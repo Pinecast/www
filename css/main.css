@@ -94,7 +94,7 @@ header.header-scrolling #header-logo-group {
 header + section {
     background: #2C253D;
     color: #fff;
-    padding: 200px 0 250px;
+    padding: 200px 15px 250px;
     text-align: center;
 }
 header + section h2 {
@@ -242,7 +242,7 @@ header + section p {
 section:last-of-type {
     background: #52D1C7;
     color: #fff;
-    padding: 100px 0 100px;
+    padding: 100px 15px 100px;
     text-align: center;
 }
 section:last-of-type h2 {
@@ -325,4 +325,41 @@ footer > div div svg {
 }
 .btn-green:hover {
     box-shadow: 0 0 8px rgba(0, 255, 230, 0.6), 0 7px 20px rgba(74, 0, 200, 0.3);
+}
+
+
+@media (max-width: 760px) {
+    header ul li:not(:last-child) {
+        display: none;
+    }
+    .row {
+        flex-direction: column;
+    }
+    .selling-points div {
+        margin-bottom: 20px;
+    }
+    .for-podcasters {
+        padding-bottom: 50px;
+    }
+
+    .point-block {
+        padding: 50px 15px;
+    }
+    .point-block img {
+        max-width: 100%;
+    }
+
+    .plans-pricing {
+        padding: 50px 15px;
+    }
+    .plans-pricing .plans {
+        flex-direction: column;
+        margin-bottom: 40px;
+        width: 100%;
+    }
+    .plans .plan + .plan {
+        border: 0;
+        margin-top: 30px;
+        margin-bottom: 40px;
+    }
 }
