@@ -1,0 +1,9 @@
+*.pyc
+settings_local.py
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+db.sqlite3
+venv
+settings_local.py
