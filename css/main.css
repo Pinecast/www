@@ -1,4 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700);
+
 
 *, *:before, *:after {
     box-sizing: border-box;
@@ -16,7 +17,7 @@ html {
 }
 
 body {
-    font-family: Open Sans, sans-serif;
+    font-family: 'Source Sans Pro', 'Hevletica Neue', Helvetica, sans-serif;
     font-size: 13px;
     height: 100%;
     min-height: 100%;
@@ -29,7 +30,7 @@ header {
     position: fixed;
     right: 0;
     top: 0;
-    transition: background-color 0.1s, color 0.1s;
+    transition: background-color 0.3s, color 0.3s;
     z-index: 100;
 }
 header div {
@@ -63,6 +64,8 @@ header ul li {
     padding: 0 15px;
 }
 header ul li a {
+    letter-spacing: 1px;
+    font-weight: 600;
     border-bottom: 2px solid transparent;
     color: inherit;
     padding: 5px 0;
@@ -91,6 +94,10 @@ header.header-scrolling #header-logo-group {
 }
 
 
+header.header-scrolling * g.logotype > path {
+  fill: #2C253C;
+}
+
 header + section {
     background: #2C253D;
     color: #fff;
@@ -98,12 +105,14 @@ header + section {
     text-align: center;
 }
 header + section h2 {
-    font-size: 28px;
+    font-size: 36px;
+    font-weight:600;
     margin: 0;
 }
 header + section p {
     color: rgba(255, 255, 255, 0.5);
     font-size: 18px;
+    margin-top: 0px;
     margin-bottom: 50px;
 }
 
@@ -130,6 +139,7 @@ header + section p {
 }
 .selling-points div {
     margin: 0 20px;
+    width: 33%;
 }
 .selling-points img {
     display: block;
@@ -143,6 +153,7 @@ header + section p {
 .selling-points p {
     color: #848498;
     font-size: 16px;
+    line-height: 24px;
     margin: 10px 0 0;
 }
 
@@ -157,6 +168,7 @@ header + section p {
 }
 .point-block p {
     font-size: 18px;
+    line-height: 23px;
     margin: 0 auto 40px;
     max-width: 450px;
 }
@@ -180,13 +192,14 @@ header + section p {
     text-align: center;
 }
 .plans-pricing > h2 {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
     margin: 0 0 20px;
 }
 .plans-pricing > p {
     color: rgba(0, 0, 0, 0.5);
-    font-size: 16px;
+    font-size: 18px;
+    line-height: 23px;
     font-weight: 600;
     margin: 0;
 }
@@ -240,7 +253,7 @@ header + section p {
 }
 
 section:last-of-type {
-    background: #52D1C7;
+    background: #56D3C9;
     color: #fff;
     padding: 100px 15px 100px;
     text-align: center;
@@ -282,7 +295,7 @@ footer > div div svg {
     box-shadow: 0 0 0 rgba(0, 0, 0, 0);
     display: inline-block;
     letter-spacing: 1px;
-    padding: 8px 18px;
+    padding: 12px 18px;
     position: relative;
     text-decoration: none;
     text-transform: uppercase;
@@ -298,29 +311,32 @@ footer > div div svg {
 }
 
 .btn-lines {
+    letter-spacing: 1px;
+    font-weight: 600;
+    padding: 11px 17px;
     background: transparent;
     border: 1px solid #fff;
     color: #fff;
     transition: background-color 0.1s border-color 0.1s, color 0.1s;
 }
 .header-scrolling .btn-lines {
-    background: #52D1C7;
-    border: 1px solid #52D1C7;
+    background: #56D3C9;
+    border: 1px solid #56D3C9;
     color: #fff;
 }
 
 .btn-white {
     background: #fff;
-    color: #52D1C7;
-    font-size: 12px;
+    color: #56D3C9;
+    font-size: 13px;
     font-weight: 600;
 }
 
 .btn-green {
-    background: #52D1C7;
+    background: #56D3C9;
     box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(0, 0, 0, 0);
     color: #fff;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
 }
 .btn-green:hover {
@@ -336,7 +352,8 @@ footer > div div svg {
         flex-direction: column;
     }
     .selling-points div {
-        margin-bottom: 20px;
+        margin-bottom: 50px;
+        width: auto;
     }
     .for-podcasters {
         padding-bottom: 50px;
