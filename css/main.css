@@ -64,10 +64,10 @@ header ul li {
     padding: 0 15px;
 }
 header ul li a {
-    letter-spacing: 1px;
-    font-weight: 600;
     border-bottom: 2px solid transparent;
     color: inherit;
+    font-weight: 600;
+    letter-spacing: 1px;
     padding: 5px 0;
     text-decoration: none;
     text-transform: uppercase;
@@ -106,7 +106,7 @@ header + section {
 }
 header + section h2 {
     font-size: 36px;
-    font-weight:600;
+    font-weight: 600;
     margin: 0;
 }
 header + section p {
