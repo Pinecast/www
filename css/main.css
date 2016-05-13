@@ -344,6 +344,38 @@ footer > div div svg {
 }
 
 
+.screenshot {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    left: 0;
+    margin: 70px auto 0;
+    position: absolute;
+    right: 0;
+    width: 700px;
+}
+.screenshot img {
+    width: 700px;
+}
+.screenshot:before {
+    background: #efefef;
+    border-radius: 4px 4px 0 0;
+    content: "";
+    display: block;
+    height: 25px;
+}
+.screenshot:after {
+    background: #e77;
+    border: 1px solid #d55;
+    border-radius: 13px;
+    content: "";
+    display: block;
+    height: 13px;
+    left: 6px;
+    position: absolute;
+    top: 6px;
+    width: 13px;
+}
+
+
 @media (max-width: 760px) {
     header ul li:not(:last-child) {
         display: none;
@@ -357,6 +389,7 @@ footer > div div svg {
     }
     .for-podcasters {
         padding-bottom: 50px;
+        padding-top: 100px;
     }
 
     .point-block {
@@ -378,5 +411,10 @@ footer > div div svg {
         border: 0;
         margin-top: 30px;
         margin-bottom: 40px;
+    }
+
+    .screenshot,
+    .screenshot img {
+        width: 300px;
     }
 }
