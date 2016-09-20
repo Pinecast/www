@@ -1,26 +1,24 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700);
 
-
-*, *:before, *:after {
+/* See https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+html {
     box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
 }
 
 html, body {
-    background: #F8F9FA;
-    color: #2C253D;
+    background: #f8f9fa;
+    height: 100%;
     margin: 0;
     padding: 0;
 }
 
-html {
-    height: 100%;
-}
-
 body {
-    font-family: 'Source Sans Pro', 'Hevletica Neue', Helvetica, sans-serif;
+    color: #2c253d;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, sans-serif;
     font-size: 13px;
-    height: 100%;
-    min-height: 100%;
 }
 
 header {
@@ -53,17 +51,16 @@ header h1 svg {
 }
 header ul {
     display: flex;
-    flex 0 0 auto;
     list-style: none;
     padding: 0 20px;
 }
-header > div > a {
+a.login {
     flex 0 0 auto;
 }
-header ul li {
+header li {
     padding: 0 15px;
 }
-header ul li a {
+header li a {
     border-bottom: 2px solid transparent;
     color: inherit;
     font-weight: 600;
@@ -73,33 +70,26 @@ header ul li a {
     text-transform: uppercase;
     transition: border-bottom-color 0.1s;
 }
-header ul li.selected a,
-header ul li a:hover {
+header li.selected a,
+header li a:hover {
     border-bottom-color: #fff;
 }
 
 header.header-scrolling {
     background: #fff;
-    color: #2C253C;
+    color: #2c253c;
 }
-header.header-scrolling ul li.selected a,
-header.header-scrolling ul li a:hover {
-    border-bottom-color: #52D1C7;
+header.header-scrolling li.selected a,
+header.header-scrolling li a:hover {
+    border-bottom-color: #52d1c7;
 }
-#header-logo-group {
-    transition: fill 0.1s;
-}
-header.header-scrolling #header-logo-group {
-    fill: #52D1C7;
-}
-
 
 header.header-scrolling * g.logotype > path {
-  fill: #2C253C;
+    fill: #2c253c;
 }
 
 header + section {
-    background: #2C253D;
+    background: #2c253d;
     color: #fff;
     padding: 200px 15px 250px;
     text-align: center;
@@ -174,12 +164,12 @@ header + section p {
 }
 
 .publish-track {
-    background: linear-gradient(90deg, #6647AF, #946EEE);
+    background: linear-gradient(90deg, #6647af, #946eee);
     color: #fff;
 }
 
 .collect-pledges {
-    background: linear-gradient(90deg, #386792, #5295D3);
+    background: linear-gradient(90deg, #386792, #5295d3);
     color: #fff;
 }
 .publish-track p,
@@ -221,7 +211,7 @@ header + section p {
     border-left: 1px solid #eee;
 }
 .plan h3 {
-    color: #52D1C7;
+    color: #52d1c7;
     font-size: 16px;
     font-weight: 600;
     margin: 0 0 30px;
@@ -232,8 +222,8 @@ header + section p {
     font-size: 32px;
     margin-bottom: 40px;
 }
-.plan strong sub {
-    color: #7D7987;
+.plan sub {
+    color: #7d7987;
     font-size: 16px;
     font-weight: 400;
     vertical-align: baseline;
@@ -253,9 +243,9 @@ header + section p {
 }
 
 section:last-of-type {
-    background: #56D3C9;
+    background: #56d3c9;
     color: #fff;
-    padding: 100px 15px 100px;
+    padding: 100px 15px;
     text-align: center;
 }
 section:last-of-type h2 {
@@ -279,13 +269,7 @@ footer > div {
     margin: auto;
     max-width: 1024px;
 }
-footer > div div {
-    align-items: center;
-}
-footer > div div span {
-    vertical-align: middle;
-}
-footer > div div svg {
+footer svg {
     flex: 0 0 auto;
     vertical-align: middle;
 }
@@ -317,23 +301,23 @@ footer > div div svg {
     background: transparent;
     border: 1px solid #fff;
     color: #fff;
-    transition: background-color 0.1s border-color 0.1s, color 0.1s;
+    transition: background-color 0.1s, border-color 0.1s, color 0.1s;
 }
 .header-scrolling .btn-lines {
-    background: #56D3C9;
-    border: 1px solid #56D3C9;
+    background: #56d3c9;
+    border: 1px solid #56d3c9;
     color: #fff;
 }
 
 .btn-white {
     background: #fff;
-    color: #56D3C9;
+    color: #56d3c9;
     font-size: 13px;
     font-weight: 600;
 }
 
 .btn-green {
-    background: #56D3C9;
+    background: #56d3c9;
     box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(0, 0, 0, 0);
     color: #fff;
     font-size: 13px;
@@ -377,7 +361,7 @@ footer > div div svg {
 
 
 @media (max-width: 760px) {
-    header ul li:not(:last-child) {
+    header li:not(:last-child) {
         display: none;
     }
     .row {

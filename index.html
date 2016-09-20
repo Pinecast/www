@@ -46,7 +46,7 @@
     <ul>
       <li class="selected"><a href="#product">Product</a></li>
       <li><a href="#pricing">Pricing</a></li>
-      <li><a href="https://pinecast.com/login">Sign In</a></li>
+      <li><a href="https://pinecast.com/login" class="login">Sign In</a></li>
     </ul>
     <a class="btn btn-lines" href="https://pinecast.com/signup/">Sign Up</a>
   </div>
@@ -183,12 +183,10 @@
       pricing.parentNode.className = '';
       product.parentNode.className = 'selected';
     }
-
   }
 
   window.addEventListener('scroll', cb);
   window.addEventListener('ohhashchange', cb);
-
 }());
 </script>
 <script>
