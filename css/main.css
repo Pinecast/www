@@ -188,7 +188,8 @@ header + section p {
 }
 
 .plans-pricing {
-    padding: 100px 15px 0;
+    margin-top: -99px;  /* Adjust for the 100px-tall sticky header. */
+    padding: 200px 15px 0;  /* Padding top with 100px + 100px for sticky header. */
     text-align: center;
 }
 .plans-pricing > h2 {
@@ -400,7 +401,7 @@ footer > div div svg {
     }
 
     .plans-pricing {
-        padding: 50px 15px;
+        padding: 150px 15px 50px;  /* Padding top with 50px + 100px for sticky header. */
     }
     .plans-pricing .plans {
         flex-direction: column;
