@@ -86,13 +86,6 @@ header.header-scrolling ul li.selected a,
 header.header-scrolling ul li a:hover {
     border-bottom-color: #52D1C7;
 }
-#header-logo-group {
-    transition: fill 0.1s;
-}
-header.header-scrolling #header-logo-group {
-    fill: #52D1C7;
-}
-
 
 header.header-scrolling * g.logotype > path {
   fill: #2C253C;
@@ -282,9 +275,6 @@ footer > div {
 }
 footer > div div {
     align-items: center;
-}
-footer > div div span {
-    vertical-align: middle;
 }
 footer > div div svg {
     flex: 0 0 auto;
