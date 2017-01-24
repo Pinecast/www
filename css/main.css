@@ -92,7 +92,7 @@ header.header-scrolling * g.logotype > path {
 }
 
 header + section {
-    background: #2C253D;
+    background: linear-gradient(to bottom,#1B43B0, #9399FF);
     color: #fff;
     padding: 200px 15px 250px;
     text-align: center;
@@ -101,6 +101,7 @@ header + section h2 {
     font-size: 36px;
     font-weight: 600;
     margin: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 header + section p {
     color: rgba(255, 255, 255, 0.5);
