@@ -241,6 +241,15 @@ header + section p {
     padding: 0;
     text-align: center;
 }
+.plan + .plan ul li em {
+    background: #56D3C9;
+    border-radius: 4px;
+    color: #fff;
+    display: inline-block;
+    font-style: normal;
+    margin-bottom: 5px;
+    padding: 0 6px;
+}
 
 
 .row {
