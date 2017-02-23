@@ -204,29 +204,6 @@
 
   ga('create', 'UA-82819781-2', 'auto');
   ga('send', 'pageview');
-  
-  document.body.addEventListener('click', function(e) {
-    if (!ga.q) {
-      return;
-    }
-    if (e.target.nodeName !== 'A') {
-      return;
-    }
-    e.preventDefault();
-    ga(
-      'send',
-      'event',
-      'outbound',
-      'click',
-      e.target.href,
-      {
-        transport: 'beacon',
-        'hitCallback': function() {
-          document.location = e.target.href;
-        },
-      }
-    );
-  });
 </script>
 </body>
 </html>
