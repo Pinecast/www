@@ -318,7 +318,7 @@ footer > div div svg {
     background: transparent;
     border: 1px solid #fff;
     color: #fff;
-    transition: background-color 0.1s border-color 0.1s, color 0.1s;
+    transition: background-color 0.1s, border-color 0.1s, color 0.1s;
 }
 .header-scrolling .btn-lines {
     background: #56D3C9;
