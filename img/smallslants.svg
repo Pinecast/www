@@ -1,0 +1,26 @@
+<svg width="39" height="74" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fadeGrad" y2="1" x2="0">
+      <stop offset="0" stop-color="white" stop-opacity="0"/>
+      <stop offset="1" stop-color="white" stop-opacity=".9"/>
+    </linearGradient>
+    <mask id="fade" maskContentUnits="objectBoundingBox">
+      <rect width="1" height="1" fill="url(#fadeGrad)"/>
+    </mask>
+    <linearGradient id="fadeGrad2" y2="1" x2="0">
+      <stop offset="0" stop-color="white" stop-opacity="0"/>
+      <stop offset="1" stop-color="white" stop-opacity=".6"/>
+    </linearGradient>
+    <mask id="fade2" maskContentUnits="objectBoundingBox">
+      <rect width="1" height="1" fill="url(#fadeGrad2)"/>
+    </mask>
+  </defs>
+  <g fill="none" fill-rule="evenodd" stroke-linecap="square" mask="url(#fade2)">
+    <path stroke="rgba(255, 255, 255, 0.7)" d="M1 74L16.266.57M11 74L26.266.57" stroke-width="1"/>
+    <path stroke="rgba(255, 255, 255, 0.5)" d="M13 74L28.164 1.06" stroke-width=".25"/>
+  </g>
+  <g fill="none" fill-rule="evenodd" stroke-linecap="square" mask="url(#fade)">
+    <path stroke="rgba(255, 255, 255, 0.7)" d="M21 74l10.177-48.953M31 74l5.089-24.477" stroke-width="1"/>
+    <path stroke="rgba(255, 255, 255, 0.7)" d="M33 74l4.987-23.987" stroke-width=".25"/>
+  </g>
+</svg>

@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pinecast.com">
   <meta property="og:title" content="Pinecast">
-  <meta property="og:description" content="Focus on content, not funding: Pinecast is the best way to host a podcast online">
+  <meta property="og:description" content="Pinecast is the best way to host a podcast online">
   <meta property="og:image" content="/img/logo.png">
 
   <script type="application/ld+json">
@@ -27,175 +27,341 @@
   </script>
 </head>
 <body>
-<header>
+<main>
+<header id="main-header">
   <div>
     <h1>
       <svg width="118" height="19" viewBox="0 0 118 19" xmlns="http://www.w3.org/2000/svg">
         <title>Pinecast</title>
         <g fill="none" fill-rule="evenodd">
-          <path d="M7.03 16.09h17.82c.74-2.053.78-4.298.1-6.39-.798-2.454-2.485-4.443-4.752-5.603-2.266-1.16-4.84-1.35-7.245-.535-4.967 1.68-7.668 7.167-6.02 12.233.032.1.065.197.1.295m23.595 2.452H6.245c-.425 0-.818-.23-1.034-.6l-.07-.122-.06-.127c-.16-.367-.3-.746-.43-1.126C2.59 10.217 5.97 3.34 12.2 1.234c3.016-1.02 6.242-.78 9.08.672 2.842 1.453 4.956 3.947 5.957 7.022.76 2.337.806 4.826.148 7.162h3.25c.664 0 1.2.55 1.2 1.226 0 .676-.536 1.226-1.2 1.226" fill="#56D3C9"/>
-          <path d="M17.14 12.893c0 .677-.537 1.225-1.2 1.225-.665 0-1.203-.548-1.203-1.225 0-.678.538-1.226 1.202-1.226.66 0 1.2.548 1.2 1.226" fill="#56D3C9"/>
-          <path d="M9.88 14.118c-.658 0-1.195-.54-1.2-1.215-.012-1.302.316-2.59.95-3.73.96-1.73 2.526-2.976 4.407-3.508 1.88-.53 3.852-.283 5.55.698.824.475 1.537 1.097 2.123 1.85.412.53.325 1.3-.195 1.72-.52.422-1.276.333-1.69-.197-.39-.503-.87-.92-1.423-1.24-1.14-.657-2.46-.824-3.724-.468-1.262.357-2.312 1.193-2.957 2.354-.42.764-.64 1.63-.63 2.5.01.677-.53 1.23-1.19 1.236h-.01zm-8.678 4.484C.54 18.602 0 18.052 0 17.376c0-.677.54-1.226 1.202-1.226h1.503c.663 0 1.202.55 1.202 1.226 0 .676-.54 1.226-1.202 1.226H1.202z" fill="#56D3C9"/>
+          <path d="M7.03 16.09h17.82c.74-2.053.78-4.298.1-6.39-.798-2.454-2.485-4.443-4.752-5.603-2.266-1.16-4.84-1.35-7.245-.535-4.967 1.68-7.668 7.167-6.02 12.233.032.1.065.197.1.295m23.595 2.452H6.245c-.425 0-.818-.23-1.034-.6l-.07-.122-.06-.127c-.16-.367-.3-.746-.43-1.126C2.59 10.217 5.97 3.34 12.2 1.234c3.016-1.02 6.242-.78 9.08.672 2.842 1.453 4.956 3.947 5.957 7.022.76 2.337.806 4.826.148 7.162h3.25c.664 0 1.2.55 1.2 1.226 0 .676-.536 1.226-1.2 1.226" fill="#000"/>
+          <path d="M17.14 12.893c0 .677-.537 1.225-1.2 1.225-.665 0-1.203-.548-1.203-1.225 0-.678.538-1.226 1.202-1.226.66 0 1.2.548 1.2 1.226" fill="#000"/>
+          <path d="M9.88 14.118c-.658 0-1.195-.54-1.2-1.215-.012-1.302.316-2.59.95-3.73.96-1.73 2.526-2.976 4.407-3.508 1.88-.53 3.852-.283 5.55.698.824.475 1.537 1.097 2.123 1.85.412.53.325 1.3-.195 1.72-.52.422-1.276.333-1.69-.197-.39-.503-.87-.92-1.423-1.24-1.14-.657-2.46-.824-3.724-.468-1.262.357-2.312 1.193-2.957 2.354-.42.764-.64 1.63-.63 2.5.01.677-.53 1.23-1.19 1.236h-.01zm-8.678 4.484C.54 18.602 0 18.052 0 17.376c0-.677.54-1.226 1.202-1.226h1.503c.663 0 1.202.55 1.202 1.226 0 .676-.54 1.226-1.202 1.226H1.202z" fill="#000"/>
         </g>
         <g class="logotype" fill="none" fill-rule="evenodd">
-          <path d="M43.453 8.953c.426 0 .832-.032 1.217-.095.385-.063.73-.175 1.032-.337.302-.16.543-.38.722-.66.178-.28.268-.64.268-1.09 0-.43-.09-.79-.268-1.06-.18-.27-.416-.48-.712-.64-.296-.15-.633-.25-1.01-.3-.38-.05-.768-.07-1.167-.07H42.27v4.27h1.183zm-3.783-6.5h4.134c.838 0 1.595.076 2.27.23.673.154 1.25.407 1.732.757.482.35.853.8 1.114 1.347.26.547.392 1.207.392 1.978 0 .827-.152 1.52-.453 2.082-.31.562-.72 1.014-1.23 1.357-.52.344-1.12.593-1.81.747-.69.16-1.42.24-2.19.24h-1.36v6.17h-2.6V2.45zm10.57 4.815h2.474v10.07H50.24V7.268zm-.352-3.302c0-.406.148-.76.443-1.062.3-.302.68-.452 1.13-.452.46 0 .84.143 1.15.43.31.29.47.65.47 1.084 0 .435-.15.797-.46 1.084-.31.288-.69.43-1.14.43-.45 0-.83-.15-1.12-.45-.29-.303-.44-.656-.44-1.064zm5.41 3.684h2.352v1.62h.04c.22-.505.603-.95 1.146-1.337.544-.385 1.187-.578 1.93-.578.646 0 1.2.116 1.66.347.46.23.84.537 1.135.915.3.38.52.814.65 1.305.14.49.21.996.21 1.515v6.283h-2.48v-5.568c0-.295-.02-.603-.06-.926-.04-.322-.13-.613-.27-.873-.13-.26-.32-.473-.56-.642-.24-.16-.56-.25-.96-.25-.4 0-.74.08-1.03.24-.29.17-.52.37-.71.63-.18.25-.32.55-.42.88-.09.33-.14.66-.14 1v5.53H55.3V7.65zm17.77 4.04c0-.324-.045-.633-.134-.927-.09-.295-.23-.554-.423-.778-.19-.225-.43-.403-.73-.537-.29-.133-.64-.2-1.04-.2-.74 0-1.37.23-1.89.684-.51.456-.8 1.04-.85 1.757h5.08zm2.476 1.135v.336c0 .12-.008.23-.02.34H67.99c.027.37.12.7.28 1 .157.3.366.56.628.78.26.22.557.39.887.52.33.13.674.19 1.032.19.618 0 1.14-.11 1.567-.34.426-.23.777-.55 1.052-.95l1.65 1.35c-.977 1.35-2.394 2.02-4.25 2.02-.77 0-1.48-.12-2.126-.37-.647-.24-1.207-.59-1.68-1.04-.476-.45-.847-1-1.115-1.65-.27-.65-.404-1.39-.404-2.22 0-.81.14-1.55.41-2.22.27-.66.64-1.23 1.1-1.7.47-.47 1.02-.83 1.66-1.09.64-.26 1.33-.39 2.08-.39.69 0 1.33.12 1.91.35.59.23 1.09.58 1.52 1.03.43.46.76 1.03 1 1.71.24.68.36 1.48.36 2.39zm8.34-2.382c-.204-.245-.48-.516-.866-.705-.385-.19-.777-.284-1.175-.284-.455 0-.854.094-1.197.284-.345.19-.63.438-.857.747-.23.31-.4.656-.51 1.04-.11.387-.17.777-.17 1.17 0 .392.05.78.17 1.166.11.39.29.74.52 1.05.23.31.52.56.87.75.57.31 1.27.35 1.9.2.55-.12 1.01-.41 1.4-.82l1.54 1.6c-.416.45-.94.8-1.58 1.04-.64.25-1.33.37-2.077.37-.73 0-1.42-.12-2.07-.36-.656-.24-1.227-.59-1.715-1.05-.48-.46-.87-1.02-1.15-1.68-.28-.66-.42-1.41-.42-2.25 0-.81.14-1.55.422-2.21.28-.66.66-1.22 1.146-1.68.48-.46 1.04-.82 1.68-1.07.64-.25 1.32-.38 2.05-.38.724 0 1.43.14 2.11.42.68.28 1.22.67 1.62 1.16l-1.69 1.52zm9.276 2.693h-.56c-.4 0-.82.018-1.26.053-.44.03-.845.11-1.216.23-.372.12-.68.28-.93.5-.246.21-.37.51-.37.89 0 .24.05.44.155.6.1.16.23.29.4.39.16.1.35.17.55.21.2.04.41.06.62.06.85 0 1.49-.23 1.93-.7.44-.47.66-1.1.66-1.9v-.36zm.04 3.324h-.062c-.247.45-.647.817-1.196 1.105-.55.286-1.177.43-1.878.43-.4 0-.815-.052-1.248-.158-.434-.104-.833-.28-1.197-.525-.37-.246-.67-.568-.91-.968s-.36-.894-.36-1.483c0-.75.21-1.36.63-1.8.42-.45.96-.79 1.62-1.03.66-.23 1.39-.39 2.19-.47.8-.07 1.59-.11 2.36-.11v-.25c0-.63-.23-1.1-.67-1.4-.45-.3-.98-.45-1.6-.45-.52 0-1.03.12-1.51.34-.48.23-.88.5-1.2.82L86.9 8.96c.563-.534 1.213-.934 1.95-1.2.734-.266 1.48-.4 2.24-.4.88 0 1.603.126 2.174.38.57.25 1.02.58 1.35.987.33.408.56.864.69 1.37.13.504.198 1.01.198 1.514v6.14H93.2v-1.28zm9.972-6.122c-.22-.295-.523-.55-.908-.768-.385-.218-.804-.326-1.258-.326-.4 0-.763.084-1.093.252-.33.168-.496.45-.496.842 0 .393.182.67.547.83.364.162.898.326 1.6.495.37.084.744.197 1.123.337.378.14.723.326 1.032.557.31.232.56.52.75.863.19.343.29.76.29 1.252 0 .617-.12 1.14-.34 1.567-.23.42-.53.77-.91 1.04-.38.26-.82.46-1.32.58-.5.11-1.02.17-1.56.17-.77 0-1.52-.15-2.25-.43-.73-.29-1.34-.7-1.82-1.23l1.63-1.56c.27.36.63.66 1.07.9.44.24.93.36 1.46.36.18 0 .36-.02.54-.07.18-.04.36-.11.51-.2.15-.09.28-.22.38-.37.09-.16.14-.35.14-.57 0-.42-.19-.72-.57-.91-.38-.18-.95-.37-1.71-.55-.37-.09-.73-.19-1.088-.33-.35-.14-.66-.31-.933-.53-.275-.22-.495-.49-.66-.81-.165-.33-.248-.72-.248-1.2 0-.56.11-1.05.34-1.45.222-.41.52-.74.893-1 .37-.26.79-.45 1.26-.58.47-.13.95-.19 1.444-.19.71 0 1.41.13 2.09.38.68.25 1.22.64 1.62 1.16l-1.61 1.45zm2.418-1.104v-2.02h1.733V4.29h2.435v2.925h2.476l-.43 2.02h-2.046v4.69c0 .45.08.82.237 1.116.158.3.512.45 1.063.45.165 0 .343-.02.536-.05.192-.03.364-.08.516-.15l.082 1.98c-.22.09-.48.15-.784.2-.303.05-.59.08-.866.08-.66 0-1.197-.09-1.61-.28-.412-.19-.74-.45-.98-.78-.24-.32-.406-.7-.494-1.13-.09-.43-.135-.89-.135-1.38V9.24h-1.733z" fill="#FFFFFF"/>
-          <path d="M114.496 16.443H114V16h1.488v.443h-.496V18h-.496v-1.557zM115.97 16h.514l.294.83.103.327h.02l.11-.326.28-.83h.52v2h-.46v-.59c0-.05 0-.1.01-.17l.02-.19.02-.18.02-.16h-.01l-.16.47-.26.68h-.18l-.26-.67-.15-.47h-.01l.02.17.02.19.02.19c0 .07.01.12.01.17V18H116v-2z" fill="#FFFFFF"/>
+          <path d="M43.453 8.953c.426 0 .832-.032 1.217-.095.385-.063.73-.175 1.032-.337.302-.16.543-.38.722-.66.178-.28.268-.64.268-1.09 0-.43-.09-.79-.268-1.06-.18-.27-.416-.48-.712-.64-.296-.15-.633-.25-1.01-.3-.38-.05-.768-.07-1.167-.07H42.27v4.27h1.183zm-3.783-6.5h4.134c.838 0 1.595.076 2.27.23.673.154 1.25.407 1.732.757.482.35.853.8 1.114 1.347.26.547.392 1.207.392 1.978 0 .827-.152 1.52-.453 2.082-.31.562-.72 1.014-1.23 1.357-.52.344-1.12.593-1.81.747-.69.16-1.42.24-2.19.24h-1.36v6.17h-2.6V2.45zm10.57 4.815h2.474v10.07H50.24V7.268zm-.352-3.302c0-.406.148-.76.443-1.062.3-.302.68-.452 1.13-.452.46 0 .84.143 1.15.43.31.29.47.65.47 1.084 0 .435-.15.797-.46 1.084-.31.288-.69.43-1.14.43-.45 0-.83-.15-1.12-.45-.29-.303-.44-.656-.44-1.064zm5.41 3.684h2.352v1.62h.04c.22-.505.603-.95 1.146-1.337.544-.385 1.187-.578 1.93-.578.646 0 1.2.116 1.66.347.46.23.84.537 1.135.915.3.38.52.814.65 1.305.14.49.21.996.21 1.515v6.283h-2.48v-5.568c0-.295-.02-.603-.06-.926-.04-.322-.13-.613-.27-.873-.13-.26-.32-.473-.56-.642-.24-.16-.56-.25-.96-.25-.4 0-.74.08-1.03.24-.29.17-.52.37-.71.63-.18.25-.32.55-.42.88-.09.33-.14.66-.14 1v5.53H55.3V7.65zm17.77 4.04c0-.324-.045-.633-.134-.927-.09-.295-.23-.554-.423-.778-.19-.225-.43-.403-.73-.537-.29-.133-.64-.2-1.04-.2-.74 0-1.37.23-1.89.684-.51.456-.8 1.04-.85 1.757h5.08zm2.476 1.135v.336c0 .12-.008.23-.02.34H67.99c.027.37.12.7.28 1 .157.3.366.56.628.78.26.22.557.39.887.52.33.13.674.19 1.032.19.618 0 1.14-.11 1.567-.34.426-.23.777-.55 1.052-.95l1.65 1.35c-.977 1.35-2.394 2.02-4.25 2.02-.77 0-1.48-.12-2.126-.37-.647-.24-1.207-.59-1.68-1.04-.476-.45-.847-1-1.115-1.65-.27-.65-.404-1.39-.404-2.22 0-.81.14-1.55.41-2.22.27-.66.64-1.23 1.1-1.7.47-.47 1.02-.83 1.66-1.09.64-.26 1.33-.39 2.08-.39.69 0 1.33.12 1.91.35.59.23 1.09.58 1.52 1.03.43.46.76 1.03 1 1.71.24.68.36 1.48.36 2.39zm8.34-2.382c-.204-.245-.48-.516-.866-.705-.385-.19-.777-.284-1.175-.284-.455 0-.854.094-1.197.284-.345.19-.63.438-.857.747-.23.31-.4.656-.51 1.04-.11.387-.17.777-.17 1.17 0 .392.05.78.17 1.166.11.39.29.74.52 1.05.23.31.52.56.87.75.57.31 1.27.35 1.9.2.55-.12 1.01-.41 1.4-.82l1.54 1.6c-.416.45-.94.8-1.58 1.04-.64.25-1.33.37-2.077.37-.73 0-1.42-.12-2.07-.36-.656-.24-1.227-.59-1.715-1.05-.48-.46-.87-1.02-1.15-1.68-.28-.66-.42-1.41-.42-2.25 0-.81.14-1.55.422-2.21.28-.66.66-1.22 1.146-1.68.48-.46 1.04-.82 1.68-1.07.64-.25 1.32-.38 2.05-.38.724 0 1.43.14 2.11.42.68.28 1.22.67 1.62 1.16l-1.69 1.52zm9.276 2.693h-.56c-.4 0-.82.018-1.26.053-.44.03-.845.11-1.216.23-.372.12-.68.28-.93.5-.246.21-.37.51-.37.89 0 .24.05.44.155.6.1.16.23.29.4.39.16.1.35.17.55.21.2.04.41.06.62.06.85 0 1.49-.23 1.93-.7.44-.47.66-1.1.66-1.9v-.36zm.04 3.324h-.062c-.247.45-.647.817-1.196 1.105-.55.286-1.177.43-1.878.43-.4 0-.815-.052-1.248-.158-.434-.104-.833-.28-1.197-.525-.37-.246-.67-.568-.91-.968s-.36-.894-.36-1.483c0-.75.21-1.36.63-1.8.42-.45.96-.79 1.62-1.03.66-.23 1.39-.39 2.19-.47.8-.07 1.59-.11 2.36-.11v-.25c0-.63-.23-1.1-.67-1.4-.45-.3-.98-.45-1.6-.45-.52 0-1.03.12-1.51.34-.48.23-.88.5-1.2.82L86.9 8.96c.563-.534 1.213-.934 1.95-1.2.734-.266 1.48-.4 2.24-.4.88 0 1.603.126 2.174.38.57.25 1.02.58 1.35.987.33.408.56.864.69 1.37.13.504.198 1.01.198 1.514v6.14H93.2v-1.28zm9.972-6.122c-.22-.295-.523-.55-.908-.768-.385-.218-.804-.326-1.258-.326-.4 0-.763.084-1.093.252-.33.168-.496.45-.496.842 0 .393.182.67.547.83.364.162.898.326 1.6.495.37.084.744.197 1.123.337.378.14.723.326 1.032.557.31.232.56.52.75.863.19.343.29.76.29 1.252 0 .617-.12 1.14-.34 1.567-.23.42-.53.77-.91 1.04-.38.26-.82.46-1.32.58-.5.11-1.02.17-1.56.17-.77 0-1.52-.15-2.25-.43-.73-.29-1.34-.7-1.82-1.23l1.63-1.56c.27.36.63.66 1.07.9.44.24.93.36 1.46.36.18 0 .36-.02.54-.07.18-.04.36-.11.51-.2.15-.09.28-.22.38-.37.09-.16.14-.35.14-.57 0-.42-.19-.72-.57-.91-.38-.18-.95-.37-1.71-.55-.37-.09-.73-.19-1.088-.33-.35-.14-.66-.31-.933-.53-.275-.22-.495-.49-.66-.81-.165-.33-.248-.72-.248-1.2 0-.56.11-1.05.34-1.45.222-.41.52-.74.893-1 .37-.26.79-.45 1.26-.58.47-.13.95-.19 1.444-.19.71 0 1.41.13 2.09.38.68.25 1.22.64 1.62 1.16l-1.61 1.45zm2.418-1.104v-2.02h1.733V4.29h2.435v2.925h2.476l-.43 2.02h-2.046v4.69c0 .45.08.82.237 1.116.158.3.512.45 1.063.45.165 0 .343-.02.536-.05.192-.03.364-.08.516-.15l.082 1.98c-.22.09-.48.15-.784.2-.303.05-.59.08-.866.08-.66 0-1.197-.09-1.61-.28-.412-.19-.74-.45-.98-.78-.24-.32-.406-.7-.494-1.13-.09-.43-.135-.89-.135-1.38V9.24h-1.733z" fill="#000"/>
+          <path d="M114.496 16.443H114V16h1.488v.443h-.496V18h-.496v-1.557zM115.97 16h.514l.294.83.103.327h.02l.11-.326.28-.83h.52v2h-.46v-.59c0-.05 0-.1.01-.17l.02-.19.02-.18.02-.16h-.01l-.16.47-.26.68h-.18l-.26-.67-.15-.47h-.01l.02.17.02.19.02.19c0 .07.01.12.01.17V18H116v-2z" fill="#000"/>
         </g>
       </svg>
     </h1>
-    <ul>
-      <li class="selected"><a href="#product">Product</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="https://blog.pinecast.com">Blog</a></li>
-      <li><a href="https://pinecast.com/login">Sign In</a></li>
-    </ul>
-    <a class="btn btn-lines" href="https://pinecast.com/signup/">Sign Up</a>
+    <div class="header-links">
+      <a class="hide-on-mobile" href="https://blog.pinecast.com">Blog</a>
+      <a href="https://pinecast.com/login">Sign In</a>
+      <a class="btn" href="https://pinecast.com/signup/">Sign Up</a>
+    </div>
   </div>
 </header>
-<section id="product">
-  <h2>Focus on content, not funding.</h2>
-  <p>Pinecast makes it easy to publish, run, and fund your podcast.</p>
-  <a class="btn btn-green" href="https://pinecast.com/signup/">Start for Free</a>
-
-  <div class="screenshot">
-    <img src="img/screenshot.png" alt="" width="700" height="528" />
-  </div>
-</section>
-<section class="for-podcasters">
-  <img src="">
-  <hr>
-  <h2>The platform designed for podcasters</h2>
-
-  <div class="row selling-points">
-    <div>
-      <img src="/img/point.png" alt="" width="51" height="36">
-      <strong>Unlimited Everything</strong>
-      <p>Pinecast doesn&#39;t limit storage, bandwidth, or the number of episodes you can release.</p>
-    </div>
-    <div>
-      <img src="/img/point.png" alt="" width="51" height="36">
-      <strong>Simple Setup</strong>
-      <p>Start a free account in seconds, with no credit card required.</p>
-    </div>
-    <div>
-      <img src="/img/point.png" alt="" width="51" height="36">
-      <strong>Connect with Your Audience</strong>
-      <p>Collect feedback from your listeners easily and automatically.</p>
+<section id="hero">
+  <div>
+    <h2>Podcasting shouldn't have to be hard.</h2>
+    <p>Pinecast makes it easy to produce, fund, and grow your podcast.</p>
+    <div class="cta">
+      <a class="btn is-big" href="https://pinecast.com/signup/">Get started for free</a>
+      <span class="no-cc-req">No credit card required.</span>
     </div>
   </div>
+  <aside class="hero-phones">
+    <div class="hero-phones-col1">
+      <div class="phone main">
+        <div class="cover-art"></div>
+        <ul class="names">
+          <li>Desert Island Dishes</li>
+          <li>About Buildings + Cities</li>
+          <li>Civil Politics</li>
+          <li>Screenplay Book Club</li>
+          <li>Desert Island Dishes</li>
+        </ul>
+        <ul class="descriptions">
+          <li>Pinecaster since Jun 2017</li>
+          <li>Pinecaster since Aug 2016</li>
+          <li>Pinecaster since Jun 2017</li>
+          <li>Pinecaster since Feb 2018</li>
+          <li>Pinecaster since Jun 2017</li>
+        </ul>
+      </div>
+      <div class="phone directory directory-exorcist"></div>
+    </div>
+    <div class="hero-phones-col2">
+      <div class="phone directory directory-exorcist"></div>
+      <div class="phone directory directory-exorcist"></div>
+    </div>
+  </aside>
+</section>
+<section class="whats-included centered-section">
+  <div>
+    <svg width="17" height="24" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#000" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13.5 4.003l3 2M6.5 2.503l-1.5-2h7l-1.5 2zM8.5 13.503l-4 4M15 5.003l-1.5 2.244M8.5 4.503v-2M.5 8.893l8-4.39 8 4.39v9.22l-8 4.39-8-4.39zM3.5 13.503h1M8.5 18.503v-1M12.036 17.039l-.707-.707M13.5 13.503h-1M12.036 9.967l-.707.707M8.5 8.503v1M4.964 9.967l.707.707"/>
+      </g>
+    </svg>
+    <h2>Get started in minutes.</h2>
+    <p>
+      Create a new podcast or import one from another host in under two minutes.<br class="hide-on-mobile">
+      Manage multiple shows with their own feeds and all the trimmings.
+    </p>
 
+    <div class="high-level-options">
+      <div class="high-level-option">
+        <img src="/img/icon_battery.svg" alt="" height="48" width="32">
+        <h3>Batteries-included</h3>
+        <p>
+          Submit your show to Apple Podcasts and Google Play and track your
+          growth with our comprehensive analytics.
+        </p>
+        <a href="https://help.pinecast.com/faqs/how-will-people-listen-to-my-podcast" rel="noopener">Learn more</a>
+      </div>
+      <div class="high-level-option">
+        <img src="/img/icon_cash.svg" alt="" height="48" width="45">
+        <h3>Accept tips</h3>
+        <p>
+          Our tip jar lets you accept tips from your listeners, deposited
+          into your bank account or debit card.
+        </p>
+        <a href="https://help.pinecast.com/knowledge-base/features/tip-jar" rel="noopener">Learn more</a>
+      </div>
+      <div class="high-level-option">
+        <img src="/img/icon_tags.svg" alt="" height="48" width="48">
+        <h3>Metadata for days</h3>
+        <p>
+          Pinecast will help you get your MP3s prepped with tools for
+          ID3 tags, episode artwork, and keeping your site updated.
+        </p>
+        <a href="https://help.pinecast.com/how-to/metadata-and-episode-artwork" rel="noopener">Learn more</a>
+      </div>
+    </div>
+  </div>
 </section>
-<section class="point-block publish-track">
-  <h2>Easily publish and track your podcasts</h2>
-  <p>Pinecast makes it as easy as uploading art and your audio files, then hitting Publish.</p>
-  <img src="/img/publish.png" alt="" width="652" height="310">
+
+<section class="walkthrough" data-selected="publish">
+  <div class="walkthrough-wrapper">
+    <h2>Let's talk about what you get.</h2>
+    <div class="walkthrough-options">
+      <a data-option="publish" href="">Publish everywhere</a>
+      <a data-option="track" href="">Track everything</a>
+      <a data-option="schedule" href="">Schedule episodes</a>
+      <a data-option="tip" href="">Get tipped</a>
+    </div>
+    <div class="walkthrough-inner">//</div>
+    <div class="walkthrough-description">
+      <p data-option="publish">
+        Publish episodes to Pinecast to see them appear on Apple Podcasts,
+        Google Play, and more. We'll update your podcast website for you, too.
+      </p>
+      <p data-option="track">
+        We'll keep track of who subscribes to your podcasts and when they
+        listen. Dig into our comprehensive analytics to find out what delights
+        your audience.
+      </p>
+      <p data-option="schedule">
+        Queue up episodes to be released on a particular day and time. You can
+        queue as many episodes as you want, and we'll take care of sending them
+        out into the world.
+      </p>
+      <p data-option="tip">
+        Set up a Pinecast tip jar to start accepting cash tips from your
+        listeners. We'll securely route tips to your debit card or bank
+        account.
+      </p>
+    </div>
+  </div>
 </section>
-<section class="point-block">
-  <h2>Build an audience with Pinecast Feedback</h2>
-  <p>Solicit feedback from your audience and interact in ways never before possible.</p>
-  <img src="/img/feedback.png" alt="" width="360" height="465">
+
+<section class="making-you-successful centered-section">
+  <div>
+    <svg width="24" height="18" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#000" fill="none" fill-rule="evenodd" stroke-linejoin="round">
+        <path stroke-linecap="round" d="M10.5 10.5H21l2.5 5H.5l2.5-5h.5"/>
+        <path d="M18.5 10.5l2 5M.5 15.5l.5 2h22l.5-2"/>
+        <path stroke-linecap="round" d="M5.5 12L11 6.5 12.5 8l2.75-2.75L17.5 7.5l4-4"/>
+        <path stroke-linecap="round" d="M19.5 1.5l4 4v-4z"/>
+      </g>
+    </svg>
+    <h2>Let us help you grow.</h2>
+    <p>
+      Our paid plans give you the tools to take your podcast to the next level.
+    </p>
+    <div class="feature-list-wrapper" data-selected-feature="import-tool">
+      <div class="feature-list">
+        <button class="feature-list--feature" type="button" data-selected-feature="import-tool">
+          <strong>Import tool</strong>
+          <p>Move your show from your last host.</p>
+        </button>
+        <button class="feature-list--feature" type="button" data-selected-feature="embed-player">
+          <strong>Embeddable player</strong>
+          <p>Play your episodes on your own site.</p>
+        </button>
+        <button class="feature-list--feature" type="button" data-selected-feature="unlimited-podcasts">
+          <strong>Unlimited podcasts</strong>
+          <p>Host as many shows as you want.</p>
+        </button>
+        <button class="feature-list--feature" type="button" data-selected-feature="unlimited-episodes">
+          <strong>Unlimited episodes</strong>
+          <p>Post as often as you want.</p>
+        </button>
+        <button class="feature-list--feature" type="button" data-selected-feature="website">
+          <strong>Customizable website</strong>
+          <p>Give your podcast a home on the web.</p>
+        </button>
+        <button class="feature-list--feature" type="button" data-selected-feature="custom-domain">
+          <strong>Use your own domain</strong>
+          <p>Host your site on a custom domain.</p>
+        </button>
+        <button class="feature-list--feature" type="button" data-selected-feature="tip-jar">
+          <strong>Higher tip jar limit</strong>
+          <p>Allow your listeners to donate more.</p>
+        </button>
+        <button class="feature-list--feature" type="button" data-selected-feature="analytics">
+          <strong>World-class analytics</strong>
+          <p>Track your audience as it grows.</p>
+        </button>
+      </div>
+      <div class="feature-example-wrappers">
+        <div class="feature-example-wrapper phone for-feature-import-tool for-feature-tip-jar for-feature-embed-player">
+          <div class="feature-example"></div>
+        </div>
+        <div class="feature-example-wrapper laptop for-feature-website for-feature-custom-domain for-feature-analytics">
+          <div class="feature-example"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
-<section class="point-block collect-pledges">
-  <h2>Collect pledges from your audience</h2>
-  <p>Get your audience involved and let them help support your show.</p>
-  <img src="/img/tips.png" alt="" width="468" height="520">
-</section>
-<section class="plans-pricing" id="pricing">
-  <h2>When you're ready to upgrade</h2>
-  <p>
-    Beginner or pro, we&#39;ve got a plan to suit you.<br>
-    Try our free plan for as long as you like, and upgrade when you're ready.
+
+<section class="plans-pricing centered-section" id="pricing">
+  <div>
+    <svg width="23" height="23" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#000" fill="none" fill-rule="evenodd" stroke-linejoin="round">
+        <path stroke-linecap="round" d="M2.5 7l3-2 3 2v7l-3 2-3-2zM8.5 10.5h-2M8.5 12.5h-2M2.5 12.5h2M2.5 10.5h2M8.5 8.5h-6M5.5.5v2"/>
+        <path d="M10.5 12v8l5 2.5 5-2.5v-6.5"/>
+        <path stroke-linecap="round" d="M21.5 13.5h-6l-5-1.5v-2l5-1.5 4 1zM20.5 15.5h2V18l-2 1M8.5 17.5v.5l2 1M13.5 16v.5M17.5 16v.5M17.5 19.5l-2 1-2-1v-1h4zM.5 7.5v-2l5-3M10.5 7.5v-2l-5-3M16.5 4.5h-2V7l2-1M16.5.941l1.5-.44M16.5 6V1"/>
+      </g>
+    </svg>
+    <h2>When you're ready to upgrade</h2>
+    <p>
+      Beginner or pro, we&#39;ve got a plan to suit you.<br>
+      Try our free plan for as long as you like, and upgrade when you're ready.
+    </p>
+
+    <div class="plans">
+      <div class="plan plan-demo">
+        <h3>Free</h3>
+        <ul class="plan--features">
+          <li class="plan--feature">Free forever</li>
+          <li class="plan--feature">Up to three podcasts</li>
+          <li class="plan--feature">48MB/episode</li>
+          <li class="plan--feature">Listen analytics</li>
+          <li class="plan--feature">Tip Jar</li>
+          <li class="plan--feature">10 episodes per feed</li>
+        </ul>
+        <a class="plan--learn-more" target="_blank" rel="noopener" href="https://help.pinecast.com/faqs/billing-and-plans/whats-included-with-the-free-plan">Learn more</a>
+        <a href="https://pinecast.com/signup" class="btn plan--sign-up">
+          Get started now
+        </a>
+      </div>
+      <div class="plan plan-starter">
+        <h3>Starter plan</h3>
+        <strong class="plan--price">$5<sub>/mo</sub></strong>
+        <ul class="plan--features">
+          <li class="plan--feature">Unlimited storage</li>
+          <li class="plan--feature">Basic analytics</li>
+          <li class="plan--feature">Tip Jar</li>
+          <li class="plan--feature">Unlimited shows</li>
+          <li class="plan--feature">Podcast homepage</li>
+          <li class="plan--feature">Custom domain support</li>
+        </ul>
+        <a class="plan--learn-more" target="_blank" rel="noopener" href="https://help.pinecast.com/faqs/billing-and-plans/whats-included-in-the-starter-plan">Learn more</a>
+      </div>
+      <div class="plan plan-pro">
+        <h3>Pro plan</h3>
+        <strong class="plan--price">$50<sub>/mo</sub></strong>
+        <ul class="plan--features">
+          <li class="plan--feature plan--feature--highlight">Everything from Starter</li>
+          <li class="plan--feature">Geographic analytics</li>
+          <li class="plan--feature">Comment box</li>
+          <li class="plan--feature">Group shows into a Network</li>
+          <li class="plan--feature">Collaboration features</li>
+        </ul>
+        <a class="plan--learn-more" target="_blank" rel="noopener" href="https://help.pinecast.com/faqs/billing-and-plans/whats-the-difference-between-the-starter-and-pro-plans">Learn more</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="plans--get-started">
+    Get started by <a href="https://pinecast.com/signup">signing up</a> and clicking <b>Upgrade</b> at any time.
   </p>
 
-  <div class="plans">
-    <div class="plan">
-      <h3>Starter</h3>
-      <strong>$5<sub>/mo</sub></strong>
-      <ul>
-        <li>Unlimited Storage</li>
-        <li>Basic Analytics</li>
-        <li>Tip Jar</li>
-        <li>Unlimited Shows</li>
-        <li>Podcast Homepage</li>
-        <li>Custom Domain Support</li>
-      </ul>
-    </div>
-    <div class="plan">
-      <h3>Pro</h3>
-      <strong>$50<sub>/mo</sub></strong>
-      <ul>
-        <li><em>Everything from Starter</em></li>
-        <li>Geographic Analytics</li>
-        <li>Podcast Homepage w/Blog</li>
-        <li>Comment Box</li>
-        <li>Group shows into a Network</li>
-        <li>Collaboration Features</li>
-      </ul>
-    </div>
-  </div>
-
 </section>
 
-<section>
-  <h2>Try it out for free</h2>
-  <p style="margin-bottom: 20px">Free forever, no credit card required. You&#39;ll love it.</p>
-  <p style="font-size: 14px"><a href="https://help.pinecast.com/faqs/billing-and-plans/whats-included-with-the-free-plan" style="color: #fff">What&#39;s included?</a></p>
-  <a href="https://pinecast.com/signup/" class="btn btn-white">Start for Free</a>
+<section class="try-it-free">
+  <div>
+    <div>
+      <h2>Try Pinecast for free.</h2>
+      <p class="flavor-text">
+        No credit card required, no time limits, upgrade whenever. We think you&#39;ll love it.
+      </p>
+    </div>
+    <div class="cta">
+      <a href="https://pinecast.com/signup/" class="btn is-big">Sign up for free</a>
+      <p class="whats-included"><a href="https://help.pinecast.com/faqs/billing-and-plans/whats-included-with-the-free-plan">What&#39;s included?</a></p>
+    </div>
+  </div>
 </section>
 
 <footer>
   <div>
-    <div>
-      <a href="#product">
-        <svg width="118" height="19" viewBox="0 0 118 19" xmlns="http://www.w3.org/2000/svg">
-          <title>Pinecast</title>
-          <g fill="none" fill-rule="evenodd">
-            <path d="M7.03 16.09h17.82c.74-2.053.78-4.298.1-6.39-.798-2.454-2.485-4.443-4.752-5.603-2.266-1.16-4.84-1.35-7.245-.535-4.967 1.68-7.668 7.167-6.02 12.233.032.1.065.197.1.295m23.595 2.452H6.245c-.425 0-.818-.23-1.034-.6l-.07-.122-.06-.127c-.16-.367-.3-.746-.43-1.126C2.59 10.217 5.97 3.34 12.2 1.234c3.016-1.02 6.242-.78 9.08.672 2.842 1.453 4.956 3.947 5.957 7.022.76 2.337.806 4.826.148 7.162h3.25c.664 0 1.2.55 1.2 1.226 0 .676-.536 1.226-1.2 1.226" fill="#BBBBBB"/>
-            <path d="M17.14 12.893c0 .677-.537 1.225-1.2 1.225-.665 0-1.203-.548-1.203-1.225 0-.678.538-1.226 1.202-1.226.66 0 1.2.548 1.2 1.226" fill="#BBBBBB"/>
-            <path d="M9.88 14.118c-.658 0-1.195-.54-1.2-1.215-.012-1.302.316-2.59.95-3.73.96-1.73 2.526-2.976 4.407-3.508 1.88-.53 3.852-.283 5.55.698.824.475 1.537 1.097 2.123 1.85.412.53.325 1.3-.195 1.72-.52.422-1.276.333-1.69-.197-.39-.503-.87-.92-1.423-1.24-1.14-.657-2.46-.824-3.724-.468-1.262.357-2.312 1.193-2.957 2.354-.42.764-.64 1.63-.63 2.5.01.677-.53 1.23-1.19 1.236h-.01zm-8.678 4.484C.54 18.602 0 18.052 0 17.376c0-.677.54-1.226 1.202-1.226h1.503c.663 0 1.202.55 1.202 1.226 0 .676-.54 1.226-1.202 1.226H1.202z" fill="#BBBBBB"/>
-          </g>
-          <g class="logotype" fill="none" fill-rule="evenodd">
-            <path d="M43.453 8.953c.426 0 .832-.032 1.217-.095.385-.063.73-.175 1.032-.337.302-.16.543-.38.722-.66.178-.28.268-.64.268-1.09 0-.43-.09-.79-.268-1.06-.18-.27-.416-.48-.712-.64-.296-.15-.633-.25-1.01-.3-.38-.05-.768-.07-1.167-.07H42.27v4.27h1.183zm-3.783-6.5h4.134c.838 0 1.595.076 2.27.23.673.154 1.25.407 1.732.757.482.35.853.8 1.114 1.347.26.547.392 1.207.392 1.978 0 .827-.152 1.52-.453 2.082-.31.562-.72 1.014-1.23 1.357-.52.344-1.12.593-1.81.747-.69.16-1.42.24-2.19.24h-1.36v6.17h-2.6V2.45zm10.57 4.815h2.474v10.07H50.24V7.268zm-.352-3.302c0-.406.148-.76.443-1.062.3-.302.68-.452 1.13-.452.46 0 .84.143 1.15.43.31.29.47.65.47 1.084 0 .435-.15.797-.46 1.084-.31.288-.69.43-1.14.43-.45 0-.83-.15-1.12-.45-.29-.303-.44-.656-.44-1.064zm5.41 3.684h2.352v1.62h.04c.22-.505.603-.95 1.146-1.337.544-.385 1.187-.578 1.93-.578.646 0 1.2.116 1.66.347.46.23.84.537 1.135.915.3.38.52.814.65 1.305.14.49.21.996.21 1.515v6.283h-2.48v-5.568c0-.295-.02-.603-.06-.926-.04-.322-.13-.613-.27-.873-.13-.26-.32-.473-.56-.642-.24-.16-.56-.25-.96-.25-.4 0-.74.08-1.03.24-.29.17-.52.37-.71.63-.18.25-.32.55-.42.88-.09.33-.14.66-.14 1v5.53H55.3V7.65zm17.77 4.04c0-.324-.045-.633-.134-.927-.09-.295-.23-.554-.423-.778-.19-.225-.43-.403-.73-.537-.29-.133-.64-.2-1.04-.2-.74 0-1.37.23-1.89.684-.51.456-.8 1.04-.85 1.757h5.08zm2.476 1.135v.336c0 .12-.008.23-.02.34H67.99c.027.37.12.7.28 1 .157.3.366.56.628.78.26.22.557.39.887.52.33.13.674.19 1.032.19.618 0 1.14-.11 1.567-.34.426-.23.777-.55 1.052-.95l1.65 1.35c-.977 1.35-2.394 2.02-4.25 2.02-.77 0-1.48-.12-2.126-.37-.647-.24-1.207-.59-1.68-1.04-.476-.45-.847-1-1.115-1.65-.27-.65-.404-1.39-.404-2.22 0-.81.14-1.55.41-2.22.27-.66.64-1.23 1.1-1.7.47-.47 1.02-.83 1.66-1.09.64-.26 1.33-.39 2.08-.39.69 0 1.33.12 1.91.35.59.23 1.09.58 1.52 1.03.43.46.76 1.03 1 1.71.24.68.36 1.48.36 2.39zm8.34-2.382c-.204-.245-.48-.516-.866-.705-.385-.19-.777-.284-1.175-.284-.455 0-.854.094-1.197.284-.345.19-.63.438-.857.747-.23.31-.4.656-.51 1.04-.11.387-.17.777-.17 1.17 0 .392.05.78.17 1.166.11.39.29.74.52 1.05.23.31.52.56.87.75.57.31 1.27.35 1.9.2.55-.12 1.01-.41 1.4-.82l1.54 1.6c-.416.45-.94.8-1.58 1.04-.64.25-1.33.37-2.077.37-.73 0-1.42-.12-2.07-.36-.656-.24-1.227-.59-1.715-1.05-.48-.46-.87-1.02-1.15-1.68-.28-.66-.42-1.41-.42-2.25 0-.81.14-1.55.422-2.21.28-.66.66-1.22 1.146-1.68.48-.46 1.04-.82 1.68-1.07.64-.25 1.32-.38 2.05-.38.724 0 1.43.14 2.11.42.68.28 1.22.67 1.62 1.16l-1.69 1.52zm9.276 2.693h-.56c-.4 0-.82.018-1.26.053-.44.03-.845.11-1.216.23-.372.12-.68.28-.93.5-.246.21-.37.51-.37.89 0 .24.05.44.155.6.1.16.23.29.4.39.16.1.35.17.55.21.2.04.41.06.62.06.85 0 1.49-.23 1.93-.7.44-.47.66-1.1.66-1.9v-.36zm.04 3.324h-.062c-.247.45-.647.817-1.196 1.105-.55.286-1.177.43-1.878.43-.4 0-.815-.052-1.248-.158-.434-.104-.833-.28-1.197-.525-.37-.246-.67-.568-.91-.968s-.36-.894-.36-1.483c0-.75.21-1.36.63-1.8.42-.45.96-.79 1.62-1.03.66-.23 1.39-.39 2.19-.47.8-.07 1.59-.11 2.36-.11v-.25c0-.63-.23-1.1-.67-1.4-.45-.3-.98-.45-1.6-.45-.52 0-1.03.12-1.51.34-.48.23-.88.5-1.2.82L86.9 8.96c.563-.534 1.213-.934 1.95-1.2.734-.266 1.48-.4 2.24-.4.88 0 1.603.126 2.174.38.57.25 1.02.58 1.35.987.33.408.56.864.69 1.37.13.504.198 1.01.198 1.514v6.14H93.2v-1.28zm9.972-6.122c-.22-.295-.523-.55-.908-.768-.385-.218-.804-.326-1.258-.326-.4 0-.763.084-1.093.252-.33.168-.496.45-.496.842 0 .393.182.67.547.83.364.162.898.326 1.6.495.37.084.744.197 1.123.337.378.14.723.326 1.032.557.31.232.56.52.75.863.19.343.29.76.29 1.252 0 .617-.12 1.14-.34 1.567-.23.42-.53.77-.91 1.04-.38.26-.82.46-1.32.58-.5.11-1.02.17-1.56.17-.77 0-1.52-.15-2.25-.43-.73-.29-1.34-.7-1.82-1.23l1.63-1.56c.27.36.63.66 1.07.9.44.24.93.36 1.46.36.18 0 .36-.02.54-.07.18-.04.36-.11.51-.2.15-.09.28-.22.38-.37.09-.16.14-.35.14-.57 0-.42-.19-.72-.57-.91-.38-.18-.95-.37-1.71-.55-.37-.09-.73-.19-1.088-.33-.35-.14-.66-.31-.933-.53-.275-.22-.495-.49-.66-.81-.165-.33-.248-.72-.248-1.2 0-.56.11-1.05.34-1.45.222-.41.52-.74.893-1 .37-.26.79-.45 1.26-.58.47-.13.95-.19 1.444-.19.71 0 1.41.13 2.09.38.68.25 1.22.64 1.62 1.16l-1.61 1.45zm2.418-1.104v-2.02h1.733V4.29h2.435v2.925h2.476l-.43 2.02h-2.046v4.69c0 .45.08.82.237 1.116.158.3.512.45 1.063.45.165 0 .343-.02.536-.05.192-.03.364-.08.516-.15l.082 1.98c-.22.09-.48.15-.784.2-.303.05-.59.08-.866.08-.66 0-1.197-.09-1.61-.28-.412-.19-.74-.45-.98-.78-.24-.32-.406-.7-.494-1.13-.09-.43-.135-.89-.135-1.38V9.24h-1.733z" fill="#BBBBBB"/>
-            <path d="M114.496 16.443H114V16h1.488v.443h-.496V18h-.496v-1.557zM115.97 16h.514l.294.83.103.327h.02l.11-.326.28-.83h.52v2h-.46v-.59c0-.05 0-.1.01-.17l.02-.19.02-.18.02-.16h-.01l-.16.47-.26.68h-.18l-.26-.67-.15-.47h-.01l.02.17.02.19.02.19c0 .07.01.12.01.17V18H116v-2z" fill="#BBBBBB"/>
-          </g>
-        </svg>
-      </a>
-    </div>
+    <svg width="118" height="19" viewBox="0 0 118 19" xmlns="http://www.w3.org/2000/svg">
+      <title>Pinecast</title>
+      <g fill="none" fill-rule="evenodd">
+        <path d="M7.03 16.09h17.82c.74-2.053.78-4.298.1-6.39-.798-2.454-2.485-4.443-4.752-5.603-2.266-1.16-4.84-1.35-7.245-.535-4.967 1.68-7.668 7.167-6.02 12.233.032.1.065.197.1.295m23.595 2.452H6.245c-.425 0-.818-.23-1.034-.6l-.07-.122-.06-.127c-.16-.367-.3-.746-.43-1.126C2.59 10.217 5.97 3.34 12.2 1.234c3.016-1.02 6.242-.78 9.08.672 2.842 1.453 4.956 3.947 5.957 7.022.76 2.337.806 4.826.148 7.162h3.25c.664 0 1.2.55 1.2 1.226 0 .676-.536 1.226-1.2 1.226" fill="#dee1df"/>
+        <path d="M17.14 12.893c0 .677-.537 1.225-1.2 1.225-.665 0-1.203-.548-1.203-1.225 0-.678.538-1.226 1.202-1.226.66 0 1.2.548 1.2 1.226" fill="#dee1df"/>
+        <path d="M9.88 14.118c-.658 0-1.195-.54-1.2-1.215-.012-1.302.316-2.59.95-3.73.96-1.73 2.526-2.976 4.407-3.508 1.88-.53 3.852-.283 5.55.698.824.475 1.537 1.097 2.123 1.85.412.53.325 1.3-.195 1.72-.52.422-1.276.333-1.69-.197-.39-.503-.87-.92-1.423-1.24-1.14-.657-2.46-.824-3.724-.468-1.262.357-2.312 1.193-2.957 2.354-.42.764-.64 1.63-.63 2.5.01.677-.53 1.23-1.19 1.236h-.01zm-8.678 4.484C.54 18.602 0 18.052 0 17.376c0-.677.54-1.226 1.202-1.226h1.503c.663 0 1.202.55 1.202 1.226 0 .676-.54 1.226-1.202 1.226H1.202z" fill="#dee1df"/>
+      </g>
+    </svg>
     <small class="copyright">&copy; Pinecast, Inc. 2018</small>
   </div>
 </footer>
-
+</main>
 <script>
 (function() {
-  var atTop = true;
-  var header = document.querySelector('header');
-  var product = header.querySelector('[href="#product"]');
-  var pricing = header.querySelector('[href="#pricing"]');
-
-  var pricingBox = document.querySelector('.plans-pricing');
-
-  function cb() {
-    if (atTop && window.scrollY !== 0) {
-      atTop = false;
-      header.className = 'header-scrolling';
-    } else if (!atTop && window.scrollY === 0) {
-      atTop = true;
-      header.className = '';
-    }
-
-    var pricingBoxTop = pricingBox.getClientRects()[0].top;
-    if (pricingBoxTop - header.clientHeight < 0) {
-      pricing.parentNode.className = 'selected';
-      product.parentNode.className = '';
-    } else {
-      pricing.parentNode.className = '';
-      product.parentNode.className = 'selected';
+  // Sticky header
+  var stickyHeader = document.querySelector('#main-header');
+  var hero = document.querySelector('#hero');
+  var status = null;
+  function run() {
+    var newStatus = window.scrollY > hero.clientHeight;
+    if (newStatus !== status) {
+      status = newStatus;
+      stickyHeader.classList.toggle('is-scrolling', newStatus);
     }
   }
+  window.addEventListener('scroll', run, {passive: true});
+  window.addEventListener('DOMContentLoaded', run);
 
-  window.addEventListener('scroll', cb);
-  window.addEventListener('hashchange', cb);
-}());
+  const walkthroughWrapper = document.querySelector('.walkthrough');
+  const featureListWrapper = document.querySelector('.feature-list-wrapper');
+  function selectWalkthroughOption(option) {
+    walkthroughWrapper.setAttribute('data-selected', option);
+  }
+  function selectFeatureOption(option) {
+    featureListWrapper.setAttribute('data-selected-feature', option);
+  }
+  document.body.addEventListener(
+    'click',
+    function(e) {
+      if (e.target.getAttribute('data-option') && e.target.nodeName === 'A') {
+        e.preventDefault();
+        selectWalkthroughOption(e.target.getAttribute('data-option'));
+        return;
+      }
+      if (e.target.getAttribute('data-selected-feature') && e.target.nodeName === 'BUTTON') {
+        e.preventDefault();
+        selectFeatureOption(e.target.getAttribute('data-selected-feature'));
+        return;
+      }
+    },
+    {capture: true},
+  );
+})();
 </script>
 <script>
   window.intercomSettings = {app_id: 'l9af3q58'};
