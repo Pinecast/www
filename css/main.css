@@ -922,7 +922,7 @@ a {
 }
 .feature-list--feature .feature-list--screenshot {
   border-radius: 4px;
-  height: 240px;
+  height: 230px;
   margin-bottom: 20px;
   max-width: calc(100vw - 24px);
   overflow: hidden;
