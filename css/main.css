@@ -1034,7 +1034,7 @@ a {
 }
 .customer-quotes .customer-quotes--quotes {
   display: flex;
-  height: 400px;
+  height: 300px;
   margin-top: 32px;
   max-width: 800px;
   padding: 32px 0 0;
