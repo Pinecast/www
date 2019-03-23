@@ -441,6 +441,10 @@ a {
   padding: 140px 0;
   position: relative;
   text-align: center;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
   z-index: 1;
 }
 .supports-wrapper p {
@@ -458,10 +462,6 @@ a {
   position: absolute;
   transform: scale(1);
   transition: filter 0.25s, transform 0.3s;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
   width: 80px;
   will-change: filter, transform;
 }
