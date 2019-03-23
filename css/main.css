@@ -458,6 +458,10 @@ a {
   position: absolute;
   transform: scale(1);
   transition: filter 0.25s, transform 0.3s;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
   width: 80px;
   will-change: filter, transform;
 }
