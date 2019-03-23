@@ -324,9 +324,6 @@ document.body.addEventListener(
 
 let scrollDebounce = null;
 function updateScroll() {
-  if (document.body.clientWidth < 800) {
-    return;
-  }
   if (scrollDebounce) {
     clearTimeout(scrollDebounce);
     scrollDebounce = null;

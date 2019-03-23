@@ -829,11 +829,14 @@ a {
 }
 
 .let-us-help-you-grow {
-  padding-bottom: 24px;
+  background-color: #f6f7f5;
+  margin-top: 64px;
+  padding-bottom: 16px;
+  padding-top: 40px;
 }
 
 .feature-list--wrapper {
-  padding: 20px 0 4px;
+  padding: 0 0 4px;
   background-color: #f6f7f5;
   background-image: url(/img/slants_dark.svg);
   background-position: left 100%;
