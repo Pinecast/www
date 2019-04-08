@@ -479,12 +479,11 @@ a {
   justify-content: center;
   position: absolute;
   transform: scale(1);
-  transition: filter 0.25s, transform 0.3s;
+  transition: transform 0.3s;
   width: 80px;
-  will-change: filter, transform;
+  will-change: transform;
 }
 .supports--service:hover {
-  filter: drop-shadow(0 4px 9px rgba(0, 0, 0, 0.1)) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
   transform: scale(1.05);
   z-index: 2;
 }
@@ -531,6 +530,10 @@ a {
   opacity: 1;
 }
 @media (min-width: 800px) {
+  .supports--service {
+    transition: filter 0.25s, transform 0.3s;
+    will-change: filter, transform;
+  }
   .supports--service:hover {
     filter: drop-shadow(0 4px 9px rgba(0, 0, 0, 0.1)) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
   }
