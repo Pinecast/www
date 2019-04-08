@@ -125,7 +125,7 @@
     </div>
   </div>
 </header>
-<section id="hero">
+<section id="hero" class="intersectable is-intersecting">
   <div>
     <h2>Podcasting shouldn't have to be hard.</h2>
     <p>Pinecast is premium podcast hosting<br>that won't waste your time.</p>
@@ -360,7 +360,7 @@ featureList.addEventListener('focusin', e => {
 });
 </script>
 
-<section class="customer-quotes centered-section">
+<section class="customer-quotes centered-section intersectable is-intersecting">
   <div>
     <svg width="23" height="24" xmlns="http://www.w3.org/2000/svg">
       <g stroke="#58595B" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
@@ -458,7 +458,7 @@ featureList.addEventListener('focusin', e => {
   setTimeout(showNext, getQuoteDuration(quotes.firstElementChild));
 </script>
 
-<section class="supports">
+<section class="supports intersectable is-intersecting">
   <div class="supports-wrapper">
     <p>Pinecast works with all<br style="display: none"> podcasting apps and directories.</p>
     <div class="supports--service supports--service--apple-podcasts" data-name="Apple Podcasts">
@@ -625,11 +625,16 @@ featureList.addEventListener('focusin', e => {
   const aAmountHalf = aAmount / 2;
   const vAmount = 2;
 
+  const root = document.querySelector('.supports');
   const services = Array.from(
     document.querySelectorAll('.supports--service svg')
   ).map(el => ({el, x: 0, y: 0, a: Math.random() * 2 * Math.PI}));
 
   function moveServices() {
+    if (!root.classList.contains('is-intersecting')) {
+      setTimeout(moveServices, 250);
+      return;
+    }
     for (let i = 0; i < services.length; i++) {
       const service = services[i];
       service.a += Math.random() * aAmount - aAmountHalf;
@@ -765,6 +770,22 @@ featureList.addEventListener('focusin', e => {
   }
   window.addEventListener('scroll', run, {passive: true});
   window.addEventListener('DOMContentLoaded', run);
+
+  // Intersectables
+  if (typeof IntersectionObserver !== 'undefined') {
+    var intersectables = document.querySelectorAll('.intersectable');
+    var observer = new IntersectionObserver(
+      function(entries) {
+        entries.forEach(function(e) {
+          e.target.classList.toggle('is-intersecting', e.isIntersecting);
+        });
+      },
+      {threshold: 0},
+    );
+    Array.prototype.slice.call(intersectables).forEach(function(i) {
+      observer.observe(i);
+    });
+  }
 })();
 </script>
 <script>
