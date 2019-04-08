@@ -374,8 +374,9 @@ featureList.addEventListener('focusin', e => {
       These are some actual quotes from our customers.
     </p>
   </div>
+  <div class="customer-quotes--bg"><svg></svg></div>
   <div class="customer-quotes--quotes">
-    <blockquote class="customer-quotes--quote is-active">
+    <blockquote class="customer-quotes--quote is-active" data-color="#E8C7E4">
       <div class="customer-quotes--quote--inner">
         Super easy interface, great support, amazing value.
       </div>
@@ -384,7 +385,7 @@ featureList.addEventListener('focusin', e => {
         Customer since Jun 2017
       </div>
     </blockquote>
-    <blockquote class="customer-quotes--quote">
+    <blockquote class="customer-quotes--quote" data-color="#fce38a">
       <div class="customer-quotes--quote--inner">
         Switching to Pinecast was the best decision I've made for my podcasts … I can't recommend it enough.
       </div>
@@ -393,7 +394,7 @@ featureList.addEventListener('focusin', e => {
         Customer since Mar 2018
       </div>
     </blockquote>
-    <blockquote class="customer-quotes--quote">
+    <blockquote class="customer-quotes--quote" data-color="#d8e9f1">
       <div class="customer-quotes--quote--inner">
         Pinecast has been a wonderful tool that has allowed me to focus on the content of my podcast.
       </div>
@@ -402,7 +403,7 @@ featureList.addEventListener('focusin', e => {
         Customer since Dec 2017
       </div>
     </blockquote>
-    <blockquote class="customer-quotes--quote">
+    <blockquote class="customer-quotes--quote" data-color="#b1f1b2">
       <div class="customer-quotes--quote--inner">
         This is the perfect place to host your podcast, especially if you are just starting out.
       </div>
@@ -411,7 +412,7 @@ featureList.addEventListener('focusin', e => {
         Customer since Feb 2018
       </div>
     </blockquote>
-    <blockquote class="customer-quotes--quote">
+    <blockquote class="customer-quotes--quote" data-color="#ffe98a">
       <div class="customer-quotes--quote--inner">
         I needed Pinecast customer service help at roughly 2:30 AM on a Sunday AM. Got the help I needed … Pinecast is amazing.
       </div>
@@ -420,7 +421,7 @@ featureList.addEventListener('focusin', e => {
         Customer since Feb 2018
       </div>
     </blockquote>
-    <blockquote class="customer-quotes--quote">
+    <blockquote class="customer-quotes--quote" data-color="#B3D0FC">
       <div class="customer-quotes--quote--inner">
         It lets us run a high quality show without feeling like our creativity is limited by our file host.
       </div>
@@ -432,9 +433,10 @@ featureList.addEventListener('focusin', e => {
   </div>
 </section>
 <script>
-  const quotes = document.querySelector('.customer-quotes--quotes');
-  function getQuoteDuration(quoteEl) {
-    const len = quoteEl.innerHTML.length;
+  const quotes = document.querySelectorAll('.customer-quotes .customer-quotes--quote');
+  let activeQuote = 0;
+  function getQuoteDuration() {
+    const len = quotes[activeQuote].innerHTML.length;
     switch (true) {
       case len < 50:
         return 3000;
@@ -449,13 +451,54 @@ featureList.addEventListener('focusin', e => {
     }
   }
   function showNext() {
-    const current = quotes.querySelector('.is-active')
-    current.classList.remove('is-active');
-    const next = current.nextElementSibling || quotes.firstElementChild;
+    quotes[activeQuote].classList.remove('is-active');
+    activeQuote += 1;
+    if (activeQuote === quotes.length) {
+      activeQuote = 0;
+    }
+    const next = quotes[activeQuote];
     next.classList.add('is-active');
-    setTimeout(showNext, getQuoteDuration(next));
+    setTimeout(showNext, getQuoteDuration());
+    const lines = document.querySelectorAll('.customer-quotes--bg svg line');
+    Array.from(lines).forEach(line => {
+      line.style.stroke = next.getAttribute('data-color');
+    });
   }
-  setTimeout(showNext, getQuoteDuration(quotes.firstElementChild));
+  setTimeout(showNext, getQuoteDuration());
+
+  (function() {
+    const bg = document.querySelector('.customer-quotes--bg svg');
+    let previousLength = 0.5;
+    const HEIGHT = 350;
+    const HEIGHT_2 = HEIGHT / 2;
+    const WIDTH = 300;
+    for (let i = 0; i < 1050; i += 12) {
+      const deviation = Math.random() * 0.2 - 0.1;
+      let width = previousLength + deviation;
+      if (width > 0.8) {
+        width *= 0.9;
+      } else if (width < 0.2) {
+        width *= 1.1;
+      }
+      previousWidth = width;
+      make(i + 1050, width * WIDTH, i / 12, bg);
+      make(1050 - i, width * WIDTH, i / 12, bg);
+    }
+
+    function make(offset, width, i, bg) {
+      const p = document.createElementNS("http://www.w3.org/2000/svg", 'line');
+      bg.appendChild(p);
+      p.setAttribute('stroke', quotes[0].getAttribute('data-color'));
+      p.setAttribute('stroke-width', '2');
+      p.setAttribute('x1', offset);
+      p.setAttribute('x2', offset);
+      p.setAttribute('y1', HEIGHT_2 - width / 2);
+      p.setAttribute('y2', HEIGHT_2 + width / 2);
+      p.style.transform = 'skew(-12deg)';
+      p.style.transition = `stroke 0.1s`;
+      p.style.transitionDelay = `${(i / 1000) * 7}s`;
+    }
+  }())
 </script>
 
 <section class="supports intersectable is-intersecting">

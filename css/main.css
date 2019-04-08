@@ -1002,27 +1002,51 @@ a {
 
 .customer-quotes {
   overflow: hidden;
-  padding-bottom: 120px;
+  padding-bottom: 80px;
 }
 .customer-quotes .customer-quotes--quotes {
   display: flex;
   height: 300px;
-  margin-top: 32px;
+  margin-top: 64px;
   max-width: 800px;
   padding: 32px 0 0;
   position: relative;
 }
+.centered-section .customer-quotes--bg {
+  height: 100%;
+  left: 0;
+  max-width: none;
+  opacity: 0.5;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  z-index: 2;
+}
+.customer-quotes--bg svg {
+  height: 100%;
+  left: calc(50% - 1050px);
+  position: absolute;
+  width: 2100px;
+}
+@media (max-width: 550px) {
+  .centered-section .customer-quotes--bg {
+    display: none;
+  }
+}
+
 .customer-quotes--quote {
   align-items: flex-start;
   bottom: 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   left: 0;
   margin: 0;
   max-width: 450px;
   position: absolute;
   top: 0;
   transform: scale(1) translate(0, 0);
+  z-index: 3;
 }
 .is-intersecting .customer-quotes--quote {
   transition: opacity 0.2s, transform 0.5s;
@@ -1057,12 +1081,6 @@ a {
 .customer-quotes--quote:nth-child(2n):not(.is-active) {
   transform: scale(0.875) translate(40px, 0);
   transform-origin: right center;
-}
-.customer-quotes--quote:nth-child(2n) {
-  justify-content: center;
-}
-.customer-quotes--quote:nth-child(3n) {
-  justify-content: flex-end;
 }
 .customer-quotes--quote--attribution {
   font-size: 16px;
