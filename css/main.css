@@ -483,7 +483,7 @@ a {
   width: 80px;
   will-change: filter, transform;
 }
-.is-intersecting .supports--service:hover {
+.supports--service:hover {
   filter: drop-shadow(0 4px 9px rgba(0, 0, 0, 0.1)) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
   transform: scale(1.05);
   z-index: 2;
@@ -494,9 +494,6 @@ a {
   position: absolute;
   transition: transform 0.75s;
   z-index: 2;
-}
-.is-intersecting .supports--service svg {
-  transition: transform 0.75s;
 }
 .supports--service:hover svg {
   transform: translate(0, 0) !important;
@@ -511,7 +508,7 @@ a {
   right: -12px;
   top: -12px;
 }*/
-.is-intersecting .supports--service:after {
+.supports--service:after {
   background: #fff;
   border-radius: 4px;
   bottom: calc(-100% - 10px);
@@ -529,7 +526,7 @@ a {
   transition: bottom 0.2s, opacity 0.2s;
   z-index: 3;
 }
-.is-intersecting .supports--service:hover:after {
+.supports--service:hover:after {
   bottom: calc(-100% - 12px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 3px 7px rgba(0, 0, 0, 0.0125);
   opacity: 1;

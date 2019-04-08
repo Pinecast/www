@@ -621,7 +621,8 @@ featureList.addEventListener('focusin', e => {
   </div>
 </section>
 <script>
-  const aAmount = Math.PI * 2 * 0.4;
+  const factor = 0.02;
+  const aAmount = Math.PI * 2 * factor;
   const aAmountHalf = aAmount / 2;
   const vAmount = 2;
 
@@ -645,11 +646,11 @@ featureList.addEventListener('focusin', e => {
         service.x *= 0.9;
         service.y *= 0.9;
       }
-      service.el.style.transform = `translate(${service.x}px, ${service.y}px)`;
+      service.el.style.transform = `translate(${service.x.toFixed(1)}px, ${service.y.toFixed(1)}px)`;
     }
-    setTimeout(moveServices, 250);
+    requestAnimationFrame(moveServices);
   }
-  setTimeout(moveServices, 250);
+  requestAnimationFrame(moveServices);
 </script>
 
 <section class="plans-pricing centered-section" id="pricing">
