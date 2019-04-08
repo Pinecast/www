@@ -1019,7 +1019,7 @@ a {
   max-width: 450px;
   position: absolute;
   top: 0;
-  transform: scale(1);
+  transform: scale(1) translate(0, 0);
 }
 .is-intersecting .customer-quotes--quote {
   transition: left 0.2s, opacity 0.2s, right 0.2s, transform 0.5s;
@@ -1042,9 +1042,8 @@ a {
   top: 32px;
 }
 .customer-quotes--quote:not(.is-active) {
-  left: -40px;
   opacity: 0;
-  transform: scale(0.875);
+  transform: scale(0.875) translate(-40px, 0);
   transform-origin: left center;
 }
 .customer-quotes--quote:nth-child(2n) {
@@ -1053,8 +1052,7 @@ a {
   text-align: right;
 }
 .customer-quotes--quote:nth-child(2n):not(.is-active) {
-  left: auto;
-  right: -40px;
+  transform: scale(0.875) translate(40px, 0);
   transform-origin: right center;
 }
 .customer-quotes--quote:nth-child(2n) {
