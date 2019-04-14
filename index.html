@@ -229,137 +229,63 @@
       Our paid plans give you the tools to take your podcast to the next level.
     </p>
   </div>
-</section>
-<div class="feature-list--wrapper">
-  <div class="feature-list--inner-wrapper is-at-start">
-    <div class="feature-list">
-      <div class="feature-list--spacer"></div>
-      <button class="feature-list--feature" data-selected-feature="import-tool" data-selected>
-        <div class="feature-list--screenshot">
-          <img src="/img/screenshots/import-tool.jpg" alt="Screenshot of Pinecast's import tool" width="400" height="230">
-        </div>
-        <strong>Move your existing show to Pinecast</strong>
-        <p class="feature-example--explanation">
-          With just your show's previous RSS feed URL, we'll copy your content to
-          Pinecast in just about a minute.
-        </p>
-      </button>
-      <button class="feature-list--feature" data-selected-feature="analytics">
-        <div class="feature-list--screenshot">
-          <img src="/img/screenshots/analytics.jpg" alt="Screenshot of a chart on a podcast dashboard" width="400" height="230">
-        </div>
-        <strong>Track growth with world-class analytics</strong>
-        <p class="feature-example--explanation">
-          IAB-compliant analytics with simple charts and clean controls. Routine audits guarantee the highest possible accuracy.
-        </p>
-      </button>
-      <button class="feature-list--feature" data-selected-feature="embed-player">
-        <div class="feature-list--screenshot">
-          <img src="/img/screenshots/embed-player.jpg" alt="Screenshot of Pinecast's embeddable player" width="400" height="230">
-        </div>
-        <strong>Embed your audio on your own site</strong>
-        <p class="feature-example--explanation">
-          Make your episode audio available on any website that allows free-form HTML code.
-        </p>
-      </button>
-      <button class="feature-list--feature" data-selected-feature="website">
-        <div class="feature-list--screenshot">
-          <img src="/img/screenshots/website.jpg" alt="Screenshot of Pinecast's Site Builder tool" width="400" height="230">
-        </div>
-        <strong>Give your podcast a unique website</strong>
-        <p class="feature-example--explanation">
-          Opt-in to a homepage for your podcast. Preview design changes in real-time with our unique Site Builder.
-        </p>
-      </button>
-      <button class="feature-list--feature" data-selected-feature="tip-jar">
-        <div class="feature-list--screenshot">
-          <img src="/img/screenshots/tip-jar.jpg" alt="Screenshot of the Pinecast Tip Jar donation page" width="400" height="230">
-        </div>
-        <strong>Accept donations with no commission</strong>
-        <p class="feature-example--explanation">
-          Accept tips up to $20 with our Starter plan, with no added fees.
-        </p>
-      </button>
-      <div class="feature-list--spacer"></div>
+  <div class="feature--item">
+    <figure>
+      <img src="/img/screenshots/analytics.jpg" alt="A screenshot of Pinecast's listen analytics breakdown" width="400" height="230">
+    </figure>
+    <div class="feature--item--description">
+      <h3>World-class analytics</h3>
+      <p>
+        Pinecast provides IAB-compliant analytics with simple charts and clean controls. Routine audits guarantee the highest possible accuracy for both listen and subscriber data.
+      </p>
+      <ul class="feature--item--detail-list">
+        <li>Listen history</li>
+        <li>Subscriber counts</li>
+        <li>Listens by app</li>
+        <li>CSV export</li>
+        <li>Near-realtime</li>
+        <li>Spotify listens</li>
+      </ul>
+      <p>
+        <a href="https://help.pinecast.com/knowledge-base/features/analytics">Learn more about Pinecast analytics</a>
+      </p>
     </div>
   </div>
-</div>
-<script>
-const featureListWrapper = document.querySelector('.feature-list--wrapper');
-const featureList = document.querySelector('.feature-list');
-const features = Array.from(featureList.querySelectorAll('.feature-list--feature'));
-function selectIndex(idx, width) {
-  const prevSelectedIdx = features.findIndex(x => x.hasAttribute('data-selected'))
-  if (prevSelectedIdx === idx) {
-    return;
-  }
-  const prevSelected = features[prevSelectedIdx].removeAttribute('data-selected');
-  features[idx].setAttribute('data-selected', '');
-}
-function selectFeatureOption(option) {
-  featureListWrapper.setAttribute('data-selected-feature', option);
-  const selectedItem = featureListWrapper.querySelector(`[data-selected-feature=${option}]`);
-  if (!selectedItem) {
-    return;
-  }
-  selectedItem.setAttribute('data-selected', '');
-  const width = selectedItem.clientWidth;
-  const idx = features.findIndex(x => x === selectedItem);
-  selectIndex(idx, width);
-  features[idx].focus();
-}
-document.body.addEventListener(
-  'click',
-  function(e) {
-    const elem = e.target.classList.contains('feature-list--feature')
-      ? e.target
-      : e.target.closest('.feature-list--feature');
-    if (elem) {
-      e.preventDefault();
-      selectFeatureOption(elem.getAttribute('data-selected-feature'));
-      return;
-    }
-  },
-  {capture: true},
-);
-
-let scrollDebounce = null;
-function updateScroll() {
-  if (scrollDebounce) {
-    clearTimeout(scrollDebounce);
-    scrollDebounce = null;
-  }
-  scrollDebounce = setTimeout(function() {
-    const windowWidth = document.body.clientWidth;
-    const width = Math.min(windowWidth - 24, 400);
-    const estIdx = Math.round(featureList.scrollLeft / (width + 48));
-    selectIndex(estIdx, width);
-  }, 250);
-}
-featureList.addEventListener('scroll', e => {
-  const target = e.target;
-  const atEnd = target.scrollWidth - target.scrollLeft - target.clientWidth < 40;
-  target.parentNode.classList.toggle('is-at-start', target.scrollLeft < 40);
-  target.parentNode.classList.toggle('is-at-end', atEnd);
-
-  updateScroll();
-});
-featureList.addEventListener('focusin', e => {
-  const target = e.target;
-  if (!target.hasAttribute('data-selected-feature')) {
-    return;
-  }
-  const idx = features.findIndex(x => x === target);
-  const width = target.clientWidth;
-  selectIndex(idx, width);
-  featureList.scrollTo({
-    left: idx * (width + 48),
-    top: 0,
-    behavior: 'smooth',
-  });
-});
-</script>
-
+  <div class="feature--item">
+    <figure>
+      <img src="/img/screenshots/import-tool.jpg" alt="A screenshot of Pinecast's import tool confirming podcast details" width="400" height="230">
+    </figure>
+    <div class="feature--item--description">
+      <h3>Move your existing show to Pinecast</h3>
+      <p>
+        With just your show's previous RSS feed or iTunes URL, we'll copy your content to Pinecast. The whole process takes just a couple minutes.
+      </p>
+      <p>
+        After importing, we'll send instructions for a feed redirect, which will automatically move your subscribers and directory listings to Pinecast.
+      </p>
+    </div>
+  </div>
+  <div class="other-features">
+    <div class="other-feature">
+      <h3>Embeddable players</h3>
+      <p>Embed your episodes anywhere you can use HTML. Three themes included.</p>
+      <p><a href="https://help.pinecast.com/faqs/embeddable-player-widget/what-does-the-embed-widget-look-like">See the players</a></p>
+    </div>
+    <div class="other-feature">
+      <h3>Tip Jar</h3>
+      <p>Accept one-time or recurring donations, with no convenience fee.</p>
+      <p><a href="https://help.pinecast.com/knowledge-base/features/tip-jar">Read about the tip jar</a></p>
+    </div>
+    <div class="other-feature">
+      <h3>Podcast website</h3>
+      <p>Add a website to your show: auto-updated, responsive, SEO-optimized, and customizable with our site builder tool.</p>
+    </div>
+    <div class="other-feature">
+      <h3>Social-optimized audiograms</h3>
+      <p>Boost your social media posts with our <a href="https://www.headliner.app/" target="_blank" rel="noopener">Headliner</a> integration. Create beautiful, shareable videos for just $1 each.</p>
+    </div>
+  </div>
+</section>
 <section class="customer-quotes centered-section intersectable is-intersecting">
   <div>
     <svg width="23" height="24" xmlns="http://www.w3.org/2000/svg">
@@ -664,7 +590,7 @@ featureList.addEventListener('focusin', e => {
   </div>
 </section>
 <script>
-  const factor = 0.02;
+  const factor = 0.03;
   const aAmount = Math.PI * 2 * factor;
   const aAmountHalf = aAmount / 2;
   const vAmount = 2;
