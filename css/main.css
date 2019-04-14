@@ -227,9 +227,9 @@ a {
 }
 .hero-phones .main .cover-art {
   background: #222 url(/img/covers.jpg) no-repeat;
-  background-size: 1000px 200px;
+  background-size: 1200px 200px;
   border-radius: 5px;
-  box-shadow: 0 7px 50px 0 rgba(72, 156, 234, 0.3), 0 20px 40px 0 rgba(72, 156, 234, 0.2);
+  box-shadow: 0 7px 50px 0 rgba(74, 96, 32, 0.3), 0 20px 40px 0 rgba(74, 96, 32, 0.2);
   height: 200px;
   margin: auto;
   position: absolute;
@@ -240,7 +240,7 @@ a {
 }
 .is-intersecting .hero-phones .main .cover-art {
   animation-delay: -50ms;
-  animation-duration: 10s;
+  animation-duration: 12s;
   animation-iteration-count: infinite;
   animation-name: phone-podcast-ca-glow;
 }
@@ -265,89 +265,104 @@ a {
   right: 0;
   text-align: center;
   top: 340px;
+  transform: translateY(0);
 }
 .hero-phones .main .descriptions {
   color: #9013fe;
   font-weight: 400;
   top: 364px;
 }
-.is-intersecting .hero-phones .main .names :first-child {
-  animation-duration: 10s;
+.is-intersecting .hero-phones .main .names > li {
+  animation-duration: 12s;
   animation-iteration-count: infinite;
   animation-name: phone-podcast-namedesc;
 }
-.is-intersecting .hero-phones .main .descriptions :first-child {
+.is-intersecting .hero-phones .main .descriptions > li {
   animation-delay: 85ms;
-  animation-duration: 10s;
+  animation-duration: 12s;
   animation-iteration-count: infinite;
   animation-name: phone-podcast-namedesc;
 }
 
 @keyframes phone-podcast-namedesc {
   0% {
-    margin-top: 0;
+    transform: translateY(0);
   }
-  22% {
-    margin-top: 0;
+  17% {
+    transform: translateY(0);
   }
-  25% {
-    margin-top: -24px;
+  20% {
+    transform: translateY(-24px);
   }
-  47% {
-    margin-top: -24px;
+  37% {
+    transform: translateY(-24px);
   }
-  50% {
-    margin-top: -48px;
+  40% {
+    transform: translateY(-48px);
   }
-  72% {
-    margin-top: -48px;
+  57% {
+    transform: translateY(-48px);
   }
-  75% {
-    margin-top: -72px;
+  60% {
+    transform: translateY(-72px);
+  }
+  77% {
+    transform: translateY(-72px);
+  }
+  80% {
+    transform: translateY(-96px);
   }
   97% {
-    margin-top: -72px;
+    transform: translateY(-96px);
   }
   100% {
-    margin-top: -96px;
+    transform: translateY(-120px);
   }
 }
 @keyframes phone-podcast-ca-glow {
   0% {
     background-position: 0 0;
-    box-shadow: 0 7px 50px 0 rgba(72, 156, 234, 0.3), 0 20px 40px 0 rgba(72, 156, 234, 0.2);
+    box-shadow: 0 7px 50px 0 rgba(74, 96, 32, 0.3), 0 20px 40px 0 rgba(74, 96, 32, 0.2);
+  }
+  15% {
+    background-position: 0 0;
+    box-shadow: 0 7px 50px 0 rgba(74, 96, 32, 0.3), 0 20px 40px 0 rgba(74, 96, 32, 0.2);
   }
   20% {
-    background-position: 0 0;
-    box-shadow: 0 7px 50px 0 rgba(72, 156, 234, 0.3), 0 20px 40px 0 rgba(72, 156, 234, 0.2);
-  }
-  25% {
     background-position: -200px 0;
-    box-shadow: 0 7px 50px 0 rgba(188, 199, 62, 0.3), 0 20px 40px 0 rgba(188, 199, 62, 0.2);
+    box-shadow: 0 7px 50px 0 rgba(0, 167, 59, 0.3), 0 20px 40px 0 rgba(0, 167, 59, 0.2);
   }
-  45% {
+  35% {
     background-position: -200px 0;
-    box-shadow: 0 7px 50px 0 rgba(188, 199, 62, 0.3), 0 20px 40px 0 rgba(188, 199, 62, 0.2);
+    box-shadow: 0 7px 50px 0 rgba(0, 167, 59, 0.3), 0 20px 40px 0 rgba(0, 167, 59, 0.2);
   }
-  50% {
+  40% {
     background-position: -400px 0;
-    box-shadow: 0 7px 50px 0 rgba(217, 27, 40, 0.3), 0 20px 40px 0 rgba(217, 27, 40, 0.2);
+    box-shadow: 0 7px 50px 0 rgba(0, 83, 147, 0.3), 0 20px 40px 0 rgba(0, 83, 147, 0.2);
   }
-  70% {
+  55% {
     background-position: -400px 0;
-    box-shadow: 0 7px 50px 0 rgba(217, 27, 40, 0.3), 0 20px 40px 0 rgba(217, 27, 40, 0.2);
+    box-shadow: 0 7px 50px 0 rgba(0, 83, 147, 0.3), 0 20px 40px 0 rgba(0, 83, 147, 0.2);
+  }
+  60% {
+    background-position: -600px 0;
+    box-shadow: 0 7px 50px 0 rgba(199, 113, 75, 0.3), 0 20px 40px 0 rgba(199, 113, 75, 0.2);
   }
   75% {
     background-position: -600px 0;
-    box-shadow: 0 7px 50px 0 rgba(241, 224, 152, 0.3), 0 20px 40px 0 rgba(241, 224, 152, 0.2);
+    box-shadow: 0 7px 50px 0 rgba(199, 113, 75, 0.3), 0 20px 40px 0 rgba(199, 113, 75, 0.2);
+  }
+  80% {
+    background-position: -800px 0;
+    box-shadow: 0 7px 50px 0 rgba(114, 4, 189, 0.3), 0 20px 40px 0 rgba(114, 4, 189, 0.2);
   }
   95% {
-    background-position: -600px 0;
-    box-shadow: 0 7px 50px 0 rgba(241, 224, 152, 0.3), 0 20px 40px 0 rgba(241, 224, 152, 0.2);
+    background-position: -800px 0;
+    box-shadow: 0 7px 50px 0 rgba(114, 4, 189, 0.3), 0 20px 40px 0 rgba(114, 4, 189, 0.2);
   }
   100% {
-    background-position: -800px 0;
-    box-shadow: 0 7px 50px 0 rgba(72, 156, 234, 0.3), 0 20px 40px 0 rgba(72, 156, 234, 0.2);
+    background-position: -1000px 0;
+    box-shadow: 0 7px 50px 0 rgba(74, 96, 32, 0.3), 0 20px 40px 0 rgba(74, 96, 32, 0.2);
   }
 }
 
