@@ -1003,9 +1003,12 @@ a {
 .other-feature h3 {
   font-size: 16px;
   font-weight: 500;
-  margin-bottom: 12px;
+  margin-top: 0;
+  margin-bottom: 16px;
 }
 .other-feature p {
+  font-size: 14px;
+  line-height: 1.75em;
   margin: 0 0 12px;
 }
 
@@ -1014,9 +1017,12 @@ a {
     padding-bottom: 0;
     padding-left: 24px;
     padding-right: 24px;
+    padding-top: 40px;
   }
   .other-feature {
+    margin-bottom: 24px;
     padding-right: 0;
+    transform: translateX(0);
   }
 }
 
@@ -1206,15 +1212,27 @@ a {
   font-size: 32px;
   margin-bottom: 8px;
 }
-.plan-pro .plan--price {
-  margin-top: -4px;
-}
 .plan--price sub,
 .plan--price span {
   font-weight: 400;
 }
 .plan--price sub {
+  vertical-align: baseline;
   font-size: 20px;
+  margin-left: 12px;
+  position: relative;
+  bottom: -6px;
+}
+.plan--price sub::before {
+  background: currentColor;
+  bottom: 6px;
+  content: "";
+  display: block;
+  height: 16px;
+  left: -6px;
+  position: absolute;
+  transform: rotate(30deg);
+  width: 1px;
 }
 .plan--features {
   list-style: none;
@@ -1251,8 +1269,9 @@ a {
   list-style: none;
 }
 .plan--learn-more {
-  display: block;
+  display: inline-block;
   text-align: center;
+  align-self: center;
 }
 .plan--sign-up {
   margin: 20px auto 0;
@@ -1299,33 +1318,6 @@ a {
   margin: 0;
   position: relative;
 }
-.plan-addon > a::after {
-  background: currentColor;
-  display: block;
-  content: "";
-  height: 2px;
-  width: 10px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: -16px;
-  margin: auto 0;
-}
-.plan-addon > a::before {
-  border: 2px solid currentColor;
-  border-left: 0;
-  border-bottom: 0;
-  transform: rotate(45deg);
-  display: block;
-  content: "";
-  height: 8px;
-  width: 8px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: -16px;
-  margin: auto 0;
-}
 .plan-addon .price {
   font-size: 18px;
   margin-bottom: 12px;
@@ -1340,6 +1332,7 @@ a {
   content: "";
   left: 0;
   opacity: 0.75;
+  pointer-events: none;
   position: absolute;
   right: 0;
   top: 0;
@@ -1465,6 +1458,37 @@ footer > div {
   max-width: 1024px;
   text-align: center;
   padding: 20px 0;
+}
+
+.has-arrow {
+  position: relative;
+}
+.has-arrow::after {
+  background: currentColor;
+  display: block;
+  content: "";
+  height: 2px;
+  width: 10px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -16px;
+  margin: auto 0;
+}
+.has-arrow::before {
+  border: 2px solid currentColor;
+  border-left: 0;
+  border-bottom: 0;
+  transform: rotate(45deg);
+  display: block;
+  content: "";
+  height: 8px;
+  width: 8px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -16px;
+  margin: auto 0;
 }
 
 @media (max-width: 850px) {
