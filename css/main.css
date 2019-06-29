@@ -585,12 +585,12 @@ a {
 }
 .supports--service--breaker {
   height: 60px;
-  left: 70%;
+  left: 60%;
   top: 70%;
   width: 60px;
 }
 .supports--service--castbox {
-  bottom: 15%;
+  bottom: 13%;
   height: 65px;
   right: 5%;
   width: 65px;
@@ -655,7 +655,7 @@ a {
 }
 .supports--service--tunein {
   height: 33px;
-  left: 79%;
+  left: 74%;
   top: 68%;
   width: 75px;
 }
