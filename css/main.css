@@ -1279,10 +1279,9 @@ a {
   display: flex;
   flex-direction: column;
   font-size: 14px;
-  font-weight: 500;
   margin-bottom: 8px;
   margin-left: 8px;
-  padding: 24px 16px;
+  padding: 16px;
   position: relative;
 }
 .plan-addon h3 {
@@ -1292,6 +1291,7 @@ a {
 }
 .plan-addon > a {
   display: inline-block;
+  font-weight: 400;
   margin: 0 0 4px;
 }
 
@@ -1306,16 +1306,16 @@ a {
   top: 0;
 }
 .plan-addon--analytics::after {
-  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.15), inset 0 0 0 4px #f2c4ec;
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.25), inset 0 0 0 4px #f2c4ec;
 }
 .plan-addon--crew::after {
-  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.15), inset 0 0 0 4px #d8e9f1;
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.25), inset 0 0 0 4px #d8e9f1;
 }
 .plan-addon--grow::after {
-  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.15), inset 0 0 0 4px #ffe98a;
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.25), inset 0 0 0 4px #ffe98a;
 }
 .plan-addon--hifi::after {
-  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.15), inset 0 0 0 4px #999;
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.25), inset 0 0 0 4px #999;
 }
 
 
