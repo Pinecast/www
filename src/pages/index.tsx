@@ -1,3 +1,4 @@
+import {Footer} from '@/components/Footer';
 import {Hero} from '@/components/Hero';
 import {MainHeader} from '@/components/MainHeader';
 import {MainLogo} from '@/components/MainLogo';
@@ -16,6 +17,7 @@ export default function Home() {
       <MainLogo />
       <MainHeader />
       <Hero />
+      <Footer />
     </>
   );
 }

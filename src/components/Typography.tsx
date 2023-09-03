@@ -1,5 +1,10 @@
 import {MOBILE_MEDIA_QUERY} from '@/constants';
-import {GintoNordCondensed, MonumentGroteskBold, MonumentGroteskRegular, MonumentGroteskSemiMono} from '@/fonts';
+import {
+  GintoNordCondensed,
+  MonumentGroteskBold,
+  MonumentGroteskRegular,
+  MonumentGroteskSemiMono,
+} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
 import {ReactNode} from 'react';
 import {StyleObject} from 'styletron-react';
@@ -62,7 +67,6 @@ export const H2 = ({
     </h2>
   );
 };
-
 
 export const Body1 = ({
   children,
@@ -137,7 +141,8 @@ export const Body4 = ({
         fontSize: '18px',
         fontWeight: 400,
         lineHeight: '22px',
-        margin: 0,
+        marginTop: 0,
+        marginBottom: 0,
         ...style,
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '14px',
@@ -165,6 +170,7 @@ export const Caption = ({
         ...MonumentGroteskSemiMono,
         display: 'block',
         fontSize: '12px',
+        fontWeight: 400,
         lineHeight: '12px',
         ...style,
         [MOBILE_MEDIA_QUERY]: {
@@ -178,4 +184,3 @@ export const Caption = ({
     </small>
   );
 };
-

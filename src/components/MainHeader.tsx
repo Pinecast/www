@@ -25,6 +25,7 @@ export const MainHeader = () => {
         top: '20px',
         left: '20px',
         right: '20px',
+        zIndex: 95,
 
         [MOBILE_MEDIA_QUERY]: {
           height: '60px',

@@ -52,7 +52,7 @@ export default function Document({
           *, *:before, *:after {
             box-sizing: border-box;
           }
-          html, body {
+          html, body, #__next {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -60,7 +60,9 @@ export default function Document({
           body {
             background: var(--color-theme-mode);
           }
-        `.trim()}
+        `
+            .replace(/\n/g, '')
+            .replace(/\s\s+/g, ' ')}
         </style>
         {stylesheets.map((sheet, i) => (
           <style

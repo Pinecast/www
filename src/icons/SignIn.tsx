@@ -19,15 +19,15 @@ export const SignIn = ({size, color = 'currentColor', style}: IconProps) => {
       <path fill={color} d="M3 11h12v2H3z" />
       <path
         fill={color}
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M12 7a4 4 0 0 0 4 4v2a6 6 0 0 1-6-6h2Z"
-        clip-rule="evenodd"
+        clipRule="evenodd"
       />
       <path
         fill={color}
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M12 17a4 4 0 0 1 4-4v-2a6 6 0 0 0-6 6h2Z"
-        clip-rule="evenodd"
+        clipRule="evenodd"
       />
     </svg>
   );
