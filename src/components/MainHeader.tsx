@@ -20,6 +20,7 @@ export const MainHeader = () => {
         height: '80px',
         justifyContent: 'space-between',
         padding: '20px',
+        transition: 'background-color 0.2s, border-color 0.2s',
 
         position: 'fixed',
         top: '20px',

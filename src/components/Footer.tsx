@@ -5,15 +5,21 @@ import {Body4, Caption} from './Typography';
 import {PrimaryButton} from './PrimaryButton';
 import {FooterNavLinks} from './FooterNavLinks';
 import {MOBILE_MEDIA_QUERY} from '@/constants';
+import React from 'react';
+import { useDarkSection } from '@/hooks/useDarkSection';
 
 export const Footer = () => {
   const css = useCSS();
 
+  const ref = React.useRef<HTMLDivElement>(null);
+  useDarkSection(ref);
+
   return (
     <div
+      ref={ref}
       className={css({
         alignItems: 'flex-end',
-        minHeight: '100%',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',

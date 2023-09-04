@@ -24,6 +24,8 @@ export const H1 = ({
         fontSize: '160px',
         letterSpacing: '-0.04em',
         lineHeight: '144px',
+        marginTop: 0,
+        marginBottom: 0,
         textTransform: 'uppercase',
         ...style,
         [MOBILE_MEDIA_QUERY]: {
@@ -54,7 +56,8 @@ export const H2 = ({
         letterSpacing: '-0.04em',
         lineHeight: '72px',
         textTransform: 'uppercase',
-        margin: 0,
+        marginTop: 0,
+        marginBottom: 0,
         ...style,
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '48px',
@@ -83,7 +86,8 @@ export const Body1 = ({
         fontSize: '28px',
         letterSpacing: '-0.03em',
         lineHeight: '28px',
-        margin: 0,
+        marginTop: 0,
+        marginBottom: 0,
         ...style,
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '24px',
@@ -112,7 +116,8 @@ export const Body2 = ({
         fontSize: '28px',
         fontWeight: 400,
         lineHeight: '39px',
-        margin: 0,
+        marginTop: 0,
+        marginBottom: 0,
         ...style,
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '18px',

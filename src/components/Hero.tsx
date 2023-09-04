@@ -150,7 +150,7 @@ export const Hero = () => {
       ref={wrapper}
       className={css({
         display: 'grid',
-        height: '100%',
+        height: '100vh',
         minHeight: '800px',
         paddingTop: '120px',
         paddingLeft: '20px',

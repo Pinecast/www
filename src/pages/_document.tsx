@@ -55,10 +55,16 @@ export default function Document({
           html, body, #__next {
             margin: 0;
             padding: 0;
-            height: 100%;
           }
           body {
             background: var(--color-theme-mode);
+          }
+          body.darkSection {
+            --color-line: #f8f4eb;
+            --color-primary-dark: #f8f4eb;
+            --color-primary-light: #090909;
+            --color-theme-mode: #090909;
+            --color-core-accent: #888888;
           }
         `
             .replace(/\n/g, '')
