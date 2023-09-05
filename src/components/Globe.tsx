@@ -11,6 +11,7 @@ import {
 } from '@/hooks/useScrollTimeline';
 import {MonumentGroteskRegular} from '@/fonts';
 import Link from 'next/link';
+import {MOBILE_MEDIA_QUERY} from '@/constants';
 
 const timeline = {
   globeX: {
@@ -179,6 +180,7 @@ export const Globe = () => {
       </div>
       <div
         className={css({
+          overflowX: 'hidden',
           position: 'sticky',
           height: '100vh',
           top: 0,
@@ -230,7 +232,11 @@ export const Globe = () => {
           />
           <text
             fill="#fff"
-            className={css({...MonumentGroteskRegular, fontSize: '26px'})}
+            className={css({
+              ...MonumentGroteskRegular,
+              fontSize: '26px',
+              [MOBILE_MEDIA_QUERY]: {fontSize: '18px'},
+            })}
           >
             <textPath
               xlinkHref="#globeCurvedTextPath"
