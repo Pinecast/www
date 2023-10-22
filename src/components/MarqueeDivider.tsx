@@ -44,7 +44,7 @@ export const MarqueeDivider = ({
   const animateRef = React.useRef<SVGAnimateElement>(null);
   React.useEffect(() => {
     const handler = () => {
-      console.log('recomputing marquee');
+      // console.log('recomputing marquee');
       const width = (
         pathRef.current!.parentNode as SVGElement
       ).getClientRects()[0].width;
@@ -84,12 +84,11 @@ export const MarqueeDivider = ({
           elementBullet.style.display = 'initial';
           twinBullet.style.display = 'initial';
           textLen += totalNodeLen;
-          console.log(elementBullet.textContent);
         }
       }
 
-      console.log('text length', textLen);
-      console.log('path length', pathLen);
+      // console.log('text length', textLen);
+      // console.log('path length', pathLen);
 
       const animate = animateRef.current!;
       animate.setAttribute('to', `${textLen}`);

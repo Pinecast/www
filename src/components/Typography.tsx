@@ -8,6 +8,7 @@ import {
 import {useCSS} from '@/hooks/useCSS';
 import {ReactNode} from 'react';
 import {StyleObject} from 'styletron-react';
+import NextLink, {LinkProps} from 'next/link';
 
 export const H1 = ({
   children,
@@ -131,6 +132,36 @@ export const Body2 = ({
   );
 };
 
+export const Body3 = ({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: StyleObject;
+}) => {
+  const css = useCSS();
+  return (
+    <p
+      className={css({
+        ...MonumentGroteskBold,
+        fontSize: '22px',
+        fontWeight: 400,
+        lineHeight: '24px',
+        marginTop: 0,
+        marginBottom: 0,
+        ...style,
+        [MOBILE_MEDIA_QUERY]: {
+          fontSize: '16px',
+          lineHeight: '18px',
+          ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
+        },
+      })}
+    >
+      {children}
+    </p>
+  );
+};
+
 export const Body4 = ({
   children,
   style,
@@ -161,6 +192,37 @@ export const Body4 = ({
   );
 };
 
+export const Subhead = ({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: StyleObject;
+}) => {
+  const css = useCSS();
+  return (
+    <h3
+      className={css({
+        ...MonumentGroteskBold,
+        display: 'block',
+        fontSize: '42px',
+        fontWeight: 700,
+        lineHeight: '42px',
+        marginTop: 0,
+        marginBottom: 0,
+        ...style,
+        [MOBILE_MEDIA_QUERY]: {
+          fontSize: '28px',
+          lineHeight: '28px',
+          ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
+        },
+      })}
+    >
+      {children}
+    </h3>
+  );
+};
+
 export const Caption = ({
   children,
   style,
@@ -187,5 +249,102 @@ export const Caption = ({
     >
       {children}
     </small>
+  );
+};
+
+export const Overline = ({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: StyleObject;
+}) => {
+  const css = useCSS();
+  return (
+    <small
+      className={css({
+        ...MonumentGroteskSemiMono,
+        display: 'block',
+        fontSize: '16px',
+        fontWeight: 400,
+        lineHeight: '16px',
+        textTransform: 'uppercase',
+        ...style,
+        [MOBILE_MEDIA_QUERY]: {
+          fontSize: '14px',
+          lineHeight: '14px',
+          ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
+        },
+      })}
+    >
+      {children}
+    </small>
+  );
+};
+
+export const Link = ({
+  children,
+  style,
+  ...rest
+}: Omit<LinkProps, 'children' | 'style'> & {
+  children: ReactNode;
+  style?: StyleObject;
+}) => {
+  const css = useCSS();
+  return (
+    <NextLink
+      {...rest}
+      className={css({
+        ...MonumentGroteskSemiMono,
+        color: '#C7F182',
+        display: 'block',
+        fontSize: '16px',
+        fontWeight: 400,
+        lineHeight: '16px',
+        textDecoration: 'none',
+        ...style,
+        ':hover': {
+          textDecoration: 'underline',
+          ...(style as Record<string, any>)?.[':hover'],
+        },
+        [MOBILE_MEDIA_QUERY]: {
+          fontSize: '14px',
+          lineHeight: '14px',
+          ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
+        },
+      })}
+    >
+      <span
+        className={css({
+          verticalAlign: 'middle',
+        })}
+      >
+        {children}
+      </span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        className={css({
+          marginLeft: '8px',
+          verticalAlign: 'middle',
+        })}
+      >
+        <path fill="currentColor" d="M4 11h15v2H4z" />
+        <path
+          fill="currentColor"
+          fillRule="evenodd"
+          d="M16 7a4 4 0 0 0 4 4v2a6 6 0 0 1-6-6h2Z"
+          clipRule="evenodd"
+        />
+        <path
+          fill="currentColor"
+          fillRule="evenodd"
+          d="M16 17a4 4 0 0 1 4-4v-2a6 6 0 0 0-6 6h2Z"
+          clipRule="evenodd"
+        />
+      </svg>
+    </NextLink>
   );
 };

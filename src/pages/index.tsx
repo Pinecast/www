@@ -8,6 +8,7 @@ import {MainHeader} from '@/components/MainHeader';
 import {MainLogo} from '@/components/MainLogo';
 import {SplashIntro} from '@/components/SplashIntro';
 import {MarqueeDivider} from '@/components/MarqueeDivider';
+import { Pricing } from '@/components/Pricing';
 
 export default function Home() {
   const [splashEnded, setSplashEnded] = React.useState(false);
@@ -58,6 +59,7 @@ export default function Home() {
           'Crafted with care in Raleigh, NC',
         )}
       </MarqueeDivider>
+      <Pricing />
       <Footer />
     </>
   );
