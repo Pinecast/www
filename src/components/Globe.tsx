@@ -73,33 +73,89 @@ const timeline = {
 };
 const elements = Object.keys(timeline) as Array<keyof typeof timeline>;
 
-const RadialLine = ({offset, opacity}: {offset: number; opacity: number}) => {
+const RadialLines = () => {
   const css = useCSS();
   return (
-    <div
+    <svg
+      width="100%"
+      height="100%"
       className={css({
-        borderTop: '1px solid #fff',
-        borderLeft: '1px solid #fff',
-        borderRight: '1px solid #fff',
-        borderBottom: 0,
-        borderTopLeftRadius: 'calc(var(--globe-ideal-height) * 2)',
-        borderTopRightRadius: 'calc(var(--globe-ideal-height) * 2)',
-        borderBottomLeftRadius: 0,
-        borderBottomRightRadius: 0,
-        display: 'block',
-        position: 'absolute',
-        top: `calc(var(--globe-vertical-space) / 2 - var(--globe-ideal-height) / 2 - ${offset}px)`,
-        left: '-100%',
-        right: '-100%',
-        margin: '0 auto',
-        opacity,
-        height: `calc((var(--globe-ideal-height) + 240px + ${
-          offset * 2
-        }px) / 2)`,
-        width: `calc(var(--globe-ideal-height) + 240px + ${offset * 2}px)`,
         pointerEvents: 'none',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
       })}
-    />
+    >
+      <defs>
+        <linearGradient
+          id="globeRadialLinesOverlay"
+          x1="0%"
+          y1="0%"
+          x2="0%"
+          y2="100%"
+        >
+          <stop offset="0%" stopColor="#090909" stopOpacity={1} />
+          <stop offset="100%" stopColor="#090909" stopOpacity={0} />
+        </linearGradient>
+      </defs>
+      <clipPath id="globeRadialLinesClip">
+        <rect
+          fill="red"
+          style={{
+            height: 'calc(120px + var(--globe-vertical-space) / 2)',
+            width: '100%',
+          }}
+        />
+      </clipPath>
+      <circle
+        style={
+          {
+            r: 'calc(var(--globe-ideal-height) / 2 * 1.45)',
+            cx: '50%',
+            cy: 'calc(var(--globe-vertical-space) / 2 + 120px)',
+            transformOrigin: '50% 50%',
+          } as any
+        }
+        fill="transparent"
+        stroke="#fff"
+        strokeWidth={1.25}
+        clipPath="url(#globeRadialLinesClip)"
+        opacity="0.35"
+      />
+      <circle
+        style={
+          {
+            r: 'calc(var(--globe-ideal-height) / 2 * 1.9)',
+            cx: '50%',
+            cy: 'calc(var(--globe-vertical-space) / 2 + 120px)',
+            transformOrigin: '50% 50%',
+          } as any
+        }
+        fill="transparent"
+        stroke="#fff"
+        strokeWidth={1.25}
+        clipPath="url(#globeRadialLinesClip)"
+        opacity="0.25"
+      />
+      <circle
+        style={
+          {
+            r: 'calc(var(--globe-ideal-height) / 2 * 2.35)',
+            cx: '50%',
+            cy: 'calc(var(--globe-vertical-space) / 2 + 120px)',
+            transformOrigin: '50% 50%',
+          } as any
+        }
+        fill="transparent"
+        stroke="#fff"
+        strokeWidth={1.25}
+        clipPath="url(#globeRadialLinesClip)"
+        opacity="0.15"
+      />
+      <rect fill="url(#globeRadialLinesOverlay)" height="100" width="100%" />
+    </svg>
   );
 };
 
@@ -180,7 +236,6 @@ export const Globe = () => {
       </div>
       <div
         className={css({
-          overflowX: 'hidden',
           position: 'sticky',
           height: '100vh',
           top: 0,
@@ -195,9 +250,7 @@ export const Globe = () => {
             'min(var(--globe-ideal-vertical-height), var(--globe-ideal-horizontal-height))',
         })}
       >
-        <RadialLine offset={0} opacity={0.35} />
-        <RadialLine offset={120} opacity={0.25} />
-        <RadialLine offset={240} opacity={0.15} />
+        <RadialLines />
         <div
           ref={globeCircleRef}
           className={css({
@@ -218,7 +271,8 @@ export const Globe = () => {
         <svg
           className={css({
             position: 'absolute',
-            top: 'calc(var(--globe-vertical-space) / 2 + var(--globe-ideal-height) / 2 + 120px)',
+            bottom:
+              'calc(var(--globe-vertical-space) / 2 - var(--globe-ideal-height) / 2 - 150px)',
             left: '-100%',
             right: '-100%',
             margin: '0 auto',
