@@ -10,13 +10,16 @@ import {Provider as StyletronProvider} from 'styletron-react';
 
 import {styletron} from '../styletron';
 import StyletronServer from 'styletron-engine-atomic/lib/server/server';
+import {Provider as UserAgentContextProvider} from '../components/UserAgentContext';
 
 Document.getInitialProps = async (context: DocumentContext) => {
   const renderPage = () =>
     context.renderPage({
       enhanceApp: App => props => (
         <StyletronProvider value={styletron}>
-          <App {...props} />
+          <UserAgentContextProvider value={context.req?.headers['user-agent'] ?? '-'}>
+            <App {...props} />
+          </UserAgentContextProvider>
         </StyletronProvider>
       ),
     });
