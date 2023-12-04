@@ -282,6 +282,39 @@ export const Overline = ({
   );
 };
 
+export const PillButton = ({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: StyleObject;
+}) => {
+  const css = useCSS();
+  return (
+    <div
+      className={css({
+        ...MonumentGroteskRegular,
+        border: '1px solid currentColor',
+        borderRadius: '32px',
+        display: 'inline-block',
+        fontSize: '16px',
+        fontWeight: 400,
+        lineHeight: '28px',
+        padding: '0px 1em',
+        textTransform: 'uppercase',
+        ...style,
+        [MOBILE_MEDIA_QUERY]: {
+          fontSize: '14px',
+          lineHeight: '20px',
+          ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
+        },
+      })}
+    >
+      {children}
+    </div>
+  );
+};
+
 export const Link = ({
   children,
   style,
