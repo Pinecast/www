@@ -38,7 +38,7 @@ if (typeof window !== 'undefined') {
 
 export type ElementOutput = Record<
   string,
-  [property: keyof React.CSSProperties, value: string]
+  [property: keyof React.CSSProperties | `--${string}`, value: string]
 >;
 export const useScrollTimeline = (
   containerRef: React.RefObject<HTMLElement>,
@@ -93,7 +93,7 @@ export const useScrollTimeline = (
       const percentageOfKeyframe =
         (percentagePosition - startKeyframe / numKeyframes) * numKeyframes;
 
-      const values: Record<string, [keyof React.CSSProperties, string]> = {};
+      const values: Record<string, [keyof React.CSSProperties | `--${string}`, string]> = {};
       for (const [
         element,
         {property, unit, keyframes},
