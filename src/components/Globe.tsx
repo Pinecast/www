@@ -2,7 +2,7 @@ import {useCSS} from '@/hooks/useCSS';
 import {Body4, H1} from './Typography';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
-import * as React from 'react';
+import React from 'react';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {
   ElementOutput,
@@ -12,7 +12,6 @@ import {
 import {MonumentGroteskRegular} from '@/fonts';
 import Link from 'next/link';
 import {MOBILE_MEDIA_QUERY} from '@/constants';
-import { SideTicks } from './SideTicks';
 
 const timeline = {
   globeX: {
@@ -192,10 +191,8 @@ export const Globe = () => {
       ref={ref}
       className={css({
         backgroundColor: '#090909',
-        position: 'relative',
       })}
     >
-      <SideTicks />
       <div
         className={css({
           display: 'flex',

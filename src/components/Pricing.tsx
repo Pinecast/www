@@ -1,6 +1,6 @@
 import {useCSS} from '@/hooks/useCSS';
 import {useDarkSection} from '@/hooks/useDarkSection';
-import * as React from 'react';
+import React from 'react';
 import {Body3, Body4, H1, H2, Link, Overline, Subhead} from './Typography';
 import {GintoNordCondensed} from '@/fonts';
 import {PrimaryButton} from './PrimaryButton';

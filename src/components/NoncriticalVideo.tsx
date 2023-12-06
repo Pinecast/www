@@ -1,8 +1,6 @@
 import {useCSS} from '@/hooks/useCSS';
 import {useIsBot} from './UserAgentContext';
 import {StyleObject} from 'styletron-react';
-import * as React from 'react';
-import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
 
 export const NoncriticalVideo = ({
   av1Source,
@@ -18,19 +16,6 @@ export const NoncriticalVideo = ({
   style?: StyleObject;
 }) => {
   const css = useCSS();
-
-  const videoRef = React.useRef<HTMLVideoElement>(null);
-  useIntersectionVisibility(
-    videoRef,
-    React.useCallback(intersecting => {
-      if (intersecting) {
-        videoRef.current?.play();
-      } else {
-        videoRef.current?.pause();
-      }
-    }, []),
-  );
-
   const isBot = useIsBot();
   if (isBot) {
     return null;
@@ -46,7 +31,6 @@ export const NoncriticalVideo = ({
       })}
     >
       <video
-        ref={videoRef}
         muted
         autoPlay
         loop

@@ -8,7 +8,7 @@ import {
 } from '@/constants';
 import {SecondaryButton} from './SecondaryButton';
 import {StyleObject} from 'styletron-react';
-import * as React from 'react';
+import React from 'react';
 import {useCalculateResizableValue} from '@/hooks/useCalculateResizableValue';
 
 const PlaceholderImage = ({style}: {style: StyleObject}) => {
