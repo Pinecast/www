@@ -1,3 +1,5 @@
+const withMDX = require('@next/mdx')();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack: function (config) {
@@ -6,6 +8,7 @@ const nextConfig = {
     return config;
   },
   reactStrictMode: true,
+  pageExtensions: ['tsx', 'mdx'],
 };
 
-module.exports = nextConfig
+module.exports = withMDX(nextConfig);

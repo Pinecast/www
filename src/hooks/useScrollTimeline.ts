@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 // t - time
 // b - beginning value
@@ -18,8 +18,8 @@ type Keyframe = {
   ease?: keyof typeof easingFunctions;
 };
 type ElementDef = {
-  property: keyof React.CSSProperties;
-  unit?: 'px' | '%' | '';
+  property: keyof React.CSSProperties | `--${string}`;
+  unit?: 'px' | '%' | '' | 'vw';
   keyframes: Array<Keyframe>;
 };
 export type Timeline = Record<string, ElementDef>;
@@ -71,10 +71,21 @@ export const useScrollTimeline = (
         // console.log('Ignoring off-screen section');
         return;
       }
-      const topScroll = containerTop - windowHeight;
-      const bottomScroll = containerTop + containerHeight;
+      // Calculate a value, `percentagePosition`, which indicates the percentage of the
+      // way through the element `containerRef.current` is through the viewport. 0% should
+      // represent when the top of the element appears on-screen (from the bottom of the
+      // viewport or if the element is at the top of the page), and 100% should represent
+      // when the bottom of the element disappears off the top of the screen (or if the
+      // viewport reaches the bottom of the page).
+      const minScrollPosition =
+        containerTop < windowHeight ? 0 : containerTop - windowHeight;
       const percentagePosition =
-        (scrollY - topScroll) / (bottomScroll - topScroll);
+        (scrollY - minScrollPosition) / containerHeight;
+
+      // const topScroll = Math.max(0, containerTop - windowHeight);
+      // const bottomScroll = containerTop + containerHeight;
+      // const percentagePosition =
+      //   (scrollY - topScroll) / (bottomScroll - topScroll);
 
       const numKeyframes = timelineRef.current[0][1].keyframes.length - 1;
       const startKeyframe = Math.floor(percentagePosition * numKeyframes);

@@ -1,12 +1,18 @@
+import Link from 'next/link';
+import * as React from 'react';
+
 import {MonumentGroteskSemiMono} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
-import Link from 'next/link';
 import {Body4, Caption} from './Typography';
 import {PrimaryButton} from './PrimaryButton';
 import {FooterNavLinks} from './FooterNavLinks';
 import {MOBILE_MEDIA_QUERY} from '@/constants';
-import React from 'react';
-import { useDarkSection } from '@/hooks/useDarkSection';
+import {useDarkSection} from '@/hooks/useDarkSection';
+import {NoncriticalVideo} from './NoncriticalVideo';
+
+const VIDEO_WIDTH = 1670;
+const VIDEO_HEIGHT = 1045;
+const ASPECT_RATIO = VIDEO_HEIGHT / VIDEO_WIDTH;
 
 export const Footer = () => {
   const css = useCSS();
@@ -19,14 +25,31 @@ export const Footer = () => {
       ref={ref}
       className={css({
         alignItems: 'flex-end',
-        minHeight: '100vh',
+        minHeight: `calc(max(100vw * ${ASPECT_RATIO} + 380px, 100vh))`,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        background: '#f4578d',
-        padding: '20px',
+        background: '#FF6869',
+        paddingRight: '20px',
+        paddingLeft: '20px',
+        paddingBottom: '20px',
+        position: 'relative',
       })}
     >
+      <NoncriticalVideo
+        av1Source="/videos/Footer2x.av1.mp4"
+        defaultSource="/videos/Footer2x.mp4"
+        height={VIDEO_HEIGHT}
+        width={VIDEO_WIDTH}
+        style={{
+          position: 'absolute',
+          bottom: '400px',
+          left: 0,
+          right: 0,
+          width: '100%',
+          height: `calc(100vw * ${ASPECT_RATIO})`,
+        }}
+      />
       <footer
         className={css({
           '--color-primary-dark': '#f8f4eb',
@@ -46,7 +69,9 @@ export const Footer = () => {
           paddingLeft: '83px',
           paddingRight: '83px',
           paddingTop: '83px',
+          position: 'relative',
           width: '100%',
+
           [MOBILE_MEDIA_QUERY]: {
             backgroundSize: 'auto 60px',
             backgroundPosition: '-11px calc(100% - 80px)',
@@ -63,6 +88,7 @@ export const Footer = () => {
             gap: '100px',
             gridTemplateColumns:
               '1fr fit-content(145px) fit-content(145px) fit-content(145px)',
+
             '@media (max-width: 1400px)': {
               display: 'flex',
               justifyContent: 'space-between',
