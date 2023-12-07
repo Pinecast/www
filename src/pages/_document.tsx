@@ -17,7 +17,9 @@ Document.getInitialProps = async (context: DocumentContext) => {
     context.renderPage({
       enhanceApp: App => props => (
         <StyletronProvider value={styletron}>
-          <UserAgentContextProvider value={context.req?.headers['user-agent'] ?? '-'}>
+          <UserAgentContextProvider
+            value={context.req?.headers['user-agent'] ?? '-'}
+          >
             <App {...props} />
           </UserAgentContextProvider>
         </StyletronProvider>

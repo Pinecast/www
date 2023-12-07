@@ -1,4 +1,4 @@
-import { MOBILE_MEDIA_QUERY } from '@/constants';
+import {MOBILE_MEDIA_QUERY} from '@/constants';
 import {MonumentGroteskBold} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
 import Link from 'next/link';

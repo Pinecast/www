@@ -88,13 +88,22 @@ export const useScrollTimeline = (
       //   (scrollY - topScroll) / (bottomScroll - topScroll);
 
       const numKeyframes = timelineRef.current[0][1].keyframes.length - 1;
-      const startKeyframe = Math.min(Math.floor(percentagePosition * numKeyframes), numKeyframes);
-      const endKeyframe = Math.min(Math.ceil(percentagePosition * numKeyframes), numKeyframes);
+      const startKeyframe = Math.min(
+        Math.floor(percentagePosition * numKeyframes),
+        numKeyframes,
+      );
+      const endKeyframe = Math.min(
+        Math.ceil(percentagePosition * numKeyframes),
+        numKeyframes,
+      );
 
       const percentageOfKeyframe =
         (percentagePosition - startKeyframe / numKeyframes) * numKeyframes;
 
-      const values: Record<string, [keyof React.CSSProperties | `--${string}`, string]> = {};
+      const values: Record<
+        string,
+        [keyof React.CSSProperties | `--${string}`, string]
+      > = {};
       for (const [
         element,
         {property, unit, keyframes},

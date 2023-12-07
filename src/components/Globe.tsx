@@ -12,7 +12,7 @@ import {
 import {MonumentGroteskRegular} from '@/fonts';
 import Link from 'next/link';
 import {MOBILE_MEDIA_QUERY} from '@/constants';
-import { SideTicks } from './SideTicks';
+import {SideTicks} from './SideTicks';
 
 const timeline = {
   globeX: {

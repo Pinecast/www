@@ -1,4 +1,4 @@
-import { MOBILE_MEDIA_QUERY } from '@/constants';
+import {MOBILE_MEDIA_QUERY} from '@/constants';
 import {MonumentGroteskBold} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
 import Link from 'next/link';
@@ -34,10 +34,10 @@ export const PrimaryButton = ({
         textDecoration: 'none',
         ...style,
         [MOBILE_MEDIA_QUERY]: {
-          ...style?.[MOBILE_MEDIA_QUERY] as any,
+          ...(style?.[MOBILE_MEDIA_QUERY] as any),
           paddingLeft: '20px',
           paddingRight: '20px',
-        }
+        },
       })}
       href={href}
     >
