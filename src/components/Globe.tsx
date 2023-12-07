@@ -309,7 +309,11 @@ export const Globe = () => {
                 </Link>
               </tspan>
               <tspan dx={10}>
-                <Link ref={menuMonetizationRef} href="/features/monetization">
+                <Link
+                  className={css({fill: 'inherit'})}
+                  ref={menuMonetizationRef}
+                  href="/features/monetization"
+                >
                   Monetization
                 </Link>
               </tspan>
