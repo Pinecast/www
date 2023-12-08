@@ -367,6 +367,7 @@ const AddonAccordion = ({children}: {children: React.ReactNode}) => {
         maxWidth: `${MAX_WIDTH}px`,
         borderBottom: '1px solid var(--color-primary-dark)',
         color: 'var(--color-primary-dark)',
+        WebkitTapHighlightColor: 'transparent',
       })}
     >
       {children}
@@ -396,13 +397,23 @@ const AddonAccordionItem = ({
       aria-label={`Toggle details about ${name}`}
       aria-expanded={open ? 'true' : 'false'}
       aria-controls={id}
-      onClick={() => setOpen(!open)}
+      onClick={() => {
+        // Undo any text sections that were accidentally highlighted when the user
+        // tapped the accordion open/close. For accessibility purposes, as opposed
+        // to preventing text selection with `user-select: none` or setting a transparent
+        // `::selection` background, we clear the highlights using JS.
+        document.getSelection()?.removeAllRanges?.();
+
+        setOpen(!open);
+      }}
       className={css({
+        ...!open ? {userSelect: 'none'} : {},
         borderTop: '1px solid var(--color-primary-dark)',
         cursor: 'pointer',
         position: 'relative',
         minHeight: '70px',
         textAlign: 'left',
+        WebkitTapHighlightColor: 'transparent',
         width: '100%',
       })}
     >
