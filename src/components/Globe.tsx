@@ -215,12 +215,10 @@ export const Globe = () => {
           color: 'var(--color-primary-dark)',
         })}
       >
-        <H1>
-          Check,
-          <br />
-          Check 1, 2, 3
+        <H1 style={{margin: '0 auto', maxWidth: '58rem'}}>
+          Check, Check 1, 2, 3
         </H1>
-        <Body4>
+        <Body4 style={{maxWidth: '32rem'}}>
           Whether you&rsquo;re sharing to a handful of friends, your company, or
           the world, Pinecast has a solution that&rsquo;s right for you.
         </Body4>

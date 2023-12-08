@@ -51,9 +51,8 @@ export const Pricing = () => {
           <br />
           your ticket
         </H1>
-        <Body4>
+        <Body4 style={{maxWidth: '32rem'}}>
           Try Pinecast for free. No credit card required, no time limits,
-          <br />
           upgrade whenever. We think you&rsquo;ll love it.
         </Body4>
       </div>
@@ -159,12 +158,10 @@ export const Pricing = () => {
           <br />
           with add-ons
         </H2>
-        <Body4>
-          Add features when you need them and remove them when
-          <br />
-          you don&rsquo;t. There are no confusing tiers or lock-in pricing: you
-          <br />
-          pay for what you use.
+        <Body4 style={{maxWidth: '32rem'}}>
+          Add features when you need them and remove them when you don&rsquo;t.
+          There are no confusing tiers or lock-in pricing: you pay for what you
+          use.
         </Body4>
       </div>
       <AddonAccordion>
