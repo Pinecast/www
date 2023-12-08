@@ -6,7 +6,7 @@ import {useCSS} from '@/hooks/useCSS';
 import {Body4, Caption} from './Typography';
 import {PrimaryButton} from './PrimaryButton';
 import {FooterNavLinks} from './FooterNavLinks';
-import {MOBILE_MEDIA_QUERY} from '@/constants';
+import {MOBILE_MEDIA_QUERY, CAN_HOVER_MEDIA_QUERY} from '@/constants';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {NoncriticalVideo} from './NoncriticalVideo';
 
@@ -183,7 +183,11 @@ export const Footer = () => {
             className={css({
               color: 'var(--color-core-accent)',
               textDecoration: 'none',
-              ':hover': {textDecoration: 'underline'},
+              ':hover': {
+                [CAN_HOVER_MEDIA_QUERY]: {
+                  textDecoration: 'underline',
+                }
+              },
             })}
             href="/terms"
           >
@@ -193,7 +197,11 @@ export const Footer = () => {
             className={css({
               color: 'var(--color-core-accent)',
               textDecoration: 'none',
-              ':hover': {textDecoration: 'underline'},
+              ':hover': {
+                [CAN_HOVER_MEDIA_QUERY]: {
+                  textDecoration: 'underline',
+                }
+              },
             })}
             href="/privacy"
           >

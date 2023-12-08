@@ -1,4 +1,4 @@
-import {MOBILE_MEDIA_QUERY} from '@/constants';
+import {MOBILE_MEDIA_QUERY, CAN_HOVER_MEDIA_QUERY} from '@/constants';
 import {
   GintoNordCondensed,
   MonumentGroteskBold,
@@ -339,8 +339,10 @@ export const Link = ({
         textDecoration: 'none',
         ...style,
         ':hover': {
-          textDecoration: 'underline',
-          ...(style as Record<string, any>)?.[':hover'],
+          [CAN_HOVER_MEDIA_QUERY]: {
+            textDecoration: 'underline',
+            ...(style as Record<string, any>)?.[':hover'],
+          }
         },
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '14px',

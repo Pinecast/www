@@ -1,3 +1,4 @@
+import {CAN_HOVER_MEDIA_QUERY} from '@/constants';
 import {MonumentGroteskBold} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
 import Link from 'next/link';
@@ -18,7 +19,9 @@ export const MainHeaderLink = ({
         color: 'var(--color-primary-dark)',
         textDecoration: 'none',
         ':hover': {
-          textDecoration: 'underline',
+          [CAN_HOVER_MEDIA_QUERY]: {
+            textDecoration: 'underline',
+          },
         },
       })}
       href={href}

@@ -1,3 +1,4 @@
+import {CAN_HOVER_MEDIA_QUERY} from '@/constants';
 import {MonumentGroteskBold} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
 import Link from 'next/link';
@@ -38,7 +39,12 @@ export const FooterNavLinks = ({
               color: 'var(--color-core-accent)',
               textDecoration: 'none',
               transition: 'color 0.2s',
-              ':hover': {color: '#fff', textDecoration: 'underline'},
+              ':hover': {
+                [CAN_HOVER_MEDIA_QUERY]: {
+                  color: '#fff',
+                  textDecoration: 'underline',
+                }
+              },
             })}
           >
             {title}
