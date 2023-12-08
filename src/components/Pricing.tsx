@@ -21,6 +21,7 @@ export const Pricing = () => {
       ref={sectionRef}
       className={css({
         backgroundColor: '#090909',
+        paddingBottom: '116px',
       })}
     >
       <div
