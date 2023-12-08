@@ -53,7 +53,7 @@ export const Footer = () => {
       <footer
         className={css({
           '--color-primary-dark': '#fff',
-          '--color-primary-light': '#090909',
+          '--color-primary-light': 'var(--color-space)',
           backgroundColor: 'var(--color-primary-light)',
           backgroundImage: 'url(/images/logotype.svg)',
           backgroundRepeat: 'repeat-x',

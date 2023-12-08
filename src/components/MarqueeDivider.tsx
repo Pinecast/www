@@ -25,7 +25,7 @@ function getPath(width: number) {
 
 export const MarqueeDivider = ({
   bottomBackgroundColor = '#fff',
-  marqueeColor = '#c4ff7e',
+  marqueeColor = 'var(--color-lime)',
   children,
   textColor = '#000',
   topBackgroundColor = '#fff',

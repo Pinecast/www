@@ -91,7 +91,7 @@ export const LearnLayout = ({
         <MainHeader />
         <div
           className={css({
-            backgroundColor: '#c4ff7e',
+            backgroundColor: 'var(--color-lime)',
             minHeight: '175vh',
             textAlign: 'center',
           })}
@@ -150,7 +150,7 @@ const LearnHero = React.forwardRef<HTMLDivElement, {heroImage: string}>(
       >
         <div
           className={css({
-            background: '#c4ff7e',
+            background: 'var(--color-lime)',
             clipPath:
               'circle(var(--circle-radius) at 50% var(--circle-offset))',
             position: 'absolute',

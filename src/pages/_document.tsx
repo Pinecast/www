@@ -48,10 +48,35 @@ export default function Document({
         <style>
           {`
           :root {
-            --color-line: #090909;
-            --color-primary-dark: #090909;
-            --color-primary-light: #f8f4eb;
-            --color-theme-mode: #f8f4eb;
+            --color-space: #090909;
+            --color-sand: #f8f4eb;
+            --color-white: #fff;
+            --color-orchid: #dbaeff;
+            --color-lime: #c4ff7e;
+
+            --color-grape: #9f16d6;
+            --color-grape-50: #cf8aea;
+            --color-grape-25: #e7c5f5;
+            --color-sky: #c7ecfa;
+            --color-sky-50: #e3f5fc;
+            --color-sky-25: #f1fafe;
+            --color-forest: #0b6426;
+            --color-forest-50: #85b192;
+            --color-forest-25: #c2d8c9;
+            --color-sunrise: #f9f199;
+            --color-sunrise-50: #fcf8cc;
+            --color-sunrise-25: #fdfbe5;
+            --color-sunset: #ff6f17;
+            --color-sunset-50: #ffb78b;
+            --color-sunset-25: #ffdbc5;
+            --color-rose: #ff2644;
+            --color-rose-50: #ff92a1;
+            --color-rose-25: #ffc9d0;
+
+            --color-line: var(--color-space);
+            --color-primary-dark: var(--color-space);
+            --color-primary-light: var(--color-sand);
+            --color-theme-mode: var(--color-sand);
             --color-core-accent: #888;
           }
           *, *:before, *:after {
@@ -66,7 +91,7 @@ export default function Document({
           }
           body.darkSection {
             --color-line: #888;
-            --color-primary-dark: #fff;
+            --color-primary-dark: var(--color-white);
             --color-primary-light: #090909;
             --color-theme-mode: #090909;
             --color-core-accent: #888;

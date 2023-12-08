@@ -28,8 +28,8 @@ export default function Home() {
       <Hero />
       <Globe />
       <MarqueeDivider
-        topBackgroundColor="#090909"
-        bottomBackgroundColor="#F8F4EB"
+        topBackgroundColor="var(--color-space)"
+        bottomBackgroundColor="var(--color-sand)"
       >
         {MarqueeDivider.MarqueeDividerBullet('Kick-ass customer support')}
         {MarqueeDivider.MarqueeDividerBullet('Fair, no-nonsense pricing')}

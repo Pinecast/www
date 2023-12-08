@@ -20,7 +20,7 @@ export const Pricing = () => {
     <section
       ref={sectionRef}
       className={css({
-        backgroundColor: '#090909',
+        backgroundColor: 'var(--color-space)',
         paddingBottom: '116px',
       })}
     >
@@ -37,8 +37,8 @@ export const Pricing = () => {
 
           '--color-line': '#888',
           '--color-primary-dark': '#fff',
-          '--color-primary-light': '#090909',
-          '--color-theme-mode': '#090909',
+          '--color-primary-light': 'var(--color-space)',
+          '--color-theme-mode': 'var(--color-space)',
           '--color-core-accent': '#888',
           color: 'var(--color-primary-dark)',
         })}
@@ -55,7 +55,7 @@ export const Pricing = () => {
         </Body4>
       </div>
       <PricingTicket
-        color="#fff"
+        color="var(--color-white)"
         col1={
           <>
             <Subhead style={{marginBottom: '30px'}}>Free plan</Subhead>
@@ -86,14 +86,14 @@ export const Pricing = () => {
         }
       />
       <PricingTicket
-        color="#DBAEFF"
+        color="var(--color-orchid)"
         col1={
           <>
             <Subhead style={{marginBottom: '30px'}}>Starter plan</Subhead>
             <div>
-              <Price amount="$10" perUnit="Month" color="#fff" />
+              <Price amount="$10" perUnit="Month" color="var(--color-white)" />
               <Overline>or</Overline>
-              <Price amount="$110" perUnit="Year" color="#fff" />
+              <Price amount="$110" perUnit="Year" color="var(--color-white)" />
             </div>
           </>
         }
@@ -133,8 +133,8 @@ export const Pricing = () => {
 
           '--color-line': '#888',
           '--color-primary-dark': '#fff',
-          '--color-primary-light': '#090909',
-          '--color-theme-mode': '#090909',
+          '--color-primary-light': 'var(--color-space)',
+          '--color-theme-mode': 'var(--color-space)',
           '--color-core-accent': '#888',
           color: 'var(--color-primary-dark)',
         })}
@@ -201,7 +201,7 @@ const PricingTicket = ({
   return (
     <div
       className={css({
-        '--color-primary-dark': '#090909',
+        '--color-primary-dark': 'var(--color-space)',
         '--color-primary-light': '#fff',
         backgroundColor: color,
         borderRadius: '20px',
@@ -212,7 +212,7 @@ const PricingTicket = ({
         overflow: 'hidden',
 
         '::before': {
-          backgroundColor: '#090909',
+          backgroundColor: 'var(--color-space)',
           content: '""',
           display: 'block',
           position: 'absolute',
@@ -223,7 +223,7 @@ const PricingTicket = ({
           borderRadius: '60px',
         },
         '::after': {
-          backgroundColor: '#090909',
+          backgroundColor: 'var(--color-space)',
           content: '""',
           display: 'block',
           position: 'absolute',
@@ -242,7 +242,7 @@ const PricingTicket = ({
       <div
         className={css({
           borderStyle: 'dashed',
-          borderColor: '#090909',
+          borderColor: 'var(--color-space)',
           borderLeftWidth: '2px',
           borderRightWidth: '2px',
           borderTopWidth: '0',

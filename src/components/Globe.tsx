@@ -97,8 +97,8 @@ const RadialLines = () => {
           x2="0%"
           y2="100%"
         >
-          <stop offset="0%" stopColor="#090909" stopOpacity={1} />
-          <stop offset="100%" stopColor="#090909" stopOpacity={0} />
+          <stop offset="0%" stopColor="var(--color-space)" stopOpacity={1} />
+          <stop offset="100%" stopColor="var(--color-space)" stopOpacity={0} />
         </linearGradient>
       </defs>
       <clipPath id="globeRadialLinesClip">
@@ -120,7 +120,7 @@ const RadialLines = () => {
           } as any
         }
         fill="transparent"
-        stroke="#fff"
+        stroke="var(--color-white)"
         strokeWidth={1.25}
         clipPath="url(#globeRadialLinesClip)"
         opacity="0.35"
@@ -135,7 +135,7 @@ const RadialLines = () => {
           } as any
         }
         fill="transparent"
-        stroke="#fff"
+        stroke="var(--color-white)"
         strokeWidth={1.25}
         clipPath="url(#globeRadialLinesClip)"
         opacity="0.25"
@@ -150,7 +150,7 @@ const RadialLines = () => {
           } as any
         }
         fill="transparent"
-        stroke="#fff"
+        stroke="var(--color-white)"
         strokeWidth={1.25}
         clipPath="url(#globeRadialLinesClip)"
         opacity="0.15"
@@ -191,7 +191,7 @@ export const Globe = () => {
     <section
       ref={ref}
       className={css({
-        backgroundColor: '#090909',
+        backgroundColor: 'var(--color-space)',
         position: 'relative',
       })}
     >
@@ -209,8 +209,8 @@ export const Globe = () => {
 
           '--color-line': '#888',
           '--color-primary-dark': '#fff',
-          '--color-primary-light': '#090909',
-          '--color-theme-mode': '#090909',
+          '--color-primary-light': 'var(--color-space)',
+          '--color-theme-mode': 'var(--color-space)',
           '--color-core-accent': '#888',
           color: 'var(--color-primary-dark)',
         })}
@@ -288,7 +288,7 @@ export const Globe = () => {
             fill="transparent"
           />
           <text
-            fill="#fff"
+            fill="var(--color-white)"
             className={css({
               ...MonumentGroteskRegular,
               fontSize: '26px',
