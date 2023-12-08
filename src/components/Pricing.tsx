@@ -53,7 +53,7 @@ export const Pricing = () => {
         <Body4>
           Try Pinecast for free. No credit card required, no time limits,
           <br />
-          upgrade whenever. We think you&apos;ll love it.
+          upgrade whenever. We think you&rsquo;ll love it.
         </Body4>
       </div>
       <PricingTicket
@@ -82,7 +82,7 @@ export const Pricing = () => {
               Sign up
             </PrimaryButton>
             <SecondaryButton href="https://help.pinecast.com/article/135-whats-included-with-the-free-plan">
-              See what&apos;s included
+              See what&rsquo;s included
             </SecondaryButton>
           </>
         }
@@ -117,7 +117,7 @@ export const Pricing = () => {
               Sign up
             </PrimaryButton>
             <SecondaryButton href="https://help.pinecast.com/article/130-whats-included-in-the-starter-plan">
-              See what&apos;s included
+              See what&rsquo;s included
             </SecondaryButton>
           </>
         }
@@ -149,7 +149,7 @@ export const Pricing = () => {
         <Body4>
           Add features when you need them and remove them when
           <br />
-          you don&apos;t. There are no confusing tiers or lock-in pricing: you
+          you don&rsquo;t. There are no confusing tiers or lock-in pricing: you
           <br />
           pay for what you use.
         </Body4>
