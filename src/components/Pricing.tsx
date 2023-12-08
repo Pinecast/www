@@ -35,11 +35,11 @@ export const Pricing = () => {
           maxWidth: '946px',
           padding: '100px 30px 0',
 
-          '--color-line': '#f8f4eb',
-          '--color-primary-dark': '#f8f4eb',
+          '--color-line': '#888',
+          '--color-primary-dark': '#fff',
           '--color-primary-light': '#090909',
           '--color-theme-mode': '#090909',
-          '--color-core-accent': '#888888',
+          '--color-core-accent': '#888',
           color: 'var(--color-primary-dark)',
         })}
       >
@@ -55,7 +55,7 @@ export const Pricing = () => {
         </Body4>
       </div>
       <PricingTicket
-        color="#F8F4EB"
+        color="#fff"
         col1={
           <>
             <Subhead style={{marginBottom: '30px'}}>Free plan</Subhead>
@@ -131,11 +131,11 @@ export const Pricing = () => {
           maxWidth: '946px',
           paddingTop: '140px',
 
-          '--color-line': '#f8f4eb',
-          '--color-primary-dark': '#f8f4eb',
+          '--color-line': '#888',
+          '--color-primary-dark': '#fff',
           '--color-primary-light': '#090909',
           '--color-theme-mode': '#090909',
-          '--color-core-accent': '#888888',
+          '--color-core-accent': '#888',
           color: 'var(--color-primary-dark)',
         })}
       >

@@ -52,7 +52,7 @@ export default function Document({
             --color-primary-dark: #090909;
             --color-primary-light: #f8f4eb;
             --color-theme-mode: #f8f4eb;
-            --color-core-accent: #888888;
+            --color-core-accent: #888;
           }
           *, *:before, *:after {
             box-sizing: border-box;
@@ -65,11 +65,11 @@ export default function Document({
             background: var(--color-theme-mode);
           }
           body.darkSection {
-            --color-line: #f8f4eb;
-            --color-primary-dark: #f8f4eb;
+            --color-line: #888;
+            --color-primary-dark: #fff;
             --color-primary-light: #090909;
             --color-theme-mode: #090909;
-            --color-core-accent: #888888;
+            --color-core-accent: #888;
           }
         `
             .replace(/\n/g, '')

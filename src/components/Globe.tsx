@@ -207,11 +207,11 @@ export const Globe = () => {
           maxWidth: '946px',
           paddingTop: '100px',
 
-          '--color-line': '#f8f4eb',
-          '--color-primary-dark': '#f8f4eb',
+          '--color-line': '#888',
+          '--color-primary-dark': '#fff',
           '--color-primary-light': '#090909',
           '--color-theme-mode': '#090909',
-          '--color-core-accent': '#888888',
+          '--color-core-accent': '#888',
           color: 'var(--color-primary-dark)',
         })}
       >

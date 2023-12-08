@@ -52,7 +52,7 @@ export const Footer = () => {
       />
       <footer
         className={css({
-          '--color-primary-dark': '#f8f4eb',
+          '--color-primary-dark': '#fff',
           '--color-primary-light': '#090909',
           backgroundColor: 'var(--color-primary-light)',
           backgroundImage: 'url(/images/logotype.svg)',

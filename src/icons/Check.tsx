@@ -14,7 +14,7 @@ export const Check = ({size, color = 'currentColor', style}: IconProps) => {
     >
       <circle cx="12" cy="12" r="10" fill={color} />
       <path
-        fill="#F8F4EB"
+        fill="#fff"
         fillRule="evenodd"
         d="m16.382 9.322-5.407 6.42-3.332-3.392.713-.7 2.562 2.608 4.699-5.58.765.644Z"
         clipRule="evenodd"
