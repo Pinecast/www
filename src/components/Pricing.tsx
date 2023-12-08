@@ -10,6 +10,8 @@ import {Expandable} from './Expandable';
 import {Collapse} from '@/icons/Collapse';
 import {Expand} from '@/icons/Expand';
 
+const MAX_WIDTH = 1300;
+
 export const Pricing = () => {
   const css = useCSS();
 
@@ -207,7 +209,7 @@ const PricingTicket = ({
         borderRadius: '20px',
         padding: '0',
         position: 'relative',
-        maxWidth: '1300px',
+        maxWidth: `${MAX_WIDTH}px`,
         margin: '0 auto 20px',
         overflow: 'hidden',
 
@@ -217,7 +219,7 @@ const PricingTicket = ({
           display: 'block',
           position: 'absolute',
           top: '-40px',
-          right: 'calc((350/1300) * 100% + 27px)',
+          right: `calc((350/${MAX_WIDTH}) * 100% - 29px)`,
           height: '60px',
           width: '60px',
           borderRadius: '60px',
@@ -228,7 +230,7 @@ const PricingTicket = ({
           display: 'block',
           position: 'absolute',
           bottom: '-40px',
-          right: 'calc((350/1300) * 100% + 27px)',
+          right: `calc((350/${MAX_WIDTH}) * 100% - 29px)`,
           height: '60px',
           width: '60px',
           borderRadius: '60px',
@@ -345,7 +347,7 @@ const AddonAccordion = ({children}: {children: React.ReactNode}) => {
         alignItems: 'center',
         textAlign: 'center',
         margin: '0 auto',
-        maxWidth: '1300px',
+        maxWidth: `${MAX_WIDTH}px`,
         borderBottom: '1px solid var(--color-primary-dark)',
         color: 'var(--color-primary-dark)',
       })}
