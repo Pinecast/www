@@ -22,7 +22,7 @@ export const FooterNavLinks = ({
         maxWidth: '145px',
       })}
     >
-      <strong className={css({whiteSpace: 'nowrap'})}>{title}</strong>
+      <strong className={css({fontWeight: 500, whiteSpace: 'nowrap'})}>{title}</strong>
       <ul
         className={css({
           listStyle: 'none',

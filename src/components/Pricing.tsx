@@ -303,6 +303,7 @@ const Price = ({
           ...GintoNordCondensed,
           color: color ?? 'inherit',
           fontSize: '42px',
+          fontWeight: '500',
           lineHeight: '1.2',
           textShadow:
             '-0.5px -1px 0 var(--color-space), 0.5px -1px 0 var(--color-space), -0.5px 1.5px 0 var(--color-space), 0.5px 1.5px 0 var(--color-space)',
