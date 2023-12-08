@@ -337,6 +337,7 @@ export const Link = ({
         fontWeight: 400,
         lineHeight: '16px',
         textDecoration: 'none',
+        textUnderlineOffset: '0.3em',
         ...style,
         ':hover': {
           [CAN_HOVER_MEDIA_QUERY]: {

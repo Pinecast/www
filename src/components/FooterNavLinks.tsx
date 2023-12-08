@@ -39,6 +39,7 @@ export const FooterNavLinks = ({
               color: 'var(--color-core-accent)',
               textDecoration: 'none',
               transition: 'color 0.2s',
+              textUnderlineOffset: '0.2em',
               ':hover': {
                 [CAN_HOVER_MEDIA_QUERY]: {
                   color: '#fff',

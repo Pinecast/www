@@ -183,8 +183,11 @@ export const Footer = () => {
             className={css({
               color: 'var(--color-core-accent)',
               textDecoration: 'none',
+              textUnderlineOffset: '0.2em',
+              transition: 'color 0.2s',
               ':hover': {
                 [CAN_HOVER_MEDIA_QUERY]: {
+                  color: '#fff',
                   textDecoration: 'underline',
                 }
               },
@@ -197,8 +200,11 @@ export const Footer = () => {
             className={css({
               color: 'var(--color-core-accent)',
               textDecoration: 'none',
+              textUnderlineOffset: '0.2em',
+              transition: 'color 0.2s',
               ':hover': {
                 [CAN_HOVER_MEDIA_QUERY]: {
+                  color: '#fff',
                   textDecoration: 'underline',
                 }
               },
