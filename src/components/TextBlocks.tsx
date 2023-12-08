@@ -8,13 +8,16 @@ export const Intro = ({children}: {children: React.ReactNode}) => {
   return (
     <div
       className={css({
-        ...MonumentGroteskBold,
-        fontSize: '42px',
-        letterSpacing: '-1px',
-        lineHeight: '42px',
-        maxWidth: '70%',
-        [MOBILE_BREAKPOINT]: {
-          maxWidth: '100%',
+        // Cheeky hack to apply the style to the nested paragraph from MDX
+        ':not(:empty) > p': {
+          ...MonumentGroteskBold,
+          fontSize: '42px',
+          letterSpacing: '-1px',
+          lineHeight: '42px',
+          maxWidth: '70%',
+          [MOBILE_BREAKPOINT]: {
+            maxWidth: '100%',
+          },
         },
       })}
     >

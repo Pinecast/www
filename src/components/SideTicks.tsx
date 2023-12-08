@@ -8,7 +8,7 @@ const TICK_WIDTH = 10;
 export const SideTicks = () => {
   const css = useCSS();
 
-  const ref = React.useRef<HTMLCanvasElement>(null);
+  const ref = React.useRef<SVGSVGElement>(null);
   React.useEffect(() => {
     const render = () => {
       const canvas = ref.current;
@@ -53,10 +53,10 @@ export const SideTicks = () => {
   });
 
   return (
-    <canvas
+    <svg
       ref={ref}
       className={css({
-        position: 'absolute',
+        position: 'fixed',
         top: 0,
         marginBottom: '-100vh',
       })}

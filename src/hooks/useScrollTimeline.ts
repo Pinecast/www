@@ -62,8 +62,10 @@ export const useScrollTimeline = (
 
   const handler = React.useCallback(
     (scrollY: number, windowHeight: number) => {
+      if (!containerRef.current) return;
+
       const {offsetTop: containerTop, offsetHeight: containerHeight} =
-        containerRef.current!;
+        containerRef.current;
       if (
         containerTop - windowHeight > scrollY ||
         containerTop + containerHeight < scrollY
