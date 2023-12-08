@@ -160,7 +160,7 @@ export const Pricing = () => {
         </H2>
         <Body4 style={{maxWidth: '32rem'}}>
           Add features when you need them and remove them when you don&rsquo;t.
-          There are no confusing tiers or lock-in pricing: you pay for what you
+          There are no confusing tiers or lock-in pricing. You pay for what you
           use.
         </Body4>
       </div>
@@ -405,7 +405,7 @@ const AddonAccordionItem = ({
         setOpen(!open);
       }}
       className={css({
-        ...!open ? {userSelect: 'none'} : {},
+        ...(!open ? {userSelect: 'none'} : {}),
         borderTop: '1px solid var(--color-primary-dark)',
         cursor: 'pointer',
         position: 'relative',
