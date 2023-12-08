@@ -18,7 +18,7 @@ export const MainHeaderLink = ({
         ...MonumentGroteskBold,
         borderRadius: '14px',
         color: 'var(--color-primary-dark)',
-        padding: '25px 15px',
+        padding: '24px 15px',
         textDecoration: 'none',
         textUnderlineOffset: '0.2em',
         ':hover': {
