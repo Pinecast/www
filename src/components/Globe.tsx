@@ -300,11 +300,19 @@ export const Globe = () => {
               startOffset="50%"
               textAnchor="middle"
             >
-              <Link ref={menuDistributionRef} href="/features/distribution">
+              <Link
+                className={css({fill: 'inherit'})}
+                ref={menuDistributionRef}
+                href="/features/distribution"
+              >
                 Distribution
               </Link>
               <tspan dx={10}>
-                <Link ref={menuAnalyticsRef} href="/features/analytics">
+                <Link
+                  className={css({fill: 'inherit'})}
+                  ref={menuAnalyticsRef}
+                  href="/features/analytics"
+                >
                   Analytics
                 </Link>
               </tspan>
