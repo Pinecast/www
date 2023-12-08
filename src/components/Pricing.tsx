@@ -435,7 +435,7 @@ const AddonAccordionItem = ({
           })}
         >
           <Price amount={monthlyPrice} perUnit="Month" />
-          <Overline style={{display: 'inline-block', margin: '0 12px'}}>
+          <Overline style={{display: 'inline-block', margin: '0 12px 0 9px'}}>
             or
           </Overline>
           <Price amount={yearlyPrice} perUnit="Year" />
