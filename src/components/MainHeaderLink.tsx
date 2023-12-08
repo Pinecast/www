@@ -20,6 +20,7 @@ export const MainHeaderLink = ({
         color: 'var(--color-primary-dark)',
         padding: '25px 15px',
         textDecoration: 'none',
+        textUnderlineOffset: '0.2em',
         ':hover': {
           [CAN_HOVER_MEDIA_QUERY]: {
             textDecoration: 'underline',
