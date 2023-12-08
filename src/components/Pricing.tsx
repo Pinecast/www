@@ -10,6 +10,7 @@ import {Expandable} from './Expandable';
 import {Collapse} from '@/icons/Collapse';
 import {Expand} from '@/icons/Expand';
 
+const BUTTON_STYLE = {height: 'auto', paddingTop: '4px', paddingBottom: '4px'};
 const MAX_WIDTH = 1300;
 
 export const Pricing = () => {
@@ -60,8 +61,8 @@ export const Pricing = () => {
         color="var(--color-white)"
         col1={
           <>
-            <Subhead style={{marginBottom: '30px'}}>Free plan</Subhead>
-            <Price amount="$0" perUnit="Month" />
+            <Subhead style={{marginBottom: '16px'}}>Free plan</Subhead>
+            <Price amount="$0" perUnit="Month" color="var(--color-white)" />
           </>
         }
         col2={
@@ -78,10 +79,16 @@ export const Pricing = () => {
         }
         col3={
           <>
-            <PrimaryButton href="https://pinecast.com/signup">
+            <PrimaryButton
+              style={BUTTON_STYLE}
+              href="https://pinecast.com/signup"
+            >
               Sign up
             </PrimaryButton>
-            <SecondaryButton href="https://help.pinecast.com/article/135-whats-included-with-the-free-plan">
+            <SecondaryButton
+              style={BUTTON_STYLE}
+              href="https://help.pinecast.com/article/135-whats-included-with-the-free-plan"
+            >
               See what&rsquo;s included
             </SecondaryButton>
           </>
@@ -91,10 +98,10 @@ export const Pricing = () => {
         color="var(--color-orchid)"
         col1={
           <>
-            <Subhead style={{marginBottom: '30px'}}>Starter plan</Subhead>
+            <Subhead style={{marginBottom: '16px'}}>Starter plan</Subhead>
             <div>
               <Price amount="$10" perUnit="Month" color="var(--color-white)" />
-              <Overline>or</Overline>
+              <Overline style={{margin: '8px 0 4px'}}>or</Overline>
               <Price amount="$110" perUnit="Year" color="var(--color-white)" />
             </div>
           </>
@@ -113,10 +120,16 @@ export const Pricing = () => {
         }
         col3={
           <>
-            <PrimaryButton href="https://pinecast.com/signup">
+            <PrimaryButton
+              style={BUTTON_STYLE}
+              href="https://pinecast.com/signup"
+            >
               Sign up
             </PrimaryButton>
-            <SecondaryButton href="https://help.pinecast.com/article/130-whats-included-in-the-starter-plan">
+            <SecondaryButton
+              style={BUTTON_STYLE}
+              href="https://help.pinecast.com/article/130-whats-included-in-the-starter-plan"
+            >
               See what&rsquo;s included
             </SecondaryButton>
           </>
@@ -288,9 +301,11 @@ const Price = ({
       <strong
         className={css({
           ...GintoNordCondensed,
+          color: color ?? 'inherit',
           fontSize: '42px',
-          color: color ?? 'transparent',
-          WebkitTextStroke: '1px var(--color-primary-dark)',
+          lineHeight: '1.2',
+          textShadow:
+            '-0.5px -1px 0 var(--color-space), 0.5px -1px 0 var(--color-space), -0.5px 1.5px 0 var(--color-space), 0.5px 1.5px 0 var(--color-space)',
           verticalAlign: 'baseline',
         })}
       >
@@ -299,10 +314,11 @@ const Price = ({
       <Body3
         style={{
           display: 'inline-block',
+          padding: '0 0.15em',
           verticalAlign: 'baseline',
         }}
       >
-        /{perUnit}
+        / {perUnit}
       </Body3>
     </div>
   );
@@ -313,9 +329,10 @@ const FeatureList = ({features}: {features: Array<React.ReactNode>}) => {
   return (
     <ul
       className={css({
+        margin: 0,
         padding: 0,
         listStyle: 'none',
-        borderTop: '1px solid #888',
+        borderTop: '1px solid var(--color-line)',
       })}
     >
       {features.map((name, i) => (
@@ -324,8 +341,8 @@ const FeatureList = ({features}: {features: Array<React.ReactNode>}) => {
           className={css({
             alignItems: 'center',
             display: 'flex',
-            borderBottom: '1px solid #888',
-            height: '44px',
+            borderBottom: '1px solid var(--color-line)',
+            padding: '9.5px 0',
             justifyContent: 'space-between',
           })}
         >
