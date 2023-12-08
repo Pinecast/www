@@ -48,8 +48,8 @@ export const SideTicks = () => {
   }, []);
 
   useCalculateResizableValue(() => {
-    ref.current!.width = window.innerWidth;
-    ref.current!.height = window.innerHeight;
+    ref.current!.width = document.body.clientWidth;
+    ref.current!.height = document.body.clientHeight;
   });
 
   return (
@@ -58,7 +58,6 @@ export const SideTicks = () => {
       className={css({
         position: 'absolute',
         top: 0,
-
         marginBottom: '-100vh',
       })}
     />
