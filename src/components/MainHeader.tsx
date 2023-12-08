@@ -48,8 +48,9 @@ export const MainHeader = () => {
       <div
         className={css({
           display: 'flex',
-          gap: '30px',
+          gap: '0 1px',
           alignItems: 'center',
+          marginLeft: '-15px',
           [MOBILE_MEDIA_QUERY]: {display: 'none'},
         })}
       >
