@@ -180,8 +180,8 @@ export const Globe = () => {
 
   const scrollHandler = React.useCallback((props: ElementOutput) => {
     for (const element of elements) {
-      elementRefs[element].current!.style[props[element][0] as any] =
-        props[element][1];
+      const [property, value] = props[element];
+      elementRefs[element].current!.style[property as any] = value;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
