@@ -49,7 +49,7 @@ export const SideTicks = () => {
 
   useCalculateResizableValue(() => {
     ref.current!.width = document.body.clientWidth;
-    ref.current!.height = document.body.clientHeight;
+    ref.current!.height = window.innerHeight;
   });
 
   return (
