@@ -6,7 +6,7 @@ import {MOBILE_BREAKPOINT} from '@/constants';
 export const Intro = ({children}: {children: React.ReactNode}) => {
   const css = useCSS();
   return (
-    <p
+    <div
       className={css({
         ...MonumentGroteskBold,
         fontSize: '42px',
@@ -19,6 +19,6 @@ export const Intro = ({children}: {children: React.ReactNode}) => {
       })}
     >
       {children}
-    </p>
+    </div>
   );
 };
