@@ -195,7 +195,6 @@ export const Globe = () => {
         position: 'relative',
       })}
     >
-      <SideTicks />
       <div
         className={css({
           display: 'flex',
@@ -251,6 +250,7 @@ export const Globe = () => {
             'min(var(--globe-ideal-vertical-height), var(--globe-ideal-horizontal-height))',
         })}
       >
+        <SideTicks />
         <RadialLines />
         <div
           ref={globeCircleRef}
