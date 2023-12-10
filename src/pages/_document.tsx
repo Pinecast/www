@@ -45,8 +45,9 @@ export default function Document({
     <Html lang="en">
       <Head>
         <link rel="icon" href="/favicon.ico" />
-        <style>
-          {`
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
           :root {
             --color-space: #090909;
             --color-sand: #f8f4eb;
@@ -97,9 +98,10 @@ export default function Document({
             --color-core-accent: #888;
           }
         `
-            .replace(/\n/g, '')
-            .replace(/\s\s+/g, ' ')}
-        </style>
+              .replace(/\n/g, '')
+              .replace(/\s\s+/g, ' '),
+          }}
+        />
         {stylesheets.map((sheet, i) => (
           <style
             className="_styletron_hydrate_"
