@@ -7,9 +7,11 @@ import {ReactNode} from 'react';
 export const MainHeaderLink = ({
   children,
   href,
+  onClick,
 }: {
   children: ReactNode;
   href: string;
+  onClick?: (evt: React.MouseEvent) => void;
 }) => {
   const css = useCSS();
   return (
@@ -28,6 +30,14 @@ export const MainHeaderLink = ({
         },
       })}
       href={href}
+      onClick={
+        onClick
+          ? (evt: React.MouseEvent) => {
+              evt.preventDefault();
+              onClick(evt);
+            }
+          : undefined
+      }
     >
       {children}
     </Link>

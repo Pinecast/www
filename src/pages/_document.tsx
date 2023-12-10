@@ -97,6 +97,21 @@ export default function Document({
             --color-theme-mode: #090909;
             --color-core-accent: #888;
           }
+          body.dimmed {
+            position: relative;
+          }
+          body.dimmed::before {
+            background: var(--color-space);
+            bottom: 0;
+            content: '';
+            display: block;
+            left: 0;
+            opacity: 0.8;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 120;
+          }
         `
               .replace(/\n/g, '')
               .replace(/\s\s+/g, ' '),

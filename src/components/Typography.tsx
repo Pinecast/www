@@ -72,15 +72,18 @@ export const H2 = ({
 };
 
 export const Body1 = ({
+  as,
   children,
   style,
 }: {
+  as: React.ElementType;
   children: ReactNode;
   style?: StyleObject;
 }) => {
   const css = useCSS();
+  const Tag = as || 'div';
   return (
-    <p
+    <Tag
       className={css({
         ...MonumentGroteskBold,
         fontSize: '28px',
@@ -97,7 +100,7 @@ export const Body1 = ({
       })}
     >
       {children}
-    </p>
+    </Tag>
   );
 };
 
@@ -372,7 +375,7 @@ export const Link = ({
           [CAN_HOVER_MEDIA_QUERY]: {
             textDecoration: 'underline',
             ...(style as Record<string, any>)?.[':hover'],
-          }
+          },
         },
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '14px',

@@ -17,7 +17,7 @@ export const MainLogo = () => {
           marginRight: 'auto',
           width: '50px',
           height: '50px',
-          zIndex: 100,
+          zIndex: 140,
 
           [MOBILE_MEDIA_QUERY]: {
             height: '40px',
