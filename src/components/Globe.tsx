@@ -242,12 +242,9 @@ export const Globe = () => {
 
           '--globe-vertical-space': 'calc(100vh - 120px)',
           '--globe-horizontal-space': '100vw',
-          '--globe-ideal-vertical-height':
-            'calc(var(--globe-vertical-space) * 0.7)',
           '--globe-ideal-horizontal-height':
             'calc(var(--globe-horizontal-space) * 0.5)',
-          '--globe-ideal-height':
-            'min(var(--globe-ideal-vertical-height), var(--globe-ideal-horizontal-height))',
+          '--globe-ideal-height': 'var(--globe-ideal-horizontal-height)',
         })}
       >
         <SideTicks />
