@@ -25,8 +25,7 @@ export const H1 = ({
         fontSize: '160px',
         letterSpacing: '-0.04em',
         lineHeight: '144px',
-        marginTop: 0,
-        marginBottom: 0,
+        margin: `0 ${style?.marginRight || 0} 0 ${style?.marginLeft || 0}`,
         textTransform: 'uppercase',
         ...style,
         [MOBILE_MEDIA_QUERY]: {
