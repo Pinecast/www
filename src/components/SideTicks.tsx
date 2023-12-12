@@ -27,6 +27,7 @@ export const SideTicks = () => {
         top: `-${TOP_OFFSET}px`,
         width: '100%',
         height: `calc(100% + ${TOP_OFFSET}px)`,
+        zIndex: 1,
       })}
     >
       {Array.from({length: Math.ceil(height / TICK_INTERVAL)}, (_, i) => (

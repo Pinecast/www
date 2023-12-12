@@ -316,6 +316,36 @@ export const PillButton = ({
   );
 };
 
+export const GhostButton = ({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: StyleObject;
+}) => {
+  const css = useCSS();
+  return (
+    <div
+      className={css({
+        ...MonumentGroteskBold,
+        color: 'var(--color-white)',
+        fontSize: '16px',
+        fontWeight: 700,
+        lineHeight: '1',
+        ...style,
+        // [MOBILE_MEDIA_QUERY]: {
+        //   fontSize: '14px',
+        //   lineHeight: '14px',
+        //   ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
+        // },
+      })}
+    >
+      {children}
+    </div>
+  );
+};
+
+
 export const Link = ({
   children,
   style,

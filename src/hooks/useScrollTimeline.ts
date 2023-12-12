@@ -13,6 +13,9 @@ const easingFunctions = {
     (t /= d / 2) < 1 ? (c / 2) * t * t + b : (-c / 2) * (--t * (t - 2) - 1) + b,
 } as const;
 
+const clamp = (input: number, min: number, max: number) =>
+  Math.max(min, Math.min(input, max));
+
 type Keyframe = {
   target: number;
   ease?: keyof typeof easingFunctions;
@@ -45,6 +48,8 @@ export const useScrollTimeline = (
   timeline: Timeline,
   callback: (elements: ElementOutput) => void,
 ) => {
+  const [scrollRatio, setScrollRatio] = React.useState<number>(0);
+
   const timelineRef = React.useRef<Array<[string, ElementDef]>>(null as any);
   if (timelineRef.current === null) {
     timelineRef.current = Object.entries(timeline) as any;
@@ -81,8 +86,13 @@ export const useScrollTimeline = (
       // viewport reaches the bottom of the page).
       const minScrollPosition =
         containerTop < windowHeight ? 0 : containerTop - windowHeight;
-      const percentagePosition =
-        (scrollY - minScrollPosition) / containerHeight;
+      const percentagePosition = clamp(
+        (scrollY - minScrollPosition) / containerHeight,
+        0,
+        1,
+      );
+
+      setScrollRatio(percentagePosition);
 
       // const topScroll = Math.max(0, containerTop - windowHeight);
       // const bottomScroll = containerTop + containerHeight;
@@ -133,4 +143,6 @@ export const useScrollTimeline = (
       handlers.delete(handler);
     };
   }, [handler]);
+
+  return scrollRatio;
 };
