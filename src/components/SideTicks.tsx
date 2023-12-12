@@ -10,10 +10,13 @@ export const SideTicks = () => {
   const css = useCSS();
 
   const ref = React.useRef<SVGSVGElement>(null);
-  const [size, setSize] = React.useState(0);
+  const [height, setHeight] = React.useState(0);
+  // `setWidth` is used to force an update of this component so the SVG is re-rendered.
+  const [_, setWidth] = React.useState(0);
 
   useCalculateResizableValue(() => {
-    setSize(ref.current!.clientHeight);
+    setHeight(ref.current!.clientHeight);
+    setWidth(ref.current!.clientWidth);
   });
 
   return (
@@ -26,7 +29,7 @@ export const SideTicks = () => {
         height: `calc(100% + ${TOP_OFFSET}px)`,
       })}
     >
-      {Array.from({length: Math.ceil(size / TICK_INTERVAL)}, (_, i) => (
+      {Array.from({length: Math.ceil(height / TICK_INTERVAL)}, (_, i) => (
         <React.Fragment key={i}>
           <line
             x1={1}
@@ -49,8 +52,8 @@ export const SideTicks = () => {
       <line
         x1={0}
         x2={ref.current?.clientWidth ?? 0}
-        y1={size / 2 + TOP_OFFSET / 2 + 60}
-        y2={size / 2 + TOP_OFFSET / 2 + 60}
+        y1={height / 2 + TOP_OFFSET / 2 + 60}
+        y2={height / 2 + TOP_OFFSET / 2 + 60}
         stroke="white"
       />
     </svg>
