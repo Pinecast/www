@@ -87,6 +87,7 @@ export const Body1 = ({
       className={css({
         ...MonumentGroteskBold,
         fontSize: '28px',
+        fontWeight: 500,
         letterSpacing: '-0.03em',
         lineHeight: '28px',
         marginTop: 0,

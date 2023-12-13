@@ -1,4 +1,4 @@
-import {MOBILE_MEDIA_QUERY} from '@/constants';
+import {TABLET_MEDIA_QUERY} from '@/constants';
 import {Logo} from '@/icons/Logo';
 import Link from 'next/link';
 
@@ -19,7 +19,7 @@ export const MainLogo = () => {
           height: '50px',
           zIndex: 140,
 
-          [MOBILE_MEDIA_QUERY]: {
+          [TABLET_MEDIA_QUERY]: {
             height: '40px',
             width: '40px',
             top: '20px',

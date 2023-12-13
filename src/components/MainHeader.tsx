@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useCSS} from '@/hooks/useCSS';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
-import {MOBILE_MEDIA_QUERY} from '@/constants';
+import {TABLET_MEDIA_QUERY} from '@/constants';
 import Link from 'next/link';
 import {SignIn} from '@/icons/SignIn';
 import {MainHeaderLink} from './MainHeaderLink';
@@ -44,13 +44,14 @@ const NavLevelColumn = ({
           width: '100%',
         })}
       >
-        <Body1 as="h3" style={{maxWidth: '10em'}}>
+        <Body1 as="h3" style={{maxWidth: '8em'}}>
           {heading}
         </Body1>
         <Caption
           style={{
             color: 'var(--color-core-accent)',
             marginBottom: '8px',
+            maxWidth: '8em',
           }}
         >
           {caption}
@@ -65,6 +66,7 @@ export const MainHeader = () => {
   const navRef = React.useRef<HTMLDivElement>(null);
   const [navOpen, setNavOpen] = React.useState(false);
 
+  // Allow any clicks outside of the dropdown nav to dismiss the nav.
   useDismiss(navRef, () => setNavOpen(false), navOpen);
 
   React.useEffect(() => {
@@ -93,7 +95,7 @@ export const MainHeader = () => {
           transition:
             'background-color 0.2s, border-color 0.2s, border-radius 0.2s',
           zIndex: navOpen ? 130 : 95,
-          [MOBILE_MEDIA_QUERY]: {
+          [TABLET_MEDIA_QUERY]: {
             height: '60px',
             top: '10px',
             left: '10px',
@@ -108,11 +110,13 @@ export const MainHeader = () => {
             appearance: 'none',
             background: 'none',
             border: 'none',
+            cursor: 'pointer',
             display: 'none',
             WebkitAppearance: 'none',
-            [MOBILE_MEDIA_QUERY]: {display: 'flex'},
+            [TABLET_MEDIA_QUERY]: {display: 'flex'},
           })}
-          onClick={() => {
+          onClick={(evt) => {
+            evt.preventDefault();
             setNavOpen(prevNavOpen => !prevNavOpen);
           }}
         >
@@ -124,7 +128,7 @@ export const MainHeader = () => {
             gap: '0 1px',
             alignItems: 'center',
             marginLeft: '-15px',
-            [MOBILE_MEDIA_QUERY]: {display: 'none'},
+            [TABLET_MEDIA_QUERY]: {display: 'none'},
           })}
         >
           <MainHeaderLink href="/features">Features</MainHeaderLink>
@@ -141,7 +145,7 @@ export const MainHeader = () => {
           className={css({
             display: 'flex',
             gap: '20px',
-            [MOBILE_MEDIA_QUERY]: {display: 'none'},
+            [TABLET_MEDIA_QUERY]: {display: 'none'},
           })}
         >
           <SecondaryButton href="https://pinecast.com/login">
@@ -155,7 +159,7 @@ export const MainHeader = () => {
           className={css({
             alignItems: 'center',
             display: 'none',
-            [MOBILE_MEDIA_QUERY]: {display: 'flex'},
+            [TABLET_MEDIA_QUERY]: {display: 'flex'},
           })}
         >
           <Link
@@ -181,14 +185,14 @@ export const MainHeader = () => {
           justifyContent: 'flex-start',
           left: '20px',
           opacity: navOpen ? 1 : 0,
-          pointerEvents: navOpen ? 'all' : 'none',
+          // pointerEvents: navOpen ? 'all' : 'none',
           position: 'fixed',
           right: '20px',
           top: navOpen ? '82px' : '80px',
           transition: 'opacity 0.2s 0.1s, top 0.2s',
           visibility: navOpen ? 'visible' : 'hidden',
           zIndex: navOpen ? 130 : 90,
-          [MOBILE_MEDIA_QUERY]: {
+          [TABLET_MEDIA_QUERY]: {
             height: '92vh',
             top: navOpen ? '70px' : '70px',
             left: '10px',
@@ -206,8 +210,9 @@ export const MainHeader = () => {
             overflow: 'hidden',
             justifyContent: 'space-between',
             padding: '20px',
+            // background:'green',
             transition: 'all 0.4s',
-            [MOBILE_MEDIA_QUERY]: {
+            [TABLET_MEDIA_QUERY]: {
               height: 'auto',
               top: '10px',
               left: '10px',
@@ -220,7 +225,8 @@ export const MainHeader = () => {
               display: 'grid',
               gap: '20px',
               gridTemplateColumns: 'repeat(4, 1fr)',
-              [MOBILE_MEDIA_QUERY]: {
+              width: '100%',
+              [TABLET_MEDIA_QUERY]: {
                 gridTemplateColumns: '1fr',
               },
             })}
