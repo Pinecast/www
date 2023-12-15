@@ -137,7 +137,7 @@ function GlobeDesktop({
           <rect width={1670} height={835} fill="#080808" />
           <g data-name="radial-lines">
             <path
-              data-name="Radial Line Small"
+              data-name="Radial Line Large"
               opacity={0.15}
               d="M1568.5 834.5C1568.5 1243.19 1240.1 1574.5 835 1574.5C429.903 1574.5 101.5 1243.19 101.5 834.5C101.5 425.805 429.903 94.5 835 94.5C1240.1 94.5 1568.5 425.805 1568.5 834.5Z"
               stroke="#fff"
@@ -149,7 +149,7 @@ function GlobeDesktop({
               stroke="#fff"
             />
             <path
-              data-name="Radial Line Large"
+              data-name="Radial Line Small"
               opacity={0.35}
               d="M1255.5 834.5C1255.5 1068.67 1067.23 1258.5 835 1258.5C602.768 1258.5 414.5 1068.67 414.5 834.5C414.5 600.327 602.768 410.5 835 410.5C1067.23 410.5 1255.5 600.327 1255.5 834.5Z"
               stroke="#fff"
