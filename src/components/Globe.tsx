@@ -3,6 +3,7 @@ import {Body1, Body4, H1, Link as ProseLink} from './Typography';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
 import * as React from 'react';
+import {StyleObject} from 'styletron-react';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {
   ElementOutput,
@@ -20,13 +21,14 @@ function GlobeDesktop({
   atDistribution,
   atAnalytics,
   atMonetization,
+  style,
   ...props
 }: {
   atDistribution?: boolean;
   atAnalytics?: boolean;
   atMonetization?: boolean;
+  style?: StyleObject;
 }) {
-  const css = useCSS();
   return (
     <svg
       fill="none"
@@ -36,13 +38,13 @@ function GlobeDesktop({
       xmlns="http://www.w3.org/2000/svg"
       style={
         {
+          bottom: '0',
+          height: 'auto',
           objectFit: 'contain',
           pointerEvents: 'none',
           position: 'absolute',
-          bottom: '0',
           width: '100%',
-          height: 'auto',
-          background: 'green',
+          ...style,
         } as any
       }
       {...props}
@@ -1202,13 +1204,13 @@ export const Globe = () => {
   function getFeaturesLink() {
     let page;
     if (atDistribution) {
-      page='distribution';
+      page = 'distribution';
     }
     if (atAnalytics) {
-      page='analytics';
+      page = 'analytics';
     }
     if (atMonetization) {
-      page='monetization';
+      page = 'monetization';
     }
     if (!page) {
       return '/features';
@@ -1216,16 +1218,11 @@ export const Globe = () => {
     return `/features/${page}`;
   }
 
-  React.useEffect(() => {
-    document.title = `${scrollRatio}`;
-  }, [scrollRatio]);
-
   return (
     <section
       ref={ref}
       className={css({
         backgroundColor: 'var(--color-space)',
-        // background:'red',
         position: 'relative',
       })}
     >
@@ -1277,7 +1274,6 @@ export const Globe = () => {
         className={css({
           position: 'sticky',
           height: '100vh',
-          // background: 'blue',
           top: 0,
 
           '--globe-vertical-space': 'calc(100vh - 120px)',
@@ -1289,6 +1285,7 @@ export const Globe = () => {
       >
         <SideTicks />
         <div
+          // Spacer that aligns semi-Globe to be flush with Equator-esque line
           className={css({
             height: '55.68vh',
             position: 'relative',
