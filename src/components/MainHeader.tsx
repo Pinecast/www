@@ -23,15 +23,15 @@ type QuickLink = {
 };
 
 const QUICK_LINKS: QuickLink[] = [
-  {href: '/learn/Create a podcast', title: 'Create a podcast'},
-  {href: '/learn/Import a podcast', title: 'Import a podcast'},
-  {href: '/learn/Promoting your show', title: 'Promoting your show'},
+  {href: '/learn/create-a-podcast', title: 'Create a podcast'},
+  {href: '/learn/import-a podcast', title: 'Import a podcast'},
+  {href: '/learn/promoting-your-podcast', title: 'Promoting your show'},
   {
-    href: '/learn/Understanding your growth',
+    href: '/learn/understand-your-growth',
     title: 'Understanding your growth',
   },
-  {href: '/learn/Monetize your show', title: 'Monetize your show'},
-  {href: '/learn/Podcasting glossary', title: 'Podcasting glossary'},
+  {href: '/learn/monetize-your-show', title: 'Monetize your show'},
+  {href: '/learn/podcasting-glossary', title: 'Podcasting glossary'},
 ];
 
 const PersonaBlock = ({
