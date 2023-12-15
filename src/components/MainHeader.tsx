@@ -4,8 +4,6 @@ import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
 import {
   DESKTOP_MEDIA_QUERY,
-  MOBILE_BREAKPOINT,
-  MOBILE_MEDIA_QUERY,
   TABLET_BREAKPOINT,
   TABLET_MEDIA_QUERY,
 } from '@/constants';
