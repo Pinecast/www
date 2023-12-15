@@ -1,6 +1,8 @@
+export const DESKTOP_BREAKPOINT = 1280;
 export const TABLET_BREAKPOINT = 1180;
 export const MOBILE_BREAKPOINT = 700;
 
+export const DESKTOP_MEDIA_QUERY = `@media (max-width: ${DESKTOP_BREAKPOINT}px)`;
 export const TABLET_MEDIA_QUERY = `@media (max-width: ${TABLET_BREAKPOINT}px)`;
 export const MOBILE_MEDIA_QUERY = `@media (max-width: ${MOBILE_BREAKPOINT}px)`;
 

@@ -2,28 +2,59 @@ import * as React from 'react';
 import {useCSS} from '@/hooks/useCSS';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
-import {TABLET_MEDIA_QUERY} from '@/constants';
+import {
+  DESKTOP_MEDIA_QUERY,
+  MOBILE_BREAKPOINT,
+  MOBILE_MEDIA_QUERY,
+  TABLET_BREAKPOINT,
+  TABLET_MEDIA_QUERY,
+} from '@/constants';
 import Link from 'next/link';
 import {SignIn} from '@/icons/SignIn';
 import {MainHeaderLink} from './MainHeaderLink';
 import {Hamburger} from '@/icons/Hamburger';
 import {useDismiss} from '@/hooks/useDismiss';
-import {Body1, Caption} from './Typography';
+import {Body1, Caption, PillButton} from './Typography';
+import useMatchMedia from '@/hooks/useMatchMedia';
 
-const NavLevelColumn = ({
-  heading,
+type QuickLink = {
+  href: string;
+  title: string;
+};
+
+const QUICK_LINKS: QuickLink[] = [
+  {href: '/learn/Create a podcast', title: 'Create a podcast'},
+  {href: '/learn/Import a podcast', title: 'Import a podcast'},
+  {href: '/learn/Promoting your show', title: 'Promoting your show'},
+  {
+    href: '/learn/Understanding your growth',
+    title: 'Understanding your growth',
+  },
+  {href: '/learn/Monetize your show', title: 'Monetize your show'},
+  {href: '/learn/Podcasting glossary', title: 'Podcasting glossary'},
+];
+
+const PersonaBlock = ({
   caption,
   color,
+  heading,
+  illustrationSrc,
+  illustrationOffsetY,
 }: {
-  heading: React.ReactNode | string;
   caption: React.ReactNode | string;
   color: string;
+  heading: React.ReactNode | string;
+  illustrationSrc: string;
+  illustrationOffsetY?: number;
 }) => {
   const css = useCSS();
   return (
     <div
       className={css({
-        background: color,
+        backgroundColor: color,
+        backgroundImage: `url(${illustrationSrc})`,
+        backgroundSize: `cover`,
+        backgroundPosition: `50% ${illustrationOffsetY || 0}px`,
         border: '1px solid var(--color-line)',
         borderRadius: '20px',
         display: 'flex',
@@ -58,6 +89,137 @@ const NavLevelColumn = ({
         </Caption>
       </header>
     </div>
+  );
+};
+
+// Vertical treatment for desktop viewports (4:3, 16:9, ultra-wide).
+const QuickTipsColumn = ({}) => {
+  const css = useCSS();
+  return (
+    <div className="adaptive">
+      <div
+        className={css({
+          background: 'var(--color-primary-dark)',
+          borderRadius: '20px',
+          color: 'var(--color-theme-mode)',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          padding: '30px',
+          [DESKTOP_MEDIA_QUERY]: {
+            padding: '20px',
+          },
+        })}
+      >
+        <Body1 as="h3" style={{maxWidth: '8em'}}>
+          Quick tips for getting started
+        </Body1>
+        <ul
+          className={css({
+            display: 'grid',
+            gap: '12px',
+            gridTemplateColumns: 'minmax(0, 1fr)',
+            listStyleType: 'none',
+            margin: 'auto 0 0 0',
+            placeSelf: 'top',
+            placeContent: 'bottom',
+            padding: '0',
+          })}
+        >
+          {QUICK_LINKS.map(({href, title}) => (
+            <li key={href}>
+              <Link
+                href={href}
+                className={css({
+                  color: 'inherit',
+                  whiteSpace: 'nowrap',
+                })}
+              >
+                <PillButton
+                  style={{
+                    fontSize: '1rem',
+                    padding: '0.125em 1em',
+                  }}
+                >
+                  {title}
+                </PillButton>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+// Horizontal treatment for smaller viewports (mobile, tablet).
+const QuickTipsRow = ({}) => {
+  const css = useCSS();
+  return (
+    <div className="adaptive">
+      <div
+        className={css({
+          background: 'var(--color-primary-dark)',
+          borderRadius: '20px',
+          color: 'var(--color-theme-mode)',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          padding: '30px',
+          [DESKTOP_MEDIA_QUERY]: {
+            padding: '20px',
+          },
+        })}
+      >
+        <Body1 as="h3" style={{maxWidth: '8em'}}>
+          Quick tips for getting started
+        </Body1>
+        <ul
+          className={css({
+            display: 'grid',
+            gap: '12px',
+            gridTemplateColumns: 'minmax(0, 1fr)',
+            listStyleType: 'none',
+            margin: 'auto 0 0 0',
+            placeSelf: 'top',
+            placeContent: 'bottom',
+            padding: '0',
+          })}
+        >
+          {QUICK_LINKS.map(({href, title}) => (
+            <li key={href}>
+              <Link
+                href={href}
+                className={css({
+                  color: 'inherit',
+                  whiteSpace: 'nowrap',
+                })}
+              >
+                <PillButton
+                  style={{
+                    fontSize: '1rem',
+                    padding: '0.125em 1em',
+                  }}
+                >
+                  {title}
+                </PillButton>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+const QuickTipsBlock = ({}) => {
+  const isSmall = useMatchMedia(`(max-width: ${TABLET_BREAKPOINT}px)`);
+  const isLarge = !isSmall;
+  return (
+    <>
+      {isSmall && <QuickTipsRow />}
+      {isLarge && <QuickTipsColumn />}
+    </>
   );
 };
 
@@ -115,7 +277,7 @@ export const MainHeader = () => {
             WebkitAppearance: 'none',
             [TABLET_MEDIA_QUERY]: {display: 'flex'},
           })}
-          onClick={(evt) => {
+          onClick={evt => {
             evt.preventDefault();
             setNavOpen(prevNavOpen => !prevNavOpen);
           }}
@@ -231,75 +393,28 @@ export const MainHeader = () => {
               },
             })}
           >
-            <NavLevelColumn
+            <PersonaBlock
               color="var(--color-orchid)"
+              illustrationSrc="/images/art/user-beginner.png"
+              illustrationOffsetY={-26}
               heading="Podcasting for beginners"
               caption="Level 1"
             />
-            <NavLevelColumn
+            <PersonaBlock
               color="var(--color-lime)"
+              illustrationSrc="/images/art/user-advanced.png"
+              illustrationOffsetY={-56}
               heading="Podcasting for power users"
               caption="Level 2"
             />
-            <NavLevelColumn
+            <PersonaBlock
               color="var(--color-sky)"
+              illustrationSrc="/images/art/user-organizations.png"
+              illustrationOffsetY={-14}
               heading="Corporate podcasters"
               caption="Level 3"
             />
-            {/* <div
-              className={css({
-                background: 'green',
-                border: '1px solid #000',
-                borderRadius: '20px',
-                display: 'flex',
-                alignItems: 'flex-end',
-                justifyContent: 'flex-end',
-                padding: '10px',
-              })}
-            >
-              <header
-                className={css({
-                  background: 'var(--color-lime)',
-                  border: '1px solid #000',
-                  borderRadius: '10px',
-                  marginTop: 'auto',
-                  display: 'flex',
-                  flexDirection: 'column-reverse',
-                  padding: '30px 20px',
-                })}
-              >
-                <Body1 as="h3">Podcasting for power users</Body1>
-                <Caption
-                  style={{
-                    color: 'var(--color-core-accent)',
-                    marginBottom: '8px',
-                  }}
-                >
-                  Level 2
-                </Caption>
-              </header>
-            </div>
-            <div
-              className={css({
-                background: 'blue',
-                borderRadius: '20px',
-              })}
-            >
-              <Caption style={{color: 'var(--color-core-accent)'}}>
-                Level 3
-              </Caption>
-              <Body1 as="h3">Podcasting for beginners</Body1>
-            </div> */}
-            <div
-              className={css({
-                background: 'var(--color-primary-dark)',
-                borderRadius: '20px',
-                color: 'var(--color-theme-mode)',
-                padding: '30px',
-              })}
-            >
-              <Body1 as="h3">Quick tips for getting started</Body1>
-            </div>
+            <QuickTipsBlock />
           </div>
         </nav>
       </div>

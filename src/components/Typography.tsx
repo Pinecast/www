@@ -1,4 +1,4 @@
-import {MOBILE_MEDIA_QUERY, CAN_HOVER_MEDIA_QUERY} from '@/constants';
+import {MOBILE_MEDIA_QUERY, CAN_HOVER_MEDIA_QUERY, TABLET_MEDIA_QUERY} from '@/constants';
 import {
   GintoNordCondensed,
   MonumentGroteskBold,
@@ -305,13 +305,15 @@ export const PillButton = ({
         fontSize: '16px',
         fontWeight: 400,
         lineHeight: '28px',
-        padding: '0px 1em',
-        textTransform: 'uppercase',
+        padding: '0 1em',
         ...style,
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '14px',
           lineHeight: '20px',
           ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
+        },
+        [TABLET_MEDIA_QUERY]: {
+          ...(style as Record<string, any>)?.[TABLET_MEDIA_QUERY],
         },
       })}
     >

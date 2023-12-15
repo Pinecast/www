@@ -90,7 +90,7 @@ export default function Document({
           body {
             background: var(--color-theme-mode);
           }
-          body.darkSection {
+          body.darkSection, body.darkSection .adaptive {
             --color-line: #888;
             --color-primary-dark: var(--color-white);
             --color-primary-light: #090909;
