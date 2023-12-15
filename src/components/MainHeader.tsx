@@ -94,7 +94,7 @@ const PersonaBlock = ({
 const QuickTipsColumn = ({}) => {
   const css = useCSS();
   return (
-    <div className="adaptive">
+    <>
       <div
         className={css({
           background: 'var(--color-primary-dark)',
@@ -146,7 +146,7 @@ const QuickTipsColumn = ({}) => {
           ))}
         </ul>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -154,7 +154,7 @@ const QuickTipsColumn = ({}) => {
 const QuickTipsRow = ({}) => {
   const css = useCSS();
   return (
-    <div className="adaptive">
+    <>
       <div
         className={css({
           background: 'var(--color-primary-dark)',
@@ -206,7 +206,7 @@ const QuickTipsRow = ({}) => {
           ))}
         </ul>
       </div>
-    </div>
+    </>
   );
 };
 
