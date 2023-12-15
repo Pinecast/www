@@ -17,6 +17,61 @@ import {SideTicks} from './SideTicks';
 
 const OPACITY_DURATION_MS: number = 1000;
 
+type Feature = 'distribution' | 'analytics' | 'monetization';
+
+const FEATURES: Record<
+  Feature,
+  {
+    title: React.ReactNode | string;
+    description: React.ReactNode | string;
+    href: string;
+  }
+> = {
+  distribution: {
+    title: <>Distribution</>,
+    description: (
+      <>
+        Publish or import your podcast, get listed in apps, and grow your
+        audience with our SEO-optimized tools.
+      </>
+    ),
+    href: '/features/distribution',
+  },
+  analytics: {
+    title: <>Analytics</>,
+    description: (
+      <>
+        Perform routine audits and measure success with premium analytics,
+        simple charts and clean controls.
+      </>
+    ),
+    href: '/features/analytics',
+  },
+  monetization: {
+    title: <>Monetization</>,
+    description: (
+      <>
+        Publish premium content to paid subscribers and receive weekly payouts
+        to your bank account or debit card.
+      </>
+    ),
+    href: '/features/monetization',
+  },
+};
+
+function chooseFeature(scrollRatio: number) {
+  if (scrollRatio >= 0.18 && scrollRatio < 0.35) {
+    return 'distribution';
+  }
+  if (scrollRatio >= 0.35 && scrollRatio < 0.64) {
+    return 'analytics';
+  }
+  if (scrollRatio >= 0.64) {
+    return 'monetization';
+  }
+  return null;
+}
+
 function GlobeDesktop({
   atDistribution,
   atAnalytics,
@@ -109,12 +164,12 @@ function GlobeDesktop({
                 // Slowly fade from 0->1 when scrolling down for fade-in effect to add the icons to the rings.
                 // Skip the fade from 1->0 when scrolling down for a vanish effect for the next set of icons to appear on the rings.
                 // Slowly fade from 1->0 when scrolling up for fade-out effect to remove the icons from the rings.
+                opacity: atDistribution ? '1' : '0',
                 transition: `opacity ${
                   atDistribution || (!atAnalytics && !atMonetization)
                     ? OPACITY_DURATION_MS
                     : 0
                 }ms ease`,
-                opacity: atDistribution ? '1' : '0',
               } as any
             }
           >
@@ -1197,26 +1252,8 @@ export const Globe = () => {
     scrollHandler,
   );
 
-  const atDistribution = scrollRatio >= 0.18 && scrollRatio < 0.35;
-  const atAnalytics = scrollRatio >= 0.35 && scrollRatio < 0.64;
-  const atMonetization = scrollRatio >= 0.64;
-
-  function getFeaturesLink() {
-    let page;
-    if (atDistribution) {
-      page = 'distribution';
-    }
-    if (atAnalytics) {
-      page = 'analytics';
-    }
-    if (atMonetization) {
-      page = 'monetization';
-    }
-    if (!page) {
-      return '/features';
-    }
-    return `/features/${page}`;
-  }
+  let currentFeatureSlug: Feature | null = chooseFeature(scrollRatio);
+  let currentFeature = FEATURES[currentFeatureSlug as Feature] ?? null;
 
   return (
     <section
@@ -1293,9 +1330,9 @@ export const Globe = () => {
         >
           {/* TODO: Build `GlobeMobile` for mobile-friendly version of Globe */}
           <GlobeDesktop
-            atDistribution={atDistribution}
-            atAnalytics={atAnalytics}
-            atMonetization={atMonetization}
+            atDistribution={currentFeatureSlug === 'distribution'}
+            atAnalytics={currentFeatureSlug === 'analytics'}
+            atMonetization={currentFeatureSlug === 'monetization'}
           />
         </div>
         <div
@@ -1303,7 +1340,13 @@ export const Globe = () => {
             display: 'grid',
             gap: '20px',
             gridAutoFlow: 'row dense',
+            // 12-col liquid grid of uniformly sized columns so the
+            // text below is elegantly re-positioned without hardcoded
+            // spacing for various media queries.
             gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
+            opacity: currentFeature ? '1' : '0',
+            pointerEvents: currentFeature ? 'auto' : 'none',
+            visibility: currentFeature ? 'visible' : 'hidden',
             margin: '120px 0',
             padding: '0 20px',
             position: 'relative',
@@ -1313,43 +1356,32 @@ export const Globe = () => {
         >
           <div
             className={css({
+              // Take up two columns.
               gridColumnStart: '2',
               gridColumnEnd: '4',
             })}
           >
             <div
               className={css({
+                // Column-gap bleed offset.
                 margin: '0 -20px 0 -30px',
               })}
             >
-              <Body1
-                style={{
-                  color: 'var(--color-white)',
-                  lineHeight: 1.05,
-                  marginBottom: '16px',
-                  transition: '0.2s opacity ease',
-                }}
-              >
-                {atDistribution && (
-                  <>
-                    Publish or import your podcast, get listed in apps, and grow
-                    your audience with our SEO-optimized tools.
-                  </>
-                )}
-                {atAnalytics && (
-                  <>
-                    Perform routine audits and measure success with premium
-                    analytics, simple charts and clean controls.
-                  </>
-                )}
-                {atMonetization && (
-                  <>
-                    Publish premium content to paid subscribers and receive
-                    weekly payouts to your bank account or debit card.
-                  </>
-                )}
-              </Body1>
-              <ProseLink href={getFeaturesLink()}>Learn more</ProseLink>
+              {currentFeature && (
+                <>
+                  <Body1
+                    style={{
+                      color: 'var(--color-white)',
+                      lineHeight: 1.05,
+                      marginBottom: '16px',
+                      transition: '0.2s opacity ease',
+                    }}
+                  >
+                    {currentFeature.description}
+                  </Body1>
+                  <ProseLink href={currentFeature.href}>Learn more</ProseLink>
+                </>
+              )}
             </div>
           </div>
         </div>
