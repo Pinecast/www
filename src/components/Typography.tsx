@@ -1,4 +1,9 @@
-import {MOBILE_MEDIA_QUERY, CAN_HOVER_MEDIA_QUERY} from '@/constants';
+import {
+  MOBILE_MEDIA_QUERY,
+  CAN_HOVER_MEDIA_QUERY,
+  TABLET_MEDIA_QUERY,
+  MIN_DESKTOP_MEDIA_QUERY,
+} from '@/constants';
 import {
   GintoNordCondensed,
   MonumentGroteskBold,
@@ -72,18 +77,22 @@ export const H2 = ({
 };
 
 export const Body1 = ({
+  as,
   children,
   style,
 }: {
+  as?: React.ElementType;
   children: ReactNode;
   style?: StyleObject;
 }) => {
   const css = useCSS();
+  const Tag = as ?? 'div';
   return (
-    <p
+    <Tag
       className={css({
         ...MonumentGroteskBold,
         fontSize: '28px',
+        fontWeight: 500,
         letterSpacing: '-0.03em',
         lineHeight: '28px',
         marginTop: 0,
@@ -97,7 +106,7 @@ export const Body1 = ({
       })}
     >
       {children}
-    </p>
+    </Tag>
   );
 };
 
@@ -225,15 +234,18 @@ export const Subhead = ({
 };
 
 export const Caption = ({
+  as,
   children,
   style,
 }: {
+  as?: React.ElementType;
   children: ReactNode;
   style?: StyleObject;
 }) => {
   const css = useCSS();
+  const Tag = as ?? 'small';
   return (
-    <small
+    <Tag
       className={css({
         ...MonumentGroteskSemiMono,
         display: 'block',
@@ -249,7 +261,7 @@ export const Caption = ({
       })}
     >
       {children}
-    </small>
+    </Tag>
   );
 };
 
@@ -284,15 +296,18 @@ export const Overline = ({
 };
 
 export const PillButton = ({
+	as,
   children,
   style,
 }: {
+	as?: React.ElementType;
   children: ReactNode;
   style?: StyleObject;
 }) => {
   const css = useCSS();
+  const Tag = as ?? 'div';
   return (
-    <div
+    <Tag
       className={css({
         ...MonumentGroteskRegular,
         border: '1px solid currentColor',
@@ -301,18 +316,20 @@ export const PillButton = ({
         fontSize: '16px',
         fontWeight: 400,
         lineHeight: '28px',
-        padding: '0px 1em',
-        textTransform: 'uppercase',
+        padding: '0 1em',
         ...style,
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '14px',
           lineHeight: '20px',
           ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
         },
+        [TABLET_MEDIA_QUERY]: {
+          ...(style as Record<string, any>)?.[TABLET_MEDIA_QUERY],
+        },
       })}
     >
       {children}
-    </div>
+    </Tag>
   );
 };
 
@@ -345,7 +362,6 @@ export const GhostButton = ({
   );
 };
 
-
 export const Link = ({
   children,
   style,
@@ -372,7 +388,7 @@ export const Link = ({
           [CAN_HOVER_MEDIA_QUERY]: {
             textDecoration: 'underline',
             ...(style as Record<string, any>)?.[':hover'],
-          }
+          },
         },
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '14px',
