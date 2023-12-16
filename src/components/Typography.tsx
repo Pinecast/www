@@ -1,4 +1,9 @@
-import {MOBILE_MEDIA_QUERY, CAN_HOVER_MEDIA_QUERY, TABLET_MEDIA_QUERY} from '@/constants';
+import {
+  MOBILE_MEDIA_QUERY,
+  CAN_HOVER_MEDIA_QUERY,
+  TABLET_MEDIA_QUERY,
+  MIN_DESKTOP_MEDIA_QUERY,
+} from '@/constants';
 import {
   GintoNordCondensed,
   MonumentGroteskBold,
@@ -76,12 +81,12 @@ export const Body1 = ({
   children,
   style,
 }: {
-  as: React.ElementType;
+  as?: React.ElementType;
   children: ReactNode;
   style?: StyleObject;
 }) => {
   const css = useCSS();
-  const Tag = as || 'div';
+  const Tag = as ?? 'div';
   return (
     <Tag
       className={css({
@@ -229,15 +234,18 @@ export const Subhead = ({
 };
 
 export const Caption = ({
+  as,
   children,
   style,
 }: {
+  as?: React.ElementType;
   children: ReactNode;
   style?: StyleObject;
 }) => {
   const css = useCSS();
+  const Tag = as ?? 'small';
   return (
-    <small
+    <Tag
       className={css({
         ...MonumentGroteskSemiMono,
         display: 'block',
@@ -253,7 +261,7 @@ export const Caption = ({
       })}
     >
       {children}
-    </small>
+    </Tag>
   );
 };
 
@@ -288,15 +296,18 @@ export const Overline = ({
 };
 
 export const PillButton = ({
+	as,
   children,
   style,
 }: {
+	as?: React.ElementType;
   children: ReactNode;
   style?: StyleObject;
 }) => {
   const css = useCSS();
+  const Tag = as ?? 'div';
   return (
-    <div
+    <Tag
       className={css({
         ...MonumentGroteskRegular,
         border: '1px solid currentColor',
@@ -318,7 +329,7 @@ export const PillButton = ({
       })}
     >
       {children}
-    </div>
+    </Tag>
   );
 };
 
@@ -350,7 +361,6 @@ export const GhostButton = ({
     </div>
   );
 };
-
 
 export const Link = ({
   children,

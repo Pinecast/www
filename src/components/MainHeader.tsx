@@ -4,7 +4,8 @@ import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
 import {
   DESKTOP_MEDIA_QUERY,
-  TABLET_BREAKPOINT,
+  MIN_DESKTOP_MEDIA_QUERY,
+  MOBILE_MEDIA_QUERY,
   TABLET_MEDIA_QUERY,
 } from '@/constants';
 import Link from 'next/link';
@@ -15,21 +16,13 @@ import {useDismiss} from '@/hooks/useDismiss';
 import {Body1, Caption, PillButton} from './Typography';
 import useMatchMedia from '@/hooks/useMatchMedia';
 
-type QuickLink = {
-  href: string;
-  title: string;
-};
-
-const QUICK_LINKS: QuickLink[] = [
-  {href: '/learn/create-a-podcast', title: 'Create a podcast'},
-  {href: '/learn/import-a podcast', title: 'Import a podcast'},
-  {href: '/learn/promoting-your-podcast', title: 'Promoting your show'},
-  {
-    href: '/learn/understand-your-growth',
-    title: 'Understanding your growth',
-  },
-  {href: '/learn/monetize-your-show', title: 'Monetize your show'},
-  {href: '/learn/podcasting-glossary', title: 'Podcasting glossary'},
+const QUICK_LINKS = [
+  ['/learn/create-a-podcast', 'Create a podcast'],
+  ['/learn/import-a podcast', 'Import a podcast'],
+  ['/learn/promoting-your-podcast', 'Promoting your show'],
+  ['/learn/understand-your-growth', 'Understanding your growth'],
+  ['/learn/monetize-your-show', 'Monetize your show'],
+  ['/learn/podcasting-glossary', 'Podcasting glossary'],
 ];
 
 const PersonaBlock = ({
@@ -54,6 +47,8 @@ const PersonaBlock = ({
         backgroundSize: `cover`,
         backgroundPosition: `50% ${illustrationOffsetY || 0}px`,
         border: '1px solid var(--color-line)',
+        [MIN_DESKTOP_MEDIA_QUERY]: {
+        },
         borderRadius: '20px',
         display: 'flex',
         alignItems: 'flex-end',
@@ -63,24 +58,38 @@ const PersonaBlock = ({
     >
       <header
         className={css({
-          background: color,
-          border: '1px solid var(--color-line)',
           borderRadius: '10px',
           marginTop: 'auto',
           display: 'flex',
           flexDirection: 'column-reverse',
           padding: '30px 20px',
           width: '100%',
+          [MIN_DESKTOP_MEDIA_QUERY]: {
+            background: color,
+            border: '1px solid var(--color-line)',
+          },
+
         })}
       >
-        <Body1 as="h3" style={{maxWidth: '8em'}}>
+        <Body1
+          as="h3"
+          style={{
+            [MIN_DESKTOP_MEDIA_QUERY]: {
+              maxWidth: '8em',
+            },
+          }}
+        >
           {heading}
         </Body1>
         <Caption
           style={{
             color: 'var(--color-core-accent)',
             marginBottom: '8px',
-            maxWidth: '8em',
+            display: 'none',
+            [MIN_DESKTOP_MEDIA_QUERY]: {
+              display: 'block',
+              maxWidth: '8em',
+            },
           }}
         >
           {caption}
@@ -91,138 +100,144 @@ const PersonaBlock = ({
 };
 
 // Vertical treatment for desktop viewports (4:3, 16:9, ultra-wide).
-const QuickTipsColumn = ({}) => {
+const QuickTipsNarrow = ({}) => {
   const css = useCSS();
   return (
-    <>
-      <div
+    <div
+      className={css({
+        background: 'var(--color-primary-dark)',
+        borderRadius: '20px',
+        color: 'var(--color-primary-dark)',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        padding: '30px',
+        [DESKTOP_MEDIA_QUERY]: {
+          padding: '20px',
+        },
+      })}
+    >
+      <Body1 as="h3" style={{maxWidth: '8em'}}>
+        Quick tips for getting started
+      </Body1>
+      <ul
         className={css({
-          background: 'var(--color-primary-dark)',
-          borderRadius: '20px',
-          color: 'var(--color-theme-mode)',
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%',
-          padding: '30px',
-          [DESKTOP_MEDIA_QUERY]: {
-            padding: '20px',
-          },
+          display: 'grid',
+          gap: '12px',
+          gridTemplateColumns: 'minmax(0, 1fr)',
+          listStyleType: 'none',
+          margin: 'auto 0 0 0',
+          placeSelf: 'top',
+          placeContent: 'bottom',
+          padding: '0',
         })}
       >
-        <Body1 as="h3" style={{maxWidth: '8em'}}>
-          Quick tips for getting started
-        </Body1>
-        <ul
-          className={css({
-            display: 'grid',
-            gap: '12px',
-            gridTemplateColumns: 'minmax(0, 1fr)',
-            listStyleType: 'none',
-            margin: 'auto 0 0 0',
-            placeSelf: 'top',
-            placeContent: 'bottom',
-            padding: '0',
-          })}
-        >
-          {QUICK_LINKS.map(({href, title}) => (
-            <li key={href}>
-              <Link
-                href={href}
-                className={css({
-                  color: 'inherit',
-                  whiteSpace: 'nowrap',
-                })}
+        {QUICK_LINKS.map(([href, title]) => (
+          <li key={href}>
+            <Link
+              href={href}
+              className={css({
+                color: 'inherit',
+                whiteSpace: 'nowrap',
+              })}
+            >
+              <PillButton
+                style={{
+                  fontSize: '1rem',
+                  padding: '0.125em 1em',
+                }}
               >
-                <PillButton
-                  style={{
-                    fontSize: '1rem',
-                    padding: '0.125em 1em',
-                  }}
-                >
-                  {title}
-                </PillButton>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </>
+                {title}
+              </PillButton>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
 // Horizontal treatment for smaller viewports (mobile, tablet).
-const QuickTipsRow = ({}) => {
+const QuickTipsWide = ({}) => {
   const css = useCSS();
   return (
-    <>
-      <div
+    <div
+      className={css({
+        color: 'var(--color-primary-dark)',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        padding: '30px',
+        margin: '0 auto',
+        maxWidth: '40em',
+        width: '90%',
+        textAlign: 'center',
+      })}
+    >
+      <Caption
+        as="h3"
+        style={{
+          color: 'var(--color-core-accent)',
+          margin: '0 auto',
+          textTransform: 'uppercase',
+        }}
+      >
+        Quick Tips
+      </Caption>
+      <ul
         className={css({
-          background: 'var(--color-primary-dark)',
-          borderRadius: '20px',
-          color: 'var(--color-theme-mode)',
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%',
-          padding: '30px',
-          [DESKTOP_MEDIA_QUERY]: {
-            padding: '20px',
-          },
+          color: 'var(--color-primary-dark)',
+          display: 'inline-block',
+          fontSize: '0',
+          isolation: 'isolate',
+          listStyleType: 'none',
+          margin: '8px auto 0',
+          maxWidth: '80%',
+          padding: '0',
         })}
       >
-        <Body1 as="h3" style={{maxWidth: '8em'}}>
-          Quick tips for getting started
-        </Body1>
-        <ul
-          className={css({
-            display: 'grid',
-            gap: '12px',
-            gridTemplateColumns: 'minmax(0, 1fr)',
-            listStyleType: 'none',
-            margin: 'auto 0 0 0',
-            placeSelf: 'top',
-            placeContent: 'bottom',
-            padding: '0',
-          })}
-        >
-          {QUICK_LINKS.map(({href, title}) => (
-            <li key={href}>
-              <Link
-                href={href}
-                className={css({
+        {QUICK_LINKS.map(([href, title]) => (
+          <React.Fragment key={href}>
+            <Link
+              href={href}
+              className={css({
+                color: 'inherit',
+                display: 'contents',
+              })}
+            >
+              <PillButton
+                style={{
+                  display: 'inline-flex',
                   color: 'inherit',
-                  whiteSpace: 'nowrap',
-                })}
+                  fontSize: '1rem',
+                  margin: '12px 4px 0',
+                  padding: '0.125em 1em',
+                }}
               >
-                <PillButton
-                  style={{
-                    fontSize: '1rem',
-                    padding: '0.125em 1em',
-                  }}
-                >
-                  {title}
-                </PillButton>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </>
+                {title}
+              </PillButton>
+            </Link>
+          </React.Fragment>
+        ))}
+      </ul>
+    </div>
   );
 };
 
 const QuickTipsBlock = ({}) => {
-  const isSmall = useMatchMedia(`(max-width: ${TABLET_BREAKPOINT}px)`);
-  const isLarge = !isSmall;
+  const isLarge = useMatchMedia(MIN_DESKTOP_MEDIA_QUERY);
+  const isSmall = !isLarge;
   return (
     <>
-      {isSmall && <QuickTipsRow />}
-      {isLarge && <QuickTipsColumn />}
+      {isSmall && <QuickTipsWide />}
+      {isLarge && <QuickTipsNarrow />}
     </>
   );
 };
 
 export const MainHeader = () => {
   const css = useCSS();
+
   const navRef = React.useRef<HTMLDivElement>(null);
   const [navOpen, setNavOpen] = React.useState(false);
 
@@ -370,7 +385,6 @@ export const MainHeader = () => {
             overflow: 'hidden',
             justifyContent: 'space-between',
             padding: '20px',
-            // background:'green',
             transition: 'all 0.4s',
             [TABLET_MEDIA_QUERY]: {
               height: 'auto',
