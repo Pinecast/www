@@ -96,10 +96,11 @@ const QuickTipsNarrow = ({}) => {
   const css = useCSS();
   return (
     <div
+      data-theme-adaptive
       className={css({
         background: 'var(--color-primary-dark)',
         borderRadius: '20px',
-        color: 'var(--color-primary-dark)',
+        color: 'var(--color-primary-light)',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
