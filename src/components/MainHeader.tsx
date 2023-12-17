@@ -2,12 +2,7 @@ import * as React from 'react';
 import {useCSS} from '@/hooks/useCSS';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
-import {
-  DESKTOP_MEDIA_QUERY,
-  MIN_DESKTOP_MEDIA_QUERY,
-  MOBILE_MEDIA_QUERY,
-  TABLET_MEDIA_QUERY,
-} from '@/constants';
+import {MIN_DESKTOP_MEDIA_QUERY, MIN_TABLET_MEDIA_QUERY} from '@/constants';
 import Link from 'next/link';
 import {SignIn} from '@/icons/SignIn';
 import {MainHeaderLink} from './MainHeaderLink';
@@ -47,8 +42,6 @@ const PersonaBlock = ({
         backgroundSize: `cover`,
         backgroundPosition: `50% ${illustrationOffsetY || 0}px`,
         border: '1px solid var(--color-line)',
-        [MIN_DESKTOP_MEDIA_QUERY]: {
-        },
         borderRadius: '20px',
         display: 'flex',
         alignItems: 'flex-end',
@@ -68,7 +61,6 @@ const PersonaBlock = ({
             background: color,
             border: '1px solid var(--color-line)',
           },
-
         })}
       >
         <Body1
@@ -111,9 +103,9 @@ const QuickTipsNarrow = ({}) => {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        padding: '30px',
-        [DESKTOP_MEDIA_QUERY]: {
-          padding: '20px',
+        padding: '20px',
+        [MIN_DESKTOP_MEDIA_QUERY]: {
+          padding: '30px',
         },
       })}
     >
@@ -225,7 +217,7 @@ const QuickTipsWide = ({}) => {
 };
 
 const QuickTipsBlock = ({}) => {
-  const isLarge = useMatchMedia(MIN_DESKTOP_MEDIA_QUERY);
+  const isLarge = useMatchMedia(MIN_TABLET_MEDIA_QUERY);
   const isSmall = !isLarge;
   return (
     <>
@@ -260,21 +252,24 @@ export const MainHeader = () => {
           borderRadius: navOpen ? '20px 20px 0 0' : '20px',
           borderWidth: '1px',
           display: 'flex',
-          height: '80px',
+          height: '60px',
+          top: '10px',
+          left: '10px',
+          right: '10px',
+
           justifyContent: 'space-between',
-          left: '20px',
+
           padding: '20px',
           position: 'fixed',
-          right: '20px',
-          top: '20px',
+
           transition:
             'background-color 0.2s, border-color 0.2s, border-radius 0.2s',
           zIndex: navOpen ? 130 : 95,
-          [TABLET_MEDIA_QUERY]: {
-            height: '60px',
-            top: '10px',
-            left: '10px',
-            right: '10px',
+          [MIN_TABLET_MEDIA_QUERY]: {
+            height: '80px',
+            top: '20px',
+            left: '20px',
+            right: '20px',
           },
         })}
       >
@@ -285,10 +280,10 @@ export const MainHeader = () => {
             appearance: 'none',
             background: 'none',
             border: 'none',
+            display: 'flex',
             cursor: 'pointer',
-            display: 'none',
             WebkitAppearance: 'none',
-            [TABLET_MEDIA_QUERY]: {display: 'flex'},
+            [MIN_TABLET_MEDIA_QUERY]: {display: 'none'},
           })}
           onClick={evt => {
             evt.preventDefault();
@@ -299,11 +294,11 @@ export const MainHeader = () => {
         </button>
         <div
           className={css({
-            display: 'flex',
+            display: 'none',
             gap: '0 1px',
             alignItems: 'center',
             marginLeft: '-15px',
-            [TABLET_MEDIA_QUERY]: {display: 'none'},
+            [MIN_TABLET_MEDIA_QUERY]: {display: 'flex'},
           })}
         >
           <MainHeaderLink href="/features">Features</MainHeaderLink>
@@ -318,9 +313,9 @@ export const MainHeader = () => {
         </div>
         <div
           className={css({
-            display: 'flex',
+            display: 'none',
             gap: '20px',
-            [TABLET_MEDIA_QUERY]: {display: 'none'},
+            [MIN_TABLET_MEDIA_QUERY]: {display: 'flex'},
           })}
         >
           <SecondaryButton href="https://pinecast.com/login">
@@ -333,8 +328,8 @@ export const MainHeader = () => {
         <div
           className={css({
             alignItems: 'center',
-            display: 'none',
-            [TABLET_MEDIA_QUERY]: {display: 'flex'},
+            display: 'flex',
+            [MIN_TABLET_MEDIA_QUERY]: {display: 'none'},
           })}
         >
           <Link
@@ -356,22 +351,23 @@ export const MainHeader = () => {
           display: 'flex',
           flexDirection: 'column',
           // A fixed parent height is required for the grow/shrink height effect.
-          height: '51vh',
+          height: '92vh',
           justifyContent: 'flex-start',
-          left: '20px',
+          left: '10px',
           opacity: navOpen ? 1 : 0,
           // pointerEvents: navOpen ? 'all' : 'none',
           position: 'fixed',
-          right: '20px',
-          top: navOpen ? '82px' : '80px',
+          right: '10px',
+          // top: navOpen ? '82px' : '80px',
+          top: navOpen ? '70px' : '70px',
           transition: 'opacity 0.2s 0.1s, top 0.2s',
           visibility: navOpen ? 'visible' : 'hidden',
           zIndex: navOpen ? 130 : 90,
-          [TABLET_MEDIA_QUERY]: {
-            height: '92vh',
-            top: navOpen ? '70px' : '70px',
-            left: '10px',
-            right: '10px',
+          [MIN_TABLET_MEDIA_QUERY]: {
+            height: '51vh',
+            top: navOpen ? '82px' : '80px',
+            left: '20px',
+            right: '20px',
           },
         })}
       >
@@ -385,12 +381,15 @@ export const MainHeader = () => {
             overflow: 'hidden',
             justifyContent: 'space-between',
             padding: '20px',
-            transition: 'all 0.4s',
-            [TABLET_MEDIA_QUERY]: {
-              height: 'auto',
-              top: '10px',
-              left: '10px',
-              right: '10px',
+            transition: navOpen ? 'all 0.2s' : 'all 0.4s',
+
+            top: '10px',
+            left: '10px',
+            right: '10px',
+            [MIN_TABLET_MEDIA_QUERY]: {
+              top: '0',
+              left: '0',
+              right: '0',
             },
           })}
         >
@@ -398,10 +397,10 @@ export const MainHeader = () => {
             className={css({
               display: 'grid',
               gap: '20px',
-              gridTemplateColumns: 'repeat(4, 1fr)',
+              gridTemplateColumns: '1fr',
               width: '100%',
-              [TABLET_MEDIA_QUERY]: {
-                gridTemplateColumns: '1fr',
+              [MIN_TABLET_MEDIA_QUERY]: {
+                gridTemplateColumns: 'repeat(4, 1fr)',
               },
             })}
           >
