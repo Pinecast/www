@@ -79,6 +79,37 @@ export const H2 = ({
   );
 };
 
+export const H3 = ({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: StyleObject;
+}) => {
+  const css = useCSS();
+  return (
+    <h3
+      className={css({
+        ...GintoNordCondensed,
+        fontSize: '42px',
+        letterSpacing: 0,
+        lineHeight: '42px',
+        textTransform: 'uppercase',
+        marginTop: 0,
+        marginBottom: 0,
+        ...style,
+        [MOBILE_MEDIA_QUERY]: {
+          fontSize: '32px',
+          lineHeight: '32px',
+          ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
+        },
+      })}
+    >
+      {children}
+    </h3>
+  );
+};
+
 export const Body1 = ({
   as,
   children,

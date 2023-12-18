@@ -1,6 +1,6 @@
 import {MainHeader} from '@/components/MainHeader';
 import {MainLogo} from '@/components/MainLogo';
-import {MOBILE_MEDIA_QUERY} from '@/constants';
+import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY, TABLET_MEDIA_QUERY} from '@/constants';
 import {MonumentGroteskRegular} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
 import {
@@ -122,10 +122,20 @@ export const BaseLayout = (
           className={css({
             maxWidth: '1375px',
             margin: '0 auto',
-            padding: '0 10px',
+            padding: '80px 10px',
+            '--text-gutter': '30px',
 
             // Base MDX styles
             ...MonumentGroteskRegular,
+            fontSize: '18px',
+
+            [MIN_TABLET_MEDIA_QUERY]: {
+              padding: '150px 150px',
+              '--text-gutter': '0px',
+
+              // Base MDX styles
+              fontSize: '28px',
+            },
           })}
         >
           {children}
