@@ -23,8 +23,6 @@ export const H1 = ({
   style?: StyleObject;
 }) => {
   const css = useCSS();
-  const {marginTop, marginRight, marginBottom, marginLeft, ...styles} =
-    style ?? {};
   return (
     <h1
       className={css({
@@ -32,13 +30,10 @@ export const H1 = ({
         fontSize: '160px',
         letterSpacing: '-0.04em',
         lineHeight: '144px',
-        margin:
-          style?.margin ??
-          `${marginTop ?? 0} ${marginRight ?? 0} ${marginBottom ?? 0} ${
-            marginLeft ?? 0
-          }`,
+        marginTop: '0',
+        marginBottom: '0',
         textTransform: 'uppercase',
-        ...styles,
+        ...style,
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '62px',
           lineHeight: '56px',
@@ -59,8 +54,6 @@ export const H2 = ({
   style?: StyleObject;
 }) => {
   const css = useCSS();
-  const {marginTop, marginRight, marginBottom, marginLeft, ...styles} =
-    style ?? {};
   return (
     <h2
       className={css({
@@ -69,12 +62,9 @@ export const H2 = ({
         letterSpacing: '-0.04em',
         lineHeight: '72px',
         textTransform: 'uppercase',
-        margin:
-          style?.margin ??
-          `${marginTop ?? 0} ${marginRight ?? 'initial'} ${marginBottom ?? 0} ${
-            marginLeft ?? 'initial'
-          }`,
-        ...styles,
+        marginTop: '0',
+        marginBottom: '0',
+        ...style,
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '48px',
           lineHeight: '43px',
@@ -103,8 +93,8 @@ export const H3 = ({
         letterSpacing: 0,
         lineHeight: '42px',
         textTransform: 'uppercase',
-        marginTop: 0,
-        marginBottom: 0,
+        marginTop: '0',
+        marginBottom: '0',
         ...style,
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '32px',
@@ -129,8 +119,6 @@ export const Body1 = ({
 }) => {
   const css = useCSS();
   const Tag = as ?? 'div';
-  const {marginTop, marginRight, marginBottom, marginLeft, ...styles} =
-    style ?? {};
   return (
     <Tag
       className={css({
@@ -139,12 +127,9 @@ export const Body1 = ({
         fontWeight: 500,
         letterSpacing: '-0.03em',
         lineHeight: '28px',
-        margin:
-          style?.margin ??
-          `${marginTop ?? 0} ${marginRight ?? 'initial'} ${marginBottom ?? 0} ${
-            marginLeft ?? 'initial'
-          }`,
-        ...styles,
+        marginTop: '0',
+        marginBottom: '0',
+        ...style,
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '24px',
           lineHeight: '24px',
@@ -165,8 +150,6 @@ export const Body2 = ({
   style?: StyleObject;
 }) => {
   const css = useCSS();
-  const {marginTop, marginRight, marginBottom, marginLeft, ...styles} =
-    style ?? {};
   return (
     <p
       className={css({
@@ -174,12 +157,9 @@ export const Body2 = ({
         fontSize: '28px',
         fontWeight: 400,
         lineHeight: '39px',
-        margin:
-          style?.margin ??
-          `${marginTop ?? 0} ${marginRight ?? 'initial'} ${marginBottom ?? 0} ${
-            marginLeft ?? 'initial'
-          }`,
-        ...styles,
+        marginTop: '0',
+        marginBottom: '0',
+        ...style,
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '18px',
           lineHeight: '25px',
@@ -200,8 +180,6 @@ export const Body3 = ({
   style?: StyleObject;
 }) => {
   const css = useCSS();
-  const {marginTop, marginRight, marginBottom, marginLeft, ...styles} =
-    style ?? {};
   return (
     <p
       className={css({
@@ -210,12 +188,9 @@ export const Body3 = ({
         fontWeight: 400,
         letterSpacing: '-0.015em',
         lineHeight: '24px',
-        margin:
-          style?.margin ??
-          `${marginTop ?? 0} ${marginRight ?? 'initial'} ${marginBottom ?? 0} ${
-            marginLeft ?? 'initial'
-          }`,
-        ...styles,
+        marginTop: '0',
+        marginBottom: '0',
+        ...style,
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '16px',
           lineHeight: '18px',
@@ -236,8 +211,6 @@ export const Body4 = ({
   style?: StyleObject;
 }) => {
   const css = useCSS();
-  const {marginTop, marginRight, marginBottom, marginLeft, ...styles} =
-    style ?? {};
   return (
     <p
       className={css({
@@ -245,12 +218,9 @@ export const Body4 = ({
         fontSize: '18px',
         fontWeight: 400,
         lineHeight: '22px',
-        margin:
-          style?.margin ??
-          `${marginTop ?? 0} ${marginRight ?? 'initial'} ${marginBottom ?? 0} ${
-            marginLeft ?? 'initial'
-          }`,
-        ...styles,
+        marginTop: '0',
+        marginBottom: '0',
+        ...style,
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '14px',
           lineHeight: '17px',
@@ -271,8 +241,6 @@ export const Subhead = ({
   style?: StyleObject;
 }) => {
   const css = useCSS();
-  const {marginTop, marginRight, marginBottom, marginLeft, ...styles} =
-    style ?? {};
   return (
     <h3
       className={css({
@@ -282,12 +250,9 @@ export const Subhead = ({
         fontWeight: 700,
         letterSpacing: '-0.025em',
         lineHeight: '42px',
-        margin:
-          style?.margin ??
-          `${marginTop ?? 0} ${marginRight ?? 'initial'} ${marginBottom ?? 0} ${
-            marginLeft ?? 'initial'
-          }`,
-        ...styles,
+        marginTop: '0',
+        marginBottom: '0',
+        ...style,
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '28px',
           lineHeight: '28px',
