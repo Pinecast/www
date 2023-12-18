@@ -8,17 +8,8 @@ import {SignIn} from '@/icons/SignIn';
 import {MainHeaderLink} from './MainHeaderLink';
 import {Hamburger} from '@/icons/Hamburger';
 import {useDismiss} from '@/hooks/useDismiss';
-import {Body1, Caption, PillButton} from './Typography';
-import useMatchMedia from '@/hooks/useMatchMedia';
-
-const QUICK_LINKS = [
-  ['/learn/create-a-podcast', 'Create a podcast'],
-  ['/learn/import-a podcast', 'Import a podcast'],
-  ['/learn/promoting-your-podcast', 'Promoting your show'],
-  ['/learn/understand-your-growth', 'Understanding your growth'],
-  ['/learn/monetize-your-show', 'Monetize your show'],
-  ['/learn/podcasting-glossary', 'Podcasting glossary'],
-];
+import {Body1, Caption} from './Typography';
+import {QuickTipsBlock} from './QuickLinks';
 
 const PersonaBlock = ({
   caption,
@@ -88,143 +79,6 @@ const PersonaBlock = ({
         </Caption>
       </header>
     </div>
-  );
-};
-
-// Vertical treatment for desktop viewports (4:3, 16:9, ultra-wide).
-const QuickTipsNarrow = ({}) => {
-  const css = useCSS();
-  return (
-    <div
-      data-theme-adaptive
-      className={css({
-        background: 'var(--color-primary-dark)',
-        borderRadius: '20px',
-        color: 'var(--color-primary-light)',
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        padding: '20px',
-        [MIN_DESKTOP_MEDIA_QUERY]: {
-          padding: '30px',
-        },
-      })}
-    >
-      <Body1 as="h3" style={{maxWidth: '8em'}}>
-        Quick tips for getting started
-      </Body1>
-      <ul
-        className={css({
-          display: 'grid',
-          gap: '12px',
-          gridTemplateColumns: 'minmax(0, 1fr)',
-          listStyleType: 'none',
-          margin: 'auto 0 0 0',
-          placeSelf: 'top',
-          placeContent: 'bottom',
-          padding: '0',
-        })}
-      >
-        {QUICK_LINKS.map(([href, title]) => (
-          <li key={href}>
-            <Link
-              href={href}
-              className={css({
-                color: 'inherit',
-                whiteSpace: 'nowrap',
-              })}
-            >
-              <PillButton
-                style={{
-                  fontSize: '1rem',
-                  padding: '0.125em 1em',
-                }}
-              >
-                {title}
-              </PillButton>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-// Horizontal treatment for smaller viewports (mobile, tablet).
-const QuickTipsWide = ({}) => {
-  const css = useCSS();
-  return (
-    <div
-      className={css({
-        color: 'var(--color-primary-dark)',
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        padding: '30px',
-        margin: '0 auto',
-        maxWidth: '40em',
-        width: '90%',
-        textAlign: 'center',
-      })}
-    >
-      <Caption
-        as="h3"
-        style={{
-          color: 'var(--color-core-accent)',
-          margin: '0 auto',
-          textTransform: 'uppercase',
-        }}
-      >
-        Quick Tips
-      </Caption>
-      <ul
-        className={css({
-          color: 'var(--color-primary-dark)',
-          display: 'inline-block',
-          fontSize: '0',
-          isolation: 'isolate',
-          listStyleType: 'none',
-          margin: '8px auto 0',
-          maxWidth: '80%',
-          padding: '0',
-        })}
-      >
-        {QUICK_LINKS.map(([href, title]) => (
-          <React.Fragment key={href}>
-            <Link
-              href={href}
-              className={css({
-                color: 'inherit',
-                display: 'contents',
-              })}
-            >
-              <PillButton
-                style={{
-                  display: 'inline-flex',
-                  color: 'inherit',
-                  fontSize: '1rem',
-                  margin: '12px 4px 0',
-                  padding: '0.125em 1em',
-                }}
-              >
-                {title}
-              </PillButton>
-            </Link>
-          </React.Fragment>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-const QuickTipsBlock = ({}) => {
-  const isLarge = useMatchMedia(MIN_TABLET_MEDIA_QUERY);
-  const isSmall = !isLarge;
-  return (
-    <>
-      {isSmall && <QuickTipsWide />}
-      {isLarge && <QuickTipsNarrow />}
-    </>
   );
 };
 
@@ -365,7 +219,7 @@ export const MainHeader = () => {
           visibility: navOpen ? 'visible' : 'hidden',
           zIndex: navOpen ? 130 : 90,
           [MIN_TABLET_MEDIA_QUERY]: {
-            height: '51vh',
+            height: '500px',
             top: navOpen ? '82px' : '80px',
             left: '20px',
             right: '20px',
@@ -426,7 +280,7 @@ export const MainHeader = () => {
               heading="Corporate podcasters"
               caption="Level 3"
             />
-            <QuickTipsBlock />
+            <QuickTipsBlock isOpen={navOpen} />
           </div>
         </nav>
       </div>
