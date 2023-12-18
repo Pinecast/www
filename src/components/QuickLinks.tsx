@@ -46,10 +46,10 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
         as="h3"
         style={{
           color: 'var(--color-core-accent)',
-          marginBottom: 0,
-          marginLeft: 'auto',
+          marginTop: '0',
           marginRight: 'auto',
-          marginTop: 0,
+          marginBottom: '0',
+          marginLeft: 'auto',
           textAlign: 'center',
           textTransform: 'uppercase',
           [MIN_TABLET_MEDIA_QUERY]: {display: 'none'},
@@ -59,8 +59,15 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
       </Caption>
       <ul
         className={css({
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '1ch',
+          justifyContent: 'center',
           listStyleType: 'none',
+          margin: '8px auto 0',
+          opacity: isOpen ? 1 : 0,
           padding: '0',
+          transition: 'opacity 0.2s',
 
           [MIN_TABLET_MEDIA_QUERY]: {
             color: 'var(--color-primary-light)',
@@ -72,14 +79,6 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
             placeSelf: 'top',
             placeContent: 'bottom',
           },
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '1ch',
-          justifyContent: 'center',
-          margin: '8px auto 0',
-
-          opacity: isOpen ? 1 : 0,
-          transition: 'opacity 0.2s',
         })}
       >
         {QUICK_LINKS.map(([href, title]) => (
