@@ -1285,7 +1285,15 @@ export const Globe = () => {
           color: 'var(--color-primary-dark)',
         })}
       >
-        <H1 style={{margin: '0 auto', maxWidth: '58rem'}}>
+        <H1
+          style={{
+            marginBottom: 0,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginTop: 0,
+            maxWidth: '58rem',
+          }}
+        >
           Check, Check 1, 2, 3
         </H1>
         <Body4 style={{maxWidth: '32rem'}}>

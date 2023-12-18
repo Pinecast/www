@@ -1,6 +1,16 @@
+import {Footer} from '@/components/Footer';
+import {InfoPageFooterUpsell} from '@/components/InfoPageFooterUpsell';
 import {MainHeader} from '@/components/MainHeader';
 import {MainLogo} from '@/components/MainLogo';
-import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY, TABLET_MEDIA_QUERY} from '@/constants';
+import {
+  MarqueeDivider,
+  StandardMarqueeDivider,
+} from '@/components/MarqueeDivider';
+import {
+  MIN_TABLET_MEDIA_QUERY,
+  MOBILE_MEDIA_QUERY,
+  TABLET_MEDIA_QUERY,
+} from '@/constants';
 import {MonumentGroteskRegular} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
 import {
@@ -121,7 +131,10 @@ export const BaseLayout = (
         <section
           className={css({
             maxWidth: '1375px',
-            margin: '0 auto',
+            marginBottom: 0,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginTop: 0,
             padding: '80px 10px',
             '--text-gutter': '30px',
 
@@ -140,6 +153,12 @@ export const BaseLayout = (
         >
           {children}
         </section>
+        <StandardMarqueeDivider
+          topBackgroundColor="var(--color-sand)"
+          bottomBackgroundColor="var(--color-space)"
+        />
+        <InfoPageFooterUpsell />
+        <Footer />
       </>
     );
   };
@@ -162,7 +181,10 @@ const BaseHero = React.forwardRef<
         width: 'var(--max-width)',
         height: '700px',
         backgroundSize: 'cover',
-        margin: '0 auto',
+        marginBottom: 0,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: 0,
 
         position: 'relative',
 

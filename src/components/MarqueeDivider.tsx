@@ -23,19 +23,21 @@ function getPath(width: number) {
   } -140 -${MARQUEE_BORDER_WIDTH} -70 -${MARQUEE_BORDER_WIDTH} 0`;
 }
 
+type Props = {
+  bottomBackgroundColor?: string;
+  children: Iterable<React.ReactNode>;
+  marqueeColor?: string;
+  textColor?: string;
+  topBackgroundColor?: string;
+};
+
 export const MarqueeDivider = ({
   bottomBackgroundColor = '#fff',
   marqueeColor = 'var(--color-lime)',
   children,
   textColor = '#000',
   topBackgroundColor = '#fff',
-}: {
-  bottomBackgroundColor?: string;
-  children: Iterable<React.ReactNode>;
-  marqueeColor?: string;
-  textColor?: string;
-  topBackgroundColor?: string;
-}) => {
+}: Props) => {
   const css = useCSS();
   const uid = React.useId();
 
@@ -104,7 +106,7 @@ export const MarqueeDivider = ({
 
   return (
     <div className={css({backgroundColor: bottomBackgroundColor})}>
-      <svg height="160" preserveAspectRatio="none" width="100%">
+      <svg height="165" preserveAspectRatio="none" width="100%">
         <path
           id={uid}
           d={getPath(600)}
@@ -162,3 +164,31 @@ MarqueeDivider.MarqueeDividerBullet = function MarqueeDividerBullet(
     </>
   );
 };
+
+export const StandardMarqueeDivider = (props: Omit<Props, 'children'>) => (
+  <MarqueeDivider {...props}>
+    {MarqueeDivider.MarqueeDividerBullet('Kick-ass customer support')}
+    {MarqueeDivider.MarqueeDividerBullet('Fair, no-nonsense pricing')}
+    {MarqueeDivider.MarqueeDividerBullet(
+      'Everything you need to be successful',
+    )}
+    {MarqueeDivider.MarqueeDividerBullet('Built by podcasters, for podcasters')}
+    {MarqueeDivider.MarqueeDividerBullet(
+      'Billions of listens served since 2015',
+    )}
+    {MarqueeDivider.MarqueeDividerBullet('Get paid for your content')}
+    {MarqueeDivider.MarqueeDividerBullet(
+      "You're the customer, not the product",
+    )}
+    {MarqueeDivider.MarqueeDividerBullet(
+      'Worry about your next episode, not your host',
+    )}
+    {MarqueeDivider.MarqueeDividerBullet(
+      '$0 advertising budget, 100% focus on great software',
+    )}
+    {MarqueeDivider.MarqueeDividerBullet(
+      'Your batteries-included podcast host',
+    )}
+    {MarqueeDivider.MarqueeDividerBullet('Crafted with care in Raleigh, NC')}
+  </MarqueeDivider>
+);

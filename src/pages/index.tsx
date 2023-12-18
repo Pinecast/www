@@ -7,7 +7,7 @@ import {Hero} from '@/components/Hero';
 import {MainHeader} from '@/components/MainHeader';
 import {MainLogo} from '@/components/MainLogo';
 import {SplashIntro} from '@/components/SplashIntro';
-import {MarqueeDivider} from '@/components/MarqueeDivider';
+import {StandardMarqueeDivider} from '@/components/MarqueeDivider';
 import {Pricing} from '@/components/Pricing';
 
 export default function Home() {
@@ -27,38 +27,10 @@ export default function Home() {
       <MainHeader />
       <Hero />
       <Globe />
-      <MarqueeDivider
+      <StandardMarqueeDivider
         topBackgroundColor="var(--color-space)"
         bottomBackgroundColor="var(--color-sand)"
-      >
-        {MarqueeDivider.MarqueeDividerBullet('Kick-ass customer support')}
-        {MarqueeDivider.MarqueeDividerBullet('Fair, no-nonsense pricing')}
-        {MarqueeDivider.MarqueeDividerBullet(
-          'Everything you need to be successful',
-        )}
-        {MarqueeDivider.MarqueeDividerBullet(
-          'Built by podcasters, for podcasters',
-        )}
-        {MarqueeDivider.MarqueeDividerBullet(
-          'Billions of listens served since 2015',
-        )}
-        {MarqueeDivider.MarqueeDividerBullet('Get paid for your content')}
-        {MarqueeDivider.MarqueeDividerBullet(
-          "You're the customer, not the product",
-        )}
-        {MarqueeDivider.MarqueeDividerBullet(
-          'Worry about your next episode, not your host',
-        )}
-        {MarqueeDivider.MarqueeDividerBullet(
-          '$0 advertising budget, 100% focus on great software',
-        )}
-        {MarqueeDivider.MarqueeDividerBullet(
-          'Your batteries-included podcast host',
-        )}
-        {MarqueeDivider.MarqueeDividerBullet(
-          'Crafted with care in Raleigh, NC',
-        )}
-      </MarqueeDivider>
+      />
       <Pricing />
       <Footer />
     </>

@@ -46,7 +46,10 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
         as="h3"
         style={{
           color: 'var(--color-core-accent)',
-          margin: '0 auto',
+          marginBottom: 0,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginTop: 0,
           textAlign: 'center',
           textTransform: 'uppercase',
           [MIN_TABLET_MEDIA_QUERY]: {display: 'none'},
