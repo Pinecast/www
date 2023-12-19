@@ -5,7 +5,7 @@ import {Body1, Caption, PillButton} from './Typography';
 import {useCSS} from '@/hooks/useCSS';
 
 const QUICK_LINKS = [
-  ['/learn/create-a-podcast', 'Create a podcast'],
+  ['/learn/create-your-podcast', 'Create a podcast'],
   ['/learn/promoting-your-podcast', 'Promoting your show'],
   ['/learn/import-a podcast', 'Import a podcast'],
   ['/learn/understand-your-growth', 'Understanding your growth'],

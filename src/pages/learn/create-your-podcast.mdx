@@ -1,4 +1,4 @@
-import {Intro} from '@/components/TextBlocks';
+import {DefinitionList, Intro, Step} from '@/components/TextBlocks';
 
 <Intro>
   We're podcasters ourselves, and want to help you and your show to be successful. Getting started with your first podcast is easy, and you can do it for free without committing to a paid Pinecast subscription.
@@ -6,47 +6,87 @@ import {Intro} from '@/components/TextBlocks';
   This section is loaded with useful tips and is the first step to setting up your podcast.
 </Intro>
 
-## Test content
+<Step stepNumber={1} title="Create the show">
+  After signing up, click the button on your main dashboard to set up a podcast. We'll ask you how you'd like to begin: choose "start from scratch" to start a new show.
 
-This is some test content
+  ### We'll ask you for some information
 
-Do you want to know more?
+  <DefinitionList>
+    <dt>Podcast name</dt>
+    <dd>
+      This is the name of your show. It can be changed later.
+    </dd>
+    <dt>Slug</dt>
+    <dd>
+      We will use this for URLs, like `https://your-slug-here.pinecast.co`.
+    </dd>
+    <dt>Description</dt>
+    <dd>
+      A short 2-3 sentence description of your podcast.
+    </dd>
+    <dt>Homepage</dt>
+    <dd>
+      Where folks should be linked to from your podcast in an app. With a paid plan, you can use a Pinecast-made webpage, or our short links feature.
+    </dd>
+    <dt>Author name</dt>
+    <dd>
+      Your name, or the name of the person or organization that produces the show.
+    </dd>
+    <dt>Cover art</dt>
+    <dd>
+      Podcast apps require an image to use as artwork for your show. Provide us with a PNG or JPG and we'll update it to match the required size and dimensions.
+    </dd>
+    <dt>Categories</dt>
+    <dd>
+      These are the categories that your show will appear under in directories like Apple Podcasts.
+    </dd>
+  </DefinitionList>
 
-This is some test content
+  When you're finished, click "Save and continue."  This will create your show.
+</Step>
 
-Do you want to know more?
+<Step stepNumber={2} title="Upload your first episode">
+  Once your show exists, you need to add content. This is your first episode. At least one episode is needed in order to submit your show for distribution: without an episode, your feed is invalid and will be rejected. Click the "New Episode" button on your show's dashboard.
 
-This is some test content
 
-Do you want to know more?
+  For your first episode, you may choose to upload a short trailer instead of your full episode. That'll give you some time to prepare a full episode while you get the ball rolling on distribution. We'll ask you for some information:
 
-This is some test content
+  <DefinitionList>
+    <dt>Episode title</dt>
+    <dd>
+      The title of your episode as it'll appear in podcast apps.
+    </dd>
+    <dt>Episode type</dt>
+    <dd>
+      Whether the episode is a full episode, bonus content, or a trailer.
+    </dd>
+    <dt>Audio</dt>
+    <dd>
+      An MP3 or M4A file of your episode audio. If it's missing tags or artwork, we'll ask you for them before you can continue.
+    </dd>
+    <dt>Publish date</dt>
+    <dd>
+      The date that the episode should go live on. If the date is in the past, we'll backdate the episode.
+    </dd>
+    <dt>Show notes</dt>
+    <dd>
+      This is a free text field where you should describe your episode. It'll appear on your podcast website and in podcast apps.
+    </dd>
+  </DefinitionList>
 
-Do you want to know more?
+  When you're finished, click "Save episode." This will create your episode.
 
-This is some test content
+</Step>
 
-Do you want to know more?
+<Step stepNumber={3} title="Set up distribution">
+  Once your first episode is live in your feed, visit the Distribution tab. This tab is where you'll be able to get your show onto podcast apps. If your feed isn't ready, this tab will let you know why.
 
-This is some test content
+  You can see more about this tab on our [Distribution page](/features/distribution).
 
-Do you want to know more?
+  Some podcast apps and directories offer one-click submission: simply flip the switch below the directory's name. Others will require a bit more effort: expand the "submission instructions" section for each directory and follow the directions for getting set up.
 
-This is some test content
-
-Do you want to know more?
-
-This is some test content
-
-Do you want to know more?
-
-This is some test content
-
-Do you want to know more?
-
-This is some test content
-
-Do you want to know more?
+  After following the instructions, there may be an option to link Pinecast to your listing. This makes Pinecast aware of the listing on the directory, and unlocks features like podcast review monitoring and entries on our short links.
+</Step>
 
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {LearnLayout} from '@/layouts/LearnLayout';

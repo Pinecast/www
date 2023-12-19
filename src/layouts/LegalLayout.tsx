@@ -8,5 +8,5 @@ export const LegalLayout = BaseLayout(
       <H1 style={{padding: '0 10%', marginBottom: '50px'}}>{title}</H1>
     </>
   ),
-  {defaultColor: 'var(--color-orchid)'},
+  {defaultColor: 'var(--color-sky)'},
 );
