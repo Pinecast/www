@@ -10,6 +10,7 @@ const handler = () => {
       section.offsetTop < scrollY &&
       section.offsetTop + section.offsetHeight > scrollY
     ) {
+      document.body.setAttribute('style', '');
       document.body.classList.add('darkSection');
       return;
     }

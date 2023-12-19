@@ -99,7 +99,7 @@ export const MainHeader = () => {
     <>
       <header
         className={css({
-          background: 'var(--color-primary-light)',
+          background: 'var(--page-bg, var(--color-primary-light))',
           borderStyle: 'solid',
           borderColor: navOpen
             ? 'var(--color-line) var(--color-line) transparent'
@@ -118,7 +118,7 @@ export const MainHeader = () => {
           position: 'fixed',
 
           transition:
-            'background-color 0.2s, border-color 0.2s, border-radius 0.2s',
+            'background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, border-radius 0.2s ease-in-out',
           zIndex: navOpen ? 130 : 95,
           [MIN_TABLET_MEDIA_QUERY]: {
             height: '80px',
@@ -215,7 +215,7 @@ export const MainHeader = () => {
           right: '10px',
           // top: navOpen ? '82px' : '80px',
           top: navOpen ? '70px' : '70px',
-          transition: 'opacity 0.2s 0.1s, top 0.2s',
+          transition: 'opacity 0.2s 0.1s ease-in-out, top 0.2s ease-in-out',
           visibility: navOpen ? 'visible' : 'hidden',
           zIndex: navOpen ? 130 : 90,
           [MIN_TABLET_MEDIA_QUERY]: {
@@ -228,7 +228,7 @@ export const MainHeader = () => {
       >
         <nav
           className={css({
-            background: 'var(--color-primary-light)',
+            background: 'var(--page-bg, var(--color-primary-light))',
             display: 'flex',
             // Set `flex: 1` to give the illusion of growing from zero to the full height.
             flex: navOpen ? 1 : 0,
@@ -236,7 +236,7 @@ export const MainHeader = () => {
             overflow: 'hidden',
             justifyContent: 'space-between',
             padding: '20px',
-            transition: navOpen ? 'all 0.2s' : 'all 0.4s',
+            transition: navOpen ? 'all 0.2s ease-in-out' : 'background 0.2s ease-in-out, flex 0.2s ease-in-out',
 
             top: '10px',
             left: '10px',
