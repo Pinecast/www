@@ -3,6 +3,7 @@ import * as React from 'react';
 import {useCSS} from '@/hooks/useCSS';
 import {MonumentGroteskSemiMono} from '@/fonts';
 
+export const MARQUEE_HEIGHT = 165;
 const MARQUEE_WIDTH = 900;
 const MARQUEE_BORDER_WIDTH = 50;
 const VERT_HANDLE_OFFSET = 50;
@@ -112,7 +113,15 @@ export const MarqueeDivider = ({
         zIndex: 2,
       })}
     >
-      <svg height="165" preserveAspectRatio="none" width="100%">
+      <svg
+        height={MARQUEE_HEIGHT}
+        preserveAspectRatio="none"
+        width="100%"
+        className={css({
+          position: 'relative',
+          zIndex: 1,
+        })}
+      >
         <path
           id={uid}
           d={getPath(600)}
@@ -155,6 +164,8 @@ export const MarqueeDivider = ({
     </div>
   );
 };
+
+MarqueeDivider.MarqueeDividerHeight = MARQUEE_HEIGHT;
 
 MarqueeDivider.MarqueeDividerBullet = function MarqueeDividerBullet(
   children: string | React.ReactNode,

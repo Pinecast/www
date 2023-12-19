@@ -7,11 +7,17 @@ import {Hero} from '@/components/Hero';
 import {MainHeader} from '@/components/MainHeader';
 import {MainLogo} from '@/components/MainLogo';
 import {SplashIntro} from '@/components/SplashIntro';
-import {StandardMarqueeDivider} from '@/components/MarqueeDivider';
+import {
+  MARQUEE_HEIGHT,
+  StandardMarqueeDivider,
+} from '@/components/MarqueeDivider';
 import {Pricing} from '@/components/Pricing';
 import {Testimonials} from '@/components/Testimonials';
+import {StickyLine} from '@/components/StickyLine';
+import {useCSS} from '@/hooks/useCSS';
 
 export default function Home() {
+  const css = useCSS();
   const [splashEnded, setSplashEnded] = React.useState(false);
 
   return (
@@ -28,11 +34,17 @@ export default function Home() {
       <MainHeader />
       <Hero />
       <Globe />
-      <StandardMarqueeDivider
-        topBackgroundColor="var(--color-space)"
-        bottomBackgroundColor="var(--color-sand)"
-      />
-      <Testimonials />
+      <div
+        // Contain the bounds of the sticky horizontal line down the page center
+        className={css({position: 'relative', zIndex: 1})}
+      >
+        <StickyLine color="var(--color-space)" />
+        <StandardMarqueeDivider
+          topBackgroundColor="var(--color-space)"
+          bottomBackgroundColor="transparent"
+        />
+        <Testimonials topMargin={-1 * MARQUEE_HEIGHT} />
+      </div>
       <Pricing />
       <Footer />
     </>

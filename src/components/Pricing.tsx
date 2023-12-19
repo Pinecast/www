@@ -25,8 +25,6 @@ export const Pricing = () => {
       className={css({
         backgroundColor: 'var(--color-space)',
         paddingBottom: '116px',
-        position: 'relative',
-        zIndex: 2,
       })}
     >
       <div

@@ -25,8 +25,6 @@ export const Footer = () => {
       style={{
         background: '#ff6869',
         overflow: 'hidden',
-        position: 'relative',
-        zIndex: 2,
       }}
     >
       <div

@@ -6,28 +6,16 @@ import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
 import {StickyLine} from './StickyLine';
 
-const BUTTON_STYLE = {height: 'auto', paddingTop: '4px', paddingBottom: '4px'};
-const MAX_WIDTH = 1300;
-
-export const Testimonials = () => {
+export const Testimonials = ({topMargin}: {topMargin?: number}) => {
   const css = useCSS();
 
   return (
     <>
-      <div
+      <section
         id="testimonials"
         className={css({
-          marginTop: '-25px',
-          marginBottom: '-65px',
-          paddingTop: '65px',
-        })}
-      />
-      <StickyLine color="var(--color-space)" />
-      <section
-        className={css({
           backgroundColor: 'var(--color-sand)',
-          marginTop: '-165px', // Height of lime-green marquee on Home page
-          paddingTop: '165px',
+          marginTop: `${topMargin ?? 0}px`,
         })}
       >
         <div
@@ -39,7 +27,10 @@ export const Testimonials = () => {
             textAlign: 'center',
             margin: '0 auto',
             maxWidth: '40em',
-            padding: '100px 30px 100px',
+            paddingTop: '264px',
+            paddingRight: '30px',
+            paddingBottom: '264px',
+            paddingLeft: '30px',
           })}
         >
           <H2
