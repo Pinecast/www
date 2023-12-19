@@ -6,6 +6,7 @@ const handler = () => {
   const height = window.innerHeight;
   for (const section of sections) {
     if (
+      section.offsetTop > 0 &&
       section.offsetTop < scrollY &&
       section.offsetTop + section.offsetHeight > scrollY
     ) {
