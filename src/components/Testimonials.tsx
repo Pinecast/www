@@ -1,13 +1,6 @@
 import {useCSS} from '@/hooks/useCSS';
 import * as React from 'react';
-import {Body3, Body4, H1, H2, Link, Overline, Subhead} from './Typography';
-import {GintoNordCondensed} from '@/fonts';
-import {PrimaryButton} from './PrimaryButton';
-import {SecondaryButton} from './SecondaryButton';
-import {StickyLine} from './StickyLine';
-import {useIntersection} from '@/hooks/useIntersection';
-import {useIntersectionObserver} from '@/hooks/useIntersectionObserver';
-import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
+import {Body4, H1, H2} from './Typography';
 import {useVisibleElements} from '@/hooks/useVisibleElements';
 
 const TESTIMONIALS = [
