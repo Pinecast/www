@@ -1259,6 +1259,7 @@ export const Globe = () => {
       className={css({
         backgroundColor: 'var(--color-space)',
         position: 'relative',
+        zIndex: 2,
       })}
     >
       <div

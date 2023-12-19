@@ -9,6 +9,7 @@ import {MainLogo} from '@/components/MainLogo';
 import {SplashIntro} from '@/components/SplashIntro';
 import {StandardMarqueeDivider} from '@/components/MarqueeDivider';
 import {Pricing} from '@/components/Pricing';
+import {Testimonials} from '@/components/Testimonials';
 
 export default function Home() {
   const [splashEnded, setSplashEnded] = React.useState(false);
@@ -31,6 +32,7 @@ export default function Home() {
         topBackgroundColor="var(--color-space)"
         bottomBackgroundColor="var(--color-sand)"
       />
+      <Testimonials />
       <Pricing />
       <Footer />
     </>

@@ -105,7 +105,13 @@ export const MarqueeDivider = ({
   }, []);
 
   return (
-    <div className={css({backgroundColor: bottomBackgroundColor})}>
+    <div
+      className={css({
+        backgroundColor: bottomBackgroundColor,
+        position: 'relative',
+        zIndex: 2,
+      })}
+    >
       <svg height="165" preserveAspectRatio="none" width="100%">
         <path
           id={uid}
