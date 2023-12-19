@@ -6,7 +6,7 @@ import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
 import {StickyLine} from './StickyLine';
 
-export const Testimonials = ({topMargin}: {topMargin?: number}) => {
+export const Testimonials = ({topPosition}: {topPosition?: number}) => {
   const css = useCSS();
 
   return (
@@ -15,7 +15,9 @@ export const Testimonials = ({topMargin}: {topMargin?: number}) => {
         id="testimonials"
         className={css({
           backgroundColor: 'var(--color-sand)',
-          marginTop: `${topMargin ?? 0}px`,
+          marginTop: `${topPosition ?? 0}px`,
+          paddingTop:
+            topPosition && topPosition < 0 ? `${topPosition * -1}px` : '0',
         })}
       >
         <div

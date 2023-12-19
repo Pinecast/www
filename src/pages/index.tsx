@@ -43,7 +43,7 @@ export default function Home() {
           topBackgroundColor="var(--color-space)"
           bottomBackgroundColor="transparent"
         />
-        <Testimonials topMargin={-1 * MARQUEE_HEIGHT} />
+        <Testimonials topPosition={-1 * MARQUEE_HEIGHT} />
       </div>
       <Pricing />
       <Footer />
