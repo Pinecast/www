@@ -64,9 +64,13 @@ const TESTIMONIALS = [
 
 const CUSTOMER_BLOCK_STYLE: StyleObject = {
   display: 'grid',
-  padding: '10vh 10vw',
+  padding: '10vh 2vw',
   placeContent: 'center',
   textAlign: 'center',
+  [MIN_TABLET_MEDIA_QUERY]: {
+    paddingLeft: '10vw',
+    paddingRight: '10vw',
+  }
 };
 
 const Customers = ({}) => {

@@ -12,7 +12,7 @@ import {
 } from '@/hooks/useScrollTimeline';
 import {MonumentGroteskRegular} from '@/fonts';
 import Link from 'next/link';
-import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY} from '@/constants';
+import {MIN_DESKTOP_MEDIA_QUERY, MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY, TABLET_MEDIA_QUERY} from '@/constants';
 import {SideTicks} from './SideTicks';
 
 const OPACITY_DURATION_MS: number = 1000;
@@ -1434,7 +1434,9 @@ export const Globe = () => {
               ...MonumentGroteskRegular,
               fontSize: '26px',
               fontWeight: 600,
-              [MOBILE_MEDIA_QUERY]: {fontSize: '18px'},
+              [MOBILE_MEDIA_QUERY]: {
+                fontSize: '18px'
+              },
             })}
           >
             <textPath
