@@ -1,8 +1,11 @@
 import * as React from 'react';
 import {StyleObject} from 'styletron-react';
-import {Body4, H1, H2} from './Typography';
+import {Body4, Caption, H1, H2} from './Typography';
 import {useCSS} from '@/hooks/useCSS';
 import {useVisibleElements} from '@/hooks/useVisibleElements';
+import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
+import {PrimaryButton} from './PrimaryButton';
+import {SecondaryButton} from './SecondaryButton';
 
 const TESTIMONIALS = [
   {
@@ -120,10 +123,7 @@ const Customers = ({}) => {
           })}
         >
           {TESTIMONIALS.map((item, idx) => (
-            <div
-              key={item.customer}
-              className={css(CUSTOMER_BLOCK_STYLE)}
-            >
+            <div key={item.customer} className={css(CUSTOMER_BLOCK_STYLE)}>
               <H1>{item.customer}</H1>
             </div>
           ))}
@@ -144,10 +144,7 @@ const Customers = ({}) => {
           })}
         >
           {TESTIMONIALS.map((item, idx) => (
-            <div
-              key={item.customer}
-              className={css(CUSTOMER_BLOCK_STYLE)}
-            >
+            <div key={item.customer} className={css(CUSTOMER_BLOCK_STYLE)}>
               <H1>{item.customer}</H1>
             </div>
           ))}
@@ -204,43 +201,105 @@ export const Testimonials = ({topPosition}: {topPosition?: number}) => {
         className={css({
           backgroundColor: 'var(--page-bg, var(--color-sand))',
           cursor: 'default',
+          marginTop: `${topPosition ?? 0}px`,
+          paddingTop:
+            topPosition && topPosition < 0 ? `${topPosition * -1}px` : '0',
           transition: 'background 0.2s ease-in-out',
           // Le sigh… This works around a Safari bug wherein the stacking
           // order becomes out of whack when scrolling past and then behind
           // elements that are `position: sticky`.
           // @see https://bugs.webkit.org/show_bug.cgi?id=168725
           transform: 'translate3d(0,0,0)',
-          marginTop: `${topPosition ?? 0}px`,
-          paddingTop:
-            topPosition && topPosition < 0 ? `${topPosition * -1}px` : '0',
         })}
       >
         <div
           className={css({
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '40px',
-            alignItems: 'center',
+            color: 'var(--color-space)',
             textAlign: 'center',
-            margin: '0 auto',
-            maxWidth: '40em',
-            paddingTop: '264px',
-            paddingRight: '30px',
-            paddingBottom: '240px',
-            paddingLeft: '30px',
+            margin: '264px 0 240px',
+            position: 'relative',
+            [MIN_TABLET_MEDIA_QUERY]: {
+              margin: '260px 0 216px',
+            },
           })}
         >
-          <H2
-            style={{
-              textWrap: 'balance',
-            }}
+          <div
+            className={css({
+              display: 'grid',
+              gap: '20px',
+              gridAutoFlow: 'row dense',
+              // 12-col liquid grid of uniformly sized columns so the
+              // text below is elegantly re-positioned without hardcoded
+              // spacing for various media queries.
+              gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
+              marginBottom: '86px',
+              padding: '0 20px',
+              position:'relative',
+              width: '100%',
+              zIndex: 2,
+              [MIN_TABLET_MEDIA_QUERY]: {
+                margin: '260px 0 240px',
+              },
+            })}
           >
-            Don&rsquo;t just take our word for it
-          </H2>
-          <Body4 style={{maxWidth: '36ch'}}>
-            We take pride in running a top-notch service. People really like us.
-            So much so, they left nice messages for you.
-          </Body4>
+            <div
+              className={css({
+                gridColumnStart: '3',
+                gridColumnEnd: '-3',
+                [MIN_TABLET_MEDIA_QUERY]: {
+                  gridColumnStart: '5',
+                  gridColumnEnd: '9',
+                  margin: '0 -20px',
+                },
+              })}
+            >
+              <H2 style={{textWrap: 'balance', marginBottom: '30px'}}>
+                Don&rsquo;t just take our word for it
+              </H2>
+              <Body4
+                style={{
+                  margin: '-10px auto 30px',
+                  maxWidth: '32ch',
+                  [MIN_TABLET_MEDIA_QUERY]: {
+                    maxWidth: '36ch',
+                  },
+                }}
+              >
+                We take pride in running a top-notch service. People really like
+                us. So much so, they left nice messages for you.
+              </Body4>
+            </div>
+            <div
+              className={css({
+                gridColumnStart: '6',
+                gridColumnEnd: '-6',
+                margin: '0 -40px',
+                [MIN_TABLET_MEDIA_QUERY]: {
+                  gridColumnStart: '6',
+                  gridColumnEnd: '8',
+                  margin: '0 10px',
+                },
+              })}
+            >
+              <SecondaryButton
+                href="https://pinecast.com/signup"
+                style={{
+                  color: 'var(--color-space)',
+                  display: 'grid',
+                  lineHeight: '1.2',
+                  placeContent: 'center',
+                  marginBottom: '30px',
+                  minHeight: '48px',
+                }}
+              >
+                Start for free
+              </SecondaryButton>
+              <Caption style={{color: 'var(--color-core-accent)'}}>
+                No credit card required
+              </Caption>
+            </div>
+          </div>
+
         </div>
         <Customers />
       </section>

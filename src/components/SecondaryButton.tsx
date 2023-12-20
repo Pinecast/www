@@ -19,7 +19,7 @@ export const SecondaryButton = ({
     <Link
       className={css({
         ...MonumentGroteskBold,
-        border: '1px solid var(--color-primary-dark)',
+        border: '1px solid currentcolor',
         borderRadius: '10px',
         color: 'var(--color-primary-dark)',
         display: 'inline-flex',
