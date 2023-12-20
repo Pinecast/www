@@ -34,9 +34,15 @@ export const H1 = ({
         marginBottom: '0',
         textTransform: 'uppercase',
         ...style,
+        [TABLET_MEDIA_QUERY]: {
+          fontSize: '112px',
+          lineHeight: '100px',
+          ...(style as Record<string, any>)?.[TABLET_MEDIA_QUERY],
+        },
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '62px',
           lineHeight: '56px',
+          wordBreak: 'break-all',
           ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
         },
       })}
