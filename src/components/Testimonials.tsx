@@ -229,8 +229,7 @@ export const Testimonials = ({topPosition}: {topPosition?: number}) => {
           <div
             className={css({
               display: 'grid',
-              gap: '20px',
-              gridAutoFlow: 'row dense',
+              gap: '10px',
               // 12-col liquid grid of uniformly sized columns so the
               // text below is elegantly re-positioned without hardcoded
               // spacing for various media queries.
@@ -241,6 +240,7 @@ export const Testimonials = ({topPosition}: {topPosition?: number}) => {
               width: '100%',
               zIndex: 2,
               [MIN_TABLET_MEDIA_QUERY]: {
+                gap: '20px',
                 margin: '260px 0 240px',
               },
             })}
