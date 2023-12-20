@@ -12,7 +12,7 @@ import {
 } from '@/hooks/useScrollTimeline';
 import {MonumentGroteskRegular} from '@/fonts';
 import Link from 'next/link';
-import {MOBILE_MEDIA_QUERY} from '@/constants';
+import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY} from '@/constants';
 import {SideTicks} from './SideTicks';
 
 const OPACITY_DURATION_MS: number = 1000;
@@ -1345,8 +1345,7 @@ export const Globe = () => {
         <div
           className={css({
             display: 'grid',
-            gap: '20px',
-            gridAutoFlow: 'row dense',
+            gap: '10px',
             // 12-col liquid grid of uniformly sized columns so the
             // text below is elegantly re-positioned without hardcoded
             // spacing for various media queries.
@@ -1354,24 +1353,35 @@ export const Globe = () => {
             opacity: currentFeature ? '1' : '0',
             pointerEvents: currentFeature ? 'auto' : 'none',
             visibility: currentFeature ? 'visible' : 'hidden',
-            margin: '120px 0',
-            padding: '0 20px',
+            marginTop: '68px',
             position: 'relative',
             width: '100%',
             zIndex: 1,
+            [MIN_TABLET_MEDIA_QUERY]: {
+              gap: '20px',
+              marginTop: '120px',
+              padding: '0 20px',
+            },
           })}
         >
           <div
             className={css({
-              // Take up two columns.
+              // Span 10 columns.
               gridColumnStart: '2',
-              gridColumnEnd: '4',
+              gridColumnEnd: '-2',
+              [MIN_TABLET_MEDIA_QUERY]: {
+                // Take up two columns.
+                gridColumnStart: '2',
+                gridColumnEnd: '4',
+              },
             })}
           >
             <div
               className={css({
-                // Column-gap bleed offset.
-                margin: '0 -20px 0 -30px',
+                [MIN_TABLET_MEDIA_QUERY]: {
+                  // Column-gap bleed offset.
+                  margin: '0 -30px 0 -30px',
+                },
               })}
             >
               {currentFeature && (
@@ -1435,7 +1445,7 @@ export const Globe = () => {
               fontSize: '26px',
               fontWeight: 600,
               [MOBILE_MEDIA_QUERY]: {
-                fontSize: '18px'
+                fontSize: '18px',
               },
             })}
           >
