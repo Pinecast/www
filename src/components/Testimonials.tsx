@@ -261,7 +261,10 @@ export const Testimonials = ({topPosition}: {topPosition?: number}) => {
               </H2>
               <Body4
                 style={{
-                  margin: '-10px auto 30px',
+                  marginTop: '-10px',
+                  marginRight:'auto',
+                  marginBottom: '30px',
+                  marginLeft:'auto',
                   maxWidth: '32ch',
                   [MIN_TABLET_MEDIA_QUERY]: {
                     maxWidth: '36ch',
