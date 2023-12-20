@@ -25,6 +25,9 @@ export const Pricing = () => {
       className={css({
         backgroundColor: 'var(--color-space)',
         paddingBottom: '116px',
+        position:'relative',
+        // transform: 'translate3d(0,0,0)',
+        zIndex: 1,
       })}
     >
       <div
@@ -36,7 +39,7 @@ export const Pricing = () => {
           textAlign: 'center',
           margin: '0 auto 200px',
           maxWidth: '946px',
-          padding: '100px 30px 0',
+          padding: '200px 30px 0',
 
           '--color-line': '#888',
           '--color-primary-dark': '#fff',

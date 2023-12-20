@@ -1,6 +1,7 @@
-import {useCSS} from '@/hooks/useCSS';
 import * as React from 'react';
+import {StyleObject} from 'styletron-react';
 import {Body4, H1, H2} from './Typography';
+import {useCSS} from '@/hooks/useCSS';
 import {useVisibleElements} from '@/hooks/useVisibleElements';
 
 const TESTIMONIALS = [
@@ -58,10 +59,17 @@ const TESTIMONIALS = [
   },
 ];
 
-export const Testimonials = ({topPosition}: {topPosition?: number}) => {
-  const css = useCSS();
+const CUSTOMER_BLOCK_STYLE: StyleObject = {
+  display: 'grid',
+  padding: '10vh 10vw',
+  placeContent: 'center',
+  textAlign: 'center',
+};
 
+const Customers = ({}) => {
+  const css = useCSS();
   const customersRef = React.useRef<Element[]>([]);
+
   const addCustomerRef = (index: number) => (el: Element | null) => {
     if (!el) {
       return;
@@ -70,7 +78,8 @@ export const Testimonials = ({topPosition}: {topPosition?: number}) => {
   };
 
   const [visibleCustomer] = useVisibleElements(customersRef, {
-    rootMargin: '-50% 0% -50% 0%', // Middle of viewport, where StickyLine is
+    // Observe when a customer block intersects at the middle of viewport, where StickyLine is
+    rootMargin: '-50% 0% -50% 0%',
   });
 
   React.useEffect(() => {
@@ -81,7 +90,6 @@ export const Testimonials = ({topPosition}: {topPosition?: number}) => {
     if (!testimonial) {
       return;
     }
-    console.log('clear', testimonial);
     document.body.style.setProperty(
       '--page-bg',
       `var(--color-${testimonial.color})`,
@@ -90,14 +98,121 @@ export const Testimonials = ({topPosition}: {topPosition?: number}) => {
 
   return (
     <>
+      <div
+        className={css({
+          marginTop: '-10vh',
+          paddingBottom: '100px',
+          position: 'relative',
+          textAlign: 'center',
+          textWrap: 'balance',
+        })}
+      >
+        <div
+          aria-hidden="true"
+          role="presentation"
+          className={css({
+            // Invisible text to ensure the height for the absolutely
+            // stacked characters below is identical to their height
+            // if they were positioned statically.
+            opacity: 0,
+            visibility: 'hidden',
+            pointerEvents: 'none',
+          })}
+        >
+          {TESTIMONIALS.map((item, idx) => (
+            <div
+              key={item.customer}
+              className={css(CUSTOMER_BLOCK_STYLE)}
+            >
+              <H1>{item.customer}</H1>
+            </div>
+          ))}
+        </div>
+
+        <div
+          className={css({
+            // Outlined Text
+            color: 'var(--color-space)',
+            left: '0',
+            position: 'absolute',
+            right: '0',
+            top: '0',
+            WebkitTextFillColor: 'transparent',
+            WebkitTextStrokeColor: 'var(--color-space)',
+            WebkitTextStrokeWidth: 'thin',
+            zIndex: 2,
+          })}
+        >
+          {TESTIMONIALS.map((item, idx) => (
+            <div
+              key={item.customer}
+              className={css(CUSTOMER_BLOCK_STYLE)}
+            >
+              <H1>{item.customer}</H1>
+            </div>
+          ))}
+        </div>
+        <div
+          className={css({
+            // Filled Text
+            color: 'var(--color-space)',
+            left: '0',
+            position: 'absolute',
+            right: '0',
+            top: '0',
+            WebkitTextFillColor: 'var(--color-space)',
+            WebkitTextStrokeColor: 'var(--color-space)',
+            WebkitTextStrokeWidth: 'thin',
+            zIndex: 1,
+            '::after': {
+              backgroundColor: 'var(--page-bg, var(--color-sand))',
+              bottom: '0',
+              content: '""',
+              display: 'block',
+              height: '50vh',
+              left: '0',
+              position: 'sticky',
+              right: '0',
+              transition: 'background 0.2s ease-in-out',
+              width: '100%',
+              zIndex: 1,
+            },
+          })}
+        >
+          {TESTIMONIALS.map((item, idx) => (
+            <div
+              key={item.customer}
+              ref={addCustomerRef(idx)}
+              className={css(CUSTOMER_BLOCK_STYLE)}
+            >
+              <H1>{item.customer}</H1>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+};
+
+export const Testimonials = ({topPosition}: {topPosition?: number}) => {
+  const css = useCSS();
+
+  return (
+    <>
       <section
         id="testimonials"
         className={css({
           backgroundColor: 'var(--page-bg, var(--color-sand))',
+          cursor: 'default',
+          transition: 'background 0.2s ease-in-out',
+          // Le sigh… This works around a Safari bug wherein the stacking
+          // order becomes out of whack when scrolling past and then behind
+          // elements that are `position: sticky`.
+          // @see https://bugs.webkit.org/show_bug.cgi?id=168725
+          transform: 'translate3d(0,0,0)',
           marginTop: `${topPosition ?? 0}px`,
           paddingTop:
             topPosition && topPosition < 0 ? `${topPosition * -1}px` : '0',
-          transition: 'background 0.2s ease-in-out',
         })}
       >
         <div
@@ -111,7 +226,7 @@ export const Testimonials = ({topPosition}: {topPosition?: number}) => {
             maxWidth: '40em',
             paddingTop: '264px',
             paddingRight: '30px',
-            paddingBottom: '264px',
+            paddingBottom: '240px',
             paddingLeft: '30px',
           })}
         >
@@ -127,21 +242,7 @@ export const Testimonials = ({topPosition}: {topPosition?: number}) => {
             So much so, they left nice messages for you.
           </Body4>
         </div>
-        {TESTIMONIALS.map((item, idx) => (
-          <div
-            key={item.customer}
-            id={`customer-${item.customer}`}
-            ref={addCustomerRef(idx)}
-            className={css({
-              alignContent: 'center',
-              display: 'grid',
-              padding: '20vh 0',
-              textAlign: 'center',
-            })}
-          >
-            <H1 style={{margin: '0'}}>{item.customer}</H1>
-          </div>
-        ))}
+        <Customers />
       </section>
     </>
   );
