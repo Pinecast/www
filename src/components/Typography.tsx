@@ -2,7 +2,6 @@ import {
   MOBILE_MEDIA_QUERY,
   CAN_HOVER_MEDIA_QUERY,
   TABLET_MEDIA_QUERY,
-  MIN_DESKTOP_MEDIA_QUERY,
 } from '@/constants';
 import {
   GintoNordCondensed,

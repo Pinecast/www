@@ -4,7 +4,6 @@ import {Body4, Caption, H1, H2} from './Typography';
 import {useCSS} from '@/hooks/useCSS';
 import {useVisibleElements} from '@/hooks/useVisibleElements';
 import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
-import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
 
 const TESTIMONIALS = [

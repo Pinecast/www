@@ -9,7 +9,6 @@ import {
 import {
   MIN_TABLET_MEDIA_QUERY,
   MOBILE_MEDIA_QUERY,
-  TABLET_MEDIA_QUERY,
 } from '@/constants';
 import {MonumentGroteskRegular} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
