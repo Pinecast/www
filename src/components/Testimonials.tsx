@@ -69,7 +69,7 @@ const CUSTOMER_BLOCK_STYLE: StyleObject = {
   [MIN_TABLET_MEDIA_QUERY]: {
     paddingLeft: '10vw',
     paddingRight: '10vw',
-  }
+  },
 };
 
 const Customers = ({}) => {
@@ -88,19 +88,21 @@ const Customers = ({}) => {
     rootMargin: '-50% 0% -50% 0%',
   });
 
+  const currentTestimonial =
+    visibleCustomer &&
+    TESTIMONIALS[customersRef.current.findIndex(el => el === visibleCustomer)];
+
   React.useEffect(() => {
-    const testimonial =
-      TESTIMONIALS[
-        customersRef.current.findIndex(el => el === visibleCustomer)
-      ];
-    if (!testimonial) {
-      return;
+    if (currentTestimonial) {
+      document.body.style.setProperty(
+        '--page-bg',
+        `var(--color-${currentTestimonial.color})`,
+      );
     }
-    document.body.style.setProperty(
-      '--page-bg',
-      `var(--color-${testimonial.color})`,
-    );
-  }, [visibleCustomer]);
+    return () => {
+      document.body.style.removeProperty('--page-bg');
+    };
+  }, [currentTestimonial]);
 
   return (
     <>
@@ -236,7 +238,7 @@ export const Testimonials = ({topPosition}: {topPosition?: number}) => {
               gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
               marginBottom: '86px',
               padding: '0 20px',
-              position:'relative',
+              position: 'relative',
               width: '100%',
               zIndex: 2,
               [MIN_TABLET_MEDIA_QUERY]: {
@@ -262,9 +264,9 @@ export const Testimonials = ({topPosition}: {topPosition?: number}) => {
               <Body4
                 style={{
                   marginTop: '-10px',
-                  marginRight:'auto',
+                  marginRight: 'auto',
                   marginBottom: '30px',
-                  marginLeft:'auto',
+                  marginLeft: 'auto',
                   maxWidth: '32ch',
                   [MIN_TABLET_MEDIA_QUERY]: {
                     maxWidth: '36ch',
@@ -305,7 +307,6 @@ export const Testimonials = ({topPosition}: {topPosition?: number}) => {
               </Caption>
             </div>
           </div>
-
         </div>
         <Customers />
       </section>
