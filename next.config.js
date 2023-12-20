@@ -1,14 +1,26 @@
-const withMDX = require('@next/mdx')();
+module.exports = async () => {
+  const withMDX = require('@next/mdx')({
+    extension: /\.mdx?$/,
+    options: {
+      remarkPlugins: [(await import('remark-unwrap-images')).default],
+      rehypePlugins: [
+        [
+          (await import('./vendor/rehype-image-size.mjs')).default,
+          {root: process.cwd() + '/public'},
+        ],
+      ],
+    },
+  });
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  webpack: function (config) {
-    config.externals = config.externals || {};
-    config.externals['styletron-server'] = 'styletron-server';
-    return config;
-  },
-  reactStrictMode: true,
-  pageExtensions: ['tsx', 'mdx'],
+  const nextConfig = {
+    webpack: function (config) {
+      config.externals = config.externals || {};
+      config.externals['styletron-server'] = 'styletron-server';
+      return config;
+    },
+    reactStrictMode: true,
+    pageExtensions: ['tsx', 'mdx'],
+  };
+
+  return withMDX(nextConfig);
 };
-
-module.exports = withMDX(nextConfig);

@@ -4,6 +4,8 @@ import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
 import {useCSS} from '@/hooks/useCSS';
 import type {MDXComponents} from 'mdx/types';
 import Image from 'next/image';
+import Link from 'next/link';
+import {MonumentGroteskSemiMono} from '@/fonts';
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
@@ -41,6 +43,19 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
 
+    a: ((props: {href: string}) => {
+      const css = useCSS(); // eslint-disable-line react-hooks/rules-of-hooks
+      return (
+        <Link
+          {...props}
+          className={css({
+            ...MonumentGroteskSemiMono,
+            color: 'inherit',
+          })}
+        />
+      );
+    }) as any,
+
     ul: ({children}) => {
       const css = useCSS(); // eslint-disable-line react-hooks/rules-of-hooks
       return (
@@ -73,6 +88,37 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         </li>
       );
     },
+
+    img: ((props: {
+      src: string;
+      alt: string;
+      height: number;
+      width: number;
+    }) => {
+      const css = useCSS(); // eslint-disable-line react-hooks/rules-of-hooks
+      return (
+        // eslint-disable-next-line jsx-a11y/alt-text
+        <Image
+          {...props}
+          className={css({
+            width: '100%',
+            height: 'auto',
+            borderRadius: '20px',
+            marginTop: '20px',
+            marginBottom: '20px',
+            [MIN_TABLET_MEDIA_QUERY]: {
+              marginTop: '130px',
+              marginBottom: '20px',
+            },
+            ':is(img) + p': {
+              [MIN_TABLET_MEDIA_QUERY]: {
+                marginTop: '150px',
+              },
+            },
+          })}
+        />
+      );
+    }) as any,
 
     ...components,
   };
