@@ -15,6 +15,7 @@ import {Pricing} from '@/components/Pricing';
 import {Testimonials} from '@/components/Testimonials';
 import {StickyLine} from '@/components/StickyLine';
 import {useCSS} from '@/hooks/useCSS';
+import { TunedIn } from '@/components/TunedIn';
 
 export default function Home() {
   const css = useCSS();
@@ -45,6 +46,7 @@ export default function Home() {
         />
         <Testimonials topPosition={-1 * MARQUEE_HEIGHT} />
       </div>
+      <TunedIn />
       <Pricing />
       <Footer />
     </>
