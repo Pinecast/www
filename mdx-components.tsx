@@ -17,10 +17,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     // All of the headings are bumped up (H1 # -> <H2>, H2 ## -> <Title> which is a H3, etc.)
     // This is so that the top level heading can be defined externally as H1
     // and the rest of the headings will be bumped up accordingly.
-    h1: ({children}) => <H2 style={{fontSize: '100px'}}>{children}</H2>,
-    h2: ({children}) => <Title>{children}</Title>,
-    h3: ({children}) => <Subtitle>{children}</Subtitle>,
-    h4: ({children}) => <ContentSection>{children}</ContentSection>,
+    h1: ({children}) => <Title>{children}</Title>,
+    h2: ({children}) => <Subtitle>{children}</Subtitle>,
+    h3: ({children}) => <ContentSection>{children}</ContentSection>,
 
     p: ({children}) => {
       const css = useCSS(); // eslint-disable-line react-hooks/rules-of-hooks
@@ -112,7 +111,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             },
             ':is(img) + p': {
               [MIN_TABLET_MEDIA_QUERY]: {
-                marginTop: '150px',
+                marginTop: '130px',
               },
             },
           })}

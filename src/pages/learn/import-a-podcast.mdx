@@ -1,0 +1,55 @@
+import {Intro, Step} from '@/components/TextBlocks';
+
+<Intro>
+  Switching from one podcast hosting service to another can seem like a daunting task. Pinecast makes it easy—it'll only take a few minutes.
+</Intro>
+
+<Step stepNumber={1} title="Upgrade your account">
+  After signing up and verifying your email, click the "Upgrade" button at the top of the page. We'll walk you through the process of setting up a subscription. Our import tool is available to all paid customers.
+
+  Once you've finished the checkout process, you'll see a screen with next steps. You can click the "Import a podcast" button to jump directly to the import tool.
+
+  ![A screenshot of the screen shown immediately after upgrading](/images/content/learn/screenshot-upgraded.png)
+</Step>
+
+<Step stepNumber={2} title="Import your show">
+  If you're not already on the import tool after upgrading, click the "New podcast" button on your main Pinecast dashboard.
+
+  Be sure to select the "Import from elsewhere" option, which will allow you to import your show.
+
+  ![A screenshot of the new podcast page, showing the import option](/images/content/learn/screenshot-import-podcast.png)
+
+  Provide your RSS feed or the URL of your show on Apple Podcasts or iTunes. We'll pull in the information about your show: you'll be able to confirm all of the details and make any necessary changes before continuing.
+
+  Once the import starts, it'll take a few minutes to copy your show's assets over. We'll show progress as it completes.
+
+  ![A screenshot of the new podcast page, showing the import option](/images/content/learn/screenshot-importing.png)
+
+</Step>
+
+<Step stepNumber={3} title="Set up a feed redirect">
+  When the import completes, we'll link you to an article with instructions for setting up a feed redirect. If you miss the link, we'll send it to you in an email.
+
+  Follow the instructions provided to set up a redirect from your old podcast host to your new Pinecast RSS feed. You can find the feed URL for your show on your podcast dashboard's Overview tab.
+
+  Feed redirects are an important step; be sure not to forget to set one up! Without a feed redirect, apps and directories won't know to start checking Pinecast instead of your old host.
+</Step>
+
+<Step stepNumber={4} title="Link your listings">
+  After the redirect has been active for 36 hours, visit the Distribution tab on your podcast's dashboard in Pinecast. Flip the switches or click the "Link" buttons to link relevant directories (Apple Podcast, Spotify, etc.). You don't need to resubmit your show manually if you'd submitted it with your old host.
+
+  Linking your podcast allows Pinecast to offer additional features to you and your listeners. For example, this will allow us to pull analytics data for Spotify, or link your listeners directly to the best app for their brand of cell phone.
+</Step>
+
+<Step stepNumber={5} title="That's it!">
+  Within about 24 hours of your feed redirect going live, you're fully moved over to Pinecast. You don't need to do anything else, and neither will your listeners.
+</Step>
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, {
+  title: 'Import Your Podcast',
+  description: 'Bring your show to Pinecast from another host.',
+  heroImage: '/images/hero/t-r.png',
+});

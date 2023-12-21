@@ -45,7 +45,7 @@ export const Title = ({
 }) => {
   const css = useCSS();
   return (
-    <h3
+    <h2
       className={css({
         ...GintoNordCondensed,
         fontSize: '48px',
@@ -67,7 +67,7 @@ export const Title = ({
       })}
     >
       {children}
-    </h3>
+    </h2>
   );
 };
 
@@ -83,13 +83,25 @@ export const TaggedTitle = ({
   const css = useCSS();
   return (
     <div className={css({textAlign: 'center', ...style})}>
-      <PillButton style={{textTransform: 'uppercase'}}>{tag}</PillButton>
+      <PillButton aria-hidden={true} style={{textTransform: 'uppercase'}}>
+        {tag}
+      </PillButton>
       <Title
         style={{
           marginTop: '40px',
           [MIN_TABLET_MEDIA_QUERY]: {marginTop: '40px'},
         }}
       >
+        <span
+          className={css({
+            position: 'absolute',
+            userSelect: 'none',
+            opacity: 0,
+          })}
+        >
+          {tag}
+          {' - '}
+        </span>
         {children}
       </Title>
     </div>
@@ -122,7 +134,7 @@ export const Step = ({
 export const Subtitle = ({children}: {children: React.ReactNode}) => {
   const css = useCSS();
   return (
-    <h4
+    <h3
       className={css({
         ...MonumentGroteskBold,
         fontSize: '28px',
@@ -144,7 +156,7 @@ export const Subtitle = ({children}: {children: React.ReactNode}) => {
       })}
     >
       {children}
-    </h4>
+    </h3>
   );
 };
 

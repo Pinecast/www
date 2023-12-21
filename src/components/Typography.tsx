@@ -27,8 +27,10 @@ export const H1 = ({
       className={css({
         ...GintoNordCondensed,
         fontSize: '160px',
+        hyphens: 'auto',
         letterSpacing: '-0.04em',
         lineHeight: '144px',
+        // overflowWrap: 'break-word',
         marginTop: '0',
         marginBottom: '0',
         textTransform: 'uppercase',
@@ -41,7 +43,6 @@ export const H1 = ({
         [MOBILE_MEDIA_QUERY]: {
           fontSize: '62px',
           lineHeight: '56px',
-          wordBreak: 'break-all',
           ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
         },
       })}
@@ -336,15 +337,18 @@ export const PillButton = ({
   as,
   children,
   style,
+  ...rest
 }: {
   as?: React.ElementType;
   children: ReactNode;
   style?: StyleObject;
+  [prop: string]: unknown;
 }) => {
   const css = useCSS();
   const Tag = as ?? 'div';
   return (
     <Tag
+      {...rest}
       className={css({
         ...MonumentGroteskRegular,
         border: '1px solid currentColor',
