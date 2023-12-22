@@ -396,9 +396,9 @@ export const TunedIn = () => {
           gap: '20px',
           gridTemplateColumns: 'repeat(3, 1fr)',
           listStyleType: 'none',
-          paddingTop: '20vh',
           minHeight: '30vh',
-          padding: '0 20px',
+          paddingLeft: '20px',
+          paddingRight: '20px',
           width: '100%',
         })}
       >
