@@ -75,12 +75,34 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         </ul>
       );
     },
+    ol: ({children}) => {
+      const css = useCSS(); // eslint-disable-line react-hooks/rules-of-hooks
+      return (
+        <ol
+          className={css({
+            marginTop: 0,
+            marginRight: 'var(--text-gutter)',
+            marginLeft: '10px',
+            paddingLeft: '60px',
+            [MIN_TABLET_MEDIA_QUERY]: {
+              maxWidth: '805px',
+              marginRight: 'auto',
+              marginLeft: 'auto',
+              marginBottom: '20px',
+            },
+          })}
+        >
+          {children}
+        </ol>
+      );
+    },
     li: ({children}) => {
       const css = useCSS(); // eslint-disable-line react-hooks/rules-of-hooks
       return (
         <li
           className={css({
             '--text-gutter': '0px',
+            marginBottom: '10px',
           })}
         >
           {children}

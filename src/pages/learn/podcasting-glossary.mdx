@@ -1,0 +1,232 @@
+# Some background
+
+Why are there so many terms? Podcasting is the intersection of the audio industry and the broadcasting industry, which both come laden with their own jargon. On top of that, podcasting as a hobby or profession can become very involved: having a vocabulary to express nuanced concepts is important.
+
+We promise that nothing is too hard to learn, and you don't need to know most of the terms until you encounter them.
+
+# The terms
+
+import {DefinitionList} from '@/components/TextBlocks';
+
+<DefinitionList>
+  <dt>AAC (Advanced Audio Codec)</dt>
+  <dd>
+  AAC is a codec—a format for storing audio in digital format. It is the successor to MP3 (see below). It generally has better compression (see below) properties to MP3, but it is encumbered by patents and may not be as well-supported by all devices.
+  </dd>
+
+  <dt>Bed</dt>
+  <dd>
+  A bed is audio (usually music) that you play while someone is speaking.
+  </dd>
+
+  <dt>Bit depth</dt>
+  <dd>
+  The bit depth of an audio file is the number of bits per sample (see below). A file with a higher bit depth uses more space for numbers with more precision when describing a sample. The more precise the samples are, the more accurately the sound can be reproduced. 16 bit is a common bit depth.
+
+  You generally do not need to worry about bit depth—when distributing a file, bitrate (see below) is much more important, as it affects the compression of the audio.
+  </dd>
+
+  <dt>Bitrate</dt>
+  <dd>
+  The bitrate of an audio file is the number of bits of data the audio takes up per second of audio. For instance, 128kbps means that there are 128,000 bits (or 15.6 kilobytes) of data for every second of audio stored in that file.
+
+  Bitrate is the unit of measure for compression (see below). Higher bitrate means the audio takes more space on your disk per second of audio: the more space the audio takes up, the more faithfully the audio is reproduced. Lower bitrates take up less space by reducing quality.
+  </dd>
+
+  <dt>Clipping</dt>
+  <dd>
+  Reducing the duration of an audio segment (by truncating the beginning or end) is known as "clipping" the audio.
+  </dd>
+
+  <dt>Compression</dt>
+  <dd>
+  Audio codecs compress their audio to minimize file size. Compression works by using less data to store sounds that the human ear cannot perceive as readily as sounds that can be heard easily. Among other techniques, very high or low-pitched tones are decreased in quality, which allows the storage space used to store that audio information to be reduced.
+
+  AAC (see above) is the best audio codec in terms of compression for podcast episodes. MP3 (see below) is the most popular.
+
+  WAV (see below) is an audio codec without compression, but it should not be used to distribute podcast audio.
+  </dd>
+
+  <dt>Compressor</dt>
+  <dd>
+  Compressor filters make soft sounds louder and loud sounds quieter, making your audio easier to listen to.
+  </dd>
+
+  <dt>Creative Commons</dt>
+  <dd>
+  Creative Commons is an organization which publishes a set of licenses (see below) for content that is not intended to be proprietary. They provide guidance for annotating your content so that it can be shared and reused with limitations of your choosing.
+  </dd>
+
+  <dt>Cutting</dt>
+  <dd>
+  Another way of saying "editing".
+  </dd>
+
+  <dt>DAW (Digital Audio Workstation)</dt>
+  <dd>
+  This is another way of saying "editing software", though it often also allows you to record audio as well.
+  </dd>
+
+  <dt>Directory</dt>
+  <dd>
+  A directory is an online (or app-based) listing of podcasts. Common directories include Apple Podcasts, Spotify, and Google Podcasts.
+  </dd>
+
+  <dt>Feed</dt>
+  <dd>
+  A feed is a computer-readable file which encodes all of the information about your podcast and its episodes. Podcast apps check feeds for updated episodes and changes to a podcast. RSS (see below) is the most common format for distributing podcasts.
+  </dd>
+
+  <dt>Gain</dt>
+  <dd>
+  Simply put, this is the sensitivity of your microphone. Adjust this before you start recording, if you have the option, to ensure your audio is recorded loud enough—but not so loud that it's peaking (see below).
+  </dd>
+
+  <dt>Hosting</dt>
+  <dd>
+  Podcast hosting is a service (like Pinecast!) used to make audio file available to podcast apps and directories. A hosting service provides a feed (see above), which directories and podcast apps use to fetch new episodes. A good hosting service will also include features like analytics, a website, and tools for managing and monitoring your show.
+  </dd>
+
+  <dt>ID3</dt>
+  <dd>
+  A kind of metadata (see below) stored inside of MP3 (see below) audio files.
+  </dd>
+
+  <dt>Intro</dt>
+  <dd>
+  A piece of audio added to the beginning of an episode to introduce the show. This may be a theme song or other standardized introduction to the podcast.
+  </dd>
+
+  <dt>Joint stereo</dt>
+  <dd>
+  When encoding an MP3, joint stereo is an encoding method that allows for stereo (see below) audio to be encoded using less space than traditional stereo audio.
+
+  With traditional stereo audio, the left and right tracks are each encoded, usually doubling the size of a file. Joint stereo stores one channel, and the numeric difference between the two channels. Since the left and right channels of even fully-stereo audio are not vastly different, the information required to encode the difference is smaller than encoding a second audio track. This reduces file sizes without reducing quality.
+
+  Joint stereo is a good option for audio with some stereo sound, since it will reduce the cost of stereo encoding to just the segments containing stereo audio. When a segment of audio has identical left and right tracks (as is the case with "mono" audio), the difference is zero and takes up a negligible amount of extra space.
+  </dd>
+
+  <dt>License</dt>
+  <dd>
+  A license is the rights that you grant to your listeners to use, share, and create derivative works from your content.
+  </dd>
+
+  <dt>Metadata</dt>
+  <dd>
+  Metadata is the extra information associated with an episode or an audio file. This may be present in a feed (see above) or embedded within an audio file, like ID3 tags (see above).
+
+  Metadata usually includes an episode title, the podcast author, and the name of the podcast.
+  </dd>
+
+  <dt>Mid-roll</dt>
+  <dd>
+  An advertisement played in the middle of an episode.
+  </dd>
+
+  <dt>Mixer</dt>
+  <dd>
+  A piece of hardware (though sometimes software) used for combining multiple audio sources together.
+  </dd>
+
+  <dt>Mixing</dt>
+  <dd>
+  The process of editing multiple audio files together.
+  </dd>
+
+  <dt>Mixing down</dt>
+  <dd>
+  At the end of the audio editing process, "mixing down" your tracks refers to combining the various tracks "down" into a single output audio file.
+  </dd>
+
+  <dt>Mono</dt>
+  <dd>
+  Audio that is "mono" has one track. There is no difference between the left and right speakers when listening with headphones.
+
+  Podcasts are often encoded as "mono," since they are usually not recorded with multiple microphones arranged to pick up left and right channels.
+  </dd>
+
+  <dt>MP3</dt>
+  <dd>
+  MP3 is a codec—a format for storing audio in digital format. It is the most common format for distributing audio for podcasts. MP3 does not have the best compression (see above), but it is usually good enough for most use cases.
+  </dd>
+
+  <dt>Multitrack</dt>
+  <dd>
+  When editing, multiple audio tracks can be layered together into a single output. This is known as "multitrack" editing, and allows for input from multiple microphones to be combined.
+  </dd>
+
+  <dt>Normalization</dt>
+  <dd>
+  This is the process of making your audio have a perceptually even volume throughout an episode.
+  </dd>
+
+  <dt>Outro</dt>
+  <dd>
+  An audio clip that "plays out" an episode. Usually a jingle played during a credit sequence.
+  </dd>
+
+  <dt>Peaking</dt>
+  <dd>
+  When someone gets too close to their microphone or causes a loud noise (e.g., bumping the microphone, coughing, or otherwise creating a spike in the audio volume), this is referred to as "peaking" the audio. In most recording software, audio levels are shown colored bars. When audio peaks, the bars will extend into a red zone.
+  </dd>
+
+  <dt>Postroll</dt>
+  <dd>
+  An advertisement or audio clip that runs after an episode.
+  </dd>
+
+  <dt>Preroll</dt>
+  <dd>
+  An advertisement or audio clip that runs before an episode.
+  </dd>
+
+  <dt>Room tone</dt>
+  <dd>
+  Even in very quiet rooms, background noise (computer noise, street noise, air conditioning or refrigerator noise, etc.) is picked up as a low hum or hiss. Our brains ignore this, but microphones can pick it up, and your listeners can often hear it as well. While it's not easy to perceive, cutting (see above) it abruptly is obvious.
+
+  It's common practice to record some room tone (e.g., ten seconds) to fade in over cuts, helping to mask edits.
+  </dd>
+
+  <dt>RSS (Really Simple Syndication)</dt>
+  <dd>
+  RSS is a standard format for feeds (see above). It is based on XML (eXtensible Markup Language), which is a computer-readable format for encoding structured information.
+  </dd>
+
+  <dt>Samples</dt>
+  <dd>
+  Audio is stored digitally in "samples". Sound travels as vibrations through the air. When these vibrations are measured with a microphone, they appear as a waveform (see below). A sample is a number describing the shape of the waveform. When samples are taken at a regular interval (the "sample rate"; see below), they can be used to reproduce the sound digitally.
+  </dd>
+
+  <dt>Sample rate</dt>
+  <dd>
+  The sample rate of an audio file is the number of samples (see above) per second (i.e., a frequency) that an audio file is encoded with. For instance, 44.1kHz is a common sample rate. This means that 44,100 samples (numbers) are stored for each second of audio.
+  </dd>
+
+  <dt>Stereo</dt>
+  <dd>
+  Audio that is "stereo" has two channels: one intended for a left speaker and one intended for a right speaker. This gives the perception of 3D space in an audio file.
+
+  Stereo audio isn't generally useful for podcasting, since most microphones do not record dedicated left and right audio channels. Stereo audio provides little benefit for the listener, and is generally discouraged.
+  </dd>
+
+  <dt>Waveform</dt>
+  <dd>
+  A waveform is a visualization of the sound wave for a piece of audio. It is represented digitally by samples (see above).
+  </dd>
+
+  <dt>WAV</dt>
+  <dd>
+  WAV is a codec—a format for storing audio in digital format. WAV losslessly stores all of the minute details of the original audio: a WAV file is as good as the input that created it. However, WAV offers no compression (see above), making the files exceptionally large. Few podcast apps support WAV because its files are too large to be distributed easily (especially over mobile data).
+
+  WAV is useful for storing source audio (e.g., audio that has been recorded but not yet edited).
+  </dd>
+</DefinitionList>
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, {
+  title: 'Podcasting glossary',
+  description: 'The lingo you need to know to get started',
+  heroImage: '/images/hero/t-r.png',
+});

@@ -221,6 +221,10 @@ export const DefinitionList = ({children}: {children: React.ReactNode}) => {
           fontSize: '14px',
           lineHeight: '17px',
         },
+        ':not(:empty) > dd > p': {
+          marginLeft: 0,
+          marginRight: 0,
+        },
 
         [MIN_TABLET_MEDIA_QUERY]: {
           marginBottom: '150px',
@@ -228,6 +232,9 @@ export const DefinitionList = ({children}: {children: React.ReactNode}) => {
           maxWidth: '805px',
           marginRight: 'auto',
           marginLeft: 'auto',
+          ':last-child': {
+            marginBottom: 0,
+          },
 
           gridTemplateColumns: '1fr 1fr',
           rowGap: '20px',
@@ -248,6 +255,10 @@ export const DefinitionList = ({children}: {children: React.ReactNode}) => {
             lineHeight: '22px',
           },
         },
+
+        ':last-child': {
+          marginBottom: 0,
+        }
       })}
     >
       {children}

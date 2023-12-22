@@ -41,7 +41,7 @@ export const H1 = ({
           ...(style as Record<string, any>)?.[TABLET_MEDIA_QUERY],
         },
         [MOBILE_MEDIA_QUERY]: {
-          fontSize: '62px',
+          fontSize: '54px',
           lineHeight: '56px',
           ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
         },

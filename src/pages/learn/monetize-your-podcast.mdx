@@ -1,0 +1,54 @@
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Making a bit of cash from your podcast is always nice. But what if you could make more?
+
+  Pinecast has features built-in to help you build a sustainable income stream from your show.
+</Intro>
+
+# What's the tip jar?
+
+Pinecast's best feature for monetization is the Tip Jar. With the tip jar, you can accept paid subscriptions from your listeners. In exchange, you can provide private subscriber-only content, release content to subscribers early, and accept messages directly from subscribers.
+
+![A screenshot of the tip jar for a podcast](/images/content/learn/screenshot-tip-jar.png)
+
+Subscription revenue pays out every Friday (after a seven-day holding period) directly to your bank account. Setup is fast and easy, with no waiting periods.
+
+# Getting set up
+
+From your main dashboard, choose the Settings &gt; Tip Jar tab on your main account dashboard or the Tip Jar tab on any podcast dashboard and follow the instructions.
+
+![A screenshot of the tip jar dashboard for a podcast](/images/content/learn/screenshot-tip-jar-dashboard.png)
+
+To get started, we'll ask you for some personal information:
+
+1. We need bank or debit card details to send you your earnings.
+2. We'll ask for identity information about you and/or your organization to satisfy your country's legal requirements for identity verification.
+
+All of this information is collected through Stripe, our payment processor, and is securely stored on their servers. Once you've provided the requested information, you'll be able to start accepting payments immediately: you'll see a link to your tip jar on the Tip Jar tab of each podcast dashboard.
+
+# Accepting tips
+
+By default, we'll accept one-off and recurring tips on your behalf. For accounts in the US, tips can range from $1 to $150 (amounts vary by currency). You can customize messaging before and after a donation is made, and add a thank you message to the email sent after a tip is made.
+
+Getting users into your tip jar is easy. Our [short links](/feature/short-links) automatically link up your tip jar when you share them. You'll find a checkbox on your episodes to have the tip jar linked automatically in the show notes of each episode (and we'll remember your choice when you go to upload your next episode).
+
+When a listener sends you a tip, you'll receive an email and see details of the tip on your podcast dashboard. Tips are held in reserve for seven days and paid out on the following Friday.
+
+## Subscribers
+
+When you create an episode, you can mark it as private (or, with our Growth add-on, private until a certain date). Paid subscribers will get a special dashboard where they can access your show's private episodes—either in their browser or in a podcast app. If they listen in the browser, we'll even help keep track of which episodes they've listened to.
+
+![A screenshot of what subscribers to a podcast tip jar will see](/images/content/learn/screenshot-tip-jar-tipper-dashboard.png)
+
+Subscriptions are managed completely automatically. Each subscriber gets a unique feed that they can add to their podcast app. If their subscription lapses, the feed disables automatically.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, {
+  title: 'Monetize Your Podcast',
+  description: 'Time to make some money',
+  heroImage: '/images/hero/t-r.png',
+});
