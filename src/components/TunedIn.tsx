@@ -94,9 +94,9 @@ const Panel = ({
               {heading}
             </Subhead>
             <ProseLink
-                // TODO: Isolate a non-anchor version of Typography's Link
-                // so the entire `<li>` can be used as a large click target.
-                href="/features"
+              // TODO: Isolate a non-anchor version of Typography's Link
+              // so the entire `<li>` can be used as a large click target.
+              href="/features"
               style={{
                 color: 'inherit',
               }}
@@ -256,23 +256,21 @@ export const TunedIn = () => {
   const scrollProgress = useScrollProgress(sectionRef);
 
   React.useEffect(() => {
-    if (scrollProgress >= 0.8) {
-      setRightActive(true);
-      return;
-    }
-    if (scrollProgress >= 0.7) {
-      setMiddleActive(true);
-      return;
-    }
-    if (scrollProgress >= 0.6) {
-      setLeftActive(true);
-      return;
-    }
     // Reset when scrolling back up
     if (scrollProgress < 0.6) {
       setRightActive(false);
       setMiddleActive(false);
       setLeftActive(false);
+      return;
+    }
+    if (scrollProgress >= 0.8) {
+      setRightActive(true);
+    }
+    if (scrollProgress >= 0.7) {
+      setMiddleActive(true);
+    }
+    if (scrollProgress >= 0.6) {
+      setLeftActive(true);
     }
   }, [scrollProgress]);
 
