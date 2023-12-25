@@ -15,7 +15,7 @@ import {Pricing} from '@/components/Pricing';
 import {Testimonials} from '@/components/Testimonials';
 import {StickyLine} from '@/components/StickyLine';
 import {useCSS} from '@/hooks/useCSS';
-import { TunedIn } from '@/components/TunedIn';
+import {TunedIn} from '@/components/TunedIn';
 
 export default function Home() {
   const css = useCSS();
@@ -37,9 +37,12 @@ export default function Home() {
       <Globe />
       <div
         // Contain the bounds of the sticky horizontal line down the page center
-        className={css({position: 'relative', zIndex: 1})}
+        className={css({
+          position: 'relative',
+          zIndex: 1,
+        })}
       >
-        <StickyLine color="var(--color-space)" />
+        <StickyLine color="var(--color-space)" zIndex={2} />
         <StandardMarqueeDivider
           topBackgroundColor="var(--color-space)"
           bottomBackgroundColor="transparent"

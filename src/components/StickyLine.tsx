@@ -1,6 +1,14 @@
 import {useCSS} from '@/hooks/useCSS';
 
-export const StickyLine = ({color, size}: {color: string; size?: number}) => {
+export const StickyLine = ({
+  color,
+  size,
+  zIndex = 2,
+}: {
+  color: string;
+  size?: number;
+  zIndex?: number;
+}) => {
   const css = useCSS();
   const height = size ?? 1.5;
   return (
@@ -14,7 +22,7 @@ export const StickyLine = ({color, size}: {color: string; size?: number}) => {
         left: '0',
         right: '0',
         width: '100%',
-        zIndex: 2,
+        zIndex: zIndex,
       })}
     />
   );

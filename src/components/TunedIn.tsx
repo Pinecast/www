@@ -6,6 +6,7 @@ import {SecondaryButton} from './SecondaryButton';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {PrimaryButton} from './PrimaryButton';
 import {useScrollProgress} from '@/hooks/useScrollProgress';
+import {StickyLine} from './StickyLine';
 
 const PANELS = {
   left: {
@@ -21,6 +22,13 @@ const PANELS = {
     heading: <>You are an organization</>,
   },
 };
+
+// When the user scrolls down, a thin white line appears.
+// If the user scrolls back up, the `position: sticky` line will
+// sit at the very top of this section behind the dark black
+// background but it will appear hidden by blending into the
+// bg color of the previous section.
+const STICKY_LINE_COLOR = 'var(--page-bg, var(--color-white))';
 
 const Panel = ({
   isActive,
@@ -73,7 +81,7 @@ const Panel = ({
             color: isActive ? 'var(--color-space)' : 'var(--color-white)',
             display: 'flex',
             left: 0,
-            minHeight: '630px',
+            minHeight: '730px',
             padding: '20px',
             position: 'absolute',
             right: 0,
@@ -253,7 +261,9 @@ export const TunedIn = () => {
   const [middleActive, setMiddleActive] = React.useState<boolean>(false);
   const [rightActive, setRightActive] = React.useState<boolean>(false);
 
-  const scrollProgress = useScrollProgress(sectionRef);
+  const scrollerRef = React.useRef<HTMLElement>(null);
+
+  const scrollProgress = useScrollProgress(scrollerRef);
 
   React.useEffect(() => {
     // Reset when scrolling back up
@@ -275,148 +285,178 @@ export const TunedIn = () => {
   }, [scrollProgress]);
 
   return (
-    <section
-      ref={sectionRef}
-      id="tuned-in"
-      className={css({
-        backgroundColor: 'var(--color-space)',
-        color: 'var(--color-white)',
-        cursor: 'default',
-        position: 'relative',
-        zIndex: 2,
-      })}
-    >
-      <div
+    <>
+      <section
+        ref={sectionRef}
+        id="tuned-in"
         className={css({
-          textAlign: 'center',
-          padding: '264px 0 240px',
+          backgroundColor: 'var(--color-space)',
+          color: 'var(--color-white)',
+          cursor: 'default',
           position: 'relative',
-          [MIN_TABLET_MEDIA_QUERY]: {
-            padding: '260px 0 216px',
-          },
+          zIndex: 2,
         })}
       >
+        <StickyLine color={STICKY_LINE_COLOR} zIndex={3} />
+
         <div
           className={css({
-            display: 'grid',
-            gap: '10px',
-            gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
-            marginBottom: '86px',
-            padding: '0 20px',
-            position: 'relative',
-            width: '100%',
-            zIndex: 2,
+            textAlign: 'center',
+            padding: '264px 0 240px',
             [MIN_TABLET_MEDIA_QUERY]: {
-              gap: '20px',
-              marginBottom: '-6px',
+              padding: '260px 0 216px',
             },
           })}
         >
           <div
             className={css({
-              gridColumnStart: '3',
-              gridColumnEnd: '-3',
+              display: 'grid',
+              gap: '10px',
+              gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
+              marginBottom: '86px',
+              padding: '0 20px',
+              position: 'relative',
+              width: '100%',
+              zIndex: 2,
               [MIN_TABLET_MEDIA_QUERY]: {
-                gridColumnStart: '5',
-                gridColumnEnd: '9',
-                margin: '0 -20px',
+                gap: '20px',
+                marginBottom: '-6px',
               },
             })}
           >
-            <H2 style={{textWrap: 'balance', marginBottom: '30px'}}>
-              Tuned-in to your needs
-            </H2>
-            <Body4
-              style={{
-                marginTop: '-10px',
-                marginRight: 'auto',
-                marginBottom: '30px',
-                marginLeft: 'auto',
-                maxWidth: '32ch',
+            <div
+              className={css({
+                gridColumnStart: '3',
+                gridColumnEnd: '-3',
                 [MIN_TABLET_MEDIA_QUERY]: {
-                  maxWidth: '36ch',
+                  gridColumnStart: '5',
+                  gridColumnEnd: '9',
+                  margin: '0 -20px',
                 },
+              })}
+            >
+              <H2
+                style={{
+                  textWrap: 'balance',
+                  marginBottom: '30px',
+                }}
+              >
+                Tuned-in to your needs
+              </H2>
+              <Body4
+                style={{
+                  backgroundColor: 'var(--color-space)',
+                  marginTop: '-10px',
+                  marginRight: 'auto',
+                  marginBottom: '30px',
+                  marginLeft: 'auto',
+                  maxWidth: '32ch',
+                  [MIN_TABLET_MEDIA_QUERY]: {
+                    maxWidth: '36ch',
+                  },
+                }}
+              >
+                Whether you’re starting out or you are more established we have
+                a solution for you.
+              </Body4>
+            </div>
+          </div>
+          <div
+            className={css({
+              display: 'inline-grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: '10px',
+              flexDirection: 'column',
+              marginBottom: '30px',
+              [MOBILE_MEDIA_QUERY]: {
+                marginBottom: '16px',
+              },
+            })}
+          >
+            <PrimaryButton
+              href="https://pinecast.com/signup"
+              style={{
+                backgroundColor: 'var(--color-white)',
+                color: 'var(--color-space)',
+                display: 'grid',
+                lineHeight: '1.2',
+                maxWidth: '230px',
+                minHeight: '48px',
+                placeContent: 'center',
+                position: 'relative',
+                zIndex: 4,
               }}
             >
-              Whether you’re starting out or you are more established we have a
-              solution for you.
-            </Body4>
+              Start for free
+            </PrimaryButton>
+            <SecondaryButton
+              href="/features"
+              style={{
+                backgroundColor: 'var(--color-space)',
+                color: 'var(--color-white)',
+                display: 'grid',
+                lineHeight: '1.2',
+                maxWidth: '230px',
+                minHeight: '48px',
+                placeContent: 'center',
+                position: 'relative',
+                zIndex: 3,
+              }}
+            >
+              Discover Features
+            </SecondaryButton>
           </div>
+          <Caption
+            style={{
+              color: 'var(--color-core-accent)',
+              margin: '0 auto',
+              maxWidth: '230px',
+              position: 'relative',
+              zIndex: 3,
+            }}
+          >
+            No credit card required
+          </Caption>
         </div>
-        <div
+
+        <PanelSprites />
+
+        {/* Vertical spacer for better thresholds to slice up `scrollProgress` between the three panels */}
+      </section>
+
+      <section
+        className={css({
+          backgroundColor: 'var(--color-space)',
+          color: 'var(--color-white)',
+          paddingBottom: '12px',
+          paddingTop: '294px',
+          transform: 'translate3d(0,0,0)',
+          cursor: 'default',
+          position: 'relative',
+          zIndex: 2,
+        })}
+      >
+        <ul
           className={css({
-            display: 'inline-grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '10px',
-            flexDirection: 'column',
-            marginBottom: '30px',
-            [MOBILE_MEDIA_QUERY]: {
-              marginBottom: '16px',
-            },
+            display: 'grid',
+            gap: '20px',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            listStyleType: 'none',
+            marginTop: '0',
+            marginBottom: '0',
+            minHeight: '730px',
+            paddingLeft: '20px',
+            paddingRight: '20px',
+            position: 'relative',
+            zIndex: 3,
+            width: '100%',
           })}
         >
-          <PrimaryButton
-            href="https://pinecast.com/signup"
-            style={{
-              backgroundColor: 'var(--color-white)',
-              color: 'var(--color-space)',
-              display: 'grid',
-              lineHeight: '1.2',
-              maxWidth: '230px',
-              minHeight: '48px',
-              placeContent: 'center',
-            }}
-          >
-            Start for free
-          </PrimaryButton>
-          <SecondaryButton
-            href="/features"
-            style={{
-              color: 'var(--color-white)',
-              display: 'grid',
-              lineHeight: '1.2',
-              maxWidth: '230px',
-              minHeight: '48px',
-              placeContent: 'center',
-            }}
-          >
-            Discover Features
-          </SecondaryButton>
-        </div>
-        <Caption style={{color: 'var(--color-core-accent)'}}>
-          No credit card required
-        </Caption>
-      </div>
-
-      <PanelSprites />
-
-      <ul
-        className={css({
-          display: 'grid',
-          gap: '20px',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          listStyleType: 'none',
-          minHeight: '30vh',
-          paddingLeft: '20px',
-          paddingRight: '20px',
-          width: '100%',
-        })}
-      >
-        <Panel position="left" isActive={leftActive} />
-        <Panel position="middle" isActive={middleActive} />
-        <Panel position="right" isActive={rightActive} />
-      </ul>
-
-      {/* Vertical spacer for better thresholds to slice up `scrollProgress` between the three panels */}
-      <div
-        className={css({
-          position: 'sticky',
-          height: '100vh',
-          top: '0',
-        })}
-      >
-        <div className={css({height: 'calc(3 * 35vh)'})} />
-      </div>
-    </section>
+          <Panel position="left" isActive={leftActive} />
+          <Panel position="middle" isActive={middleActive} />
+          <Panel position="right" isActive={rightActive} />
+        </ul>
+      </section>
+    </>
   );
 };
