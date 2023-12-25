@@ -261,7 +261,7 @@ export const TunedIn = () => {
   const [middleActive, setMiddleActive] = React.useState<boolean>(false);
   const [rightActive, setRightActive] = React.useState<boolean>(false);
 
-  const scrollerRef = React.useRef<HTMLElement>(null);
+  const scrollerRef = React.useRef<HTMLDivElement>(null);
 
   const scrollProgress = useScrollProgress(scrollerRef);
 
@@ -297,165 +297,171 @@ export const TunedIn = () => {
           zIndex: 2,
         })}
       >
-        <StickyLine color={STICKY_LINE_COLOR} zIndex={3} />
-
         <div
           className={css({
-            textAlign: 'center',
-            padding: '264px 0 240px',
-            [MIN_TABLET_MEDIA_QUERY]: {
-              padding: '260px 0 216px',
-            },
+            position: 'relative',
+            zIndex: 2,
           })}
         >
+          <StickyLine color={STICKY_LINE_COLOR} zIndex={3} />
+
           <div
             className={css({
-              display: 'grid',
-              gap: '10px',
-              gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
-              marginBottom: '86px',
-              padding: '0 20px',
-              position: 'relative',
-              width: '100%',
-              zIndex: 2,
+              textAlign: 'center',
+              padding: '264px 0 240px',
               [MIN_TABLET_MEDIA_QUERY]: {
-                gap: '20px',
-                marginBottom: '-6px',
+                padding: '260px 0 216px',
               },
             })}
           >
             <div
               className={css({
-                gridColumnStart: '3',
-                gridColumnEnd: '-3',
+                display: 'grid',
+                gap: '10px',
+                gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
+                marginBottom: '86px',
+                padding: '0 20px',
+                position: 'relative',
+                width: '100%',
+                zIndex: 2,
                 [MIN_TABLET_MEDIA_QUERY]: {
-                  gridColumnStart: '5',
-                  gridColumnEnd: '9',
-                  margin: '0 -20px',
+                  gap: '20px',
+                  marginBottom: '-6px',
                 },
               })}
             >
-              <H2
+              <div
+                className={css({
+                  gridColumnStart: '3',
+                  gridColumnEnd: '-3',
+                  [MIN_TABLET_MEDIA_QUERY]: {
+                    gridColumnStart: '5',
+                    gridColumnEnd: '9',
+                    margin: '0 -20px',
+                  },
+                })}
+              >
+                <H2
+                  style={{
+                    textWrap: 'balance',
+                    marginBottom: '30px',
+                  }}
+                >
+                  Tuned-in to your needs
+                </H2>
+                <Body4
+                  style={{
+                    backgroundColor: 'var(--color-space)',
+                    marginTop: '-10px',
+                    marginRight: 'auto',
+                    marginBottom: '30px',
+                    marginLeft: 'auto',
+                    maxWidth: '32ch',
+                    [MIN_TABLET_MEDIA_QUERY]: {
+                      maxWidth: '36ch',
+                    },
+                  }}
+                >
+                  Whether you’re starting out or you are more established we
+                  have a solution for you.
+                </Body4>
+              </div>
+            </div>
+            <div
+              className={css({
+                display: 'inline-grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gap: '10px',
+                flexDirection: 'column',
+                marginBottom: '30px',
+                [MOBILE_MEDIA_QUERY]: {
+                  marginBottom: '16px',
+                },
+              })}
+            >
+              <PrimaryButton
+                href="https://pinecast.com/signup"
                 style={{
-                  textWrap: 'balance',
-                  marginBottom: '30px',
+                  backgroundColor: 'var(--color-white)',
+                  color: 'var(--color-space)',
+                  display: 'grid',
+                  lineHeight: '1.2',
+                  maxWidth: '230px',
+                  minHeight: '48px',
+                  placeContent: 'center',
+                  position: 'relative',
+                  zIndex: 4,
                 }}
               >
-                Tuned-in to your needs
-              </H2>
-              <Body4
+                Start for free
+              </PrimaryButton>
+              <SecondaryButton
+                href="/features"
                 style={{
                   backgroundColor: 'var(--color-space)',
-                  marginTop: '-10px',
-                  marginRight: 'auto',
-                  marginBottom: '30px',
-                  marginLeft: 'auto',
-                  maxWidth: '32ch',
-                  [MIN_TABLET_MEDIA_QUERY]: {
-                    maxWidth: '36ch',
-                  },
+                  color: 'var(--color-white)',
+                  display: 'grid',
+                  lineHeight: '1.2',
+                  maxWidth: '230px',
+                  minHeight: '48px',
+                  placeContent: 'center',
+                  position: 'relative',
+                  zIndex: 3,
                 }}
               >
-                Whether you’re starting out or you are more established we have
-                a solution for you.
-              </Body4>
+                Discover Features
+              </SecondaryButton>
             </div>
-          </div>
-          <div
-            className={css({
-              display: 'inline-grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: '10px',
-              flexDirection: 'column',
-              marginBottom: '30px',
-              [MOBILE_MEDIA_QUERY]: {
-                marginBottom: '16px',
-              },
-            })}
-          >
-            <PrimaryButton
-              href="https://pinecast.com/signup"
+            <Caption
               style={{
-                backgroundColor: 'var(--color-white)',
-                color: 'var(--color-space)',
-                display: 'grid',
-                lineHeight: '1.2',
+                color: 'var(--color-core-accent)',
+                margin: '0 auto',
                 maxWidth: '230px',
-                minHeight: '48px',
-                placeContent: 'center',
-                position: 'relative',
-                zIndex: 4,
-              }}
-            >
-              Start for free
-            </PrimaryButton>
-            <SecondaryButton
-              href="/features"
-              style={{
-                backgroundColor: 'var(--color-space)',
-                color: 'var(--color-white)',
-                display: 'grid',
-                lineHeight: '1.2',
-                maxWidth: '230px',
-                minHeight: '48px',
-                placeContent: 'center',
                 position: 'relative',
                 zIndex: 3,
               }}
             >
-              Discover Features
-            </SecondaryButton>
+              No credit card required
+            </Caption>
           </div>
-          <Caption
-            style={{
-              color: 'var(--color-core-accent)',
-              margin: '0 auto',
-              maxWidth: '230px',
-              position: 'relative',
-              zIndex: 3,
-            }}
-          >
-            No credit card required
-          </Caption>
+
+          <PanelSprites />
         </div>
 
-        <PanelSprites />
-
-        {/* Vertical spacer for better thresholds to slice up `scrollProgress` between the three panels */}
-      </section>
-
-      <section
-        className={css({
-          backgroundColor: 'var(--color-space)',
-          color: 'var(--color-white)',
-          paddingBottom: '12px',
-          paddingTop: '294px',
-          transform: 'translate3d(0,0,0)',
-          cursor: 'default',
-          position: 'relative',
-          zIndex: 2,
-        })}
-      >
-        <ul
+        <div
+          ref={scrollerRef}
           className={css({
-            display: 'grid',
-            gap: '20px',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            listStyleType: 'none',
-            marginTop: '0',
-            marginBottom: '0',
-            minHeight: '730px',
-            paddingLeft: '20px',
-            paddingRight: '20px',
+            backgroundColor: 'var(--color-space)',
+            color: 'var(--color-white)',
+            paddingBottom: '12px',
+            paddingTop: '294px',
+            transform: 'translate3d(0,0,0)',
+            cursor: 'default',
             position: 'relative',
-            zIndex: 3,
-            width: '100%',
+            zIndex: 2,
           })}
         >
-          <Panel position="left" isActive={leftActive} />
-          <Panel position="middle" isActive={middleActive} />
-          <Panel position="right" isActive={rightActive} />
-        </ul>
+          <ul
+            className={css({
+              display: 'grid',
+              gap: '20px',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              listStyleType: 'none',
+              marginTop: '0',
+              marginBottom: '0',
+              minHeight: '730px',
+              paddingLeft: '20px',
+              paddingRight: '20px',
+              position: 'relative',
+              zIndex: 3,
+              width: '100%',
+            })}
+          >
+            <Panel position="left" isActive={leftActive} />
+            <Panel position="middle" isActive={middleActive} />
+            <Panel position="right" isActive={rightActive} />
+          </ul>
+        </div>
       </section>
     </>
   );
