@@ -261,8 +261,10 @@ export const TunedIn = () => {
   const [middleActive, setMiddleActive] = React.useState<boolean>(false);
   const [rightActive, setRightActive] = React.useState<boolean>(false);
 
-  const scrollerRef = React.useRef<HTMLDivElement>(null);
+  const bottomRef = React.useRef<HTMLDivElement>(null);
+  useDarkSection(bottomRef);
 
+  const scrollerRef = React.useRef<HTMLDivElement>(null);
   const scrollProgress = useScrollProgress(scrollerRef);
 
   React.useEffect(() => {
@@ -294,17 +296,19 @@ export const TunedIn = () => {
           color: 'var(--color-white)',
           cursor: 'default',
           position: 'relative',
-          zIndex: 2,
+          zIndex: 1,
+          transform: 'translate3d(0,0,0)',
         })}
       >
         <div
           className={css({
+            paddingBottom: '286px',
+            transform: 'translate3d(0,0,0)',
             position: 'relative',
             zIndex: 2,
           })}
         >
           <StickyLine color={STICKY_LINE_COLOR} zIndex={3} />
-
           <div
             className={css({
               textAlign: 'center',
@@ -390,7 +394,8 @@ export const TunedIn = () => {
                   minHeight: '48px',
                   placeContent: 'center',
                   position: 'relative',
-                  zIndex: 4,
+                  zIndex: 3,
+                  transform: 'translate3d(0,0,0)',
                 }}
               >
                 Start for free
@@ -407,6 +412,7 @@ export const TunedIn = () => {
                   placeContent: 'center',
                   position: 'relative',
                   zIndex: 3,
+                  transform: 'translate3d(0,0,0)',
                 }}
               >
                 Discover Features
@@ -419,6 +425,7 @@ export const TunedIn = () => {
                 maxWidth: '230px',
                 position: 'relative',
                 zIndex: 3,
+                transform: 'translate3d(0,0,0)',
               }}
             >
               No credit card required
@@ -427,15 +434,14 @@ export const TunedIn = () => {
 
           <PanelSprites />
         </div>
+      </section>
 
+      <div ref={bottomRef}>
         <div
           ref={scrollerRef}
           className={css({
             backgroundColor: 'var(--color-space)',
             color: 'var(--color-white)',
-            paddingBottom: '12px',
-            paddingTop: '294px',
-            transform: 'translate3d(0,0,0)',
             cursor: 'default',
             position: 'relative',
             zIndex: 2,
@@ -449,7 +455,7 @@ export const TunedIn = () => {
               listStyleType: 'none',
               marginTop: '0',
               marginBottom: '0',
-              minHeight: '730px',
+              minHeight: '460px',
               paddingLeft: '20px',
               paddingRight: '20px',
               position: 'relative',
@@ -462,7 +468,14 @@ export const TunedIn = () => {
             <Panel position="right" isActive={rightActive} />
           </ul>
         </div>
-      </section>
+        {/* Spacer for the vertical scroll region past 1.0 */}
+        <div
+          className={css({
+            height: '422px',
+            marginBottom: '-152px',
+          })}
+        />
+      </div>
     </>
   );
 };
