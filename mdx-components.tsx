@@ -60,6 +60,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       const css = useCSS(); // eslint-disable-line react-hooks/rules-of-hooks
       return (
         <Link
+          target={props.href.startsWith('http') ? '_blank' : undefined}
           {...props}
           className={css({
             ...MonumentGroteskSemiMono,
