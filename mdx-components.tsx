@@ -5,7 +5,7 @@ import {useCSS} from '@/hooks/useCSS';
 import type {MDXComponents} from 'mdx/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import {MonumentGroteskSemiMono} from '@/fonts';
+import {MonumentGroteskSemiMono, MonumentGroteskBold} from '@/fonts';
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
@@ -42,6 +42,20 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
 
+    strong: ({children}) => {
+      const css = useCSS(); // eslint-disable-line react-hooks/rules-of-hooks
+      return (
+        <strong
+          className={css({
+            ...MonumentGroteskBold,
+            fontWeight: 700,
+          })}
+        >
+          {children}
+        </strong>
+      );
+    },
+
     a: ((props: {href: string}) => {
       const css = useCSS(); // eslint-disable-line react-hooks/rules-of-hooks
       return (
@@ -50,6 +64,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
           className={css({
             ...MonumentGroteskSemiMono,
             color: 'inherit',
+            letterSpacing: '-1px',
           })}
         />
       );

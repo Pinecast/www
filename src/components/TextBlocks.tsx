@@ -1,9 +1,14 @@
 import * as React from 'react';
 import {useCSS} from '@/hooks/useCSS';
-import {GintoNordCondensed, MonumentGroteskBold} from '@/fonts';
-import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
-import {PillButton} from './Typography';
+import {
+  GintoNordCondensed,
+  MonumentGroteskBold,
+  MonumentGroteskSemiMono,
+} from '@/fonts';
+import {MIN_TABLET_MEDIA_QUERY, MOBILE_BREAKPOINT, MOBILE_MEDIA_QUERY} from '@/constants';
+import {Link, PillButton} from './Typography';
 import {StyleObject} from 'styletron-react';
+import {access} from 'fs';
 
 export const Intro = ({children}: {children: React.ReactNode}) => {
   const css = useCSS();
@@ -258,10 +263,221 @@ export const DefinitionList = ({children}: {children: React.ReactNode}) => {
 
         ':last-child': {
           marginBottom: 0,
-        }
+        },
       })}
     >
       {children}
     </dl>
+  );
+};
+
+type Product = {
+  name: string;
+  imageUrl: string;
+  price: string;
+  description: string;
+  url: string;
+};
+
+export const ProductFeature = ({
+  name,
+  imageUrl,
+  price,
+  description,
+  url,
+  accessories,
+}: Product & {
+  accessories?: Array<Product>;
+}) => {
+  const css = useCSS();
+  return (
+    <div
+      className={css({
+        background: 'var(--color-space)',
+        color: 'var(--color-sand)',
+        width: '100%',
+        borderRadius: '20px',
+        marginTop: '20px',
+        marginBottom: '20px',
+        padding: '20px',
+
+        display: 'grid',
+        gap: '5px 20px',
+        gridTemplateAreas:
+          '"image name" "image price" "image description" "image url" "accessories accessories"',
+        gridTemplateColumns: '150px 1fr',
+        gridTemplateRows: 'min-content',
+        [MOBILE_MEDIA_QUERY]: {
+          gridTemplateColumns: '20% 1fr',
+        }
+      })}
+    >
+      <div
+        className={css({
+          backgroundColor: '#fff',
+          backgroundImage: `url(${imageUrl})`,
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'contain',
+          borderRadius: '10px',
+          gridArea: 'image',
+          height: 0,
+          paddingBottom: '100%',
+        })}
+      />
+      <div
+        className={css({
+          ...MonumentGroteskBold,
+          color: 'var(--color-grape-25)',
+          fontSize: '28px',
+          fontWeight: 700,
+          gridArea: 'name',
+        })}
+      >
+        {name}
+      </div>
+      <div
+        className={css({
+          ...MonumentGroteskSemiMono,
+          color: 'var(--color-lime)',
+          fontSize: '16px',
+          gridArea: 'price',
+        })}
+      >
+        {price}
+      </div>
+      <div
+        className={css({
+          fontSize: '20px',
+          gridArea: 'description',
+        })}
+      >
+        {description}
+      </div>
+      <div
+        className={css({
+          gridArea: 'url',
+        })}
+      >
+        <Link target="_blank" href={url}>
+          See it on Amazon
+        </Link>
+      </div>
+      {accessories && (
+        <div
+          className={css({
+            gridArea: 'accessories',
+            marginTop: '24px',
+            position: 'relative',
+            ':after': {
+              display: 'block',
+              content: '""',
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              bottom: 0,
+              width: '40px',
+              background:
+                'linear-gradient(to left, var(--color-space), transparent)',
+            },
+          })}
+        >
+          <div
+            className={css({
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '10px',
+              overflowX: 'scroll',
+              paddingRight: '40px',
+            })}
+          >
+            {accessories.map(accessory => (
+              <ProductFeatureAccessory key={accessory.url} {...accessory} />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ProductFeatureAccessory = ({
+  name,
+  imageUrl,
+  price,
+  description,
+  url,
+}: Product) => {
+  const css = useCSS();
+  return (
+    <a
+      href={url}
+      target="_blank"
+      className={css({
+        backgroundColor: 'var(--color-space-50)',
+        color: 'var(--color-sand)',
+        borderRadius: '10px',
+        fontSize: '14px',
+        padding: '10px',
+
+        display: 'grid',
+        gap: '2px 10px',
+        gridTemplateAreas: '"image name" "image price" "image description"',
+        gridTemplateColumns: '20% 1fr',
+        gridTemplateRows: 'min-content',
+
+        flex: '0 0 300px',
+        width: '300px',
+
+        textDecoration: 'none',
+        ':hover .ProductFeatureAccessory-Title': {
+          textDecoration: 'underline',
+        },
+      })}
+    >
+      <div
+        className={css({
+          backgroundColor: '#fff',
+          backgroundImage: `url(${imageUrl})`,
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'contain',
+          borderRadius: '10px',
+          overflow: 'hidden',
+          gridArea: 'image',
+          height: 0,
+          paddingBottom: '100%',
+        })}
+      />
+      <div
+        className={
+          css({
+            ...MonumentGroteskBold,
+            color: 'var(--color-grape-25)',
+            fontWeight: 700,
+            gridArea: 'name',
+          }) + ' ProductFeatureAccessory-Title'
+        }
+      >
+        {name}
+      </div>
+      <div
+        className={css({
+          ...MonumentGroteskSemiMono,
+          color: 'var(--color-lime)',
+          fontSize: '12px',
+          gridArea: 'price',
+        })}
+      >
+        {price}
+      </div>
+      <div
+        className={css({
+          gridArea: 'description',
+        })}
+      >
+        {description}
+      </div>
+    </a>
   );
 };

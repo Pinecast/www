@@ -50,6 +50,7 @@ export default function Document({
             __html: `
           :root {
             --color-space: #090909;
+            --color-space-50: #25272F;
             --color-sand: #f8f4eb;
             --color-white: #fff;
             --color-orchid: #dbaeff;

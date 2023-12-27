@@ -410,6 +410,7 @@ export const Link = ({
 }: Omit<LinkProps, 'children' | 'style'> & {
   children: ReactNode;
   style?: StyleObject;
+  target?: '_blank';
 }) => {
   const css = useCSS();
   return (
