@@ -7,9 +7,9 @@ import {useCSS} from '@/hooks/useCSS';
 const QUICK_LINKS = [
   ['/learn/create-a-podcast', 'Create a podcast'],
   ['/learn/promoting-your-podcast', 'Promoting your show'],
-  ['/learn/import-a podcast', 'Import a podcast'],
+  ['/learn/import-a-podcast', 'Import a podcast'],
   ['/learn/understand-your-growth', 'Understanding your growth'],
-  ['/learn/monetize-your-show', 'Monetize your show'],
+  ['/learn/monetize-your-podcast', 'Monetize your show'],
   ['/learn/podcasting-glossary', 'Podcasting glossary'],
 ];
 
