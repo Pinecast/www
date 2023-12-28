@@ -127,7 +127,7 @@ const Customers = ({}) => {
             pointerEvents: 'none',
           })}
         >
-          {TESTIMONIALS.map((item, idx) => (
+          {TESTIMONIALS.map(item => (
             <div key={item.customer} className={css(CUSTOMER_BLOCK_STYLE)}>
               <H1>{item.customer}</H1>
             </div>
@@ -148,7 +148,7 @@ const Customers = ({}) => {
             zIndex: 2,
           })}
         >
-          {TESTIMONIALS.map((item, idx) => (
+          {TESTIMONIALS.map(item => (
             <div key={item.customer} className={css(CUSTOMER_BLOCK_STYLE)}>
               <H1>{item.customer}</H1>
             </div>
