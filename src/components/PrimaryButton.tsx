@@ -1,4 +1,4 @@
-import {MOBILE_MEDIA_QUERY} from '@/constants';
+import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY} from '@/constants';
 import {MonumentGroteskBold} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
 import Link from 'next/link';
@@ -28,15 +28,15 @@ export const PrimaryButton = ({
         justifyContent: 'center',
         lineHeight: '40px',
         minWidth: '120px',
-        paddingLeft: '30px',
-        paddingRight: '30px',
+        paddingLeft: '15px',
+        paddingRight: '15px',
         textAlign: 'center',
         textDecoration: 'none',
         ...style,
-        [MOBILE_MEDIA_QUERY]: {
-          ...(style?.[MOBILE_MEDIA_QUERY] as any),
-          paddingLeft: '20px',
-          paddingRight: '20px',
+        [MIN_TABLET_MEDIA_QUERY]: {
+          paddingLeft: '30px',
+          paddingRight: '30px',
+          ...(style?.[MIN_TABLET_MEDIA_QUERY] as any),
         },
       })}
       href={href}

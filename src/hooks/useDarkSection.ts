@@ -6,8 +6,8 @@ const handler = () => {
   const height = window.innerHeight;
   for (const section of sections) {
     if (
-      section.offsetTop > 0 &&
-      section.offsetTop < scrollY &&
+      section.offsetTop >= 0 &&
+      section.offsetTop <= scrollY &&
       section.offsetTop + section.offsetHeight > scrollY
     ) {
       document.body.setAttribute('style', '');
@@ -30,5 +30,5 @@ export const useDarkSection = (sectionRef: React.RefObject<HTMLElement>) => {
     return () => {
       sections.delete(section);
     };
-  }, [sectionRef]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 };
