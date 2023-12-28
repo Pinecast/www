@@ -51,13 +51,21 @@ const Panel = ({
       <li
         className={css({
           position: 'relative',
+          [MOBILE_MEDIA_QUERY]: {
+            width: '265px',
+            flex: '0 0 265px',
+          },
         })}
       >
         <svg
           className={css({
             background: 'var(--color-space)',
+            display: 'none',
             position: 'relative',
             zIndex: 1,
+            [MIN_TABLET_MEDIA_QUERY]: {
+              display: 'block',
+            },
           })}
           viewBox="0 0 530.1 78"
         >
@@ -73,6 +81,8 @@ const Panel = ({
           className={css({
             alignItems: 'flex-end',
             backgroundColor: isActive ? activeColor : 'transparent',
+            borderTopLeftRadius: '10px',
+            borderTopRightRadius: '10px',
             borderBottomLeftRadius: '10px',
             borderBottomRightRadius: '10px',
             borderBottomWidth: '1px',
@@ -84,11 +94,15 @@ const Panel = ({
             color: isActive ? 'var(--color-space)' : 'var(--color-white)',
             display: 'flex',
             left: 0,
-            minHeight: '730px',
             padding: '20px',
             position: 'absolute',
             right: 0,
             top: 0,
+            [MIN_TABLET_MEDIA_QUERY]: {
+              borderTopLeftRadius: '0',
+              borderTopRightRadius: '0',
+              minHeight: '730px',
+            },
           })}
         >
           <header
@@ -96,9 +110,11 @@ const Panel = ({
               borderRadius: '10px',
               borderStyle: 'solid',
               borderWidth: '1px',
-              minHeight: '160px',
               padding: '20px',
               width: '100%',
+              [MIN_TABLET_MEDIA_QUERY]: {
+                minHeight: '160px',
+              },
             })}
           >
             <Subhead style={{marginBottom: '16px', maxWidth: '16ch'}}>
@@ -452,9 +468,6 @@ export const TunedIn = () => {
         >
           <ul
             className={css({
-              display: 'grid',
-              gap: '20px',
-              gridTemplateColumns: 'repeat(3, 1fr)',
               listStyleType: 'none',
               marginTop: '0',
               marginBottom: '0',
@@ -464,6 +477,18 @@ export const TunedIn = () => {
               position: 'relative',
               zIndex: 3,
               width: '100%',
+
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '10px',
+              overflowX: 'scroll',
+
+              [MIN_TABLET_MEDIA_QUERY]: {
+                display: 'grid',
+                gap: '20px',
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                overflowX: 'unset',
+              },
             })}
           >
             <Panel position="left" isActive={leftActive} />

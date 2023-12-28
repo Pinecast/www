@@ -14,10 +14,10 @@ export const StickyLine = ({
     <div
       className={css({
         backgroundColor: color,
-        position: 'fixed',
+        position: 'sticky',
         height: `${height}px`,
         marginTop: `${-1 * height}px`,
-        top: `calc(50dvh - ${height}px)`,
+        top: `calc(50vh - ${height}px)`,
         left: '0',
         right: '0',
         width: '100%',
