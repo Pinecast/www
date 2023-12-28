@@ -9,8 +9,19 @@ import {Check} from '@/icons/Check';
 import {Expandable} from './Expandable';
 import {Collapse} from '@/icons/Collapse';
 import {Expand} from '@/icons/Expand';
+import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY} from '@/constants';
 
-const BUTTON_STYLE = {height: 'auto', paddingTop: '4px', paddingBottom: '4px'};
+const BUTTON_STYLE = {
+  fontSize: '14px',
+  paddingLeft: '0px',
+  paddingRight: '0px',
+  [MIN_TABLET_MEDIA_QUERY]: {
+    fontSize: '16px',
+    height: 'auto',
+    paddingTop: '4px',
+    paddingBottom: '4px',
+  },
+};
 const MAX_WIDTH = 1300;
 
 export const Pricing = () => {
@@ -24,6 +35,11 @@ export const Pricing = () => {
       ref={sectionRef}
       className={css({
         backgroundColor: 'var(--color-space)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        paddingLeft: '10px',
+        paddingRight: '10px',
         paddingBottom: '116px',
         position: 'relative',
         // transform: 'translate3d(0,0,0)',
@@ -37,7 +53,7 @@ export const Pricing = () => {
           gap: '40px',
           alignItems: 'center',
           textAlign: 'center',
-          margin: '0 auto 200px',
+          marginBottom: '200px',
           maxWidth: '946px',
           padding: '200px 30px 0',
 
@@ -56,11 +72,11 @@ export const Pricing = () => {
         </Body4>
       </div>
       <PricingTicket
-        color="var(--color-white)"
+        color="var(--color-sand)"
         col1={
           <>
             <Subhead style={{marginBottom: '16px'}}>Free plan</Subhead>
-            <Price amount="$0" perUnit="Month" color="var(--color-white)" />
+            <Price amount="$0" perUnit="Month" color="var(--color-sand)" />
           </>
         }
         col2={
@@ -97,7 +113,15 @@ export const Pricing = () => {
         col1={
           <>
             <Subhead style={{marginBottom: '16px'}}>Starter plan</Subhead>
-            <div>
+            <div
+              className={css({
+                [MOBILE_MEDIA_QUERY]: {
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                },
+              })}
+            >
               <Price amount="$10" perUnit="Month" color="var(--color-white)" />
               <Overline style={{margin: '8px 0 4px'}}>or</Overline>
               <Price amount="$110" perUnit="Year" color="var(--color-white)" />
@@ -219,8 +243,14 @@ const PricingTicket = ({
         padding: '0',
         position: 'relative',
         maxWidth: `${MAX_WIDTH}px`,
-        margin: '0 auto 20px',
+        marginBottom: '20px',
         overflow: 'hidden',
+        width: '100%',
+
+        [MOBILE_MEDIA_QUERY]: {
+          gridTemplateColumns: 'unset',
+          gridTemplateRows: '1fr',
+        },
 
         '::before': {
           backgroundColor: 'var(--color-space)',
@@ -232,6 +262,15 @@ const PricingTicket = ({
           height: '60px',
           width: '60px',
           borderRadius: '60px',
+
+          [MOBILE_MEDIA_QUERY]: {
+            height: '40px',
+            width: '40px',
+            borderRadius: '40px',
+            right: '-25px',
+            top: 'unset',
+            bottom: '90px',
+          },
         },
         '::after': {
           backgroundColor: 'var(--color-space)',
@@ -243,13 +282,30 @@ const PricingTicket = ({
           height: '60px',
           width: '60px',
           borderRadius: '60px',
+
+          [MOBILE_MEDIA_QUERY]: {
+            height: '40px',
+            width: '40px',
+            borderRadius: '40px',
+            right: 'unset',
+            left: '-25px',
+            top: 'unset',
+            bottom: '90px',
+          },
         },
 
         display: 'grid',
         gridTemplateColumns: '350fr 600fr 350fr',
       })}
     >
-      <div className={css({padding: '30px'})}>{col1}</div>
+      <div
+        className={css({
+          padding: '30px',
+          [MOBILE_MEDIA_QUERY]: {padding: '20px'},
+        })}
+      >
+        {col1}
+      </div>
       <div
         className={css({
           borderStyle: 'dashed',
@@ -259,6 +315,13 @@ const PricingTicket = ({
           borderTopWidth: '0',
           borderBottomWidth: '0',
           padding: '18px 80px',
+          [MOBILE_MEDIA_QUERY]: {
+            borderLeftWidth: 0,
+            borderRightWidth: 0,
+            borderBottomWidth: '1px',
+            padding: '0 20px 30px',
+            marginBottom: '30px',
+          },
         })}
       >
         {col2}
@@ -274,6 +337,12 @@ const PricingTicket = ({
           justifyContent: 'center',
           justifyItems: 'stretch',
           padding: '30px',
+          [MOBILE_MEDIA_QUERY]: {
+            gap: '8px',
+            gridTemplateRows: 'unset',
+            gridTemplateColumns: '1fr 1fr',
+            padding: '20px',
+          },
         })}
       >
         {col3}
@@ -286,9 +355,11 @@ const Price = ({
   amount,
   perUnit,
   color,
+  strokeColor = 'var(--color-space)',
 }: {
   amount: React.ReactNode;
-  color?: string;
+  color: string;
+  strokeColor?: string;
   perUnit: React.ReactNode;
 }) => {
   const css = useCSS();
@@ -304,8 +375,11 @@ const Price = ({
           // textShadow:
           //   '-0.5px -1px 0 var(--color-space), 0.5px -1px 0 var(--color-space), -0.5px 1.5px 0 var(--color-space), 0.5px 1.5px 0 var(--color-space)',
           // Against all odds, this guy is supported in all browsers
-          WebkitTextStroke: '1px var(--color-space)',
+          WebkitTextStroke: `1px ${strokeColor}`,
           verticalAlign: 'baseline',
+          [MOBILE_MEDIA_QUERY]: {
+            fontSize: '32px',
+          },
         })}
       >
         {amount}
@@ -427,20 +501,41 @@ const AddonAccordionItem = ({
       <Expandable
         open={open}
         id={id}
-        innerStyle={{display: 'grid', gridTemplateColumns: '1fr 1fr 24px'}}
+        innerStyle={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr 24px',
+          [MOBILE_MEDIA_QUERY]: {
+            gridTemplateColumns: 'unset',
+            gridTemplateRows: '1fr',
+          },
+        }}
       >
         <div
           className={css({
             paddingTop: '80px',
             opacity: open ? 1 : 0,
             transition: 'opacity 0.2s ease',
+            [MOBILE_MEDIA_QUERY]: {
+              paddingTop: '60px',
+            }
+
           })}
         >
-          <Price amount={monthlyPrice} perUnit="Month" />
+          <Price
+            amount={monthlyPrice}
+            perUnit="Month"
+            color="var(--color-space)"
+            strokeColor="var(--color-white)"
+          />
           <Overline style={{display: 'inline-block', margin: '0 12px 0 9px'}}>
             or
           </Overline>
-          <Price amount={yearlyPrice} perUnit="Year" />
+          <Price
+            amount={yearlyPrice}
+            perUnit="Year"
+            color="var(--color-space)"
+            strokeColor="var(--color-white)"
+          />
         </div>
         <div
           className={css({

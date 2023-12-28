@@ -2,6 +2,7 @@ import {
   MOBILE_MEDIA_QUERY,
   CAN_HOVER_MEDIA_QUERY,
   TABLET_MEDIA_QUERY,
+  MIN_TABLET_MEDIA_QUERY,
 } from '@/constants';
 import {
   GintoNordCondensed,
@@ -252,17 +253,17 @@ export const Subhead = ({
       className={css({
         ...MonumentGroteskBold,
         display: 'block',
-        fontSize: '42px',
         fontWeight: 700,
         letterSpacing: '-0.025em',
-        lineHeight: '42px',
         marginTop: '0',
         marginBottom: '0',
+        fontSize: '28px',
+        lineHeight: '28px',
         ...style,
-        [MOBILE_MEDIA_QUERY]: {
-          fontSize: '28px',
-          lineHeight: '28px',
-          ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
+        [MIN_TABLET_MEDIA_QUERY]: {
+          fontSize: '42px',
+          lineHeight: '42px',
+          ...(style as Record<string, any>)?.[MIN_TABLET_MEDIA_QUERY],
         },
       })}
     >
