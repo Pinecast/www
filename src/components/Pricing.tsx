@@ -301,8 +301,10 @@ const Price = ({
           fontSize: '42px',
           fontWeight: '500',
           lineHeight: '1.2',
-          textShadow:
-            '-0.5px -1px 0 var(--color-space), 0.5px -1px 0 var(--color-space), -0.5px 1.5px 0 var(--color-space), 0.5px 1.5px 0 var(--color-space)',
+          // textShadow:
+          //   '-0.5px -1px 0 var(--color-space), 0.5px -1px 0 var(--color-space), -0.5px 1.5px 0 var(--color-space), 0.5px 1.5px 0 var(--color-space)',
+          // Against all odds, this guy is supported in all browsers
+          WebkitTextStroke: '1px var(--color-space)',
           verticalAlign: 'baseline',
         })}
       >
