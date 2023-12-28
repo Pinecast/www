@@ -12,14 +12,17 @@ const PANELS = {
   left: {
     color: 'var(--color-orchid)',
     heading: <>You are just getting started</>,
+    url: '/learn/podcasting-for-beginners',
   },
   middle: {
     color: 'var(--color-lime)',
     heading: <>You need advanced tools</>,
+    url: '/learn/podcasting-for-power-users',
   },
   right: {
     color: 'var(--color-sky)',
     heading: <>You are an organization</>,
+    url: '/learn/corporate-podcasting',
   },
 };
 
@@ -104,7 +107,7 @@ const Panel = ({
             <ProseLink
               // TODO: Isolate a non-anchor version of Typography's Link
               // so the entire `<li>` can be used as a large click target.
-              href="/features"
+              href={panel.url}
               style={{
                 color: 'inherit',
               }}
