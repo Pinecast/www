@@ -1,0 +1,36 @@
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Are your listeners leaving your podcast reviews? How often do you check? Let Pinecast do the heavy lifting of checking for reviews.
+</Intro>
+
+# See every review
+
+"Leave us a review" is a frequently-uttered phrase for many podcasters, but most producers don't see every review that gets left. Pinecast's Growth add-on ($10/mo or $110/year) takes care of the hard work for you and emails you when a new review has been left on Apple Podcasts or Podchaser.
+
+![A screenshot of the podcast dashboard showing reviews that have been left](/images/content/features/review-monitoring-dashboard.png)
+
+Not only do we capture reviews that have been left, we break down the ratings that were provided and track your average rating. Reviews can be filtered by rating or the reviewer's country (if available).
+
+## Rampant regional review relief
+
+Did you know that Apple Podcasts has different regional listings for each podcast? Switching your country on Apple Podcasts will show different podcast reviews. Seeing all of your reviews can mean checking dozens of versions of your listings.
+
+Fear not! Pinecast will check the reviews for every country and show them together in your dashboard.
+
+# Notifications
+
+By default, the podcast owner will receive an email notification every time a review is received. Reviews show up in the podcast's dashboard.
+
+![A screenshot of the podcast dashboard showing reviews that have been left](/images/content/features/review-monitoring-notification.png)
+
+If you also subscribe to Pinecast's Crew add-on, you can also configure notifications to other email addresses, Slack, Discord, or HTTP webhooks.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, {
+  title: 'Review Monitoring',
+  description: 'Keep track of reviews of your podcast from listeners.',
+  heroImage: '/images/hero/t-r.png',
+});

@@ -1,0 +1,41 @@
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Writing about your podcast online often isn't enough. Post the audio to other pages on the web with our easy-to-use embeddable players.
+</Intro>
+
+# Embed your podcast
+
+Whether you're trying to share a single episode or all of them, we've got you covered. All of our players have customization options and have baked-in accessibility features.
+
+## Podcast player
+
+If you want to share all of your episodes, the Player tab on your podcast dashboard lets you choose colors for a full podcast player.
+
+![A screenshot of the podcast dashboard showing host to customize a podcast player](/images/content/features/players-podcast-dashboard.png)
+
+Episodes are played sequentially, with speed and volume controls. Hovering the cover art shows a button to let your listeners subscribe to your show.
+
+<iframe src="https://pinecast.com/embed/player_playlist/testcast?color.primary=%23ffffff&amp;color.secondary=%23cbd3da&amp;color.accent=%23009dff" border="0" style={{width: '100%', border: 0}} height="400"></iframe>
+
+## Episode player
+
+If you'd like to share a single episode, visit the episode's dashboard and choose the Player tab. Episode players have theme options available for a variety of use cases. Some themes will show subtitles for episodes that have been transcribed.
+
+![A screenshot of the episode dashboard showing theme options](/images/content/features/players-episode-dashboard.png)
+
+Unlike plain HTML embeds, these players meet IAB guidelines to keep analytics accurate. The code and infrastructure are optimized for performance by minimizing the number of files that need to be loaded.
+
+<iframe src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=minimal" seamless height="60" style={{width: '100%', border: 0, marginTop: '40px'}} class="pinecast-embed" width="100%"></iframe>
+<iframe src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=flat" seamless height="200" style={{width: '100%', border: 0}} class="pinecast-embed" width="100%"></iframe>
+<iframe src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=whitePlastic" seamless height="120" style={{width: '100%', border: 0}} class="pinecast-embed" width="100%"></iframe>
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, {
+  title: 'Embeddable Players',
+  description: 'Add your podcast or its episodes anywhere that you can add HTML iframes.',
+  heroImage: '/images/hero/t-r.png',
+});
