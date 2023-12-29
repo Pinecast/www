@@ -444,6 +444,7 @@ const AddonAccordion = ({children}: {children: React.ReactNode}) => {
         borderBottom: '1px solid var(--color-primary-dark)',
         color: 'var(--color-primary-dark)',
         WebkitTapHighlightColor: 'transparent',
+        width: '100%',
       })}
     >
       {children}
@@ -494,7 +495,13 @@ const AddonAccordionItem = ({
       })}
     >
       <Subhead
-        style={{position: 'absolute', top: 0, left: 0, lineHeight: '70px'}}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          lineHeight: '70px',
+          [MIN_TABLET_MEDIA_QUERY]: {lineHeight: '70px'},
+        }}
       >
         {name}
       </Subhead>
@@ -517,8 +524,7 @@ const AddonAccordionItem = ({
             transition: 'opacity 0.2s ease',
             [MOBILE_MEDIA_QUERY]: {
               paddingTop: '60px',
-            }
-
+            },
           })}
         >
           <Price
