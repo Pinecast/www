@@ -1,0 +1,27 @@
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Nobody likes sharing passwords. Pinecast makes it easy to work on your podcast with friends, coworkers, or whoever you produce with.
+</Intro>
+
+# Podcast with friends
+
+Going it alone can be hard! With our Crew add-on ($10/mo or $110/year), adding collaborators to your podcast is as simple as entering the email address of their Pinecast account.
+
+![A screenshot of the podcast settings for a show with one collaborator added](/images/content/features/collaborators-list.png)
+
+Your collaborators don't need a paid subscription to Pinecast to work on your show as a collaborator. As soon as they're added, they'll be able to see information like [analytics](/features/analytics), create and edit episodes, and edit some configuration.
+
+## Security
+
+Rest assured that your show is safe. Collaborators don't have [tip jar](/features/monetization) access, the ability to delete or redirect your podcast, or perform other administrative functions.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, {
+  title: 'Collaborators',
+  description: 'Allow your fellow producers to work on your podcast with you—no password sharing needed.',
+  heroImage: '/images/hero/t-r.png',
+});

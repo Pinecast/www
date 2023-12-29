@@ -1,0 +1,45 @@
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Podcasting isn't just about putting out content, it's about engaging with your audience.
+
+  Accept and solicit messages from your listeners with our built-in tools.
+</Intro>
+
+# Feedback in one place
+
+Lots of podcasters create a dedicated email for listeners to write in to so they don't need to share their personal email addresses. Managing yet-another-inbox is often tough to stay on top of, though.
+
+Pinecast's [tip jar](/features/monetization) lets your paid subscribers write in directly as a subscriber perk. Or with our Growth add-on ($10/mo or $110/year), all of your listeners—paid subscription or not—can write in.
+
+![A screenshot of the podcast dashboard showing submitted feedback](/images/content/features/feedback.png)
+
+# Thoughtfully designed
+
+We're podcasters ourselves, so we know that it's not enough to just have an inbox in your dashboard. We've addressed our own needs and accepted dozens of feature requests from customers over the years to make sure that our feedback tool is the best it can be.
+
+## Episode prompts
+
+Having a single form to submit feedback can be too simplistic, so we let you set a prompt for feedback on an episode-by-episode basis. Each episode will have a dedicated URL for submitting feedback, featuring its prompt. Your feedback inbox will show the episode each message was left for—if any.
+
+![A screenshot of the podcast dashboard showing that you can set a prompt for feedback when creating or editing an episode](/images/content/features/feedback-prompt.png)
+
+## Moderation and security
+
+Feedback can be great, but it can also be unpleasant at times. Our feedback inbox lets you shadowban submitters by IP address or email. Feedback can be easily deleted as needed.
+
+Moreover, we prevent spam by using Invisible reCAPTCHA: most listeners won't encounter any delay, but bots and suspicious senders will be prompted to solve a challenge to prove that they're human.
+
+## Notifications
+
+We send you an email whenever you receive feedback. If you have a team or want notifications in a shared location like Slack, the Crew add-on also lets you set up notifications for feedback. Notifications can send an email alert, post to Slack or Discord, or send a HTTP webhook.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, {
+  title: 'Collaborators',
+  description: 'Allow your fellow producers to work on your podcast with you—no password sharing needed.',
+  heroImage: '/images/hero/t-r.png',
+});
