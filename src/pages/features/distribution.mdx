@@ -1,0 +1,75 @@
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Whether you're sharing to a handful of friends, your company, or the world, Pinecast has a solution that's right for you.
+</Intro>
+
+# Getting listed
+
+Being listed on the biggest apps and directories is an important first step for any growing show. But it's also important to be listed on other apps, as well. We make it easy to get your show set up and listed in as many places with the least effort as possible.
+
+![A screenshot of the podcast distribution page for a show that has submitted and linked their directory listings](/images/content/features/distribution-apps.png)
+
+## Podcast apps
+
+Large and small, we cover all of the most important podcast apps for you to be listed on. We stay on top of the latest news and app launches as well, adding support as new apps come online.
+
+<ChecksList>
+  <li>Apple Podcasts</li>
+  <li>Spotify</li>
+  <li>Google Podcasts</li>
+  <li>Amazon Music</li>
+  <li>Boomplay</li>
+  <li>Pandora</li>
+  <li>Player FM</li>
+  <li>RadioPublic</li>
+  <li>JioSaavn</li>
+  <li>TuneIn</li>
+  <li>iHeartRadio</li>
+  <li>Pocket Casts</li>
+</ChecksList>
+
+## Directories
+
+Along with podcast apps, we also include podcast directories that you can submit your show to. Directories help listeners find shows, but also supply information to other apps—being listed helps ensure your podcast is visible to as many people as possible.
+
+<ChecksList>
+  <li>Listen Notes</li>
+  <li>Podchaser</li>
+</ChecksList>
+
+# All the little details
+
+If you're just getting started—or if you just care more about production than worrying about distribution—we've got you covered. Our team of experts makes it dead simple to submit your show for distribution and to understand what that means for you.
+
+## Automatic submission
+
+Many of the apps and directories that we support need only a single click to submit your podcast. There's no fussing or filling out forms, just flip a switch to "on".
+
+![A screenshot of the podcast distribution page showing apps which require only a single click to submit to](/images/content/features/distribution-apps-unsubmitted.png)
+
+## Reading the legalese for you
+
+Nobody has time to read through the pages of legal lingo from a website's terms of use—especially when you're in a rush to get your podcast published. We did it for you, so you can focus on producing your show.
+
+When an app or directory's terms of use asks for something unexpected or out of the ordinary, we'll let you know. We'll include a link when we can, and an excerpt so you can have a look for yourself.
+
+We'll alert you about:
+
+<ChecksList>
+  <li>Apps that add advertising</li>
+  <li>Release of rights for your brand</li>
+  <li>Release of rights for your content</li>
+  <li>Requirements for promotion</li>
+</ChecksList>
+
+For many apps, we'll even include the terms of service excerpt relevant to your show.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, {
+  title: 'Distribution',
+  description: 'We take care of distributing your podcast for you.',
+  heroImage: '/images/hero/t-r.png',
+});
