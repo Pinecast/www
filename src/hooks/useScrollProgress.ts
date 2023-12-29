@@ -9,7 +9,7 @@ const handler = () => {
   }
 };
 if (typeof window !== 'undefined') {
-  window.addEventListener('scroll', handler, {passive: true});
+  document.addEventListener('scroll', handler, {passive: true});
 }
 
 const clamp = (input: number, min: number, max: number) =>

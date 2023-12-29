@@ -18,7 +18,7 @@ const handler = () => {
   document.body.classList.remove('darkSection');
 };
 if (typeof window !== 'undefined') {
-  window.addEventListener('scroll', handler, {passive: true});
+  document.addEventListener('scroll', handler, {passive: true});
 }
 
 export const useDarkSection = (sectionRef: React.RefObject<HTMLElement>) => {
