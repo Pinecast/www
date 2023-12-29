@@ -7,6 +7,7 @@ import {useDarkSection} from '@/hooks/useDarkSection';
 import {PrimaryButton} from './PrimaryButton';
 import {useScrollProgress} from '@/hooks/useScrollProgress';
 import {StickyLine} from './StickyLine';
+import {useVisibleElements} from '@/hooks/useVisibleElements';
 
 const PANELS = {
   left: {
@@ -24,6 +25,137 @@ const PANELS = {
     heading: <>You are an organization</>,
     url: '/learn/corporate-podcasting',
   },
+};
+
+const scaleNumber = (
+  value: number,
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+) => {
+  // Convert the original range to a [0..1] range.
+  const standardValue = (value - x1) / (y1 - x1);
+  // Convert the [0..1] range to the new range.
+  const mappedValue = standardValue * (y2 - x2) + x2;
+  // Clamp the value to be within the bounds of the new range.
+  return Math.min(Math.max(mappedValue, x2), y2);
+};
+
+const SCROLL_PERCENTAGE_TO_SHOW_DIAL = 0.482;
+
+const scaleDial = (num: number) =>
+  scaleNumber(num, SCROLL_PERCENTAGE_TO_SHOW_DIAL, 1, 0, 1);
+
+const scaleDialAngle = (num: number) => scaleNumber(num, 0, 1, 0, 180);
+
+const Dial = ({progress}: {progress: number}) => {
+  const rotationStyles = {
+    // 0deg = on left line.
+    // -180deg = on right line.
+    transform: `rotate(${-1 * scaleDialAngle(progress)}deg)`,
+    // Rotate the dial's hand from the center of the dial.
+    transformOrigin: '144px 70px',
+    // Slight transition to smoothly rotate the dial's hand on scroll.
+    transition: 'all 0.025s linear',
+  };
+
+  return (
+    <svg
+      width={288}
+      height={214}
+      viewBox="0 0 288 214"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clipPath="url(#tuned-in-clip-path-1)">
+        <g clipPath="url(#tuned-in-clip-path-2)">
+          <path
+            d="M1 70c0 78.977 64.023 143 143 143s143-64.023 143-143"
+            stroke="var(--color-white)"
+          />
+          <path
+            d="M143 70H.5"
+            stroke="var(--color-sand)"
+            style={rotationStyles}
+          />
+          <g>
+            <ellipse
+              cx={144}
+              cy={70}
+              rx={70}
+              ry={70}
+              transform="rotate(-180 144 70)"
+              fill="var(--color-white)"
+            />
+            <ellipse
+              id="Ellipse 449"
+              cx={144}
+              cy={70}
+              rx={65}
+              ry={65}
+              transform="rotate(-180 144 70)"
+              fill="var(--color-white)"
+              stroke="var(--color-space)"
+            />
+            <circle id="Ellipse 448" cx={182} cy={103} r={6} fill="var(--color-space)" />
+          </g>
+          <g opacity={0.6} stroke="var(--color-white)">
+            <path d="M143.5 144L143.5 152" />
+            <path d="M89.3164 120.354L81.5383 128.132" />
+            <path d="M113.417 137.171L110.681 144.689" />
+            <path
+              transform="scale(1 -1) rotate(-70 -11.241 -192.159)"
+              d="M0 -0.5L8 -0.5"
+            />
+            <path d="M73.6886 95.4777L66.171 98.2138" />
+            <path
+              transform="scale(1 -1) rotate(-20 -163.177 -649.973)"
+              d="M0 -0.5L8 -0.5"
+            />
+            <path
+              transform="scale(1 -1) rotate(-45 -44.555 -298.727)"
+              d="M0 -0.5L8 -0.5"
+            />
+          </g>
+          <g>
+            <ellipse
+              cx={144}
+              cy={70}
+              rx={70}
+              ry={70}
+              transform="rotate(-180 144 70)"
+              fill="var(--color-white)"
+            />
+            <ellipse
+              cx={144}
+              cy={70}
+              rx={65}
+              ry={65}
+              transform="rotate(-180 144 70)"
+              fill="var(--color-white)"
+              stroke="var(--color-space)"
+            />
+            <circle
+              cx={95}
+              cy={71}
+              r={6}
+              fill="var(--color-space)"
+              style={rotationStyles}
+            />
+          </g>
+        </g>
+      </g>
+      <defs>
+        <clipPath id="tuned-in-clip-path-1">
+          <path fill="var(--color-white)" d="M0 0H288V214H0z" />
+        </clipPath>
+        <clipPath id="tuned-in-clip-path-2">
+          <path fill="var(--color-white)" d="M0 0H288V214H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
 };
 
 // When the user scrolls down, a thin white line appears.
@@ -161,7 +293,7 @@ const PanelSprites = () => {
             fillRule="evenodd"
             clipRule="evenodd"
             d="M10 705.026h510a9 9 0 009-9V74.454c0-4.752-3.707-8.688-8.455-8.992C334.622 53.556 162.434 31.39 11.808 1.18 6.218.059 1 4.326 1 10.023v686.003a9 9 0 009 9zm0 1c-5.523 0-10-4.478-10-10V10.023C0 3.693 5.798-1.045 12.004.2 162.581 30.4 334.724 52.561 520.61 64.464c5.272.337 9.391 4.708 9.391 9.99v621.572c0 5.522-4.477 10-10 10H10z"
-            fill="#F8F4EB"
+            fill="var(--color-sand)"
           />
           <path
             d="M520 705.026H10a9 9 0 01-9-9V10.023C1 4.326 6.218.06 11.807 1.18c150.627 30.21 322.815 52.376 508.738 64.282 4.748.304 8.455 4.24 8.455 8.992v621.572a9 9 0 01-9 9z"
@@ -198,7 +330,7 @@ const PanelSprites = () => {
             fillRule="evenodd"
             clipRule="evenodd"
             d="M520 705.026H10a9 9 0 01-9-9V74.454c0-4.752 3.707-8.688 8.455-8.992C195.378 53.556 367.566 31.39 518.193 1.18 523.782.059 529 4.326 529 10.023v686.003a9 9 0 01-9 9zm0 1c5.523 0 10-4.478 10-10V10.023c0-6.33-5.798-11.068-12.004-9.824C367.419 30.4 195.276 52.561 9.391 64.464 4.119 64.8 0 69.172 0 74.454v621.572c0 5.522 4.477 10 10 10h510z"
-            fill="#F8F4EB"
+            fill="var(--color-sand)"
           />
           <path
             d="M10 705.026h510a9 9 0 009-9V10.023c0-5.697-5.218-9.964-10.807-8.843C367.566 31.39 195.378 53.556 9.455 65.462 4.707 65.766 1 69.702 1 74.454v621.572a9 9 0 009 9z"
@@ -233,7 +365,7 @@ const PanelSprites = () => {
         <path
           d="M.5 695.54V77.545c0-5.444 4.565-9.775 10.004-9.498C93.088 72.25 178.138 74.44 265 74.44c86.862 0 171.912-2.19 254.496-6.393 5.439-.277 10.004 4.054 10.004 9.498V695.54a9.5 9.5 0 01-9.5 9.5H10a9.5 9.5 0 01-9.5-9.5z"
           fill="#090909"
-          stroke="#F8F4EB"
+          stroke="var(--color-sand)"
         />
       </g>
       <g id="tuned-in-panel-middle-filled">
@@ -246,21 +378,21 @@ const PanelSprites = () => {
       </g>
       <defs>
         <clipPath id="tuned-in-panels-clip1">
-          <path fill="#fff" d="M0 0H530V706H0z" />
+          <path fill="var(--color-white)" d="M0 0H530V706H0z" />
         </clipPath>
         <clipPath id="tuned-in-panels-clip2">
-          <path fill="#fff" d="M0 0H530V706H0z" />
+          <path fill="var(--color-white)" d="M0 0H530V706H0z" />
         </clipPath>
         <clipPath id="tuned-in-panels-clip3">
           <path
-            fill="#fff"
+            fill="var(--color-white)"
             transform="matrix(-1 0 0 1 530 0)"
             d="M0 0H530V706H0z"
           />
         </clipPath>
         <clipPath id="tuned-in-panels-clip4">
           <path
-            fill="#fff"
+            fill="var(--color-white)"
             transform="matrix(-1 0 0 1 530 0)"
             d="M0 0H530V706H0z"
           />
@@ -287,23 +419,34 @@ export const TunedIn = () => {
   const scrollProgress = useScrollProgress(scrollerRef);
 
   React.useEffect(() => {
-    // Reset when scrolling back up
-    if (scrollProgress < 0.6) {
+    const proportionalProgress = scaleDial(scrollProgress);
+    if (proportionalProgress >= 0.11 * 6) {
+      setRightActive(true);
+    }
+    if (proportionalProgress >= 0.11 * 4) {
+      setMiddleActive(true);
+    }
+    if (proportionalProgress >= 0.11 * 2) {
+      setLeftActive(true);
+    } else {
+      // Reset when scrolling back up
       setRightActive(false);
       setMiddleActive(false);
       setLeftActive(false);
-      return;
-    }
-    if (scrollProgress >= 0.8) {
-      setRightActive(true);
-    }
-    if (scrollProgress >= 0.7) {
-      setMiddleActive(true);
-    }
-    if (scrollProgress >= 0.6) {
-      setLeftActive(true);
     }
   }, [scrollProgress]);
+
+  const stickyLineRefs = React.useRef<Element[]>([]);
+  const addStickyLineRef = (el: Element | null) => {
+    if (el) {
+      stickyLineRefs.current[0] = el;
+    }
+  };
+  const [visibleStickyElement] = useVisibleElements(stickyLineRefs, {
+    // Observe where StickyLine becomes stuck from `position: sticky` upon scrolling down,
+    // when the section for the three panels intersects at the middle of viewport.
+    rootMargin: '-50% 0% -50% 0%',
+  });
 
   return (
     <>
@@ -315,19 +458,23 @@ export const TunedIn = () => {
           color: 'var(--color-white)',
           cursor: 'default',
           position: 'relative',
-          zIndex: 1,
           transform: 'translate3d(0,0,0)',
+          zIndex: 1,
         })}
       >
         <div
           className={css({
             paddingBottom: '286px',
-            transform: 'translate3d(0,0,0)',
             position: 'relative',
+            transform: 'translate3d(0,0,0)',
             zIndex: 2,
           })}
         >
-          <StickyLine color={STICKY_LINE_COLOR} zIndex={3} />
+          <StickyLine
+            ref={addStickyLineRef}
+            color={STICKY_LINE_COLOR}
+            zIndex={3}
+          />
           <div
             className={css({
               textAlign: 'center',
@@ -456,6 +603,34 @@ export const TunedIn = () => {
       </section>
 
       <div ref={bottomRef}>
+        <div
+          className={css({
+            position: 'relative',
+            zIndex: 1,
+            width: '288px',
+            margin: '0 auto',
+            display: 'grid',
+            placeItems: 'end',
+          })}
+        >
+          <div
+            className={css({
+              position: 'absolute',
+              top: '-356.35px',
+              zIndex: 2,
+              margin: '0 auto',
+              opacity: scrollProgress > 0 && !visibleStickyElement ? 1 : 0,
+              pointerEvents: 'none',
+              transition:
+                scrollProgress > 0 && !visibleStickyElement
+                  ? 'opacity 0.2s ease-in-out'
+                  : 'opacity 0.1s ease-in-out',
+            })}
+          >
+            <Dial progress={scaleDial(scrollProgress)} />
+          </div>
+        </div>
+
         <div
           ref={scrollerRef}
           className={css({

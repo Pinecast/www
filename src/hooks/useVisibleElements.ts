@@ -1,9 +1,14 @@
 import * as React from 'react';
 
+interface IntersectionOptions extends IntersectionObserverInit {
+  root?: Element | null;
+  rootMargin?: string;
+  threshold?: number | number[];
+}
+
 export function useVisibleElements(
-  // elements: Element[],
   elementsRef: React.MutableRefObject<Element[]>,
-  observerOptions?: IntersectionObserverInit,
+  observerOptions?: IntersectionOptions,
 ) {
   const observerOptionsRef = React.useRef(observerOptions);
 
@@ -29,7 +34,7 @@ export function useVisibleElements(
       );
     }, observerOptionsRef.current);
 
-    (elementsRef.current).forEach(element => {
+    elementsRef.current.forEach(element => {
       observer.observe(element);
     });
 
