@@ -1,0 +1,102 @@
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Pinecast podcast analytics are driven by a powerful analytics engine that provides near-realtime data with unparalleled granularity.
+
+  We know your show's growth is important to you. See how we've built some of the best analytics tooling for podcasters ever made.
+</Intro>
+
+# The data you need
+
+We provide a wide array of views for your analytics data. You can choose time ranges for most views. For time series data, you can choose the granularity to view the results by (day, week, month). Most views are timezone-adjusted to your computer's clock.
+
+![A screenshot of the Listens by Episode view for a podcast](/images/content/features/analytics-listens-by-episode.png)
+
+Every analytics view includes an explanation of what you're looking at and how to interpret the data, so you're never without context. We'll even annotate your charts to show when episodes were published. And of course, you can download any view as a CSV.
+
+## Unique views
+
+See when your listeners download episodes, the relative rate of growth of episodes, the locations of listeners, and more. We're confident that we have one of the largest selections—if not the largest selection—of analytics views of any podcast host. Moreover, the charts we provide are thoughtfully designed to answer real questions about your podcast; they're not just nice to look at.
+
+![A screenshot of the Listen Growth by Episode view for a podcast that's available with the Pro Analytics add-on](/images/content/features/analytics-listen-growth-by-episode.png)
+
+With all of this detail comes some complexity, but don't worry: below each chart is an explanation of the data, including specifics about what's included and what's not, and whether the data is timezone-adjusted.
+
+Pinecast offers 19 analytics views for podcasts, 13 views for episodes, and 16 views for podcast networks (available with our Crew add-on). You'll be hard-pressed to find another host that provides as much data with the same quality as Pinecast.
+
+You can see all of the details for all of our analytics views [on our support site](https://pinecast.support/en/articles/935524-analytics).
+
+### Podcast views
+
+These are the views that are available when viewing a podcast.
+
+<ChecksList>
+  <li>Total listens</li>
+  <li>Total listens on Spotify</li>
+  <li>Listens by episode</li>
+  <li>Listens by time of day</li>
+  <li>Top episodes</li>
+  <li>Listen growth</li>
+  <li>Listen growth by episode</li>
+  <li>Listens by source</li>
+  <li>Listens by agent</li>
+  <li>Listens by agent by time</li>
+  <li>Listens by OS</li>
+  <li>Episode listen totals</li>
+  <li>Listener locations</li>
+  <li>Short link visits</li>
+  <li>Short link visits by browser</li>
+  <li>Short link visitor locations</li>
+  <li>Short link clickthrough breakdown</li>
+  <li>Top episodes</li>
+</ChecksList>
+
+### Episode views
+
+You'll see these when you open an individual episode in your dashboard.
+
+<ChecksList>
+  <li>Total listens</li>
+  <li>Total listens on Spotify</li>
+  <li>Listens by time of day</li>
+  <li>Listen growth</li>
+  <li>Listens by source</li>
+  <li>Listens by agent</li>
+  <li>Listens by agent by time</li>
+  <li>Listens by OS</li>
+  <li>Listener locations</li>
+  <li>Short link visits</li>
+  <li>Short link visits by browser</li>
+  <li>Short link visitor locations</li>
+  <li>Short link clickthrough breakdown</li>
+</ChecksList>
+
+### Network views
+
+Views for networks show details for multiple podcasts at once. Networks are available with the Crew add-on.
+
+<ChecksList>
+  <li>Total listens</li>
+  <li>Total listens on Spotify</li>
+  <li>Listens by time of day</li>
+  <li>Top episodes</li>
+  <li>Listen growth</li>
+  <li>Listens by source</li>
+  <li>Listens by agent</li>
+  <li>Listens by agent by time</li>
+  <li>Listens by OS</li>
+  <li>Listener locations</li>
+  <li>Short link visits</li>
+  <li>Short link visits by browser</li>
+  <li>Short link clickthrough breakdown</li>
+</ChecksList>
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, {
+  title: 'Analytics',
+  description: 'Track listens and visitors to your podcast',
+  heroImage: '/images/hero/t-r.png',
+});

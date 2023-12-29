@@ -6,10 +6,7 @@ import {
   MarqueeDivider,
   StandardMarqueeDivider,
 } from '@/components/MarqueeDivider';
-import {
-  MIN_TABLET_MEDIA_QUERY,
-  MOBILE_MEDIA_QUERY,
-} from '@/constants';
+import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY} from '@/constants';
 import {MonumentGroteskRegular} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
 import {
@@ -51,11 +48,38 @@ type Props = {
   description: string;
 };
 
-export const BaseLayout = (
+type BaseLayoutOptions = {defaultColor?: string};
+
+export function BaseLayout(
   content: (props: Omit<Props, 'children'>) => React.ReactNode,
-  {defaultColor = 'var(--color-lime)'}: {defaultColor?: string} = {},
-) =>
-  function BaseLayout(props: Props) {
+): (props: Props) => JSX.Element;
+export function BaseLayout(
+  content: (props: Omit<Props, 'children'>) => React.ReactNode,
+  options: BaseLayoutOptions,
+): (props: Props) => JSX.Element;
+export function BaseLayout(
+  content: (props: Omit<Props, 'children'>) => React.ReactNode,
+  afterContent: () => React.ReactNode,
+): (props: Props) => JSX.Element;
+export function BaseLayout(
+  content: (props: Omit<Props, 'children'>) => React.ReactNode,
+  afterContent: () => React.ReactNode,
+  options: BaseLayoutOptions,
+): (props: Props) => JSX.Element;
+export function BaseLayout(
+  content: (props: Omit<Props, 'children'>) => React.ReactNode,
+  optionsOrAfterContent?: BaseLayoutOptions | (() => React.ReactNode),
+  options?: BaseLayoutOptions,
+) {
+  const afterContent =
+    typeof optionsOrAfterContent === 'function'
+      ? optionsOrAfterContent
+      : undefined;
+  const {defaultColor = 'var(--color-space)'} =
+    typeof optionsOrAfterContent === 'object'
+      ? optionsOrAfterContent
+      : options ?? {};
+  return function BaseLayout(props: Props) {
     const {
       children,
       heroImage,
@@ -152,6 +176,7 @@ export const BaseLayout = (
         >
           {children}
         </section>
+        {afterContent?.()}
         <StandardMarqueeDivider
           topBackgroundColor="var(--color-sand)"
           bottomBackgroundColor="var(--color-space)"
@@ -161,6 +186,7 @@ export const BaseLayout = (
       </>
     );
   };
+}
 
 const BaseHero = React.forwardRef<
   HTMLDivElement,

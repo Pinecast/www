@@ -1,0 +1,50 @@
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Growing your show means sharing your show. Our Short Links are the best way to ensure a great first impression.
+</Intro>
+
+# The first impression
+
+What link do you use to share your podcast or its episodes with the world? Will it show a preview card on social media, or direct visitors to the correct podcast app? Pinecast Short Links are the simplest and most powerful way to make sure that folks interested in your show get converted into listeners.
+
+<ChecksList>
+  <li>A short, copyable URL</li>
+  <li>Links to the right podcast apps</li>
+  <li>Beautiful social preview card</li>
+  <li>SEO-optimized</li>
+  <li>Episode player</li>
+  <li>Accessibility-minded</li>
+  <li>Episode transcripts</li>
+</ChecksList>
+
+![A screenshot of a podcast short link](/images/content/features/short-links.png)
+
+The best part: Short Links are available for all Pinecast customers and are turned on by default. Copy your Short Link URL from the Overview tab of any podcast or episode dashboard's Overview tab by clicking on the clipboard icon.
+
+# All the little details
+
+We take care of all the little details—both technical and cosmetic—so you don't have to. Behind the scenes, your Short Links have all the built-in metadata to make search engines and social networks happy, including a preview card that adapts to your show's artwork.
+
+![A screenshot of a short link being posted to Bluesky](/images/content/features/short-links-preview-card.png)
+
+We'll detect what kind of device your visitors are using and show them an appropriate selection of apps to open your podcast with: we'll suggest Apple Podcasts to iOS and Mac visitors and Google Podcasts for Android visitors.
+
+When sharing your podcast, we'll automatically include a player for the latest episode of your show. When sharing a single episode, we'll show the player for that episode.
+
+# Analytics
+
+Pinecast includes a complement of analytics just for Short Links: you can keep track of not just who click on the links you share, but you can also see who clicks through to a podcast app (and which one they chose).
+
+![A screenshot of a short link being posted to Bluesky](/images/content/features/short-links-clickthrough-analytics.png)
+
+With our Pro Analytics package, you can even see the countries and cities that the visitors to your Short Links are in. This can be a powerful insight to help target your efforts to reach the largest possible number of listeners.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, {
+  title: 'Short Links',
+  description: 'Share your podcast and episodes on social the right way',
+  heroImage: '/images/hero/t-r.png',
+});

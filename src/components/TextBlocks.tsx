@@ -5,7 +5,11 @@ import {
   MonumentGroteskBold,
   MonumentGroteskSemiMono,
 } from '@/fonts';
-import {MIN_TABLET_MEDIA_QUERY, MOBILE_BREAKPOINT, MOBILE_MEDIA_QUERY} from '@/constants';
+import {
+  MIN_TABLET_MEDIA_QUERY,
+  MOBILE_BREAKPOINT,
+  MOBILE_MEDIA_QUERY,
+} from '@/constants';
 import {Link, PillButton} from './Typography';
 import {StyleObject} from 'styletron-react';
 import {access} from 'fs';
@@ -194,6 +198,87 @@ export const ContentSection = ({children}: {children: React.ReactNode}) => {
   );
 };
 
+export const ChecksList = ({children}: {children: React.ReactNode}) => {
+  const css = useCSS();
+  return (
+    <ul
+      className={css({
+        listStyle: 'none',
+        marginBottom: '40px',
+        marginTop: '20px',
+        marginRight: 'var(--text-gutter)',
+        marginLeft: 'var(--text-gutter)',
+        padding: 0,
+
+        display: 'grid',
+        gridTemplateColumns: '1fr',
+        columnGap: '20px',
+
+        ':not(:empty) > li': {
+          borderBottom: '1px solid var(--color-core-accent)',
+          paddingBottom: '10px',
+          paddingRight: '30px',
+          marginLeft: 0,
+          marginBottom: '10px',
+          position: 'relative',
+
+          fontSize: '14px',
+          lineHeight: '20px',
+        },
+        ':not(:empty) > li::before': {
+          content: '""',
+          display: 'block',
+          position: 'absolute',
+          right: '4px',
+          height: '20px',
+          bottom: '10px',
+          width: '20px',
+          backgroundColor: 'var(--color-space)',
+          borderRadius: '50%',
+        },
+        ':not(:empty) > li::after': {
+          content: '""',
+          display: 'block',
+          height: '10px',
+          width: '5px',
+          transform: 'rotate(45deg)',
+          borderColor: 'var(--color-sand)',
+          borderStyle: 'solid',
+          borderTopWidth: 0,
+          borderLeftWidth: 0,
+          borderRightWidth: '2px',
+          borderBottomWidth: '2px',
+          position: 'absolute',
+          right: '11px',
+          bottom: '16px',
+        },
+
+        [MIN_TABLET_MEDIA_QUERY]: {
+          marginBottom: '80px',
+          marginTop: '40px',
+          maxWidth: '805px',
+          marginRight: 'auto',
+          marginLeft: 'auto',
+          gridTemplateColumns: '1fr 1fr',
+          ':not(:empty) > li': {
+            fontSize: '22px',
+            lineHeight: '25px',
+            marginBottom: '30px',
+          },
+          ':not(:empty) > li::before': {bottom: '12px'},
+          ':not(:empty) > li::after': {bottom: '18px'},
+        },
+
+        ':last-child': {
+          marginBottom: 0,
+        },
+      })}
+    >
+      {children}
+    </ul>
+  );
+};
+
 export const DefinitionList = ({children}: {children: React.ReactNode}) => {
   const css = useCSS();
   return (
@@ -309,7 +394,7 @@ export const ProductFeature = ({
         gridTemplateRows: 'min-content',
         [MOBILE_MEDIA_QUERY]: {
           gridTemplateColumns: '20% 1fr',
-        }
+        },
       })}
     >
       <div
