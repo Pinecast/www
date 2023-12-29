@@ -1,0 +1,505 @@
+{
+    "data": {
+        "id": "c64d5206-7681-4bd4-bce2-96269572cebe",
+        "text": "Hi, I'm Jonathan Mosen, host of Living Blindfully. I started podcasting in 2004 and have worked with quite a few podcast hosting companies over the years. Nothing has come close to Pinecast for ease of use, reliability, accessibility—which is vital to me because I use a screen reader—and support, which are some of the best I've experienced with any company. I'm a huge Pinecast fan and recommend them unreservedly.",
+        "words": [
+            {
+                "text": "Hi,",
+                "start": 90,
+                "end": 254,
+                "confidence": 0.99986,
+                "speaker": null
+            },
+            {
+                "text": "I'm",
+                "start": 292,
+                "end": 458,
+                "confidence": 0.99996,
+                "speaker": null
+            },
+            {
+                "text": "Jonathan",
+                "start": 474,
+                "end": 826,
+                "confidence": 0.99954,
+                "speaker": null
+            },
+            {
+                "text": "Mosen,",
+                "start": 858,
+                "end": 1226,
+                "confidence": 0.6945,
+                "speaker": null
+            },
+            {
+                "text": "host",
+                "start": 1258,
+                "end": 1466,
+                "confidence": 0.9999,
+                "speaker": null
+            },
+            {
+                "text": "of",
+                "start": 1498,
+                "end": 1646,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "Living",
+                "start": 1668,
+                "end": 1902,
+                "confidence": 0.99992,
+                "speaker": null
+            },
+            {
+                "text": "Blindfully.",
+                "start": 1956,
+                "end": 2634,
+                "confidence": 0.21132,
+                "speaker": null
+            },
+            {
+                "text": "I",
+                "start": 2682,
+                "end": 2894,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "started",
+                "start": 2932,
+                "end": 3230,
+                "confidence": 0.99999,
+                "speaker": null
+            },
+            {
+                "text": "podcasting",
+                "start": 3300,
+                "end": 3914,
+                "confidence": 0.99591,
+                "speaker": null
+            },
+            {
+                "text": "in",
+                "start": 3962,
+                "end": 4126,
+                "confidence": 0.99965,
+                "speaker": null
+            },
+            {
+                "text": "2004",
+                "start": 4148,
+                "end": 4318,
+                "confidence": 0.8,
+                "speaker": null
+            },
+            {
+                "text": "and",
+                "start": 4324,
+                "end": 5086,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "have",
+                "start": 5108,
+                "end": 5246,
+                "confidence": 0.99885,
+                "speaker": null
+            },
+            {
+                "text": "worked",
+                "start": 5268,
+                "end": 5502,
+                "confidence": 0.92519,
+                "speaker": null
+            },
+            {
+                "text": "with",
+                "start": 5556,
+                "end": 5774,
+                "confidence": 0.99998,
+                "speaker": null
+            },
+            {
+                "text": "quite",
+                "start": 5812,
+                "end": 5966,
+                "confidence": 0.99999,
+                "speaker": null
+            },
+            {
+                "text": "a",
+                "start": 5988,
+                "end": 6078,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "few",
+                "start": 6084,
+                "end": 6302,
+                "confidence": 0.83757,
+                "speaker": null
+            },
+            {
+                "text": "podcast",
+                "start": 6356,
+                "end": 6794,
+                "confidence": 0.58283,
+                "speaker": null
+            },
+            {
+                "text": "hosting",
+                "start": 6842,
+                "end": 7306,
+                "confidence": 0.55058,
+                "speaker": null
+            },
+            {
+                "text": "companies",
+                "start": 7338,
+                "end": 7630,
+                "confidence": 0.99996,
+                "speaker": null
+            },
+            {
+                "text": "over",
+                "start": 7700,
+                "end": 7886,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "the",
+                "start": 7908,
+                "end": 8094,
+                "confidence": 0.99,
+                "speaker": null
+            },
+            {
+                "text": "years.",
+                "start": 8132,
+                "end": 8622,
+                "confidence": 0.99999,
+                "speaker": null
+            },
+            {
+                "text": "Nothing",
+                "start": 8756,
+                "end": 9150,
+                "confidence": 0.77994,
+                "speaker": null
+            },
+            {
+                "text": "has",
+                "start": 9220,
+                "end": 9454,
+                "confidence": 0.98028,
+                "speaker": null
+            },
+            {
+                "text": "come",
+                "start": 9492,
+                "end": 9694,
+                "confidence": 0.99999,
+                "speaker": null
+            },
+            {
+                "text": "close",
+                "start": 9732,
+                "end": 9982,
+                "confidence": 0.56205,
+                "speaker": null
+            },
+            {
+                "text": "to",
+                "start": 10036,
+                "end": 10254,
+                "confidence": 0.67,
+                "speaker": null
+            },
+            {
+                "text": "Pinecast",
+                "start": 10292,
+                "end": 10874,
+                "confidence": 0.98674,
+                "speaker": null
+            },
+            {
+                "text": "for",
+                "start": 10922,
+                "end": 11086,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "ease",
+                "start": 11108,
+                "end": 11338,
+                "confidence": 0.99918,
+                "speaker": null
+            },
+            {
+                "text": "of",
+                "start": 11354,
+                "end": 11486,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "use,",
+                "start": 11508,
+                "end": 11886,
+                "confidence": 0.99991,
+                "speaker": null
+            },
+            {
+                "text": "reliability,",
+                "start": 11988,
+                "end": 12922,
+                "confidence": 0.99184,
+                "speaker": null
+            },
+            {
+                "text": "accessibility—",
+                "start": 13066,
+                "end": 13898,
+                "confidence": 0.7581,
+                "speaker": null
+            },
+            {
+                "text": "which",
+                "start": 13994,
+                "end": 14206,
+                "confidence": 0.99999,
+                "speaker": null
+            },
+            {
+                "text": "is",
+                "start": 14228,
+                "end": 14414,
+                "confidence": 0.98057,
+                "speaker": null
+            },
+            {
+                "text": "vital",
+                "start": 14452,
+                "end": 14714,
+                "confidence": 0.99999,
+                "speaker": null
+            },
+            {
+                "text": "to",
+                "start": 14762,
+                "end": 14926,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "me",
+                "start": 14948,
+                "end": 15086,
+                "confidence": 0.99999,
+                "speaker": null
+            },
+            {
+                "text": "because",
+                "start": 15108,
+                "end": 15294,
+                "confidence": 0.99998,
+                "speaker": null
+            },
+            {
+                "text": "I",
+                "start": 15332,
+                "end": 15486,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "use",
+                "start": 15508,
+                "end": 15694,
+                "confidence": 0.99958,
+                "speaker": null
+            },
+            {
+                "text": "a",
+                "start": 15732,
+                "end": 15838,
+                "confidence": 0.99,
+                "speaker": null
+            },
+            {
+                "text": "screen",
+                "start": 15844,
+                "end": 16062,
+                "confidence": 0.99999,
+                "speaker": null
+            },
+            {
+                "text": "reader—",
+                "start": 16116,
+                "end": 16602,
+                "confidence": 0.99751,
+                "speaker": null
+            },
+            {
+                "text": "and",
+                "start": 16666,
+                "end": 16942,
+                "confidence": 0.8,
+                "speaker": null
+            },
+            {
+                "text": "support,",
+                "start": 16996,
+                "end": 17502,
+                "confidence": 0.99999,
+                "speaker": null
+            },
+            {
+                "text": "which",
+                "start": 17636,
+                "end": 17934,
+                "confidence": 0.99999,
+                "speaker": null
+            },
+            {
+                "text": "are",
+                "start": 17972,
+                "end": 18078,
+                "confidence": 0.69914,
+                "speaker": null
+            },
+            {
+                "text": "some",
+                "start": 18084,
+                "end": 18206,
+                "confidence": 0.99702,
+                "speaker": null
+            },
+            {
+                "text": "of",
+                "start": 18228,
+                "end": 18366,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "the",
+                "start": 18388,
+                "end": 18526,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "best",
+                "start": 18548,
+                "end": 18830,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "I've",
+                "start": 18900,
+                "end": 19194,
+                "confidence": 0.90556,
+                "speaker": null
+            },
+            {
+                "text": "experienced",
+                "start": 19242,
+                "end": 19786,
+                "confidence": 0.99999,
+                "speaker": null
+            },
+            {
+                "text": "with",
+                "start": 19818,
+                "end": 20014,
+                "confidence": 0.99997,
+                "speaker": null
+            },
+            {
+                "text": "any",
+                "start": 20052,
+                "end": 20302,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "company.",
+                "start": 20356,
+                "end": 20814,
+                "confidence": 0.99999,
+                "speaker": null
+            },
+            {
+                "text": "I'm",
+                "start": 20932,
+                "end": 21258,
+                "confidence": 0.96723,
+                "speaker": null
+            },
+            {
+                "text": "a",
+                "start": 21274,
+                "end": 21406,
+                "confidence": 0.68,
+                "speaker": null
+            },
+            {
+                "text": "huge",
+                "start": 21428,
+                "end": 21662,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "Pinecast",
+                "start": 21716,
+                "end": 22314,
+                "confidence": 0.941,
+                "speaker": null
+            },
+            {
+                "text": "fan",
+                "start": 22362,
+                "end": 22714,
+                "confidence": 0.99999,
+                "speaker": null
+            },
+            {
+                "text": "and",
+                "start": 22762,
+                "end": 22974,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "recommend",
+                "start": 23012,
+                "end": 23358,
+                "confidence": 1,
+                "speaker": null
+            },
+            {
+                "text": "them",
+                "start": 23444,
+                "end": 23694,
+                "confidence": 0.99999,
+                "speaker": null
+            },
+            {
+                "text": "unreservedly.",
+                "start": 23732,
+                "end": 24410,
+                "confidence": 0.80812,
+                "speaker": null
+            }
+        ]
+    }
+}
