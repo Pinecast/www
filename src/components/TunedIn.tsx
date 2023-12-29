@@ -14,16 +14,19 @@ const PANELS = {
     color: 'var(--color-orchid)',
     heading: <>You are just getting started</>,
     url: '/learn/podcasting-for-beginners',
+    image: '/images/art/user-beginner.png',
   },
   middle: {
     color: 'var(--color-lime)',
     heading: <>You need advanced tools</>,
     url: '/learn/podcasting-for-power-users',
+    image: '/images/art/user-advanced.png',
   },
   right: {
     color: 'var(--color-sky)',
     heading: <>You are an organization</>,
     url: '/learn/corporate-podcasting',
+    image: '/images/art/user-organizations.png',
   },
 };
 
@@ -42,7 +45,7 @@ const scaleNumber = (
   return Math.min(Math.max(mappedValue, x2), y2);
 };
 
-const SCROLL_PERCENTAGE_TO_SHOW_DIAL = 0.482;
+const SCROLL_PERCENTAGE_TO_SHOW_DIAL = 0.117;
 
 const scaleDial = (num: number) =>
   scaleNumber(num, SCROLL_PERCENTAGE_TO_SHOW_DIAL, 1, 0, 1);
@@ -98,7 +101,13 @@ const Dial = ({progress}: {progress: number}) => {
               fill="var(--color-white)"
               stroke="var(--color-space)"
             />
-            <circle id="Ellipse 448" cx={182} cy={103} r={6} fill="var(--color-space)" />
+            <circle
+              id="Ellipse 448"
+              cx={182}
+              cy={103}
+              r={6}
+              fill="var(--color-space)"
+            />
           </g>
           <g opacity={0.6} stroke="var(--color-white)">
             <path d="M143.5 144L143.5 152" />
@@ -187,218 +196,70 @@ const Panel = ({
             width: '265px',
             flex: '0 0 265px',
           },
+          '::before': {
+            content: '""',
+            display: 'block',
+            paddingTop: '125.5%',
+          },
         })}
       >
-        <svg
-          className={css({
-            background: 'var(--color-space)',
-            display: 'none',
-            position: 'relative',
-            zIndex: 1,
-            [MIN_TABLET_MEDIA_QUERY]: {
-              display: 'block',
-            },
-          })}
-          viewBox="0 0 530.1 78"
-        >
-          <use
-            href={
-              isActive
-                ? `#tuned-in-panel-${position}-filled`
-                : `#tuned-in-panel-${position}-default`
-            }
-          />
-        </svg>
         <div
           className={css({
-            alignItems: 'flex-end',
-            backgroundColor: isActive ? activeColor : 'transparent',
-            borderTopLeftRadius: '10px',
-            borderTopRightRadius: '10px',
-            borderBottomLeftRadius: '10px',
-            borderBottomRightRadius: '10px',
-            borderBottomWidth: '1px',
-            borderColor: isActive ? activeColor : 'var(--color-sand)',
-            borderLeftWidth: '1px',
-            borderRightWidth: '1px',
-            borderStyle: 'solid',
-            bottom: 0,
-            color: isActive ? 'var(--color-space)' : 'var(--color-white)',
-            display: 'flex',
-            left: 0,
-            padding: '20px',
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            [MIN_TABLET_MEDIA_QUERY]: {
-              borderTopLeftRadius: '0',
-              borderTopRightRadius: '0',
-              minHeight: '730px',
-            },
+            position: 'relative',
+            borderTopLeftRadius: '20px',
+            borderTopRightRadius: '20px',
+            borderBottomLeftRadius: '20px',
+            borderBottomRightRadius: '20px',
           })}
         >
-          <header
+          <div
             className={css({
-              borderRadius: '10px',
-              borderStyle: 'solid',
-              borderWidth: '1px',
+              alignItems: 'flex-end',
+              bottom: '0',
+              color: isActive ? 'var(--color-space)' : 'var(--color-sand)',
+              display: 'flex',
+              left: '0',
               padding: '20px',
-              width: '100%',
-              [MIN_TABLET_MEDIA_QUERY]: {
-                minHeight: '160px',
-              },
+              position: 'absolute',
+              right: '0',
+              top: '0',
             })}
           >
-            <Subhead style={{marginBottom: '16px', maxWidth: '16ch'}}>
-              {heading}
-            </Subhead>
-            <ProseLink
-              // TODO: Isolate a non-anchor version of Typography's Link
-              // so the entire `<li>` can be used as a large click target.
-              href={panel.url}
-              style={{
-                color: 'inherit',
-              }}
+            <header
+              className={css({
+                backgroundColor: isActive ? activeColor : 'transparent',
+                borderRadius: '10px',
+                borderStyle: 'solid',
+                borderWidth: '1px',
+                padding: '20px',
+                width: '100%',
+                [MIN_TABLET_MEDIA_QUERY]: {
+                  minHeight: '160px',
+                },
+              })}
             >
-              Learn more
-            </ProseLink>
-          </header>
+              <Subhead style={{marginBottom: '16px', maxWidth: '16ch'}}>
+                {heading}
+              </Subhead>
+              <ProseLink
+                // TODO: Isolate a non-anchor version of Typography's Link
+                // so the entire `<li>` can be used as a large click target.
+                href={panel.url}
+                style={{
+                  color: 'inherit',
+                  marginTop: '-8px',
+                  marginBottom: '-8px',
+                  paddingTop: '8px',
+                  paddingBottom: '8px',
+                }}
+              >
+                Learn more
+              </ProseLink>
+            </header>
+          </div>
         </div>
       </li>
     </>
-  );
-};
-
-const PanelSprites = () => {
-  const css = useCSS();
-  return (
-    <svg
-      aria-hidden="true"
-      focusable="false"
-      width={0}
-      height={0}
-      fill="none"
-      viewBox="0 0 530 706"
-      xmlns="http://www.w3.org/2000/svg"
-      className={css({display: 'none'})}
-    >
-      <path fill="#090909" d="M0 0H530V706H0z" />
-      <g
-        id="tuned-in-panel-left-default"
-        clipPath="url(#tuned-in-panels-clip1)"
-      >
-        <path fill="#090909" d="M0 0H530V706H0z" />
-        <g>
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M10 705.026h510a9 9 0 009-9V74.454c0-4.752-3.707-8.688-8.455-8.992C334.622 53.556 162.434 31.39 11.808 1.18 6.218.059 1 4.326 1 10.023v686.003a9 9 0 009 9zm0 1c-5.523 0-10-4.478-10-10V10.023C0 3.693 5.798-1.045 12.004.2 162.581 30.4 334.724 52.561 520.61 64.464c5.272.337 9.391 4.708 9.391 9.99v621.572c0 5.522-4.477 10-10 10H10z"
-            fill="var(--color-sand)"
-          />
-          <path
-            d="M520 705.026H10a9 9 0 01-9-9V10.023C1 4.326 6.218.06 11.807 1.18c150.627 30.21 322.815 52.376 508.738 64.282 4.748.304 8.455 4.24 8.455 8.992v621.572a9 9 0 01-9 9z"
-            fill="#090909"
-          />
-        </g>
-      </g>
-      <g id="tuned-in-panel-left-filled" clipPath="url(#tuned-in-panels-clip2)">
-        <path fill="#090909" d="M0 0H530V706H0z" />
-        <g>
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M10 705.026h510a9 9 0 009-9V74.454c0-4.752-3.707-8.688-8.455-8.992C334.622 53.556 162.434 31.39 11.808 1.18 6.218.059 1 4.326 1 10.023v686.003a9 9 0 009 9zm0 1c-5.523 0-10-4.478-10-10V10.023C0 3.693 5.798-1.045 12.004.2 162.581 30.4 334.724 52.561 520.61 64.464c5.272.337 9.391 4.708 9.391 9.99v621.572c0 5.522-4.477 10-10 10H10z"
-            fill="#DBAEFF"
-          />
-          <path
-            d="M520 705.026H10a9 9 0 01-9-9V10.023C1 4.326 6.218.06 11.807 1.18c150.627 30.21 322.815 52.376 508.738 64.282 4.748.304 8.455 4.24 8.455 8.992v621.572a9 9 0 01-9 9z"
-            fill="#DBAEFF"
-          />
-        </g>
-      </g>
-      <g
-        id="tuned-in-panel-right-default"
-        clipPath="url(#tuned-in-panels-clip3)"
-      >
-        <path
-          transform="matrix(-1 0 0 1 530 0)"
-          fill="#090909"
-          d="M0 0H530V706H0z"
-        />
-        <g>
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M520 705.026H10a9 9 0 01-9-9V74.454c0-4.752 3.707-8.688 8.455-8.992C195.378 53.556 367.566 31.39 518.193 1.18 523.782.059 529 4.326 529 10.023v686.003a9 9 0 01-9 9zm0 1c5.523 0 10-4.478 10-10V10.023c0-6.33-5.798-11.068-12.004-9.824C367.419 30.4 195.276 52.561 9.391 64.464 4.119 64.8 0 69.172 0 74.454v621.572c0 5.522 4.477 10 10 10h510z"
-            fill="var(--color-sand)"
-          />
-          <path
-            d="M10 705.026h510a9 9 0 009-9V10.023c0-5.697-5.218-9.964-10.807-8.843C367.566 31.39 195.378 53.556 9.455 65.462 4.707 65.766 1 69.702 1 74.454v621.572a9 9 0 009 9z"
-            fill="#090909"
-          />
-        </g>
-      </g>
-      <g
-        id="tuned-in-panel-right-filled"
-        clipPath="url(#tuned-in-panels-clip4)"
-      >
-        <path
-          transform="matrix(-1 0 0 1 530 0)"
-          fill="#090909"
-          d="M0 0H530V706H0z"
-        />
-        <g>
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M520 705.026H10a9 9 0 01-9-9V74.454c0-4.752 3.707-8.688 8.455-8.992C195.378 53.556 367.566 31.39 518.193 1.18 523.782.059 529 4.326 529 10.023v686.003a9 9 0 01-9 9zm0 1c5.523 0 10-4.478 10-10V10.023c0-6.33-5.798-11.068-12.004-9.824C367.419 30.4 195.276 52.561 9.391 64.464 4.119 64.8 0 69.172 0 74.454v621.572c0 5.522 4.477 10 10 10h510z"
-            fill="#C7ECFA"
-          />
-          <path
-            d="M10 705.026h510a9 9 0 009-9V10.023c0-5.697-5.218-9.964-10.807-8.843C367.566 31.39 195.378 53.556 9.455 65.462 4.707 65.766 1 69.702 1 74.454v621.572a9 9 0 009 9z"
-            fill="#C7ECFA"
-          />
-        </g>
-      </g>
-      <g id="tuned-in-panel-middle-default">
-        <path fill="#090909" d="M0 0H530V706H0z" />
-        <path
-          d="M.5 695.54V77.545c0-5.444 4.565-9.775 10.004-9.498C93.088 72.25 178.138 74.44 265 74.44c86.862 0 171.912-2.19 254.496-6.393 5.439-.277 10.004 4.054 10.004 9.498V695.54a9.5 9.5 0 01-9.5 9.5H10a9.5 9.5 0 01-9.5-9.5z"
-          fill="#090909"
-          stroke="var(--color-sand)"
-        />
-      </g>
-      <g id="tuned-in-panel-middle-filled">
-        <path fill="#090909" d="M0 0H530V706H0z" />
-        <path
-          d="M.5 695.54V77.545c0-5.444 4.565-9.775 10.004-9.498C93.088 72.25 178.138 74.44 265 74.44c86.862 0 171.912-2.19 254.496-6.393 5.439-.277 10.004 4.054 10.004 9.498V695.54a9.5 9.5 0 01-9.5 9.5H10a9.5 9.5 0 01-9.5-9.5z"
-          fill="#C4FF7E"
-          stroke="#C4FF7E"
-        />
-      </g>
-      <defs>
-        <clipPath id="tuned-in-panels-clip1">
-          <path fill="var(--color-white)" d="M0 0H530V706H0z" />
-        </clipPath>
-        <clipPath id="tuned-in-panels-clip2">
-          <path fill="var(--color-white)" d="M0 0H530V706H0z" />
-        </clipPath>
-        <clipPath id="tuned-in-panels-clip3">
-          <path
-            fill="var(--color-white)"
-            transform="matrix(-1 0 0 1 530 0)"
-            d="M0 0H530V706H0z"
-          />
-        </clipPath>
-        <clipPath id="tuned-in-panels-clip4">
-          <path
-            fill="var(--color-white)"
-            transform="matrix(-1 0 0 1 530 0)"
-            d="M0 0H530V706H0z"
-          />
-        </clipPath>
-      </defs>
-    </svg>
   );
 };
 
@@ -420,6 +281,7 @@ export const TunedIn = () => {
 
   React.useEffect(() => {
     const proportionalProgress = scaleDial(scrollProgress);
+    document.title = `${scrollProgress} | ${proportionalProgress}`;
     if (proportionalProgress >= 0.11 * 6) {
       setRightActive(true);
     }
@@ -597,8 +459,6 @@ export const TunedIn = () => {
               No credit card required
             </Caption>
           </div>
-
-          <PanelSprites />
         </div>
       </section>
 
@@ -641,14 +501,23 @@ export const TunedIn = () => {
             zIndex: 2,
           })}
         >
+          {/* spacer */}
+          <div
+            className={css({
+              paddingBottom: '300px',
+              marginBottom: '-380px',
+            })}
+          ></div>
           <ul
             className={css({
               listStyleType: 'none',
               marginTop: '0',
               marginBottom: '0',
-              minHeight: '460px',
+              marginLeft: '0',
+              marginRight: '0',
               paddingLeft: '20px',
               paddingRight: '20px',
+              paddingTop: '40px',
               position: 'relative',
               zIndex: 3,
               width: '100%',
@@ -663,6 +532,8 @@ export const TunedIn = () => {
                 gap: '20px',
                 gridTemplateColumns: 'repeat(3, 1fr)',
                 overflowX: 'unset',
+                position: 'absolute',
+                top: '0',
               },
             })}
           >
@@ -670,14 +541,255 @@ export const TunedIn = () => {
             <Panel position="middle" isActive={middleActive} />
             <Panel position="right" isActive={rightActive} />
           </ul>
+          <svg
+            fill="none"
+            viewBox="0 3 1630 709"
+            xmlns="http://www.w3.org/2000/svg"
+            className={css({
+              display: 'block',
+              marginLeft: '20px',
+              marginRight: '20px',
+              paddingTop: '120px',
+            })}
+          >
+            {/* left - filled */}
+            <g
+              style={{
+                opacity: leftActive ? 1 : 0,
+              }}
+            >
+              <mask
+                id="tuned-in-panels-mask-left-filled"
+                style={{maskType: 'alpha'}}
+                maskUnits="userSpaceOnUse"
+                x={0}
+                y={3}
+                width={530}
+                height={705}
+              >
+                <path
+                  d="M0 687.26c0 11.046 8.954 20 20 20h490c11.046 0 20-8.954 20-20V85.088c0-10.565-8.219-19.303-18.761-20C333.853 53.373 169.164 32.302 24.022 3.819 11.6 1.38 0 10.855 0 23.515V687.26z"
+                  fill="#fff"
+                />
+              </mask>
+              <g mask="url(#tuned-in-panels-mask-left-filled)">
+                <path
+                  d="M0-1h530v668.26c0 18.856 0 28.284-5.858 34.142-5.858 5.858-15.286 5.858-34.142 5.858H40c-18.856 0-28.284 0-34.142-5.858C0 695.544 0 686.116 0 667.26V-1z"
+                  fill="url(#tuned-in-panels-pattern-beginner)"
+                />
+              </g>
+            </g>
+            {/* left - default */}
+            <g
+              style={{
+                opacity: leftActive ? 0 : 1,
+              }}
+            >
+              <mask
+                id="tuned-in-panels-mask-left-skeleton"
+                style={{maskType: 'alpha'}}
+                maskUnits="userSpaceOnUse"
+                x={0}
+                y={-1}
+                width={530}
+                height={709}
+              >
+                <path
+                  d="M0 707.26h530V66.29C335.55 54.23 155.92 30.96 0-1v708.26z"
+                  fill="#fff"
+                />
+              </mask>
+              <g mask="url(#tuned-in-panels-mask-left-skeleton)">
+                <mask id="tuned-in-panels-mask-left-skeleton-shape" fill="#fff">
+                  <path d="M0 687.26c0 11.046 8.954 20 20 20h490c11.046 0 20-8.954 20-20V85.088c0-10.565-8.219-19.303-18.761-20C333.853 53.373 169.164 32.302 24.022 3.819 11.6 1.38 0 10.855 0 23.515V687.26z" />
+                </mask>
+                <path
+                  d="M0 687.26c0 11.046 8.954 20 20 20h490c11.046 0 20-8.954 20-20V85.088c0-10.565-8.219-19.303-18.761-20C333.853 53.373 169.164 32.302 24.022 3.819 11.6 1.38 0 10.855 0 23.515V687.26z"
+                  fill="var(--color-space)"
+                  stroke="var(--color-sand)"
+                  strokeWidth={2}
+                  mask="url(#tuned-in-panels-mask-left-skeleton-shape)"
+                />
+              </g>
+            </g>
+
+            {/* middle - filled */}
+            <g
+              style={{
+                opacity: middleActive ? 1 : 0,
+              }}
+            >
+              <mask
+                id="tuned-in-panels-mask-middle-filled"
+                style={{maskType: 'alpha'}}
+                maskUnits="userSpaceOnUse"
+                x={550}
+                y={70}
+                width={530}
+                height={638}
+              >
+                <path
+                  d="M571.061 70.072C559.612 69.514 550 78.628 550 90.09v597.45c0 11.046 8.954 20 20 20h490c11.05 0 20-8.954 20-20V90.09c0-11.462-9.61-20.576-21.06-20.018-79.27 3.86-160.774 5.868-243.94 5.868s-164.67-2.008-243.939-5.868z"
+                  fill="var(--color-lime)"
+                />
+              </mask>
+              <g mask="url(#tuned-in-panels-mask-middle-filled)">
+                <path
+                  d="M550 69h530v598.54c0 18.856 0 28.284-5.86 34.142-5.86 5.858-15.28 5.858-34.14 5.858H590c-18.856 0-28.284 0-34.142-5.858C550 695.824 550 686.396 550 667.54V69z"
+                  fill="url(#tuned-in-panels-pattern-advanced)"
+                />
+              </g>
+            </g>
+            {/* middle - default */}
+            <g
+              style={{
+                opacity: middleActive ? 0 : 1,
+                border: '1px solid #f00',
+                padding: '10000px',
+              }}
+            >
+              <mask
+                id="tuned-in-panels-mask-middle-skeleton"
+                style={{maskType: 'alpha'}}
+                maskUnits="userSpaceOnUse"
+                x={550}
+                y={69}
+                width={530}
+                height={639}
+              >
+                <path
+                  d="M550 69v638.54h530V69c-85.87 4.56-174.45 6.94-265 6.94-90.55 0-179.13-2.38-265-6.94z"
+                  fill="var(--color-lime)"
+                />
+              </mask>
+              <g mask="url(#tuned-in-panels-mask-middle-skeleton)">
+                <mask id="tuned-in-panels-mask-middle-skeleton" fill="#fff">
+                  <path d="M571.061 70.072C559.612 69.514 550 78.628 550 90.09v597.45c0 11.046 8.954 20 20 20h490c11.05 0 20-8.954 20-20V90.09c0-11.462-9.61-20.576-21.06-20.018-79.27 3.86-160.774 5.868-243.94 5.868s-164.67-2.008-243.939-5.868z" />
+                </mask>
+                <path
+                  d="M571.061 70.072C559.612 69.514 550 78.628 550 90.09v597.45c0 11.046 8.954 20 20 20h490c11.05 0 20-8.954 20-20V90.09c0-11.462-9.61-20.576-21.06-20.018-79.27 3.86-160.774 5.868-243.94 5.868s-164.67-2.008-243.939-5.868z"
+                  fill="var(--color-space)"
+                  stroke="var(--color-sand)"
+                  strokeWidth={2}
+                  mask="url(#tuned-in-panels-mask-middle-skeleton-shape)"
+                />
+              </g>
+            </g>
+            {/* right - filled */}
+            <g
+              style={{
+                opacity: rightActive ? 1 : 0,
+              }}
+            >
+              <mask
+                id="tuned-in-panels-mask-right-filled"
+                style={{maskType: 'alpha'}}
+                maskUnits="userSpaceOnUse"
+                x={1100}
+                y={3}
+                width={530}
+                height={705}
+              >
+                <path
+                  d="M1630 687.26c0 11.046-8.95 20-20 20h-490c-11.05 0-20-8.954-20-20V85.088c0-10.565 8.22-19.303 18.76-20 177.39-11.716 342.08-32.787 487.22-61.27C1618.4 1.38 1630 10.855 1630 23.515V687.26z"
+                  fill="#fff"
+                />
+              </mask>
+              <g mask="url(#tuned-in-panels-mask-right-filled)">
+                <rect
+                  x="1100"
+                  y="-12"
+                  width="532"
+                  height="732"
+                  fill="url(#tuned-in-panels-pattern-organizations)"
+                />
+              </g>
+            </g>
+            {/* right - default */}
+            <g
+              style={{
+                opacity: rightActive ? 0 : 1,
+              }}
+            >
+              <mask id="tuned-in-panels-mask-right-skeleton" fill="#fff">
+                <path d="M1630 687.26c0 11.046-8.95 20-20 20h-490c-11.05 0-20-8.954-20-20V85.088c0-10.565 8.22-19.303 18.76-20 177.39-11.716 342.08-32.787 487.22-61.27C1618.4 1.38 1630 10.855 1630 23.515V687.26z" />
+              </mask>
+              <path
+                d="M1630 687.26c0 11.046-8.95 20-20 20h-490c-11.05 0-20-8.954-20-20V85.088c0-10.565 8.22-19.303 18.76-20 177.39-11.716 342.08-32.787 487.22-61.27C1618.4 1.38 1630 10.855 1630 23.515V687.26z"
+                fill="var(--color-space)"
+                stroke="var(--color-sand)"
+                strokeWidth={3}
+                mask="url(#tuned-in-panels-mask-right-skeleton)"
+              />
+              <mask
+                style={{maskType: 'alpha'}}
+                maskUnits="userSpaceOnUse"
+                x={1100}
+                y={-39}
+                width={530}
+                height={707}
+              >
+                <path
+                  d="M1100 667.27c0-.006 0-.01.01-.01H1620c5.52 0 10-4.477 10-10V-28.742c0-6.33-5.8-11.069-12-9.824-150.58 30.2-322.72 52.361-508.61 64.264-5.27.338-9.39 4.709-9.39 9.991V667.27z"
+                  fill="var(--color-sky)"
+                />
+              </mask>
+            </g>
+            <defs>
+              <pattern
+                id="tuned-in-panels-pattern-beginner"
+                patternContentUnits="objectBoundingBox"
+                width={1}
+                height={1}
+              >
+                <use
+                  xlinkHref="#tuned-in-panels-img-beginner"
+                  transform="matrix(.0004 0 0 .0003 -.013 0)"
+                />
+              </pattern>
+              <pattern
+                id="tuned-in-panels-pattern-advanced"
+                patternContentUnits="objectBoundingBox"
+                width={1}
+                height={1}
+              >
+                <use
+                  xlinkHref="#tuned-in-panels-img-advanced"
+                  transform="matrix(.00038 0 0 .00032 0 -.04)"
+                />
+              </pattern>
+              <pattern
+                id="tuned-in-panels-pattern-organizations"
+                patternContentUnits="objectBoundingBox"
+                width={1}
+                height={1}
+              >
+                <use
+                  xlinkHref="#tuned-in-panels-img-organizations"
+                  transform="scale(.00094 .0007)"
+                />
+              </pattern>
+              <image
+                id="tuned-in-panels-img-beginner"
+                width={2629}
+                height={3421}
+                href="/images/art/user-beginner.png"
+              />
+              <image
+                id="tuned-in-panels-img-advanced"
+                width={2629}
+                height={3421}
+                href="/images/art/user-advanced.png"
+              />
+              <image
+                id="tuned-in-panels-img-organizations"
+                width={1060}
+                height={1440}
+                href="/images/art/user-organizations.png"
+              />
+            </defs>
+          </svg>
         </div>
-        {/* Spacer for the vertical scroll region past 1.0 */}
-        <div
-          className={css({
-            height: '422px',
-            marginBottom: '-152px',
-          })}
-        />
       </div>
     </>
   );
