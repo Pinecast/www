@@ -11,6 +11,7 @@ import {useDismiss} from '@/hooks/useDismiss';
 import {Body1, Caption} from './Typography';
 import {QuickTipsBlock} from './QuickLinks';
 import {RightArrow} from '@/icons/RightArrow';
+import { FeaturesBlock } from './FeaturesBlock';
 
 const PersonaBlock = ({
   caption,
@@ -284,7 +285,7 @@ export const MainHeader = () => {
               display: 'grid',
               gap: '20px',
               gridTemplateColumns: '1fr',
-              gridTemplateRows: 'min-content min-content min-content',
+              gridTemplateRows: 'min-content min-content min-content min-content',
               width: '100%',
               [MIN_TABLET_MEDIA_QUERY]: {
                 gridTemplateColumns: '1fr 1fr 1fr 1.25fr',
@@ -292,6 +293,7 @@ export const MainHeader = () => {
               },
             })}
           >
+            <FeaturesBlock />
             <PersonaBlock
               color="var(--color-orchid)"
               illustrationSrc="/images/art/user-beginner.png"
