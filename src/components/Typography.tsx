@@ -3,6 +3,7 @@ import {
   CAN_HOVER_MEDIA_QUERY,
   TABLET_MEDIA_QUERY,
   MIN_TABLET_MEDIA_QUERY,
+  MIN_DESKTOP_MEDIA_QUERY,
 } from '@/constants';
 import {
   GintoNordCondensed,
@@ -27,24 +28,26 @@ export const H1 = ({
     <h1
       className={css({
         ...GintoNordCondensed,
-        fontSize: '160px',
         hyphens: 'auto',
         letterSpacing: '-0.04em',
-        lineHeight: '144px',
         // overflowWrap: 'break-word',
         marginTop: '0',
         marginBottom: '0',
         textTransform: 'uppercase',
+
+        fontSize: '54px',
+        lineHeight: '56px',
+
         ...style,
-        [TABLET_MEDIA_QUERY]: {
+        [MIN_TABLET_MEDIA_QUERY]: {
           fontSize: '112px',
           lineHeight: '100px',
-          ...(style as Record<string, any>)?.[TABLET_MEDIA_QUERY],
+          ...(style as Record<string, any>)?.[MIN_TABLET_MEDIA_QUERY],
         },
-        [MOBILE_MEDIA_QUERY]: {
-          fontSize: '54px',
-          lineHeight: '56px',
-          ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
+        [MIN_DESKTOP_MEDIA_QUERY]: {
+          fontSize: '160px',
+          lineHeight: '144px',
+          ...(style as Record<string, any>)?.[MIN_DESKTOP_MEDIA_QUERY],
         },
       })}
     >
