@@ -11,19 +11,6 @@ import {StyleObject} from 'styletron-react';
 import * as React from 'react';
 import {useCalculateResizableValue} from '@/hooks/useCalculateResizableValue';
 
-const PlaceholderImage = ({style}: {style: StyleObject}) => {
-  const css = useCSS();
-  return (
-    <div
-      className={css({
-        background: 'red',
-        borderRadius: '20px',
-        position: 'relative',
-        ...style,
-      })}
-    ></div>
-  );
-};
 const HeroImage = ({src, style}: {src: string; style: StyleObject}) => {
   const css = useCSS();
   return (
@@ -211,14 +198,16 @@ export const Hero = () => {
           },
         })}
       >
-        <PlaceholderImage
+        <HeroImage
+          src="/images/hero/ml.png"
           style={{
             gridArea: '1 / 1 / 2 / 2',
             zIndex: 5,
             [TABLET_MEDIA_QUERY]: {display: 'none'},
           }}
         />
-        <PlaceholderImage
+        <HeroImage
+          src="/images/hero/ml.png"
           style={{
             gridArea: '2 / 1 / 3 / 2',
             zIndex: 5,
@@ -299,14 +288,16 @@ export const Hero = () => {
           />
         </div>
 
-        <PlaceholderImage
+        <HeroImage
+          src="/images/hero/mr.png"
           style={{
             gridArea: '1 / 3 / 2 / 4',
             zIndex: 5,
             [TABLET_MEDIA_QUERY]: {display: 'none'},
           }}
         />
-        <PlaceholderImage
+        <HeroImage
+          src="/images/hero/mr.png"
           style={{
             gridArea: '2 / 3 / 3 / 4',
             zIndex: 5,
