@@ -20,15 +20,17 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
       data-theme-adaptive
       className={css({
         [MIN_TABLET_MEDIA_QUERY]: {
-          background: 'var(--color-primary-dark)',
+          background: 'var(--color-space)',
+          border: '1px solid var(--color-sand)',
           borderRadius: '20px',
-          color: 'var(--color-primary-light)',
+          color: 'var(--color-white)',
           display: 'flex',
           flexDirection: 'column',
+          gap: '12px',
           height: '100%',
           padding: '30px',
         },
-        background: 'var(--color-primary-light)',
+        // background: 'var(--color-primary-light)',
         padding: '20px 0',
       })}
     >
@@ -38,6 +40,10 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
           maxWidth: '8em',
           display: 'none',
           [MIN_TABLET_MEDIA_QUERY]: {display: 'block'},
+          '@media (max-height: 575px)': {
+            fontSize: '24px',
+            lineHeight: '24px',
+          },
         }}
       >
         Quick tips for getting started
@@ -70,7 +76,7 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
           transition: 'opacity 0.2s',
 
           [MIN_TABLET_MEDIA_QUERY]: {
-            color: 'var(--color-primary-light)',
+            color: 'var(--color-white)',
             display: 'grid',
             gap: '12px',
             gridTemplateColumns: 'minmax(0, 1fr)',
@@ -94,6 +100,10 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
                 as="span"
                 style={{
                   padding: '0.125em 0.875em',
+                  '@media (max-height: 575px)': {
+                    fontSize: '14px',
+                    lineHeight: '20px',
+                  },
                 }}
               >
                 {title}

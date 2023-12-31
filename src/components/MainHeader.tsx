@@ -10,6 +10,7 @@ import {Hamburger} from '@/icons/Hamburger';
 import {useDismiss} from '@/hooks/useDismiss';
 import {Body1, Caption} from './Typography';
 import {QuickTipsBlock} from './QuickLinks';
+import {RightArrow} from '@/icons/RightArrow';
 
 const PersonaBlock = ({
   caption,
@@ -17,12 +18,14 @@ const PersonaBlock = ({
   heading,
   illustrationSrc,
   illustrationOffsetY,
+  href,
 }: {
   caption: React.ReactNode | string;
   color: string;
   heading: React.ReactNode | string;
   illustrationSrc: string;
   illustrationOffsetY?: number;
+  href: string;
 }) => {
   const css = useCSS();
   return (
@@ -35,29 +38,41 @@ const PersonaBlock = ({
         border: '1px solid var(--color-line)',
         borderRadius: '20px',
         display: 'flex',
+        height: '100px',
         alignItems: 'flex-end',
         padding: '10px',
+        position: 'relative',
         width: '100%',
+        [MIN_TABLET_MEDIA_QUERY]: {
+          height: 'auto',
+        },
       })}
     >
-      <header
+      <Link
+        href={href}
         className={css({
           borderRadius: '10px',
-          marginTop: 'auto',
+          color: 'var(--color-space)',
           display: 'flex',
           flexDirection: 'column-reverse',
-          padding: '30px 20px',
+          textDecoration: 'none',
+          padding: '40px 5px 10px',
           width: '100%',
-          [MIN_DESKTOP_MEDIA_QUERY]: {
+          [MIN_TABLET_MEDIA_QUERY]: {
             background: color,
             border: '1px solid var(--color-line)',
+            marginTop: 'auto',
+            padding: '20px 20px 20px',
           },
         })}
       >
         <Body1
           as="h3"
           style={{
-            [MIN_DESKTOP_MEDIA_QUERY]: {
+            fontSize: '18px',
+            paddingRight: '24px',
+            [MIN_TABLET_MEDIA_QUERY]: {
+              fontSize: '28px',
               maxWidth: '8em',
             },
           }}
@@ -66,10 +81,11 @@ const PersonaBlock = ({
         </Body1>
         <Caption
           style={{
-            color: 'var(--color-core-accent)',
+            color: 'var(--color-space)',
             marginBottom: '8px',
             display: 'none',
-            [MIN_DESKTOP_MEDIA_QUERY]: {
+            textTransform: 'uppercase',
+            [MIN_TABLET_MEDIA_QUERY]: {
               display: 'block',
               maxWidth: '8em',
             },
@@ -77,7 +93,16 @@ const PersonaBlock = ({
         >
           {caption}
         </Caption>
-      </header>
+        <RightArrow
+          size={24}
+          style={{
+            position: 'absolute',
+            bottom: '20px',
+            right: '10px',
+            [MIN_TABLET_MEDIA_QUERY]: {right: '30px', bottom: '30px'},
+          }}
+        />
+      </Link>
     </div>
   );
 };
@@ -99,7 +124,9 @@ export const MainHeader = () => {
     <>
       <header
         className={css({
-          background: 'var(--page-bg, var(--color-primary-light))',
+          background: navOpen
+            ? 'var(--color-primary-light)'
+            : 'var(--page-bg, var(--color-primary-light))',
           borderStyle: 'solid',
           borderColor: navOpen
             ? 'var(--color-line) var(--color-line) transparent'
@@ -130,6 +157,7 @@ export const MainHeader = () => {
       >
         <button
           type="button"
+          aria-label="Toggle menu"
           className={css({
             alignItems: 'center',
             appearance: 'none',
@@ -219,7 +247,7 @@ export const MainHeader = () => {
           visibility: navOpen ? 'visible' : 'hidden',
           zIndex: navOpen ? 130 : 90,
           [MIN_TABLET_MEDIA_QUERY]: {
-            height: '500px',
+            height: 'min(500px, calc(100vh - 120px))',
             top: navOpen ? '82px' : '80px',
             left: '20px',
             right: '20px',
@@ -228,7 +256,8 @@ export const MainHeader = () => {
       >
         <nav
           className={css({
-            background: 'var(--page-bg, var(--color-primary-light))',
+            background: 'var(--color-primary-light)',
+            color: 'var(--color-primary-dark)',
             display: 'flex',
             // Set `flex: 1` to give the illusion of growing from zero to the full height.
             flex: navOpen ? 1 : 0,
@@ -236,7 +265,9 @@ export const MainHeader = () => {
             overflow: 'hidden',
             justifyContent: 'space-between',
             padding: '20px',
-            transition: navOpen ? 'all 0.2s ease-in-out' : 'background 0.2s ease-in-out, flex 0.2s ease-in-out',
+            transition: navOpen
+              ? 'all 0.2s ease-in-out'
+              : 'background 0.2s ease-in-out, flex 0.2s ease-in-out',
 
             top: '10px',
             left: '10px',
@@ -253,9 +284,11 @@ export const MainHeader = () => {
               display: 'grid',
               gap: '20px',
               gridTemplateColumns: '1fr',
+              gridTemplateRows: 'min-content min-content min-content',
               width: '100%',
               [MIN_TABLET_MEDIA_QUERY]: {
-                gridTemplateColumns: 'repeat(4, 1fr)',
+                gridTemplateColumns: '1fr 1fr 1fr 1.25fr',
+                gridTemplateRows: '100%',
               },
             })}
           >
@@ -265,6 +298,7 @@ export const MainHeader = () => {
               illustrationOffsetY={-26}
               heading="Podcasting for beginners"
               caption="Level 1"
+              href="/learn/podcsting-for-beginners"
             />
             <PersonaBlock
               color="var(--color-lime)"
@@ -272,6 +306,7 @@ export const MainHeader = () => {
               illustrationOffsetY={-56}
               heading="Podcasting for power users"
               caption="Level 2"
+              href="/learn/podcsting-for-power-users"
             />
             <PersonaBlock
               color="var(--color-sky)"
@@ -279,6 +314,7 @@ export const MainHeader = () => {
               illustrationOffsetY={-14}
               heading="Corporate podcasters"
               caption="Level 3"
+              href="/learn/corporate-podcasting"
             />
             <QuickTipsBlock isOpen={navOpen} />
           </div>

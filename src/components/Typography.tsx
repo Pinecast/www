@@ -15,6 +15,7 @@ import {useCSS} from '@/hooks/useCSS';
 import {ReactNode} from 'react';
 import {StyleObject} from 'styletron-react';
 import NextLink, {LinkProps} from 'next/link';
+import {RightArrow} from '@/icons/RightArrow';
 
 export const H1 = ({
   children,
@@ -135,17 +136,25 @@ export const Body1 = ({
     <Tag
       className={css({
         ...MonumentGroteskBold,
-        fontSize: '28px',
         fontWeight: 500,
         letterSpacing: '-0.03em',
-        lineHeight: '28px',
         marginTop: '0',
         marginBottom: '0',
+
+        fontSize: '24px',
+        lineHeight: '24px',
+
         ...style,
-        [MOBILE_MEDIA_QUERY]: {
-          fontSize: '24px',
-          lineHeight: '24px',
-          ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
+
+        [MIN_TABLET_MEDIA_QUERY]: {
+          fontSize: '28px',
+          lineHeight: '28px',
+          ...(style as Record<string, any>)?.[MIN_TABLET_MEDIA_QUERY],
+        },
+        [MIN_DESKTOP_MEDIA_QUERY]: {
+          fontSize: '28px',
+          lineHeight: '28px',
+          ...(style as Record<string, any>)?.[MIN_DESKTOP_MEDIA_QUERY],
         },
       })}
     >
@@ -452,30 +461,7 @@ export const Link = ({
       >
         {children}
       </span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        fill="none"
-        className={css({
-          marginLeft: '8px',
-          verticalAlign: 'middle',
-        })}
-      >
-        <path fill="currentColor" d="M4 11h15v2H4z" />
-        <path
-          fill="currentColor"
-          fillRule="evenodd"
-          d="M16 7a4 4 0 0 0 4 4v2a6 6 0 0 1-6-6h2Z"
-          clipRule="evenodd"
-        />
-        <path
-          fill="currentColor"
-          fillRule="evenodd"
-          d="M16 17a4 4 0 0 1 4-4v-2a6 6 0 0 0-6 6h2Z"
-          clipRule="evenodd"
-        />
-      </svg>
+      <RightArrow />
     </NextLink>
   );
 };
