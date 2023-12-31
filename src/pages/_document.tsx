@@ -84,6 +84,9 @@ export default function Document({
           *, *:before, *:after {
             box-sizing: border-box;
           }
+          html {
+            scroll-behavior: smooth;
+          }
           html, body, #__next {
             margin: 0;
             padding: 0;

@@ -19,6 +19,8 @@ const OPACITY_DURATION_MS: number = 1000;
 
 type Feature = 'distribution' | 'analytics' | 'monetization';
 
+const WIDE_DESCRIPTION_PLACEMENT_QUERY = '@media (min-width: 900px)';
+
 const FEATURES: Record<
   Feature,
   {
@@ -51,8 +53,8 @@ const FEATURES: Record<
     title: <>Monetization</>,
     description: (
       <>
-        Publish premium content to paid subscribers and receive weekly payouts
-        to your bank account or debit card.
+        Publish premium content to paid subscribers and receive payouts
+        directly to your bank account.
       </>
     ),
     href: '/features/monetization',
@@ -1360,14 +1362,20 @@ export const Globe = () => {
             opacity: currentFeature ? '1' : '0',
             pointerEvents: currentFeature ? 'auto' : 'none',
             visibility: currentFeature ? 'visible' : 'hidden',
-            marginTop: '68px',
-            position: 'relative',
             width: '100%',
             zIndex: 1,
+
+            position: 'absolute',
+            bottom: 0,
+            alignItems: 'flex-end',
+            paddingBottom: '10px',
+
             [MIN_TABLET_MEDIA_QUERY]: {
               gap: '20px',
-              marginTop: '120px',
               padding: '0 20px',
+            },
+            [WIDE_DESCRIPTION_PLACEMENT_QUERY]: {
+              paddingBottom: '30px',
             },
           })}
         >
@@ -1376,7 +1384,7 @@ export const Globe = () => {
               // Span 10 columns.
               gridColumnStart: '2',
               gridColumnEnd: '-2',
-              [MIN_TABLET_MEDIA_QUERY]: {
+              [WIDE_DESCRIPTION_PLACEMENT_QUERY]: {
                 // Take up two columns.
                 gridColumnStart: '2',
                 gridColumnEnd: '4',
