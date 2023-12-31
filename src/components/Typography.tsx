@@ -68,17 +68,19 @@ export const H2 = ({
     <h2
       className={css({
         ...GintoNordCondensed,
-        fontSize: '80px',
         letterSpacing: '-0.04em',
-        lineHeight: '72px',
         textTransform: 'uppercase',
         marginTop: '0',
         marginBottom: '0',
+
+        fontSize: '48px',
+        lineHeight: '43px',
+
         ...style,
-        [MOBILE_MEDIA_QUERY]: {
-          fontSize: '48px',
-          lineHeight: '43px',
-          ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
+        [MIN_DESKTOP_MEDIA_QUERY]: {
+          fontSize: '80px',
+          lineHeight: '72px',
+          ...(style as Record<string, any>)?.[MIN_DESKTOP_MEDIA_QUERY],
         },
       })}
     >

@@ -1159,6 +1159,13 @@ function GlobeDesktop({
   );
 }
 
+const debugAnchor = {
+  // height: '50px',
+  // width: '50px',
+  // background: 'red',
+  // zIndex: 1000,
+};
+
 const timeline = {
   globeX: {
     property: 'backgroundPositionX',
@@ -1457,7 +1464,7 @@ export const Globe = () => {
               <Link
                 className={css({fill: 'inherit'})}
                 ref={menuDistributionRef}
-                href="/features/distribution"
+                href="#distribution"
               >
                 Distribution
               </Link>
@@ -1465,7 +1472,7 @@ export const Globe = () => {
                 <Link
                   className={css({fill: 'inherit'})}
                   ref={menuAnalyticsRef}
-                  href="/features/analytics"
+                  href="#analytics"
                 >
                   Analytics
                 </Link>
@@ -1474,7 +1481,7 @@ export const Globe = () => {
                 <Link
                   className={css({fill: 'inherit'})}
                   ref={menuMonetizationRef}
-                  href="/features/monetization"
+                  href="#monetization"
                 >
                   Monetization
                 </Link>
@@ -1486,6 +1493,18 @@ export const Globe = () => {
 
       {/* Spacer */}
       <div className={css({height: 'calc(5 * 100vh)'})} />
+      <a
+        id="distribution"
+        style={{position: 'absolute', ...debugAnchor, top: '80vh'}}
+      />
+      <a
+        id="analytics"
+        style={{position: 'absolute', ...debugAnchor, top: '250vh'}}
+      />
+      <a
+        id="monetization"
+        style={{position: 'absolute', ...debugAnchor, top: '420vh'}}
+      />
     </section>
   );
 };
