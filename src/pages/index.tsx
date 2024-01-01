@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import {Footer} from '@/components/Footer';
 import {Globe} from '@/components/Globe';
-import {Hero} from '@/components/Hero';
+import {HeroV2} from '@/components/HeroV2';
 import {MainHeader} from '@/components/MainHeader';
 import {MainLogo} from '@/components/MainLogo';
 import {SplashIntro} from '@/components/SplashIntro';
@@ -33,7 +33,7 @@ export default function Home() {
       {/* {!splashEnded && <SplashIntro onComplete={() => setSplashEnded(true)} />} */}
       <MainLogo />
       <MainHeader />
-      <Hero />
+      <HeroV2 />
       <Globe />
       <div
         // Contain the bounds of the sticky horizontal line down the page center
