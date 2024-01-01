@@ -3,7 +3,7 @@ import * as React from 'react';
 
 export const useAsyncImage = (src: string): [HTMLImageElement, boolean] => {
   if (typeof Image === 'undefined') {
-    return [null, false];
+    return [null as any, false];
   }
   const image = React.useRef<HTMLImageElement>();
   const [loaded, setLoaded] = React.useState(false);
@@ -22,7 +22,7 @@ export const useAsyncVideo = (tracks: {
   [mimeType: string]: string;
 }): [HTMLVideoElement, boolean] => {
   if (typeof Image === 'undefined') {
-    return [null, false];
+    return [null as any, false];
   }
   const video = React.useRef<HTMLVideoElement>();
   const [loaded, setLoaded] = React.useState(false);
@@ -35,9 +35,21 @@ export const useAsyncVideo = (tracks: {
       source.type = mimeType;
       vid.appendChild(source);
     });
-    vid.onloadeddata = () => {
+    vid.loop = true;
+    vid.controls = false;
+    vid.autoplay = true;
+    vid.muted = true;
+    vid.oncanplaythrough = () => {
       setLoaded(true);
     };
+    vid.load();
+    vid.style.position = 'absolute';
+    vid.style.pointerEvents = 'none';
+    vid.style.top = '0';
+    vid.style.opacity = '0';
+    vid.style.height = '0';
+    vid.style.width = '0';
+    document.body.appendChild(vid);
   }
   return [video.current, loaded];
 };

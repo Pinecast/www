@@ -16,10 +16,14 @@ const RADIUS_OFFSET = 60;
 const RADIUS_OFFSET_TABLET = 60;
 const RADIUS_OFFSET_MOBILE = 40;
 
-type AsyncImage = [HTMLImageElement, boolean];
+type AsyncDrawable = [HTMLImageElement | HTMLVideoElement, boolean];
+
+function preferDrawable(a: AsyncDrawable, b: AsyncDrawable) {
+  return a[1] ? a : b;
+}
 
 function drawImageProp(
-  [img, loaded]: AsyncImage,
+  [img, loaded]: AsyncDrawable,
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
@@ -94,7 +98,7 @@ function roundedRectPath(
 
 function drawImageInRoundedRect(
   ctx: CanvasRenderingContext2D,
-  image: AsyncImage,
+  image: AsyncDrawable,
   x: number,
   y: number,
   width: number,
@@ -133,19 +137,26 @@ export const HeroV2 = () => {
 
   const canvas = React.useRef<HTMLCanvasElement>(null);
 
-  const tl = useAsyncImage('/images/hero/t-l.png');
-  const tr = useAsyncImage('/images/hero/t-r.png');
-  const bl = useAsyncImage('/images/hero/b-l.png');
-  const br = useAsyncImage('/images/hero/b-r.png');
   const ml = useAsyncImage('/images/hero/ml.png');
   const mr = useAsyncImage('/images/hero/mr.png');
-  const c = useAsyncImage('/images/hero/central.png');
 
-  // const tlv = useAsyncVideo({'video/mp4': '/videos/hero/t-l.mp4'});
-  // const trv = useAsyncVideo({'video/mp4': '/videos/hero/t-r.mp4'});
-  // const blv = useAsyncVideo({'video/mp4': '/videos/hero/b-l.mp4'});
-  // const brv = useAsyncVideo({'video/mp4': '/videos/hero/b-r.mp4'});
-  // const cv = useAsyncVideo({'video/mp4': '/videos/hero/central.mp4'});
+  const tli = useAsyncImage('/images/hero/t-l.png');
+  const tri = useAsyncImage('/images/hero/t-r.png');
+  const bli = useAsyncImage('/images/hero/b-l.png');
+  const bri = useAsyncImage('/images/hero/b-r.png');
+  const ci = useAsyncImage('/images/hero/central.png');
+
+  const tlv = useAsyncVideo({'video/mp4': '/videos/hero/t-l.mp4'});
+  const trv = useAsyncVideo({'video/mp4': '/videos/hero/t-r.mp4'});
+  const blv = useAsyncVideo({'video/mp4': '/videos/hero/b-l.mp4'});
+  const brv = useAsyncVideo({'video/mp4': '/videos/hero/b-r.mp4'});
+  const cv = useAsyncVideo({'video/mp4': '/videos/hero/central.mp4'});
+
+  const tl = preferDrawable(tlv, tli);
+  const tr = preferDrawable(trv, tri);
+  const bl = preferDrawable(blv, bli);
+  const br = preferDrawable(brv, bri);
+  const c = preferDrawable(cv, ci);
 
   const wrapper = React.useRef<HTMLElement>(null);
   const wrapperSize = React.useRef<{width: number; height: number}>({
@@ -322,13 +333,15 @@ export const HeroV2 = () => {
           sideWidth,
           outerSideTopHeight,
         );
-        // Draw middle radius
-        drawRadius(
-          ctx,
-          wrapperSize.current.width / 2,
-          RADIUS_OFFSET,
-          radiusState.current.middle,
-        );
+        if (wrapperSize.current.width > 1400) {
+          // Draw middle radius
+          drawRadius(
+            ctx,
+            wrapperSize.current.width / 2,
+            RADIUS_OFFSET,
+            radiusState.current.middle,
+          );
+        }
 
         // Inner left
         ctx.save();
