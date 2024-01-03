@@ -27,11 +27,10 @@ export const useScrollListener = (
 const clamp = (input: number, min: number, max: number) =>
   Math.max(min, Math.min(input, max));
 
-export const useScrollProgress = (
+export const useScrollProgressEffect = (
   containerRef: React.RefObject<HTMLElement>,
+  callback: (scrollRatio: number) => void,
 ) => {
-  const [scrollRatio, setScrollRatio] = React.useState<number>(0);
-
   const handler = React.useCallback(
     (scrollY: number, windowHeight: number) => {
       if (!containerRef.current) return;
@@ -59,12 +58,18 @@ export const useScrollProgress = (
         1,
       );
 
-      setScrollRatio(percentagePosition);
+      callback(percentagePosition);
     },
-    [containerRef],
+    [containerRef, callback],
   );
 
   useScrollListener(handler);
+};
 
+export const useScrollProgress = (
+  containerRef: React.RefObject<HTMLElement>,
+) => {
+  const [scrollRatio, setScrollRatio] = React.useState<number>(0);
+  useScrollProgressEffect(containerRef, setScrollRatio);
   return scrollRatio;
 };

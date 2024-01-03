@@ -5,7 +5,7 @@ import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY} from '@/constants';
 import {SecondaryButton} from './SecondaryButton';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {PrimaryButton} from './PrimaryButton';
-import {useScrollProgress} from '@/hooks/useScrollProgress';
+import {useScrollProgressEffect} from '@/hooks/useScrollProgress';
 import {StickyLine} from './StickyLine';
 import {useVisibleElements} from '@/hooks/useVisibleElements';
 import Link from 'next/link';
@@ -53,17 +53,9 @@ const scaleDial = (num: number) =>
 
 const scaleDialAngle = (num: number) => scaleNumber(num, 0, 1, 0, 180);
 
-const Dial = ({progress}: {progress: number}) => {
-  const rotationStyles = {
-    // 0deg = on left line.
-    // -180deg = on right line.
-    transform: `rotate(${-1 * scaleDialAngle(progress)}deg)`,
-    // Rotate the dial's hand from the center of the dial.
-    transformOrigin: '144px 70px',
-    // Slight transition to smoothly rotate the dial's hand on scroll.
-    transition: 'all 0.025s linear',
-  };
+type DialProps = {};
 
+const Dial = React.forwardRef<SVGGElement, DialProps>(function Dial(_, ref) {
   return (
     <svg
       width={288}
@@ -78,38 +70,31 @@ const Dial = ({progress}: {progress: number}) => {
             d="M1 70c0 78.977 64.023 143 143 143s143-64.023 143-143"
             stroke="var(--color-white)"
           />
-          <path
-            d="M143 70H.5"
-            stroke="var(--color-sand)"
-            style={rotationStyles}
+          <ellipse
+            cx={144}
+            cy={70}
+            rx={70}
+            ry={70}
+            transform="rotate(-180 144 70)"
+            fill="var(--color-white)"
           />
-          <g>
-            <ellipse
-              cx={144}
-              cy={70}
-              rx={70}
-              ry={70}
-              transform="rotate(-180 144 70)"
-              fill="var(--color-white)"
-            />
-            <ellipse
-              id="Ellipse 449"
-              cx={144}
-              cy={70}
-              rx={65}
-              ry={65}
-              transform="rotate(-180 144 70)"
-              fill="var(--color-white)"
-              stroke="var(--color-space)"
-            />
-            <circle
-              id="Ellipse 448"
-              cx={182}
-              cy={103}
-              r={6}
-              fill="var(--color-space)"
-            />
-          </g>
+          <ellipse
+            id="Ellipse 449"
+            cx={144}
+            cy={70}
+            rx={65}
+            ry={65}
+            transform="rotate(-180 144 70)"
+            fill="var(--color-white)"
+            stroke="var(--color-space)"
+          />
+          <circle
+            id="Ellipse 448"
+            cx={182}
+            cy={103}
+            r={6}
+            fill="var(--color-space)"
+          />
           <g opacity={0.6} stroke="var(--color-white)">
             <path d="M143.5 144L143.5 152" />
             <path d="M89.3164 120.354L81.5383 128.132" />
@@ -128,31 +113,34 @@ const Dial = ({progress}: {progress: number}) => {
               d="M0 -0.5L8 -0.5"
             />
           </g>
-          <g>
-            <ellipse
-              cx={144}
-              cy={70}
-              rx={70}
-              ry={70}
-              transform="rotate(-180 144 70)"
-              fill="var(--color-white)"
-            />
-            <ellipse
-              cx={144}
-              cy={70}
-              rx={65}
-              ry={65}
-              transform="rotate(-180 144 70)"
-              fill="var(--color-white)"
-              stroke="var(--color-space)"
-            />
-            <circle
-              cx={95}
-              cy={71}
-              r={6}
-              fill="var(--color-space)"
-              style={rotationStyles}
-            />
+          <ellipse
+            cx={144}
+            cy={70}
+            rx={70}
+            ry={70}
+            transform="rotate(-180 144 70)"
+            fill="var(--color-white)"
+          />
+          <ellipse
+            cx={144}
+            cy={70}
+            rx={65}
+            ry={65}
+            transform="rotate(-180 144 70)"
+            fill="var(--color-white)"
+            stroke="var(--color-space)"
+          />
+          <g
+            ref={ref}
+            style={{
+              // Rotate the dial's hand from the center of the dial.
+              transformOrigin: '144px 70px',
+              // Slight transition to smoothly rotate the dial's hand on scroll.
+              transition: 'all 0.025s linear',
+            }}
+          >
+            <path d="M143 70H.5" stroke="var(--color-sand)" />
+            <circle cx={95} cy={71} r={6} fill="var(--color-space)" />
           </g>
         </g>
       </g>
@@ -166,7 +154,7 @@ const Dial = ({progress}: {progress: number}) => {
       </defs>
     </svg>
   );
-};
+});
 
 // When the user scrolls down, a thin white line appears.
 // If the user scrolls back up, the `position: sticky` line will
@@ -269,6 +257,7 @@ export const TunedIn = () => {
   const sectionRef = React.useRef<HTMLElement>(null);
   useDarkSection(sectionRef);
 
+  const [aboveZero, setAboveZero] = React.useState<boolean>(false);
   const [leftActive, setLeftActive] = React.useState<boolean>(false);
   const [middleActive, setMiddleActive] = React.useState<boolean>(false);
   const [rightActive, setRightActive] = React.useState<boolean>(false);
@@ -277,25 +266,31 @@ export const TunedIn = () => {
   useDarkSection(bottomRef);
 
   const scrollerRef = React.useRef<HTMLDivElement>(null);
-  const scrollProgress = useScrollProgress(scrollerRef);
-
-  React.useEffect(() => {
-    const proportionalProgress = scaleDial(scrollProgress);
-    if (proportionalProgress >= 0.11 * 6) {
-      setRightActive(true);
-    }
-    if (proportionalProgress >= 0.11 * 4) {
-      setMiddleActive(true);
-    }
-    if (proportionalProgress >= 0.11 * 2) {
-      setLeftActive(true);
-    } else {
-      // Reset when scrolling back up
-      setRightActive(false);
-      setMiddleActive(false);
-      setLeftActive(false);
-    }
-  }, [scrollProgress]);
+  const dialRef = React.useRef<SVGGElement>(null);
+  useScrollProgressEffect(
+    scrollerRef,
+    React.useCallback((scrollProgress: number) => {
+      setAboveZero(scrollProgress > 0);
+      const proportionalProgress = scaleDial(scrollProgress);
+      if (proportionalProgress >= 0.11 * 6) {
+        setRightActive(true);
+      }
+      if (proportionalProgress >= 0.11 * 4) {
+        setMiddleActive(true);
+      }
+      if (proportionalProgress >= 0.11 * 2) {
+        setLeftActive(true);
+      } else {
+        // Reset when scrolling back up
+        setRightActive(false);
+        setMiddleActive(false);
+        setLeftActive(false);
+      }
+      dialRef.current!.style.transform = `rotate(${
+        -1 * scaleDialAngle(scaleDial(scrollProgress))
+      }deg)`;
+    }, []),
+  );
 
   const stickyLineRefs = React.useRef<Element[]>([]);
   const addStickyLineRef = (el: Element | null) => {
@@ -393,8 +388,8 @@ export const TunedIn = () => {
                     },
                   }}
                 >
-                  Whether you’re starting out or you are more established we
-                  have a solution for you.
+                  Whether you&rsquo;re starting out or you are more established
+                  we have a solution for you.
                 </Body4>
               </div>
             </div>
@@ -478,15 +473,15 @@ export const TunedIn = () => {
               top: '-356.35px',
               zIndex: 2,
               margin: '0 auto',
-              opacity: scrollProgress > 0 && !visibleStickyElement ? 1 : 0,
+              opacity: aboveZero && !visibleStickyElement ? 1 : 0,
               pointerEvents: 'none',
               transition:
-                scrollProgress > 0 && !visibleStickyElement
+                aboveZero && !visibleStickyElement
                   ? 'opacity 0.2s ease-in-out'
                   : 'opacity 0.1s ease-in-out',
             })}
           >
-            <Dial progress={scaleDial(scrollProgress)} />
+            <Dial ref={dialRef} />
           </div>
         </div>
 
