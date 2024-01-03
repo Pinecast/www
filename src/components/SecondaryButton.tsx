@@ -38,6 +38,13 @@ export const SecondaryButton = ({
           paddingRight: '30px',
           ...(style?.[MIN_TABLET_MEDIA_QUERY] as any),
         },
+        ':focus': {
+          outlineColor: 'var(--color-sky)',
+          outlineStyle: 'solid',
+          outlineOffset: '2px',
+          outlineWidth: '2px',
+          ...(style?.[':focus'] as any),
+        },
       })}
       href={href}
     >

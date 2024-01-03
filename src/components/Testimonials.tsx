@@ -292,6 +292,7 @@ export const Testimonials = ({topPosition}: {topPosition?: number}) => {
               <SecondaryButton
                 href="https://pinecast.com/signup"
                 style={{
+                  backgroundColor: 'var(--color-sand)',
                   color: 'var(--color-space)',
                   display: 'grid',
                   lineHeight: '1.2',
