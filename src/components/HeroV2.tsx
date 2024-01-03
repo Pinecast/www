@@ -138,13 +138,13 @@ export const HeroV2 = () => {
   const canvas = React.useRef<HTMLCanvasElement>(null);
 
 
-  const tli = useAsyncImage('/images/hero/t-l.png');
-  const tri = useAsyncImage('/images/hero/t-r.png');
-  const bli = useAsyncImage('/images/hero/b-l.png');
-  const bri = useAsyncImage('/images/hero/b-r.png');
-  const mli = useAsyncImage('/images/hero/ml.png');
-  const mri = useAsyncImage('/images/hero/mr.png');
-  const ci = useAsyncImage('/images/hero/central.png');
+  const tli = useAsyncImage('/images/hero/t-l.jpg');
+  const tri = useAsyncImage('/images/hero/t-r.jpg');
+  const bli = useAsyncImage('/images/hero/b-l.jpg');
+  const bri = useAsyncImage('/images/hero/b-r.jpg');
+  const mli = useAsyncImage('/images/hero/ml.jpg');
+  const mri = useAsyncImage('/images/hero/mr.jpg');
+  const ci = useAsyncImage('/images/hero/central.jpg');
 
   const tlv = useAsyncVideo({'video/mp4': '/videos/hero/t-l.mp4'});
   const trv = useAsyncVideo({'video/mp4': '/videos/hero/t-r.mp4'});
