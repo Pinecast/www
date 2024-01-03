@@ -8,6 +8,7 @@ import {PrimaryButton} from './PrimaryButton';
 import {useScrollProgress} from '@/hooks/useScrollProgress';
 import {StickyLine} from './StickyLine';
 import {useVisibleElements} from '@/hooks/useVisibleElements';
+import Link from 'next/link';
 
 const PANELS = {
   left: {
@@ -189,7 +190,8 @@ const Panel = ({
 
   return (
     <>
-      <li
+      <Link
+        href={panel.url}
         className={css({
           position: 'relative',
           [MOBILE_MEDIA_QUERY]: {
@@ -232,6 +234,7 @@ const Panel = ({
                 borderStyle: 'solid',
                 borderWidth: '1px',
                 padding: '20px',
+                transition: 'background-color 0.2s ease-in-out',
                 width: '100%',
                 [MIN_TABLET_MEDIA_QUERY]: {
                   minHeight: '160px',
@@ -242,9 +245,6 @@ const Panel = ({
                 {heading}
               </Subhead>
               <ProseLink
-                // TODO: Isolate a non-anchor version of Typography's Link
-                // so the entire `<li>` can be used as a large click target.
-                href={panel.url}
                 style={{
                   color: 'inherit',
                   marginTop: '-8px',
@@ -258,7 +258,7 @@ const Panel = ({
             </header>
           </div>
         </div>
-      </li>
+      </Link>
     </>
   );
 };
@@ -507,9 +507,8 @@ export const TunedIn = () => {
               marginBottom: '-380px',
             })}
           ></div>
-          <ul
+          <nav
             className={css({
-              listStyleType: 'none',
               marginTop: '0',
               marginBottom: '0',
               marginLeft: '0',
@@ -539,7 +538,7 @@ export const TunedIn = () => {
             <Panel position="left" isActive={leftActive} />
             <Panel position="middle" isActive={middleActive} />
             <Panel position="right" isActive={rightActive} />
-          </ul>
+          </nav>
           <svg
             fill="none"
             viewBox="0 3 1630 709"
@@ -575,6 +574,10 @@ export const TunedIn = () => {
                 <path
                   d="M0-1h530v668.26c0 18.856 0 28.284-5.858 34.142-5.858 5.858-15.286 5.858-34.142 5.858H40c-18.856 0-28.284 0-34.142-5.858C0 695.544 0 686.116 0 667.26V-1z"
                   fill="url(#tuned-in-panels-pattern-beginner)"
+                  style={{
+                    opacity: leftActive ? 1 : 0,
+                    transition: 'opacity 0.2s ease-in-out',
+                  }}
                 />
               </g>
             </g>
@@ -636,6 +639,10 @@ export const TunedIn = () => {
                 <path
                   d="M550 69h530v598.54c0 18.856 0 28.284-5.86 34.142-5.86 5.858-15.28 5.858-34.14 5.858H590c-18.856 0-28.284 0-34.142-5.858C550 695.824 550 686.396 550 667.54V69z"
                   fill="url(#tuned-in-panels-pattern-advanced)"
+                  style={{
+                    opacity: middleActive ? 1 : 0,
+                    transition: 'opacity 0.2s ease-in-out',
+                  }}
                 />
               </g>
             </g>
@@ -701,6 +708,10 @@ export const TunedIn = () => {
                   width="532"
                   height="732"
                   fill="url(#tuned-in-panels-pattern-organizations)"
+                  style={{
+                    opacity: rightActive ? 1 : 0,
+                    transition: 'opacity 0.2s ease-in-out',
+                  }}
                 />
               </g>
             </g>

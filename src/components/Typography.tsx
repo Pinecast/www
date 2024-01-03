@@ -422,14 +422,16 @@ export const Link = ({
   children,
   style,
   ...rest
-}: Omit<LinkProps, 'children' | 'style'> & {
+}: Omit<LinkProps, 'children' | 'style' | 'href'> & {
+  href?: LinkProps['href'];
   children: ReactNode;
   style?: StyleObject;
   target?: '_blank';
 }) => {
   const css = useCSS();
+  const Tag = rest.href ? NextLink : 'span';
   return (
-    <NextLink
+    <Tag
       {...rest}
       className={css({
         ...MonumentGroteskSemiMono,
@@ -462,6 +464,6 @@ export const Link = ({
         {children}
       </span>
       <RightArrow size={24} />
-    </NextLink>
+    </Tag>
   );
 };
