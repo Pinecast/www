@@ -704,13 +704,15 @@ export const HeroV2 = () => {
           </div>
         </div>
       </section>
+      {/* Transitional background for scroll-linked transition upon reaching the Globe section */}
       <div
         className={css({
-          height: '100vh',
-          width: '100vw',
-          position: 'absolute',
-          top: 0,
           background: 'var(--color-space)',
+          bottom: 0,
+          left: 0,
+          position: 'absolute',
+          right: 0,
+          top: 0,
         })}
       />
       <canvas
