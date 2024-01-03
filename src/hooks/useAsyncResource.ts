@@ -43,7 +43,7 @@ export const useAsyncVideo = (tracks: {
       setLoaded(true);
     };
     vid.load();
-    vid.style.position = 'absolute';
+    vid.style.position = 'fixed';
     vid.style.pointerEvents = 'none';
     vid.style.top = '0';
     vid.style.opacity = '0';
