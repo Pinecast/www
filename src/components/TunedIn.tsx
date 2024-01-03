@@ -281,7 +281,6 @@ export const TunedIn = () => {
 
   React.useEffect(() => {
     const proportionalProgress = scaleDial(scrollProgress);
-    document.title = `${scrollProgress} | ${proportionalProgress}`;
     if (proportionalProgress >= 0.11 * 6) {
       setRightActive(true);
     }
