@@ -135,6 +135,19 @@ type RadiusTween = {
 export const HeroV2 = () => {
   const css = useCSS();
 
+  const wrapper = React.useRef<HTMLElement>(null);
+  const [{width, height}, setWrapperSize] = React.useState<{
+    width: number;
+    height: number;
+  }>({
+    width: 0,
+    height: 0,
+  });
+
+  const sizeSet = !!width;
+  const isMobile = sizeSet && width < MOBILE_BREAKPOINT;
+  const isTablet = sizeSet && width < TABLET_BREAKPOINT && !isMobile;
+
   const canvas = React.useRef<HTMLCanvasElement>(null);
 
   const tli = useAsyncImage('/images/hero/t-l.jpg');
@@ -145,13 +158,31 @@ export const HeroV2 = () => {
   const mri = useAsyncImage('/images/hero/mr.jpg');
   const ci = useAsyncImage('/images/hero/central.jpg');
 
-  const tlv = useAsyncVideo({'video/mp4': '/videos/hero/t-l.mp4'});
-  const trv = useAsyncVideo({'video/mp4': '/videos/hero/t-r.mp4'});
-  const blv = useAsyncVideo({'video/mp4': '/videos/hero/b-l.mp4'});
-  const brv = useAsyncVideo({'video/mp4': '/videos/hero/b-r.mp4'});
-  const mlv = useAsyncVideo({'video/mp4': '/videos/hero/ml.mp4'});
-  const mrv = useAsyncVideo({'video/mp4': '/videos/hero/mr.mp4'});
-  const cv = useAsyncVideo({'video/mp4': '/videos/hero/central.mp4'});
+  const tlv = useAsyncVideo(
+    {'video/mp4': '/videos/hero/t-l.mp4'},
+    sizeSet && !isMobile,
+  );
+  const trv = useAsyncVideo(
+    {'video/mp4': '/videos/hero/t-r.mp4'},
+    sizeSet && !isMobile,
+  );
+  const blv = useAsyncVideo(
+    {'video/mp4': '/videos/hero/b-l.mp4'},
+    sizeSet && !isMobile,
+  );
+  const brv = useAsyncVideo(
+    {'video/mp4': '/videos/hero/b-r.mp4'},
+    sizeSet && !isMobile,
+  );
+  const mlv = useAsyncVideo(
+    {'video/mp4': '/videos/hero/ml.mp4'},
+    sizeSet && !isMobile && !isTablet,
+  );
+  const mrv = useAsyncVideo(
+    {'video/mp4': '/videos/hero/mr.mp4'},
+    sizeSet && !isMobile && !isTablet,
+  );
+  const cv = useAsyncVideo({'video/mp4': '/videos/hero/central.mp4'}, true);
 
   const tl = preferDrawable(tlv, tli);
   const tr = preferDrawable(trv, tri);
@@ -161,11 +192,6 @@ export const HeroV2 = () => {
   const mr = preferDrawable(mrv, mri);
   const c = preferDrawable(cv, ci);
 
-  const wrapper = React.useRef<HTMLElement>(null);
-  const wrapperSize = React.useRef<{width: number; height: number}>({
-    width: 0,
-    height: 0,
-  });
   const textArea = React.useRef<HTMLDivElement>(null);
 
   const radiusState = React.useRef<RadiusTween>({
@@ -205,7 +231,7 @@ export const HeroV2 = () => {
 
       const {clientHeight: taHeight, offsetTop: taTop} = textArea.current!;
 
-      if (wrapperSize.current.width < MOBILE_BREAKPOINT) {
+      if (width < MOBILE_BREAKPOINT) {
         ctx.save();
         ctx.beginPath();
         roundedRectPath(
@@ -215,9 +241,9 @@ export const HeroV2 = () => {
           // The top is the bottom of the text area + 20px gap
           taHeight + taTop + 20 - scrollY,
           // The width is the wrapper width - 10px padding on each side
-          wrapperSize.current.width - 20 * inverseScrollRatio,
+          width - 20 * inverseScrollRatio,
           // The height is the space below the text area - 10px padding - 20px gap
-          wrapperSize.current.height - taHeight - taTop - 10 - 20 + scrollY,
+          height - taHeight - taTop - 10 - 20 + scrollY,
           Math.max(0, 1 - scrollY / (windowHeight * 0.25)) * 20,
         );
         ctx.closePath();
@@ -237,22 +263,19 @@ export const HeroV2 = () => {
           // The top is the bottom of the text area + 20px gap
           taHeight + taTop + 20 - scrollY,
           // The width is the wrapper width - 10px padding on each side
-          wrapperSize.current.width - 20 * inverseScrollRatio,
+          width - 20 * inverseScrollRatio,
           // The height is the space below the text area - 10px padding - 20px gap
-          wrapperSize.current.height - taHeight - taTop - 10 - 20 + scrollY,
+          height - taHeight - taTop - 10 - 20 + scrollY,
         );
         ctx.restore();
-      } else if (wrapperSize.current.width < TABLET_BREAKPOINT) {
+      } else if (width < TABLET_BREAKPOINT) {
         // The central area is 5fr while the two sides are each 1.1fr.
         // The gap size is 20px.
-        const sideWidth = ((wrapperSize.current.width - 40 - 40) / 723) * 176;
-        const centralWidth =
-          ((wrapperSize.current.width - 40 - 40) / 723) * 371;
+        const sideWidth = ((width - 40 - 40) / 723) * 176;
+        const centralWidth = ((width - 40 - 40) / 723) * 371;
 
-        const sideTopHeight =
-          ((wrapperSize.current.height - taTop - 20 - 20) / 78) * 46;
-        const sideBotHeight =
-          ((wrapperSize.current.height - taTop - 20 - 20) / 78) * 32;
+        const sideTopHeight = ((height - taTop - 20 - 20) / 78) * 46;
+        const sideBotHeight = ((height - taTop - 20 - 20) / 78) * 32;
 
         const xNudge = scrollRatio * (sideWidth + 20 + 20);
 
@@ -306,12 +329,7 @@ export const HeroV2 = () => {
           taHeight + taTop + 20 - scrollY,
           centralWidth + 2 * xNudge,
           // The height is the space below the text area - 20px padding - 20px gap
-          wrapperSize.current.height -
-            taHeight -
-            taTop -
-            20 * inverseScrollRatio -
-            20 +
-            scrollY,
+          height - taHeight - taTop - 20 * inverseScrollRatio - 20 + scrollY,
           Math.max(0, 1 - scrollY / (windowHeight * 0.25)) * 20,
         );
         ctx.closePath();
@@ -332,29 +350,18 @@ export const HeroV2 = () => {
           taHeight + taTop + 20 - scrollY,
           centralWidth + 2 * xNudge,
           // The height is the space below the text area - 20px padding - 20px gap
-          wrapperSize.current.height -
-            taHeight -
-            taTop -
-            20 * inverseScrollRatio -
-            20 +
-            scrollY,
+          height - taHeight - taTop - 20 * inverseScrollRatio - 20 + scrollY,
         );
         ctx.restore();
       } else {
-        const sideWidth =
-          ((wrapperSize.current.width - 40 - 40 - 40) / 1554) * 256;
-        const centralWidth =
-          ((wrapperSize.current.width - 40 - 40 - 40) / 1554) * 530;
+        const sideWidth = ((width - 40 - 40 - 40) / 1554) * 256;
+        const centralWidth = ((width - 40 - 40 - 40) / 1554) * 530;
 
-        const innerSideTopHeight =
-          ((wrapperSize.current.height - taTop - 20 - 20) / 78) * 24;
-        const innerSideBotHeight =
-          ((wrapperSize.current.height - taTop - 20 - 20) / 78) * 54;
+        const innerSideTopHeight = ((height - taTop - 20 - 20) / 78) * 24;
+        const innerSideBotHeight = ((height - taTop - 20 - 20) / 78) * 54;
 
-        const outerSideTopHeight =
-          ((wrapperSize.current.height - taTop - 20 - 20) / 78) * 46;
-        const outerSideBotHeight =
-          ((wrapperSize.current.height - taTop - 20 - 20) / 78) * 32;
+        const outerSideTopHeight = ((height - taTop - 20 - 20) / 78) * 46;
+        const outerSideBotHeight = ((height - taTop - 20 - 20) / 78) * 32;
 
         const xNudge = scrollRatio * (sideWidth * 2 + 20 + 20 + 20);
 
@@ -388,7 +395,7 @@ export const HeroV2 = () => {
         // Draw outer radius
         drawRadius(
           ctx,
-          wrapperSize.current.width / 2,
+          width / 2,
           RADIUS_OFFSET - scrollY * 2.25,
           radiusState.current.outer + scrollY,
         );
@@ -420,11 +427,11 @@ export const HeroV2 = () => {
           sideWidth,
           outerSideTopHeight,
         );
-        if (wrapperSize.current.width > 1400) {
+        if (width > 1400) {
           // Draw middle radius
           drawRadius(
             ctx,
-            wrapperSize.current.width / 2,
+            width / 2,
             RADIUS_OFFSET - scrollY * 2.25,
             radiusState.current.middle + scrollY,
           );
@@ -455,7 +462,7 @@ export const HeroV2 = () => {
           20 + sideWidth + 20 - xNudge,
           taTop,
           sideWidth,
-          wrapperSize.current.height - taTop - 20,
+          height - taTop - 20,
         );
         ctx.restore();
 
@@ -484,7 +491,7 @@ export const HeroV2 = () => {
           20 + sideWidth + 20 + sideWidth + 20 + centralWidth + 20 + xNudge,
           taTop,
           sideWidth,
-          wrapperSize.current.height - taTop - 20,
+          height - taTop - 20,
         );
         ctx.restore();
 
@@ -499,12 +506,7 @@ export const HeroV2 = () => {
           taHeight + taTop + 20 - scrollY,
           centralWidth + 2 * xNudge,
           // The height is the space below the text area - 20px padding - 20px gap
-          wrapperSize.current.height -
-            taHeight -
-            taTop -
-            20 * inverseScrollRatio -
-            20 +
-            scrollY,
+          height - taHeight - taTop - 20 * inverseScrollRatio - 20 + scrollY,
           Math.max(0, 1 - scrollY / (windowHeight * 0.25)) * 20,
         );
         ctx.closePath();
@@ -525,12 +527,7 @@ export const HeroV2 = () => {
           taHeight + taTop + 20 - scrollY,
           centralWidth + 2 * xNudge,
           // The height is the space below the text area - 20px padding - 20px gap
-          wrapperSize.current.height -
-            taHeight -
-            taTop -
-            20 * inverseScrollRatio -
-            20 +
-            scrollY,
+          height - taHeight - taTop - 20 * inverseScrollRatio - 20 + scrollY,
         );
         ctx.restore();
       }
@@ -538,7 +535,7 @@ export const HeroV2 = () => {
       // Draw the inner radius
       drawRadius(
         ctx,
-        wrapperSize.current.width / 2,
+        width / 2,
         RADIUS_OFFSET - scrollY * 3,
         radiusState.current.inner + scrollY * 2,
       );
@@ -557,8 +554,7 @@ export const HeroV2 = () => {
     raf.current = requestAnimationFrame(paint);
   });
 
-  const updateSize = React.useCallback(() => {
-    const {width, height} = wrapperSize.current;
+  const updateSize = React.useCallback((height: number, width: number) => {
     canvas.current!.width = width;
     canvas.current!.height = height;
 
@@ -587,8 +583,9 @@ export const HeroV2 = () => {
 
   useCalculateResizableValue(
     React.useCallback(() => {
-      wrapperSize.current = wrapper.current!.getBoundingClientRect();
-      updateSize();
+      const {width, height} = wrapper.current!.getBoundingClientRect();
+      setWrapperSize({width, height});
+      updateSize(height, width);
     }, [updateSize]),
   );
 
@@ -723,8 +720,8 @@ export const HeroV2 = () => {
           pointerEvents: 'none',
         })}
         ref={canvas}
-        height={wrapperSize.current.height}
-        width={wrapperSize.current.width}
+        height={height}
+        width={width}
       />
     </>
   );

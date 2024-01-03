@@ -18,14 +18,20 @@ export const useAsyncImage = (src: string): [HTMLImageElement, boolean] => {
   return [image.current, loaded];
 };
 
-export const useAsyncVideo = (tracks: {
-  [mimeType: string]: string;
-}): [HTMLVideoElement, boolean] => {
+export const useAsyncVideo = (
+  tracks: {
+    [mimeType: string]: string;
+  },
+  doLoad: boolean,
+): [HTMLVideoElement, boolean] => {
   if (typeof Image === 'undefined') {
     return [null as any, false];
   }
   const video = React.useRef<HTMLVideoElement>();
   const [loaded, setLoaded] = React.useState(false);
+  if (!doLoad) {
+    return [null as any, false];
+  }
   if (!video.current) {
     const vid = document.createElement('video');
     video.current = vid;
