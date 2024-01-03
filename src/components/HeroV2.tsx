@@ -43,8 +43,8 @@ function drawImageProp(
   if (offsetX > 1) offsetX = 1;
   if (offsetY > 1) offsetY = 1;
 
-  let iw = img.width,
-    ih = img.height,
+  let iw = 'videoWidth' in img ? img.videoWidth : img.width,
+    ih = 'videoHeight' in img ? img.videoHeight : img.height,
     r = Math.min(w / iw, h / ih),
     nw = iw * r, // new prop. width
     nh = ih * r, // new prop. height
@@ -137,25 +137,29 @@ export const HeroV2 = () => {
 
   const canvas = React.useRef<HTMLCanvasElement>(null);
 
-  const ml = useAsyncImage('/images/hero/ml.png');
-  const mr = useAsyncImage('/images/hero/mr.png');
 
   const tli = useAsyncImage('/images/hero/t-l.png');
   const tri = useAsyncImage('/images/hero/t-r.png');
   const bli = useAsyncImage('/images/hero/b-l.png');
   const bri = useAsyncImage('/images/hero/b-r.png');
+  const mli = useAsyncImage('/images/hero/ml.png');
+  const mri = useAsyncImage('/images/hero/mr.png');
   const ci = useAsyncImage('/images/hero/central.png');
 
   const tlv = useAsyncVideo({'video/mp4': '/videos/hero/t-l.mp4'});
   const trv = useAsyncVideo({'video/mp4': '/videos/hero/t-r.mp4'});
   const blv = useAsyncVideo({'video/mp4': '/videos/hero/b-l.mp4'});
   const brv = useAsyncVideo({'video/mp4': '/videos/hero/b-r.mp4'});
+  const mlv = useAsyncVideo({'video/mp4': '/videos/hero/ml.mp4'});
+  const mrv = useAsyncVideo({'video/mp4': '/videos/hero/mr.mp4'});
   const cv = useAsyncVideo({'video/mp4': '/videos/hero/central.mp4'});
 
   const tl = preferDrawable(tlv, tli);
   const tr = preferDrawable(trv, tri);
   const bl = preferDrawable(blv, bli);
   const br = preferDrawable(brv, bri);
+  const ml = preferDrawable(mlv, mli);
+  const mr = preferDrawable(mrv, mri);
   const c = preferDrawable(cv, ci);
 
   const wrapper = React.useRef<HTMLElement>(null);
