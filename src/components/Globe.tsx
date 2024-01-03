@@ -53,8 +53,8 @@ const FEATURES: Record<
     title: <>Monetization</>,
     description: (
       <>
-        Publish premium content to paid subscribers and receive payouts
-        directly to your bank account.
+        Publish premium content to paid subscribers and receive payouts directly
+        to your bank account.
       </>
     ),
     href: '/features/monetization',
@@ -1317,7 +1317,13 @@ export const Globe = () => {
             gap: '20px',
           })}
         >
-          <PrimaryButton href="https://pinecast.com/signup">
+          <PrimaryButton
+            href="https://pinecast.com/signup"
+            style={{
+              backgroundColor: 'var(--color-white)',
+              color: 'var(--color-space)',
+            }}
+          >
             Start for free
           </PrimaryButton>
           <SecondaryButton href="/features">Discover features</SecondaryButton>
@@ -1334,13 +1340,15 @@ export const Globe = () => {
           '--globe-ideal-horizontal-height':
             'calc(var(--globe-horizontal-space) * 0.35)',
           '--globe-ideal-height': 'var(--globe-ideal-horizontal-height)',
+
+          '--globe-rings-height': '55.68vh',
         })}
       >
         <SideTicks />
         <div
           // Spacer that aligns semi-Globe to be flush with Equator-esque line
           className={css({
-            height: '55.68vh',
+            height: 'var(--globe-rings-height)',
             position: 'relative',
           })}
         >
@@ -1353,29 +1361,24 @@ export const Globe = () => {
         </div>
         <div
           className={css({
+            bottom: '0',
             display: 'grid',
             gap: '10px',
-            // 12-col liquid grid of uniformly sized columns so the
-            // text below is elegantly re-positioned without hardcoded
-            // spacing for various media queries.
             gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
+            height: 'calc(100vh - var(--globe-rings-height))',
             opacity: currentFeature ? '1' : '0',
+            paddingBottom: '60px',
+            placeItems: 'end',
             pointerEvents: currentFeature ? 'auto' : 'none',
+            position: 'absolute',
             visibility: currentFeature ? 'visible' : 'hidden',
             width: '100%',
             zIndex: 1,
 
-            position: 'absolute',
-            bottom: 0,
-            alignItems: 'flex-end',
-            paddingBottom: '10px',
-
-            [MIN_TABLET_MEDIA_QUERY]: {
-              gap: '20px',
-              padding: '0 20px',
-            },
             [WIDE_DESCRIPTION_PLACEMENT_QUERY]: {
-              paddingBottom: '30px',
+              gap: '20px',
+              paddingBottom: '0',
+              placeItems: 'center',
             },
           })}
         >
@@ -1393,9 +1396,10 @@ export const Globe = () => {
           >
             <div
               className={css({
-                [MIN_TABLET_MEDIA_QUERY]: {
+                [WIDE_DESCRIPTION_PLACEMENT_QUERY]: {
                   // Column-gap bleed offset.
-                  margin: '0 -30px 0 -30px',
+                  marginLeft: '-26px',
+                  marginRight: '-26px',
                 },
               })}
             >
@@ -1406,13 +1410,22 @@ export const Globe = () => {
                     style={{
                       color: 'var(--color-white)',
                       lineHeight: 1.05,
-                      marginBottom: '16px',
+                      marginBottom: '10px',
                       transition: '0.2s opacity ease',
                     }}
                   >
                     {currentFeature.description}
                   </Body1>
-                  <ProseLink href={currentFeature.href}>Learn more</ProseLink>
+                  <ProseLink
+                    href={currentFeature.href}
+                    style={{
+                      marginBottom: '-8px',
+                      paddingBottom: '8px',
+                      paddingTop: '8px',
+                    }}
+                  >
+                    Learn more
+                  </ProseLink>
                 </>
               )}
             </div>
