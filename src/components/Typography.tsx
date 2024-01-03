@@ -461,7 +461,7 @@ export const Link = ({
       >
         {children}
       </span>
-      <RightArrow />
+      <RightArrow size={24} />
     </NextLink>
   );
 };
