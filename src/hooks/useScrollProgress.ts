@@ -12,6 +12,18 @@ if (typeof window !== 'undefined') {
   document.addEventListener('scroll', handler, {passive: true});
 }
 
+export const useScrollListener = (
+  handler: (scrollY: number, windowHeight: number) => void,
+) => {
+  React.useEffect(() => {
+    handlers.add(handler);
+
+    return () => {
+      handlers.delete(handler);
+    };
+  }, [handler]);
+};
+
 const clamp = (input: number, min: number, max: number) =>
   Math.max(min, Math.min(input, max));
 
@@ -52,14 +64,7 @@ export const useScrollProgress = (
     [containerRef],
   );
 
-  React.useEffect(() => {
-    handlers.add(handler);
-    handler(window.scrollY, window.innerHeight);
-
-    return () => {
-      handlers.delete(handler);
-    };
-  }, [handler]);
+  useScrollListener(handler);
 
   return scrollRatio;
 };
