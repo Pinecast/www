@@ -18,6 +18,8 @@ export const useAsyncImage = (src: string): [HTMLImageElement, boolean] => {
   return [image.current, loaded];
 };
 
+export const AV1_MIME = 'video/mp4; codecs=av01.0.05M.08';
+
 export const useAsyncVideo = (
   tracks: {
     [mimeType: string]: string;
@@ -35,12 +37,17 @@ export const useAsyncVideo = (
   if (!video.current) {
     const vid = document.createElement('video');
     video.current = vid;
-    Object.keys(tracks).forEach(mimeType => {
-      const source = document.createElement('source');
-      source.src = tracks[mimeType];
-      source.type = mimeType;
-      vid.appendChild(source);
-    });
+    Object.keys(tracks)
+      .sort(
+        // Sort by length descending
+        (a, b) => b.length - a.length,
+      )
+      .forEach(mimeType => {
+        const source = document.createElement('source');
+        source.src = tracks[mimeType];
+        source.type = mimeType;
+        vid.appendChild(source);
+      });
     vid.loop = true;
     vid.controls = false;
     vid.autoplay = true;

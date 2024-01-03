@@ -9,7 +9,7 @@ import {
 import {SecondaryButton} from './SecondaryButton';
 import * as React from 'react';
 import {useCalculateResizableValue} from '@/hooks/useCalculateResizableValue';
-import {useAsyncImage, useAsyncVideo} from '@/hooks/useAsyncResource';
+import {AV1_MIME, useAsyncImage, useAsyncVideo} from '@/hooks/useAsyncResource';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
 
 const RADIUS_OFFSET = 60;
@@ -31,6 +31,12 @@ function drawImageProp(
   h: number,
 ) {
   if (!loaded) {
+    if (y < ctx.canvas.height / 2) {
+      ctx.fillStyle = '#cf8aea';
+    } else {
+      ctx.fillStyle = '#c4ff7e';
+    }
+    ctx.fillRect(x, y, w, h);
     return;
   }
   // default offset is center
@@ -159,30 +165,54 @@ export const HeroV2 = () => {
   const ci = useAsyncImage('/images/hero/central.jpg');
 
   const tlv = useAsyncVideo(
-    {'video/mp4': '/videos/hero/t-l.mp4'},
+    {
+      'video/mp4': '/videos/hero/t-l.mp4',
+      [AV1_MIME]: '/videos/hero/t-l.av1.mp4',
+    },
     sizeSet && !isMobile,
   );
   const trv = useAsyncVideo(
-    {'video/mp4': '/videos/hero/t-r.mp4'},
+    {
+      'video/mp4': '/videos/hero/t-r.mp4',
+      [AV1_MIME]: '/videos/hero/t-r.av1.mp4',
+    },
     sizeSet && !isMobile,
   );
   const blv = useAsyncVideo(
-    {'video/mp4': '/videos/hero/b-l.mp4'},
+    {
+      'video/mp4': '/videos/hero/b-l.mp4',
+      [AV1_MIME]: '/videos/hero/b-l.av1.mp4',
+    },
     sizeSet && !isMobile,
   );
   const brv = useAsyncVideo(
-    {'video/mp4': '/videos/hero/b-r.mp4'},
+    {
+      'video/mp4': '/videos/hero/b-r.mp4',
+      [AV1_MIME]: '/videos/hero/b-r.av1.mp4',
+    },
     sizeSet && !isMobile,
   );
   const mlv = useAsyncVideo(
-    {'video/mp4': '/videos/hero/ml.mp4'},
+    {
+      'video/mp4': '/videos/hero/ml.mp4',
+      [AV1_MIME]: '/videos/hero/ml.av1.mp4',
+    },
     sizeSet && !isMobile && !isTablet,
   );
   const mrv = useAsyncVideo(
-    {'video/mp4': '/videos/hero/mr.mp4'},
+    {
+      'video/mp4': '/videos/hero/mr.mp4',
+      [AV1_MIME]: '/videos/hero/mr.av1.mp4',
+    },
     sizeSet && !isMobile && !isTablet,
   );
-  const cv = useAsyncVideo({'video/mp4': '/videos/hero/central.mp4'}, true);
+  const cv = useAsyncVideo(
+    {
+      'video/mp4': '/videos/hero/central.mp4',
+      [AV1_MIME]: '/videos/hero/central.av1.mp4',
+    },
+    true,
+  );
 
   const tl = preferDrawable(tlv, tli);
   const tr = preferDrawable(trv, tri);
@@ -243,7 +273,7 @@ export const HeroV2 = () => {
           // The width is the wrapper width - 10px padding on each side
           width - 20 * inverseScrollRatio,
           // The height is the space below the text area - 10px padding - 20px gap
-          height - taHeight - taTop - 10 - 20 + scrollY,
+          height - taHeight - taTop - 10 * inverseScrollRatio - 20 + scrollY,
           Math.max(0, 1 - scrollY / (windowHeight * 0.25)) * 20,
         );
         ctx.closePath();
@@ -265,7 +295,7 @@ export const HeroV2 = () => {
           // The width is the wrapper width - 10px padding on each side
           width - 20 * inverseScrollRatio,
           // The height is the space below the text area - 10px padding - 20px gap
-          height - taHeight - taTop - 10 - 20 + scrollY,
+          height - taHeight - taTop - 10 * inverseScrollRatio - 20 + scrollY,
         );
         ctx.restore();
       } else if (width < TABLET_BREAKPOINT) {
@@ -595,7 +625,7 @@ export const HeroV2 = () => {
         ref={wrapper}
         className={css({
           display: 'grid',
-          height: '100vh',
+          height: '100lvh',
           minHeight: '800px',
           paddingTop: '120px',
           paddingLeft: '20px',
