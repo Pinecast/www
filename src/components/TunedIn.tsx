@@ -79,7 +79,6 @@ const Dial = React.forwardRef<SVGGElement, DialProps>(function Dial(_, ref) {
             fill="var(--color-white)"
           />
           <ellipse
-            id="Ellipse 449"
             cx={144}
             cy={70}
             rx={65}
@@ -87,13 +86,6 @@ const Dial = React.forwardRef<SVGGElement, DialProps>(function Dial(_, ref) {
             transform="rotate(-180 144 70)"
             fill="var(--color-white)"
             stroke="var(--color-space)"
-          />
-          <circle
-            id="Ellipse 448"
-            cx={182}
-            cy={103}
-            r={6}
-            fill="var(--color-space)"
           />
           <g opacity={0.6} stroke="var(--color-white)">
             <path d="M143.5 144L143.5 152" />
@@ -113,23 +105,6 @@ const Dial = React.forwardRef<SVGGElement, DialProps>(function Dial(_, ref) {
               d="M0 -0.5L8 -0.5"
             />
           </g>
-          <ellipse
-            cx={144}
-            cy={70}
-            rx={70}
-            ry={70}
-            transform="rotate(-180 144 70)"
-            fill="var(--color-white)"
-          />
-          <ellipse
-            cx={144}
-            cy={70}
-            rx={65}
-            ry={65}
-            transform="rotate(-180 144 70)"
-            fill="var(--color-white)"
-            stroke="var(--color-space)"
-          />
           <g
             ref={ref}
             style={{
@@ -140,6 +115,24 @@ const Dial = React.forwardRef<SVGGElement, DialProps>(function Dial(_, ref) {
             }}
           >
             <path d="M143 70H.5" stroke="var(--color-sand)" />
+            <ellipse
+              cx={144}
+              cy={70}
+              rx={70}
+              ry={70}
+              transform="rotate(-180 144 70)"
+              fill="var(--color-white)"
+            />
+            <circle cx={182} cy={103} r={6} fill="var(--color-space)" />
+            <ellipse
+              cx={144}
+              cy={70}
+              rx={65}
+              ry={65}
+              transform="rotate(-180 144 70)"
+              fill="var(--color-white)"
+              stroke="var(--color-space)"
+            />
             <circle cx={95} cy={71} r={6} fill="var(--color-space)" />
           </g>
         </g>
