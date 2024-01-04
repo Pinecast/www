@@ -422,8 +422,7 @@ export const Link = ({
   children,
   style,
   ...rest
-}: Omit<LinkProps, 'children' | 'style' | 'href'> & {
-  href?: LinkProps['href'];
+}: Omit<LinkProps, 'children' | 'style'> & {
   children: ReactNode;
   style?: StyleObject;
   target?: '_blank';
