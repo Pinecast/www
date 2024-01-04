@@ -12,7 +12,7 @@ import {
   MonumentGroteskSemiMono,
 } from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
-import {ReactNode} from 'react';
+import {ReactNode, useCallback} from 'react';
 import {StyleObject} from 'styletron-react';
 import NextLink, {LinkProps} from 'next/link';
 import {RightArrow} from '@/icons/RightArrow';
@@ -419,50 +419,57 @@ export const GhostButton = ({
 };
 
 export const Link = ({
+  href,
   children,
   style,
   ...rest
-}: Omit<LinkProps, 'children' | 'style'> & {
+}: Omit<LinkProps, 'children' | 'style' | 'href'> & {
+  href?: string | URL;
   children: ReactNode;
   style?: StyleObject;
   target?: '_blank';
 }) => {
   const css = useCSS();
-  const Tag = rest.href ? NextLink : 'span';
-  return (
-    <Tag
-      {...rest}
-      className={css({
-        ...MonumentGroteskSemiMono,
-        color: '#C7F182',
-        display: 'block',
-        fontSize: '16px',
-        fontWeight: 400,
-        lineHeight: '16px',
-        textDecoration: 'none',
-        textUnderlineOffset: '0.3em',
-        ...style,
-        ':hover': {
-          [CAN_HOVER_MEDIA_QUERY]: {
-            textDecoration: 'underline',
-            ...(style as Record<string, any>)?.[':hover'],
-          },
-        },
-        [MOBILE_MEDIA_QUERY]: {
-          fontSize: '14px',
-          lineHeight: '14px',
-          ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
-        },
-      })}
-    >
-      <span
+  const Tag = href ? 'a' : 'span';
+  const renderLink = useCallback(
+    () => (
+      <Tag
+        {...rest}
         className={css({
-          verticalAlign: 'middle',
+          ...MonumentGroteskSemiMono,
+          color: '#C7F182',
+          display: 'block',
+          fontSize: '16px',
+          fontWeight: 400,
+          lineHeight: '16px',
+          textDecoration: 'none',
+          textUnderlineOffset: '0.3em',
+          ...style,
+          ':hover': {
+            [CAN_HOVER_MEDIA_QUERY]: {
+              textDecoration: 'underline',
+              ...(style as Record<string, any>)?.[':hover'],
+            },
+          },
+          [MOBILE_MEDIA_QUERY]: {
+            fontSize: '14px',
+            lineHeight: '14px',
+            ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
+          },
         })}
       >
-        {children}
-      </span>
-      <RightArrow size={24} />
-    </Tag>
+        <span className={css({verticalAlign: 'middle'})}>{children}</span>
+        <RightArrow size={24} />
+      </Tag>
+    ),
+    [Tag, children, css, rest, style],
   );
+  if (href) {
+    return (
+      <NextLink legacyBehavior href={href}>
+        {renderLink()}
+      </NextLink>
+    );
+  }
+  return <Tag>{renderLink()}</Tag>;
 };
