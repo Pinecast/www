@@ -322,6 +322,7 @@ export const TunedIn = () => {
           <StickyLine
             ref={addStickyLineRef}
             color={STICKY_LINE_COLOR}
+            size={1}
             zIndex={3}
           />
           <div
