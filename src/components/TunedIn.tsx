@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Body4, Caption, H2, Subhead, Link as ProseLink} from './Typography';
 import {useCSS} from '@/hooks/useCSS';
 import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY} from '@/constants';
+import {AspectRatioBox} from './AspectRatioBox';
 import {SecondaryButton} from './SecondaryButton';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {PrimaryButton} from './PrimaryButton';
@@ -16,18 +17,30 @@ const PANELS = {
     heading: <>You are just getting started</>,
     url: '/learn/podcasting-for-beginners',
     image: '/images/art/user-beginner.png',
+    sizes: [
+      [265, 400],
+      [530, 708.26],
+    ],
   },
   middle: {
     color: 'var(--color-lime)',
     heading: <>You need advanced tools</>,
     url: '/learn/podcasting-for-power-users',
     image: '/images/art/user-advanced.png',
+    sizes: [
+      [265, 400],
+      [530, 638.54],
+    ],
   },
   right: {
     color: 'var(--color-sky)',
     heading: <>You are an organization</>,
     url: '/learn/corporate-podcasting',
     image: '/images/art/user-organizations.png',
+    sizes: [
+      [265, 400],
+      [530, 708.26],
+    ],
   },
 };
 
@@ -167,80 +180,126 @@ const Panel = ({
 
   const panel = PANELS[position];
 
-  const {color: activeColor, heading} = panel;
+  const {
+    color: activeColor,
+    heading,
+    sizes: [[smallWidth, smallHeight], [largeWidth, largeHeight]],
+  } = panel;
 
   return (
-    <>
+    <AspectRatioBox
+      style={{
+        // Use fixed dimensions for mobile carousel swiper.
+        '--width': '0',
+        '--height': '0',
+        flex: `1 0 ${smallWidth}px`,
+        height: `${smallHeight}px`,
+
+        // Enforce aspect ratio at tablet or larger for curved three columns.
+        [MIN_TABLET_MEDIA_QUERY]: {
+          '--width': `${largeWidth}`,
+          '--height': `${largeHeight}`,
+          flex: 'unset',
+          width: '100%',
+          height: 0,
+        },
+      }}
+    >
       <Link
         href={panel.url}
         className={css({
+          '--panel-border-width': '1px',
+          '--panel-border-color': isActive
+            ? 'var(--color-space)'
+            : 'var(--color-white)',
+          backgroundColor: 'var(--panel-border-color)',
+          color: 'inherit',
+          display: 'block',
+          height: '100%',
           position: 'relative',
-          [MOBILE_MEDIA_QUERY]: {
-            width: '265px',
-            flex: '0 0 265px',
-          },
+          textDecoration: 'none',
+          zIndex: 2,
+
           '::before': {
+            // Pleasant trick for simulating a border around each panel's complex polygon (the clip-path) on desktop
+            backgroundColor: 'var(--color-space)',
+            backgroundImage: isActive ? `url(${panel.image})` : undefined,
+            backgroundPosition: '50% 50%',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            borderRadius: '10px',
+            bottom: 'var(--panel-border-width)',
             content: '""',
-            display: 'block',
-            paddingTop: '125.5%',
+            height: 'calc(100% - var(--panel-border-width) * 2)',
+            left: 'var(--panel-border-width)',
+            position: 'absolute',
+            right: 'var(--panel-border-width)',
+            transition: 'background 0.2s ease-in-out',
+            top: 'var(--panel-border-width)',
+            width: 'calc(100% - var(--panel-border-width) * 2)',
+            zIndex: 1,
+          },
+
+          [MIN_TABLET_MEDIA_QUERY]: {
+            clipPath: `url(#clip-${position})`,
+            height: 'calc(100% + var(--panel-border-width) * 2)',
+            width: 'calc(100% + var(--panel-border-width) * 2)',
+
+            '::before': {
+              borderRadius: 'unset',
+              clipPath: 'inherit',
+            },
           },
         })}
       >
         <div
           className={css({
+            alignItems: 'flex-end',
+            color: isActive ? 'var(--color-space)' : 'var(--color-sand)',
+            display: 'flex',
+            height: '100%',
+            padding: '10px',
+            width: '100%',
             position: 'relative',
-            borderTopLeftRadius: '20px',
-            borderTopRightRadius: '20px',
-            borderBottomLeftRadius: '20px',
-            borderBottomRightRadius: '20px',
+            zIndex: 2,
+            transition: 'color 0.2s ease-in-out',
+            [MIN_TABLET_MEDIA_QUERY]: {
+              padding: '20px',
+            },
           })}
         >
-          <div
+          <header
             className={css({
-              alignItems: 'flex-end',
-              bottom: '0',
-              color: isActive ? 'var(--color-space)' : 'var(--color-sand)',
-              display: 'flex',
-              left: '0',
+              backgroundColor: isActive ? activeColor : 'transparent',
+              borderRadius: '10px',
+              borderStyle: 'solid',
+              borderWidth: '1px',
               padding: '20px',
-              position: 'absolute',
-              right: '0',
-              top: '0',
+              transition: 'background-color 0.2s ease-in-out',
+              width: '100%',
+              [MIN_TABLET_MEDIA_QUERY]: {
+                minHeight: '160px',
+              },
             })}
           >
-            <header
-              className={css({
-                backgroundColor: isActive ? activeColor : 'transparent',
-                borderRadius: '10px',
-                borderStyle: 'solid',
-                borderWidth: '1px',
-                padding: '20px',
-                transition: 'background-color 0.2s ease-in-out',
-                width: '100%',
-                [MIN_TABLET_MEDIA_QUERY]: {
-                  minHeight: '160px',
-                },
-              })}
+            <Subhead style={{marginBottom: '16px', maxWidth: '16ch'}}>
+              {heading}
+            </Subhead>
+            <ProseLink
+              style={{
+                color: 'inherit',
+                marginTop: '-8px',
+                marginBottom: '-8px',
+                paddingTop: '8px',
+                paddingBottom: '8px',
+              }}
             >
-              <Subhead style={{marginBottom: '16px', maxWidth: '16ch'}}>
-                {heading}
-              </Subhead>
-              <ProseLink
-                style={{
-                  color: 'inherit',
-                  marginTop: '-8px',
-                  marginBottom: '-8px',
-                  paddingTop: '8px',
-                  paddingBottom: '8px',
-                }}
-              >
-                Learn more
-              </ProseLink>
-            </header>
-          </div>
+              Learn more
+            </ProseLink>
+          </header>
         </div>
       </Link>
-    </>
+    </AspectRatioBox>
   );
 };
 
@@ -487,40 +546,65 @@ export const TunedIn = () => {
             cursor: 'default',
             position: 'relative',
             zIndex: 2,
+            [MIN_TABLET_MEDIA_QUERY]: {
+              marginLeft: '20px',
+              marginRight: '20px',
+            },
           })}
         >
-          {/* spacer */}
-          <div
+          <svg
             className={css({
-              paddingBottom: '300px',
-              marginBottom: '-380px',
+              position: 'absolute',
+              width: 0,
+              height: 0,
             })}
-          ></div>
+          >
+            <defs>
+              <clipPath id="clip-left" clipPathUnits="objectBoundingBox">
+                <path d="M0.963,1 H0.037 C0.017,1,0,0.99,0,0.975 V0.031 C0,0.013,0.021,0,0.044,0.003 C0.319,0.044,0.63,0.074,0.965,0.091 C0.985,0.092,1,0.104,1,0.118 V0.975 C1,0.99,0.983,1,0.963,1" />
+              </clipPath>
+              <clipPath id="clip-middle" clipPathUnits="objectBoundingBox">
+                <path d="M0,0.97 V0.032 C0,0.014,0.018,0,0.039,0.001 C0.189,0.007,0.343,0.01,0.5,0.01 C0.657,0.01,0.811,0.007,0.961,0.001 C0.982,0,1,0.014,1,0.032 V0.97 C1,0.987,0.983,1,0.963,1 H0.037 C0.017,1,0,0.987,0,0.97" />
+              </clipPath>
+              <clipPath id="clip-right" clipPathUnits="objectBoundingBox">
+                <path d="M0.037,1 H0.963 C0.983,1,1,0.99,1,0.975 V0.031 C1,0.013,0.979,0,0.956,0.003 C0.681,0.044,0.37,0.074,0.035,0.091 C0.015,0.092,0,0.104,0,0.118 V0.975 C0,0.99,0.017,1,0.037,1" />
+              </clipPath>
+            </defs>
+          </svg>
+
           <nav
             className={css({
               marginTop: '0',
               marginBottom: '0',
               marginLeft: '0',
               marginRight: '0',
-              paddingLeft: '20px',
-              paddingRight: '20px',
               paddingTop: '40px',
+              paddingBottom: '10px',
+              paddingLeft: '10px',
+              paddingRight: '10px',
               position: 'relative',
-              zIndex: 3,
               width: '100%',
 
               display: 'flex',
               flexDirection: 'row',
+              flexWrap: 'nowrap',
               gap: '10px',
               overflowX: 'scroll',
+              overflowY: 'hidden',
+              WebkitOverflowScrolling: 'touch',
 
               [MIN_TABLET_MEDIA_QUERY]: {
                 display: 'grid',
                 gap: '20px',
+                height: '100%',
                 gridTemplateColumns: 'repeat(3, 1fr)',
                 overflowX: 'unset',
-                position: 'absolute',
-                top: '0',
+                overflowY: 'unset',
+                paddingTop: '0',
+                paddingLeft: '0',
+                paddingRight: '0',
+                placeItems: 'end',
+                width: '100%',
               },
             })}
           >
@@ -528,266 +612,6 @@ export const TunedIn = () => {
             <Panel position="middle" isActive={middleActive} />
             <Panel position="right" isActive={rightActive} />
           </nav>
-          <svg
-            fill="none"
-            viewBox="0 3 1630 709"
-            xmlns="http://www.w3.org/2000/svg"
-            className={css({
-              display: 'block',
-              marginLeft: '20px',
-              marginRight: '20px',
-              paddingTop: '120px',
-            })}
-          >
-            {/* left - filled */}
-            <g
-              style={{
-                opacity: leftActive ? 1 : 0,
-              }}
-            >
-              <mask
-                id="tuned-in-panels-mask-left-filled"
-                style={{maskType: 'alpha'}}
-                maskUnits="userSpaceOnUse"
-                x={0}
-                y={3}
-                width={530}
-                height={705}
-              >
-                <path
-                  d="M0 687.26c0 11.046 8.954 20 20 20h490c11.046 0 20-8.954 20-20V85.088c0-10.565-8.219-19.303-18.761-20C333.853 53.373 169.164 32.302 24.022 3.819 11.6 1.38 0 10.855 0 23.515V687.26z"
-                  fill="#fff"
-                />
-              </mask>
-              <g mask="url(#tuned-in-panels-mask-left-filled)">
-                <path
-                  d="M0-1h530v668.26c0 18.856 0 28.284-5.858 34.142-5.858 5.858-15.286 5.858-34.142 5.858H40c-18.856 0-28.284 0-34.142-5.858C0 695.544 0 686.116 0 667.26V-1z"
-                  fill="url(#tuned-in-panels-pattern-beginner)"
-                  style={{
-                    opacity: leftActive ? 1 : 0,
-                    transition: 'opacity 0.2s ease-in-out',
-                  }}
-                />
-              </g>
-            </g>
-            {/* left - default */}
-            <g
-              style={{
-                opacity: leftActive ? 0 : 1,
-              }}
-            >
-              <mask
-                id="tuned-in-panels-mask-left-skeleton"
-                style={{maskType: 'alpha'}}
-                maskUnits="userSpaceOnUse"
-                x={0}
-                y={-1}
-                width={530}
-                height={709}
-              >
-                <path
-                  d="M0 707.26h530V66.29C335.55 54.23 155.92 30.96 0-1v708.26z"
-                  fill="#fff"
-                />
-              </mask>
-              <g mask="url(#tuned-in-panels-mask-left-skeleton)">
-                <mask id="tuned-in-panels-mask-left-skeleton-shape" fill="#fff">
-                  <path d="M0 687.26c0 11.046 8.954 20 20 20h490c11.046 0 20-8.954 20-20V85.088c0-10.565-8.219-19.303-18.761-20C333.853 53.373 169.164 32.302 24.022 3.819 11.6 1.38 0 10.855 0 23.515V687.26z" />
-                </mask>
-                <path
-                  d="M0 687.26c0 11.046 8.954 20 20 20h490c11.046 0 20-8.954 20-20V85.088c0-10.565-8.219-19.303-18.761-20C333.853 53.373 169.164 32.302 24.022 3.819 11.6 1.38 0 10.855 0 23.515V687.26z"
-                  fill="var(--color-space)"
-                  stroke="var(--color-sand)"
-                  strokeWidth={2}
-                  mask="url(#tuned-in-panels-mask-left-skeleton-shape)"
-                />
-              </g>
-            </g>
-
-            {/* middle - filled */}
-            <g
-              style={{
-                opacity: middleActive ? 1 : 0,
-              }}
-            >
-              <mask
-                id="tuned-in-panels-mask-middle-filled"
-                style={{maskType: 'alpha'}}
-                maskUnits="userSpaceOnUse"
-                x={550}
-                y={70}
-                width={530}
-                height={638}
-              >
-                <path
-                  d="M571.061 70.072C559.612 69.514 550 78.628 550 90.09v597.45c0 11.046 8.954 20 20 20h490c11.05 0 20-8.954 20-20V90.09c0-11.462-9.61-20.576-21.06-20.018-79.27 3.86-160.774 5.868-243.94 5.868s-164.67-2.008-243.939-5.868z"
-                  fill="var(--color-lime)"
-                />
-              </mask>
-              <g mask="url(#tuned-in-panels-mask-middle-filled)">
-                <path
-                  d="M550 69h530v598.54c0 18.856 0 28.284-5.86 34.142-5.86 5.858-15.28 5.858-34.14 5.858H590c-18.856 0-28.284 0-34.142-5.858C550 695.824 550 686.396 550 667.54V69z"
-                  fill="url(#tuned-in-panels-pattern-advanced)"
-                  style={{
-                    opacity: middleActive ? 1 : 0,
-                    transition: 'opacity 0.2s ease-in-out',
-                  }}
-                />
-              </g>
-            </g>
-            {/* middle - default */}
-            <g
-              style={{
-                opacity: middleActive ? 0 : 1,
-                border: '1px solid #f00',
-                padding: '10000px',
-              }}
-            >
-              <mask
-                id="tuned-in-panels-mask-middle-skeleton"
-                style={{maskType: 'alpha'}}
-                maskUnits="userSpaceOnUse"
-                x={550}
-                y={69}
-                width={530}
-                height={639}
-              >
-                <path
-                  d="M550 69v638.54h530V69c-85.87 4.56-174.45 6.94-265 6.94-90.55 0-179.13-2.38-265-6.94z"
-                  fill="var(--color-lime)"
-                />
-              </mask>
-              <g mask="url(#tuned-in-panels-mask-middle-skeleton)">
-                <mask id="tuned-in-panels-mask-middle-skeleton" fill="#fff">
-                  <path d="M571.061 70.072C559.612 69.514 550 78.628 550 90.09v597.45c0 11.046 8.954 20 20 20h490c11.05 0 20-8.954 20-20V90.09c0-11.462-9.61-20.576-21.06-20.018-79.27 3.86-160.774 5.868-243.94 5.868s-164.67-2.008-243.939-5.868z" />
-                </mask>
-                <path
-                  d="M571.061 70.072C559.612 69.514 550 78.628 550 90.09v597.45c0 11.046 8.954 20 20 20h490c11.05 0 20-8.954 20-20V90.09c0-11.462-9.61-20.576-21.06-20.018-79.27 3.86-160.774 5.868-243.94 5.868s-164.67-2.008-243.939-5.868z"
-                  fill="var(--color-space)"
-                  stroke="var(--color-sand)"
-                  strokeWidth={2}
-                  mask="url(#tuned-in-panels-mask-middle-skeleton-shape)"
-                />
-              </g>
-            </g>
-            {/* right - filled */}
-            <g
-              style={{
-                opacity: rightActive ? 1 : 0,
-              }}
-            >
-              <mask
-                id="tuned-in-panels-mask-right-filled"
-                style={{maskType: 'alpha'}}
-                maskUnits="userSpaceOnUse"
-                x={1100}
-                y={3}
-                width={530}
-                height={705}
-              >
-                <path
-                  d="M1630 687.26c0 11.046-8.95 20-20 20h-490c-11.05 0-20-8.954-20-20V85.088c0-10.565 8.22-19.303 18.76-20 177.39-11.716 342.08-32.787 487.22-61.27C1618.4 1.38 1630 10.855 1630 23.515V687.26z"
-                  fill="#fff"
-                />
-              </mask>
-              <g mask="url(#tuned-in-panels-mask-right-filled)">
-                <rect
-                  x="1100"
-                  y="-12"
-                  width="532"
-                  height="732"
-                  fill="url(#tuned-in-panels-pattern-organizations)"
-                  style={{
-                    opacity: rightActive ? 1 : 0,
-                    transition: 'opacity 0.2s ease-in-out',
-                  }}
-                />
-              </g>
-            </g>
-            {/* right - default */}
-            <g
-              style={{
-                opacity: rightActive ? 0 : 1,
-              }}
-            >
-              <mask id="tuned-in-panels-mask-right-skeleton" fill="#fff">
-                <path d="M1630 687.26c0 11.046-8.95 20-20 20h-490c-11.05 0-20-8.954-20-20V85.088c0-10.565 8.22-19.303 18.76-20 177.39-11.716 342.08-32.787 487.22-61.27C1618.4 1.38 1630 10.855 1630 23.515V687.26z" />
-              </mask>
-              <path
-                d="M1630 687.26c0 11.046-8.95 20-20 20h-490c-11.05 0-20-8.954-20-20V85.088c0-10.565 8.22-19.303 18.76-20 177.39-11.716 342.08-32.787 487.22-61.27C1618.4 1.38 1630 10.855 1630 23.515V687.26z"
-                fill="var(--color-space)"
-                stroke="var(--color-sand)"
-                strokeWidth={3}
-                mask="url(#tuned-in-panels-mask-right-skeleton)"
-              />
-              <mask
-                style={{maskType: 'alpha'}}
-                maskUnits="userSpaceOnUse"
-                x={1100}
-                y={-39}
-                width={530}
-                height={707}
-              >
-                <path
-                  d="M1100 667.27c0-.006 0-.01.01-.01H1620c5.52 0 10-4.477 10-10V-28.742c0-6.33-5.8-11.069-12-9.824-150.58 30.2-322.72 52.361-508.61 64.264-5.27.338-9.39 4.709-9.39 9.991V667.27z"
-                  fill="var(--color-sky)"
-                />
-              </mask>
-            </g>
-            <defs>
-              <pattern
-                id="tuned-in-panels-pattern-beginner"
-                patternContentUnits="objectBoundingBox"
-                width={1}
-                height={1}
-              >
-                <use
-                  xlinkHref="#tuned-in-panels-img-beginner"
-                  transform="matrix(.0004 0 0 .0003 -.013 0)"
-                />
-              </pattern>
-              <pattern
-                id="tuned-in-panels-pattern-advanced"
-                patternContentUnits="objectBoundingBox"
-                width={1}
-                height={1}
-              >
-                <use
-                  xlinkHref="#tuned-in-panels-img-advanced"
-                  transform="matrix(.00038 0 0 .00032 0 -.04)"
-                />
-              </pattern>
-              <pattern
-                id="tuned-in-panels-pattern-organizations"
-                patternContentUnits="objectBoundingBox"
-                width={1}
-                height={1}
-              >
-                <use
-                  xlinkHref="#tuned-in-panels-img-organizations"
-                  transform="scale(.00094 .0007)"
-                />
-              </pattern>
-              <image
-                id="tuned-in-panels-img-beginner"
-                width={2629}
-                height={3421}
-                href="/images/art/user-beginner.png"
-              />
-              <image
-                id="tuned-in-panels-img-advanced"
-                width={2629}
-                height={3421}
-                href="/images/art/user-advanced.png"
-              />
-              <image
-                id="tuned-in-panels-img-organizations"
-                width={1060}
-                height={1440}
-                href="/images/art/user-organizations.png"
-              />
-            </defs>
-          </svg>
         </div>
       </div>
     </>
