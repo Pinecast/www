@@ -60,8 +60,8 @@ export const useAsyncVideo = (
     vid.style.pointerEvents = 'none';
     vid.style.top = '0';
     vid.style.opacity = '0';
-    vid.style.height = '0';
-    vid.style.width = '0';
+    vid.style.height = '1px';
+    vid.style.width = '1px';
     document.body.appendChild(vid);
   }
   return [video.current, loaded];
