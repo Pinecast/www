@@ -10,6 +10,10 @@ import {useScrollProgressEffect} from '@/hooks/useScrollProgress';
 import {StickyLine} from './StickyLine';
 import {useVisibleElements} from '@/hooks/useVisibleElements';
 import Link from 'next/link';
+import {NoncriticalVideo} from './NoncriticalVideo';
+
+const VIDEO_WIDTH = 1060;
+const VIDEO_HEIGHT = 1440;
 
 const PANELS = {
   left: {
@@ -17,6 +21,10 @@ const PANELS = {
     heading: <>You are just getting started</>,
     url: '/learn/podcasting-for-beginners',
     image: '/images/art/user-beginner.png',
+    videos: {
+      vp9: '/videos/user-beginner.vp9.mp4',
+      av1: '/videos/user-beginner.av1.mp4',
+    },
     sizes: [
       [265, 400],
       [530, 708.26],
@@ -27,6 +35,10 @@ const PANELS = {
     heading: <>You need advanced tools</>,
     url: '/learn/podcasting-for-power-users',
     image: '/images/art/user-advanced.png',
+    videos: {
+      vp9: '/videos/user-advanced.vp9.mp4',
+      av1: '/videos/user-advanced.av1.mp4',
+    },
     sizes: [
       [265, 400],
       [530, 638.54],
@@ -37,6 +49,10 @@ const PANELS = {
     heading: <>You are an organization</>,
     url: '/learn/corporate-podcasting',
     image: '/images/art/user-organizations.png',
+    videos: {
+      vp9: '/videos/user-organizations.vp9.mp4',
+      av1: '/videos/user-organizations.av1.mp4',
+    },
     sizes: [
       [265, 400],
       [530, 708.26],
@@ -220,7 +236,7 @@ const Panel = ({
           zIndex: 2,
 
           '::after': {
-            backgroundImage: `url(${panel.image})`,
+            backgroundColor: `${panel.color}`,
             backgroundPosition: '50% 50%',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
@@ -231,7 +247,7 @@ const Panel = ({
             opacity: isActive ? 1 : 0,
             position: 'absolute',
             right: '0',
-            transition: 'opacity 0.4s ease-in-out',
+            transition: 'opacity 0.3s ease-in-out',
             top: '0',
           },
 
@@ -263,6 +279,46 @@ const Panel = ({
       >
         <div
           className={css({
+            // Load the video conditionally once the panel's scroll threshold is reached.
+            // This wrapper allows the video to fade in so the entrance feels smoother.
+            backgroundColor: `${panel.color}`,
+            borderRadius: 'inherit',
+            bottom: 0,
+            left: 0,
+            opacity: isActive ? 1 : 0,
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            transition: isActive
+              ? 'opacity 0.3s ease-in-out'
+              : 'opacity 0.1s ease-in-out',
+            zIndex: 2,
+          })}
+        >
+          {isActive && (
+            <NoncriticalVideo
+              av1Source={panel.videos.av1}
+              defaultSource={panel.videos.vp9}
+              height={VIDEO_HEIGHT}
+              width={VIDEO_WIDTH}
+              poster={panel.image}
+              style={{
+                backgroundColor: `${panel.color}`,
+                borderRadius: 'inherit',
+                height: '100%',
+                left: 0,
+                objectFit: 'cover',
+                position: 'absolute',
+                right: 0,
+                top: 0,
+                width: '100%',
+                zIndex: 2,
+              }}
+            />
+          )}
+        </div>
+        <div
+          className={css({
             alignItems: 'flex-end',
             color: isActive ? 'var(--color-space)' : 'var(--color-sand)',
             display: 'flex',
@@ -271,7 +327,7 @@ const Panel = ({
             width: '100%',
             position: 'relative',
             zIndex: 2,
-            transition: 'color 0.4s ease-in-out',
+            transition: 'color 0.3s ease-in-out',
             [MIN_TABLET_MEDIA_QUERY]: {
               padding: '20px',
             },
@@ -284,7 +340,7 @@ const Panel = ({
               borderStyle: 'solid',
               borderWidth: '1px',
               padding: '20px',
-              transition: 'background-color 0.4s ease-in-out',
+              transition: 'background-color 0.3s ease-in-out',
               width: '100%',
               [MIN_TABLET_MEDIA_QUERY]: {
                 minHeight: '160px',
