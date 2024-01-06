@@ -190,15 +190,13 @@ const Panel = ({
     <AspectRatioBox
       style={{
         // Use fixed dimensions for mobile carousel swiper.
-        '--width': '0',
-        '--height': '0',
+        '--aspect-ratio': '0',
         flex: `1 0 ${smallWidth}px`,
         height: `${smallHeight}px`,
 
         // Enforce aspect ratio at tablet or larger for curved three columns.
         [MIN_TABLET_MEDIA_QUERY]: {
-          '--width': `${largeWidth}`,
-          '--height': `${largeHeight}`,
+          '--aspect-ratio': `${largeHeight} / ${largeWidth}`,
           flex: 'unset',
           width: '100%',
           height: 0,
@@ -216,7 +214,7 @@ const Panel = ({
           borderRadius: '10px',
           color: 'inherit',
           display: 'block',
-          height: '100%',
+          height: `${smallHeight}px`,
           position: 'relative',
           textDecoration: 'none',
           zIndex: 2,
@@ -242,6 +240,7 @@ const Panel = ({
             border: 'unset',
             borderRadius: 'unset',
             clipPath: `url(#clip-${position})`,
+            height: '100%',
             width: '100%',
 
             '::before': {

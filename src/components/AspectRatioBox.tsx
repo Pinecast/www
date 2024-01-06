@@ -15,7 +15,7 @@ export const AspectRatioBox = ({
     <div
       className={css({
         height: 0,
-        paddingBottom: 'calc(var(--height) / var(--width) * 100%)',
+        paddingBottom: 'calc(var(--aspect-ratio) * 100%)',
         position: 'relative',
         zIndex: zIndex,
         width: '100%',
