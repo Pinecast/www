@@ -3,17 +3,20 @@ import {useIsBot} from './UserAgentContext';
 import {StyleObject} from 'styletron-react';
 import * as React from 'react';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
+import {AV1_MIME} from '@/hooks/useAsyncResource';
 
 export const NoncriticalVideo = ({
   av1Source,
   defaultSource,
   height,
+  poster,
   style,
   width,
 }: {
   av1Source?: string;
   defaultSource: string;
   height: number;
+  poster?: string;
   width: number;
   style?: StyleObject;
 }) => {
@@ -54,6 +57,7 @@ export const NoncriticalVideo = ({
         disableRemotePlayback
         height={height}
         width={width}
+        poster={poster}
         className={css({
           // position: 'absolute',
           // minHeight: '100%',
@@ -67,7 +71,7 @@ export const NoncriticalVideo = ({
           // transform: 'translate(-50%, -50%)',
         })}
       >
-        {av1Source && <source src={av1Source} type="video/mp4; codecs=av01" />}
+        {av1Source && <source src={av1Source} type={AV1_MIME} />}
         <source src={defaultSource} />
       </video>
     </div>
