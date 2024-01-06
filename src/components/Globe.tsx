@@ -61,6 +61,70 @@ const FEATURES: Record<
   },
 };
 
+const IntroSection = React.memo(function IntroSection() {
+  const css = useCSS();
+  return (
+    <div
+      className={css({
+        backgroundImage:
+          'linear-gradient(to bottom, rgba(9,9,9,0.65) 30%,rgba(9,9,9,0) 90%)',
+        borderRadius: '0 0 100% 100%',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '40px',
+        alignItems: 'center',
+        textAlign: 'center',
+        margin: '0 auto -400px',
+        maxWidth: '946px',
+        padding: '100px 0 400px',
+        position: 'relative',
+        zIndex: 1,
+
+        '--color-line': '#888',
+        '--color-primary-dark': '#fff',
+        '--color-primary-light': 'var(--color-space)',
+        '--color-theme-mode': 'var(--color-space)',
+        '--color-core-accent': '#888',
+        color: 'var(--color-primary-dark)',
+      })}
+    >
+      <H1
+        style={{
+          marginBottom: 0,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginTop: 0,
+          maxWidth: '58rem',
+        }}
+      >
+        Check, Check 1, 2, 3
+      </H1>
+      <Body4 style={{maxWidth: '32rem'}}>
+        Whether you&rsquo;re sharing to a handful of friends, your company, or
+        the world, Pinecast has a solution that&rsquo;s right for you.
+      </Body4>
+      <div
+        className={css({
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '20px',
+        })}
+      >
+        <PrimaryButton
+          href="https://pinecast.com/signup"
+          style={{
+            backgroundColor: 'var(--color-white)',
+            color: 'var(--color-space)',
+          }}
+        >
+          Start for free
+        </PrimaryButton>
+        <SecondaryButton href="/features">Discover features</SecondaryButton>
+      </div>
+    </div>
+  );
+});
+
 function chooseFeature(scrollRatio: number) {
   if (scrollRatio >= 0.18 && scrollRatio < 0.35) {
     return 'distribution';
@@ -1271,64 +1335,7 @@ export const Globe = () => {
         zIndex: 2,
       })}
     >
-      <div
-        className={css({
-          backgroundImage:
-            'linear-gradient(to bottom, rgba(9,9,9,0.65) 30%,rgba(9,9,9,0) 90%)',
-          borderRadius: '0 0 100% 100%',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '40px',
-          alignItems: 'center',
-          textAlign: 'center',
-          margin: '0 auto -400px',
-          maxWidth: '946px',
-          padding: '100px 0 400px',
-          position: 'relative',
-          zIndex: 1,
-
-          '--color-line': '#888',
-          '--color-primary-dark': '#fff',
-          '--color-primary-light': 'var(--color-space)',
-          '--color-theme-mode': 'var(--color-space)',
-          '--color-core-accent': '#888',
-          color: 'var(--color-primary-dark)',
-        })}
-      >
-        <H1
-          style={{
-            marginBottom: 0,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            marginTop: 0,
-            maxWidth: '58rem',
-          }}
-        >
-          Check, Check 1, 2, 3
-        </H1>
-        <Body4 style={{maxWidth: '32rem'}}>
-          Whether you&rsquo;re sharing to a handful of friends, your company, or
-          the world, Pinecast has a solution that&rsquo;s right for you.
-        </Body4>
-        <div
-          className={css({
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '20px',
-          })}
-        >
-          <PrimaryButton
-            href="https://pinecast.com/signup"
-            style={{
-              backgroundColor: 'var(--color-white)',
-              color: 'var(--color-space)',
-            }}
-          >
-            Start for free
-          </PrimaryButton>
-          <SecondaryButton href="/features">Discover features</SecondaryButton>
-        </div>
-      </div>
+      <IntroSection />
       <div
         className={css({
           position: 'sticky',

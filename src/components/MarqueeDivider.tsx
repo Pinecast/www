@@ -110,7 +110,7 @@ export const MarqueeDivider = ({
       className={css({
         backgroundColor: bottomBackgroundColor,
         position: 'relative',
-        zIndex: 2,
+        zIndex: 3,
       })}
     >
       <svg
