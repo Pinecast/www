@@ -212,7 +212,8 @@ const Panel = ({
           '--panel-border-color': isActive
             ? 'var(--color-space)'
             : 'var(--color-white)',
-          backgroundColor: 'var(--panel-border-color)',
+          border: '1px solid var(--panel-border-color)',
+          borderRadius: '10px',
           color: 'inherit',
           display: 'block',
           height: '100%',
@@ -220,34 +221,43 @@ const Panel = ({
           textDecoration: 'none',
           zIndex: 2,
 
-          '::before': {
-            // Pleasant trick for simulating a border around each panel's complex polygon (the clip-path) on desktop
-            backgroundColor: 'var(--color-space)',
-            backgroundImage: isActive ? `url(${panel.image})` : undefined,
+          '::after': {
+            backgroundImage: `url(${panel.image})`,
             backgroundPosition: '50% 50%',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
-            borderRadius: '10px',
-            bottom: 'var(--panel-border-width)',
+            borderRadius: 'inherit',
+            bottom: '0',
             content: '""',
-            height: 'calc(100% - var(--panel-border-width) * 2)',
-            left: 'var(--panel-border-width)',
+            left: '0',
+            opacity: isActive ? 1 : 0,
             position: 'absolute',
-            right: 'var(--panel-border-width)',
-            transition: 'background 0.2s ease-in-out',
-            top: 'var(--panel-border-width)',
-            width: 'calc(100% - var(--panel-border-width) * 2)',
-            zIndex: 1,
+            right: '0',
+            transition: 'opacity 0.4s ease-in-out',
+            top: '0',
           },
 
           [MIN_TABLET_MEDIA_QUERY]: {
+            backgroundColor: 'var(--panel-border-color)',
+            border: 'unset',
+            borderRadius: 'unset',
             clipPath: `url(#clip-${position})`,
-            height: 'calc(100% + var(--panel-border-width) * 2)',
-            width: 'calc(100% + var(--panel-border-width) * 2)',
+            width: '100%',
 
             '::before': {
+              // Pleasant trick for painting an outline with clip-path.
+              // Since CSS borders are painted *before* an element is cut to match
+              // the clip-path, emulate a border by layering a smaller copy of the
+              // clip-path filled with the page bg color.
+              backgroundColor: 'var(--color-space)',
               borderRadius: 'unset',
+              bottom: 'var(--panel-border-width)',
               clipPath: 'inherit',
+              content: '""',
+              left: 'var(--panel-border-width)',
+              position: 'absolute',
+              right: 'var(--panel-border-width)',
+              top: 'var(--panel-border-width)',
             },
           },
         })}
@@ -262,7 +272,7 @@ const Panel = ({
             width: '100%',
             position: 'relative',
             zIndex: 2,
-            transition: 'color 0.2s ease-in-out',
+            transition: 'color 0.4s ease-in-out',
             [MIN_TABLET_MEDIA_QUERY]: {
               padding: '20px',
             },
@@ -275,7 +285,7 @@ const Panel = ({
               borderStyle: 'solid',
               borderWidth: '1px',
               padding: '20px',
-              transition: 'background-color 0.2s ease-in-out',
+              transition: 'background-color 0.4s ease-in-out',
               width: '100%',
               [MIN_TABLET_MEDIA_QUERY]: {
                 minHeight: '160px',
@@ -601,6 +611,7 @@ export const TunedIn = () => {
                 overflowX: 'unset',
                 overflowY: 'unset',
                 paddingTop: '0',
+                paddingBottom: '0',
                 paddingLeft: '0',
                 paddingRight: '0',
                 placeItems: 'end',
