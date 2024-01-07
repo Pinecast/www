@@ -35,13 +35,8 @@ export default function Home() {
       <MainHeader />
       <HeroV2 />
       <Globe />
-      <div
-        // Contain the bounds of the sticky horizontal line down the page center
-        className={css({
-          position: 'relative',
-          zIndex: 1,
-        })}
-      >
+      <div>
+        {/* The wrapper div contains the bounds of the sticky horizontal line. */}
         <StickyLine color="var(--color-space)" zIndex={2} />
         <StandardMarqueeDivider
           topBackgroundColor="var(--color-space)"

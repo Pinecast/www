@@ -432,7 +432,7 @@ export const TunedIn = () => {
           cursor: 'default',
           position: 'relative',
           transform: 'translate3d(0,0,0)',
-          zIndex: 1,
+          zIndex: 2,
         })}
       >
         <div

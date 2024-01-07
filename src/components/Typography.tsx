@@ -217,6 +217,11 @@ export const Body3 = ({
           lineHeight: '18px',
           ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
         },
+        [TABLET_MEDIA_QUERY]: {
+          fontSize: '18px',
+          lineHeight: '20px',
+          ...(style as Record<string, any>)?.[TABLET_MEDIA_QUERY],
+        },
       })}
     >
       {children}
