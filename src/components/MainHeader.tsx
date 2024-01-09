@@ -125,9 +125,8 @@ export const MainHeader = () => {
     <>
       <header
         className={css({
-          background: navOpen
-            ? 'var(--color-primary-light)'
-            : 'var(--page-bg, var(--color-primary-light))',
+          background:
+             'var(--color-primary-light)',
           borderStyle: 'solid',
           borderColor: navOpen
             ? 'var(--color-line) var(--color-line) transparent'
