@@ -581,6 +581,7 @@ const Customers = ({}) => {
             // order becomes out of whack when scrolling past and then behind
             // elements that are `position: sticky`.
             // @see https://bugs.webkit.org/show_bug.cgi?id=168725
+            transform: 'translate3d(0,0,0)',
             '::after': {
               backgroundColor: 'var(--page-bg, var(--color-sand))',
               bottom: '0',
