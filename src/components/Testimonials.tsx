@@ -156,7 +156,7 @@ const AudioPlayer = React.memo(
       const tickerDotRef = React.useRef<HTMLDivElement>(null);
       const tickerTimeRef = React.useRef<HTMLDivElement>(null);
 
-      const { audio, isPlaying, play, pause} = useSound(testimonial.audioFiles!);
+      const {audio, isPlaying, play, pause} = useSound(testimonial.audioFiles!);
 
       React.useImperativeHandle(ref, () => ({
         play,
@@ -187,8 +187,6 @@ const AudioPlayer = React.memo(
             transform: tickerWrapperRef.current.style.transform,
           };
           const tickerDot = {
-            // opacity: tickerDotRef.current.style.opacity,
-            opacity: '1',
             transform: tickerDotRef.current.style.transform,
           };
           const tickerTime = {
@@ -197,50 +195,41 @@ const AudioPlayer = React.memo(
           };
 
           if (progress <= SCROLL_PERCENTAGE_TO_SHOW_PLAYER) {
-            // tickerWrapper.opacity = `${scalePlayerEnter(progress)}`;
             tickerWrapper.transform = `scale(${scalePlayerEnter(progress)})`;
 
-            tickerTime.transform = `scale(${scalePlayerEnter(progress)})`;
             tickerTime.opacity = '0';
+            tickerTime.transform = `scale(${scalePlayerEnter(progress)})`;
 
             tickerDot.transform = `scale(${scalePlayerEnter(progress)})`;
-            // tickerDot.opacity = '1';
 
             quote.opacity = '0';
           } else {
-            // tickerWrapper.opacity = '1';
             tickerWrapper.transform = 'scale(1)';
+
+            tickerTime.opacity = '1';
             tickerTime.transform = 'scale(1)';
 
-            // Call `.animate()`
-            tickerTime.opacity = '1';
-
             tickerDot.transform = `scale(${scalePlayerEnter(progress)})`;
-            // tickerDot.opacity = '1';
 
             quote.opacity = '1';
           }
 
           if (progress >= SCROLL_PERCENTAGE_TO_HIDE_PLAYER) {
-            // tickerWrapper.opacity = `${scalePlayerExit(progress)}`;
             tickerWrapper.transform = 'scale(0)';
 
+            tickerTime.opacity = '0';
             tickerTime.transform = `scale(${scalePlayerExit(progress)})`;
-            tickerTime.opacity = `${scalePlayerExit(progress)}`;
 
             tickerDot.transform = `scale(${scalePlayerExit(progress)})`;
-            // tickerDot.opacity = `${scalePlayerExit(progress)}`;
 
             quote.opacity = `${scalePlayerExit(progress)}`;
           } else if (progress === 1) {
-            // tickerWrapper.opacity = '1';
             tickerWrapper.transform = 'scale(0)';
 
+            tickerTime.opacity = '0';
             tickerTime.transform = 'scale(0)';
-            tickerTime.opacity = 'scale(0)';
 
             tickerDot.transform = 'scale(0)';
-            // tickerDot.opacity='scale(0)';
 
             quote.opacity = '0';
           }
@@ -251,7 +240,6 @@ const AudioPlayer = React.memo(
           tickerWrapperRef.current.style.opacity = tickerWrapper.opacity;
           tickerWrapperRef.current.style.transform = tickerWrapper.transform;
 
-          tickerDotRef.current.style.opacity = tickerDot.opacity;
           tickerDotRef.current.style.transform = tickerDot.transform;
 
           tickerTimeRef.current.style.opacity = tickerTime.opacity;
@@ -342,9 +330,7 @@ const AudioPlayer = React.memo(
                 ref={tickerDotRef}
                 className={css({
                   margin: 'auto',
-                  opacity: 0,
                   padding: '10px 27.5px',
-                  //
                   transform: 'scaleX(0)',
                   transformOrigin: '5% 50%',
                   whiteSpace: 'nowrap',
@@ -378,8 +364,7 @@ const AudioPlayer = React.memo(
                   <span
                     ref={tickerTimeRef}
                     className={css({
-                      opacity: 0,
-                      transition: 'opacity 0.1s linear, transform 0.1s linear',
+                      transition: 'transform 0.1s linear',
                       willChange: 'opacity',
                     })}
                   >{`${formatTime(currentTimeSec)} / ${formatTime(
@@ -596,7 +581,6 @@ const Customers = ({}) => {
             // order becomes out of whack when scrolling past and then behind
             // elements that are `position: sticky`.
             // @see https://bugs.webkit.org/show_bug.cgi?id=168725
-            transform: 'translate3d(0,0,0)', // <-- good
             '::after': {
               backgroundColor: 'var(--page-bg, var(--color-sand))',
               bottom: '0',
@@ -632,7 +616,6 @@ const Customers = ({}) => {
             WebkitTextFillColor: 'transparent',
             WebkitTextStrokeColor: 'var(--color-space)',
             WebkitTextStrokeWidth: 'thin',
-            // transform: 'translate3d(0,0,0)', // <-- maybe
           })}
         >
           {TESTIMONIALS.map(item => (
