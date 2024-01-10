@@ -430,9 +430,7 @@ export const TunedIn = () => {
           backgroundColor: 'var(--color-space)',
           color: 'var(--color-white)',
           cursor: 'default',
-          position: 'relative',
           transform: 'translate3d(0,0,0)',
-          zIndex: 2,
         })}
       >
         <div
