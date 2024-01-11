@@ -329,14 +329,15 @@ const AudioPlayer = React.memo(
               <div
                 ref={tickerDotRef}
                 className={css({
-                  margin: 'auto',
-                  padding: '10px 27.5px',
+                  padding: '6px 14.5px',
                   transform: 'scaleX(0)',
-                  transformOrigin: '5% 50%',
+                  transformOrigin: '10% 50%',
                   whiteSpace: 'nowrap',
                   willChange: 'opacity, transform',
                   width: `${TICKER_WIDTH_SMALL}px`,
                   [MIN_TABLET_MEDIA_QUERY]: {
+                    padding: '10px 27.5px',
+                    transformOrigin: '5% 50%',
                     width: `${TICKER_WIDTH_LARGE}px`,
                   },
                 })}
@@ -348,16 +349,27 @@ const AudioPlayer = React.memo(
                     position: 'relative',
                     // Nudge the text so the vertical alignment is actually centered.
                     top: '0.5px',
+                    fontSize: '10px',
+                    lineHeight: '10px',
+                    [MIN_TABLET_MEDIA_QUERY]: {
+                      fontSize: '12px',
+                      lineHeight: '12px',
+                    },
                     '::before': {
                       backgroundColor: 'var(--color-space)',
                       borderRadius: '100%',
                       content: '""',
                       display: 'block',
-                      height: '9px',
-                      marginRight: '10px',
+                      height: '4px',
+                      marginRight: '7px',
                       position: 'relative',
                       top: '-0.5px',
-                      width: '9px',
+                      width: '4px',
+                      [MIN_TABLET_MEDIA_QUERY]: {
+                        height: '9px',
+                        marginRight: '10px',
+                        width: '9px',
+                      },
                     },
                   }}
                 >
