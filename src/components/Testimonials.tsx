@@ -739,6 +739,7 @@ export const Testimonials = ({topPosition}: {topPosition?: number}) => {
                 marginBottom: '30px',
                 minHeight: '48px',
                 transition: 'background-color 0.2s ease-in-out',
+                whiteSpace:'nowrap'
               }}
             >
               Start for free
