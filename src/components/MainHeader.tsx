@@ -8,10 +8,11 @@ import {SignIn} from '@/icons/SignIn';
 import {MainHeaderLink} from './MainHeaderLink';
 import {Hamburger} from '@/icons/Hamburger';
 import {useDismiss} from '@/hooks/useDismiss';
+import {useScrollLock} from '@/hooks/useScrollLock';
 import {Body1, Caption} from './Typography';
 import {QuickTipsBlock} from './QuickLinks';
 import {RightArrow} from '@/icons/RightArrow';
-import { FeaturesBlock } from './FeaturesBlock';
+import {FeaturesBlock} from './FeaturesBlock';
 
 const PersonaBlock = ({
   caption,
@@ -114,19 +115,26 @@ export const MainHeader = () => {
   const navRef = React.useRef<HTMLDivElement>(null);
   const [navOpen, setNavOpen] = React.useState(false);
 
+  // Prevent background scrolling of the document when the dropdown nav is open.
+  const [lock, unlock] = useScrollLock();
+
   // Allow any clicks outside of the dropdown nav to dismiss the nav.
   useDismiss(navRef, () => setNavOpen(false), navOpen);
 
   React.useEffect(() => {
+    if (navOpen) {
+      lock();
+    } else {
+      unlock();
+    }
     document.body.classList.toggle('dimmed', navOpen);
-  }, [navOpen]);
+  }, [lock, navOpen, unlock]);
 
   return (
     <>
       <header
         className={css({
-          background:
-             'var(--color-primary-light)',
+          background: 'var(--color-primary-light)',
           borderStyle: 'solid',
           borderColor: navOpen
             ? 'var(--color-line) var(--color-line) transparent'
@@ -284,7 +292,8 @@ export const MainHeader = () => {
               display: 'grid',
               gap: '20px',
               gridTemplateColumns: '1fr',
-              gridTemplateRows: 'min-content min-content min-content min-content',
+              gridTemplateRows:
+                'min-content min-content min-content min-content',
               width: '100%',
               [MIN_TABLET_MEDIA_QUERY]: {
                 gridTemplateColumns: '1fr 1fr 1fr 1.25fr',
