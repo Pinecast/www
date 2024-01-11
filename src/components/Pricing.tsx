@@ -13,8 +13,10 @@ import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY} from '@/constants';
 
 const BUTTON_STYLE = {
   fontSize: '14px',
+  lineHeight: '40px',
   paddingLeft: '0px',
   paddingRight: '0px',
+  minWidth: '150px',
   [MIN_TABLET_MEDIA_QUERY]: {
     fontSize: '16px',
     height: 'auto',
