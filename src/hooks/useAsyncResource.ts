@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import * as React from 'react';
 
+export type AsyncDrawable = [HTMLImageElement | HTMLVideoElement, boolean];
+
 export const useAsyncImage = (src: string): [HTMLImageElement, boolean] => {
   if (typeof Image === 'undefined') {
     return [null as any, false];
@@ -25,11 +27,19 @@ export const useAsyncVideo = (
     [mimeType: string]: string;
   },
   doLoad: boolean,
+  autoplay: boolean = false
 ): [HTMLVideoElement, boolean] => {
+  const video = React.useRef<HTMLVideoElement>();
+  React.useEffect(() => {
+    return () => {
+      if (!video.current) return;
+      video.current!.pause();
+      video.current!.remove();
+    };
+  }, []);
   if (typeof Image === 'undefined') {
     return [null as any, false];
   }
-  const video = React.useRef<HTMLVideoElement>();
   const [loaded, setLoaded] = React.useState(false);
   if (!doLoad) {
     return [null as any, false];
@@ -48,9 +58,9 @@ export const useAsyncVideo = (
         source.type = mimeType;
         vid.appendChild(source);
       });
-    vid.loop = true;
+    vid.loop = autoplay;
     vid.controls = false;
-    vid.autoplay = true;
+    vid.autoplay = autoplay;
     vid.muted = true;
     vid.oncanplaythrough = () => {
       setLoaded(true);
@@ -66,3 +76,7 @@ export const useAsyncVideo = (
   }
   return [video.current, loaded];
 };
+
+export function preferDrawable(a: AsyncDrawable, b: AsyncDrawable) {
+  return a[1] ? a : b;
+}
