@@ -8,7 +8,7 @@ import {PrimaryButton} from './PrimaryButton';
 import {FooterNavLinks} from './FooterNavLinks';
 import {MOBILE_MEDIA_QUERY, CAN_HOVER_MEDIA_QUERY} from '@/constants';
 import {useDarkSection} from '@/hooks/useDarkSection';
-import {NoncriticalVideo} from './NoncriticalVideo';
+import {Codec, MimeType, NoncriticalVideo} from './NoncriticalVideo';
 
 const VIDEO_WIDTH = 1670;
 const VIDEO_HEIGHT = 1045;
@@ -37,8 +37,18 @@ export const Footer = () => {
         }}
       >
         <NoncriticalVideo
-          av1Source="/videos/Footer2x.av1.mp4"
-          defaultSource="/videos/Footer2x.mp4"
+          sources={[
+            {
+              src: '/videos/Footer2x.mp4',
+              mimeType: MimeType.MP4,
+              codec: Codec.H264,
+            },
+            {
+              src: '/videos/Footer2x.av1.mp4',
+              mimeType: MimeType.MP4,
+              codec: Codec.AV1,
+            },
+          ]}
           height={VIDEO_HEIGHT}
           width={VIDEO_WIDTH}
           style={{

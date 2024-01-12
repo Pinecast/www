@@ -3,22 +3,37 @@ import {useIsBot} from './UserAgentContext';
 import {StyleObject} from 'styletron-react';
 import * as React from 'react';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
-import {AV1_MIME} from '@/hooks/useAsyncResource';
+
+export enum MimeType {
+  MP4 = 'video/mp4',
+  WEBM = 'video/webm',
+}
+
+export enum Codec {
+  AV1 = 'av01.0.00M.10.0.111.01.01.01.0',
+  H264 = 'avc1.4D0033',
+  H265 = 'hvc1.1.6.L120.90', // (aka HEVC) For Safari on iOS.
+  VP9 = 'vp09.00.40.08.01.01.01.01.00',
+}
+
+type Source = {
+  src: string;
+  mimeType: MimeType;
+  codec: Codec;
+};
 
 export const NoncriticalVideo = ({
-  av1Source,
-  defaultSource,
   height,
   poster,
+  sources,
   style,
   width,
 }: {
-  av1Source?: string;
-  defaultSource: string;
   height: number;
   poster?: string;
-  width: number;
+  sources: Source[];
   style?: StyleObject;
+  width: number;
 }) => {
   const css = useCSS();
 
@@ -26,6 +41,7 @@ export const NoncriticalVideo = ({
   useIntersectionVisibility(
     videoRef,
     React.useCallback(intersecting => {
+      console.log(videoRef.current?.currentSrc);
       if (intersecting) {
         videoRef.current?.play();
       } else {
@@ -53,8 +69,11 @@ export const NoncriticalVideo = ({
         muted
         autoPlay
         loop
+        // For iOS, opt in to inline video playback so the video can autoplay without entering full-screen mode.
+        playsInline
         disablePictureInPicture
         disableRemotePlayback
+        preload="metadata"
         height={height}
         width={width}
         poster={poster}
@@ -71,8 +90,9 @@ export const NoncriticalVideo = ({
           // transform: 'translate(-50%, -50%)',
         })}
       >
-        {av1Source && <source src={av1Source} type={AV1_MIME} />}
-        <source src={defaultSource} />
+        {sources.map(({src, mimeType, codec}) => (
+          <source key={src} src={src} type={`${mimeType}; codecs="${codec}"`} />
+        ))}
       </video>
     </div>
   );
