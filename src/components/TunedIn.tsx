@@ -10,7 +10,7 @@ import {useScrollProgressEffect} from '@/hooks/useScrollProgress';
 import {StickyLine} from './StickyLine';
 import {useVisibleElements} from '@/hooks/useVisibleElements';
 import Link from 'next/link';
-import {NoncriticalVideo} from './NoncriticalVideo';
+import {Codec, MimeType, NoncriticalVideo} from './NoncriticalVideo';
 
 const VIDEO_WIDTH = 1060;
 const VIDEO_HEIGHT = 1440;
@@ -21,10 +21,30 @@ const PANELS = {
     heading: <>You are just getting started</>,
     url: '/learn/podcasting-for-beginners',
     image: '/images/art/user-beginner.png',
-    videos: {
-      vp9: '/videos/user-beginner.vp9.mp4',
-      av1: '/videos/user-beginner.av1.mp4',
-    },
+    videos: [
+      {
+        // Smallest
+        src: '/videos/user-beginner.vp9.webm',
+        mimeType: MimeType.WEBM,
+        codec: Codec.VP9,
+      },
+      {
+        src: '/videos/user-beginner.vp9.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.VP9,
+      },
+      {
+        // Necessary for iOS playback
+        src: '/videos/user-beginner.hevc.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.H265,
+      },
+      {
+        src: '/videos/user-beginner.av1.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.AV1,
+      },
+    ],
     sizes: [
       [265, 400],
       [530, 708.26],
@@ -35,10 +55,28 @@ const PANELS = {
     heading: <>You need advanced tools</>,
     url: '/learn/podcasting-for-power-users',
     image: '/images/art/user-advanced.png',
-    videos: {
-      vp9: '/videos/user-advanced.vp9.mp4',
-      av1: '/videos/user-advanced.av1.mp4',
-    },
+    videos: [
+      {
+        src: '/videos/user-advanced.vp9.webm',
+        mimeType: MimeType.WEBM,
+        codec: Codec.VP9,
+      },
+      {
+        src: '/videos/user-advanced.vp9.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.VP9,
+      },
+      {
+        src: '/videos/user-advanced.hevc.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.H265,
+      },
+      {
+        src: '/videos/user-advanced.av1.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.AV1,
+      },
+    ],
     sizes: [
       [265, 400],
       [530, 638.54],
@@ -49,10 +87,28 @@ const PANELS = {
     heading: <>You are an organization</>,
     url: '/learn/corporate-podcasting',
     image: '/images/art/user-organizations.png',
-    videos: {
-      vp9: '/videos/user-organizations.vp9.mp4',
-      av1: '/videos/user-organizations.av1.mp4',
-    },
+    videos: [
+      {
+        src: '/videos/user-organizations.vp9.webm',
+        mimeType: MimeType.WEBM,
+        codec: Codec.VP9,
+      },
+      {
+        src: '/videos/user-organizations.vp9.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.VP9,
+      },
+      {
+        src: '/videos/user-organizations.hevc.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.H265,
+      },
+      {
+        src: '/videos/user-organizations.av1.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.AV1,
+      },
+    ],
     sizes: [
       [265, 400],
       [530, 708.26],
@@ -297,8 +353,7 @@ const Panel = ({
         >
           {isActive && (
             <NoncriticalVideo
-              av1Source={panel.videos.av1}
-              defaultSource={panel.videos.vp9}
+              sources={panel.videos}
               height={VIDEO_HEIGHT}
               width={VIDEO_WIDTH}
               poster={panel.image}
