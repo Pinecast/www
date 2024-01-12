@@ -18,7 +18,7 @@ export const useAsyncImage = (src: string): [HTMLImageElement, boolean] => {
   return [image.current, loaded];
 };
 
-export const AV1_MIME = 'video/mp4; codecs=av01.0.05M.08';
+export const AV1_MIME = 'video/mp4; codecs=av01.0.00M.10.0.111.01.01.01.0';
 
 export const useAsyncVideo = (
   tracks: {
