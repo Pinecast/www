@@ -413,7 +413,8 @@ export const Globe = () => {
   });
   useCalculateResizableValue(
     React.useCallback(() => {
-      let verticalScrollbarWidth = window.innerWidth - document.body.offsetWidth;
+      let verticalScrollbarWidth =
+        window.innerWidth - document.body.offsetWidth;
       setWrapperSize({
         // Use the dimensions of the viewport without scrollbars.
         width: window.innerWidth - verticalScrollbarWidth,
@@ -534,24 +535,28 @@ export const Globe = () => {
         // Start from the center of the globe center position in imageData and work
         // left until we find a pixel that's #0a0a0a or darker. Draw a white line from
         // x=0 to that point along the center of the globe.
-        for (let i = imageData.width / 2; i >= 0; i -= 2) {
+        const centerIndex = Math.floor(imageData.width / 2);
+
+        for (let i = centerIndex; i >= 0; i--) {
           const pixel = i * 4;
           const r = imageData.data[pixel];
           const g = imageData.data[pixel + 1];
           const b = imageData.data[pixel + 2];
-          if (r <= 30 && g <= 30 && b <= 30) {
-            ctx.moveTo(i, globeCenterPosition);
-            ctx.lineTo(0, globeCenterPosition);
+          if (r <= 9 && g <= 9 && b <= 9) {
+            // Draw a white line from the left edge to the dark pixel found along the center of the globe.
+            ctx.moveTo(0, globeCenterPosition);
+            ctx.lineTo(i, globeCenterPosition);
             break;
           }
         }
-        // Now do the same thing in the opposite direction
-        for (let i = imageData.width / 2; i < imageData.width; i += 2) {
+        // Start from the center to the right edge.
+        for (let i = centerIndex; i < imageData.width; i++) {
           const pixel = i * 4;
           const r = imageData.data[pixel];
           const g = imageData.data[pixel + 1];
           const b = imageData.data[pixel + 2];
-          if (r <= 30 && g <= 30 && b <= 30) {
+          if (r <= 9 && g <= 9 && b <= 9) {
+            // Draw line from the right edge to the dark pixel found.
             ctx.moveTo(i, globeCenterPosition);
             ctx.lineTo(width, globeCenterPosition);
             break;
