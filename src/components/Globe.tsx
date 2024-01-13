@@ -460,6 +460,7 @@ export const Globe = () => {
     canvas,
     React.useCallback(
       ctx => {
+        if (!width) return;
         // ctx.clearRect(0, 0, width, height);
         ctx.fillStyle = '#090909';
         ctx.fillRect(0, 0, width, height);

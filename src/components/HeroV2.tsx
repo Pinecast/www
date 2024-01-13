@@ -158,6 +158,9 @@ export const HeroV2 = () => {
           return;
         }
 
+        const gap = 20 * window.devicePixelRatio;
+        const gutter = 10 * window.devicePixelRatio;
+
         // ctx.clearRect(0, 0, canvas.current!.width, canvas.current!.height);
         ctx.fillStyle = '#f8f4eb';
         ctx.fillRect(0, 0, canvas.current!.width, canvas.current!.height);
@@ -165,22 +168,32 @@ export const HeroV2 = () => {
         const scrollRatio = scrollY / windowHeight;
         const inverseScrollRatio = 1 - scrollRatio;
 
-        const {clientHeight: taHeight, offsetTop: taTop} = textArea.current!;
+        const {clientHeight: rawTaHeight, offsetTop: rawTaTop} =
+          textArea.current!;
+        const taTop = rawTaTop * window.devicePixelRatio;
+        const taHeight = rawTaHeight * window.devicePixelRatio;
 
-        if (width < MOBILE_BREAKPOINT) {
+        if (width / window.devicePixelRatio < MOBILE_BREAKPOINT) {
           ctx.save();
           ctx.beginPath();
           roundedRectPath(
             ctx,
             // 10px left padding
-            10 * inverseScrollRatio,
+            gutter * inverseScrollRatio,
             // The top is the bottom of the text area + 20px gap
-            taHeight + taTop + 20 - scrollY,
+            taHeight + taTop + gap - scrollY * devicePixelRatio,
             // The width is the wrapper width - 10px padding on each side
-            width - 20 * inverseScrollRatio,
+            width - 2 * gutter * inverseScrollRatio,
             // The height is the space below the text area - 10px padding - 20px gap
-            height - taHeight - taTop - 10 * inverseScrollRatio - 20 + scrollY,
-            Math.max(0, 1 - scrollY / (windowHeight * 0.25)) * 20,
+            height -
+              taHeight -
+              taTop -
+              gutter * inverseScrollRatio -
+              gap +
+              scrollY,
+            Math.max(0, 1 - scrollY / (windowHeight * 0.25)) *
+              20 *
+              devicePixelRatio,
           );
           ctx.closePath();
           ctx.clip();
@@ -195,63 +208,72 @@ export const HeroV2 = () => {
             c,
             ctx,
             // 10px left padding
-            10 * inverseScrollRatio,
+            gutter * inverseScrollRatio,
             // The top is the bottom of the text area + 20px gap
-            taHeight + taTop + 20 - scrollY,
+            taHeight + taTop + gap - scrollY * devicePixelRatio,
             // The width is the wrapper width - 10px padding on each side
-            width - 20 * inverseScrollRatio,
+            width - 2 * gutter * inverseScrollRatio,
             // The height is the space below the text area - 10px padding - 20px gap
-            height - taHeight - taTop - 10 * inverseScrollRatio - 20 + scrollY,
+            height -
+              taHeight -
+              taTop -
+              gutter * inverseScrollRatio -
+              gap +
+              scrollY,
           );
           ctx.restore();
-        } else if (width < TABLET_BREAKPOINT) {
+        } else if (width / window.devicePixelRatio < TABLET_BREAKPOINT) {
           // The central area is 5fr while the two sides are each 1.1fr.
           // The gap size is 20px.
-          const sideWidth = ((width - 40 - 40) / 723) * 176;
-          const centralWidth = ((width - 40 - 40) / 723) * 371;
+          const sideWidth = ((width - 2 * gap - 2 * gap) / 723) * 176;
+          const centralWidth = ((width - 2 * gap - 2 * gap) / 723) * 371;
 
-          const sideTopHeight = ((height - taTop - 20 - 20) / 78) * 46;
-          const sideBotHeight = ((height - taTop - 20 - 20) / 78) * 32;
+          const sideTopHeight = ((height - taTop - gap - gap) / 78) * 46;
+          const sideBotHeight = ((height - taTop - gap - gap) / 78) * 32;
 
-          const xNudge = scrollRatio * (sideWidth + 20 + 20);
+          const xNudge = scrollRatio * (sideWidth + gap + gap);
 
           // Left bottom
           drawImageInRoundedRect(
             ctx,
             bl,
-            20 - xNudge,
-            taTop + 20 + sideTopHeight,
+            gap - xNudge,
+            taTop + gap + sideTopHeight,
             sideWidth,
             sideBotHeight,
+            20 * devicePixelRatio,
           );
 
           // Right bottom
           drawImageInRoundedRect(
             ctx,
             br,
-            20 + sideWidth + 20 + centralWidth + 20 + xNudge,
-            taTop + 20 + sideTopHeight,
+            gap + sideWidth + gap + centralWidth + gap + xNudge,
+            taTop + gap + sideTopHeight,
             sideWidth,
             sideBotHeight,
+            20 * devicePixelRatio,
           );
 
           // Left top
           drawImageInRoundedRect(
             ctx,
             tl,
-            20 - xNudge,
+            gap - xNudge,
             taTop,
             sideWidth,
             sideTopHeight,
+            20 * devicePixelRatio,
           );
           // Right top
           drawImageInRoundedRect(
             ctx,
             tr,
-            20 + sideWidth + 20 + centralWidth + 20 + xNudge,
+            gap + sideWidth + gap + centralWidth + gap + xNudge,
             taTop,
             sideWidth,
             sideTopHeight,
+            20 * devicePixelRatio,
           );
 
           // Central
@@ -260,13 +282,20 @@ export const HeroV2 = () => {
           roundedRectPath(
             ctx,
             // 20px left padding, 20px gap, plus the width of the left side
-            20 + sideWidth + 20 - xNudge,
+            gap + sideWidth + gap - xNudge,
             // The top is the bottom of the text area + 20px gap
-            taHeight + taTop + 20 - scrollY,
+            taHeight + taTop + gap - scrollY,
             centralWidth + 2 * xNudge,
             // The height is the space below the text area - 20px padding - 20px gap
-            height - taHeight - taTop - 20 * inverseScrollRatio - 20 + scrollY,
-            Math.max(0, 1 - scrollY / (windowHeight * 0.25)) * 20,
+            height -
+              taHeight -
+              taTop -
+              gap * inverseScrollRatio -
+              gap +
+              scrollY,
+            Math.max(0, 1 - scrollY / (windowHeight * 0.25)) *
+              20 *
+              devicePixelRatio,
           );
           ctx.closePath();
           ctx.clip();
@@ -281,95 +310,106 @@ export const HeroV2 = () => {
             c,
             ctx,
             // 20px left padding, 20px gap, plus the width of the left side
-            20 + sideWidth + 20 - xNudge,
+            gap + sideWidth + gap - xNudge,
             // The top is the bottom of the text area + 20px gap
-            taHeight + taTop + 20 - scrollY,
+            taHeight + taTop + gap - scrollY,
             centralWidth + 2 * xNudge,
             // The height is the space below the text area - 20px padding - 20px gap
-            height - taHeight - taTop - 20 * inverseScrollRatio - 20 + scrollY,
+            height -
+              taHeight -
+              taTop -
+              gap * inverseScrollRatio -
+              gap +
+              scrollY,
           );
           ctx.restore();
         } else {
-          const sideWidth = ((width - 40 - 40 - 40) / 1554) * 256;
-          const centralWidth = ((width - 40 - 40 - 40) / 1554) * 530;
+          const sideWidth =
+            ((width - 2 * gap - 2 * gap - 2 * gap) / 1554) * 256;
+          const centralWidth =
+            ((width - 2 * gap - 2 * gap - 2 * gap) / 1554) * 530;
 
-          const innerSideTopHeight = ((height - taTop - 20 - 20) / 78) * 24;
-          const innerSideBotHeight = ((height - taTop - 20 - 20) / 78) * 54;
+          const innerSideTopHeight = ((height - taTop - gap - gap) / 78) * 24;
+          const innerSideBotHeight = ((height - taTop - gap - gap) / 78) * 54;
 
-          const outerSideTopHeight = ((height - taTop - 20 - 20) / 78) * 46;
-          const outerSideBotHeight = ((height - taTop - 20 - 20) / 78) * 32;
+          const outerSideTopHeight = ((height - taTop - gap - gap) / 78) * 46;
+          const outerSideBotHeight = ((height - taTop - gap - gap) / 78) * 32;
 
-          const xNudge = scrollRatio * (sideWidth * 2 + 20 + 20 + 20);
+          const xNudge = scrollRatio * (sideWidth * 2 + gap + gap + gap);
 
           // Left bottom
           drawImageInRoundedRect(
             ctx,
             bl,
-            20 - xNudge * 1.5,
-            taTop + 20 + outerSideTopHeight,
+            gap - xNudge * 1.5,
+            taTop + gap + outerSideTopHeight,
             sideWidth,
             outerSideBotHeight,
+            20 * devicePixelRatio,
           );
           // Right bottom
           drawImageInRoundedRect(
             ctx,
             br,
-            20 +
+            gap +
               sideWidth +
-              20 +
+              gap +
               centralWidth +
-              20 +
+              gap +
               sideWidth +
-              20 +
+              gap +
               sideWidth +
-              20 +
+              gap +
               xNudge * 1.5,
-            taTop + 20 + outerSideTopHeight,
+            taTop + gap + outerSideTopHeight,
             sideWidth,
             outerSideBotHeight,
+            20 * devicePixelRatio,
           );
           // Draw outer radius
           drawRadius(
             ctx,
             width / 2,
-            RADIUS_OFFSET - scrollY * 2.25,
-            radiusState.current.outer + scrollY,
+            RADIUS_OFFSET * window.devicePixelRatio - scrollY * 2.25,
+            radiusState.current.outer + scrollY * devicePixelRatio,
           );
 
           // Left top
           drawImageInRoundedRect(
             ctx,
             tl,
-            20 - xNudge * 1.5,
+            gap - xNudge * 1.5,
             taTop,
             sideWidth,
             outerSideTopHeight,
+            20 * devicePixelRatio,
           );
           // Right top
           drawImageInRoundedRect(
             ctx,
             tr,
-            20 +
+            gap +
               sideWidth +
-              20 +
+              gap +
               centralWidth +
-              20 +
+              gap +
               sideWidth +
-              20 +
+              gap +
               sideWidth +
-              20 +
+              gap +
               xNudge * 1.5,
             taTop,
             sideWidth,
             outerSideTopHeight,
+            20 * devicePixelRatio,
           );
           if (width > 1400) {
             // Draw middle radius
             drawRadius(
               ctx,
               width / 2,
-              RADIUS_OFFSET - scrollY * 2.25,
-              radiusState.current.middle + scrollY,
+              RADIUS_OFFSET * devicePixelRatio - scrollY * 2.25,
+              radiusState.current.middle + scrollY * devicePixelRatio,
             );
           }
 
@@ -378,27 +418,29 @@ export const HeroV2 = () => {
           ctx.beginPath();
           roundedRectPath(
             ctx,
-            20 + sideWidth + 20 - xNudge,
+            gap + sideWidth + gap - xNudge,
             taTop,
             sideWidth,
             innerSideTopHeight,
+            20 * devicePixelRatio,
           );
           roundedRectPath(
             ctx,
-            20 + sideWidth + 20 - xNudge,
-            taTop + innerSideTopHeight + 20,
+            gap + sideWidth + gap - xNudge,
+            taTop + innerSideTopHeight + gap,
             sideWidth,
             innerSideBotHeight,
+            20 * devicePixelRatio,
           );
           ctx.closePath();
           ctx.clip();
           drawImageProp(
             ml,
             ctx,
-            20 + sideWidth + 20 - xNudge,
+            gap + sideWidth + gap - xNudge,
             taTop,
             sideWidth,
-            height - taTop - 20,
+            height - taTop - gap,
           );
           ctx.restore();
 
@@ -407,27 +449,50 @@ export const HeroV2 = () => {
           ctx.beginPath();
           roundedRectPath(
             ctx,
-            20 + sideWidth + 20 + sideWidth + 20 + centralWidth + 20 + xNudge,
+            gap +
+              sideWidth +
+              gap +
+              sideWidth +
+              gap +
+              centralWidth +
+              gap +
+              xNudge,
             taTop,
             sideWidth,
             innerSideTopHeight,
+            20 * devicePixelRatio,
           );
           roundedRectPath(
             ctx,
-            20 + sideWidth + 20 + sideWidth + 20 + centralWidth + 20 + xNudge,
-            taTop + innerSideTopHeight + 20,
+            gap +
+              sideWidth +
+              gap +
+              sideWidth +
+              gap +
+              centralWidth +
+              gap +
+              xNudge,
+            taTop + innerSideTopHeight + gap,
             sideWidth,
             innerSideBotHeight,
+            20 * devicePixelRatio,
           );
           ctx.closePath();
           ctx.clip();
           drawImageProp(
             mr,
             ctx,
-            20 + sideWidth + 20 + sideWidth + 20 + centralWidth + 20 + xNudge,
+            gap +
+              sideWidth +
+              gap +
+              sideWidth +
+              gap +
+              centralWidth +
+              gap +
+              xNudge,
             taTop,
             sideWidth,
-            height - taTop - 20,
+            height - taTop - gap,
           );
           ctx.restore();
 
@@ -437,13 +502,20 @@ export const HeroV2 = () => {
           roundedRectPath(
             ctx,
             // 20px left padding, 20px gap twice, plus the width of the left side times two
-            20 + sideWidth + 20 + sideWidth + 20 - xNudge,
+            gap + sideWidth + gap + sideWidth + gap - xNudge,
             // The top is the bottom of the text area + 20px gap
-            taHeight + taTop + 20 - scrollY,
+            taHeight + taTop + gap - scrollY * devicePixelRatio,
             centralWidth + 2 * xNudge,
             // The height is the space below the text area - 20px padding - 20px gap
-            height - taHeight - taTop - 20 * inverseScrollRatio - 20 + scrollY,
-            Math.max(0, 1 - scrollY / (windowHeight * 0.25)) * 20,
+            height -
+              taHeight -
+              taTop -
+              gap * inverseScrollRatio -
+              gap +
+              scrollY * devicePixelRatio,
+            Math.max(0, 1 - scrollY / (windowHeight * 0.25)) *
+              20 *
+              devicePixelRatio,
           );
           ctx.closePath();
           ctx.clip();
@@ -458,12 +530,17 @@ export const HeroV2 = () => {
             c,
             ctx,
             // 20px left padding, 20px gap twice, plus the width of the left side times two
-            20 + sideWidth + 20 + sideWidth + 20 - xNudge,
+            gap + sideWidth + gap + sideWidth + gap - xNudge,
             // The top is the bottom of the text area + 20px gap
-            taHeight + taTop + 20 - scrollY,
+            taHeight + taTop + gap - scrollY * devicePixelRatio,
             centralWidth + 2 * xNudge,
             // The height is the space below the text area - 20px padding - 20px gap
-            height - taHeight - taTop - 20 * inverseScrollRatio - 20 + scrollY,
+            height -
+              taHeight -
+              taTop -
+              gap * inverseScrollRatio -
+              gap +
+              scrollY * devicePixelRatio,
           );
           ctx.restore();
         }
@@ -472,8 +549,8 @@ export const HeroV2 = () => {
         drawRadius(
           ctx,
           width / 2,
-          RADIUS_OFFSET - scrollY * 3,
-          radiusState.current.inner + scrollY * 2,
+          (RADIUS_OFFSET - scrollY * 3) * window.devicePixelRatio,
+          (radiusState.current.inner + scrollY * 2) * window.devicePixelRatio,
         );
 
         radiusState.current.inner +=
@@ -490,11 +567,17 @@ export const HeroV2 = () => {
   );
 
   const updateSize = React.useCallback((height: number, width: number) => {
-    canvas.current!.width = width;
-    canvas.current!.height = height;
+    if (!canvas.current) {
+      return;
+    }
+    canvas.current.width = width;
+    canvas.current.height = height;
+    canvas.current.style.width = `${width / window.devicePixelRatio}px`;
+    canvas.current.style.height = `${height / window.devicePixelRatio}px`;
 
-    const isMobile = width < MOBILE_BREAKPOINT;
-    const isTablet = width < TABLET_BREAKPOINT && !isMobile;
+    const isMobile = width / window.devicePixelRatio < MOBILE_BREAKPOINT;
+    const isTablet =
+      width / window.devicePixelRatio < TABLET_BREAKPOINT && !isMobile;
 
     const radiusOffset = isMobile
       ? RADIUS_OFFSET_MOBILE
@@ -508,17 +591,20 @@ export const HeroV2 = () => {
     );
     radiusTarget.current.middle = Math.sqrt(
       ((width / 2) * (2.5 / 4) + 20) ** 2 +
-        (height * (24 / 78) + radiusOffset) ** 2,
+        (height * (24 / 78) + radiusOffset * devicePixelRatio) ** 2,
     );
     radiusTarget.current.outer = Math.sqrt(
       ((width / 2) * (2.5 / 4) + 20) ** 2 +
-        (height * (48 / 78) + radiusOffset) ** 2,
+        (height * (48 / 78) + radiusOffset * devicePixelRatio) ** 2,
     );
   }, []);
 
   useCalculateResizableValue(
     React.useCallback(() => {
-      const {width, height} = wrapper.current!.getBoundingClientRect();
+      const {width: rawWidth, height: rawHeight} =
+        wrapper.current!.getBoundingClientRect();
+      const width = rawWidth * window.devicePixelRatio;
+      const height = rawHeight * window.devicePixelRatio;
       setWrapperSize({width, height});
       updateSize(height, width);
     }, [updateSize]),
