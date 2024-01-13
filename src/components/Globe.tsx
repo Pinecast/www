@@ -65,6 +65,7 @@ if (typeof document !== 'undefined') {
     ...monetizationIcons,
   ]) {
     const div = document.createElement('div');
+    div.style.display = 'none';
     document.body.appendChild(div);
     const root = ReactDOM.createRoot(div);
     const Component = () => {
@@ -75,8 +76,10 @@ if (typeof document !== 'undefined') {
             const img = new Image();
             img.src = `data:image/svg+xml;base64,${btoa(elem.innerHTML)}`;
             iconCache.set(Icon, img);
-            root.unmount();
-            div.remove();
+            requestIdleCallback(() => {
+              root.unmount();
+              div.remove();
+            });
           }}
         >
           <Icon />
