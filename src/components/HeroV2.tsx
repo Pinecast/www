@@ -10,13 +10,11 @@ import {SecondaryButton} from './SecondaryButton';
 import * as React from 'react';
 import {useCalculateResizableValue} from '@/hooks/useCalculateResizableValue';
 import {
-  AsyncDrawable,
   AV1_MIME,
   preferDrawable,
   useAsyncImage,
   useAsyncVideo,
 } from '@/hooks/useAsyncResource';
-import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
 import {
   drawImageInRoundedRect,
   drawImageProp,
@@ -78,6 +76,7 @@ export const HeroV2 = () => {
       [AV1_MIME]: '/videos/hero/t-l.av1.mp4',
     },
     sizeSet && !isMobile,
+    true,
   );
   const trv = useAsyncVideo(
     {
@@ -85,6 +84,7 @@ export const HeroV2 = () => {
       [AV1_MIME]: '/videos/hero/t-r.av1.mp4',
     },
     sizeSet && !isMobile,
+    true,
   );
   const blv = useAsyncVideo(
     {
@@ -92,6 +92,7 @@ export const HeroV2 = () => {
       [AV1_MIME]: '/videos/hero/b-l.av1.mp4',
     },
     sizeSet && !isMobile,
+    true,
   );
   const brv = useAsyncVideo(
     {
@@ -99,6 +100,7 @@ export const HeroV2 = () => {
       [AV1_MIME]: '/videos/hero/b-r.av1.mp4',
     },
     sizeSet && !isMobile,
+    true,
   );
   const mlv = useAsyncVideo(
     {
@@ -106,6 +108,7 @@ export const HeroV2 = () => {
       [AV1_MIME]: '/videos/hero/ml.av1.mp4',
     },
     sizeSet && !isMobile && !isTablet,
+    true,
   );
   const mrv = useAsyncVideo(
     {
@@ -113,12 +116,14 @@ export const HeroV2 = () => {
       [AV1_MIME]: '/videos/hero/mr.av1.mp4',
     },
     sizeSet && !isMobile && !isTablet,
+    true,
   );
   const cv = useAsyncVideo(
     {
       'video/mp4': '/videos/hero/central.mp4',
       [AV1_MIME]: '/videos/hero/central.av1.mp4',
     },
+    true,
     true,
   );
 
