@@ -452,7 +452,10 @@ export const Globe = () => {
       // Use the dimensions of the viewport without scrollbars.
       const width = window.innerWidth - verticalScrollbarWidth;
       const height = window.innerHeight;
-      setWrapperSize({width, height});
+      setWrapperSize({
+        width: width * devicePixelRatio,
+        height: height * devicePixelRatio,
+      });
       const m = menu.current!;
       const globeCenterPosition = getGlobeCenterPosition(width, height);
       const globeWidth = getGlobeWidth(width, height);
@@ -476,7 +479,7 @@ export const Globe = () => {
       [AV1_MIME]: '/videos/globe/globe2x.av1.mp4',
     },
     // Disable the video on mobile
-    width > MOBILE_BREAKPOINT,
+    width / (global.devicePixelRatio ?? 1) > MOBILE_BREAKPOINT,
     false,
   );
 
@@ -667,14 +670,6 @@ export const Globe = () => {
           position: 'sticky',
           height: '100vh',
           top: 0,
-
-          '--globe-vertical-space': 'calc(100vh - 120px)',
-          '--globe-horizontal-space': '100vw',
-          '--globe-ideal-horizontal-height':
-            'calc(var(--globe-horizontal-space) * 0.35)',
-          '--globe-ideal-height': 'var(--globe-ideal-horizontal-height)',
-
-          '--globe-rings-height': 'calc(50vh + 120px)',
         })}
       >
         <canvas
@@ -685,6 +680,8 @@ export const Globe = () => {
             zIndex: 3,
             pointerEvents: 'none',
             imageRendering: 'pixelated',
+            width: `${width / (global.devicePixelRatio ?? 1)}px`,
+            height: `${height / (global.devicePixelRatio ?? 1)}px`,
           })}
           ref={canvas}
           height={height}
@@ -695,8 +692,8 @@ export const Globe = () => {
         <FeatureMenu
           currentFeatureSlug={currentFeatureSlug}
           ref={menu}
-          height={height}
-          width={width}
+          height={height / (global.devicePixelRatio ?? 1)}
+          width={width / (global.devicePixelRatio ?? 1)}
         />
       </div>
 

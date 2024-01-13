@@ -190,7 +190,7 @@ export const HeroV2 = () => {
               taTop -
               gutter * inverseScrollRatio -
               gap +
-              scrollY,
+              scrollY * devicePixelRatio,
             Math.max(0, 1 - scrollY / (windowHeight * 0.25)) *
               20 *
               devicePixelRatio,
@@ -219,7 +219,7 @@ export const HeroV2 = () => {
               taTop -
               gutter * inverseScrollRatio -
               gap +
-              scrollY,
+              scrollY * devicePixelRatio,
           );
           ctx.restore();
         } else if (width / window.devicePixelRatio < TABLET_BREAKPOINT) {
