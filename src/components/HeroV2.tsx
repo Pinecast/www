@@ -284,7 +284,7 @@ export const HeroV2 = () => {
             // 20px left padding, 20px gap, plus the width of the left side
             gap + sideWidth + gap - xNudge,
             // The top is the bottom of the text area + 20px gap
-            taHeight + taTop + gap - scrollY,
+            taHeight + taTop + gap - scrollY * devicePixelRatio,
             centralWidth + 2 * xNudge,
             // The height is the space below the text area - 20px padding - 20px gap
             height -
@@ -292,7 +292,7 @@ export const HeroV2 = () => {
               taTop -
               gap * inverseScrollRatio -
               gap +
-              scrollY,
+              scrollY * devicePixelRatio,
             Math.max(0, 1 - scrollY / (windowHeight * 0.25)) *
               20 *
               devicePixelRatio,
@@ -312,7 +312,7 @@ export const HeroV2 = () => {
             // 20px left padding, 20px gap, plus the width of the left side
             gap + sideWidth + gap - xNudge,
             // The top is the bottom of the text area + 20px gap
-            taHeight + taTop + gap - scrollY,
+            taHeight + taTop + gap - scrollY * devicePixelRatio,
             centralWidth + 2 * xNudge,
             // The height is the space below the text area - 20px padding - 20px gap
             height -
@@ -320,7 +320,7 @@ export const HeroV2 = () => {
               taTop -
               gap * inverseScrollRatio -
               gap +
-              scrollY,
+              scrollY * devicePixelRatio,
           );
           ctx.restore();
         } else {

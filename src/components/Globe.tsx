@@ -170,7 +170,9 @@ const IntroSection = React.memo(function IntroSection() {
       >
         Check, Check 1, 2, 3
       </H1>
-      <Body4 style={{maxWidth: '32rem'}}>
+      <Body4
+        style={{maxWidth: '32rem', paddingLeft: '10px', paddingRight: '10px'}}
+      >
         Whether you&rsquo;re sharing to a handful of friends, your company, or
         the world, Pinecast has a solution that&rsquo;s right for you.
       </Body4>
@@ -208,9 +210,9 @@ const FeatureText = React.memo(function FeatureText({
         display: 'grid',
         gap: '10px',
         gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
-        height: 'calc(100vh - var(--globe-rings-height))',
+        height: '50vh',
         opacity: currentFeature ? '1' : '0',
-        paddingBottom: '60px',
+        paddingBottom: '20px',
         placeItems: 'end',
         pointerEvents: currentFeature ? 'auto' : 'none',
         position: 'absolute',
@@ -277,82 +279,92 @@ const FeatureText = React.memo(function FeatureText({
   );
 });
 
-const FeatureMenu = React.memo(function FeatureMenu({
-  currentFeatureSlug,
-}: {
-  currentFeatureSlug: Feature | null;
-}) {
+const FeatureMenu = React.forwardRef(function FeatureMenu(
+  {
+    currentFeatureSlug,
+    height,
+    width,
+  }: {
+    currentFeatureSlug: Feature | null;
+    height: number;
+    width: number;
+  },
+  ref: React.Ref<SVGSVGElement>,
+) {
   const css = useCSS();
+  const radius = Math.min(getGlobeWidth(width, height) / 2 + 80, width);
   return (
     <svg
+      ref={ref}
       className={css({
         position: 'absolute',
-        bottom:
-          'calc(var(--globe-vertical-space) / 2 - var(--globe-ideal-height) / 2 - 150px)',
-        left: '-100%',
-        right: '-100%',
         margin: '0 auto',
-        width: '471px',
-        zIndex: 2,
+        width: '400px',
+        zIndex: 4,
       })}
+      viewBox="0 0 400 100"
+      width="400"
+      height="100"
+      preserveAspectRatio="none"
     >
-      <path
-        d="M0.5 1.20642C67.3374 47.1259 148.28 74 235.5 74C322.72 74 403.663 47.1259 470.5 1.20642"
-        id="globeCurvedTextPath"
-        fill="transparent"
-      />
-      <text
-        fill="var(--color-white)"
-        className={css({
-          ...MonumentGroteskRegular,
-          fontSize: '26px',
-          fontWeight: 600,
-          [MOBILE_MEDIA_QUERY]: {
-            fontSize: '18px',
-          },
-        })}
-      >
-        <textPath
-          xlinkHref="#globeCurvedTextPath"
-          startOffset="50%"
-          textAnchor="middle"
+      <g transform="translate(0 20)">
+        <path
+          d={`M ${-radius + 200} -${radius - 50} a ${radius} ${radius} 0 1 0 ${
+            2 * radius
+          } 0`}
+          id="globeCurvedTextPath"
+          fill="transparent"
+        />
+        <text
+          fill="var(--color-white)"
+          className={css({
+            ...MonumentGroteskRegular,
+            fontSize: `${radius * 0.075}px`,
+            fontWeight: 600,
+          })}
         >
-          <Link
-            className={css({
-              fill: 'inherit',
-              transition: 'opacity 0.2s',
-              opacity: currentFeatureSlug === 'distribution' ? 1 : 0.3,
-            })}
-            href="#distribution"
+          <textPath
+            xlinkHref="#globeCurvedTextPath"
+            startOffset="50%"
+            textAnchor="middle"
           >
-            Distribution
-          </Link>
-          <tspan dx={10}>
             <Link
               className={css({
                 fill: 'inherit',
                 transition: 'opacity 0.2s',
-                opacity: currentFeatureSlug === 'analytics' ? 1 : 0.3,
+                opacity: currentFeatureSlug === 'distribution' ? 1 : 0.3,
               })}
-              href="#analytics"
+              href="#distribution"
             >
-              Analytics
+              Distribution
             </Link>
-          </tspan>
-          <tspan dx={10}>
-            <Link
-              className={css({
-                fill: 'inherit',
-                transition: 'opacity 0.2s',
-                opacity: currentFeatureSlug === 'monetization' ? 1 : 0.3,
-              })}
-              href="#monetization"
-            >
-              Monetization
-            </Link>
-          </tspan>
-        </textPath>
-      </text>
+            <tspan dx={10}>
+              <Link
+                className={css({
+                  fill: 'inherit',
+                  transition: 'opacity 0.2s',
+                  opacity: currentFeatureSlug === 'analytics' ? 1 : 0.3,
+                })}
+                href="#analytics"
+              >
+                Analytics
+              </Link>
+            </tspan>
+            <tspan dx={10}>
+              <Link
+                className={css({
+                  fill: 'inherit',
+                  transition: 'opacity 0.2s',
+                  opacity: currentFeatureSlug === 'monetization' ? 1 : 0.3,
+                })}
+                href="#monetization"
+              >
+                Monetization
+              </Link>
+            </tspan>
+          </textPath>
+        </text>
+      </g>
     </svg>
   );
 });
@@ -396,6 +408,23 @@ function getImageOffset(currentFeatureSlug: Feature | null) {
   }
 }
 
+function getGlobeCenterPosition(width: number, height: number) {
+  const isMobile = width < height;
+  const headerSize = isMobile ? 80 : 120;
+  return (height - headerSize) / (isMobile ? 2.8 : 2.4) + headerSize;
+}
+function getGlobeWidth(width: number, height: number) {
+  const isMobile = width < height;
+  const headerSize = isMobile ? 80 : 120;
+  return Math.max(
+    0,
+    Math.min(
+      width - 20,
+      isMobile ? (height - headerSize) / 2.5 : (height - headerSize) / 1.5,
+    ),
+  );
+}
+
 const IMAGE_HEIGHT = 547;
 const IMAGE_WIDTH = 3335;
 const VIDEO_SIZE = 1600;
@@ -406,6 +435,7 @@ export const Globe = () => {
 
   const ref = React.useRef<HTMLElement>(null);
   useDarkSection(ref);
+  const menu = React.useRef<SVGSVGElement>(null);
 
   const [{width, height}, setWrapperSize] = React.useState<{
     width: number;
@@ -418,11 +448,23 @@ export const Globe = () => {
     React.useCallback(() => {
       let verticalScrollbarWidth =
         window.innerWidth - document.body.offsetWidth;
-      setWrapperSize({
-        // Use the dimensions of the viewport without scrollbars.
-        width: window.innerWidth - verticalScrollbarWidth,
-        height: window.innerHeight,
-      });
+
+      // Use the dimensions of the viewport without scrollbars.
+      const width = window.innerWidth - verticalScrollbarWidth;
+      const height = window.innerHeight;
+      setWrapperSize({width, height});
+      const m = menu.current!;
+      const globeCenterPosition = getGlobeCenterPosition(width, height);
+      const globeWidth = getGlobeWidth(width, height);
+      const isMobile = width < height;
+      const menuWidth = Math.min(
+        (globeWidth / 850) * 400 * (isMobile ? 3 : 1.5),
+        width,
+      );
+      m.style.left = `${(width - menuWidth) / 2}px`;
+      m.style.top = `${globeCenterPosition + globeWidth / 2}px`;
+      m.style.width = `${menuWidth}px`;
+      m.style.height = `${menuWidth / 4}px`;
     }, []),
   );
 
@@ -475,21 +517,10 @@ export const Globe = () => {
         imageState.current.lastTs = now;
         imageState.current.xPos = xPos + (imageOffset - xPos) * (delta * 0.01);
 
-        const isMobile = width < MOBILE_BREAKPOINT;
+        const isMobile = width < height;
 
-        const headerSize = isMobile ? 80 : 120;
-        const globeCenterPosition =
-          (height - headerSize) / (isMobile ? 2.8 : 2.4) + headerSize;
-
-        const globeWidth = Math.max(
-          0,
-          Math.min(
-            width - 20,
-            isMobile
-              ? (height - headerSize) / 2.5
-              : (height - headerSize) / 1.5,
-          ),
-        );
+        const globeCenterPosition = getGlobeCenterPosition(width, height);
+        const globeWidth = getGlobeWidth(width, height);
         const globeRadius = globeWidth / 2;
 
         const [gvVideo, gvLoaded] = gv;
@@ -660,39 +691,13 @@ export const Globe = () => {
           width={width}
         />
         {/* <SideTicks /> */}
-        {/* <div
-          // Spacer that aligns semi-Globe to be flush with Equator-esque line
-          className={css({
-            height: 'var(--globe-rings-height)',
-            position: 'relative',
-          })}
-        >
-          <GlobeDesktop
-            atDistribution={currentFeatureSlug === 'distribution'}
-            atAnalytics={currentFeatureSlug === 'analytics'}
-            atMonetization={currentFeatureSlug === 'monetization'}
-          />
-        </div> */}
         <FeatureText currentFeature={currentFeature} />
-        {/* <div
-          ref={globeCircleRef}
-          className={css({
-            borderRadius: '100%',
-            backgroundImage: 'url(/images/globe-full.png)',
-            backgroundPositionY: 'center',
-            backgroundSize: 'auto calc(var(--globe-ideal-height) * 1.5)',
-            position: 'absolute',
-            top: 'calc(var(--globe-vertical-space) / 2 - var(--globe-ideal-height) / 2 + 120px)',
-            left: '-100%',
-            right: '-100%',
-            margin: '0 auto',
-            height: 'var(--globe-ideal-height)',
-            width: 'var(--globe-ideal-height)',
-            willChange: 'background-position-x',
-            zIndex: 2,
-          })}
-        /> */}
-        {/* <FeatureMenu currentFeatureSlug={currentFeatureSlug} /> */}
+        <FeatureMenu
+          currentFeatureSlug={currentFeatureSlug}
+          ref={menu}
+          height={height}
+          width={width}
+        />
       </div>
 
       {/* Spacer */}
@@ -707,7 +712,7 @@ export const Globe = () => {
       />
       <a
         id="monetization"
-        className={css({position: 'absolute', top: 'calc(2.2 * 100vh)'})}
+        className={css({position: 'absolute', top: 'calc(2.6 * 100vh)'})}
       />
     </section>
   );

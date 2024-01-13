@@ -17,6 +17,7 @@ export const useScrollListener = (
 ) => {
   React.useEffect(() => {
     handlers.add(handler);
+    handler(window.scrollY, window.innerHeight);
 
     return () => {
       handlers.delete(handler);
