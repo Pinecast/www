@@ -536,8 +536,7 @@ export const Globe = () => {
         // left until we find a pixel that's #0a0a0a or darker. Draw a white line from
         // x=0 to that point along the center of the globe.
         const centerIndex = Math.floor(imageData.width / 2);
-
-        for (let i = centerIndex; i >= 0; i--) {
+        for (let i = centerIndex; i >= 0; i -= 2) {
           const pixel = i * 4;
           const r = imageData.data[pixel];
           const g = imageData.data[pixel + 1];
@@ -550,7 +549,7 @@ export const Globe = () => {
           }
         }
         // Start from the center to the right edge.
-        for (let i = centerIndex; i < imageData.width; i++) {
+        for (let i = centerIndex; i < imageData.width; i += 2) {
           const pixel = i * 4;
           const r = imageData.data[pixel];
           const g = imageData.data[pixel + 1];
