@@ -413,7 +413,12 @@ export const Globe = () => {
   });
   useCalculateResizableValue(
     React.useCallback(() => {
-      setWrapperSize({width: window.innerWidth, height: window.innerHeight});
+      let verticalScrollbarWidth = window.innerWidth - document.body.offsetWidth;
+      setWrapperSize({
+        // Use the dimensions of the viewport without scrollbars.
+        width: window.innerWidth - verticalScrollbarWidth,
+        height: window.innerHeight,
+      });
     }, []),
   );
 
