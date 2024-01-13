@@ -726,7 +726,7 @@ export const HeroV2 = () => {
       <div
         className={css({
           background: 'var(--color-space)',
-          bottom: 0,
+          height: '100lvh',
           left: 0,
           position: 'absolute',
           right: 0,
