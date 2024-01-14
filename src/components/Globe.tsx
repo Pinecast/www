@@ -413,34 +413,37 @@ function getVideoSegmentBounds(currentFeatureSlug: Feature | null) {
 
 const VIEWPORT_HEIGHTS = 3.2;
 // In percents:
-const DISTRIBUTION_OFFSET = 0.3;
-const ANALYTICS_OFFSET = 0.6;
-const MONETIZATION_OFFSET = 0.9;
+const DISTRIBUTION_SCROLL_OFFSET = 0.3;
+const ANALYTICS_SCROLL_OFFSET = 0.6;
+const MONETIZATION_SCROLL_OFFSET = 0.85;
+const DISTRIBUTION_IMAGE_OFFSET = 0.146;
+const ANALYTICS_IMAGE_OFFSET = 0.509;
+const MONETIZATION_IMAGE_OFFSET = 0.855;
 
 const getScrollOffset = (offset: number) => {
-  return (offset - DISTRIBUTION_OFFSET) / (1 - DISTRIBUTION_OFFSET);
+  return (offset - DISTRIBUTION_SCROLL_OFFSET) / (1 - DISTRIBUTION_SCROLL_OFFSET);
 };
 
 function getImageOffset(currentFeatureSlug: Feature | null) {
   switch (currentFeatureSlug) {
     case 'distribution':
-      return 0.146;
+      return DISTRIBUTION_IMAGE_OFFSET;
     case 'analytics':
-      return 0.509;
+      return ANALYTICS_IMAGE_OFFSET;
     case 'monetization':
-      return 0.855;
+      return MONETIZATION_IMAGE_OFFSET;
     default:
       return 0;
   }
 }
 function chooseFeature(scrollRatio: number) {
-  if (scrollRatio >= DISTRIBUTION_OFFSET && scrollRatio < ANALYTICS_OFFSET) {
+  if (scrollRatio >= DISTRIBUTION_SCROLL_OFFSET && scrollRatio < ANALYTICS_SCROLL_OFFSET) {
     return 'distribution';
   }
-  if (scrollRatio >= ANALYTICS_OFFSET && scrollRatio < MONETIZATION_OFFSET) {
+  if (scrollRatio >= ANALYTICS_SCROLL_OFFSET && scrollRatio < MONETIZATION_SCROLL_OFFSET) {
     return 'analytics';
   }
-  if (scrollRatio >= MONETIZATION_OFFSET) {
+  if (scrollRatio >= MONETIZATION_SCROLL_OFFSET) {
     return 'monetization';
   }
   return null;
@@ -749,10 +752,10 @@ export const Globe = () => {
             perlin.noise3d(now / 1000 / 3, dist, rotation) / 50;
 
           const distributionSectionOpacity =
-            getCloseness(animPerc, DISTRIBUTION_OFFSET, 0.07) * 1; // No scale factor, it's a percent
+            getCloseness(animPerc, DISTRIBUTION_IMAGE_OFFSET, 0.07) * 1; // No scale factor, it's a percent
           const distributionRotationOffset =
             perlinRotationOffset +
-            getSignedCloseness(animPerc, DISTRIBUTION_OFFSET, 0.07) * -0.15; // 0.15 radians
+            getSignedCloseness(animPerc, DISTRIBUTION_IMAGE_OFFSET, 0.07) * -0.15; // 0.15 radians
           // console.log(distributionSectionOffset, distributionRotationOffset);
           if (distributionSectionOpacity > 0.01) {
             ctx.globalAlpha = distributionSectionOpacity;
@@ -785,10 +788,10 @@ export const Globe = () => {
 
           const analyticsIcon = iconCache.get(analyticsIcons[i])!;
           const analyticsSectionOpacity =
-            getCloseness(animPerc, ANALYTICS_OFFSET, 0.07) * 1; // No scale factor, it's a percent
+            getCloseness(animPerc, ANALYTICS_IMAGE_OFFSET, 0.07) * 1; // No scale factor, it's a percent
           const analyticsRotationOffset =
             perlinRotationOffset +
-            getSignedCloseness(animPerc, ANALYTICS_OFFSET, 0.07) * -0.15; // 0.15 radians
+            getSignedCloseness(animPerc, ANALYTICS_IMAGE_OFFSET, 0.07) * -0.15; // 0.15 radians
           if (analyticsSectionOpacity > 0.01) {
             ctx.globalAlpha = analyticsSectionOpacity;
             ctx.drawImage(
@@ -812,10 +815,10 @@ export const Globe = () => {
 
           const monetizationIcon = iconCache.get(monetizationIcons[i])!;
           const monetizationSectionOpacity =
-            getCloseness(animPerc, MONETIZATION_OFFSET, 0.07) * 1; // No scale factor, it's a percent
+            getCloseness(animPerc, MONETIZATION_IMAGE_OFFSET, 0.07) * 1; // No scale factor, it's a percent
           const monetizationRotationOffset =
             perlinRotationOffset +
-            getSignedCloseness(animPerc, MONETIZATION_OFFSET, 0.07) * -0.15; // 0.15 radians
+            getSignedCloseness(animPerc, MONETIZATION_IMAGE_OFFSET, 0.07) * -0.15; // 0.15 radians
           if (monetizationSectionOpacity > 0.01) {
             ctx.globalAlpha = monetizationSectionOpacity;
             ctx.drawImage(
@@ -902,7 +905,7 @@ export const Globe = () => {
           className={css({
             position: 'absolute',
             top: `calc(${
-              getScrollOffset(DISTRIBUTION_OFFSET) * VIEWPORT_HEIGHTS
+              getScrollOffset(DISTRIBUTION_SCROLL_OFFSET) * VIEWPORT_HEIGHTS
             } * 100vh)`,
           })}
         />
@@ -911,7 +914,7 @@ export const Globe = () => {
           className={css({
             position: 'absolute',
             top: `calc(${
-              getScrollOffset(ANALYTICS_OFFSET) * VIEWPORT_HEIGHTS
+              getScrollOffset(ANALYTICS_SCROLL_OFFSET) * VIEWPORT_HEIGHTS
             } * 100vh)`,
           })}
         />
@@ -920,7 +923,7 @@ export const Globe = () => {
           className={css({
             position: 'absolute',
             top: `calc(${
-              getScrollOffset(MONETIZATION_OFFSET) * VIEWPORT_HEIGHTS
+              getScrollOffset(MONETIZATION_SCROLL_OFFSET) * VIEWPORT_HEIGHTS
             } * 100vh)`,
           })}
         />
