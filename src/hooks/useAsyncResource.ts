@@ -62,6 +62,7 @@ export const useAsyncVideo = (
     vid.controls = false;
     vid.autoplay = autoplay;
     vid.muted = true;
+    vid.playsInline = true;
     vid.oncanplaythrough = () => {
       setLoaded(true);
     };
