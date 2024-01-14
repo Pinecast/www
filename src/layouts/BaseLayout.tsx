@@ -153,6 +153,7 @@ export function BaseLayout(
         </div>
         <section
           className={css({
+            backgroundColor: 'var(--color-sand)',
             maxWidth: '1375px',
             marginBottom: 0,
             marginLeft: 'auto',
