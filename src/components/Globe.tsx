@@ -438,9 +438,9 @@ function chooseFeature(scrollRatio: number) {
   return null;
 }
 
-function getGlobeCenterPosition(width: number, height: number) {
+function getGlobeCenterPosition(width: number, height: number, adjustForDpr = true) {
   const isMobile = width < height;
-  const headerSize = (isMobile ? 80 : 120) * devicePixelRatio;
+  const headerSize = (isMobile ? 80 : 120) * (adjustForDpr ? devicePixelRatio : 1);
   return (height - headerSize) / (isMobile ? 2.8 : 2.4) + headerSize;
 }
 function getGlobeWidth(width: number, height: number) {
@@ -499,7 +499,7 @@ export const Globe = () => {
         height: height * devicePixelRatio,
       });
       const m = menu.current!;
-      const globeCenterPosition = getGlobeCenterPosition(width, height);
+      const globeCenterPosition = getGlobeCenterPosition(width, height, false);
       const globeWidth = getGlobeWidth(width, height);
       const isMobile = width < height;
       const menuWidth = Math.min(
