@@ -360,8 +360,19 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
             <Link
               className={css({
                 fill: 'inherit',
-                transition: 'opacity 0.2s',
                 opacity: currentFeatureSlug === 'distribution' ? 1 : 0.3,
+                color: '#fff',
+                transition: 'opacity 0.2s, text-shadow 0.2s, color 0.2s',
+                textShadow:
+                  '0 0 10px rgba(255, 255, 255, 0), 0 0 7px transparent, 0 0 4px #090909',
+                ':focus:active': {
+                  color: '#c4ff7e',
+                  opacity: 1,
+                },
+                ':hover': {
+                  textShadow:
+                    '0 0 10px rgba(255, 255, 255, 0.85), 0 0 7px #c4ff7e, 0 0 4px #090909',
+                },
               })}
               href="#distribution"
             >
@@ -371,8 +382,19 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
               <Link
                 className={css({
                   fill: 'inherit',
-                  transition: 'opacity 0.2s',
                   opacity: currentFeatureSlug === 'analytics' ? 1 : 0.3,
+                  color: '#fff',
+                  transition: 'opacity 0.2s, text-shadow 0.2s, color 0.2s',
+                  textShadow:
+                    '0 0 10px rgba(255, 255, 255, 0), 0 0 7px transparent, 0 0 4px #090909',
+                  ':focus:active': {
+                    color: '#c4ff7e',
+                    opacity: 1,
+                  },
+                  ':hover': {
+                    textShadow:
+                      '0 0 10px rgba(255, 255, 255, 0.85), 0 0 7px #c4ff7e, 0 0 4px #090909',
+                  },
                 })}
                 href="#analytics"
               >
@@ -383,8 +405,19 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
               <Link
                 className={css({
                   fill: 'inherit',
-                  transition: 'opacity 0.2s',
                   opacity: currentFeatureSlug === 'monetization' ? 1 : 0.3,
+                  color: '#fff',
+                  transition: 'opacity 0.2s, text-shadow 0.2s, color 0.2s',
+                  textShadow:
+                    '0 0 10px rgba(255, 255, 255, 0), 0 0 7px transparent, 0 0 4px #090909',
+                  ':focus:active': {
+                    color: '#c4ff7e',
+                    opacity: 1,
+                  },
+                  ':hover': {
+                    textShadow:
+                      '0 0 10px rgba(255, 255, 255, 0.85), 0 0 7px #c4ff7e, 0 0 4px #090909',
+                  },
                 })}
                 href="#monetization"
               >
