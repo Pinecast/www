@@ -12,7 +12,6 @@ import {
 } from '@/constants';
 import {Link, PillButton} from './Typography';
 import {StyleObject} from 'styletron-react';
-import {access} from 'fs';
 
 export const Intro = ({children}: {children: React.ReactNode}) => {
   const css = useCSS();
