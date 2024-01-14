@@ -57,6 +57,7 @@ export const Title = ({
       className={css({
         ...GintoNordCondensed,
         fontSize: '48px',
+        fontWeight: '400',
         letterSpacing: '-0.04em',
         lineHeight: '43px',
         textAlign: 'center',
@@ -292,13 +293,14 @@ export const DefinitionList = ({children}: {children: React.ReactNode}) => {
         gridTemplateColumns: 'min-content 1fr',
 
         ':not(:empty) > dt': {
+          ...MonumentGroteskBold,
           borderTop: '1px solid var(--color-core-accent)',
           paddingTop: '10px',
           paddingRight: '20px',
           marginBottom: '20px',
 
-          fontWeight: 700,
           fontSize: '16px',
+          fontWeight: 400,
           lineHeight: '18px',
         },
         ':not(:empty) > dd': {
@@ -332,7 +334,6 @@ export const DefinitionList = ({children}: {children: React.ReactNode}) => {
             paddingTop: '10px',
             paddingRight: '20px',
 
-            fontWeight: 700,
             fontSize: '22px',
             lineHeight: '24px',
           },
@@ -414,7 +415,7 @@ export const ProductFeature = ({
           ...MonumentGroteskBold,
           color: 'var(--color-grape-25)',
           fontSize: '28px',
-          fontWeight: 700,
+          fontWeight: 400,
           gridArea: 'name',
         })}
       >
@@ -538,7 +539,7 @@ const ProductFeatureAccessory = ({
           css({
             ...MonumentGroteskBold,
             color: 'var(--color-grape-25)',
-            fontWeight: 700,
+            fontWeight: 400,
             gridArea: 'name',
           }) + ' ProductFeatureAccessory-Title'
         }

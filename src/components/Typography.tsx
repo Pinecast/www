@@ -29,6 +29,7 @@ export const H1 = ({
     <h1
       className={css({
         ...GintoNordCondensed,
+        fontWeight: '400',
         hyphens: 'auto',
         letterSpacing: '-0.04em',
         // overflowWrap: 'break-word',
@@ -69,6 +70,7 @@ export const H2 = ({
     <h2
       className={css({
         ...GintoNordCondensed,
+        fontWeight: '400',
         letterSpacing: '-0.04em',
         textTransform: 'uppercase',
         marginTop: '0',
@@ -102,6 +104,7 @@ export const H3 = ({
     <h3
       className={css({
         ...GintoNordCondensed,
+        fontWeight: '400',
         fontSize: '42px',
         letterSpacing: 0,
         lineHeight: '42px',
@@ -136,7 +139,7 @@ export const Body1 = ({
     <Tag
       className={css({
         ...MonumentGroteskBold,
-        fontWeight: 500,
+        fontWeight: 400,
         letterSpacing: '-0.03em',
         marginTop: '0',
         marginBottom: '0',
@@ -272,7 +275,7 @@ export const Subhead = ({
       className={css({
         ...MonumentGroteskBold,
         display: 'block',
-        fontWeight: 700,
+        fontWeight: 400,
         letterSpacing: '-0.025em',
         marginTop: '0',
         marginBottom: '0',
@@ -408,7 +411,7 @@ export const GhostButton = ({
         ...MonumentGroteskBold,
         color: 'var(--color-white)',
         fontSize: '16px',
-        fontWeight: 700,
+        fontWeight: 400,
         lineHeight: '1',
         ...style,
         // [MOBILE_MEDIA_QUERY]: {

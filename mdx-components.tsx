@@ -48,7 +48,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         <strong
           className={css({
             ...MonumentGroteskBold,
-            fontWeight: 700,
+            fontWeight: 400,
           })}
         >
           {children}

@@ -262,6 +262,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
         onClick={() => onSelectName(selected ? null : feature.name)}
         type="button"
         className={css({
+          ...MonumentGroteskBold,
           backgroundColor: selected
             ? 'var(--color-grape-50)'
             : 'var(--color-sand)',
@@ -272,7 +273,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
           color: selected ? 'var(--color-space)' : 'var(--color-sand)',
           display: 'block',
           fontSize: '18px',
-          fontWeight: 700,
+          fontWeight: 400,
           overflow: 'hidden',
           padding: '0',
           position: 'relative',
@@ -331,6 +332,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
               : 'var(--color-sand)',
             transition: 'background-color 0.2s, -webkit-text-stroke 0.2s',
             color: 'currentColor',
+            fontWeight: '400',
             WebkitTextStroke: selected
               ? '1px transparent'
               : '1px var(--color-space)',

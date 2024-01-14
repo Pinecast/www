@@ -5,7 +5,7 @@ import {SecondaryButton} from './SecondaryButton';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import {useDarkSection} from '@/hooks/useDarkSection';
-import {MonumentGroteskRegular} from '@/fonts';
+import {MonumentGroteskBold} from '@/fonts';
 import Link from 'next/link';
 import {MOBILE_BREAKPOINT} from '@/constants';
 import {useScrollProgressEffect} from '@/hooks/useScrollProgress';
@@ -347,9 +347,9 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
         <text
           fill="var(--color-white)"
           className={css({
-            ...MonumentGroteskRegular,
+            ...MonumentGroteskBold,
             fontSize: `${Math.max(14, Math.min(24, radius * 0.075))}px`,
-            fontWeight: 600,
+            fontWeight: 400,
           })}
         >
           <textPath
