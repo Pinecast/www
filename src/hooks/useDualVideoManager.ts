@@ -1,4 +1,4 @@
-import {clear} from 'console';
+import {clear, time} from 'console';
 import {on} from 'events';
 import * as React from 'react';
 
@@ -28,6 +28,7 @@ export const useDualVideoManager = (
 
     const {currentStart, currentEnd} = state.current;
     if (activeDrawableVideo.currentTime < currentEnd) {
+      console.log('Video update scheduled too soon; rescheduling');
       timeUpdateTimer.current = setTimeout(
         onTimeUpdate,
         (currentEnd - activeDrawableVideo.currentTime) * 1000,
@@ -51,18 +52,13 @@ export const useDualVideoManager = (
     activeVideoIndex.current = activeVideoIndex.current === 0 ? 1 : 0;
     activeVideo.current =
       activeVideoIndex.current === 0 ? drawable1 : drawable2;
-
-    // // Schedule the next update
-    // timeUpdateTimer.current = setTimeout(
-    //   onTimeUpdate,
-    //   (currentEnd - currentStart) * 1000,
-    // );
   }, [drawable1, drawable2]);
 
   React.useEffect(() => {
     if (!drawable1[0] || !drawable2[0]) {
       return;
     }
+    // When the start segment changes, update the secondary video so we're ready to play it
     if (segmentStart !== state.current.currentStart) {
       console.log(
         `Updating video segment start from ${state.current.currentStart} to ${segmentStart}`,
@@ -71,12 +67,26 @@ export const useDualVideoManager = (
         activeVideoIndex.current === 0 ? drawable2 : drawable1;
       secondaryDrawableVideo.currentTime = segmentStart;
     }
+    // Store the new state
+    const oldEnd = state.current.currentEnd;
     state.current.currentStart = segmentStart;
     state.current.currentEnd = segmentEnd;
+    // If we rewound, trigger a video update immediately so we don't wait
     if (activeVideo.current[0]?.currentTime > segmentEnd) {
       console.log('Video rewind detected; resetting');
       clearTimeout(timeUpdateTimer.current!);
       onTimeUpdate();
+    } else if (activeVideo.current[0] && oldEnd < segmentStart) {
+      // If we jumped forward, there's going to be a gap after the current segment range
+      // ends. Immediately jump to the end of the current segment so we can start playing
+      // the transition, leading into the next segment.
+      console.log('Video jump forward detected; resetting');
+      activeVideo.current[0].currentTime = oldEnd;
+      clearTimeout(timeUpdateTimer.current!);
+      timeUpdateTimer.current = setTimeout(
+        onTimeUpdate,
+        (segmentEnd - oldEnd) * 1000,
+      );
     }
   }, [segmentStart, segmentEnd, drawable1, drawable2, onTimeUpdate]);
 
