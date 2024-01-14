@@ -37,25 +37,6 @@ export const useVideoManager = (
     );
   }, [drawable]);
 
-  const triggerVideoUpdate = React.useCallback(() => {
-    const {firstSegmentStart, currentStart, currentEnd, running} =
-      state.current;
-    if (!running) {
-      const now = drawable[0].currentTime;
-      if (firstSegmentStart < currentStart) {
-        drawable[0].currentTime = currentStart;
-      }
-      drawable[0].play();
-      state.current.running = true;
-      console.log(`Scheduling video update in ${currentEnd - now} seconds`);
-      timeUpdateTimer.current = setTimeout(
-        onTimeUpdate,
-        (currentEnd - now) * 1000,
-      );
-      return;
-    }
-  }, [drawable, onTimeUpdate]);
-
   React.useEffect(() => {
     const video = drawable[0];
     if (!video) {
@@ -80,7 +61,22 @@ export const useVideoManager = (
     };
 
     const onCanPlayThrough = () => {
-      triggerVideoUpdate();
+      const {firstSegmentStart, currentStart, currentEnd, running} =
+        state.current;
+      if (!running) {
+        const now = drawable[0].currentTime;
+        if (firstSegmentStart < currentStart) {
+          drawable[0].currentTime = currentStart;
+        }
+        drawable[0].play();
+        state.current.running = true;
+        console.log(`Scheduling video update in ${currentEnd - now} seconds`);
+        timeUpdateTimer.current = setTimeout(
+          onTimeUpdate,
+          (currentEnd - now) * 1000,
+        );
+        return;
+      }
     };
     if (video.readyState === 4) {
       onCanPlayThrough();
@@ -93,5 +89,5 @@ export const useVideoManager = (
       video.removeEventListener('pause', onPause);
       video.removeEventListener('play', onResume);
     };
-  }, [drawable, triggerVideoUpdate, onTimeUpdate]);
+  }, [drawable, onTimeUpdate]);
 };

@@ -12,7 +12,6 @@ import {useScrollProgressEffect} from '@/hooks/useScrollProgress';
 import {AV1_MIME, useAsyncImage, useAsyncVideo} from '@/hooks/useAsyncResource';
 import {useCalculateResizableValue} from '@/hooks/useCalculateResizableValue';
 import {useCanvasDrawing} from '@/hooks/useCanvasDrawing';
-import {useVideoManager} from '@/hooks/useVideoManager';
 
 import analytics0 from '@/icons/globe/analytics/0.svg';
 import analytics1 from '@/icons/globe/analytics/1.svg';
@@ -34,6 +33,7 @@ import monetization4 from '@/icons/globe/monetization/4.svg';
 import monetization5 from '@/icons/globe/monetization/5.svg';
 
 import Simplex from 'ts-perlin-simplex';
+import {useDualVideoManager} from '@/hooks/useDualVideoManager';
 
 const callWhenIdle = (callback: IdleRequestCallback) => {
   if (typeof window.requestIdleCallback === 'undefined') {
@@ -421,7 +421,9 @@ const ANALYTICS_IMAGE_OFFSET = 0.509;
 const MONETIZATION_IMAGE_OFFSET = 0.855;
 
 const getScrollOffset = (offset: number) => {
-  return (offset - DISTRIBUTION_SCROLL_OFFSET) / (1 - DISTRIBUTION_SCROLL_OFFSET);
+  return (
+    (offset - DISTRIBUTION_SCROLL_OFFSET) / (1 - DISTRIBUTION_SCROLL_OFFSET)
+  );
 };
 
 function getImageOffset(currentFeatureSlug: Feature | null) {
@@ -437,10 +439,16 @@ function getImageOffset(currentFeatureSlug: Feature | null) {
   }
 }
 function chooseFeature(scrollRatio: number) {
-  if (scrollRatio >= DISTRIBUTION_SCROLL_OFFSET && scrollRatio < ANALYTICS_SCROLL_OFFSET) {
+  if (
+    scrollRatio >= DISTRIBUTION_SCROLL_OFFSET &&
+    scrollRatio < ANALYTICS_SCROLL_OFFSET
+  ) {
     return 'distribution';
   }
-  if (scrollRatio >= ANALYTICS_SCROLL_OFFSET && scrollRatio < MONETIZATION_SCROLL_OFFSET) {
+  if (
+    scrollRatio >= ANALYTICS_SCROLL_OFFSET &&
+    scrollRatio < MONETIZATION_SCROLL_OFFSET
+  ) {
     return 'analytics';
   }
   if (scrollRatio >= MONETIZATION_SCROLL_OFFSET) {
@@ -449,9 +457,14 @@ function chooseFeature(scrollRatio: number) {
   return null;
 }
 
-function getGlobeCenterPosition(width: number, height: number, adjustForDpr = true) {
+function getGlobeCenterPosition(
+  width: number,
+  height: number,
+  adjustForDpr = true,
+) {
   const isMobile = width < height;
-  const headerSize = (isMobile ? 80 : 120) * (adjustForDpr ? devicePixelRatio : 1);
+  const headerSize =
+    (isMobile ? 80 : 120) * (adjustForDpr ? devicePixelRatio : 1);
   return (height - headerSize) / (isMobile ? 2.8 : 2.4) + headerSize;
 }
 function getGlobeWidth(width: number, height: number) {
@@ -526,7 +539,19 @@ export const Globe = () => {
 
   const canvas = React.useRef<HTMLCanvasElement>(null);
   const gi = useAsyncImage('/images/globe-full.jpg');
-  const gv = useAsyncVideo(
+
+  // We load two versions of the video. They are switched between by the
+  // dual video manager.
+  const gv1 = useAsyncVideo(
+    {
+      'video/mp4': '/videos/globe/globe2x.mp4',
+      [AV1_MIME]: '/videos/globe/globe2x.av1.mp4',
+    },
+    // Disable the video on mobile
+    width / (global.devicePixelRatio ?? 1) > MOBILE_BREAKPOINT,
+    false,
+  );
+  const gv2 = useAsyncVideo(
     {
       'video/mp4': '/videos/globe/globe2x.mp4',
       [AV1_MIME]: '/videos/globe/globe2x.av1.mp4',
@@ -550,7 +575,7 @@ export const Globe = () => {
   const [segmentStart, segmentEnd] = getVideoSegmentBounds(
     currentFeatureSlug ?? 'distribution',
   );
-  useVideoManager(gv, segmentStart, segmentEnd, 0.6);
+  const gv = useDualVideoManager(gv1, gv2, segmentStart, segmentEnd, 0.6);
 
   const imageState = React.useRef({
     xPerc: 0,
@@ -589,7 +614,30 @@ export const Globe = () => {
         const globeWidth = getGlobeWidth(width, height);
         const globeRadius = globeWidth / 2;
 
-        const [gvVideo, gvLoaded] = gv;
+        // Draw 5px long horizontal white lines at 50% opacity along the left and right edges of the canvas, giving
+        // a 3px gap along the edge of the canvas. The lines should be spaced every 14px.
+        ctx.save();
+        ctx.beginPath();
+        const scrollOffset = -((scrollY / 2) % 14) * devicePixelRatio;
+        const sideTickOpacity =
+          Math.max(0, Math.min(1, getSignedCloseness(xPerc, 0.175, 0.1))) * 0.5;
+        ctx.globalAlpha = sideTickOpacity;
+        for (let i = 0; i < height / devicePixelRatio + 14; i += 14) {
+          const y = i * devicePixelRatio + scrollOffset;
+          const closeness = getCloseness(y, globeCenterPosition, 50);
+          const lineWidth = 5 + (closeness * 20) ** 1.25 + closeness * 20;
+          ctx.moveTo(3 * devicePixelRatio, y);
+          ctx.lineTo((3 + lineWidth) * devicePixelRatio, y);
+          ctx.moveTo(width - 3 * devicePixelRatio, y);
+          ctx.lineTo(width - (3 + lineWidth) * devicePixelRatio, y);
+        }
+        ctx.closePath();
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.restore();
+
+        const [gvVideo, gvLoaded] = gv.current!;
         // const gvLoaded = false;
         // const gvVideo = null;
         if (gvLoaded) {
@@ -669,29 +717,6 @@ export const Globe = () => {
         ctx.closePath();
         ctx.restore();
 
-        // Draw 5px long horizontal white lines at 50% opacity along the left and right edges of the canvas, giving
-        // a 3px gap along the edge of the canvas. The lines should be spaced every 14px.
-        ctx.save();
-        ctx.beginPath();
-        const scrollOffset = -((scrollY / 2) % 14) * devicePixelRatio;
-        const sideTickOpacity =
-          Math.max(0, Math.min(1, getSignedCloseness(xPerc, 0.175, 0.1))) * 0.5;
-        ctx.globalAlpha = sideTickOpacity;
-        for (let i = 0; i < height / devicePixelRatio + 14; i += 14) {
-          const y = i * devicePixelRatio + scrollOffset;
-          const closeness = getCloseness(y, globeCenterPosition, 50);
-          const lineWidth = 5 + (closeness * 20) ** 1.25 + closeness * 20;
-          ctx.moveTo(3 * devicePixelRatio, y);
-          ctx.lineTo((3 + lineWidth) * devicePixelRatio, y);
-          ctx.moveTo(width - 3 * devicePixelRatio, y);
-          ctx.lineTo(width - (3 + lineWidth) * devicePixelRatio, y);
-        }
-        ctx.closePath();
-        ctx.strokeStyle = 'white';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-        ctx.restore();
-
         const radiusIncrement = isMobile ? 0.35 : 0.4;
 
         // Draw three arcs around the top half of the globe (starting and stopping at the vertical center)
@@ -755,7 +780,8 @@ export const Globe = () => {
             getCloseness(animPerc, DISTRIBUTION_IMAGE_OFFSET, 0.07) * 1; // No scale factor, it's a percent
           const distributionRotationOffset =
             perlinRotationOffset +
-            getSignedCloseness(animPerc, DISTRIBUTION_IMAGE_OFFSET, 0.07) * -0.15; // 0.15 radians
+            getSignedCloseness(animPerc, DISTRIBUTION_IMAGE_OFFSET, 0.07) *
+              -0.15; // 0.15 radians
           // console.log(distributionSectionOffset, distributionRotationOffset);
           if (distributionSectionOpacity > 0.01) {
             ctx.globalAlpha = distributionSectionOpacity;
@@ -818,7 +844,8 @@ export const Globe = () => {
             getCloseness(animPerc, MONETIZATION_IMAGE_OFFSET, 0.07) * 1; // No scale factor, it's a percent
           const monetizationRotationOffset =
             perlinRotationOffset +
-            getSignedCloseness(animPerc, MONETIZATION_IMAGE_OFFSET, 0.07) * -0.15; // 0.15 radians
+            getSignedCloseness(animPerc, MONETIZATION_IMAGE_OFFSET, 0.07) *
+              -0.15; // 0.15 radians
           if (monetizationSectionOpacity > 0.01) {
             ctx.globalAlpha = monetizationSectionOpacity;
             ctx.drawImage(
