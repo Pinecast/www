@@ -7,7 +7,7 @@ import * as ReactDOM from 'react-dom/client';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {MonumentGroteskRegular} from '@/fonts';
 import Link from 'next/link';
-import {MOBILE_BREAKPOINT, MOBILE_MEDIA_QUERY} from '@/constants';
+import {MOBILE_BREAKPOINT} from '@/constants';
 import {useScrollProgressEffect} from '@/hooks/useScrollProgress';
 import {AV1_MIME, useAsyncImage, useAsyncVideo} from '@/hooks/useAsyncResource';
 import {useCalculateResizableValue} from '@/hooks/useCalculateResizableValue';
@@ -412,9 +412,15 @@ function getVideoSegmentBounds(currentFeatureSlug: Feature | null) {
   }
 }
 
-const DISTRIBUTION_OFFSET = 0.2;
-const ANALYTICS_OFFSET = 0.509;
-const MONETIZATION_OFFSET = 0.855;
+const VIEWPORT_HEIGHTS = 3.2;
+// In percents:
+const DISTRIBUTION_OFFSET = 0.28;
+const ANALYTICS_OFFSET = 0.6;
+const MONETIZATION_OFFSET = 0.9;
+
+const getScrollOffset = (offset: number) => {
+  return (offset - DISTRIBUTION_OFFSET) / (1 - DISTRIBUTION_OFFSET);
+};
 
 function getImageOffset(currentFeatureSlug: Feature | null) {
   switch (currentFeatureSlug) {
@@ -522,6 +528,7 @@ export const Globe = () => {
   useScrollProgressEffect(
     ref,
     React.useCallback(progress => {
+      console.log(progress);
       const newFeature = chooseFeature(progress);
       setCurrentFeatureSlug(newFeature);
     }, []),
@@ -647,6 +654,29 @@ export const Globe = () => {
         ctx.lineWidth = 1;
         ctx.stroke();
         ctx.closePath();
+        ctx.restore();
+
+        // Draw 5px long horizontal white lines at 50% opacity along the left and right edges of the canvas, giving
+        // a 3px gap along the edge of the canvas. The lines should be spaced every 14px.
+        ctx.save();
+        ctx.beginPath();
+        const scrollOffset = (scrollY % 14) * devicePixelRatio;
+        const sideTickOpacity =
+          Math.max(0, Math.min(1, getSignedCloseness(xPerc, 0.175, 0.1))) * 0.5;
+        ctx.globalAlpha = sideTickOpacity;
+        for (let i = 0; i < height / devicePixelRatio; i += 14) {
+          const y = i * devicePixelRatio + scrollOffset;
+          const closeness = getCloseness(y, globeCenterPosition, 50);
+          const lineWidth = 5 + (closeness * 20) ** 1.25 + closeness * 20;
+          ctx.moveTo(3 * devicePixelRatio, y);
+          ctx.lineTo((3 + lineWidth) * devicePixelRatio, y);
+          ctx.moveTo(width - 3 * devicePixelRatio, y);
+          ctx.lineTo(width - (3 + lineWidth) * devicePixelRatio, y);
+        }
+        ctx.closePath();
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 1;
+        ctx.stroke();
         ctx.restore();
 
         const radiusIncrement = isMobile ? 0.35 : 0.4;
@@ -842,28 +872,43 @@ export const Globe = () => {
       </div>
 
       {/* Spacer */}
-      <div className={css({height: 'calc(3.8 * 100vh)'})} />
-      <a
-        id="distribution"
+      <div
         className={css({
-          position: 'absolute',
-          top: `calc(${DISTRIBUTION_OFFSET * 3.8} * 100vh)`,
+          height: `calc(${VIEWPORT_HEIGHTS} * 100vh)`,
+          position: 'relative',
+          pointerEvents: 'none',
+          visibility: 'hidden',
+          top: '-100vh',
         })}
-      />
-      <a
-        id="analytics"
-        className={css({
-          position: 'absolute',
-          top: `calc(${ANALYTICS_OFFSET * 3.8} * 100vh)`,
-        })}
-      />
-      <a
-        id="monetization"
-        className={css({
-          position: 'absolute',
-          top: `calc(${MONETIZATION_OFFSET * 3.8} * 100vh)`,
-        })}
-      />
+      >
+        <a
+          id="distribution"
+          className={css({
+            position: 'absolute',
+            top: `calc(${
+              getScrollOffset(DISTRIBUTION_OFFSET) * VIEWPORT_HEIGHTS
+            } * 100vh)`,
+          })}
+        />
+        <a
+          id="analytics"
+          className={css({
+            position: 'absolute',
+            top: `calc(${
+              getScrollOffset(ANALYTICS_OFFSET) * VIEWPORT_HEIGHTS
+            } * 100vh)`,
+          })}
+        />
+        <a
+          id="monetization"
+          className={css({
+            position: 'absolute',
+            top: `calc(${
+              getScrollOffset(MONETIZATION_OFFSET) * VIEWPORT_HEIGHTS
+            } * 100vh)`,
+          })}
+        />
+      </div>
     </section>
   );
 };
