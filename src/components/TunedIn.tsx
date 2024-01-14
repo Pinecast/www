@@ -136,7 +136,27 @@ const SCROLL_PERCENTAGE_TO_SHOW_DIAL = 0.117;
 const scaleDial = (num: number) =>
   scaleNumber(num, SCROLL_PERCENTAGE_TO_SHOW_DIAL, 1, 0, 1);
 
-const scaleDialAngle = (num: number) => scaleNumber(num, 0, 1, 0, 180);
+const DIAL_INTERVALS = [
+  // Scroll progress => angle to which the Dial should be rotated.
+  [0, 0],
+  [0.25, -45],
+  [0.5, -90],
+  [0.75, -135],
+  [1, -180],
+];
+const scaleDialAngle = (progress: number) => {
+  const intervals = DIAL_INTERVALS.map(x => x[0]);
+  let closestIndex = 0;
+  let minDifference = Math.abs(progress - intervals[0]);
+  for (let idx = 1; idx < intervals.length; idx++) {
+    let difference = Math.abs(progress - intervals[idx]);
+    if (difference < minDifference) {
+      minDifference = difference;
+      closestIndex = idx;
+    }
+  }
+  return DIAL_INTERVALS[closestIndex][1];
+};
 
 type DialProps = {};
 
@@ -196,7 +216,7 @@ const Dial = React.forwardRef<SVGGElement, DialProps>(function Dial(_, ref) {
               // Rotate the dial's hand from the center of the dial.
               transformOrigin: '144px 70px',
               // Slight transition to smoothly rotate the dial's hand on scroll.
-              transition: 'all 0.025s linear',
+              transition: 'all 0.2s linear',
             }}
           >
             <path d="M143 70H.5" stroke="var(--color-sand)" />
@@ -429,6 +449,7 @@ export const TunedIn = () => {
   const sectionRef = React.useRef<HTMLElement>(null);
   useDarkSection(sectionRef);
 
+  const [progress, setProgress] = React.useState<number>(-1);
   const [aboveZero, setAboveZero] = React.useState<boolean>(false);
   const [leftActive, setLeftActive] = React.useState<boolean>(false);
   const [middleActive, setMiddleActive] = React.useState<boolean>(false);
@@ -442,25 +463,14 @@ export const TunedIn = () => {
   useScrollProgressEffect(
     scrollerRef,
     React.useCallback((scrollProgress: number) => {
-      setAboveZero(scrollProgress > 0);
+      setAboveZero(scrollProgress > SCROLL_PERCENTAGE_TO_SHOW_DIAL);
       const proportionalProgress = scaleDial(scrollProgress);
-      if (proportionalProgress >= 0.11 * 6) {
-        setRightActive(true);
-      }
-      if (proportionalProgress >= 0.11 * 4) {
-        setMiddleActive(true);
-      }
-      if (proportionalProgress >= 0.11 * 2) {
-        setLeftActive(true);
-      } else {
-        // Reset when scrolling back up
-        setRightActive(false);
-        setMiddleActive(false);
-        setLeftActive(false);
-      }
-      dialRef.current!.style.transform = `rotate(${
-        -1 * scaleDialAngle(scaleDial(scrollProgress))
-      }deg)`;
+      setRightActive(proportionalProgress >= 0.01 * 66);
+      setMiddleActive(proportionalProgress >= 0.01 * 44);
+      setLeftActive(proportionalProgress >= 0.01 * 22);
+      dialRef.current!.style.transform = `rotate(${scaleDialAngle(
+        proportionalProgress,
+      )}deg)`;
     }, []),
   );
 
@@ -626,7 +636,6 @@ export const TunedIn = () => {
           </div>
         </div>
       </section>
-
       <div ref={bottomRef}>
         <div
           className={css({
