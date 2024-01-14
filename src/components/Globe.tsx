@@ -7,7 +7,7 @@ import * as ReactDOM from 'react-dom/client';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {MonumentGroteskBold} from '@/fonts';
 import Link from 'next/link';
-import {MOBILE_BREAKPOINT} from '@/constants';
+import {MOBILE_BREAKPOINT, TABLET_BREAKPOINT} from '@/constants';
 import {useScrollProgressEffect} from '@/hooks/useScrollProgress';
 import {AV1_MIME, useAsyncImage, useAsyncVideo} from '@/hooks/useAsyncResource';
 import {useCalculateResizableValue} from '@/hooks/useCalculateResizableValue';
@@ -536,13 +536,15 @@ export const Globe = () => {
   useDarkSection(ref);
   const menu = React.useRef<SVGSVGElement>(null);
 
-  const [{width, height}, setWrapperSize] = React.useState<{
-    width: number;
-    height: number;
-  }>({
-    width: 0,
-    height: 0,
-  });
+  const [isMobile, setIsMobile] = React.useState(false);
+  // const [{width, height}, setWrapperSize] = React.useState<{
+  //   width: number;
+  //   height: number;
+  // }>({
+  //   width: 0,
+  //   height: 0,
+  // });
+  const size = React.useRef({width: 0, height: 0});
   useCalculateResizableValue(
     React.useCallback(() => {
       let verticalScrollbarWidth =
@@ -551,10 +553,10 @@ export const Globe = () => {
       // Use the dimensions of the viewport without scrollbars.
       const width = window.innerWidth - verticalScrollbarWidth;
       const height = window.innerHeight;
-      setWrapperSize({
+      size.current = {
         width: width * devicePixelRatio,
         height: height * devicePixelRatio,
-      });
+      };
       const m = menu.current!;
       const globeCenterPosition = getGlobeCenterPosition(width, height, false);
       const globeWidth = getGlobeWidth(width, height);
@@ -567,6 +569,15 @@ export const Globe = () => {
       m.style.top = `${globeCenterPosition + globeWidth / 2}px`;
       m.style.width = `${menuWidth}px`;
       m.style.height = `${menuWidth / 4}px`;
+
+      if (canvas.current) {
+        canvas.current.style.width = `${width}px`;
+        canvas.current.style.height = `${height}px`;
+        canvas.current.width = width * devicePixelRatio;
+        canvas.current.height = height * devicePixelRatio;
+      }
+
+      setIsMobile(isMobile);
     }, []),
   );
 
@@ -581,7 +592,7 @@ export const Globe = () => {
       [AV1_MIME]: '/videos/globe/globe2x.av1.mp4',
     },
     // Disable the video on mobile
-    width / (global.devicePixelRatio ?? 1) > MOBILE_BREAKPOINT,
+    !isMobile,
     false,
   );
   const gv2 = useAsyncVideo(
@@ -590,7 +601,7 @@ export const Globe = () => {
       [AV1_MIME]: '/videos/globe/globe2x.av1.mp4',
     },
     // Disable the video on mobile
-    width / (global.devicePixelRatio ?? 1) > MOBILE_BREAKPOINT,
+    !isMobile,
     false,
   );
 
@@ -621,6 +632,7 @@ export const Globe = () => {
     canvas,
     React.useCallback(
       ctx => {
+        const {width, height} = size.current;
         if (!width) return;
         // ctx.clearRect(0, 0, width, height);
         ctx.fillStyle = '#090909';
@@ -902,7 +914,7 @@ export const Globe = () => {
         }
         ctx.restore();
       },
-      [currentFeatureSlug, gi, gv, width, height],
+      [currentFeatureSlug, gi, gv],
     ),
   );
 
@@ -933,20 +945,20 @@ export const Globe = () => {
             zIndex: 3,
             pointerEvents: 'none',
             imageRendering: 'pixelated',
-            width: `${width / (global.devicePixelRatio ?? 1)}px`,
-            height: `${height / (global.devicePixelRatio ?? 1)}px`,
+            width: `${size.current.width / (global.devicePixelRatio ?? 1)}px`,
+            height: `${size.current.height / (global.devicePixelRatio ?? 1)}px`,
           })}
           ref={canvas}
-          height={height}
-          width={width}
+          height={size.current.height}
+          width={size.current.width}
         />
         {/* <SideTicks /> */}
         <FeatureText currentFeature={currentFeature} />
         <FeatureMenu
           currentFeatureSlug={currentFeatureSlug}
           ref={menu}
-          height={height / (global.devicePixelRatio ?? 1)}
-          width={width / (global.devicePixelRatio ?? 1)}
+          height={size.current.height / (global.devicePixelRatio ?? 1)}
+          width={size.current.width / (global.devicePixelRatio ?? 1)}
         />
       </div>
 

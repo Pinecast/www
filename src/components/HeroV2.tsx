@@ -48,17 +48,18 @@ export const HeroV2 = () => {
   const css = useCSS();
 
   const wrapper = React.useRef<HTMLElement>(null);
-  const [{width, height}, setWrapperSize] = React.useState<{
-    width: number;
-    height: number;
-  }>({
-    width: 0,
-    height: 0,
-  });
+  const size = React.useRef({width: 0, height: 0});
+  if (!size.current.width && typeof document !== 'undefined') {
+    size.current.width = document.body.offsetWidth;
+    size.current.height = window.innerHeight;
+  }
 
-  const sizeSet = !!width;
-  const isMobile = sizeSet && width < MOBILE_BREAKPOINT;
-  const isTablet = sizeSet && width < TABLET_BREAKPOINT && !isMobile;
+  const [isMobile, setIsMobile] = React.useState(
+    size.current.width < MOBILE_BREAKPOINT,
+  );
+  const [isTablet, setIsTablet] = React.useState(
+    size.current.width < TABLET_BREAKPOINT && !isMobile,
+  );
 
   const canvas = React.useRef<HTMLCanvasElement>(null);
 
@@ -75,7 +76,7 @@ export const HeroV2 = () => {
       'video/mp4': '/videos/hero/t-l.mp4',
       [AV1_MIME]: '/videos/hero/t-l.av1.mp4',
     },
-    sizeSet && !isMobile,
+    !isMobile,
     true,
   );
   const trv = useAsyncVideo(
@@ -83,7 +84,7 @@ export const HeroV2 = () => {
       'video/mp4': '/videos/hero/t-r.mp4',
       [AV1_MIME]: '/videos/hero/t-r.av1.mp4',
     },
-    sizeSet && !isMobile,
+    !isMobile,
     true,
   );
   const blv = useAsyncVideo(
@@ -91,7 +92,7 @@ export const HeroV2 = () => {
       'video/mp4': '/videos/hero/b-l.mp4',
       [AV1_MIME]: '/videos/hero/b-l.av1.mp4',
     },
-    sizeSet && !isMobile,
+    !isMobile,
     true,
   );
   const brv = useAsyncVideo(
@@ -99,7 +100,7 @@ export const HeroV2 = () => {
       'video/mp4': '/videos/hero/b-r.mp4',
       [AV1_MIME]: '/videos/hero/b-r.av1.mp4',
     },
-    sizeSet && !isMobile,
+    !isMobile,
     true,
   );
   const mlv = useAsyncVideo(
@@ -107,7 +108,7 @@ export const HeroV2 = () => {
       'video/mp4': '/videos/hero/ml.mp4',
       [AV1_MIME]: '/videos/hero/ml.av1.mp4',
     },
-    sizeSet && !isMobile && !isTablet,
+    !isMobile && !isTablet,
     true,
   );
   const mrv = useAsyncVideo(
@@ -115,7 +116,7 @@ export const HeroV2 = () => {
       'video/mp4': '/videos/hero/mr.mp4',
       [AV1_MIME]: '/videos/hero/mr.av1.mp4',
     },
-    sizeSet && !isMobile && !isTablet,
+    !isMobile && !isTablet,
     true,
   );
   const cv = useAsyncVideo(
@@ -152,6 +153,7 @@ export const HeroV2 = () => {
     canvas,
     React.useCallback(
       ctx => {
+        const {width, height} = size.current;
         const {innerHeight: windowHeight, scrollY} = window;
         if (scrollY > windowHeight) {
           ctx.clearRect(0, 0, canvas.current!.width, canvas.current!.height);
@@ -562,42 +564,9 @@ export const HeroV2 = () => {
         radiusState.current.outer +=
           (radiusTarget.current.outer - radiusState.current.outer) * 0.025;
       },
-      [bl, br, c, height, ml, mr, tl, tr, width],
+      [bl, br, c, ml, mr, tl, tr],
     ),
   );
-
-  const updateSize = React.useCallback((height: number, width: number) => {
-    if (!canvas.current) {
-      return;
-    }
-    canvas.current.width = width;
-    canvas.current.height = height;
-    canvas.current.style.width = `${width / window.devicePixelRatio}px`;
-    canvas.current.style.height = `${height / window.devicePixelRatio}px`;
-
-    const isMobile = width / window.devicePixelRatio < MOBILE_BREAKPOINT;
-    const isTablet =
-      width / window.devicePixelRatio < TABLET_BREAKPOINT && !isMobile;
-
-    const radiusOffset = isMobile
-      ? RADIUS_OFFSET_MOBILE
-      : isTablet
-      ? RADIUS_OFFSET_TABLET
-      : RADIUS_OFFSET;
-
-    radiusTarget.current.inner = Math.sqrt(
-      ((textArea.current!.parentNode as HTMLElement).offsetWidth / 2) ** 2 +
-        (textArea.current!.offsetHeight + radiusOffset + 20) ** 2,
-    );
-    radiusTarget.current.middle = Math.sqrt(
-      ((width / 2) * (2.5 / 4) + 20) ** 2 +
-        (height * (24 / 78) + radiusOffset * devicePixelRatio) ** 2,
-    );
-    radiusTarget.current.outer = Math.sqrt(
-      ((width / 2) * (2.5 / 4) + 20) ** 2 +
-        (height * (48 / 78) + radiusOffset * devicePixelRatio) ** 2,
-    );
-  }, []);
 
   useCalculateResizableValue(
     React.useCallback(() => {
@@ -605,9 +574,41 @@ export const HeroV2 = () => {
         wrapper.current!.getBoundingClientRect();
       const width = rawWidth * window.devicePixelRatio;
       const height = rawHeight * window.devicePixelRatio;
-      setWrapperSize({width, height});
-      updateSize(height, width);
-    }, [updateSize]),
+      const isMobile = rawWidth < MOBILE_BREAKPOINT;
+      const isTablet =
+        rawWidth < TABLET_BREAKPOINT && rawWidth > MOBILE_BREAKPOINT;
+      setIsMobile(rawWidth < MOBILE_BREAKPOINT);
+      setIsTablet(rawWidth < TABLET_BREAKPOINT && rawWidth > MOBILE_BREAKPOINT);
+      size.current.width = width;
+      size.current.height = height;
+
+      if (!canvas.current) {
+        return;
+      }
+      canvas.current.width = width;
+      canvas.current.height = height;
+      canvas.current.style.width = `${rawWidth}px`;
+      canvas.current.style.height = `${rawHeight}px`;
+
+      const radiusOffset = isMobile
+        ? RADIUS_OFFSET_MOBILE
+        : isTablet
+        ? RADIUS_OFFSET_TABLET
+        : RADIUS_OFFSET;
+
+      radiusTarget.current.inner = Math.sqrt(
+        ((textArea.current!.parentNode as HTMLElement).offsetWidth / 2) ** 2 +
+          (textArea.current!.offsetHeight + radiusOffset + 20) ** 2,
+      );
+      radiusTarget.current.middle = Math.sqrt(
+        ((width / 2) * (2.5 / 4) + 20) ** 2 +
+          (height * (24 / 78) + radiusOffset * devicePixelRatio) ** 2,
+      );
+      radiusTarget.current.outer = Math.sqrt(
+        ((width / 2) * (2.5 / 4) + 20) ** 2 +
+          (height * (48 / 78) + radiusOffset * devicePixelRatio) ** 2,
+      );
+    }, []),
   );
 
   return (
@@ -677,7 +678,6 @@ export const HeroV2 = () => {
               className={css({
                 alignItems: 'center',
                 backgroundColor: 'var(--color-sand)',
-                borderRadius: '20px',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '30px',
@@ -747,8 +747,6 @@ export const HeroV2 = () => {
           imageRendering: 'pixelated',
         })}
         ref={canvas}
-        height={height}
-        width={width}
       />
     </>
   );
