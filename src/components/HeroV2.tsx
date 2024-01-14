@@ -676,6 +676,8 @@ export const HeroV2 = () => {
               ref={textArea}
               className={css({
                 alignItems: 'center',
+                backgroundColor: 'var(--color-sand)',
+                borderRadius: '20px',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '30px',
@@ -684,6 +686,8 @@ export const HeroV2 = () => {
                 textAlign: 'center',
                 gridArea: '1 / 1 / 2 / 2',
                 paddingTop: '56px',
+                paddingLeft: '20px',
+                paddingRight: '20px',
                 position: 'relative',
                 zIndex: 10,
                 [MOBILE_MEDIA_QUERY]: {
@@ -726,7 +730,8 @@ export const HeroV2 = () => {
       <div
         className={css({
           background: 'var(--color-space)',
-          height: '100lvh',
+          height: 'calc(100lvh + 133px)',
+          minHeight: '800px',
           left: 0,
           position: 'absolute',
           right: 0,
