@@ -416,11 +416,11 @@ const getScrollOffset = (offset: number) => {
 function getImageOffset(currentFeatureSlug: Feature | null) {
   switch (currentFeatureSlug) {
     case 'distribution':
-      return DISTRIBUTION_OFFSET;
+      return 0.146;
     case 'analytics':
-      return ANALYTICS_OFFSET;
+      return 0.509;
     case 'monetization':
-      return MONETIZATION_OFFSET;
+      return 0.855;
     default:
       return 0;
   }
