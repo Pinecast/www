@@ -35,6 +35,14 @@ import monetization5 from '@/icons/globe/monetization/5.svg';
 
 import Simplex from 'ts-perlin-simplex';
 
+const callWhenIdle = (callback: IdleRequestCallback) => {
+  if (typeof window.requestIdleCallback === 'undefined') {
+    // Basic shim for Safari
+    return setTimeout(callback, 1);
+  }
+  return requestIdleCallback(callback);
+};
+
 const perlin = new Simplex.SimplexNoise();
 
 const analyticsIcons = [
@@ -80,7 +88,7 @@ if (typeof document !== 'undefined') {
             const img = new Image();
             img.src = `data:image/svg+xml;base64,${btoa(elem.innerHTML)}`;
             iconCache.set(Icon, img);
-            requestIdleCallback(() => {
+            callWhenIdle(() => {
               root.unmount();
               div.remove();
             });
