@@ -308,7 +308,7 @@ export const MainHeader = () => {
               illustrationOffsetY={-26}
               heading="Podcasting for beginners"
               caption="Level 1"
-              href="/learn/podcsting-for-beginners"
+              href="/learn/podcasting-for-beginners"
             />
             <PersonaBlock
               color="var(--color-lime)"
@@ -316,7 +316,7 @@ export const MainHeader = () => {
               illustrationOffsetY={-56}
               heading="Podcasting for power users"
               caption="Level 2"
-              href="/learn/podcsting-for-power-users"
+              href="/learn/podcasting-for-power-users"
             />
             <PersonaBlock
               color="var(--color-sky)"
