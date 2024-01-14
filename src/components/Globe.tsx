@@ -90,6 +90,23 @@ if (typeof document !== 'undefined') {
   }
 }
 
+const radConv = Math.PI / 180;
+const orbPositionsDesktop = [
+  {rotation: 13 * radConv, dist: 1},
+  {rotation: 17 * radConv, dist: 2},
+  {rotation: 50.6 * radConv, dist: 0},
+  {rotation: 140.6 * radConv, dist: 0},
+  {rotation: 151.9 * radConv, dist: 2},
+  {rotation: 163.1 * radConv, dist: 1},
+];
+const orbPositionsMobile = [
+  {rotation: 33.75 * radConv, dist: 0},
+  {rotation: 56.25 * radConv, dist: 1},
+  {rotation: 90 * radConv, dist: 0},
+  {rotation: 123.75 * radConv, dist: 1},
+  {rotation: 146.25 * radConv, dist: 0},
+];
+
 type Feature = 'distribution' | 'analytics' | 'monetization';
 type FeatureShape = {
   title: React.ReactNode | string;
@@ -309,9 +326,9 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
     >
       <g transform="translate(0 20)">
         <path
-          d={`M ${-radius + 200} -${radius - 50} a ${radius} ${radius} 0 1 0 ${
-            2 * radius
-          } 0`}
+          d={`M ${-radius + 200} ${-(
+            radius - 50
+          )} a ${radius} ${radius} 0 1 0 ${2 * radius} 0`}
           id="globeCurvedTextPath"
           fill="transparent"
         />
@@ -319,7 +336,7 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
           fill="var(--color-white)"
           className={css({
             ...MonumentGroteskRegular,
-            fontSize: `${radius * 0.075}px`,
+            fontSize: `${Math.max(14, Math.min(24, radius * 0.075))}px`,
             fontWeight: 600,
           })}
         >
@@ -395,14 +412,18 @@ function getVideoSegmentBounds(currentFeatureSlug: Feature | null) {
   }
 }
 
+const DISTRIBUTION_OFFSET = 0.2;
+const ANALYTICS_OFFSET = 0.509;
+const MONETIZATION_OFFSET = 0.855;
+
 function getImageOffset(currentFeatureSlug: Feature | null) {
   switch (currentFeatureSlug) {
     case 'distribution':
-      return 0.146;
+      return DISTRIBUTION_OFFSET;
     case 'analytics':
-      return 0.509;
+      return ANALYTICS_OFFSET;
     case 'monetization':
-      return 0.855;
+      return MONETIZATION_OFFSET;
     default:
       return 0;
   }
@@ -423,6 +444,18 @@ function getGlobeWidth(width: number, height: number) {
       isMobile ? (height - headerSize) / 2.5 : (height - headerSize) / 1.5,
     ),
   );
+}
+
+function getCloseness(value: number, target: number, threshold: number) {
+  return Math.max(0, threshold - Math.abs(value - target)) / threshold;
+}
+function getSignedCloseness(value: number, target: number, threshold: number) {
+  const signedDistance = value - target;
+  if (signedDistance > 0) {
+    return Math.min(threshold, signedDistance) / threshold;
+  } else {
+    return Math.max(-threshold, signedDistance) / threshold;
+  }
 }
 
 const IMAGE_HEIGHT = 547;
@@ -499,7 +532,12 @@ export const Globe = () => {
   );
   useVideoManager(gv, segmentStart, segmentEnd, 0.6);
 
-  const imageState = React.useRef({xPos: 0, lastTs: Date.now()});
+  const imageState = React.useRef({
+    xPerc: 0,
+    xPerc2: 0,
+    xPerc3: 0,
+    lastTs: Date.now(),
+  });
 
   useCanvasDrawing(
     canvas,
@@ -511,14 +549,19 @@ export const Globe = () => {
         ctx.fillRect(0, 0, width, height);
 
         const imageOffsetPercent = getImageOffset(currentFeatureSlug);
-        const imageOffset =
-          Math.max(IMAGE_HEIGHT / 2, imageOffsetPercent * IMAGE_WIDTH) -
-          IMAGE_HEIGHT / 2;
-        const {xPos, lastTs} = imageState.current;
+        const {xPerc, xPerc2, xPerc3, lastTs} = imageState.current;
         const now = Date.now();
         const delta = now - lastTs;
         imageState.current.lastTs = now;
-        imageState.current.xPos = xPos + (imageOffset - xPos) * (delta * 0.01);
+        imageState.current.xPerc =
+          xPerc + (imageOffsetPercent - xPerc) * (delta * 0.008);
+        imageState.current.xPerc2 =
+          xPerc2 + (imageOffsetPercent - xPerc2) * (delta * 0.004);
+        imageState.current.xPerc3 =
+          xPerc3 + (imageOffsetPercent - xPerc3) * (delta * 0.002);
+        const imageOffset =
+          Math.max(IMAGE_HEIGHT / 2, xPerc * IMAGE_WIDTH) - IMAGE_HEIGHT / 2;
+        // console.log(xPerc);
 
         const isMobile = width < height;
 
@@ -558,7 +601,8 @@ export const Globe = () => {
           const giHeight = globeWidth;
           const giWidth = (giHeight * IMAGE_WIDTH) / IMAGE_HEIGHT;
 
-          const giX = width / 2 - globeRadius - (xPos / IMAGE_WIDTH) * giWidth;
+          const giX =
+            width / 2 - globeRadius - (imageOffset / IMAGE_WIDTH) * giWidth;
           const giY = globeCenterPosition - giHeight / 2;
 
           ctx.drawImage(giImage, giX, giY, giWidth, giHeight);
@@ -647,7 +691,107 @@ export const Globe = () => {
         ctx.closePath();
         ctx.restore();
 
-        // ctx.drawImage(iconCache.get(distributionIcons[0])!, 0, 0);
+        // Draw the orbs
+        ctx.save();
+        const positions = isMobile ? orbPositionsMobile : orbPositionsDesktop;
+        const orbRadius = isMobile ? 25 : 30;
+        const orbSizeRatio = isMobile ? 0.8333 : 1;
+        for (let i = 0; i < positions.length; i++) {
+          const position = positions[i];
+          const rotation = position.rotation; // in degrees
+          const dist = position.dist;
+          const animPerc = dist === 0 ? xPerc : dist === 1 ? xPerc2 : xPerc3;
+          const orbDistance =
+            globeRadius *
+            (1 + radiusIncrement * (dist === 0 ? 0.75 : dist + 1));
+
+          const distributionSectionOpacity =
+            getCloseness(animPerc, DISTRIBUTION_OFFSET, 0.07) * 1; // No scale factor, it's a percent
+          const distributionRotationOffset =
+            getSignedCloseness(animPerc, DISTRIBUTION_OFFSET, 0.07) * -0.15; // 0.15 radians
+          // console.log(distributionSectionOffset, distributionRotationOffset);
+          if (distributionSectionOpacity > 0.01) {
+            ctx.globalAlpha = distributionSectionOpacity;
+            const distributionIcon = iconCache.get(distributionIcons[i])!;
+            ctx.drawImage(
+              distributionIcon,
+              0,
+              0,
+              distributionIcon.width,
+              distributionIcon.height - (isMobile ? 30 : 0),
+              width / 2 -
+                (distributionIcon.width * devicePixelRatio * orbSizeRatio) / 2 -
+                Math.cos(rotation + distributionRotationOffset) * orbDistance,
+              globeCenterPosition -
+                orbRadius * devicePixelRatio -
+                Math.sin(rotation + distributionRotationOffset) * orbDistance,
+              distributionIcon.width * devicePixelRatio * orbSizeRatio,
+              (distributionIcon.height - (isMobile ? 30 : 0)) *
+                devicePixelRatio *
+                orbSizeRatio,
+            );
+          }
+          // // Draw a debug message next to the orb
+          // ctx.fillStyle = 'red';
+          // ctx.fillText(
+          //   `Point ${i}`,
+          //   width / 2 - Math.cos(rotation) * orbDistance,
+          //   globeCenterPosition - Math.sin(rotation) * orbDistance,
+          // );
+
+          const analyticsIcon = iconCache.get(analyticsIcons[i])!;
+          const analyticsSectionOpacity =
+            getCloseness(animPerc, ANALYTICS_OFFSET, 0.07) * 1; // No scale factor, it's a percent
+          const analyticsRotationOffset =
+            getSignedCloseness(animPerc, ANALYTICS_OFFSET, 0.07) * -0.15; // 0.15 radians
+          if (analyticsSectionOpacity > 0.01) {
+            ctx.globalAlpha = analyticsSectionOpacity;
+            ctx.drawImage(
+              analyticsIcon,
+              0,
+              0,
+              analyticsIcon.width,
+              analyticsIcon.height - (isMobile ? 30 : 0),
+              width / 2 -
+                (analyticsIcon.width * devicePixelRatio * orbSizeRatio) / 2 -
+                Math.cos(rotation + analyticsRotationOffset) * orbDistance,
+              globeCenterPosition -
+                orbRadius * devicePixelRatio -
+                Math.sin(rotation + analyticsRotationOffset) * orbDistance,
+              analyticsIcon.width * devicePixelRatio * orbSizeRatio,
+              (analyticsIcon.height - (isMobile ? 30 : 0)) *
+                devicePixelRatio *
+                orbSizeRatio,
+            );
+          }
+
+          const monetizationIcon = iconCache.get(monetizationIcons[i])!;
+          const monetizationSectionOpacity =
+            getCloseness(animPerc, MONETIZATION_OFFSET, 0.07) * 1; // No scale factor, it's a percent
+          const monetizationRotationOffset =
+            getSignedCloseness(animPerc, MONETIZATION_OFFSET, 0.07) * -0.15; // 0.15 radians
+          if (monetizationSectionOpacity > 0.01) {
+            ctx.globalAlpha = monetizationSectionOpacity;
+            ctx.drawImage(
+              monetizationIcon,
+              0,
+              0,
+              monetizationIcon.width,
+              monetizationIcon.height - (isMobile ? 30 : 0),
+              width / 2 -
+                (monetizationIcon.width * devicePixelRatio * orbSizeRatio) / 2 -
+                Math.cos(rotation + monetizationRotationOffset) * orbDistance,
+              globeCenterPosition -
+                orbRadius * devicePixelRatio -
+                Math.sin(rotation + monetizationRotationOffset) * orbDistance,
+              monetizationIcon.width * devicePixelRatio * orbSizeRatio,
+              (monetizationIcon.height - (isMobile ? 30 : 0)) *
+                devicePixelRatio *
+                orbSizeRatio,
+            );
+          }
+        }
+        ctx.restore();
       },
       [currentFeatureSlug, gi, gv, width, height],
     ),
@@ -698,18 +842,27 @@ export const Globe = () => {
       </div>
 
       {/* Spacer */}
-      <div className={css({height: 'calc(4 * 100vh)'})} />
+      <div className={css({height: 'calc(3.8 * 100vh)'})} />
       <a
         id="distribution"
-        className={css({position: 'absolute', top: 'calc(0.8 * 100vh)'})}
+        className={css({
+          position: 'absolute',
+          top: `calc(${DISTRIBUTION_OFFSET * 3.8} * 100vh)`,
+        })}
       />
       <a
         id="analytics"
-        className={css({position: 'absolute', top: 'calc(1.5 * 100vh)'})}
+        className={css({
+          position: 'absolute',
+          top: `calc(${ANALYTICS_OFFSET * 3.8} * 100vh)`,
+        })}
       />
       <a
         id="monetization"
-        className={css({position: 'absolute', top: 'calc(2.6 * 100vh)'})}
+        className={css({
+          position: 'absolute',
+          top: `calc(${MONETIZATION_OFFSET * 3.8} * 100vh)`,
+        })}
       />
     </section>
   );
