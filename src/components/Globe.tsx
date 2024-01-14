@@ -33,6 +33,10 @@ import monetization3 from '@/icons/globe/monetization/3.svg';
 import monetization4 from '@/icons/globe/monetization/4.svg';
 import monetization5 from '@/icons/globe/monetization/5.svg';
 
+import Simplex from 'ts-perlin-simplex';
+
+const perlin = new Simplex.SimplexNoise();
+
 const analyticsIcons = [
   analytics0,
   analytics1,
@@ -94,9 +98,9 @@ const radConv = Math.PI / 180;
 const orbPositionsDesktop = [
   {rotation: 13 * radConv, dist: 1},
   {rotation: 17 * radConv, dist: 2},
-  {rotation: 50.6 * radConv, dist: 0},
+  {rotation: 45.6 * radConv, dist: 0},
   {rotation: 140.6 * radConv, dist: 0},
-  {rotation: 151.9 * radConv, dist: 2},
+  {rotation: 155.9 * radConv, dist: 2},
   {rotation: 163.1 * radConv, dist: 1},
 ];
 const orbPositionsMobile = [
@@ -386,19 +390,6 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
   );
 });
 
-function chooseFeature(scrollRatio: number) {
-  if (scrollRatio >= 0.18 && scrollRatio < 0.35) {
-    return 'distribution';
-  }
-  if (scrollRatio >= 0.35 && scrollRatio < 0.64) {
-    return 'analytics';
-  }
-  if (scrollRatio >= 0.64) {
-    return 'monetization';
-  }
-  return null;
-}
-
 function getVideoSegmentBounds(currentFeatureSlug: Feature | null) {
   switch (currentFeatureSlug) {
     case 'distribution':
@@ -414,7 +405,7 @@ function getVideoSegmentBounds(currentFeatureSlug: Feature | null) {
 
 const VIEWPORT_HEIGHTS = 3.2;
 // In percents:
-const DISTRIBUTION_OFFSET = 0.28;
+const DISTRIBUTION_OFFSET = 0.3;
 const ANALYTICS_OFFSET = 0.6;
 const MONETIZATION_OFFSET = 0.9;
 
@@ -433,6 +424,18 @@ function getImageOffset(currentFeatureSlug: Feature | null) {
     default:
       return 0;
   }
+}
+function chooseFeature(scrollRatio: number) {
+  if (scrollRatio >= DISTRIBUTION_OFFSET && scrollRatio < ANALYTICS_OFFSET) {
+    return 'distribution';
+  }
+  if (scrollRatio >= ANALYTICS_OFFSET && scrollRatio < MONETIZATION_OFFSET) {
+    return 'analytics';
+  }
+  if (scrollRatio >= MONETIZATION_OFFSET) {
+    return 'monetization';
+  }
+  return null;
 }
 
 function getGlobeCenterPosition(width: number, height: number) {
@@ -528,7 +531,6 @@ export const Globe = () => {
   useScrollProgressEffect(
     ref,
     React.useCallback(progress => {
-      console.log(progress);
       const newFeature = chooseFeature(progress);
       setCurrentFeatureSlug(newFeature);
     }, []),
@@ -660,11 +662,11 @@ export const Globe = () => {
         // a 3px gap along the edge of the canvas. The lines should be spaced every 14px.
         ctx.save();
         ctx.beginPath();
-        const scrollOffset = (scrollY % 14) * devicePixelRatio;
+        const scrollOffset = -((scrollY / 2) % 14) * devicePixelRatio;
         const sideTickOpacity =
           Math.max(0, Math.min(1, getSignedCloseness(xPerc, 0.175, 0.1))) * 0.5;
         ctx.globalAlpha = sideTickOpacity;
-        for (let i = 0; i < height / devicePixelRatio; i += 14) {
+        for (let i = 0; i < height / devicePixelRatio + 14; i += 14) {
           const y = i * devicePixelRatio + scrollOffset;
           const closeness = getCloseness(y, globeCenterPosition, 50);
           const lineWidth = 5 + (closeness * 20) ** 1.25 + closeness * 20;
@@ -735,9 +737,13 @@ export const Globe = () => {
             globeRadius *
             (1 + radiusIncrement * (dist === 0 ? 0.75 : dist + 1));
 
+          const perlinRotationOffset =
+            perlin.noise3d(now / 1000 / 3, dist, rotation) / 50;
+
           const distributionSectionOpacity =
             getCloseness(animPerc, DISTRIBUTION_OFFSET, 0.07) * 1; // No scale factor, it's a percent
           const distributionRotationOffset =
+            perlinRotationOffset +
             getSignedCloseness(animPerc, DISTRIBUTION_OFFSET, 0.07) * -0.15; // 0.15 radians
           // console.log(distributionSectionOffset, distributionRotationOffset);
           if (distributionSectionOpacity > 0.01) {
@@ -773,6 +779,7 @@ export const Globe = () => {
           const analyticsSectionOpacity =
             getCloseness(animPerc, ANALYTICS_OFFSET, 0.07) * 1; // No scale factor, it's a percent
           const analyticsRotationOffset =
+            perlinRotationOffset +
             getSignedCloseness(animPerc, ANALYTICS_OFFSET, 0.07) * -0.15; // 0.15 radians
           if (analyticsSectionOpacity > 0.01) {
             ctx.globalAlpha = analyticsSectionOpacity;
@@ -799,6 +806,7 @@ export const Globe = () => {
           const monetizationSectionOpacity =
             getCloseness(animPerc, MONETIZATION_OFFSET, 0.07) * 1; // No scale factor, it's a percent
           const monetizationRotationOffset =
+            perlinRotationOffset +
             getSignedCloseness(animPerc, MONETIZATION_OFFSET, 0.07) * -0.15; // 0.15 radians
           if (monetizationSectionOpacity > 0.01) {
             ctx.globalAlpha = monetizationSectionOpacity;
