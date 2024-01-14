@@ -440,7 +440,7 @@ function chooseFeature(scrollRatio: number) {
 
 function getGlobeCenterPosition(width: number, height: number) {
   const isMobile = width < height;
-  const headerSize = isMobile ? 80 : 120;
+  const headerSize = (isMobile ? 80 : 120) * devicePixelRatio;
   return (height - headerSize) / (isMobile ? 2.8 : 2.4) + headerSize;
 }
 function getGlobeWidth(width: number, height: number) {
