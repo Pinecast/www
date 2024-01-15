@@ -551,7 +551,7 @@ export const HeroV2 = () => {
         drawRadius(
           ctx,
           width / 2,
-          (RADIUS_OFFSET - scrollY * 3) * window.devicePixelRatio,
+          (RADIUS_OFFSET - scrollY * 2.85) * window.devicePixelRatio,
           (radiusState.current.inner + scrollY * 2) * window.devicePixelRatio,
         );
 
