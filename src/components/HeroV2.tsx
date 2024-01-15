@@ -625,7 +625,7 @@ export const HeroV2 = () => {
           paddingBottom: '20px',
           position: 'relative',
           gap: '20px',
-          gridTemplateColumns: '1.1fr 5fr 1.1fr',
+          gridTemplateColumns: '1.2fr 5fr 1.2fr',
           gridTemplateRows: '46fr 32fr',
 
           overflow: 'hidden',

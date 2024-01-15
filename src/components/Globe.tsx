@@ -665,7 +665,7 @@ export const Globe = () => {
         ctx.beginPath();
         const scrollOffset = -((scrollY / 2) % 14) * devicePixelRatio;
         const sideTickOpacity =
-          Math.max(0, Math.min(1, getSignedCloseness(xPerc, 0.175, 0.1))) * 0.5;
+          Math.max(0, Math.min(1, getSignedCloseness(xPerc, 0.1, 0.1))) * 0.5;
         ctx.globalAlpha = sideTickOpacity;
         for (let i = 0; i < height / devicePixelRatio + 14; i += 14) {
           const y = i * devicePixelRatio + scrollOffset;
@@ -819,7 +819,7 @@ export const Globe = () => {
             (1 + radiusIncrement * (dist === 0 ? 0.75 : dist + 1));
 
           const perlinRotationOffset =
-            perlin.noise3d(now / 1000 / 3, dist, rotation) / 50;
+            perlin.noise3d(now / 1000 / 3, dist / 4, rotation) / 50;
 
           const distributionSectionOpacity =
             getCloseness(animPerc, DISTRIBUTION_IMAGE_OFFSET, 0.07) * 1; // No scale factor, it's a percent

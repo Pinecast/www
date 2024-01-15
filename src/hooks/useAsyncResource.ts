@@ -7,6 +7,7 @@ export const useAsyncImage = (src: string): [HTMLImageElement, boolean] => {
   if (typeof Image === 'undefined') {
     return [null as any, false];
   }
+  const returnValue = React.useRef<[any, any]>([null, false]);
   const image = React.useRef<HTMLImageElement>();
   const [loaded, setLoaded] = React.useState(false);
   if (!image.current) {
@@ -17,7 +18,9 @@ export const useAsyncImage = (src: string): [HTMLImageElement, boolean] => {
       setLoaded(true);
     };
   }
-  return [image.current, loaded];
+  returnValue.current[0] = image.current;
+  returnValue.current[1] = loaded;
+  return returnValue.current;
 };
 
 export const AV1_MIME = 'video/mp4; codecs=av01.0.00M.10.0.111.01.01.01.0';
@@ -27,11 +30,14 @@ export const useAsyncVideo = (
     [mimeType: string]: string;
   },
   doLoad: boolean,
-  autoplay: boolean = false
+  autoplay: boolean = false,
 ): [HTMLVideoElement, boolean] => {
+  const returnValue = React.useRef<[any, any]>([null, false]);
   const video = React.useRef<HTMLVideoElement>();
   React.useEffect(() => {
+    console.log('Loading');
     return () => {
+      console.log('Unloading');
       if (!video.current) return;
       video.current!.pause();
       video.current!.remove();
@@ -67,6 +73,9 @@ export const useAsyncVideo = (
       setLoaded(true);
     };
     vid.load();
+    if (vid.readyState >= 3) {
+      setLoaded(true);
+    }
     vid.style.position = 'fixed';
     vid.style.pointerEvents = 'none';
     vid.style.top = '0';
@@ -75,7 +84,9 @@ export const useAsyncVideo = (
     vid.style.width = '1px';
     document.body.appendChild(vid);
   }
-  return [video.current, loaded];
+  returnValue.current[0] = video.current;
+  returnValue.current[1] = loaded;
+  return returnValue.current;
 };
 
 export function preferDrawable(a: AsyncDrawable, b: AsyncDrawable) {

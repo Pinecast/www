@@ -24,7 +24,7 @@ module.exports = async () => {
 
       return config;
     },
-    reactStrictMode: true,
+    reactStrictMode: false,
     pageExtensions: ['tsx', 'mdx'],
   };
 
