@@ -599,7 +599,7 @@ const Customers = ({}) => {
               bottom: '0',
               content: '""',
               display: 'block',
-              height: '50vh',
+              height: 'calc(50vh + 100dvh - 100svh)',
               left: '0',
               position: 'sticky',
               right: '0',
