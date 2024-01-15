@@ -34,6 +34,7 @@ import monetization5 from '@/icons/globe/monetization/5.svg';
 
 import Simplex from 'ts-perlin-simplex';
 import {useDualVideoManager} from '@/hooks/useDualVideoManager';
+import {dpi} from '@/canvasHelpers';
 
 const callWhenIdle = (callback: IdleRequestCallback) => {
   if (typeof window.requestIdleCallback === 'undefined') {
@@ -496,8 +497,7 @@ function getGlobeCenterPosition(
   adjustForDpr = true,
 ) {
   const isMobile = width < height;
-  const headerSize =
-    (isMobile ? 80 : 120) * (adjustForDpr ? devicePixelRatio : 1);
+  const headerSize = (isMobile ? 80 : 120) * (adjustForDpr ? dpi : 1);
   return (height - headerSize) / (isMobile ? 2.8 : 2.4) + headerSize;
 }
 function getGlobeWidth(width: number, height: number) {
@@ -554,8 +554,8 @@ export const Globe = () => {
       const width = window.innerWidth - verticalScrollbarWidth;
       const height = window.innerHeight;
       size.current = {
-        width: width * devicePixelRatio,
-        height: height * devicePixelRatio,
+        width: width * dpi,
+        height: height * dpi,
       };
       const m = menu.current!;
       const globeCenterPosition = getGlobeCenterPosition(width, height, false);
@@ -573,8 +573,8 @@ export const Globe = () => {
       if (canvas.current) {
         canvas.current.style.width = `${width}px`;
         canvas.current.style.height = `${height}px`;
-        canvas.current.width = width * devicePixelRatio;
-        canvas.current.height = height * devicePixelRatio;
+        canvas.current.width = width * dpi;
+        canvas.current.height = height * dpi;
       }
 
       setIsMobile(isMobile);
@@ -663,18 +663,18 @@ export const Globe = () => {
         // a 3px gap along the edge of the canvas. The lines should be spaced every 14px.
         ctx.save();
         ctx.beginPath();
-        const scrollOffset = -((scrollY / 2) % 14) * devicePixelRatio;
+        const scrollOffset = -((scrollY / 2) % 14) * dpi;
         const sideTickOpacity =
           Math.max(0, Math.min(1, getSignedCloseness(xPerc, 0.1, 0.1))) * 0.5;
         ctx.globalAlpha = sideTickOpacity;
-        for (let i = 0; i < height / devicePixelRatio + 14; i += 14) {
-          const y = i * devicePixelRatio + scrollOffset;
+        for (let i = 0; i < height / dpi + 14; i += 14) {
+          const y = i * dpi + scrollOffset;
           const closeness = getCloseness(y, globeCenterPosition, 50);
           const lineWidth = 5 + (closeness * 20) ** 1.25 + closeness * 20;
-          ctx.moveTo(3 * devicePixelRatio, y);
-          ctx.lineTo((3 + lineWidth) * devicePixelRatio, y);
-          ctx.moveTo(width - 3 * devicePixelRatio, y);
-          ctx.lineTo(width - (3 + lineWidth) * devicePixelRatio, y);
+          ctx.moveTo(3 * dpi, y);
+          ctx.lineTo((3 + lineWidth) * dpi, y);
+          ctx.moveTo(width - 3 * dpi, y);
+          ctx.lineTo(width - (3 + lineWidth) * dpi, y);
         }
         ctx.closePath();
         ctx.strokeStyle = 'white';
@@ -838,14 +838,14 @@ export const Globe = () => {
               distributionIcon.width,
               distributionIcon.height - (isMobile ? 30 : 0),
               width / 2 -
-                (distributionIcon.width * devicePixelRatio * orbSizeRatio) / 2 -
+                (distributionIcon.width * dpi * orbSizeRatio) / 2 -
                 Math.cos(rotation + distributionRotationOffset) * orbDistance,
               globeCenterPosition -
-                orbRadius * devicePixelRatio -
+                orbRadius * dpi -
                 Math.sin(rotation + distributionRotationOffset) * orbDistance,
-              distributionIcon.width * devicePixelRatio * orbSizeRatio,
+              distributionIcon.width * dpi * orbSizeRatio,
               (distributionIcon.height - (isMobile ? 30 : 0)) *
-                devicePixelRatio *
+                dpi *
                 orbSizeRatio,
             );
           }
@@ -872,15 +872,13 @@ export const Globe = () => {
               analyticsIcon.width,
               analyticsIcon.height - (isMobile ? 30 : 0),
               width / 2 -
-                (analyticsIcon.width * devicePixelRatio * orbSizeRatio) / 2 -
+                (analyticsIcon.width * dpi * orbSizeRatio) / 2 -
                 Math.cos(rotation + analyticsRotationOffset) * orbDistance,
               globeCenterPosition -
-                orbRadius * devicePixelRatio -
+                orbRadius * dpi -
                 Math.sin(rotation + analyticsRotationOffset) * orbDistance,
-              analyticsIcon.width * devicePixelRatio * orbSizeRatio,
-              (analyticsIcon.height - (isMobile ? 30 : 0)) *
-                devicePixelRatio *
-                orbSizeRatio,
+              analyticsIcon.width * dpi * orbSizeRatio,
+              (analyticsIcon.height - (isMobile ? 30 : 0)) * dpi * orbSizeRatio,
             );
           }
 
@@ -900,14 +898,14 @@ export const Globe = () => {
               monetizationIcon.width,
               monetizationIcon.height - (isMobile ? 30 : 0),
               width / 2 -
-                (monetizationIcon.width * devicePixelRatio * orbSizeRatio) / 2 -
+                (monetizationIcon.width * dpi * orbSizeRatio) / 2 -
                 Math.cos(rotation + monetizationRotationOffset) * orbDistance,
               globeCenterPosition -
-                orbRadius * devicePixelRatio -
+                orbRadius * dpi -
                 Math.sin(rotation + monetizationRotationOffset) * orbDistance,
-              monetizationIcon.width * devicePixelRatio * orbSizeRatio,
+              monetizationIcon.width * dpi * orbSizeRatio,
               (monetizationIcon.height - (isMobile ? 30 : 0)) *
-                devicePixelRatio *
+                dpi *
                 orbSizeRatio,
             );
           }
@@ -945,8 +943,8 @@ export const Globe = () => {
             zIndex: 3,
             pointerEvents: 'none',
             imageRendering: 'pixelated',
-            width: `${size.current.width / (global.devicePixelRatio ?? 1)}px`,
-            height: `${size.current.height / (global.devicePixelRatio ?? 1)}px`,
+            width: `${size.current.width / dpi}px`,
+            height: `${size.current.height / dpi}px`,
           })}
           ref={canvas}
           height={size.current.height}
@@ -957,8 +955,8 @@ export const Globe = () => {
         <FeatureMenu
           currentFeatureSlug={currentFeatureSlug}
           ref={menu}
-          height={size.current.height / (global.devicePixelRatio ?? 1)}
-          width={size.current.width / (global.devicePixelRatio ?? 1)}
+          height={size.current.height / dpi}
+          width={size.current.width / dpi}
         />
       </div>
 

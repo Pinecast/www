@@ -1,5 +1,8 @@
 import {AsyncDrawable} from './hooks/useAsyncResource';
 
+// Clamp dpi to 2 for performance
+export const dpi = Math.min(2, global.devicePixelRatio ?? 1);
+
 export function drawImageProp(
   [img, loaded]: AsyncDrawable,
   ctx: CanvasRenderingContext2D,
