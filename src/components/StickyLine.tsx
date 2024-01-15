@@ -21,7 +21,7 @@ export const StickyLine = React.forwardRef<HTMLDivElement, Props>(
           position: 'sticky',
           height: `${height}px`,
           marginTop: `${-1 * height}px`,
-          top: `calc(50dvh - ${height}px)`,
+          top: `calc(50lvh - ${height}px)`,
           left: '0',
           right: '0',
           width: '100%',
