@@ -265,7 +265,7 @@ const AudioPlayer = React.memo(
             left: '0',
             position: 'fixed',
             right: '0',
-            top: '50vh',
+            top: '50dvh',
             width: '100%',
             zIndex: 2,
             [MIN_TABLET_MEDIA_QUERY]: {
@@ -599,7 +599,7 @@ const Customers = ({}) => {
               bottom: '0',
               content: '""',
               display: 'block',
-              height: 'calc(50vh + 100dvh - 100svh)',
+              height: '50dvh',
               left: '0',
               position: 'sticky',
               right: '0',
