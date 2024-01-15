@@ -18,6 +18,17 @@ export const useAsyncImage = (src: string): [HTMLImageElement, boolean] => {
       setLoaded(true);
     };
   }
+  React.useEffect(() => {
+    let unloaded = false;
+    if (!image.current) return;
+    image.current!.onload = () => {
+      if (unloaded) return;
+      setLoaded(true);
+    };
+    return () => {
+      unloaded = true;
+    };
+  });
   returnValue.current[0] = image.current;
   returnValue.current[1] = loaded;
   return returnValue.current;
@@ -47,6 +58,17 @@ export const useAsyncVideo = (
     return [null as any, false];
   }
   const [loaded, setLoaded] = React.useState(false);
+  React.useEffect(() => {
+    let unloaded = false;
+    if (!video.current) return;
+    video.current!.onload = () => {
+      if (unloaded) return;
+      setLoaded(true);
+    };
+    return () => {
+      unloaded = true;
+    };
+  });
   if (!doLoad) {
     return [null as any, false];
   }
