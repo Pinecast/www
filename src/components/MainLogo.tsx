@@ -51,8 +51,6 @@ export const MainLogo = ({startDark = false}: {startDark?: boolean} = {}) => {
         onComplete={React.useCallback(() => {
           setAnimated(true);
         }, [])}
-        height={global.document?.body.offsetWidth < 1180 ? 40 : 50}
-        width={global.document?.body.offsetWidth < 1180 ? 40 : 50}
       />
       <Logo
         size={50}
