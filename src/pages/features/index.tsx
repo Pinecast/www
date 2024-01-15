@@ -33,7 +33,7 @@ export default function Features() {
           content="All the features you could want from a podcast hosting service"
         />
       </Head>
-      <MainLogo />
+      <MainLogo startDark />
       <MainHeader />
       <Header />
       <StandardMarqueeDivider
