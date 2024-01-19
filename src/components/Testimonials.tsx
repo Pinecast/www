@@ -542,6 +542,8 @@ const Customers = ({}) => {
     <div
       className={css({
         marginTop: '-10vh',
+        // Intentional: 'clip' vs. 'hidden' with a negative margin below to conceal the height of the Sticky Façade.
+        overflow: 'clip',
         paddingBottom: '100px',
         position: 'relative',
         textAlign: 'center',
@@ -558,7 +560,33 @@ const Customers = ({}) => {
           quotation={currentTestimonial.quotation}
         />
       )}
-      <div ref={intersectionProgressRef}>
+      <div
+        className={css({
+          // Hide the Sticky Façade
+          marginBottom: '-50vh',
+          // Workaround for Safari layering bug when scrolling past `position: sticky` elements.
+          // @see https://bugs.webkit.org/show_bug.cgi?id=168725
+          transform: 'translate3d(0,0,0)',
+        })}
+        ref={intersectionProgressRef}
+      >
+        <div
+          className={css({
+            // Sticky Façade — hides the bottom half of the viewport for
+            // the scrolling text effect. The outlined text appears on top.
+            // After scrolling past the viewport center, the filled text appears.
+            backgroundColor: 'var(--page-bg, var(--color-sand))',
+            height: '50lvh',
+            left: '0',
+            position: 'sticky',
+            right: '0',
+            // Intentional: 'top' vs. 'bottom' so the position remains fixed for mobile browsers with
+            // viewports that expand/shrink the address bar chrome based on scroll direction.
+            top: '50lvh',
+            transition: 'background 0.2s ease-in-out',
+            width: '100%',
+          })}
+        />
         <div
           aria-hidden="true"
           role="presentation"
@@ -580,32 +608,38 @@ const Customers = ({}) => {
 
         <div
           className={css({
-            // Filled Text
+            // Outlined Text
             color: 'var(--color-space)',
             left: '0',
             position: 'absolute',
             right: '0',
             top: '0',
+            transform: 'translate3d(0,0,0)',
+            WebkitTextFillColor: 'transparent',
+            WebkitTextStrokeColor: 'var(--color-space)',
+            WebkitTextStrokeWidth: 'thin',
+          })}
+        >
+          {TESTIMONIALS.map(item => (
+            <div key={item.customer} className={css(CUSTOMER_BLOCK_STYLE)}>
+              <H1>{item.customer}</H1>
+            </div>
+          ))}
+        </div>
+
+        <div
+          className={css({
+            // Filled Text
+            color: 'var(--color-space)',
+            left: '0',
+            position: 'absolute',
+            right: '0',
+            transform: 'translate3d(0,0,0)',
+            top: '0',
             WebkitTextFillColor: 'var(--color-space)',
             WebkitTextStrokeColor: 'var(--color-space)',
             WebkitTextStrokeWidth: 'thin',
-            // Le sigh… This works around a Safari bug wherein the stacking
-            // order becomes out of whack when scrolling past and then behind
-            // elements that are `position: sticky`.
-            // @see https://bugs.webkit.org/show_bug.cgi?id=168725
-            transform: 'translate3d(0,0,0)',
-            '::after': {
-              backgroundColor: 'var(--page-bg, var(--color-sand))',
-              bottom: '0',
-              content: '""',
-              display: 'block',
-              height: '50lvh',
-              left: '0',
-              position: 'sticky',
-              right: '0',
-              transition: 'background 0.2s ease-in-out',
-              width: '100%',
-            },
+            zIndex: -1,
           })}
         >
           {TESTIMONIALS.map((item, idx) => (
@@ -614,25 +648,6 @@ const Customers = ({}) => {
               ref={addCustomerRef(idx)}
               className={css(CUSTOMER_BLOCK_STYLE)}
             >
-              <H1>{item.customer}</H1>
-            </div>
-          ))}
-        </div>
-        <div
-          className={css({
-            // Outlined Text
-            color: 'var(--color-space)',
-            left: '0',
-            position: 'absolute',
-            right: '0',
-            top: '0',
-            WebkitTextFillColor: 'transparent',
-            WebkitTextStrokeColor: 'var(--color-space)',
-            WebkitTextStrokeWidth: 'thin',
-          })}
-        >
-          {TESTIMONIALS.map(item => (
-            <div key={item.customer} className={css(CUSTOMER_BLOCK_STYLE)}>
               <H1>{item.customer}</H1>
             </div>
           ))}
@@ -739,7 +754,7 @@ export const Testimonials = ({topPosition}: {topPosition?: number}) => {
                 marginBottom: '30px',
                 minHeight: '48px',
                 transition: 'background-color 0.2s ease-in-out',
-                whiteSpace:'nowrap'
+                whiteSpace: 'nowrap',
               }}
             >
               Start for free
