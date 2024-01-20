@@ -156,7 +156,11 @@ const AudioPlayer = React.memo(
       const tickerDotRef = React.useRef<HTMLDivElement>(null);
       const tickerTimeRef = React.useRef<HTMLDivElement>(null);
 
-      const {audio, isPlaying, play, pause} = useSound(testimonial.audioFiles!);
+      const {
+        element: audioElement,
+        controls: {play, pause},
+        state: {time: currentTimeSec, playing},
+      } = useSound({sources: testimonial?.audioFiles, autoPlay: true});
 
       React.useImperativeHandle(ref, () => ({
         play,
@@ -250,9 +254,6 @@ const AudioPlayer = React.memo(
         },
       }));
 
-      // TODO: Proxy this property to be live.
-      const currentTimeSec = 0 ?? audio?.currentTime;
-
       return (
         <div
           className={css({
@@ -326,6 +327,7 @@ const AudioPlayer = React.memo(
                 },
               })}
             >
+              {audioElement}
               <div
                 ref={tickerDotRef}
                 className={css({
@@ -379,7 +381,7 @@ const AudioPlayer = React.memo(
                       transition: 'transform 0.1s linear',
                       willChange: 'opacity',
                     })}
-                  >{`${formatTime(currentTimeSec)} / ${formatTime(
+                  >{`${formatTime(Math.trunc(currentTimeSec))} / ${formatTime(
                     testimonial.audioDuration,
                   )}`}</span>
                 </Caption>
@@ -444,7 +446,7 @@ const AudioPlayer = React.memo(
                 <button
                   type="button"
                   className={css({all: 'unset', appearance: 'none'})}
-                  onClick={isPlaying ? pause : play}
+                  onClick={playing ? pause : play}
                 >
                   <Caption
                     style={{
@@ -470,7 +472,7 @@ const AudioPlayer = React.memo(
                       },
                     }}
                   >
-                    {isPlaying ? 'Pause' : 'Play'}
+                    {playing ? 'Pause' : 'Play'}
                   </Caption>
                 </button>
               </footer>
