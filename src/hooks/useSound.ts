@@ -1,13 +1,12 @@
 import * as React from 'react';
 
 const MIME_TYPES = {
-  vorbis: 'audio/ogg; codecs="vorbis"',
   opus: 'audio/ogg; codecs="opus"',
   mp3: 'audio/mpeg',
   aac: 'audio/aac',
 };
 
-type AudioCodec = 'vorbis' | 'opus' | 'mp3' | 'aac';
+type AudioCodec = 'opus' | 'mp3' | 'aac';
 
 export type AudioFiles = Record<AudioCodec, string>;
 
@@ -210,9 +209,7 @@ function createHTMLMediaHook<T extends HTMLAudioElement | HTMLVideoElement>(
           }
           const {sources: audioFiles} = props;
           if (audioFiles) {
-            if (audioFiles.vorbis && el.canPlayType(MIME_TYPES.vorbis)) {
-              el.src = audioFiles.vorbis;
-            } else if (audioFiles.opus && el.canPlayType(MIME_TYPES.opus)) {
+            if (audioFiles.opus && el.canPlayType(MIME_TYPES.opus)) {
               el.src = audioFiles.opus;
             } else if (audioFiles.mp3 && el.canPlayType(MIME_TYPES.mp3)) {
               el.src = audioFiles.mp3;

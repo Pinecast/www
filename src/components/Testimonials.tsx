@@ -20,15 +20,14 @@ type Testimonial = {
 const TESTIMONIALS: Testimonial[] = [
   {
     audioFiles: {
-      vorbis: '/testimonials/living-blindfully.vorbis.ogg',
       opus: '/testimonials/living-blindfully.opus.webm',
       mp3: '/testimonials/living-blindfully.mp3',
-      aac: '/testimonials/living-blindfully.aac',
+      aac: '/testimonials/living-blindfully.m4a',
     },
     audioDuration: 49,
     color: 'sand',
     customer: 'Living Blindfully',
-    joinYear: 1999,
+    joinYear: 2020,
     quotation: (
       <>
         Ease of use, reliability, accessibility, and support. I&rsquo;m a huge
@@ -38,15 +37,14 @@ const TESTIMONIALS: Testimonial[] = [
   },
   {
     audioFiles: {
-      vorbis: '/testimonials/girls-girls-girls-podcast.vorbis.ogg',
-      opus: '/testimonials/girls-girls-girls-podcast.opus.webm',
-      mp3: '/testimonials/girls-girls-girls-podcast.mp3',
-      aac: '/testimonials/girls-girls-girls-podcast.aac',
+      opus: '/testimonials/make-life-work.opus.webm',
+      mp3: '/testimonials/make-life-work.mp3',
+      aac: '/testimonials/make-life-work.m4a',
     },
     audioDuration: 30,
     color: 'lime',
-    customer: 'Girls! Girls! Girls! Podcast',
-    joinYear: 2021,
+    customer: 'Make Life Work',
+    joinYear: 2019,
     quotation: (
       <>
         Pinecast is the absolute best in the game. The perfect one-stop shop for
@@ -56,7 +54,6 @@ const TESTIMONIALS: Testimonial[] = [
   },
   {
     audioFiles: {
-      vorbis: '/testimonials/digging-dexter-podcast.vorbis.ogg',
       opus: '/testimonials/digging-dexter-podcast.opus.webm',
       mp3: '/testimonials/digging-dexter-podcast.mp3',
       aac: '/testimonials/digging-dexter-podcast.aac',
@@ -67,26 +64,7 @@ const TESTIMONIALS: Testimonial[] = [
     joinYear: 2016,
     quotation: (
       <>
-        Pinecast has given me all the tools I need to thrive, while ensuring
-        I&rsquo;m never concerned about storage, length, size or volume.
-      </>
-    ),
-  },
-  {
-    audioFiles: {
-      vorbis: '/testimonials/the-newsroom-podcast-podcast.vorbis.ogg',
-      opus: '/testimonials/the-newsroom-podcast-podcast.opus.webm',
-      mp3: '/testimonials/the-newsroom-podcast-podcast.mp3',
-      aac: '/testimonials/the-newsroom-podcast-podcast.aac',
-    },
-    audioDuration: 50,
-    color: 'sky',
-    customer: 'The Newsroom Podcast',
-    joinYear: 2022,
-    quotation: (
-      <>
-        Pinecast is the bee&rsquo;s knees. What else could we ever ask for?
-        Perfection.
+        Having unlimited podcasts and episodes allows me to deliver all my ideas.
       </>
     ),
   },
