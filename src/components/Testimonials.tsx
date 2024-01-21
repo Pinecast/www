@@ -52,22 +52,6 @@ const TESTIMONIALS: Testimonial[] = [
       </>
     ),
   },
-  {
-    audioFiles: {
-      opus: '/testimonials/digging-dexter-podcast.opus.webm',
-      mp3: '/testimonials/digging-dexter-podcast.mp3',
-      aac: '/testimonials/digging-dexter-podcast.aac',
-    },
-    audioDuration: 40,
-    color: 'orchid',
-    customer: 'Digging Dexter Podcast',
-    joinYear: 2016,
-    quotation: (
-      <>
-        Having unlimited podcasts and episodes allows me to deliver all my ideas.
-      </>
-    ),
-  },
 ];
 
 const padTime = (time: number) => `${time}`.padStart(2, '0');
