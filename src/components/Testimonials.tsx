@@ -25,7 +25,7 @@ const TESTIMONIALS: Testimonial[] = [
       aac: '/testimonials/living-blindfully.m4a',
     },
     audioDuration: 49,
-    color: 'sand',
+    color: 'var(--color-lime)',
     customer: 'Living Blindfully',
     joinYear: 2020,
     quotation: (
@@ -42,7 +42,7 @@ const TESTIMONIALS: Testimonial[] = [
       aac: '/testimonials/make-life-work.m4a',
     },
     audioDuration: 23,
-    color: 'lime',
+    color: 'var(--color-sky)',
     customer: 'Make Life Work',
     joinYear: 2019,
     quotation: (
@@ -482,10 +482,7 @@ const Customers = ({}) => {
 
   React.useEffect(() => {
     if (currentTestimonial) {
-      document.body.style.setProperty(
-        '--page-bg',
-        `var(--color-${currentTestimonial.color})`,
-      );
+      document.body.style.setProperty('--page-bg', currentTestimonial.color);
       audioPlayerRef.current?.play();
     }
     return () => {
