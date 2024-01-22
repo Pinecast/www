@@ -524,8 +524,6 @@ const Customers = ({}) => {
       )}
       <div
         className={css({
-          // Hide the Sticky Façade
-          marginBottom: '-50vh',
           // Workaround for Safari layering bug when scrolling past `position: sticky` elements.
           // @see https://bugs.webkit.org/show_bug.cgi?id=168725
           transform: 'translate3d(0,0,0)',
@@ -540,6 +538,7 @@ const Customers = ({}) => {
             backgroundColor: 'var(--page-bg, var(--color-sand))',
             height: '50lvh',
             left: '0',
+            marginBottom: '-50vh',
             position: 'sticky',
             right: '0',
             // Intentional: 'top' vs. 'bottom' so the position remains fixed for mobile browsers with

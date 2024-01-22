@@ -45,7 +45,6 @@ interface HTMLMediaProps
   src?: string;
 
   sources: AudioFiles | undefined;
-
 }
 
 interface HTMLMediaState {
@@ -166,6 +165,7 @@ function createHTMLMediaHook<T extends HTMLAudioElement | HTMLVideoElement>(
       return {
         controls: false,
         ...props,
+        sources: undefined,
         ref,
         onPlay: wrapEvent(props.onPlay, onPlay),
         onPlaying: wrapEvent(props.onPlaying, onPlaying),
@@ -293,7 +293,7 @@ function createHTMLMediaHook<T extends HTMLAudioElement | HTMLVideoElement>(
       if (props.autoPlay && paused) {
         controls.play();
       }
-    }, [controls, props.autoPlay, props.src, setState]);
+    }, [props.src, props.sources]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return {element, state, controls, ref};
   };
