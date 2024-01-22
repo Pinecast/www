@@ -219,10 +219,7 @@ const AudioPlayer = React.memo(
       return (
         <div
           className={css({
-            // As the child moves horizontally as the page is vertically scrolled, to improve the performance of
-            // the scroll-linked `transform` on the child, give hints to the browser to create a new stacking
-            // context that is independent of other styles on the page (enable containment for layout, paint, and size).
-            content: 'strict',
+            contain: 'size',
             display: 'grid',
             height: `${PLAYER_HEIGHT_SMALL}px`,
             left: '0',
@@ -239,6 +236,9 @@ const AudioPlayer = React.memo(
           <div
             ref={playerRef}
             className={css({
+              // As the child moves horizontally as the page is vertically scrolled, to improve the performance of
+              // the scroll-linked `transform` on the child, give hints to the browser to create a new stacking
+              // context that is independent of other styles on the page (enable containment for layout, paint, and size).
               contain: 'strict',
               height: `${PLAYER_HEIGHT_SMALL}px`,
               position: 'relative',
