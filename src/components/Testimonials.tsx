@@ -382,6 +382,7 @@ const AudioPlayer = React.memo(
                   display: 'grid',
                   gap: '0.125em 10px',
                   gridTemplateColumns: '1fr 1fr',
+                  whiteSpace: 'nowrap',
                   width: '100%',
                 })}
               >
