@@ -41,7 +41,7 @@ const TESTIMONIALS: Testimonial[] = [
       mp3: '/testimonials/make-life-work.mp3',
       aac: '/testimonials/make-life-work.m4a',
     },
-    audioDuration: 30,
+    audioDuration: 23,
     color: 'lime',
     customer: 'Make Life Work',
     joinYear: 2019,
