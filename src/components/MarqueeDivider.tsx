@@ -30,6 +30,7 @@ type Props = {
   marqueeColor?: string;
   textColor?: string;
   topBackgroundColor?: string;
+  zIndex?: number;
 };
 
 export const MarqueeDivider = ({
@@ -38,6 +39,7 @@ export const MarqueeDivider = ({
   children,
   textColor = '#000',
   topBackgroundColor = '#fff',
+  zIndex = 2
 }: Props) => {
   const css = useCSS();
   const uid = React.useId();
@@ -110,7 +112,7 @@ export const MarqueeDivider = ({
       className={css({
         backgroundColor: bottomBackgroundColor,
         position: 'relative',
-        zIndex: 3,
+        zIndex,
       })}
     >
       <svg
@@ -118,8 +120,11 @@ export const MarqueeDivider = ({
         preserveAspectRatio="none"
         width="100%"
         className={css({
+          // Remove 4 extra pixels added by browser when SVG is an inline box.
+          display: 'block',
           position: 'relative',
-          zIndex: 1,
+          // Work around a nasty Chrome flickering bug the marquee is scrolled fast into view.
+          transform: 'translate3d(0,0,0)',
         })}
       >
         <path

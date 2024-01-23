@@ -1,5 +1,13 @@
 import {RefObject, useEffect, useState} from 'react';
 
+const climb = (num: number, min: number, max: number) => {
+  if (Math.abs(min - num) < Math.abs(max - num)) {
+    return min;
+  } else {
+    return max;
+  }
+};
+
 const genRange = (start: number, stop: number, step = 1) => {
   if (step <= 0) {
     return [start];
@@ -25,6 +33,10 @@ interface CreateIntersectionProgressOptions<T extends Element> {
   axis?: 'x' | 'y';
   // called when progress changes
   onProgress?: (target: T, progress: number) => void;
+  // called when target reaches threshold
+  onEnter?: (target: T) => void;
+  // called when target leaves threshold
+  onLeave?: (target: T) => void;
 }
 
 interface IntersectionProgressInstance<T extends Element> {
@@ -41,6 +53,8 @@ function createIntersectionProgress<T extends Element>({
   threshold = 0.001,
   axis = 'y',
   onProgress = () => {},
+  onEnter = () => {},
+  onLeave = () => {},
 }: CreateIntersectionProgressOptions<T>): IntersectionProgressInstance<T> {
   const createIntersectionObserver = () => {
     // Create a root bounding box for observing the [0..1] progression of the target.
@@ -62,7 +76,13 @@ function createIntersectionProgress<T extends Element>({
       thresholdStep = threshold / target.clientWidth;
     }
 
+    let isIntersectingLastTick = false;
     let progressLastTick = -1;
+
+    let isFirstEnter = true;
+    setTimeout(() => {
+      isFirstEnter = false;
+    });
 
     const options = {rootMargin, threshold: genRange(0, 1, thresholdStep)};
 
@@ -81,10 +101,33 @@ function createIntersectionProgress<T extends Element>({
         progress = 1 - intersectionRect.width / boundingClientRect.width;
       }
 
-      if (isProgressing && progressLastTick !== progress) {
-        // Percent (as [0..1]) of completion of a step past the threshold.
-        onProgress(target, progress);
+      // Percent (as [0..1]) of completion of a step past the threshold.
+
+      const isEntering = !isIntersectingLastTick && isProgressing;
+      const isLeaving = isIntersectingLastTick && !isProgressing;
+      isIntersectingLastTick = isProgressing;
+
+      const onProgressChange = (progress: number) => {
+        if (progressLastTick !== progress) {
+          onProgress(target, progress);
+        }
         progressLastTick = progress;
+      };
+
+      if (isEntering) {
+        onEnter(target);
+        if (!isFirstEnter) {
+          onProgressChange(climb(progress, 0, 1));
+        }
+      }
+
+      if (isProgressing && progressLastTick !== progress) {
+        onProgressChange(progress);
+      }
+
+      if (isLeaving) {
+        onLeave(target);
+        onProgressChange(climb(progress, 0, 1));
       }
     }, options);
 
@@ -130,6 +173,8 @@ type UseIntersectionProgressOptions<T extends Element> = Omit<
   'target'
 > & {
   onProgress?: (target: T, progress: number) => void;
+  onEnter?: (target: T) => void;
+  onLeave?: (target: T) => void;
 };
 
 export function useIntersectionProgress<T extends Element>(

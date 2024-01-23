@@ -233,7 +233,7 @@ const AudioPlayer = React.memo(
             right: '0',
             top: '50lvh',
             width: '100%',
-            zIndex: 2,
+            zIndex: 4,
             [MIN_TABLET_MEDIA_QUERY]: {
               height: `${PLAYER_HEIGHT_LARGE}px`,
             },
@@ -292,6 +292,7 @@ const AudioPlayer = React.memo(
                 transformOrigin: '0% 50%',
                 width: `${TICKER_WIDTH_SMALL}px`,
                 willChange: 'opacity, transform',
+                zIndex: 4,
                 [MIN_TABLET_MEDIA_QUERY]: {
                   height: `${TICKER_HEIGHT_LARGE}px`,
                   width: `${TICKER_WIDTH_LARGE}px`,
@@ -547,7 +548,7 @@ const Customers = ({}) => {
             backgroundColor: 'var(--page-bg, var(--color-sand))',
             height: '50lvh',
             left: '0',
-            marginBottom: '-50vh',
+            marginBottom: 'calc(-50vh - 100px)',
             position: 'sticky',
             right: '0',
             // Intentional: 'top' vs. 'bottom' so the position remains fixed for mobile browsers with
@@ -627,115 +628,185 @@ const Customers = ({}) => {
   );
 };
 
-export const Testimonials = ({topPosition}: {topPosition?: number}) => {
+export const Testimonials = ({
+  topPosition = 0,
+  zIndex,
+}: {
+  topPosition?: number;
+  zIndex: number;
+}) => {
   const css = useCSS();
-
   return (
-    <section
-      id="testimonials"
-      className={css({
-        backgroundColor: 'var(--page-bg, var(--color-sand))',
-        cursor: 'default',
-        marginTop: `${topPosition ?? 0}px`,
-        paddingTop:
-          topPosition && topPosition < 0 ? `${topPosition * -1}px` : '0',
-        position: 'relative',
-        transition: 'background 0.2s ease-in-out',
-      })}
-    >
-      <div
+    <>
+      <section
+        id="testimonials"
         className={css({
-          color: 'var(--color-space)',
-          textAlign: 'center',
-          margin: '264px 0 240px',
+          cursor: 'default',
+          marginTop: `${topPosition}px`,
+          paddingTop: topPosition < 0 ? `${topPosition * -1}px` : '0',
           position: 'relative',
-          zIndex: 1,
-          [MIN_TABLET_MEDIA_QUERY]: {
-            margin: '260px 0 216px',
-          },
+          zIndex,
         })}
       >
         <div
           className={css({
-            display: 'grid',
-            gap: '10px',
-            gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
-            marginBottom: '86px',
-            padding: '0 20px',
-            position: 'relative',
-            width: '100%',
-            zIndex: 2,
+            color: 'var(--color-space)',
+            textAlign: 'center',
+            margin: '264px 0 240px',
             [MIN_TABLET_MEDIA_QUERY]: {
-              gap: '20px',
-              margin: '260px 0 240px',
+              margin: '260px 0 216px',
             },
           })}
         >
           <div
             className={css({
-              gridColumnStart: '3',
-              gridColumnEnd: '-3',
+              display: 'grid',
+              gap: '10px',
+              gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
+              marginBottom: '86px',
+              padding: '0 20px',
+              position: 'relative',
+              width: '100%',
+              zIndex: 2,
               [MIN_TABLET_MEDIA_QUERY]: {
-                gridColumnStart: '5',
-                gridColumnEnd: '9',
-                margin: '0 -20px',
+                gap: '20px',
+                margin: '260px 0 240px',
               },
             })}
           >
-            <H2 style={{textWrap: 'balance', marginBottom: '30px'}}>
-              Don&rsquo;t just take our word for it
-            </H2>
-            <Body4
-              style={{
-                marginTop: '-10px',
-                marginRight: 'auto',
-                marginBottom: '30px',
-                marginLeft: 'auto',
-                maxWidth: '32ch',
+            <div
+              className={css({
+                gridColumnStart: '3',
+                gridColumnEnd: '-3',
                 [MIN_TABLET_MEDIA_QUERY]: {
-                  maxWidth: '36ch',
+                  gridColumnStart: '5',
+                  gridColumnEnd: '9',
+                  margin: '0 -20px',
                 },
-              }}
+              })}
             >
-              We take pride in running a top-notch service. People really like
-              us. So much so, they left nice messages for you.
-            </Body4>
-          </div>
-          <div
-            className={css({
-              gridColumnStart: '6',
-              gridColumnEnd: '-6',
-              margin: '0 -40px',
-              [MIN_TABLET_MEDIA_QUERY]: {
+              <H2
+                style={{
+                  textWrap: 'balance',
+                  marginBottom: '30px',
+                }}
+              >
+                Don&rsquo;t just take our word for it
+              </H2>
+              <Body4
+                style={{
+                  marginTop: '-10px',
+                  marginRight: 'auto',
+                  marginBottom: '30px',
+                  marginLeft: 'auto',
+                  maxWidth: '32ch',
+                  [MIN_TABLET_MEDIA_QUERY]: {
+                    maxWidth: '36ch',
+                  },
+                }}
+              >
+                We take pride in running a top-notch service. People really like
+                us. So much so, they left nice messages for you.
+              </Body4>
+            </div>
+            <div
+              className={css({
                 gridColumnStart: '6',
-                gridColumnEnd: '8',
-                margin: '0 10px',
-              },
-            })}
-          >
-            <SecondaryButton
-              href="https://pinecast.com/signup"
-              style={{
-                backgroundColor: 'var(--page-bg, var(--color-sand))',
-                color: 'var(--color-space)',
-                display: 'grid',
-                lineHeight: '1.2',
-                placeContent: 'center',
-                marginBottom: '30px',
-                minHeight: '48px',
-                transition: 'background-color 0.2s ease-in-out',
-                whiteSpace: 'nowrap',
-              }}
+                gridColumnEnd: '-6',
+                margin: '0 -40px',
+                [MIN_TABLET_MEDIA_QUERY]: {
+                  gridColumnStart: '6',
+                  gridColumnEnd: '8',
+                  margin: '0 10px',
+                },
+              })}
             >
-              Start for free
-            </SecondaryButton>
-            <Caption style={{color: 'var(--color-core-accent)'}}>
-              No credit card required
-            </Caption>
+              <SecondaryButton
+                href="https://pinecast.com/signup"
+                style={{
+                  backgroundColor: 'var(--page-bg, var(--color-sand))',
+                  color: 'var(--color-space)',
+                  display: 'grid',
+                  lineHeight: '1.2',
+                  placeContent: 'center',
+                  marginBottom: '30px',
+                  minHeight: '48px',
+                  transition: 'background-color 0.2s ease-in-out',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                Start for free
+              </SecondaryButton>
+              <Caption style={{color: 'var(--color-core-accent)'}}>
+                No credit card required
+              </Caption>
+            </div>
           </div>
         </div>
+        <Customers />
+      </section>
+      <div
+        className={css({
+          display: 'none',
+          [MIN_TABLET_MEDIA_QUERY]: {
+            display: 'block',
+          },
+        })}
+      >
+        <svg
+          className={css({
+            '--curve-height': '140px',
+            background: 'var(--color-space)',
+            display: 'block',
+            height: 'var(--curve-height)',
+            marginTop: '-1.5px',
+            marginBottom: 'calc(-1 * var(--curve-height))',
+            width: '100%',
+          })}
+          viewBox="0 0 1670 140"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M835 90C1601.57 90 2223 -62.8948 2223 -251.5C2223 -440.105 1601.57 -593 835 -593C68.4288 -593 -553 -440.105 -553 -251.5C-553 -62.8948 68.4288 90 835 90Z"
+            fill="var(--page-bg, var(--color-sand))"
+            style={{transition: 'fill 0.2s ease-in-out'}}
+          />
+        </svg>
       </div>
-      <Customers />
-    </section>
+      <div
+        className={css({
+          display: 'block',
+          [MIN_TABLET_MEDIA_QUERY]: {
+            display: 'none',
+          },
+          // background:'green',
+          // height: '153px'
+          // display:'none',
+        })}
+      >
+        <svg
+          className={css({
+            '--curve-height': '140px',
+            background: 'var(--color-space)',
+            display: 'block',
+            height: 'var(--curve-height)',
+            marginTop: '-1.5px',
+            marginBottom: 'calc(-1 * var(--curve-height))',
+            width: '100%',
+          })}
+          viewBox="0 0 375 33"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M187.5 19C570.786 19 881.5 -57.4474 881.5 -151.75C881.5 -246.053 570.786 -322.5 187.5 -322.5C-195.786 -322.5 -506.5 -246.053 -506.5 -151.75C-506.5 -57.4474 -195.786 19 187.5 19Z"
+            fill="var(--page-bg, var(--color-sand))"
+            style={{transition: 'fill 0.2s ease-in-out'}}
+
+          />
+        </svg>
+      </div>
+    </>
   );
 };

@@ -1,16 +1,13 @@
 import * as React from 'react';
 import {Body4, Caption, H2, Subhead, Link as ProseLink} from './Typography';
 import {useCSS} from '@/hooks/useCSS';
-import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY} from '@/constants';
+import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
 import {AspectRatioBox} from './AspectRatioBox';
 import {SecondaryButton} from './SecondaryButton';
-import {useDarkSection} from '@/hooks/useDarkSection';
 import {PrimaryButton} from './PrimaryButton';
-import {useScrollProgressEffect} from '@/hooks/useScrollProgress';
-import {StickyLine} from './StickyLine';
-import {useVisibleElements} from '@/hooks/useVisibleElements';
 import Link from 'next/link';
 import {Codec, MimeType, NoncriticalVideo} from './NoncriticalVideo';
+import {useIntersectionProgress} from '@/hooks/useIntersectionProgress';
 
 const VIDEO_WIDTH = 1060;
 const VIDEO_HEIGHT = 1440;
@@ -131,7 +128,7 @@ const scaleNumber = (
   return Math.min(Math.max(mappedValue, x2), y2);
 };
 
-const SCROLL_PERCENTAGE_TO_SHOW_DIAL = 0.117;
+const SCROLL_PERCENTAGE_TO_SHOW_DIAL = 0;
 
 const scaleDial = (num: number) =>
   scaleNumber(num, SCROLL_PERCENTAGE_TO_SHOW_DIAL, 1, 0, 1);
@@ -161,6 +158,7 @@ const scaleDialAngle = (progress: number) => {
 type DialProps = {};
 
 const Dial = React.forwardRef<SVGGElement, DialProps>(function Dial(_, ref) {
+  const css = useCSS();
   return (
     <svg
       width={288}
@@ -168,6 +166,9 @@ const Dial = React.forwardRef<SVGGElement, DialProps>(function Dial(_, ref) {
       viewBox="0 0 288 214"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={css({
+        display: 'block',
+      })}
     >
       <g clipPath="url(#tuned-in-clip-path-1)">
         <g clipPath="url(#tuned-in-clip-path-2)">
@@ -253,13 +254,6 @@ const Dial = React.forwardRef<SVGGElement, DialProps>(function Dial(_, ref) {
     </svg>
   );
 });
-
-// When the user scrolls down, a thin white line appears.
-// If the user scrolls back up, the `position: sticky` line will
-// sit at the very top of this section behind the dark black
-// background but it will appear hidden by blending into the
-// bg color of the previous section.
-const STICKY_LINE_COLOR = 'var(--page-bg, var(--color-white))';
 
 const Panel = ({
   isActive,
@@ -443,79 +437,34 @@ const Panel = ({
   );
 };
 
-export const TunedIn = () => {
+export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
   const css = useCSS();
-
-  const sectionRef = React.useRef<HTMLElement>(null);
-  useDarkSection(sectionRef);
-
-  const [progress, setProgress] = React.useState<number>(-1);
-  const [aboveZero, setAboveZero] = React.useState<boolean>(false);
-  const [leftActive, setLeftActive] = React.useState<boolean>(false);
-  const [middleActive, setMiddleActive] = React.useState<boolean>(false);
-  const [rightActive, setRightActive] = React.useState<boolean>(false);
-
-  const bottomRef = React.useRef<HTMLDivElement>(null);
-  useDarkSection(bottomRef);
-
-  const scrollerRef = React.useRef<HTMLDivElement>(null);
-  const dialRef = React.useRef<SVGGElement>(null);
-  useScrollProgressEffect(
-    scrollerRef,
-    React.useCallback((scrollProgress: number) => {
-      setAboveZero(scrollProgress > SCROLL_PERCENTAGE_TO_SHOW_DIAL);
-      const proportionalProgress = scaleDial(scrollProgress);
-      setRightActive(proportionalProgress >= 0.01 * 66);
-      setMiddleActive(proportionalProgress >= 0.01 * 44);
-      setLeftActive(proportionalProgress >= 0.01 * 22);
-      dialRef.current!.style.transform = `rotate(${scaleDialAngle(
-        proportionalProgress,
-      )}deg)`;
-    }, []),
-  );
-
-  const stickyLineRefs = React.useRef<Element[]>([]);
-  const addStickyLineRef = (el: Element | null) => {
-    if (el) {
-      stickyLineRefs.current[0] = el;
-    }
-  };
-  const [visibleStickyElement] = useVisibleElements(stickyLineRefs, {
-    // Observe where StickyLine becomes stuck from `position: sticky` upon scrolling down,
-    // when the section for the three panels intersects at the middle of viewport.
-    rootMargin: '-50% 0% -50% 0%',
-  });
 
   return (
     <>
       <section
-        ref={sectionRef}
         id="tuned-in"
         className={css({
-          backgroundColor: 'var(--color-space)',
           color: 'var(--color-white)',
           cursor: 'default',
+          position: 'relative',
           transform: 'translate3d(0,0,0)',
+          zIndex,
         })}
       >
         <div
           className={css({
-            paddingBottom: '286px',
             position: 'relative',
-            transform: 'translate3d(0,0,0)',
-            zIndex: 2,
+            overflow: 'hidden',
+            [MIN_TABLET_MEDIA_QUERY]: {
+              paddingTop: '140px',
+            },
           })}
         >
-          <StickyLine
-            ref={addStickyLineRef}
-            color={STICKY_LINE_COLOR}
-            size={1}
-            zIndex={3}
-          />
           <div
             className={css({
               textAlign: 'center',
-              padding: '264px 0 240px',
+              padding: '264px 0 123px',
               [MIN_TABLET_MEDIA_QUERY]: {
                 padding: '260px 0 216px',
               },
@@ -526,11 +475,9 @@ export const TunedIn = () => {
                 display: 'grid',
                 gap: '10px',
                 gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
-                marginBottom: '86px',
                 padding: '0 20px',
                 position: 'relative',
                 width: '100%',
-                zIndex: 2,
                 [MIN_TABLET_MEDIA_QUERY]: {
                   gap: '20px',
                   marginBottom: '-6px',
@@ -541,6 +488,8 @@ export const TunedIn = () => {
                 className={css({
                   gridColumnStart: '3',
                   gridColumnEnd: '-3',
+                  position: 'relative',
+                  zIndex: 4,
                   [MIN_TABLET_MEDIA_QUERY]: {
                     gridColumnStart: '5',
                     gridColumnEnd: '9',
@@ -558,7 +507,6 @@ export const TunedIn = () => {
                 </H2>
                 <Body4
                   style={{
-                    backgroundColor: 'var(--color-space)',
                     marginTop: '-10px',
                     marginRight: 'auto',
                     marginBottom: '30px',
@@ -580,9 +528,9 @@ export const TunedIn = () => {
                 gridTemplateColumns: 'repeat(2, 1fr)',
                 gap: '10px',
                 flexDirection: 'column',
-                marginBottom: '30px',
-                [MOBILE_MEDIA_QUERY]: {
-                  marginBottom: '16px',
+                marginBottom: '16px',
+                [MIN_TABLET_MEDIA_QUERY]: {
+                  marginBottom: '30px',
                 },
               })}
             >
@@ -597,8 +545,7 @@ export const TunedIn = () => {
                   minHeight: '48px',
                   placeContent: 'center',
                   position: 'relative',
-                  zIndex: 3,
-                  transform: 'translate3d(0,0,0)',
+                  zIndex,
                 }}
               >
                 Start for free
@@ -614,8 +561,7 @@ export const TunedIn = () => {
                   minHeight: '48px',
                   placeContent: 'center',
                   position: 'relative',
-                  zIndex: 3,
-                  transform: 'translate3d(0,0,0)',
+                  zIndex,
                 }}
               >
                 Discover Features
@@ -627,8 +573,7 @@ export const TunedIn = () => {
                 margin: '0 auto',
                 maxWidth: '230px',
                 position: 'relative',
-                zIndex: 3,
-                transform: 'translate3d(0,0,0)',
+                zIndex,
               }}
             >
               No credit card required
@@ -636,112 +581,166 @@ export const TunedIn = () => {
           </div>
         </div>
       </section>
-      <div ref={bottomRef}>
-        <div
-          className={css({
-            position: 'relative',
-            zIndex: 1,
-            width: '288px',
-            margin: '0 auto',
-            display: 'grid',
-            placeItems: 'end',
-          })}
-        >
-          <div
-            className={css({
-              position: 'absolute',
-              top: '-356.35px',
-              zIndex: 2,
-              margin: '0 auto',
-              opacity: aboveZero && !visibleStickyElement ? 1 : 0,
-              pointerEvents: 'none',
-              transition:
-                aboveZero && !visibleStickyElement
-                  ? 'opacity 0.2s ease-in-out'
-                  : 'opacity 0.1s ease-in-out',
-            })}
-          >
-            <Dial ref={dialRef} />
-          </div>
-        </div>
+    </>
+  );
+};
 
+export const TunedInPanels = () => {
+  const css = useCSS();
+  const [aboveZero, setAboveZero] = React.useState<boolean>(false);
+  const [leftActive, setLeftActive] = React.useState<boolean>(false);
+  const [middleActive, setMiddleActive] = React.useState<boolean>(false);
+  const [rightActive, setRightActive] = React.useState<boolean>(false);
+
+  const progressRef = React.useRef<HTMLDivElement>(null);
+
+  const dialRef = React.useRef<SVGGElement>(null);
+
+  useIntersectionProgress(progressRef, {
+    onProgress: React.useCallback(
+      (target: HTMLElement, scrollProgress: number) => {
+        const showDial = scrollProgress > SCROLL_PERCENTAGE_TO_SHOW_DIAL;
+        setAboveZero(showDial);
+
+        const proportionalProgress = scaleDial(scrollProgress);
+        const degree = showDial ? scaleDialAngle(proportionalProgress) : 0;
+
+        dialRef.current!.style.transform = `rotate(${degree}deg)`;
+
+        setRightActive(degree <= -135);
+        setMiddleActive(degree <= -90);
+        setLeftActive(degree <= -45);
+      },
+      [],
+    ),
+  });
+
+  return (
+    <div
+      className={css({
+        backgroundColor: 'var(--color-space)',
+        position: 'relative',
+        zIndex: 2,
+      })}
+    >
+      <div
+        ref={progressRef}
+        className={css({
+          '--progress-height': '210px',
+          height: 'var(--progress-height)',
+          marginBottom: 'calc(-1 * var(--progress-height))',
+          [MIN_TABLET_MEDIA_QUERY]: {
+            '--progress-height': '280px',
+          },
+        })}
+      />
+      <div
+        className={css({
+          margin: '0 auto',
+          width: '288px',
+        })}
+      >
         <div
-          ref={scrollerRef}
           className={css({
-            backgroundColor: 'var(--color-space)',
-            color: 'var(--color-white)',
-            cursor: 'default',
-            position: 'relative',
-            zIndex: 2,
+            position: 'absolute',
+            top: '-79.5px',
+            margin: '0 auto',
+            opacity: aboveZero ? 1 : 0,
+            pointerEvents: 'none',
+            transition: aboveZero
+              ? 'opacity 0.2s ease-in-out'
+              : 'opacity 0.1s ease-in-out',
+            transform: 'scale(0.75)',
             [MIN_TABLET_MEDIA_QUERY]: {
-              marginLeft: '20px',
-              marginRight: '20px',
+              top: '-70.5px',
+              transform: 'unset',
             },
           })}
         >
-          <svg
-            className={css({
-              position: 'absolute',
-              width: 0,
-              height: 0,
-            })}
-          >
-            <defs>
-              <clipPath id="clip-left" clipPathUnits="objectBoundingBox">
-                <path d="M0.963,1 H0.037 C0.017,1,0,0.99,0,0.975 V0.031 C0,0.013,0.021,0,0.044,0.003 C0.319,0.044,0.63,0.074,0.965,0.091 C0.985,0.092,1,0.104,1,0.118 V0.975 C1,0.99,0.983,1,0.963,1" />
-              </clipPath>
-              <clipPath id="clip-middle" clipPathUnits="objectBoundingBox">
-                <path d="M0,0.97 V0.032 C0,0.014,0.018,0,0.039,0.001 C0.189,0.007,0.343,0.01,0.5,0.01 C0.657,0.01,0.811,0.007,0.961,0.001 C0.982,0,1,0.014,1,0.032 V0.97 C1,0.987,0.983,1,0.963,1 H0.037 C0.017,1,0,0.987,0,0.97" />
-              </clipPath>
-              <clipPath id="clip-right" clipPathUnits="objectBoundingBox">
-                <path d="M0.037,1 H0.963 C0.983,1,1,0.99,1,0.975 V0.031 C1,0.013,0.979,0,0.956,0.003 C0.681,0.044,0.37,0.074,0.035,0.091 C0.015,0.092,0,0.104,0,0.118 V0.975 C0,0.99,0.017,1,0.037,1" />
-              </clipPath>
-            </defs>
-          </svg>
-
-          <nav
-            className={css({
-              marginTop: '0',
-              marginBottom: '0',
-              marginLeft: '0',
-              marginRight: '0',
-              paddingTop: '40px',
-              paddingBottom: '10px',
-              paddingLeft: '10px',
-              paddingRight: '10px',
-              position: 'relative',
-              width: '100%',
-
-              display: 'flex',
-              flexDirection: 'row',
-              flexWrap: 'nowrap',
-              gap: '10px',
-              overflowX: 'scroll',
-              overflowY: 'hidden',
-              WebkitOverflowScrolling: 'touch',
-
-              [MIN_TABLET_MEDIA_QUERY]: {
-                display: 'grid',
-                gap: '20px',
-                height: '100%',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                overflowX: 'unset',
-                overflowY: 'unset',
-                paddingTop: '0',
-                paddingBottom: '0',
-                paddingLeft: '0',
-                paddingRight: '0',
-                placeItems: 'end',
-                width: '100%',
-              },
-            })}
-          >
-            <Panel position="left" isActive={leftActive} />
-            <Panel position="middle" isActive={middleActive} />
-            <Panel position="right" isActive={rightActive} />
-          </nav>
+          <Dial ref={dialRef} />
         </div>
       </div>
-    </>
+
+      <div
+        className={css({
+          cursor: 'default',
+          paddingTop: '148px',
+          [MIN_TABLET_MEDIA_QUERY]: {
+            // Space from the top of the middle panel
+            paddingTop: '136px',
+            paddingRight: '20px',
+            paddingLeft: '20px',
+          },
+        })}
+      >
+        <svg
+          className={css({
+            position: 'absolute',
+            width: 0,
+            height: 0,
+          })}
+        >
+          <defs>
+            <clipPath id="clip-left" clipPathUnits="objectBoundingBox">
+              <path d="M0.963,1 H0.037 C0.017,1,0,0.99,0,0.975 V0.031 C0,0.013,0.021,0,0.044,0.003 C0.319,0.044,0.63,0.074,0.965,0.091 C0.985,0.092,1,0.104,1,0.118 V0.975 C1,0.99,0.983,1,0.963,1" />
+            </clipPath>
+            <clipPath id="clip-middle" clipPathUnits="objectBoundingBox">
+              <path d="M0,0.97 V0.032 C0,0.014,0.018,0,0.039,0.001 C0.189,0.007,0.343,0.01,0.5,0.01 C0.657,0.01,0.811,0.007,0.961,0.001 C0.982,0,1,0.014,1,0.032 V0.97 C1,0.987,0.983,1,0.963,1 H0.037 C0.017,1,0,0.987,0,0.97" />
+            </clipPath>
+            <clipPath id="clip-right" clipPathUnits="objectBoundingBox">
+              <path d="M0.037,1 H0.963 C0.983,1,1,0.99,1,0.975 V0.031 C1,0.013,0.979,0,0.956,0.003 C0.681,0.044,0.37,0.074,0.035,0.091 C0.015,0.092,0,0.104,0,0.118 V0.975 C0,0.99,0.017,1,0.037,1" />
+            </clipPath>
+            <clipPath
+              id="clip-section-divider"
+              clipPathUnits="objectBoundingBox"
+            >
+              <path d="M0.301,0.132 C0.577,0.132,0.801,-0.092,0.801,-0.368 C0.801,-0.644,0.577,-0.868,0.301,-0.868 C0.025,-0.868,-0.199,-0.644,-0.199,-0.368 C-0.199,-0.092,0.025,0.132,0.301,0.132" />
+            </clipPath>
+          </defs>
+        </svg>
+
+        <nav
+          className={css({
+            marginTop: '0',
+            marginBottom: '0',
+            marginLeft: '0',
+            marginRight: '0',
+            paddingTop: '40px',
+            paddingBottom: '10px',
+            paddingLeft: '10px',
+            paddingRight: '10px',
+            position: 'relative',
+            width: '100%',
+
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
+            gap: '10px',
+            overflowX: 'scroll',
+            overflowY: 'hidden',
+            WebkitOverflowScrolling: 'touch',
+
+            [MIN_TABLET_MEDIA_QUERY]: {
+              display: 'grid',
+              gap: '20px',
+              height: '100%',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              overflowX: 'unset',
+              overflowY: 'unset',
+              paddingTop: '6vh',
+              paddingBottom: '0',
+              paddingLeft: '0',
+              paddingRight: '0',
+              placeItems: 'end',
+              width: '100%',
+            },
+          })}
+        >
+          <Panel position="left" isActive={leftActive} />
+          <Panel position="middle" isActive={middleActive} />
+          <Panel position="right" isActive={rightActive} />
+        </nav>
+      </div>
+    </div>
   );
 };
