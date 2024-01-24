@@ -144,8 +144,8 @@ const FEATURES: Record<Feature, FeatureShape> = {
     title: <>Analytics</>,
     description: (
       <>
-        Perform routine audits and measure success with premium analytics,
-        simple charts and clean controls.
+        The most powerful analytics in podcasting, with premium features,
+        simple charts, and clean controls.
       </>
     ),
     href: '/features/analytics',
