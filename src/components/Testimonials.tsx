@@ -7,6 +7,7 @@ import {useVisibleElements} from '@/hooks/useVisibleElements';
 import {CAN_HOVER_MEDIA_QUERY, MIN_TABLET_MEDIA_QUERY} from '@/constants';
 import {SecondaryButton} from './SecondaryButton';
 import {AudioFiles, useSound} from '@/hooks/useSound';
+import {SectionDivider} from './SectionDivider';
 import {TestimonialQuotation, type Script} from './TestimonialQuotation';
 
 import * as livingBlindfully from '../../public/testimonials/living-blindfully.json';
@@ -745,68 +746,7 @@ export const Testimonials = ({
         </div>
         <Customers />
       </section>
-      <div
-        className={css({
-          display: 'none',
-          [MIN_TABLET_MEDIA_QUERY]: {
-            display: 'block',
-          },
-        })}
-      >
-        <svg
-          className={css({
-            '--curve-height': '140px',
-            background: 'var(--color-space)',
-            display: 'block',
-            height: 'var(--curve-height)',
-            marginTop: '-1.5px',
-            marginBottom: 'calc(-1 * var(--curve-height))',
-            width: '100%',
-          })}
-          viewBox="0 0 1670 140"
-        >
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M835 90C1601.57 90 2223 -62.8948 2223 -251.5C2223 -440.105 1601.57 -593 835 -593C68.4288 -593 -553 -440.105 -553 -251.5C-553 -62.8948 68.4288 90 835 90Z"
-            fill="var(--page-bg, var(--color-sand))"
-            style={{transition: 'fill 0.2s ease-in-out'}}
-          />
-        </svg>
-      </div>
-      <div
-        className={css({
-          display: 'block',
-          [MIN_TABLET_MEDIA_QUERY]: {
-            display: 'none',
-          },
-          // background:'green',
-          // height: '153px'
-          // display:'none',
-        })}
-      >
-        <svg
-          className={css({
-            '--curve-height': '140px',
-            background: 'var(--color-space)',
-            display: 'block',
-            height: 'var(--curve-height)',
-            marginTop: '-1.5px',
-            marginBottom: 'calc(-1 * var(--curve-height))',
-            width: '100%',
-          })}
-          viewBox="0 0 375 33"
-        >
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M187.5 19C570.786 19 881.5 -57.4474 881.5 -151.75C881.5 -246.053 570.786 -322.5 187.5 -322.5C-195.786 -322.5 -506.5 -246.053 -506.5 -151.75C-506.5 -57.4474 -195.786 19 187.5 19Z"
-            fill="var(--page-bg, var(--color-sand))"
-            style={{transition: 'fill 0.2s ease-in-out'}}
-
-          />
-        </svg>
-      </div>
+      <SectionDivider />
     </>
   );
 };
