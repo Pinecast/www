@@ -66,25 +66,11 @@ interface HTMLMediaControls {
   seek: (time: number) => void;
 }
 
-type MediaPropsWithRef<T> = HTMLMediaProps & {
-  ref?: React.MutableRefObject<T | null>;
-};
-
 // Adapted from and improved upon from https://github.com/streamich/react-use/blob/master/src/factory/createHTMLMediaHook.ts
 function createHTMLMediaHook<T extends HTMLAudioElement | HTMLVideoElement>(
   tag: 'audio' | 'video',
 ) {
-  return (elOrProps: HTMLMediaProps | React.ReactElement<HTMLMediaProps>) => {
-    let element: React.ReactElement<MediaPropsWithRef<T>> | undefined;
-    let props: MediaPropsWithRef<T>;
-
-    if (React.isValidElement(elOrProps)) {
-      element = elOrProps;
-      props = element.props;
-    } else {
-      props = elOrProps;
-    }
-
+  return (props: HTMLMediaProps) => {
     const [state, setState] = useSetState<HTMLMediaState>({
       buffered: [],
       time: 0,
@@ -188,11 +174,7 @@ function createHTMLMediaHook<T extends HTMLAudioElement | HTMLVideoElement>(
       props,
     ]);
 
-    if (element) {
-      element = React.cloneElement(element, elementAttrs);
-    } else {
-      element = React.createElement(tag, elementAttrs as any);
-    }
+    const element = React.createElement(tag, elementAttrs as any);
 
     // Some browsers return `Promise` on `.play()` and may throw errors
     // if one tries to execute another `.play()` or `.pause()` while that

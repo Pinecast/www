@@ -1,491 +1,350 @@
 {
-    "data": {
-        "id": "92746c30-5b86-4e45-bb62-096d17aaa901",
-        "text": "Hi, I'm Si Jobling, producer of the Petal Snapshots and make life work podcast. Over the past five years or so, I've trusted Pinecast to reliably host all my podcasts. Having unlimited podcasts and episodes allows me to deliver all my ideas. It's so easy to configure and manage my content, and the new transcription integration shows how they're adopting AI into the workflow for a richer follower experience.",
-        "words": [
-            {
-                "text": "Hi,",
-                "start": 170,
-                "end": 430,
-                "confidence": 0.99394,
-                "speaker": null
-            },
-            {
-                "text": "I'm",
-                "start": 500,
-                "end": 794,
-                "confidence": 0.87951,
-                "speaker": null
-            },
-            {
-                "text": "Si",
-                "start": 842,
-                "end": 1066,
-                "confidence": 0.15321,
-                "speaker": null
-            },
-            {
-                "text": "Jobling,",
-                "start": 1098,
-                "end": 1562,
-                "confidence": 0.67937,
-                "speaker": null
-            },
-            {
-                "text": "producer",
-                "start": 1626,
-                "end": 2026,
-                "confidence": 0.9994,
-                "speaker": null
-            },
-            {
-                "text": "of",
-                "start": 2058,
-                "end": 2206,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "the",
-                "start": 2228,
-                "end": 2366,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "Petal",
-                "start": 2388,
-                "end": 2746,
-                "confidence": 0.56736,
-                "speaker": null
-            },
-            {
-                "text": "Snapshots",
-                "start": 2778,
-                "end": 3274,
-                "confidence": 0.73906,
-                "speaker": null
-            },
-            {
-                "text": "and",
-                "start": 3322,
-                "end": 3486,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "make",
-                "start": 3508,
-                "end": 3694,
-                "confidence": 0.94,
-                "speaker": null
-            },
-            {
-                "text": "life",
-                "start": 3732,
-                "end": 3934,
-                "confidence": 0.95,
-                "speaker": null
-            },
-            {
-                "text": "work",
-                "start": 3972,
-                "end": 4174,
-                "confidence": 0.99605,
-                "speaker": null
-            },
-            {
-                "text": "podcast.",
-                "start": 4212,
-                "end": 4954,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "Over",
-                "start": 5082,
-                "end": 5326,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "the",
-                "start": 5348,
-                "end": 5534,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "past",
-                "start": 5572,
-                "end": 5774,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "five",
-                "start": 5812,
-                "end": 6014,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "years",
-                "start": 6052,
-                "end": 6206,
-                "confidence": 0.99984,
-                "speaker": null
-            },
-            {
-                "text": "or",
-                "start": 6228,
-                "end": 6366,
-                "confidence": 0.93,
-                "speaker": null
-            },
-            {
-                "text": "so,",
-                "start": 6388,
-                "end": 6574,
-                "confidence": 0.99707,
-                "speaker": null
-            },
-            {
-                "text": "I've",
-                "start": 6612,
-                "end": 6826,
-                "confidence": 0.91397,
-                "speaker": null
-            },
-            {
-                "text": "trusted",
-                "start": 6858,
-                "end": 7226,
-                "confidence": 0.99996,
-                "speaker": null
-            },
-            {
-                "text": "Pinecast",
-                "start": 7258,
-                "end": 7754,
-                "confidence": 0.92017,
-                "speaker": null
-            },
-            {
-                "text": "to",
-                "start": 7802,
-                "end": 7966,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "reliably",
-                "start": 7988,
-                "end": 8426,
-                "confidence": 0.86302,
-                "speaker": null
-            },
-            {
-                "text": "host",
-                "start": 8458,
-                "end": 8794,
-                "confidence": 0.99969,
-                "speaker": null
-            },
-            {
-                "text": "all",
-                "start": 8842,
-                "end": 9006,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "my",
-                "start": 9028,
-                "end": 9214,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "podcasts.",
-                "start": 9252,
-                "end": 10042,
-                "confidence": 0.94102,
-                "speaker": null
-            },
-            {
-                "text": "Having",
-                "start": 10186,
-                "end": 10638,
-                "confidence": 0.99982,
-                "speaker": null
-            },
-            {
-                "text": "unlimited",
-                "start": 10724,
-                "end": 11418,
-                "confidence": 0.79892,
-                "speaker": null
-            },
-            {
-                "text": "podcasts",
-                "start": 11514,
-                "end": 12074,
-                "confidence": 0.87613,
-                "speaker": null
-            },
-            {
-                "text": "and",
-                "start": 12122,
-                "end": 12334,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "episodes",
-                "start": 12372,
-                "end": 13002,
-                "confidence": 0.80754,
-                "speaker": null
-            },
-            {
-                "text": "allows",
-                "start": 13066,
-                "end": 13466,
-                "confidence": 0.99992,
-                "speaker": null
-            },
-            {
-                "text": "me",
-                "start": 13498,
-                "end": 13646,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "to",
-                "start": 13668,
-                "end": 13854,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "deliver",
-                "start": 13892,
-                "end": 14234,
-                "confidence": 0.63342,
-                "speaker": null
-            },
-            {
-                "text": "all",
-                "start": 14282,
-                "end": 14398,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "my",
-                "start": 14404,
-                "end": 14574,
-                "confidence": 0.89,
-                "speaker": null
-            },
-            {
-                "text": "ideas.",
-                "start": 14612,
-                "end": 15034,
-                "confidence": 0.99986,
-                "speaker": null
-            },
-            {
-                "text": "It's",
-                "start": 15082,
-                "end": 15306,
-                "confidence": 0.90671,
-                "speaker": null
-            },
-            {
-                "text": "so",
-                "start": 15338,
-                "end": 15534,
-                "confidence": 0.9999,
-                "speaker": null
-            },
-            {
-                "text": "easy",
-                "start": 15572,
-                "end": 15822,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "to",
-                "start": 15876,
-                "end": 16046,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "configure",
-                "start": 16068,
-                "end": 16474,
-                "confidence": 0.67217,
-                "speaker": null
-            },
-            {
-                "text": "and",
-                "start": 16522,
-                "end": 16686,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "manage",
-                "start": 16708,
-                "end": 16942,
-                "confidence": 0.99997,
-                "speaker": null
-            },
-            {
-                "text": "my",
-                "start": 16996,
-                "end": 17166,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "content,",
-                "start": 17188,
-                "end": 17566,
-                "confidence": 0.99994,
-                "speaker": null
-            },
-            {
-                "text": "and",
-                "start": 17668,
-                "end": 17886,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "the",
-                "start": 17908,
-                "end": 18046,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "new",
-                "start": 18068,
-                "end": 18254,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "transcription",
-                "start": 18292,
-                "end": 18826,
-                "confidence": 0.99971,
-                "speaker": null
-            },
-            {
-                "text": "integration",
-                "start": 18858,
-                "end": 19322,
-                "confidence": 0.96045,
-                "speaker": null
-            },
-            {
-                "text": "shows",
-                "start": 19386,
-                "end": 19662,
-                "confidence": 0.99993,
-                "speaker": null
-            },
-            {
-                "text": "how",
-                "start": 19716,
-                "end": 19886,
-                "confidence": 0.9997,
-                "speaker": null
-            },
-            {
-                "text": "they're",
-                "start": 19908,
-                "end": 20106,
-                "confidence": 0.99454,
-                "speaker": null
-            },
-            {
-                "text": "adopting",
-                "start": 20138,
-                "end": 20522,
-                "confidence": 0.96631,
-                "speaker": null
-            },
-            {
-                "text": "AI",
-                "start": 20586,
-                "end": 21002,
-                "confidence": 0.92,
-                "speaker": null
-            },
-            {
-                "text": "into",
-                "start": 21066,
-                "end": 21294,
-                "confidence": 0.99993,
-                "speaker": null
-            },
-            {
-                "text": "the",
-                "start": 21332,
-                "end": 21486,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "workflow",
-                "start": 21508,
-                "end": 21946,
-                "confidence": 0.99985,
-                "speaker": null
-            },
-            {
-                "text": "for",
-                "start": 21978,
-                "end": 22126,
-                "confidence": 0.9999,
-                "speaker": null
-            },
-            {
-                "text": "a",
-                "start": 22148,
-                "end": 22286,
-                "confidence": 1,
-                "speaker": null
-            },
-            {
-                "text": "richer",
-                "start": 22308,
-                "end": 22666,
-                "confidence": 0.9996,
-                "speaker": null
-            },
-            {
-                "text": "follower",
-                "start": 22698,
-                "end": 23146,
-                "confidence": 0.99619,
-                "speaker": null
-            },
-            {
-                "text": "experience.",
-                "start": 23178,
-                "end": 23260,
-                "confidence": 1,
-                "speaker": null
-            }
-        ]
+  "text": "Hi, I'm Si Jobling, producer of the Petal Snapshots and make life work podcast. Over the past five years or so, I've trusted Pinecast to reliably host all my podcasts. Having unlimited podcasts and episodes allows me to deliver all my ideas. It's so easy to configure and manage my content, and the new transcription integration shows how they're adopting AI into the workflow for a richer follower experience.",
+  "words": [
+    {
+        "text": "Hi,",
+        "start": 170,
+        "end": 430
+    },
+    {
+        "text": "I'm",
+        "start": 500,
+        "end": 794
+    },
+    {
+        "text": "Si",
+        "start": 842,
+        "end": 1066
+    },
+    {
+        "text": "Jobling,",
+        "start": 1098,
+        "end": 1562
+    },
+    {
+        "text": "producer",
+        "start": 1626,
+        "end": 2026
+    },
+    {
+        "text": "of",
+        "start": 2058,
+        "end": 2206
+    },
+    {
+        "text": "the",
+        "start": 2228,
+        "end": 2366
+    },
+    {
+        "text": "Petal",
+        "start": 2388,
+        "end": 2746
+    },
+    {
+        "text": "Snapshots",
+        "start": 2778,
+        "end": 3274
+    },
+    {
+        "text": "and",
+        "start": 3322,
+        "end": 3486
+    },
+    {
+        "text": "make",
+        "start": 3508,
+        "end": 3694
+    },
+    {
+        "text": "life",
+        "start": 3732,
+        "end": 3934
+    },
+    {
+        "text": "work",
+        "start": 3972,
+        "end": 4174
+    },
+    {
+        "text": "podcast.",
+        "start": 4212,
+        "end": 4954
+    },
+    {
+        "text": "Over",
+        "start": 5082,
+        "end": 5326
+    },
+    {
+        "text": "the",
+        "start": 5348,
+        "end": 5534
+    },
+    {
+        "text": "past",
+        "start": 5572,
+        "end": 5774
+    },
+    {
+        "text": "five",
+        "start": 5812,
+        "end": 6014
+    },
+    {
+        "text": "years",
+        "start": 6052,
+        "end": 6206
+    },
+    {
+        "text": "or",
+        "start": 6228,
+        "end": 6366
+    },
+    {
+        "text": "so,",
+        "start": 6388,
+        "end": 6574
+    },
+    {
+        "text": "I've",
+        "start": 6612,
+        "end": 6826
+    },
+    {
+        "text": "trusted",
+        "start": 6858,
+        "end": 7226
+    },
+    {
+        "text": "Pinecast",
+        "start": 7258,
+        "end": 7754
+    },
+    {
+        "text": "to",
+        "start": 7802,
+        "end": 7966
+    },
+    {
+        "text": "reliably",
+        "start": 7988,
+        "end": 8426
+    },
+    {
+        "text": "host",
+        "start": 8458,
+        "end": 8794
+    },
+    {
+        "text": "all",
+        "start": 8842,
+        "end": 9006
+    },
+    {
+        "text": "my",
+        "start": 9028,
+        "end": 9214
+    },
+    {
+        "text": "podcasts.",
+        "start": 9252,
+        "end": 10042
+    },
+    {
+        "text": "Having",
+        "start": 10186,
+        "end": 10638
+    },
+    {
+        "text": "unlimited",
+        "start": 10724,
+        "end": 11418
+    },
+    {
+        "text": "podcasts",
+        "start": 11514,
+        "end": 12074
+    },
+    {
+        "text": "and",
+        "start": 12122,
+        "end": 12334
+    },
+    {
+        "text": "episodes",
+        "start": 12372,
+        "end": 13002
+    },
+    {
+        "text": "allows",
+        "start": 13066,
+        "end": 13466
+    },
+    {
+        "text": "me",
+        "start": 13498,
+        "end": 13646
+    },
+    {
+        "text": "to",
+        "start": 13668,
+        "end": 13854
+    },
+    {
+        "text": "deliver",
+        "start": 13892,
+        "end": 14234
+    },
+    {
+        "text": "all",
+        "start": 14282,
+        "end": 14398
+    },
+    {
+        "text": "my",
+        "start": 14404,
+        "end": 14574
+    },
+    {
+        "text": "ideas.",
+        "start": 14612,
+        "end": 15034
+    },
+    {
+        "text": "It's",
+        "start": 15082,
+        "end": 15306
+    },
+    {
+        "text": "so",
+        "start": 15338,
+        "end": 15534
+    },
+    {
+        "text": "easy",
+        "start": 15572,
+        "end": 15822
+    },
+    {
+        "text": "to",
+        "start": 15876,
+        "end": 16046
+    },
+    {
+        "text": "configure",
+        "start": 16068,
+        "end": 16474
+    },
+    {
+        "text": "and",
+        "start": 16522,
+        "end": 16686
+    },
+    {
+        "text": "manage",
+        "start": 16708,
+        "end": 16942
+    },
+    {
+        "text": "my",
+        "start": 16996,
+        "end": 17166
+    },
+    {
+        "text": "content,",
+        "start": 17188,
+        "end": 17566
+    },
+    {
+        "text": "and",
+        "start": 17668,
+        "end": 17886
+    },
+    {
+        "text": "the",
+        "start": 17908,
+        "end": 18046
+    },
+    {
+        "text": "new",
+        "start": 18068,
+        "end": 18254
+    },
+    {
+        "text": "transcription",
+        "start": 18292,
+        "end": 18826
+    },
+    {
+        "text": "integration",
+        "start": 18858,
+        "end": 19322
+    },
+    {
+        "text": "shows",
+        "start": 19386,
+        "end": 19662
+    },
+    {
+        "text": "how",
+        "start": 19716,
+        "end": 19886
+    },
+    {
+        "text": "they're",
+        "start": 19908,
+        "end": 20106
+    },
+    {
+        "text": "adopting",
+        "start": 20138,
+        "end": 20522
+    },
+    {
+        "text": "AI",
+        "start": 20586,
+        "end": 21002
+    },
+    {
+        "text": "into",
+        "start": 21066,
+        "end": 21294
+    },
+    {
+        "text": "the",
+        "start": 21332,
+        "end": 21486
+    },
+    {
+        "text": "workflow",
+        "start": 21508,
+        "end": 21946
+    },
+    {
+        "text": "for",
+        "start": 21978,
+        "end": 22126
+    },
+    {
+        "text": "a",
+        "start": 22148,
+        "end": 22286
+    },
+    {
+        "text": "richer",
+        "start": 22308,
+        "end": 22666
+    },
+    {
+        "text": "follower",
+        "start": 22698,
+        "end": 23146
+    },
+    {
+        "text": "experience.",
+        "start": 23178,
+        "end": 23260
     }
+  ]
 }

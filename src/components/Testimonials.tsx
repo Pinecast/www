@@ -7,6 +7,10 @@ import {useVisibleElements} from '@/hooks/useVisibleElements';
 import {CAN_HOVER_MEDIA_QUERY, MIN_TABLET_MEDIA_QUERY} from '@/constants';
 import {SecondaryButton} from './SecondaryButton';
 import {AudioFiles, useSound} from '@/hooks/useSound';
+import {TestimonialQuotation, type Script} from './TestimonialQuotation';
+
+import * as livingBlindfully from '../../public/testimonials/living-blindfully.json';
+import * as makeLifeWork from '../../public/testimonials/make-life-work.json';
 
 type Testimonial = {
   audioFiles?: AudioFiles;
@@ -14,7 +18,9 @@ type Testimonial = {
   color: string;
   customer: string;
   joinYear: number;
-  quotation: React.ReactNode | string;
+  quotation: string;
+  quotationStartIdx: number;
+  script: Script;
 };
 
 const TESTIMONIALS: Testimonial[] = [
@@ -28,12 +34,10 @@ const TESTIMONIALS: Testimonial[] = [
     color: 'var(--color-lime)',
     customer: 'Living Blindfully',
     joinYear: 2020,
-    quotation: (
-      <>
-        Ease of use, reliability, accessibility, and support. I&rsquo;m a huge
-        Pinecast fan. I recommend them unreservedly.
-      </>
-    ),
+    quotation:
+      'I started podcasting in 2004 and have worked with quite a few podcast hosting companies over the years. Nothing has come close to Pinecast',
+    quotationStartIdx: 8,
+    script: livingBlindfully,
   },
   {
     audioFiles: {
@@ -45,12 +49,10 @@ const TESTIMONIALS: Testimonial[] = [
     color: 'var(--color-sky)',
     customer: 'Make Life Work',
     joinYear: 2019,
-    quotation: (
-      <>
-        Pinecast is the absolute best in the game. The perfect one-stop shop for
-        all our podcasting services.
-      </>
-    ),
+    quotation:
+      "Over the past five years or so, I've trusted Pinecast to reliably host all my podcasts.",
+    quotationStartIdx: 14,
+    script: makeLifeWork,
   },
 ];
 
@@ -122,6 +124,7 @@ const AudioPlayer = React.memo(
         element: audioElement,
         controls: {play, pause},
         state: {time: currentTimeSec, playing},
+        ref: audioRef,
       } = useSound({sources: testimonial?.audioFiles, autoPlay: true});
 
       React.useImperativeHandle(ref, () => ({
@@ -139,6 +142,9 @@ const AudioPlayer = React.memo(
           }
 
           playerRef.current.style.transform = `translateX(${progress * 100}vw)`;
+          playerRef.current.style.maxWidth = `calc(100vw - ${
+            progress * 100
+          }vw)`;
 
           const player = {
             opacity: playerRef.current.style.opacity,
@@ -236,10 +242,12 @@ const AudioPlayer = React.memo(
           <div
             ref={playerRef}
             className={css({
-              // As the child moves horizontally as the page is vertically scrolled, to improve the performance of
-              // the scroll-linked `transform` on the child, give hints to the browser to create a new stacking
-              // context that is independent of other styles on the page (enable containment for layout, paint, and size).
-              contain: 'strict',
+              // // As the child moves horizontally as the page is vertically scrolled, to improve the performance of
+              // // the scroll-linked `transform` on the child, give hints to the browser to create a new stacking
+              // // context that is independent of other styles on the page (enable containment for layout, paint, and size).
+              // contain: 'strict',
+              display: 'flex',
+              flexDirection: 'column',
               height: `${PLAYER_HEIGHT_SMALL}px`,
               position: 'relative',
               // Vertically center this element so the ticker box intersects with
@@ -253,7 +261,7 @@ const AudioPlayer = React.memo(
               width: `${PLAYER_WIDTH_SMALL}px`,
               // When the `slideTo` method is called, a `transform` is applied
               // to slide this element horizontally with vertical page scrolls.
-              willChange: 'opacity, transform',
+              willChange: 'opacity, transform, max-width',
               zIndex: -1,
 
               [MIN_TABLET_MEDIA_QUERY]: {
@@ -268,6 +276,7 @@ const AudioPlayer = React.memo(
               ref={tickerWrapperRef}
               className={css({
                 transition: 'opacity 0.1s linear, transform 0.1s linear',
+                alignSelf: 'flex-start',
                 alignContent: 'center',
                 alignItems: 'center',
                 backgroundColor: 'var(--color-white)',
@@ -376,7 +385,14 @@ const AudioPlayer = React.memo(
                 },
               })}
             >
-              <Body3>{testimonial.quotation}</Body3>
+              <Body3 style={{fontSize: '20px'}}>
+                <TestimonialQuotation
+                  audio={audioRef}
+                  script={testimonial.script}
+                  quotation={testimonial.quotation}
+                  quotationStartIdx={testimonial.quotationStartIdx}
+                />
+              </Body3>
               <footer
                 className={css({
                   display: 'grid',
@@ -513,14 +529,7 @@ const Customers = ({}) => {
       })}
     >
       {currentTestimonial && (
-        <AudioPlayer
-          ref={audioPlayerRef}
-          audioFiles={currentTestimonial.audioFiles}
-          audioDuration={currentTestimonial.audioDuration}
-          customer={currentTestimonial.customer}
-          joinYear={currentTestimonial.joinYear}
-          quotation={currentTestimonial.quotation}
-        />
+        <AudioPlayer ref={audioPlayerRef} {...currentTestimonial} />
       )}
       <div
         className={css({
