@@ -17,8 +17,7 @@ export const SectionDivider = () => {
       <svg
         className={css({
           display: 'block',
-          height: '100%',
-          width: 'auto',
+          width: '100%',
           [MIN_TABLET_MEDIA_QUERY]: {
             display: 'none',
           },
@@ -36,8 +35,7 @@ export const SectionDivider = () => {
       <svg
         className={css({
           display: 'none',
-          height: '100%',
-          width: 'auto',
+          width: '100%',
           [MIN_TABLET_MEDIA_QUERY]: {
             display: 'block',
           },
