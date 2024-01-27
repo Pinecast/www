@@ -44,6 +44,7 @@ export const MarqueeDivider = ({
   const css = useCSS();
   const uid = React.useId();
 
+  const marqueeRef = React.useRef<SVGSVGElement>(null);
   const pathRef = React.useRef<SVGPathElement>(null);
   const textPathRef = React.useRef<SVGTextPathElement>(null);
   const animateRef = React.useRef<SVGAnimateElement>(null);
@@ -98,6 +99,8 @@ export const MarqueeDivider = ({
       const animate = animateRef.current!;
       animate.setAttribute('to', `${textLen}`);
       // animate.setAttribute('to', `0`);
+
+      marqueeRef.current!.style.opacity = '1';
     };
     window.addEventListener('resize', handler);
     handler();
@@ -111,20 +114,26 @@ export const MarqueeDivider = ({
     <div
       className={css({
         backgroundColor: bottomBackgroundColor,
+        height: `${MARQUEE_HEIGHT}px`,
         position: 'relative',
         zIndex,
       })}
     >
       <svg
+        ref={marqueeRef}
         height={MARQUEE_HEIGHT}
         preserveAspectRatio="none"
         width="100%"
         className={css({
           // Remove 4 extra pixels added by browser when SVG is an inline box.
           display: 'block',
+          // Hide the marquee until the width is available. Otherwise, the marquee jumps from 600px to the true screen width.
+          opacity: 0,
           position: 'relative',
           // Work around a nasty Chrome flickering bug the marquee is scrolled fast into view.
           transform: 'translate3d(0,0,0)',
+          transition: 'opacity 0.2s ease-in-out',
+          width: '100%',
         })}
       >
         <path
