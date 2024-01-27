@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import {useCSS} from '@/hooks/useCSS';
 import {MonumentGroteskSemiMono} from '@/fonts';
+import {ANTIALIASED} from '@/constants';
 
 export const MARQUEE_HEIGHT = 165;
 const MARQUEE_WIDTH = 900;
@@ -39,7 +40,7 @@ export const MarqueeDivider = ({
   children,
   textColor = '#000',
   topBackgroundColor = '#fff',
-  zIndex = 2
+  zIndex = 2,
 }: Props) => {
   const css = useCSS();
   const uid = React.useId();
@@ -125,6 +126,7 @@ export const MarqueeDivider = ({
         preserveAspectRatio="none"
         width="100%"
         className={css({
+          ...ANTIALIASED,
           // Remove 4 extra pixels added by browser when SVG is an inline box.
           display: 'block',
           // Hide the marquee until the width is available. Otherwise, the marquee jumps from 600px to the true screen width.
