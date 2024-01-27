@@ -248,7 +248,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
   return (
     <li
       className={css({
-        borderBottom: '1px solid var(--color-space)',
+        borderBottom: '1px solid var(--color-space-50)',
         backgroundColor: selected
           ? 'var(--color-grape-50)'
           : 'var(--color-sand)',
@@ -271,6 +271,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
           backgroundRepeat: 'repeat-y, repeat-y',
           border: 0,
           color: selected ? 'var(--color-space)' : 'var(--color-sand)',
+          cursor: selected ? 'unset' : 'pointer',
           display: 'block',
           fontSize: '18px',
           fontWeight: 400,
@@ -279,7 +280,6 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
           position: 'relative',
           transition: 'background-color 0.2s, color 0.2s, height 0.2s',
           width: '100%',
-          willChange: 'height',
 
           '::before': {
             display: 'block',
@@ -287,17 +287,18 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
             height: '1px',
             width: '100%',
             position: 'absolute',
-            top: '30px',
+            top: '34px',
             left: 0,
             right: 0,
-            backgroundColor: 'var(--color-space)',
+            backgroundColor: 'var(--color-space-50)',
             opacity: selected ? 1 : 0,
             transition: 'opacity 0.2s',
             zIndex: 2,
           },
 
           [MIN_TABLET_MEDIA_QUERY]: {
-            height: selected ? '80px' : '60px',
+            height: selected ? '80px' : '70px',
+            willChange: 'height',
           },
         })}
       >
@@ -314,7 +315,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
             top: '0',
             transition: 'background-color 0.2s, color 0.2s',
             width: '60px',
-            height: '60px',
+            height: '70px',
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 3,
@@ -338,14 +339,14 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
               : '1px var(--color-space)',
             textTransform: 'uppercase',
             fontSize: '28px',
-            lineHeight: '60px',
+            lineHeight: '44px',
             padding: '0 20px',
             position: 'relative',
             textDecoration: 'none',
             zIndex: 3,
             [MIN_TABLET_MEDIA_QUERY]: {
               fontSize: '36px',
-              top: '10px',
+              top: '15px',
             },
             [MIN_DESKTOP_MEDIA_QUERY]: {fontSize: '80px'},
           })}
@@ -364,7 +365,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
             position: 'absolute',
             top: 0,
             right: '43px',
-            height: '60px',
+            height: '70px',
             width: '60px',
             zIndex: 3,
             display: 'none',
