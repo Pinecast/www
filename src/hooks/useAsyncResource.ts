@@ -2,6 +2,14 @@
 import * as React from 'react';
 
 export type AsyncDrawable = [HTMLImageElement | HTMLVideoElement, boolean];
+export type TransitionedDrawable<T extends Record<string, number> = any> = {
+  drawable: AsyncDrawable;
+  version: 'a' | 'b';
+  a: AsyncDrawable;
+  b: AsyncDrawable;
+  state: T;
+  key: keyof T;
+};
 
 export const useAsyncImage = (src: string): [HTMLImageElement, boolean] => {
   if (typeof Image === 'undefined') {
@@ -111,6 +119,26 @@ export const useAsyncVideo = (
   return returnValue.current;
 };
 
-export function preferDrawable(a: AsyncDrawable, b: AsyncDrawable) {
-  return a[1] ? a : b;
+export function usePreferDrawable<T extends Record<string, number>>(
+  a: AsyncDrawable,
+  b: AsyncDrawable,
+  state: T,
+  key: keyof T,
+) {
+  const ret = React.useRef<TransitionedDrawable<T>>({
+    drawable: b,
+    version: 'b',
+    a,
+    b,
+    state,
+    key,
+  });
+  if (a[1]) {
+    ret.current.drawable = a;
+    ret.current.version = 'a';
+  } else {
+    ret.current.drawable = b;
+    ret.current.version = 'b';
+  }
+  return ret.current;
 }

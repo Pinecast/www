@@ -11,7 +11,7 @@ import * as React from 'react';
 import {useCalculateResizableValue} from '@/hooks/useCalculateResizableValue';
 import {
   AV1_MIME,
-  preferDrawable,
+  usePreferDrawable,
   useAsyncImage,
   useAsyncVideo,
 } from '@/hooks/useAsyncResource';
@@ -130,13 +130,22 @@ export const HeroV2 = () => {
     true,
   );
 
-  const tl = preferDrawable(tlv, tli);
-  const tr = preferDrawable(trv, tri);
-  const bl = preferDrawable(blv, bli);
-  const br = preferDrawable(brv, bri);
-  const ml = preferDrawable(mlv, mli);
-  const mr = preferDrawable(mrv, mri);
-  const c = preferDrawable(cv, ci);
+  const fadeState = React.useRef({
+    tl: 0,
+    tr: 0,
+    bl: 0,
+    br: 0,
+    ml: 0,
+    mr: 0,
+    c: 0,
+  });
+  const tl = usePreferDrawable(tlv, tli, fadeState.current, 'tl');
+  const tr = usePreferDrawable(trv, tri, fadeState.current, 'tr');
+  const bl = usePreferDrawable(blv, bli, fadeState.current, 'bl');
+  const br = usePreferDrawable(brv, bri, fadeState.current, 'br');
+  const ml = usePreferDrawable(mlv, mli, fadeState.current, 'ml');
+  const mr = usePreferDrawable(mrv, mri, fadeState.current, 'mr');
+  const c = usePreferDrawable(cv, ci, fadeState.current, 'c');
 
   const textArea = React.useRef<HTMLDivElement>(null);
 
@@ -207,7 +216,7 @@ export const HeroV2 = () => {
           ctx.fillRect(0, 0, canvas.current!.width, canvas.current!.height);
           ctx.globalAlpha = Math.max(0, 1 - scrollY / (windowHeight * 0.7));
           drawImageProp(
-            c,
+            c.drawable,
             ctx,
             // 10px left padding
             gutter * inverseScrollRatio,
@@ -238,7 +247,7 @@ export const HeroV2 = () => {
           // Left bottom
           drawImageInRoundedRect(
             ctx,
-            bl,
+            bl.drawable,
             gap - xNudge,
             taTop + gap + sideTopHeight,
             sideWidth,
@@ -249,7 +258,7 @@ export const HeroV2 = () => {
           // Right bottom
           drawImageInRoundedRect(
             ctx,
-            br,
+            br.drawable,
             gap + sideWidth + gap + centralWidth + gap + xNudge,
             taTop + gap + sideTopHeight,
             sideWidth,
@@ -260,7 +269,7 @@ export const HeroV2 = () => {
           // Left top
           drawImageInRoundedRect(
             ctx,
-            tl,
+            tl.drawable,
             gap - xNudge,
             taTop,
             sideWidth,
@@ -270,7 +279,7 @@ export const HeroV2 = () => {
           // Right top
           drawImageInRoundedRect(
             ctx,
-            tr,
+            tr.drawable,
             gap + sideWidth + gap + centralWidth + gap + xNudge,
             taTop,
             sideWidth,
@@ -307,7 +316,7 @@ export const HeroV2 = () => {
           ctx.fillRect(0, 0, canvas.current!.width, canvas.current!.height);
           ctx.globalAlpha = Math.max(0, 1 - scrollY / (windowHeight * 0.7));
           drawImageProp(
-            c,
+            c.drawable,
             ctx,
             // 20px left padding, 20px gap, plus the width of the left side
             gap + sideWidth + gap - xNudge,
@@ -340,7 +349,7 @@ export const HeroV2 = () => {
           // Left bottom
           drawImageInRoundedRect(
             ctx,
-            bl,
+            bl.drawable,
             gap - xNudge * 1.5,
             taTop + gap + outerSideTopHeight,
             sideWidth,
@@ -350,7 +359,7 @@ export const HeroV2 = () => {
           // Right bottom
           drawImageInRoundedRect(
             ctx,
-            br,
+            br.drawable,
             gap +
               sideWidth +
               gap +
@@ -377,7 +386,7 @@ export const HeroV2 = () => {
           // Left top
           drawImageInRoundedRect(
             ctx,
-            tl,
+            tl.drawable,
             gap - xNudge * 1.5,
             taTop,
             sideWidth,
@@ -387,7 +396,7 @@ export const HeroV2 = () => {
           // Right top
           drawImageInRoundedRect(
             ctx,
-            tr,
+            tr.drawable,
             gap +
               sideWidth +
               gap +
@@ -435,7 +444,7 @@ export const HeroV2 = () => {
           ctx.closePath();
           ctx.clip();
           drawImageProp(
-            ml,
+            ml.drawable,
             ctx,
             gap + sideWidth + gap - xNudge,
             taTop,
@@ -480,7 +489,7 @@ export const HeroV2 = () => {
           ctx.closePath();
           ctx.clip();
           drawImageProp(
-            mr,
+            mr.drawable,
             ctx,
             gap +
               sideWidth +
@@ -525,7 +534,7 @@ export const HeroV2 = () => {
           ctx.fillRect(0, 0, canvas.current!.width, canvas.current!.height);
           ctx.globalAlpha = Math.max(0, 1 - scrollY / (windowHeight * 0.7));
           drawImageProp(
-            c,
+            c.drawable,
             ctx,
             // 20px left padding, 20px gap twice, plus the width of the left side times two
             gap + sideWidth + gap + sideWidth + gap - xNudge,

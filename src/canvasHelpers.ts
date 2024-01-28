@@ -1,10 +1,11 @@
-import {AsyncDrawable} from './hooks/useAsyncResource';
+import {AsyncDrawable, TransitionedDrawable} from './hooks/useAsyncResource';
 
 // Clamp dpi to 2 for performance
 export const dpi = Math.min(2, global.devicePixelRatio ?? 1);
 
 export function drawImageProp(
-  [img, loaded]: AsyncDrawable,
+  // [img, loaded]: AsyncDrawable,
+  transitionedDrawable: TransitionedDrawable,
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
@@ -85,7 +86,7 @@ export function roundedRectPath(
 
 export function drawImageInRoundedRect(
   ctx: CanvasRenderingContext2D,
-  image: AsyncDrawable,
+  image: TransitionedDrawable,
   x: number,
   y: number,
   width: number,
