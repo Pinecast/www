@@ -590,6 +590,7 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
 
 export const TunedInPanels = () => {
   const css = useCSS();
+  const [hasLeft, setHasLeft] = React.useState<boolean>(false);
   const [aboveZero, setAboveZero] = React.useState<boolean>(false);
   const [leftActive, setLeftActive] = React.useState<boolean>(false);
   const [middleActive, setMiddleActive] = React.useState<boolean>(false);
@@ -603,9 +604,15 @@ export const TunedInPanels = () => {
   useDarkSection(sectionRef);
 
   useIntersectionProgress(progressRef, {
+    onEnter: React.useCallback(() => {
+      setHasLeft(false);
+    }, []),
+    onLeave: React.useCallback(() => {
+      setHasLeft(true);
+    }, []),
     onProgress: React.useCallback(
       (target: HTMLElement, scrollProgress: number) => {
-        const showDial = scrollProgress > SCROLL_PERCENTAGE_TO_SHOW_DIAL;
+        const showDial = !hasLeft && scrollProgress > SCROLL_PERCENTAGE_TO_SHOW_DIAL;
         setAboveZero(showDial);
 
         const proportionalProgress = scaleDial(scrollProgress);
@@ -617,7 +624,7 @@ export const TunedInPanels = () => {
         setMiddleActive(degree <= -90);
         setLeftActive(degree <= -45);
       },
-      [],
+      [hasLeft],
     ),
   });
 
