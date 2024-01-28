@@ -37,8 +37,8 @@ export const InfoPageFooterUpsell = () => {
           for free
         </H2>
         <Body4 style={{maxWidth: '32rem'}}>
-          Whether you&apos;re just starting out or you&apos;re more established,
-          we have a solution for you.
+          Whether you&rsquo;re just starting out or you&rsquo;re more
+          established, we have a solution for you.
         </Body4>
 
         <div
@@ -52,7 +52,7 @@ export const InfoPageFooterUpsell = () => {
             Start for free
           </PrimaryButton>
           <SecondaryButton href="/features">
-            What&apos;s included?
+            What&rsquo;s included?
           </SecondaryButton>
         </div>
         <Caption style={{color: 'var(--color-core-accent)'}}>

@@ -50,7 +50,7 @@ export const TestimonialQuotation = ({
                   : 'var(--color-core-accent)',
             })}
           >
-            {word.text + ' '}
+            {word.text.replace(/'/g, '’') + ' '}
           </span>
         );
       })}

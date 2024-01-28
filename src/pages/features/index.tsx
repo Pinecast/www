@@ -92,112 +92,193 @@ const Header = () => {
 type Feature = {
   name: string;
   url?: string;
-  description: string;
+  description: string | React.ReactNode;
 };
 
 export const FEATURES: Array<Feature> = [
   {
     name: 'Analytics',
     url: '/features/analytics',
-    description:
-      "See where your listeners are coming from and how they're listening.",
+    description: (
+      <>
+        See where your listeners are coming from and how they&rsquo;re
+        listening.
+      </>
+    ),
   },
   {
     name: 'Art Optimization',
-    description:
-      "If you upload an image that doesn't meet the requirements for podcast or episode artwork, we'll fix it for you with a single click.",
+    description: (
+      <>
+        If you upload an image that doesn&rsquo;t meet the requirements for
+        podcast or episode artwork, we&rsquo;ll fix it for you with a single
+        click.
+      </>
+    ),
   },
   {
     name: 'Collaborators',
     url: '/features/collaborators',
-    description:
-      'Invite your co-hosts and producers to help you manage your show.',
+    description: (
+      <>Invite your co-hosts and producers to help you manage your show.</>
+    ),
   },
   {
     name: 'Distribution',
     url: '/features/distribution',
-    description:
-      'Get your show on all the major podcast platforms with a single click.',
+    description: (
+      <>Get your show on all the major podcast platforms with a single click.</>
+    ),
   },
   {
     name: 'Embeddable App Links',
-    description:
-      'Embed HTML code for your podcast that lets your website visitors open your show in their favorite podcast app.',
+    description: (
+      <>
+        Embed HTML code for your podcast that lets your website visitors open
+        your show in their favorite podcast app.
+      </>
+    ),
   },
   {
     name: 'Embeddable Players',
     url: '/features/embeddable-players',
-    description:
-      'Embed a player on your website that lets your visitors listen to individual episodes or your whole podcast.',
+    description: (
+      <>
+        Embed a player on your website that lets your visitors listen to
+        individual episodes or your whole podcast.
+      </>
+    ),
   },
   {
     name: 'Episode Metadata',
-    description:
-      "If your episode's MP3 doesn't include all of the metadata tags that podcast apps expect, we'll fill in the blanks for you with a single click—without overwriting custom metadata.",
+    description: (
+      <>
+        If your episode&rsquo;s MP3 doesn&rsquo;t include all of the metadata
+        tags that podcast apps expect, we&rsquo;ll fill in the blanks for you
+        with a single click—without overwriting custom metadata.
+      </>
+    ),
   },
   {
     name: 'Feedback',
     url: '/features/feedback',
-    description:
-      'Get feedback from your listeners collected to a single dashboard with a simple, customizable form. Moderation features protect against spam and abuse.',
+    description: (
+      <>
+        Get feedback from your listeners collected to a single dashboard with a
+        simple, customizable form. Moderation features protect against spam and
+        abuse.
+      </>
+    ),
   },
   {
     name: 'JSON Feed',
-    description:
-      "We don't just provide RSS, we offer an easy-to-parse JSON Feed-compliant feed for every podcast as well.",
+    description: (
+      <>
+        We don&rsquo;t just provide RSS, we offer an easy-to-parse JSON
+        Feed-compliant feed for every podcast as well.
+      </>
+    ),
   },
   {
     name: 'Monetization',
     url: '/features/monetization',
-    description:
-      "Earn money from your podcast with listener support. Mark episodes as paid-only and we'll handle subscriptions and payments processing.",
+    description: (
+      <>
+        Earn money from your podcast with listener support. Mark episodes as
+        paid-only and we&rsquo;ll handle subscriptions and payments processing.
+      </>
+    ),
   },
   {
     name: 'Networks',
-    description:
-      "Create a group for all the podcasters and shows in your network. We'll provide a single dashboard for managing your network's shows and analytics.",
+    description: (
+      <>
+        Create a group for all the podcasters and shows in your network.
+        We&rsquo;ll provide a single dashboard for managing your network&rsquo;s
+        shows and analytics.
+      </>
+    ),
   },
   {
     name: 'Notifications',
-    description:
-      'Get notifications via email, Slack, Discord, or webhooks when episodes are published, hit analytics milestones, when your podcast receives tips, and more.',
+    description: (
+      <>
+        Get notifications via email, Slack, Discord, or webhooks when episodes
+        are published, hit analytics milestones, when your podcast receives
+        tips, and more.
+      </>
+    ),
   },
   {
     name: 'Password Protection',
-    description:
-      'Protect your podcast feed and website with a password that you can share with your listeners.',
+    description: (
+      <>
+        Protect your podcast feed and website with a password that you can share
+        with your listeners.
+      </>
+    ),
   },
   {
     name: 'Referrals',
-    description:
-      "Earn account credit for referring other podcasters to Pinecast. For every referral that stays a customer, we'll give you two months of our Starter plan.",
+    description: (
+      <>
+        Earn account credit for referring other podcasters to Pinecast. For
+        every referral that stays a customer, we&rsquo;ll give you two months of
+        our Starter plan.
+      </>
+    ),
   },
   {
     name: 'Podcast Websites',
-    description:
-      'Set up a website for your show with a single click—no coding required. Customize the layout and appearance of your site and know that it will work great on any device. SEO included.',
+    description: (
+      <>
+        Set up a website for your show with a single click—no coding required.
+        Customize the layout and appearance of your site and know that it will
+        work great on any device. SEO included.
+      </>
+    ),
   },
   {
     name: 'Review Monitoring',
     url: '/features/review-monitoring',
-    description:
-      "Let us take care of keeping track of your reviews. We'll crawl reviews left on Podchaser and Apple Podcasts in every region and send you an email when a new one is found.",
+    description: (
+      <>
+        Let us take care of keeping track of your reviews. We&rsquo;ll crawl
+        reviews left on Podchaser and Apple Podcasts in every region and send
+        you an email when a new one is found.
+      </>
+    ),
   },
   {
     name: 'Seasons & Episodes',
-    description:
-      "Add season and episode numbers to your episode automatically. For apps that don't use Apple's official numbering tags, we'll tastefully add the numbers to episode titles.",
+    description: (
+      <>
+        Add season and episode numbers to your episode automatically. For apps
+        that don&rsquo;t use Apple&rsquo;s official numbering tags, we&rsquo;ll
+        tastefully add the numbers to episode titles.
+      </>
+    ),
   },
   {
     name: 'Short Links',
     url: '/features/short-links',
-    description:
-      'Create short links for your podcast and episodes that are perfectly optimized for social media. Track clicks and see where your listeners are coming from.',
+    description: (
+      <>
+        Create short links for your podcast and episodes that are perfectly
+        optimized for social media. Track clicks and see where your listeners
+        are coming from.
+      </>
+    ),
   },
   {
     name: 'Transcripts',
-    description:
-      "Pinecast will transcribe up to four hours of audio per month at no extra cost. We'll recognize and remember your speakers, and you can edit the transcript right in your browser.",
+    description: (
+      <>
+        Pinecast will transcribe up to four hours of audio per month at no extra
+        cost. We&rsquo;ll recognize and remember your speakers, and you can edit
+        the transcript right in your browser.
+      </>
+    ),
   },
 ].sort((a, b) => a.name.localeCompare(b.name));
 

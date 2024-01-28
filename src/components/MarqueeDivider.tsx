@@ -211,7 +211,7 @@ export const StandardMarqueeDivider = (props: Omit<Props, 'children'>) => (
     )}
     {MarqueeDivider.MarqueeDividerBullet('Get paid for your content')}
     {MarqueeDivider.MarqueeDividerBullet(
-      "You're the customer, not the product",
+      <>You&rsquo;re the customer, not the product</>,
     )}
     {MarqueeDivider.MarqueeDividerBullet(
       'Worry about your next episode, not your host',
