@@ -8,6 +8,7 @@ import {PrimaryButton} from './PrimaryButton';
 import Link from 'next/link';
 import {Codec, MimeType, NoncriticalVideo} from './NoncriticalVideo';
 import {useIntersectionProgress} from '@/hooks/useIntersectionProgress';
+import {useDarkSection} from '@/hooks/useDarkSection';
 
 const VIDEO_WIDTH = 1060;
 const VIDEO_HEIGHT = 1440;
@@ -440,9 +441,13 @@ const Panel = ({
 export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
   const css = useCSS();
 
+  const sectionRef = React.useRef<HTMLElement>(null);
+  useDarkSection(sectionRef);
+
   return (
     <>
       <section
+        ref={sectionRef}
         id="tuned-in"
         className={css({
           color: 'var(--color-white)',
@@ -596,6 +601,9 @@ export const TunedInPanels = () => {
 
   const dialRef = React.useRef<SVGGElement>(null);
 
+  const sectionRef = React.useRef<HTMLDivElement>(null);
+  useDarkSection(sectionRef);
+
   useIntersectionProgress(progressRef, {
     onProgress: React.useCallback(
       (target: HTMLElement, scrollProgress: number) => {
@@ -617,6 +625,7 @@ export const TunedInPanels = () => {
 
   return (
     <div
+      ref={sectionRef}
       className={css({
         backgroundColor: 'var(--color-space)',
         position: 'relative',
