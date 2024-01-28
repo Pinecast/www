@@ -49,10 +49,11 @@ export const HeroV2 = () => {
   const css = useCSS();
 
   const wrapper = React.useRef<HTMLElement>(null);
-  const size = React.useRef({width: 0, height: 0});
+  const size = React.useRef({width: 0, height: 0, windowHeight: 0});
   if (!size.current.width && typeof document !== 'undefined') {
     size.current.width = document.body.offsetWidth;
     size.current.height = window.innerHeight;
+    size.current.windowHeight = window.innerHeight;
   }
 
   const [isMobile, setIsMobile] = React.useState(
@@ -154,8 +155,8 @@ export const HeroV2 = () => {
     canvas,
     React.useCallback(
       ctx => {
-        const {width, height} = size.current;
-        const {innerHeight: windowHeight, scrollY} = window;
+        const {width, height, windowHeight} = size.current;
+        const scrollY = window.scrollY;
         if (scrollY > windowHeight) {
           ctx.clearRect(0, 0, canvas.current!.width, canvas.current!.height);
           return;
@@ -576,6 +577,7 @@ export const HeroV2 = () => {
       setIsTablet(rawWidth < TABLET_BREAKPOINT && rawWidth > MOBILE_BREAKPOINT);
       size.current.width = width;
       size.current.height = height;
+      size.current.windowHeight = window.innerHeight;
 
       if (!canvas.current) {
         return;

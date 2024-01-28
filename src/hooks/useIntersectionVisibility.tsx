@@ -5,7 +5,9 @@ export const useIntersectionVisibility = (
   callback: (isIntersecting: boolean) => void,
   cleanup?: () => void,
 ) => {
-  const elementMapRef = React.useRef(new Map<HTMLElement, (isIntersecting: boolean) => void>());
+  const elementMapRef = React.useRef(
+    new Map<HTMLElement, (isIntersecting: boolean) => void>(),
+  );
   React.useEffect(() => {
     const element = ref.current;
     if (!element) {
@@ -19,9 +21,9 @@ export const useIntersectionVisibility = (
     const observer =
       typeof IntersectionObserver !== 'undefined'
         ? new IntersectionObserver(entries => {
-            entries.forEach(({target, isIntersecting}) => {
+            for (const {target, isIntersecting} of entries) {
               elementMap.get(target as HTMLElement)?.(isIntersecting);
-            });
+            }
           })
         : undefined;
     observer?.observe(element);

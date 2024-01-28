@@ -510,13 +510,19 @@ const Customers = ({}) => {
   }, [currentTestimonial]);
 
   const intersectionProgressRef = React.useRef<HTMLDivElement>(null);
-  useIntersectionProgress(intersectionProgressRef, {
-    onProgress(target: HTMLDivElement, progress: number) {
-      if (audioPlayerRef.current) {
-        audioPlayerRef.current.slideTo(progress);
-      }
-    },
-  });
+  useIntersectionProgress(
+    intersectionProgressRef,
+    React.useMemo(
+      () => ({
+        onProgress(target: HTMLDivElement, progress: number) {
+          if (audioPlayerRef.current) {
+            audioPlayerRef.current.slideTo(progress);
+          }
+        },
+      }),
+      [],
+    ),
+  );
 
   return (
     <div
