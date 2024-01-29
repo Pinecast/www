@@ -57,6 +57,12 @@ const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
+const ANIMATION_OPTIONS: KeyframeAnimationOptions = {
+  duration: 200,
+  fill: 'forwards',
+  easing: 'linear',
+};
+
 const padTime = (time: number) => `${time}`.padStart(2, '0');
 
 const formatTime = (seconds: number) =>
@@ -78,13 +84,13 @@ const scaleNumber = (
 };
 
 const SCROLL_PERCENTAGE_TO_SHOW_PLAYER = 0.03;
-const SCROLL_PERCENTAGE_TO_HIDE_PLAYER = 0.945;
+const SCROLL_PERCENTAGE_TO_HIDE_PLAYER = 0.8;
 
 const scalePlayerEnter = (num: number) =>
   scaleNumber(num, 0, SCROLL_PERCENTAGE_TO_SHOW_PLAYER, 0.15, 1);
 
 const scalePlayerExit = (num: number) =>
-  1 - scaleNumber(num, 0, SCROLL_PERCENTAGE_TO_HIDE_PLAYER, 0.15, 1);
+  1 - scaleNumber(num, 0, SCROLL_PERCENTAGE_TO_HIDE_PLAYER, 0.25, 1);
 
 type AudioPlayerRef = {
   play(): void;
@@ -110,6 +116,20 @@ const [PLAYER_WIDTH_SMALL, PLAYER_WIDTH_LARGE] = [
   QUOTE_WIDTH_LARGE,
 ];
 
+const [CONTROLS_START, CONTROLS_END] = [0.3, 0.5];
+
+const calculateTickerLeft = (progress: number) => {
+  if (progress <= CONTROLS_START) {
+    return 0;
+  }
+  if (progress >= CONTROLS_END) {
+    return `calc(var(--player-width) - var(--ticker-width))`;
+  }
+  return `calc(${
+    (progress - CONTROLS_START) / (CONTROLS_END - CONTROLS_START)
+  } * (var(--player-width) - var(--ticker-width)))`;
+};
+
 const AudioPlayer = React.memo(
   React.forwardRef<AudioPlayerRef, AudioPlayerProps>(
     function AudioPlayer(testimonial, ref) {
@@ -131,7 +151,7 @@ const AudioPlayer = React.memo(
       React.useImperativeHandle(ref, () => ({
         play,
         pause,
-        slideTo(progress: number) {
+        async slideTo(progress: number) {
           if (
             !playerRef.current ||
             !quoteRef.current ||
@@ -142,11 +162,6 @@ const AudioPlayer = React.memo(
             return;
           }
 
-          playerRef.current.style.transform = `translateX(${progress * 100}vw)`;
-          playerRef.current.style.maxWidth = `calc(100vw - ${
-            progress * 100
-          }vw)`;
-
           const player = {
             opacity: playerRef.current.style.opacity,
             transform: playerRef.current.style.transform,
@@ -156,6 +171,7 @@ const AudioPlayer = React.memo(
             transform: quoteRef.current.style.transform,
           };
           const tickerWrapper = {
+            left: tickerWrapperRef.current.style.left,
             opacity: tickerWrapperRef.current.style.opacity,
             transform: tickerWrapperRef.current.style.transform,
           };
@@ -207,9 +223,34 @@ const AudioPlayer = React.memo(
             quote.opacity = '0';
           }
 
+          player.transform = `translateX(${progress * 100}vw)`;
+          tickerWrapper.left = `${calculateTickerLeft(progress)}`;
+
+          if (typeof playerRef.current.animate === 'function') {
+            const animation = playerRef.current.animate(
+              [{transform: player.transform}],
+              ANIMATION_OPTIONS,
+            );
+
+            tickerWrapperRef.current.animate(
+              [
+                {
+                  left: tickerWrapper.left,
+                  transform: tickerWrapper.transform,
+                },
+              ],
+              ANIMATION_OPTIONS,
+            );
+
+            if (typeof animation.finished === 'function') {
+              await animation.finished;
+            }
+          }
+
           playerRef.current.style.opacity = player.opacity;
           playerRef.current.style.transform = player.transform;
 
+          tickerWrapperRef.current.style.left = tickerWrapper.left;
           tickerWrapperRef.current.style.opacity = tickerWrapper.opacity;
           tickerWrapperRef.current.style.transform = tickerWrapper.transform;
 
@@ -243,32 +284,27 @@ const AudioPlayer = React.memo(
           <div
             ref={playerRef}
             className={css({
-              // // As the child moves horizontally as the page is vertically scrolled, to improve the performance of
-              // // the scroll-linked `transform` on the child, give hints to the browser to create a new stacking
-              // // context that is independent of other styles on the page (enable containment for layout, paint, and size).
-              // contain: 'strict',
-              display: 'flex',
-              flexDirection: 'column',
+              '--player-height': `${PLAYER_HEIGHT_SMALL}px`,
+              '--player-width': `${PLAYER_WIDTH_SMALL}px`,
               height: `${PLAYER_HEIGHT_SMALL}px`,
               position: 'relative',
               // Vertically center this element so the ticker box intersects with
               // the viewport's sticky horizontal line.
               top: `-${(TICKER_HEIGHT_SMALL + 2) / 2}px`,
-              transition: 'transform 0.1s linear',
+              transition: '0.2s linear',
               // if progress is ascending -> start from left
-              transformOrigin: '0% 50%',
+              transformOrigin: '50% 50%',
               // if progress is descending -> start from right
               // transformOrigin: '100% 50%',
-              width: `${PLAYER_WIDTH_SMALL}px`,
+              width: 'var(--player-width)',
               // When the `slideTo` method is called, a `transform` is applied
               // to slide this element horizontally with vertical page scrolls.
-              willChange: 'opacity, transform, max-width',
+              willChange: 'opacity, transform',
               zIndex: -1,
-
               [MIN_TABLET_MEDIA_QUERY]: {
-                height: `${PLAYER_HEIGHT_LARGE}px`,
+                '--player-height': `${PLAYER_HEIGHT_LARGE}px`,
+                '--player-width': `${PLAYER_WIDTH_LARGE}px`,
                 top: `-${(TICKER_HEIGHT_LARGE + 2) / 2}px`,
-                width: `${PLAYER_WIDTH_LARGE}px`,
               },
             })}
           >
@@ -276,7 +312,9 @@ const AudioPlayer = React.memo(
             <div
               ref={tickerWrapperRef}
               className={css({
-                transition: 'opacity 0.1s linear, transform 0.1s linear',
+                '--ticker-height': `${TICKER_HEIGHT_SMALL}px`,
+                '--ticker-width': `${TICKER_WIDTH_SMALL}px`,
+                transition: '0.2s linear',
                 alignSelf: 'flex-start',
                 alignContent: 'center',
                 alignItems: 'center',
@@ -285,18 +323,18 @@ const AudioPlayer = React.memo(
                 borderRadius: '300px',
                 contain: 'content',
                 display: 'flex',
-                height: `${TICKER_HEIGHT_SMALL}px`,
+                height: 'var(--ticker-height)',
                 justifyContent: 'center',
                 marginBottom: '10px',
                 position: 'relative',
                 transform: 'scaleX(0)',
                 transformOrigin: '0% 50%',
-                width: `${TICKER_WIDTH_SMALL}px`,
+                width: 'var(--ticker-width)',
                 willChange: 'opacity, transform',
                 zIndex: 4,
                 [MIN_TABLET_MEDIA_QUERY]: {
-                  height: `${TICKER_HEIGHT_LARGE}px`,
-                  width: `${TICKER_WIDTH_LARGE}px`,
+                  '--ticker-height': `${TICKER_HEIGHT_LARGE}px`,
+                  '--ticker-width': `${TICKER_WIDTH_LARGE}px`,
                 },
               })}
             >
@@ -351,7 +389,8 @@ const AudioPlayer = React.memo(
                   <span
                     ref={tickerTimeRef}
                     className={css({
-                      transition: 'transform 0.1s linear',
+                      transition: '0.2s linear',
+                      // transition: 'transform 0.1s linear',
                       willChange: 'opacity',
                     })}
                   >{`${formatTime(Math.trunc(currentTimeSec))} / ${formatTime(
@@ -375,7 +414,7 @@ const AudioPlayer = React.memo(
                 justifyContent: 'space-between',
                 marginBottom: 'auto',
                 opacity: 0,
-                transition: 'opacity 0.1s linear, transform 0.1s linear',
+                transition: '0.2s linear',
                 padding: '20px',
                 textAlign: 'left',
                 transformOrigin: '50% 50%',
@@ -467,7 +506,12 @@ const AudioPlayer = React.memo(
 
 const CUSTOMER_BLOCK_STYLE: StyleObject = {
   display: 'grid',
-  padding: '10vh 2vw',
+  marginTop: '-20vh',
+  marginBottom: '-10vh',
+  paddingTop: '20vh',
+  paddingRight: '2vw',
+  paddingBottom: '10vh',
+  paddingLeft: '2vw',
   placeContent: 'center',
   textAlign: 'center',
   [MIN_TABLET_MEDIA_QUERY]: {
@@ -514,9 +558,9 @@ const Customers = ({}) => {
     intersectionProgressRef,
     React.useMemo(
       () => ({
-        onProgress(target: HTMLDivElement, progress: number) {
+        async onProgress(target: HTMLDivElement, progress: number) {
           if (audioPlayerRef.current) {
-            audioPlayerRef.current.slideTo(progress);
+            await audioPlayerRef.current.slideTo(progress);
           }
         },
       }),
