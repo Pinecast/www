@@ -158,32 +158,59 @@ const scaleDialAngle = (progress: number) => {
 
 type DialProps = {};
 
-const Dial = React.forwardRef<SVGGElement, DialProps>(function Dial(_, ref) {
-  const css = useCSS();
-  return (
-    <svg
-      width={288}
-      height={214}
-      viewBox="0 0 288 214"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={css({
-        display: 'block',
-      })}
-    >
-      <g clipPath="url(#tuned-in-clip-path-1)">
-        <g clipPath="url(#tuned-in-clip-path-2)">
+const Dial = React.memo(
+  React.forwardRef<SVGGElement, DialProps>(function Dial(_, ref) {
+    const css = useCSS();
+    return (
+      <svg
+        width={288}
+        height={214}
+        viewBox="0 0 288 214"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={css({
+          display: 'block',
+        })}
+      >
+        <path
+          d="M1 70c0 78.977 64.023 143 143 143s143-64.023 143-143"
+          stroke="var(--color-sand)"
+        />
+        <g opacity={0.6} stroke="var(--color-white)">
+          <path d="M143.5 144L143.5 152" />
+          <path d="M89.3164 120.354L81.5383 128.132" />
+          <path d="M113.417 137.171L110.681 144.689" />
           <path
-            d="M1 70c0 78.977 64.023 143 143 143s143-64.023 143-143"
-            stroke="var(--color-white)"
+            transform="scale(1 -1) rotate(-70 -11.241 -192.159)"
+            d="M0 -0.5L8 -0.5"
           />
+          <path d="M73.6886 95.4777L66.171 98.2138" />
+          <path
+            transform="scale(1 -1) rotate(-20 -163.177 -649.973)"
+            d="M0 -0.5L8 -0.5"
+          />
+          <path
+            transform="scale(1 -1) rotate(-45 -44.555 -298.727)"
+            d="M0 -0.5L8 -0.5"
+          />
+        </g>
+        <g
+          ref={ref}
+          style={{
+            // Rotate the hand from the center of the dial.
+            transformOrigin: '144px 70px',
+            // Slight transition to smoothly rotate the dial's hand on scroll.
+            transition: 'all 0.2s linear',
+          }}
+        >
+          <path d="M143 70H.5" stroke="var(--color-sand)" />
           <ellipse
             cx={144}
             cy={70}
             rx={70}
             ry={70}
             transform="rotate(-180 144 70)"
-            fill="var(--color-white)"
+            fill="var(--color-sand)"
           />
           <ellipse
             cx={144}
@@ -191,70 +218,15 @@ const Dial = React.forwardRef<SVGGElement, DialProps>(function Dial(_, ref) {
             rx={65}
             ry={65}
             transform="rotate(-180 144 70)"
-            fill="var(--color-white)"
+            fill="var(--color-sand)"
             stroke="var(--color-space)"
           />
-          <g opacity={0.6} stroke="var(--color-white)">
-            <path d="M143.5 144L143.5 152" />
-            <path d="M89.3164 120.354L81.5383 128.132" />
-            <path d="M113.417 137.171L110.681 144.689" />
-            <path
-              transform="scale(1 -1) rotate(-70 -11.241 -192.159)"
-              d="M0 -0.5L8 -0.5"
-            />
-            <path d="M73.6886 95.4777L66.171 98.2138" />
-            <path
-              transform="scale(1 -1) rotate(-20 -163.177 -649.973)"
-              d="M0 -0.5L8 -0.5"
-            />
-            <path
-              transform="scale(1 -1) rotate(-45 -44.555 -298.727)"
-              d="M0 -0.5L8 -0.5"
-            />
-          </g>
-          <g
-            ref={ref}
-            style={{
-              // Rotate the dial's hand from the center of the dial.
-              transformOrigin: '144px 70px',
-              // Slight transition to smoothly rotate the dial's hand on scroll.
-              transition: 'all 0.2s linear',
-            }}
-          >
-            <path d="M143 70H.5" stroke="var(--color-sand)" />
-            <ellipse
-              cx={144}
-              cy={70}
-              rx={70}
-              ry={70}
-              transform="rotate(-180 144 70)"
-              fill="var(--color-white)"
-            />
-            <circle cx={182} cy={103} r={6} fill="var(--color-space)" />
-            <ellipse
-              cx={144}
-              cy={70}
-              rx={65}
-              ry={65}
-              transform="rotate(-180 144 70)"
-              fill="var(--color-white)"
-              stroke="var(--color-space)"
-            />
-            <circle cx={95} cy={71} r={6} fill="var(--color-space)" />
-          </g>
+          <circle cx={95} cy={71} r={6} fill="var(--color-space)" />
         </g>
-      </g>
-      <defs>
-        <clipPath id="tuned-in-clip-path-1">
-          <path fill="var(--color-white)" d="M0 0H288V214H0z" />
-        </clipPath>
-        <clipPath id="tuned-in-clip-path-2">
-          <path fill="var(--color-white)" d="M0 0H288V214H0z" />
-        </clipPath>
-      </defs>
-    </svg>
-  );
-});
+      </svg>
+    );
+  }),
+);
 
 const Panel = ({
   isActive,
@@ -612,7 +584,8 @@ export const TunedInPanels = () => {
     }, []),
     onProgress: React.useCallback(
       (target: HTMLElement, scrollProgress: number) => {
-        const showDial = !hasLeft && scrollProgress > SCROLL_PERCENTAGE_TO_SHOW_DIAL;
+        const showDial =
+          !hasLeft && scrollProgress > SCROLL_PERCENTAGE_TO_SHOW_DIAL;
         setAboveZero(showDial);
 
         const proportionalProgress = scaleDial(scrollProgress);
