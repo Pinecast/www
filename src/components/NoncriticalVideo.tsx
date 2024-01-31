@@ -41,7 +41,6 @@ export const NoncriticalVideo = ({
   useIntersectionVisibility(
     videoRef,
     React.useCallback(intersecting => {
-      console.log(videoRef.current?.currentSrc);
       if (intersecting) {
         videoRef.current?.play();
       } else {

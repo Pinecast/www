@@ -1,20 +1,19 @@
 import * as React from 'react';
 
-interface IntersectionOptions extends IntersectionObserverInit {
-  root?: Element | null;
+type CustomIntersectionObserverInit = {
+  root?: React.RefObject<HTMLElement> | null;
   rootMargin?: string;
   threshold?: number | number[];
-}
+};
 
 export function useVisibleElements(
   elementsRef: React.MutableRefObject<Element[]>,
-  observerOptions?: IntersectionOptions,
+  observerOptions: CustomIntersectionObserverInit = {},
 ) {
-  const observerOptionsRef = React.useRef(observerOptions);
-
   const [visibleElements, setVisibleElements] = React.useState<Array<Element>>(
     [],
   );
+  const {root, rootMargin, threshold} = observerOptions;
 
   React.useEffect(() => {
     if (typeof window.IntersectionObserver === 'undefined') {
@@ -22,6 +21,12 @@ export function useVisibleElements(
     }
 
     const isElementVisible = new Map<Element, boolean>();
+
+    const observerOptions: IntersectionObserverInit = {
+      root: root?.current ?? document,
+      rootMargin,
+      threshold,
+    };
 
     const observer = new IntersectionObserver(entries => {
       entries.forEach(({target, isIntersecting}) =>
@@ -32,14 +37,14 @@ export function useVisibleElements(
           .filter(([, isVisible]) => isVisible)
           .map(([element]) => element),
       );
-    }, observerOptionsRef.current);
+    }, observerOptions);
 
     elementsRef.current.forEach(element => {
       observer.observe(element);
     });
 
     return () => observer.disconnect();
-  }, [elementsRef]);
+  }, [JSON.stringify(threshold), rootMargin]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return visibleElements;
 }

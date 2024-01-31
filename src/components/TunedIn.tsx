@@ -1,20 +1,55 @@
 import * as React from 'react';
 import {Body4, Caption, H2, Subhead, Link as ProseLink} from './Typography';
 import {useCSS} from '@/hooks/useCSS';
-import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
 import {AspectRatioBox} from './AspectRatioBox';
+import {HorizontalCarousel} from './HorizontalCarousel';
 import {SecondaryButton} from './SecondaryButton';
 import {PrimaryButton} from './PrimaryButton';
 import Link from 'next/link';
 import {Codec, MimeType, NoncriticalVideo} from './NoncriticalVideo';
 import {useIntersectionProgress} from '@/hooks/useIntersectionProgress';
 import {useDarkSection} from '@/hooks/useDarkSection';
+import { MIN_TABLET_MEDIA_QUERY } from '@/constants';
 
 const VIDEO_WIDTH = 1060;
 const VIDEO_HEIGHT = 1440;
 
-const PANELS = {
+const [PANEL_WIDTH_MOBILE, PANEL_HEIGHT_MOBILE] = [265, 400];
+
+const PANEL_GAP_MOBILE = 10;
+const PANEL_GAP_DESKTOP = 20;
+
+enum PanelPosition {
+  LEFT = 'left',
+  MIDDLE = 'middle',
+  RIGHT = 'right',
+}
+
+type VideoSource = {
+  src: string;
+  mimeType: MimeType;
+  codec: Codec;
+};
+
+type ResponsiveSizes = [[number, number], [number, number]];
+
+type Panel = {
+  position: PanelPosition;
+  color: string;
+  heading: React.ReactNode;
+  url: string;
+  image: string;
+  videos: VideoSource[];
+  sizes: ResponsiveSizes;
+};
+
+type PanelItems = {
+  [key: string]: Panel;
+};
+
+const PANELS: PanelItems = {
   left: {
+    position: PanelPosition.LEFT,
     color: 'var(--color-orchid)',
     heading: <>You are just getting started</>,
     url: '/learn/podcasting-for-beginners',
@@ -44,11 +79,12 @@ const PANELS = {
       },
     ],
     sizes: [
-      [265, 400],
+      [PANEL_WIDTH_MOBILE, PANEL_HEIGHT_MOBILE],
       [530, 708.26],
     ],
   },
   middle: {
+    position: PanelPosition.MIDDLE,
     color: 'var(--color-lime)',
     heading: <>You need advanced tools</>,
     url: '/learn/podcasting-for-power-users',
@@ -76,11 +112,12 @@ const PANELS = {
       },
     ],
     sizes: [
-      [265, 400],
+      [PANEL_WIDTH_MOBILE, PANEL_HEIGHT_MOBILE],
       [530, 638.54],
     ],
   },
   right: {
+    position: PanelPosition.RIGHT,
     color: 'var(--color-sky)',
     heading: <>You are an organization</>,
     url: '/learn/corporate-podcasting',
@@ -108,11 +145,19 @@ const PANELS = {
       },
     ],
     sizes: [
-      [265, 400],
+      [PANEL_WIDTH_MOBILE, PANEL_HEIGHT_MOBILE],
       [530, 708.26],
     ],
   },
 };
+
+const NUM_PANELS = Object.keys(PANELS).length;
+const MOBILE_PANELS_OVERFLOW_WIDTH =
+  NUM_PANELS * 1.25 * PANEL_WIDTH_MOBILE + (NUM_PANELS + 1) * PANEL_GAP_MOBILE;
+const WIDE_PANELS_QUERY = `@media (min-width: ${MOBILE_PANELS_OVERFLOW_WIDTH}px)`;
+
+const isDesktop = () =>
+  !!window?.matchMedia?.(WIDE_PANELS_QUERY.replace(/^@media/, ''))?.matches;
 
 const scaleNumber = (
   value: number,
@@ -120,7 +165,7 @@ const scaleNumber = (
   y1: number,
   x2: number,
   y2: number,
-) => {
+): number => {
   // Convert the original range to a [0..1] range.
   const standardValue = (value - x1) / (y1 - x1);
   // Convert the [0..1] range to the new range.
@@ -157,7 +202,8 @@ const scaleDialAngle = (progress: number) => {
 };
 
 type DialRef = {
-  rotate(degrees: number): void;
+  rotateMobile(degrees: number): void;
+  rotateDesktop(degrees: number): void;
 };
 type DialProps = {};
 
@@ -167,8 +213,10 @@ const Dial = React.memo(
     const mobileRef = React.useRef<SVGGElement>(null);
     const desktopRef = React.useRef<SVGGElement>(null);
     React.useImperativeHandle(ref, () => ({
-      rotate: (degrees: number) => {
+      rotateMobile: (degrees: number) => {
         mobileRef.current!.style.transform = `rotate(${degrees}deg)`;
+      },
+      rotateDesktop: (degrees: number) => {
         desktopRef.current!.style.transform = `rotate(${degrees}deg)`;
       },
     }));
@@ -183,7 +231,7 @@ const Dial = React.memo(
             display: 'block',
             marginTop: '-1.5px',
             paddingTop: '1.5px',
-            [MIN_TABLET_MEDIA_QUERY]: {
+            [WIDE_PANELS_QUERY]: {
               display: 'none',
             },
           })}
@@ -248,7 +296,7 @@ const Dial = React.memo(
           fill="none"
           className={css({
             display: 'none',
-            [MIN_TABLET_MEDIA_QUERY]: {
+            [WIDE_PANELS_QUERY]: {
               display: 'block',
             },
           })}
@@ -316,7 +364,7 @@ const Panel = ({
   position,
 }: {
   isActive: boolean;
-  position: 'left' | 'middle' | 'right';
+  position: PanelPosition;
 }) => {
   const css = useCSS();
 
@@ -337,7 +385,7 @@ const Panel = ({
         height: `${smallHeight}px`,
 
         // Enforce aspect ratio at tablet or larger for curved three columns.
-        [MIN_TABLET_MEDIA_QUERY]: {
+        [WIDE_PANELS_QUERY]: {
           '--aspect-ratio': `${largeHeight} / ${largeWidth}`,
           flex: 'unset',
           width: '100%',
@@ -377,7 +425,7 @@ const Panel = ({
             top: '0',
           },
 
-          [MIN_TABLET_MEDIA_QUERY]: {
+          [WIDE_PANELS_QUERY]: {
             backgroundColor: 'var(--panel-border-color)',
             border: 'unset',
             borderRadius: 'unset',
@@ -453,7 +501,7 @@ const Panel = ({
             position: 'relative',
             zIndex: 2,
             transition: 'color 0.3s ease-in-out',
-            [MIN_TABLET_MEDIA_QUERY]: {
+            [WIDE_PANELS_QUERY]: {
               padding: '20px',
             },
           })}
@@ -467,9 +515,12 @@ const Panel = ({
               padding: '20px',
               transition: 'background-color 0.3s ease-in-out',
               width: '100%',
+              [WIDE_PANELS_QUERY]: {
+                minHeight: '120px',
+              },
               [MIN_TABLET_MEDIA_QUERY]: {
                 minHeight: '160px',
-              },
+              }
             })}
           >
             <Subhead style={{marginBottom: '16px', maxWidth: '16ch'}}>
@@ -515,7 +566,7 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
         className={css({
           position: 'relative',
           overflow: 'hidden',
-          [MIN_TABLET_MEDIA_QUERY]: {
+          [WIDE_PANELS_QUERY]: {
             paddingTop: '140px',
           },
         })}
@@ -524,7 +575,7 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
           className={css({
             textAlign: 'center',
             padding: '264px 0 123px',
-            [MIN_TABLET_MEDIA_QUERY]: {
+            [WIDE_PANELS_QUERY]: {
               padding: '260px 0 216px',
             },
           })}
@@ -532,13 +583,13 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
           <div
             className={css({
               display: 'grid',
-              gap: '10px',
+              gap: `${PANEL_GAP_MOBILE}px`,
               gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
               padding: '0 20px',
               position: 'relative',
               width: '100%',
-              [MIN_TABLET_MEDIA_QUERY]: {
-                gap: '20px',
+              [WIDE_PANELS_QUERY]: {
+                gap: `${PANEL_GAP_DESKTOP}px`,
                 marginBottom: '-6px',
               },
             })}
@@ -549,7 +600,7 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
                 gridColumnEnd: '-3',
                 position: 'relative',
                 zIndex: 4,
-                [MIN_TABLET_MEDIA_QUERY]: {
+                [WIDE_PANELS_QUERY]: {
                   gridColumnStart: '5',
                   gridColumnEnd: '9',
                   margin: '0 -20px',
@@ -571,7 +622,7 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
                   marginBottom: '30px',
                   marginLeft: 'auto',
                   maxWidth: '32ch',
-                  [MIN_TABLET_MEDIA_QUERY]: {
+                  [WIDE_PANELS_QUERY]: {
                     maxWidth: '36ch',
                   },
                 }}
@@ -585,10 +636,10 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
             className={css({
               display: 'inline-grid',
               gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: '10px',
+              gap: `${PANEL_GAP_MOBILE}px`,
               flexDirection: 'column',
               marginBottom: '16px',
-              [MIN_TABLET_MEDIA_QUERY]: {
+              [WIDE_PANELS_QUERY]: {
                 marginBottom: '30px',
               },
             })}
@@ -645,11 +696,29 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
 
 export const TunedInPanels = () => {
   const css = useCSS();
-  const [hasLeft, setHasLeft] = React.useState<boolean>(false);
+
+  // const [hasLeft, setHasLeft] = React.useState<boolean>(false);
   const [aboveZero, setAboveZero] = React.useState<boolean>(false);
-  const [leftActive, setLeftActive] = React.useState<boolean>(false);
-  const [middleActive, setMiddleActive] = React.useState<boolean>(false);
-  const [rightActive, setRightActive] = React.useState<boolean>(false);
+
+  const [leftActiveMobile, setLeftActiveMobile] =
+    React.useState<boolean>(false);
+  const [middleActiveMobile, setMiddleActiveMobile] =
+    React.useState<boolean>(false);
+  const [rightActiveMobile, setRightActiveMobile] =
+    React.useState<boolean>(false);
+
+  const [leftActiveDesktop, setLeftActiveDesktop] =
+    React.useState<boolean>(false);
+  const [middleActiveDesktop, setMiddleActiveDesktop] =
+    React.useState<boolean>(false);
+  const [rightActiveDesktop, setRightActiveDesktop] =
+    React.useState<boolean>(false);
+
+  const mobilePanels = [
+    {...PANELS.left, isActive: leftActiveMobile},
+    {...PANELS.middle, isActive: middleActiveMobile},
+    {...PANELS.right, isActive: rightActiveMobile},
+  ];
 
   const progressRef = React.useRef<HTMLDivElement>(null);
 
@@ -659,28 +728,33 @@ export const TunedInPanels = () => {
   useDarkSection(sectionRef);
 
   useIntersectionProgress(progressRef, {
-    onEnter: React.useCallback(() => {
-      setHasLeft(false);
-    }, []),
-    onLeave: React.useCallback(() => {
-      setHasLeft(true);
-    }, []),
+    // onEnter: React.useCallback(() => {
+    //   setHasLeft(false);
+    // }, []),
+    // onLeave: React.useCallback(() => {
+    //   setHasLeft(true);
+    // }, []),
     onProgress: React.useCallback(
       (target: HTMLElement, scrollProgress: number) => {
-        const showDial =
-          !hasLeft && scrollProgress > SCROLL_PERCENTAGE_TO_SHOW_DIAL;
+        // const showDial = !hasLeft && scrollProgress > SCROLL_PERCENTAGE_TO_SHOW_DIAL;
+        const showDial = scrollProgress > SCROLL_PERCENTAGE_TO_SHOW_DIAL;
         setAboveZero(showDial);
+
+        if (!isDesktop()) {
+          // Let mobile carousel swiper control the dial rotation and panel active states.
+          return;
+        }
 
         const proportionalProgress = scaleDial(scrollProgress);
         const degree = showDial ? scaleDialAngle(proportionalProgress) : 0;
 
-        dialRef.current!.rotate(degree);
+        dialRef.current!.rotateDesktop?.(degree);
 
-        setRightActive(degree <= -135);
-        setMiddleActive(degree <= -90);
-        setLeftActive(degree <= -45);
+        setRightActiveDesktop(degree <= -135);
+        setMiddleActiveDesktop(degree <= -90);
+        setLeftActiveDesktop(degree <= -45);
       },
-      [hasLeft],
+      [],
     ),
   });
 
@@ -699,7 +773,7 @@ export const TunedInPanels = () => {
           '--progress-height': '210px',
           height: 'var(--progress-height)',
           marginBottom: 'calc(-1 * var(--progress-height))',
-          [MIN_TABLET_MEDIA_QUERY]: {
+          [WIDE_PANELS_QUERY]: {
             '--progress-height': '280px',
           },
         })}
@@ -708,7 +782,7 @@ export const TunedInPanels = () => {
         className={css({
           margin: '0 auto',
           width: '144px',
-          [MIN_TABLET_MEDIA_QUERY]: {
+          [WIDE_PANELS_QUERY]: {
             width: '288px',
           },
         })}
@@ -723,7 +797,7 @@ export const TunedInPanels = () => {
             transition: aboveZero
               ? 'opacity 0.2s ease-in-out'
               : 'opacity 0.1s ease-in-out',
-            [MIN_TABLET_MEDIA_QUERY]: {
+            [WIDE_PANELS_QUERY]: {
               top: '-70.75px',
             },
           })}
@@ -736,7 +810,7 @@ export const TunedInPanels = () => {
         className={css({
           cursor: 'default',
           paddingTop: '112px',
-          [MIN_TABLET_MEDIA_QUERY]: {
+          [WIDE_PANELS_QUERY]: {
             // Space from the top of the middle panel
             paddingTop: '136px',
             paddingRight: '20px',
@@ -770,32 +844,67 @@ export const TunedInPanels = () => {
           </defs>
         </svg>
 
+        <div
+          className={css({
+            display: 'block',
+            [WIDE_PANELS_QUERY]: {
+              display: 'none',
+            },
+          })}
+        >
+          <HorizontalCarousel
+            width={PANEL_WIDTH_MOBILE}
+            height={PANEL_HEIGHT_MOBILE}
+            items={mobilePanels}
+            renderItem={item => (
+              <Panel
+                key={item.url}
+                position={item.position}
+                isActive={item.isActive}
+              />
+            )}
+            onChange={(currentPanelIndex: number) => {
+              if (isDesktop()) {
+                // On desktop, leave the dial rotation & active panel state to be
+                // controlled by the larger nav below based on vertical scroll progress.
+                return;
+              }
+
+              // setAboveZero(currentPanelIndex > -1);
+
+              const intervals = [
+                DIAL_INTERVALS[1],
+                DIAL_INTERVALS[2],
+                DIAL_INTERVALS[3],
+              ].map(x => x[0]);
+
+              const progress = intervals[currentPanelIndex];
+
+              const proportionalProgress = scaleDial(progress);
+              const degree = scaleDialAngle(proportionalProgress);
+
+              dialRef.current!.rotateMobile?.(degree);
+
+              setRightActiveMobile(degree <= -135);
+              setMiddleActiveMobile(degree <= -90);
+              setLeftActiveMobile(degree <= -45);
+            }}
+          />
+        </div>
+
         <nav
           className={css({
-            marginTop: '0',
-            marginBottom: '0',
-            marginLeft: '0',
-            marginRight: '0',
-            paddingTop: '40px',
-            paddingBottom: '10px',
-            paddingLeft: '10px',
-            paddingRight: '10px',
-            position: 'relative',
-            width: '100%',
-
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'nowrap',
-            gap: '10px',
-            overflowX: 'scroll',
-            overflowY: 'hidden',
-            WebkitOverflowScrolling: 'touch',
-
-            [MIN_TABLET_MEDIA_QUERY]: {
+            display: 'none',
+            [WIDE_PANELS_QUERY]: {
               display: 'grid',
-              gap: '20px',
+              gap: `${PANEL_GAP_DESKTOP}px`,
               height: '100%',
               gridTemplateColumns: 'repeat(3, 1fr)',
+              marginTop: '0',
+              marginBottom: '0',
+              marginLeft: '0',
+              marginRight: '0',
+              position: 'relative',
               overflowX: 'unset',
               overflowY: 'unset',
               paddingTop: '6vh',
@@ -807,9 +916,12 @@ export const TunedInPanels = () => {
             },
           })}
         >
-          <Panel position="left" isActive={leftActive} />
-          <Panel position="middle" isActive={middleActive} />
-          <Panel position="right" isActive={rightActive} />
+          <Panel position={PanelPosition.LEFT} isActive={leftActiveDesktop} />
+          <Panel
+            position={PanelPosition.MIDDLE}
+            isActive={middleActiveDesktop}
+          />
+          <Panel position={PanelPosition.RIGHT} isActive={rightActiveDesktop} />
         </nav>
       </div>
     </div>
