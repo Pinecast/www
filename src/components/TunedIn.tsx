@@ -255,6 +255,7 @@ const Dial = React.memo(
         >
           <path
             d="M1 70c0 78.977 64.023 143 143 143s143-64.023 143-143"
+            stroke="var(--color-sand)"
             strokeWidth={1.5}
           />
           <g opacity={0.6} stroke="var(--color-white)">
