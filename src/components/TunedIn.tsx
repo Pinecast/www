@@ -156,74 +156,156 @@ const scaleDialAngle = (progress: number) => {
   return DIAL_INTERVALS[closestIndex][1];
 };
 
+type DialRef = {
+  rotate(degrees: number): void;
+};
 type DialProps = {};
 
 const Dial = React.memo(
-  React.forwardRef<SVGGElement, DialProps>(function Dial(_, ref) {
+  React.forwardRef<DialRef, DialProps>(function Dial(_, ref) {
     const css = useCSS();
+    const mobileRef = React.useRef<SVGGElement>(null);
+    const desktopRef = React.useRef<SVGGElement>(null);
+    React.useImperativeHandle(ref, () => ({
+      rotate: (degrees: number) => {
+        mobileRef.current!.style.transform = `rotate(${degrees}deg)`;
+        desktopRef.current!.style.transform = `rotate(${degrees}deg)`;
+      },
+    }));
     return (
-      <svg
-        width={288}
-        height={214}
-        viewBox="0 0 288 214"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className={css({
-          display: 'block',
-        })}
-      >
-        <path
-          d="M1 70c0 78.977 64.023 143 143 143s143-64.023 143-143"
-          stroke="var(--color-sand)"
-        />
-        <g opacity={0.6} stroke="var(--color-white)">
-          <path d="M143.5 144L143.5 152" />
-          <path d="M89.3164 120.354L81.5383 128.132" />
-          <path d="M113.417 137.171L110.681 144.689" />
-          <path
-            transform="scale(1 -1) rotate(-70 -11.241 -192.159)"
-            d="M0 -0.5L8 -0.5"
-          />
-          <path d="M73.6886 95.4777L66.171 98.2138" />
-          <path
-            transform="scale(1 -1) rotate(-20 -163.177 -649.973)"
-            d="M0 -0.5L8 -0.5"
-          />
-          <path
-            transform="scale(1 -1) rotate(-45 -44.555 -298.727)"
-            d="M0 -0.5L8 -0.5"
-          />
-        </g>
-        <g
-          ref={ref}
-          style={{
-            // Rotate the hand from the center of the dial.
-            transformOrigin: '144px 70px',
-            // Slight transition to smoothly rotate the dial's hand on scroll.
-            transition: 'all 0.2s linear',
-          }}
+      <>
+        <svg
+          width={144}
+          height={108}
+          viewBox="0 0 144 108"
+          fill="none"
+          className={css({
+            display: 'block',
+            marginTop: '-1.5px',
+            paddingTop: '1.5px',
+            [MIN_TABLET_MEDIA_QUERY]: {
+              display: 'none',
+            },
+          })}
         >
-          <path d="M143 70H.5" stroke="var(--color-sand)" />
-          <ellipse
-            cx={144}
-            cy={70}
-            rx={70}
-            ry={70}
-            transform="rotate(-180 144 70)"
-            fill="var(--color-sand)"
+          <path
+            d="M.5 35.5C.5 74.988 32.512 107 72 107s71.5-32.012 71.5-71.5"
+            stroke="var(--color-sand)"
+            strokeWidth={1.5}
           />
-          <ellipse
-            cx={144}
-            cy={70}
-            rx={65}
-            ry={65}
-            transform="rotate(-180 144 70)"
-            fill="var(--color-sand)"
-            stroke="var(--color-space)"
+          <g opacity={0.6} stroke="var(--color-white)">
+            <path d="M72.5 72.7461L72.5 76.7461" />
+            <path d="M45.335 61.0996L41.4459 64.9887" />
+            <path d="M57.4435 69.4171L56.0754 73.1759" />
+            <path
+              transform="matrix(.34202 .9397 .9397 -.34202 87.087 69.246)"
+              d="M0 -0.5L4 -0.5"
+            />
+            <path d="M37.4298 48.7198L33.671 50.0879" />
+            <path
+              transform="matrix(.9397 .34202 .34202 -.9397 106.731 48.25)"
+              d="M0 -0.5L4 -0.5"
+            />
+            <path
+              transform="scale(1 -1) rotate(-45 -22.928 -150.34)"
+              d="M0 -0.5L4 -0.5"
+            />
+          </g>
+          <g
+            ref={mobileRef}
+            style={{
+              // Rotate the hand from the center of the dial.
+              transformOrigin: '72px 35px',
+              // Slight transition to smoothly rotate the dial's hand on scroll.
+              transition: 'all 0.2s linear',
+            }}
+          >
+            <path stroke="var(--color-sand)" d="M70 35L0 35" />
+            <ellipse
+              cx={72}
+              cy={35.5}
+              rx={35}
+              ry={35}
+              transform="rotate(-180 72 35.5)"
+              fill="var(--color-sand)"
+            />
+            <ellipse
+              cx={72}
+              cy={35.75}
+              rx={32.5}
+              ry={32.5}
+              transform="rotate(-180 72 35.75)"
+              fill="var(--color-sand)"
+              stroke="var(--color-space)"
+            />
+            <circle cx={45.5} cy={35.25} r={3} fill="var(--color-space)" />
+          </g>
+        </svg>
+        <svg
+          width={288}
+          height={214}
+          viewBox="0 0 288 214"
+          fill="none"
+          className={css({
+            display: 'none',
+            [MIN_TABLET_MEDIA_QUERY]: {
+              display: 'block',
+            },
+          })}
+        >
+          <path
+            d="M1 70c0 78.977 64.023 143 143 143s143-64.023 143-143"
+            strokeWidth={1.5}
           />
-          <circle cx={95} cy={71} r={6} fill="var(--color-space)" />
-        </g>
-      </svg>
+          <g opacity={0.6} stroke="var(--color-white)">
+            <path d="M143.5 144L143.5 152" />
+            <path d="M89.3164 120.354L81.5383 128.132" />
+            <path d="M113.417 137.171L110.681 144.689" />
+            <path
+              transform="scale(1 -1) rotate(-70 -11.241 -192.159)"
+              d="M0 -0.5L8 -0.5"
+            />
+            <path d="M73.6886 95.4777L66.171 98.2138" />
+            <path
+              transform="scale(1 -1) rotate(-20 -163.177 -649.973)"
+              d="M0 -0.5L8 -0.5"
+            />
+            <path
+              transform="scale(1 -1) rotate(-45 -44.555 -298.727)"
+              d="M0 -0.5L8 -0.5"
+            />
+          </g>
+          <g
+            ref={desktopRef}
+            style={{
+              // Rotate the hand from the center of the dial.
+              transformOrigin: '144px 70px',
+              // Slight transition to smoothly rotate the dial's hand on scroll.
+              transition: 'all 0.2s linear',
+            }}
+          >
+            <path d="M143 70H.5" stroke="var(--color-sand)" />
+            <ellipse
+              cx={144}
+              cy={70}
+              rx={70}
+              ry={70}
+              transform="rotate(-180 144 70)"
+              fill="var(--color-sand)"
+            />
+            <ellipse
+              cx={144}
+              cy={70}
+              rx={65}
+              ry={65}
+              transform="rotate(-180 144 70)"
+              fill="var(--color-sand)"
+              stroke="var(--color-space)"
+            />
+            <circle cx={95} cy={71} r={6} fill="var(--color-space)" />
+          </g>
+        </svg>
+      </>
     );
   }),
 );
@@ -570,7 +652,7 @@ export const TunedInPanels = () => {
 
   const progressRef = React.useRef<HTMLDivElement>(null);
 
-  const dialRef = React.useRef<SVGGElement>(null);
+  const dialRef = React.useRef<DialRef>(null);
 
   const sectionRef = React.useRef<HTMLDivElement>(null);
   useDarkSection(sectionRef);
@@ -591,7 +673,7 @@ export const TunedInPanels = () => {
         const proportionalProgress = scaleDial(scrollProgress);
         const degree = showDial ? scaleDialAngle(proportionalProgress) : 0;
 
-        dialRef.current!.style.transform = `rotate(${degree}deg)`;
+        dialRef.current!.rotate(degree);
 
         setRightActive(degree <= -135);
         setMiddleActive(degree <= -90);
@@ -624,23 +706,24 @@ export const TunedInPanels = () => {
       <div
         className={css({
           margin: '0 auto',
-          width: '288px',
+          width: '144px',
+          [MIN_TABLET_MEDIA_QUERY]: {
+            width: '288px',
+          },
         })}
       >
         <div
           className={css({
-            position: 'absolute',
-            top: '-79.5px',
             margin: '0 auto',
             opacity: aboveZero ? 1 : 0,
             pointerEvents: 'none',
+            position: 'absolute',
+            top: '-35.25px',
             transition: aboveZero
               ? 'opacity 0.2s ease-in-out'
               : 'opacity 0.1s ease-in-out',
-            transform: 'scale(0.75)',
             [MIN_TABLET_MEDIA_QUERY]: {
-              top: '-70.5px',
-              transform: 'unset',
+              top: '-70.75px',
             },
           })}
         >
@@ -651,7 +734,7 @@ export const TunedInPanels = () => {
       <div
         className={css({
           cursor: 'default',
-          paddingTop: '148px',
+          paddingTop: '112px',
           [MIN_TABLET_MEDIA_QUERY]: {
             // Space from the top of the middle panel
             paddingTop: '136px',
