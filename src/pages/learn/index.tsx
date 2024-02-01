@@ -72,7 +72,9 @@ const Header = () => {
         <br />
         running
       </H1>
-      <Body4 style={{maxWidth: '32rem', margin: '0 auto'}}>
+      <Body4
+        style={{maxWidth: '32rem', marginLeft: 'auto', marginRight: 'auto'}}
+      >
         Pinecast has tools for podcasters of all experience levels. Whether you
         are just getting started or running a podcast for a business, we have
         your back.
