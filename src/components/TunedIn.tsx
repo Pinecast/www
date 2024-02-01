@@ -9,7 +9,8 @@ import Link from 'next/link';
 import {Codec, MimeType, NoncriticalVideo} from './NoncriticalVideo';
 import {useIntersectionProgress} from '@/hooks/useIntersectionProgress';
 import {useDarkSection} from '@/hooks/useDarkSection';
-import { MIN_TABLET_MEDIA_QUERY } from '@/constants';
+import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
+import {PERSONAS, VideoSource} from './CustomerPersona';
 
 const VIDEO_WIDTH = 1060;
 const VIDEO_HEIGHT = 1440;
@@ -25,18 +26,12 @@ enum PanelPosition {
   RIGHT = 'right',
 }
 
-type VideoSource = {
-  src: string;
-  mimeType: MimeType;
-  codec: Codec;
-};
-
 type ResponsiveSizes = [[number, number], [number, number]];
 
 type Panel = {
   position: PanelPosition;
-  color: string;
   heading: React.ReactNode;
+  color: string;
   url: string;
   image: string;
   videos: VideoSource[];
@@ -50,34 +45,11 @@ type PanelItems = {
 const PANELS: PanelItems = {
   left: {
     position: PanelPosition.LEFT,
-    color: 'var(--color-orchid)',
     heading: <>You are just getting started</>,
-    url: '/learn/podcasting-for-beginners',
-    image: '/images/art/user-beginner.png',
-    videos: [
-      {
-        // Smallest
-        src: '/videos/user-beginner.vp9.webm',
-        mimeType: MimeType.WEBM,
-        codec: Codec.VP9,
-      },
-      {
-        src: '/videos/user-beginner.vp9.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.VP9,
-      },
-      {
-        // Necessary for iOS playback
-        src: '/videos/user-beginner.hevc.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.H265,
-      },
-      {
-        src: '/videos/user-beginner.av1.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.AV1,
-      },
-    ],
+    color: PERSONAS.beginner.color,
+    url: PERSONAS.beginner.url,
+    image: PERSONAS.beginner.image,
+    videos: PERSONAS.beginner.videos,
     sizes: [
       [PANEL_WIDTH_MOBILE, PANEL_HEIGHT_MOBILE],
       [530, 708.26],
@@ -85,32 +57,11 @@ const PANELS: PanelItems = {
   },
   middle: {
     position: PanelPosition.MIDDLE,
-    color: 'var(--color-lime)',
     heading: <>You need advanced tools</>,
-    url: '/learn/podcasting-for-power-users',
-    image: '/images/art/user-advanced.png',
-    videos: [
-      {
-        src: '/videos/user-advanced.vp9.webm',
-        mimeType: MimeType.WEBM,
-        codec: Codec.VP9,
-      },
-      {
-        src: '/videos/user-advanced.vp9.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.VP9,
-      },
-      {
-        src: '/videos/user-advanced.hevc.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.H265,
-      },
-      {
-        src: '/videos/user-advanced.av1.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.AV1,
-      },
-    ],
+    color: PERSONAS.advanced.color,
+    url: PERSONAS.advanced.url,
+    image: PERSONAS.advanced.image,
+    videos: PERSONAS.advanced.videos,
     sizes: [
       [PANEL_WIDTH_MOBILE, PANEL_HEIGHT_MOBILE],
       [530, 638.54],
@@ -118,32 +69,11 @@ const PANELS: PanelItems = {
   },
   right: {
     position: PanelPosition.RIGHT,
-    color: 'var(--color-sky)',
     heading: <>You are an organization</>,
-    url: '/learn/corporate-podcasting',
-    image: '/images/art/user-organizations.png',
-    videos: [
-      {
-        src: '/videos/user-organizations.vp9.webm',
-        mimeType: MimeType.WEBM,
-        codec: Codec.VP9,
-      },
-      {
-        src: '/videos/user-organizations.vp9.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.VP9,
-      },
-      {
-        src: '/videos/user-organizations.hevc.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.H265,
-      },
-      {
-        src: '/videos/user-organizations.av1.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.AV1,
-      },
-    ],
+    color: PERSONAS.organizations.color,
+    url: PERSONAS.organizations.url,
+    image: PERSONAS.organizations.image,
+    videos: PERSONAS.organizations.videos,
     sizes: [
       [PANEL_WIDTH_MOBILE, PANEL_HEIGHT_MOBILE],
       [530, 708.26],
@@ -469,26 +399,24 @@ const Panel = ({
             zIndex: 2,
           })}
         >
-          {isActive && (
-            <NoncriticalVideo
-              sources={panel.videos}
-              height={VIDEO_HEIGHT}
-              width={VIDEO_WIDTH}
-              poster={panel.image}
-              style={{
-                backgroundColor: `${panel.color}`,
-                borderRadius: 'inherit',
-                height: '100%',
-                left: 0,
-                objectFit: 'cover',
-                position: 'absolute',
-                right: 0,
-                top: 0,
-                width: '100%',
-                zIndex: 2,
-              }}
-            />
-          )}
+          <NoncriticalVideo
+            sources={panel.videos}
+            height={VIDEO_HEIGHT}
+            width={VIDEO_WIDTH}
+            poster={panel.image}
+            style={{
+              backgroundColor: `${panel.color}`,
+              borderRadius: 'inherit',
+              height: '100%',
+              left: 0,
+              objectFit: 'cover',
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              width: '100%',
+              zIndex: 2,
+            }}
+          />
         </div>
         <div
           className={css({
@@ -520,7 +448,7 @@ const Panel = ({
               },
               [MIN_TABLET_MEDIA_QUERY]: {
                 minHeight: '160px',
-              }
+              },
             })}
           >
             <Subhead style={{marginBottom: '16px', maxWidth: '16ch'}}>

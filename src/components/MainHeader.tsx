@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useCSS} from '@/hooks/useCSS';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
-import {MIN_DESKTOP_MEDIA_QUERY, MIN_TABLET_MEDIA_QUERY} from '@/constants';
+import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
 import Link from 'next/link';
 import {SignIn} from '@/icons/SignIn';
 import {MainHeaderLink} from './MainHeaderLink';
@@ -13,6 +13,7 @@ import {Body1, Caption} from './Typography';
 import {QuickTipsBlock} from './QuickLinks';
 import {RightArrow} from '@/icons/RightArrow';
 import {FeaturesBlock} from './FeaturesBlock';
+import {CustomerPersonaVideo, PERSONAS, PersonaSlug} from './CustomerPersona';
 
 const PersonaBlock = ({
   caption,
@@ -20,14 +21,18 @@ const PersonaBlock = ({
   heading,
   illustrationSrc,
   illustrationOffsetY,
+  isActive = false,
   href,
+  slug,
 }: {
   caption: React.ReactNode | string;
   color: string;
   heading: React.ReactNode | string;
   illustrationSrc: string;
   illustrationOffsetY?: number;
+  isActive?: boolean;
   href: string;
+  slug: PersonaSlug;
 }) => {
   const css = useCSS();
   return (
@@ -44,6 +49,7 @@ const PersonaBlock = ({
         alignItems: 'flex-end',
         padding: '10px',
         position: 'relative',
+        zIndex: 0,
         width: '100%',
         [MIN_TABLET_MEDIA_QUERY]: {
           height: 'auto',
@@ -53,7 +59,7 @@ const PersonaBlock = ({
       <Link
         href={href}
         className={css({
-          borderRadius: '10px',
+          borderRadius: 'inherit',
           color: 'var(--color-space)',
           display: 'flex',
           flexDirection: 'column-reverse',
@@ -104,6 +110,7 @@ const PersonaBlock = ({
             [MIN_TABLET_MEDIA_QUERY]: {right: '30px', bottom: '30px'},
           }}
         />
+        <CustomerPersonaVideo slug={slug} isActive={isActive} zIndex={-1} />
       </Link>
     </div>
   );
@@ -303,28 +310,34 @@ export const MainHeader = () => {
           >
             <FeaturesBlock />
             <PersonaBlock
-              color="var(--color-orchid)"
-              illustrationSrc="/images/art/user-beginner.png"
+              slug={PersonaSlug.BEGINNER}
+              isActive={navOpen}
+              color={PERSONAS.beginner.color}
+              illustrationSrc={PERSONAS.beginner.image}
               illustrationOffsetY={-26}
               heading="Podcasting for beginners"
               caption="Level 1"
-              href="/learn/podcasting-for-beginners"
+              href={PERSONAS.beginner.url}
             />
             <PersonaBlock
+              slug={PersonaSlug.ADVANCED}
+              isActive={navOpen}
               color="var(--color-lime)"
-              illustrationSrc="/images/art/user-advanced.png"
+              illustrationSrc={PERSONAS.advanced.image}
               illustrationOffsetY={-56}
               heading="Podcasting for power users"
               caption="Level 2"
-              href="/learn/podcasting-for-power-users"
+              href={PERSONAS.advanced.url}
             />
             <PersonaBlock
+              slug={PersonaSlug.ORGANIZATIONS}
+              isActive={navOpen}
               color="var(--color-sky)"
-              illustrationSrc="/images/art/user-organizations.png"
+              illustrationSrc={PERSONAS.organizations.image}
               illustrationOffsetY={-14}
               heading="Corporate podcasters"
               caption="Level 3"
-              href="/learn/corporate-podcasting"
+              href={PERSONAS.organizations.url}
             />
             <QuickTipsBlock isOpen={navOpen} />
           </div>
