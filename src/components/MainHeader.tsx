@@ -2,7 +2,13 @@ import * as React from 'react';
 import {useCSS} from '@/hooks/useCSS';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
-import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
+import {
+  MIN_TABLET_MEDIA_QUERY,
+  MOBILE_BREAKPOINT,
+  MOBILE_MEDIA_QUERY,
+  TABLET_BREAKPOINT,
+  TABLET_MEDIA_QUERY,
+} from '@/constants';
 import Link from 'next/link';
 import {SignIn} from '@/icons/SignIn';
 import {MainHeaderLink} from './MainHeaderLink';
@@ -13,95 +19,141 @@ import {Body1, Caption} from './Typography';
 import {QuickTipsBlock} from './QuickLinks';
 import {RightArrow} from '@/icons/RightArrow';
 import {FeaturesBlock} from './FeaturesBlock';
-import {CustomerPersonaVideo, PERSONAS, PersonaSlug} from './CustomerPersona';
+import {
+  CustomerPersonaAnimation,
+  PERSONAS,
+  PersonaSlug,
+} from './CustomerPersona';
 
 const PersonaBlock = ({
   caption,
-  color,
   heading,
-  illustrationSrc,
-  illustrationOffsetY,
   isActive = false,
-  href,
   slug,
 }: {
   caption: React.ReactNode | string;
-  color: string;
   heading: React.ReactNode | string;
-  illustrationSrc: string;
-  illustrationOffsetY?: number;
   isActive?: boolean;
-  href: string;
   slug: PersonaSlug;
 }) => {
+  const {color, url} = PERSONAS[slug];
   const css = useCSS();
   return (
     <div
       className={css({
         backgroundColor: color,
-        backgroundImage: `url(${illustrationSrc})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: '50% 18%',
         border: '1px solid var(--color-line)',
         borderRadius: '20px',
-        display: 'flex',
         height: '100px',
-        alignItems: 'flex-end',
-        padding: '10px',
+        overflow: 'hidden',
         position: 'relative',
         zIndex: 0,
         width: '100%',
         [MIN_TABLET_MEDIA_QUERY]: {
+          display: 'flex',
           height: 'auto',
+          alignItems: 'flex-end',
         },
       })}
     >
       <Link
-        href={href}
+        href={url}
         className={css({
           borderRadius: 'inherit',
           color: 'var(--color-space)',
-          display: 'flex',
-          flexDirection: 'column-reverse',
+          display: 'grid',
+          gridTemplateColumns: '0.4fr 0.6fr',
           textDecoration: 'none',
-          padding: '40px 5px 10px',
+          height: '100%',
           width: '100%',
+          placeContent: 'stretch',
+          placeItems: 'stretch',
+
           [MIN_TABLET_MEDIA_QUERY]: {
             background: color,
+            borderRadius: '10px',
             border: '1px solid var(--color-line)',
-            marginTop: 'auto',
-            padding: '20px 20px 20px',
+            display: 'flex',
+            flexDirection: 'column-reverse',
+            height: 'auto',
+            margin: '10px',
+            padding: '30px 20px',
           },
         })}
       >
-        <Body1
-          as="h3"
-          style={{
-            fontSize: '18px',
-            paddingRight: '24px',
+        <div
+          className={css({
+            borderBottomLeftRadius: 'inherit',
+            display: 'grid',
+            padding: '15px',
+            placeSelf: 'end',
+            width: '100%',
             [MIN_TABLET_MEDIA_QUERY]: {
-              fontSize: '28px',
-              maxWidth: '8em',
+              display: 'contents',
             },
-          }}
+          })}
         >
-          {heading}
-        </Body1>
-        <Caption
-          style={{
-            color: 'var(--color-space)',
-            marginBottom: '8px',
-            display: 'none',
-            textTransform: 'uppercase',
+          <Body1
+            style={{
+              letterSpacing: '-0.015em',
+              [MIN_TABLET_MEDIA_QUERY]: {
+                letterSpacing: '-0.03em',
+                lineHeight: '24px',
+                maxWidth: '8em',
+              },
+              [MOBILE_MEDIA_QUERY]: {
+                fontSize: '16px',
+                lineHeight: '18px',
+                maxWidth: '8em',
+              },
+              [TABLET_MEDIA_QUERY]: {
+                fontSize: '18px',
+                lineHeight: '20px',
+                maxWidth: '12em',
+              },
+            }}
+          >
+            {heading}
+          </Body1>
+          <Caption
+            style={{
+              color: 'var(--color-space)',
+              marginBottom: '8px',
+              display: 'none',
+              textTransform: 'uppercase',
+              [MIN_TABLET_MEDIA_QUERY]: {
+                display: 'block',
+                maxWidth: '8em',
+              },
+            }}
+          >
+            {caption}
+          </Caption>
+        </div>
+        <div
+          className={css({
+            borderTopRightRadius: 'inherit',
+            borderBottomRightRadius: 'inherit',
+            height: '100px',
+            position: 'absolute',
+            right: '10px',
+            width: '200px',
             [MIN_TABLET_MEDIA_QUERY]: {
-              display: 'block',
-              maxWidth: '8em',
+              height: '100%',
+              width: '100%',
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 0,
             },
-          }}
+          })}
         >
-          {caption}
-        </Caption>
+          <CustomerPersonaAnimation
+            slug={slug}
+            isActive={isActive}
+            zIndex={-1}
+          />
+        </div>
         <RightArrow
           size={24}
           style={{
@@ -111,15 +163,6 @@ const PersonaBlock = ({
             [MIN_TABLET_MEDIA_QUERY]: {right: '30px', bottom: '30px'},
           }}
         />
-        <div
-          className={css({
-            borderRadius:'inherit',
-            display: 'none',
-            [MIN_TABLET_MEDIA_QUERY]: {display: 'block'},
-          })}
-        >
-          <CustomerPersonaVideo slug={slug} isActive={isActive} zIndex={-1} />
-        </div>
       </Link>
     </div>
   );
@@ -257,8 +300,7 @@ export const MainHeader = () => {
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
-          // A fixed parent height is required for the grow/shrink height effect.
-          height: '86svh',
+          height: 'min(550px, calc(100vh - 80px))',
           justifyContent: 'flex-start',
           left: '10px',
           opacity: navOpen ? 1 : 0,
@@ -321,32 +363,20 @@ export const MainHeader = () => {
             <PersonaBlock
               slug={PersonaSlug.BEGINNER}
               isActive={navOpen}
-              color={PERSONAS.beginner.color}
-              illustrationSrc={PERSONAS.beginner.image}
-              illustrationOffsetY={-26}
               heading="Podcasting for beginners"
               caption="Level 1"
-              href={PERSONAS.beginner.url}
             />
             <PersonaBlock
               slug={PersonaSlug.ADVANCED}
               isActive={navOpen}
-              color="var(--color-lime)"
-              illustrationSrc={PERSONAS.advanced.image}
-              illustrationOffsetY={-56}
               heading="Podcasting for power users"
               caption="Level 2"
-              href={PERSONAS.advanced.url}
             />
             <PersonaBlock
               slug={PersonaSlug.ORGANIZATIONS}
               isActive={navOpen}
-              color="var(--color-sky)"
-              illustrationSrc={PERSONAS.organizations.image}
-              illustrationOffsetY={-14}
               heading="Corporate podcasters"
               caption="Level 3"
-              href={PERSONAS.organizations.url}
             />
             <QuickTipsBlock isOpen={navOpen} />
           </div>

@@ -6,11 +6,11 @@ import {HorizontalCarousel} from './HorizontalCarousel';
 import {SecondaryButton} from './SecondaryButton';
 import {PrimaryButton} from './PrimaryButton';
 import Link from 'next/link';
-import {Codec, MimeType, NoncriticalVideo} from './NoncriticalVideo';
+import {Codec, MimeType, NoncriticalVideo, VideoSource} from './NoncriticalVideo';
 import {useIntersectionProgress} from '@/hooks/useIntersectionProgress';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
-import {PERSONAS, VideoSource} from './CustomerPersona';
+import {PERSONAS} from './CustomerPersona';
 
 const VIDEO_WIDTH = 1060;
 const VIDEO_HEIGHT = 1440;
@@ -48,8 +48,31 @@ const PANELS: PanelItems = {
     heading: <>You are just getting started</>,
     color: PERSONAS.beginner.color,
     url: PERSONAS.beginner.url,
-    image: PERSONAS.beginner.image,
-    videos: PERSONAS.beginner.videos,
+    image: PERSONAS.beginner.images[1].src,
+    videos: [
+      {
+        // Smallest
+        src: '/videos/user-beginner.vp9.webm',
+        mimeType: MimeType.WEBM,
+        codec: Codec.VP9,
+      },
+      {
+        src: '/videos/user-beginner.vp9.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.VP9,
+      },
+      {
+        // Necessary for iOS playback
+        src: '/videos/user-beginner.hevc.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.H265,
+      },
+      {
+        src: '/videos/user-beginner.av1.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.AV1,
+      },
+    ],
     sizes: [
       [PANEL_WIDTH_MOBILE, PANEL_HEIGHT_MOBILE],
       [530, 708.26],
@@ -60,8 +83,29 @@ const PANELS: PanelItems = {
     heading: <>You need advanced tools</>,
     color: PERSONAS.advanced.color,
     url: PERSONAS.advanced.url,
-    image: PERSONAS.advanced.image,
-    videos: PERSONAS.advanced.videos,
+    image: PERSONAS.advanced.images[1].src,
+    videos: [
+      {
+        src: '/videos/user-advanced.vp9.webm',
+        mimeType: MimeType.WEBM,
+        codec: Codec.VP9,
+      },
+      {
+        src: '/videos/user-advanced.vp9.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.VP9,
+      },
+      {
+        src: '/videos/user-advanced.hevc.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.H265,
+      },
+      {
+        src: '/videos/user-advanced.av1.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.AV1,
+      },
+    ],
     sizes: [
       [PANEL_WIDTH_MOBILE, PANEL_HEIGHT_MOBILE],
       [530, 638.54],
@@ -72,8 +116,29 @@ const PANELS: PanelItems = {
     heading: <>You are an organization</>,
     color: PERSONAS.organizations.color,
     url: PERSONAS.organizations.url,
-    image: PERSONAS.organizations.image,
-    videos: PERSONAS.organizations.videos,
+    image: PERSONAS.organizations.images[1].src,
+    videos: [
+      {
+        src: '/videos/user-organizations.vp9.webm',
+        mimeType: MimeType.WEBM,
+        codec: Codec.VP9,
+      },
+      {
+        src: '/videos/user-organizations.vp9.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.VP9,
+      },
+      {
+        src: '/videos/user-organizations.hevc.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.H265,
+      },
+      {
+        src: '/videos/user-organizations.av1.mp4',
+        mimeType: MimeType.MP4,
+        codec: Codec.AV1,
+      },
+    ],
     sizes: [
       [PANEL_WIDTH_MOBILE, PANEL_HEIGHT_MOBILE],
       [530, 708.26],

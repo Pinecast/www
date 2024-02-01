@@ -1,13 +1,15 @@
-import {Codec, MimeType, NoncriticalVideo} from './NoncriticalVideo';
+import Image from 'next/image';
 import {useCSS} from '@/hooks/useCSS';
+import {MIN_TABLET_MEDIA_QUERY, TABLET_BREAKPOINT} from '@/constants';
 
-export const VIDEO_WIDTH = 1060;
-export const VIDEO_HEIGHT = 1440;
+export enum ImageMimeType {
+  PNG = 'image/png',
+  WEBP = 'image/webp',
+}
 
-export type VideoSource = {
+export type ImageSource = {
   src: string;
-  mimeType: MimeType;
-  codec: Codec;
+  mimeType: ImageMimeType;
 };
 
 export enum PersonaSlug {
@@ -16,112 +18,102 @@ export enum PersonaSlug {
   ORGANIZATIONS = 'organizations',
 }
 
+type ResponsiveImages = [ImageSource, ImageSource];
+
 export type Persona = {
   slug: PersonaSlug;
-  name: 'Beginner' | 'Power User' | 'Corporate';
+  name: string;
   color: string;
   url: string;
-  image: string;
-  videos: VideoSource[];
+  images: ResponsiveImages;
+  animatedImages: ResponsiveImages;
 };
 
 type PersonaItems = {
   [key: string]: Persona;
 };
 
+// The sRGB colors of the video backgrounds don't exactly match the brand colors.
+const VIDEO_COLORS = {
+  orchid: '#ebb0ff',
+  lime: '#a7ff74',
+  sky: '#b6edfb',
+};
+
+const PICTURE_QUERY_SMALL = `(max-width: ${TABLET_BREAKPOINT}px)`;
+const PICTURE_QUERY_WIDE = `(min-width: ${TABLET_BREAKPOINT + 1}px)`;
+
 export const PERSONAS: PersonaItems = {
   beginner: {
     slug: PersonaSlug.BEGINNER,
     name: 'Beginner',
-    color: 'var(--color-orchid)',
+    color: VIDEO_COLORS.orchid,
     url: '/learn/podcasting-for-beginners',
-    image: '/images/art/user-beginner.png',
-    videos: [
+    images: [
       {
-        // Smallest
-        src: '/videos/user-beginner.vp9.webm',
-        mimeType: MimeType.WEBM,
-        codec: Codec.VP9,
+        src: '/images/art/user-beginner.small.png',
+        mimeType: ImageMimeType.PNG,
+      },
+      {src: '/images/art/user-beginner.png', mimeType: ImageMimeType.PNG},
+    ],
+    animatedImages: [
+      {
+        src: '/images/art/user-beginner.small.webp',
+        mimeType: ImageMimeType.WEBP,
       },
       {
-        src: '/videos/user-beginner.vp9.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.VP9,
-      },
-      {
-        // Necessary for iOS playback
-        src: '/videos/user-beginner.hevc.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.H265,
-      },
-      {
-        src: '/videos/user-beginner.av1.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.AV1,
+        src: '/images/art/user-beginner.webp',
+        mimeType: ImageMimeType.WEBP,
       },
     ],
   },
   advanced: {
     slug: PersonaSlug.ADVANCED,
     name: 'Power User',
-    color: 'var(--color-lime)',
+    color: VIDEO_COLORS.lime,
     url: '/learn/podcasting-for-power-users',
-    image: '/images/art/user-advanced.png',
-    videos: [
+    images: [
       {
-        src: '/videos/user-advanced.vp9.webm',
-        mimeType: MimeType.WEBM,
-        codec: Codec.VP9,
+        src: '/images/art/user-advanced.small.png',
+        mimeType: ImageMimeType.PNG,
       },
+      {src: '/images/art/user-advanced.png', mimeType: ImageMimeType.PNG},
+    ],
+    animatedImages: [
       {
-        src: '/videos/user-advanced.vp9.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.VP9,
+        src: '/images/art/user-advanced.small.webp',
+        mimeType: ImageMimeType.WEBP,
       },
-      {
-        src: '/videos/user-advanced.hevc.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.H265,
-      },
-      {
-        src: '/videos/user-advanced.av1.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.AV1,
-      },
+
+      {src: '/images/art/user-advanced.webp', mimeType: ImageMimeType.WEBP},
     ],
   },
   organizations: {
     slug: PersonaSlug.ORGANIZATIONS,
     name: 'Corporate',
-    color: 'var(--color-sky)',
+    color: VIDEO_COLORS.sky,
     url: '/learn/corporate-podcasting',
-    image: '/images/art/user-organizations.png',
-    videos: [
+    images: [
       {
-        src: '/videos/user-organizations.vp9.webm',
-        mimeType: MimeType.WEBM,
-        codec: Codec.VP9,
+        src: '/images/art/user-organizations.small.png',
+        mimeType: ImageMimeType.PNG,
+      },
+      {src: '/images/art/user-organizations.png', mimeType: ImageMimeType.PNG},
+    ],
+    animatedImages: [
+      {
+        src: '/images/art/user-organizations.small.webp',
+        mimeType: ImageMimeType.WEBP,
       },
       {
-        src: '/videos/user-organizations.vp9.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.VP9,
-      },
-      {
-        src: '/videos/user-organizations.hevc.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.H265,
-      },
-      {
-        src: '/videos/user-organizations.av1.mp4',
-        mimeType: MimeType.MP4,
-        codec: Codec.AV1,
+        src: '/images/art/user-organizations.webp',
+        mimeType: ImageMimeType.WEBP,
       },
     ],
   },
 };
 
-export const CustomerPersonaVideo = ({
+export const CustomerPersonaAnimation = ({
   slug,
   isActive = false,
   zIndex = 0,
@@ -135,13 +127,12 @@ export const CustomerPersonaVideo = ({
   return (
     <div
       className={css({
-        // Load the video conditionally once the panel's scroll threshold is reached.
-        // This wrapper allows the video to fade in so the entrance feels smoother.
         backgroundColor: `${persona.color}`,
         borderRadius: 'inherit',
         bottom: 0,
         left: 0,
         opacity: isActive ? 1 : 0,
+        overflow: 'hidden',
         position: 'absolute',
         right: 0,
         top: 0,
@@ -151,24 +142,78 @@ export const CustomerPersonaVideo = ({
         zIndex,
       })}
     >
-      <NoncriticalVideo
-        sources={persona.videos}
-        height={VIDEO_HEIGHT}
-        width={VIDEO_WIDTH}
-        poster={persona.image}
-        style={{
-          backgroundColor: `${persona.color}`,
+      <picture
+        className={css({
           borderRadius: 'inherit',
-          height: '100%',
-          left: 0,
-          objectFit: 'cover',
-          position: 'absolute',
-          right: 0,
-          top: 0,
-          width: '100%',
-          zIndex,
-        }}
-      />
+          [MIN_TABLET_MEDIA_QUERY]: {display: 'none'},
+        })}
+      >
+        <source
+          srcSet={persona.animatedImages[0].src}
+          type={persona.animatedImages[0].mimeType}
+          media={PICTURE_QUERY_SMALL}
+        />
+        <source
+          srcSet={persona.images[0].src}
+          type={persona.images[0].mimeType}
+          media={PICTURE_QUERY_SMALL}
+        />
+        <Image
+          src={persona.images[0].src}
+          alt={persona.name}
+          width={200}
+          height={100}
+          loading="lazy"
+          className={css({
+            backgroundColor: `${persona.color}`,
+            left: 0,
+            position: 'absolute',
+            right: 0,
+            top: 0,
+          })}
+        />
+      </picture>
+
+      <picture
+        className={css({
+          borderRadius: 'inherit',
+          display: 'none',
+          [MIN_TABLET_MEDIA_QUERY]: {
+            display: 'block',
+          },
+        })}
+      >
+        <source
+          srcSet={persona.animatedImages[1].src}
+          type="image/webp"
+          media={PICTURE_QUERY_WIDE}
+        />
+        <source
+          srcSet={persona.images[1].src}
+          type="image/png"
+          media={PICTURE_QUERY_WIDE}
+        />
+        <Image
+          src={persona.images[1].src}
+          alt={persona.name}
+          // This is the image's intrinsic size, not the rendered size,
+          // used to cover the parent with the correct aspect ratio.
+          width={1060}
+          height={1440}
+          loading="lazy"
+          className={css({
+            backgroundColor: `${persona.color}`,
+            bottom: 0,
+            height: '100%',
+            left: 0,
+            objectFit: 'cover',
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            width: '100%',
+          })}
+        />
+      </picture>
     </div>
   );
 };
