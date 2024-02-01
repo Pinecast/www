@@ -31,6 +31,9 @@ export default function Home() {
           name="description"
           content="Kick-ass podcast hosting for the 21st century"
         />
+        <link rel="prefetch" href="/videos/hero/central.av1.mp4" />
+        <link rel="prefetch" href="/images/globe-full.jpg" />
+        <link rel="prefetch" href="/videos/Footer2x.mp4" />
       </Head>
       {/* {!splashEnded && <SplashIntro onComplete={() => setSplashEnded(true)} />} */}
       <MainLogo />
@@ -40,7 +43,12 @@ export default function Home() {
       {/* Boundary for the sticky horizontal line to move through. */}
       <div>
         {/* The line moves above the sibling background wrappers and behind the section's elements. */}
-        <StickyLine color="var(--color-white)" invertColor size={STICKY_LINE_SIZE} zIndex={2} />
+        <StickyLine
+          color="var(--color-white)"
+          invertColor
+          size={STICKY_LINE_SIZE}
+          zIndex={2}
+        />
 
         <div
           className={css({
