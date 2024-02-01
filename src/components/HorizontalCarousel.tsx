@@ -23,7 +23,6 @@ export const HorizontalCarousel = <T extends any>({
 }: HorizontalCarouselProps<T>) => {
   const css = useCSS();
   const scrollRef = React.useRef<HTMLElement>(null);
-  const [currentPanelIndex, setCurrentPanelIndex] = React.useState<number>(-1);
 
   const panelsRef = React.useRef<Element[]>([]);
   const addPanelRef = React.useCallback(
@@ -45,14 +44,8 @@ export const HorizontalCarousel = <T extends any>({
         el => el === visiblePanel,
       );
       onChange?.(currentPanelIndex);
-      setCurrentPanelIndex(currentPanelIndex);
     }
-    return () => onChange?.(-1);
   }, [onChange, visiblePanel]);
-
-  React.useEffect(() => {
-    onChange?.(currentPanelIndex);
-  }, [currentPanelIndex, items, onChange]);
 
   return (
     <nav
