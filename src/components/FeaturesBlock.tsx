@@ -13,23 +13,9 @@ export const FeaturesBlock = () => {
         [MIN_TABLET_MEDIA_QUERY]: {
           display: 'none',
         },
-        padding: '20px 0',
+        padding: '10px 0 4px',
       })}
     >
-      <Caption
-        as="h3"
-        style={{
-          color: 'var(--color-core-accent)',
-          marginTop: '0',
-          marginRight: 'auto',
-          marginBottom: '12px',
-          marginLeft: 'auto',
-          textAlign: 'center',
-          textTransform: 'uppercase',
-        }}
-      >
-        Features
-      </Caption>
       <Link
         href="/features"
         className={css({
@@ -39,7 +25,20 @@ export const FeaturesBlock = () => {
           ':hover': {textDecoration: 'underline'},
         })}
       >
-        <Body1 as="span">All Features</Body1>
+        <Caption
+          as="h3"
+          style={{
+            color: 'var(--color-core-accent)',
+            marginTop: '0',
+            marginRight: 'auto',
+            marginBottom: '0',
+            marginLeft: 'auto',
+            textAlign: 'center',
+            textTransform: 'uppercase',
+          }}
+        >
+          Features
+        </Caption>
       </Link>
     </div>
   );

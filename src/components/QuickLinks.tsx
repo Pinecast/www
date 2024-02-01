@@ -26,12 +26,12 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
           color: 'var(--color-white)',
           display: 'flex',
           flexDirection: 'column',
-          gap: '12px',
+          gap: '10px',
           height: '100%',
           padding: '30px',
         },
         // background: 'var(--color-primary-light)',
-        padding: '20px 0',
+        padding: '16px 0 4px',
       })}
     >
       <Body1
@@ -54,7 +54,7 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
           color: 'var(--color-core-accent)',
           marginTop: '0',
           marginRight: 'auto',
-          marginBottom: '0',
+          marginBottom: '10px',
           marginLeft: 'auto',
           textAlign: 'center',
           textTransform: 'uppercase',

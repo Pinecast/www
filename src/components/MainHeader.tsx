@@ -40,8 +40,9 @@ const PersonaBlock = ({
       className={css({
         backgroundColor: color,
         backgroundImage: `url(${illustrationSrc})`,
-        backgroundSize: `cover`,
-        backgroundPosition: `50% ${illustrationOffsetY || 0}px`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: '50% 18%',
         border: '1px solid var(--color-line)',
         borderRadius: '20px',
         display: 'flex',
@@ -110,7 +111,15 @@ const PersonaBlock = ({
             [MIN_TABLET_MEDIA_QUERY]: {right: '30px', bottom: '30px'},
           }}
         />
-        <CustomerPersonaVideo slug={slug} isActive={isActive} zIndex={-1} />
+        <div
+          className={css({
+            borderRadius:'inherit',
+            display: 'none',
+            [MIN_TABLET_MEDIA_QUERY]: {display: 'block'},
+          })}
+        >
+          <CustomerPersonaVideo slug={slug} isActive={isActive} zIndex={-1} />
+        </div>
       </Link>
     </div>
   );
@@ -249,14 +258,12 @@ export const MainHeader = () => {
           display: 'flex',
           flexDirection: 'column',
           // A fixed parent height is required for the grow/shrink height effect.
-          height: '92vh',
+          height: '86svh',
           justifyContent: 'flex-start',
           left: '10px',
           opacity: navOpen ? 1 : 0,
-          // pointerEvents: navOpen ? 'all' : 'none',
           position: 'fixed',
           right: '10px',
-          // top: navOpen ? '82px' : '80px',
           top: navOpen ? '70px' : '70px',
           transition: 'opacity 0.2s 0.1s ease-in-out, top 0.2s ease-in-out',
           visibility: navOpen ? 'visible' : 'hidden',
@@ -279,7 +286,7 @@ export const MainHeader = () => {
             height: 'auto',
             overflow: 'hidden',
             justifyContent: 'space-between',
-            padding: '20px',
+            padding: '0 10px',
             transition: navOpen
               ? 'all 0.2s ease-in-out'
               : 'background 0.2s ease-in-out, flex 0.2s ease-in-out',
@@ -288,6 +295,7 @@ export const MainHeader = () => {
             left: '10px',
             right: '10px',
             [MIN_TABLET_MEDIA_QUERY]: {
+              padding: '20px',
               top: '0',
               left: '0',
               right: '0',
@@ -297,12 +305,13 @@ export const MainHeader = () => {
           <div
             className={css({
               display: 'grid',
-              gap: '20px',
+              gap: '8px',
               gridTemplateColumns: '1fr',
               gridTemplateRows:
                 'min-content min-content min-content min-content',
               width: '100%',
               [MIN_TABLET_MEDIA_QUERY]: {
+                gap: '20px',
                 gridTemplateColumns: '1fr 1fr 1fr 1.25fr',
                 gridTemplateRows: '100%',
               },
