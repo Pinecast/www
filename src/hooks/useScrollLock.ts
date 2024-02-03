@@ -14,6 +14,7 @@ const calculateScrollbarWidth = (): number => {
     document.body.appendChild(scrollDiv);
     scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
     document.body.removeChild(scrollDiv);
+    document.body.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
   }
   return scrollbarWidth;
 };
