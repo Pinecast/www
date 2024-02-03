@@ -26,26 +26,15 @@ const getScrollbarWidth = (): number => {
 };
 
 export function useScrollLock() {
-  const initialPaddingRightRef = React.useRef(new Map<HTMLElement, number>());
-
   const lock = React.useCallback(() => {
     const scrollbarWidth = getScrollbarWidth();
-    const originalPaddingRight = parseFloat(
-      window.getComputedStyle(document.body).paddingRight ?? 0,
-    );
-    initialPaddingRightRef.current.set(document.body, originalPaddingRight);
-    document.body.style.paddingRight = `${
-      originalPaddingRight + scrollbarWidth
-    }px`;
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
     document.body.style.overflow = 'hidden';
   }, []);
 
   const unlock = React.useCallback(() => {
     document.body.style.overflow = 'unset';
-    const originalPaddingRight = initialPaddingRightRef.current.get(
-      document.body,
-    );
-    document.body.style.paddingRight = `${originalPaddingRight}px`;
+    document.body.style.paddingRight = '0';
   }, []);
 
   return [lock, unlock];
