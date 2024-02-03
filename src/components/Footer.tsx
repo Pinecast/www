@@ -43,6 +43,11 @@ export const Footer = () => {
               mimeType: MimeType.MP4,
               codec: Codec.H264,
             },
+            {
+              src: '/videos/Footer2x.av1.mp4',
+              mimeType: MimeType.MP4,
+              codec: Codec.AV1,
+            },
           ]}
           height={VIDEO_HEIGHT}
           width={VIDEO_WIDTH}
