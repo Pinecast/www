@@ -4,9 +4,7 @@ import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
 import {
   MIN_TABLET_MEDIA_QUERY,
-  MOBILE_BREAKPOINT,
   MOBILE_MEDIA_QUERY,
-  TABLET_BREAKPOINT,
   TABLET_MEDIA_QUERY,
 } from '@/constants';
 import Link from 'next/link';
@@ -62,7 +60,6 @@ const PersonaBlock = ({
           borderRadius: 'inherit',
           color: 'var(--color-space)',
           display: 'grid',
-          gridTemplateColumns: '0.4fr 0.6fr',
           textDecoration: 'none',
           height: '100%',
           width: '100%',
