@@ -16,7 +16,7 @@ export enum Codec {
   VP9 = 'vp09.00.40.08.01.01.01.01.00',
 }
 
-type Source = {
+export type VideoSource = {
   src: string;
   mimeType: MimeType;
   codec: Codec;
@@ -31,7 +31,7 @@ export const NoncriticalVideo = ({
 }: {
   height: number;
   poster?: string;
-  sources: Source[];
+  sources: VideoSource[];
   style?: StyleObject;
   width: number;
 }) => {
