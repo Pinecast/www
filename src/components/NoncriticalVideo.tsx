@@ -4,7 +4,7 @@ import {StyleObject} from 'styletron-react';
 import * as React from 'react';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
 
-export enum MimeType {
+export enum VideoMimeType {
   MP4 = 'video/mp4',
   WEBM = 'video/webm',
 }
@@ -18,7 +18,7 @@ export enum Codec {
 
 export type VideoSource = {
   src: string;
-  mimeType: MimeType;
+  mimeType: VideoMimeType;
   codec: Codec;
 };
 

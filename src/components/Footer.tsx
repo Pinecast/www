@@ -8,7 +8,7 @@ import {PrimaryButton} from './PrimaryButton';
 import {FooterNavLinks} from './FooterNavLinks';
 import {MOBILE_MEDIA_QUERY, CAN_HOVER_MEDIA_QUERY} from '@/constants';
 import {useDarkSection} from '@/hooks/useDarkSection';
-import {Codec, MimeType, NoncriticalVideo} from './NoncriticalVideo';
+import {Codec, VideoMimeType, NoncriticalVideo} from './NoncriticalVideo';
 
 const VIDEO_WIDTH = 1670;
 const VIDEO_HEIGHT = 1045;
@@ -40,12 +40,12 @@ export const Footer = () => {
           sources={[
             {
               src: '/videos/Footer2x.mp4',
-              mimeType: MimeType.MP4,
+              mimeType: VideoMimeType.MP4,
               codec: Codec.H264,
             },
             {
               src: '/videos/Footer2x.av1.mp4',
-              mimeType: MimeType.MP4,
+              mimeType: VideoMimeType.MP4,
               codec: Codec.AV1,
             },
           ]}

@@ -6,7 +6,12 @@ import {HorizontalCarousel} from './HorizontalCarousel';
 import {SecondaryButton} from './SecondaryButton';
 import {PrimaryButton} from './PrimaryButton';
 import Link from 'next/link';
-import {Codec, MimeType, NoncriticalVideo, VideoSource} from './NoncriticalVideo';
+import {
+  Codec,
+  NoncriticalVideo,
+  VideoMimeType,
+  VideoSource,
+} from './NoncriticalVideo';
 import {useIntersectionProgress} from '@/hooks/useIntersectionProgress';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
@@ -53,23 +58,23 @@ const PANELS: PanelItems = {
       {
         // Smallest
         src: '/videos/user-beginner.vp9.webm',
-        mimeType: MimeType.WEBM,
+        mimeType: VideoMimeType.WEBM,
         codec: Codec.VP9,
       },
       {
         src: '/videos/user-beginner.vp9.mp4',
-        mimeType: MimeType.MP4,
+        mimeType: VideoMimeType.MP4,
         codec: Codec.VP9,
       },
       {
         // Necessary for iOS playback
         src: '/videos/user-beginner.hevc.mp4',
-        mimeType: MimeType.MP4,
+        mimeType: VideoMimeType.MP4,
         codec: Codec.H265,
       },
       {
         src: '/videos/user-beginner.av1.mp4',
-        mimeType: MimeType.MP4,
+        mimeType: VideoMimeType.MP4,
         codec: Codec.AV1,
       },
     ],
@@ -87,22 +92,22 @@ const PANELS: PanelItems = {
     videos: [
       {
         src: '/videos/user-advanced.vp9.webm',
-        mimeType: MimeType.WEBM,
+        mimeType: VideoMimeType.WEBM,
         codec: Codec.VP9,
       },
       {
         src: '/videos/user-advanced.vp9.mp4',
-        mimeType: MimeType.MP4,
+        mimeType: VideoMimeType.MP4,
         codec: Codec.VP9,
       },
       {
         src: '/videos/user-advanced.hevc.mp4',
-        mimeType: MimeType.MP4,
+        mimeType: VideoMimeType.MP4,
         codec: Codec.H265,
       },
       {
         src: '/videos/user-advanced.av1.mp4',
-        mimeType: MimeType.MP4,
+        mimeType: VideoMimeType.MP4,
         codec: Codec.AV1,
       },
     ],
@@ -120,22 +125,22 @@ const PANELS: PanelItems = {
     videos: [
       {
         src: '/videos/user-organizations.vp9.webm',
-        mimeType: MimeType.WEBM,
+        mimeType: VideoMimeType.WEBM,
         codec: Codec.VP9,
       },
       {
         src: '/videos/user-organizations.vp9.mp4',
-        mimeType: MimeType.MP4,
+        mimeType: VideoMimeType.MP4,
         codec: Codec.VP9,
       },
       {
         src: '/videos/user-organizations.hevc.mp4',
-        mimeType: MimeType.MP4,
+        mimeType: VideoMimeType.MP4,
         codec: Codec.H265,
       },
       {
         src: '/videos/user-organizations.av1.mp4',
-        mimeType: MimeType.MP4,
+        mimeType: VideoMimeType.MP4,
         codec: Codec.AV1,
       },
     ],
