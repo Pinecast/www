@@ -23,7 +23,7 @@ export const Footer = () => {
   return (
     <div
       style={{
-        background: '#ff6869',
+        backgroundColor: '#fe7575',
         overflow: 'hidden',
       }}
     >
