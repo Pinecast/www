@@ -210,14 +210,40 @@ type DialProps = {};
 const Dial = React.memo(
   React.forwardRef<DialRef, DialProps>(function Dial(_, ref) {
     const css = useCSS();
-    const mobileRef = React.useRef<SVGGElement>(null);
-    const desktopRef = React.useRef<SVGGElement>(null);
+
+    const mobileDialRef = React.useRef<SVGGElement>(null);
+    const mobileMarkingsRef = React.useRef<SVGGElement>(null);
+    const desktopDialRef = React.useRef<SVGGElement>(null);
+    const desktopMarkingsRef = React.useRef<SVGGElement>(null);
+
     React.useImperativeHandle(ref, () => ({
       rotateMobile: (degrees: number) => {
-        mobileRef.current!.style.transform = `rotate(${degrees}deg)`;
+        mobileDialRef.current!.style.transform = `rotate(${degrees}deg)`;
+        mobileDialRef.current!.style.setProperty(
+          '--dial-line-transition-duration',
+          degrees === 0 ? '0.1s' : '0.2s',
+        );
+        mobileDialRef.current!.style.setProperty(
+          '--dial-line-color',
+          degrees === 0 ? 'transparent' : 'var(--color-sand)',
+        );
+        mobileMarkingsRef.current!.style.transitionDuration =
+          degrees === 0 ? '0.1s' : '0.2s';
+        mobileMarkingsRef.current!.style.opacity = degrees === 0 ? '0' : '1';
       },
       rotateDesktop: (degrees: number) => {
-        desktopRef.current!.style.transform = `rotate(${degrees}deg)`;
+        desktopDialRef.current!.style.transform = `rotate(${degrees}deg)`;
+        desktopDialRef.current!.style.setProperty(
+          '--dial-line-transition-duration',
+          degrees === 0 ? '0.1s' : '0.2s',
+        );
+        desktopDialRef.current!.style.setProperty(
+          '--dial-line-color',
+          degrees === 0 ? 'transparent' : 'var(--color-sand)',
+        );
+        desktopMarkingsRef.current!.style.transitionDuration =
+          degrees === 0 ? '0.1s' : '0.2s';
+        desktopMarkingsRef.current!.style.opacity = degrees === 0 ? '0' : '1';
       },
     }));
     return (
@@ -236,39 +262,58 @@ const Dial = React.memo(
             },
           })}
         >
-          <path
-            d="M.5 35.5C.5 74.988 32.512 107 72 107s71.5-32.012 71.5-71.5"
-            stroke="var(--color-sand)"
-            strokeWidth={1.5}
-          />
-          <g opacity={0.6} stroke="var(--color-white)">
-            <path d="M72.5 72.7461L72.5 76.7461" />
-            <path d="M45.335 61.0996L41.4459 64.9887" />
-            <path d="M57.4435 69.4171L56.0754 73.1759" />
+          <g
+            ref={mobileMarkingsRef}
+            className={css({
+              opacity: 0,
+              transition: 'opacity 0.2s ease-in-out',
+            })}
+          >
             <path
-              transform="matrix(.34202 .9397 .9397 -.34202 87.087 69.246)"
-              d="M0 -0.5L4 -0.5"
+              d="M.5 35.5C.5 74.988 32.512 107 72 107s71.5-32.012 71.5-71.5"
+              stroke="var(--color-sand)"
             />
-            <path d="M37.4298 48.7198L33.671 50.0879" />
-            <path
-              transform="matrix(.9397 .34202 .34202 -.9397 106.731 48.25)"
-              d="M0 -0.5L4 -0.5"
-            />
-            <path
-              transform="scale(1 -1) rotate(-45 -22.928 -150.34)"
-              d="M0 -0.5L4 -0.5"
-            />
+            <g stroke="var(--color-white)" opacity={0.6}>
+              <path d="M72.5 72.7461L72.5 76.7461" />
+              <path d="M45.335 61.0996L41.4459 64.9887" />
+              <path d="M57.4435 69.4171L56.0754 73.1759" />
+              <path
+                transform="matrix(.34202 .9397 .9397 -.34202 87.087 69.246)"
+                d="M0 -0.5L4 -0.5"
+              />
+              <path d="M37.4298 48.7198L33.671 50.0879" />
+              <path
+                transform="matrix(.9397 .34202 .34202 -.9397 106.731 48.25)"
+                d="M0 -0.5L4 -0.5"
+              />
+              <path
+                transform="scale(1 -1) rotate(-45 -22.928 -150.34)"
+                d="M0 -0.5L4 -0.5"
+              />
+            </g>
           </g>
           <g
-            ref={mobileRef}
-            style={{
+            ref={mobileDialRef}
+            className={css({
+              '--dial-line-color': 'transparent',
+              '--dial-line-transition-duration': '0.2s',
+              '--dial-transform-origin': '72px 35px',
               // Rotate the hand from the center of the dial.
-              transformOrigin: '72px 35px',
-              // Slight transition to smoothly rotate the dial's hand on scroll.
+              transformOrigin: 'var(--dial-transform-origin)',
+              // Slight transition to smoothly rotate the dial's hand on swipe.
               transition: 'all 0.2s linear',
-            }}
+            })}
           >
-            <path stroke="var(--color-sand)" d="M70 35L0 35" />
+            <path
+              d="M70 35L0 35"
+              stroke="var(--dial-line-color)"
+              className={css({
+                transition:
+                  'stroke var(--dial-line-transition-duration) ease-in-out',
+                transform: 'scale(0.95)',
+                transformOrigin: 'var(--dial-transform-origin)',
+              })}
+            />
             <ellipse
               cx={72}
               cy={35.5}
@@ -296,44 +341,61 @@ const Dial = React.memo(
           fill="none"
           className={css({
             display: 'none',
-            [WIDE_PANELS_QUERY]: {
-              display: 'block',
-            },
+            [WIDE_PANELS_QUERY]: {display: 'block'},
           })}
         >
-          <path
-            d="M1 70c0 78.977 64.023 143 143 143s143-64.023 143-143"
-            stroke="var(--color-sand)"
-            strokeWidth={1.5}
-          />
-          <g opacity={0.6} stroke="var(--color-white)">
-            <path d="M143.5 144L143.5 152" />
-            <path d="M89.3164 120.354L81.5383 128.132" />
-            <path d="M113.417 137.171L110.681 144.689" />
+          <g
+            ref={desktopMarkingsRef}
+            className={css({
+              opacity: 0,
+              transition: 'opacity 0.2s ease-in-out',
+            })}
+          >
             <path
-              transform="scale(1 -1) rotate(-70 -11.241 -192.159)"
-              d="M0 -0.5L8 -0.5"
+              d="M1 70c0 78.977 64.023 143 143 143s143-64.023 143-143"
+              stroke="var(--color-sand)"
             />
-            <path d="M73.6886 95.4777L66.171 98.2138" />
-            <path
-              transform="scale(1 -1) rotate(-20 -163.177 -649.973)"
-              d="M0 -0.5L8 -0.5"
-            />
-            <path
-              transform="scale(1 -1) rotate(-45 -44.555 -298.727)"
-              d="M0 -0.5L8 -0.5"
-            />
+            <g stroke="var(--color-white)" opacity={0.6}>
+              <path d="M143.5 144L143.5 152" />
+              <path d="M89.3164 120.354L81.5383 128.132" />
+              <path d="M113.417 137.171L110.681 144.689" />
+              <path
+                transform="scale(1 -1) rotate(-70 -11.241 -192.159)"
+                d="M0 -0.5L8 -0.5"
+              />
+              <path d="M73.6886 95.4777L66.171 98.2138" />
+              <path
+                transform="scale(1 -1) rotate(-20 -163.177 -649.973)"
+                d="M0 -0.5L8 -0.5"
+              />
+              <path
+                transform="scale(1 -1) rotate(-45 -44.555 -298.727)"
+                d="M0 -0.5L8 -0.5"
+              />
+            </g>
           </g>
           <g
-            ref={desktopRef}
-            style={{
+            ref={desktopDialRef}
+            className={css({
+              '--dial-line-color': 'transparent',
+              '--dial-line-transition-duration': '0.2s',
+              '--dial-transform-origin': '144px 70px',
               // Rotate the hand from the center of the dial.
-              transformOrigin: '144px 70px',
+              transformOrigin: 'var(--dial-transform-origin)',
               // Slight transition to smoothly rotate the dial's hand on scroll.
               transition: 'all 0.2s linear',
-            }}
+            })}
           >
-            <path d="M143 70H.5" stroke="var(--color-sand)" />
+            <path
+              d="M143 70H.5"
+              stroke="var(--dial-line-color)"
+              className={css({
+                transition:
+                  'stroke var(--dial-line-transition-duration) ease-in-out',
+                transform: 'scale(0.95)',
+                transformOrigin: 'var(--dial-transform-origin)',
+              })}
+            />
             <ellipse
               cx={144}
               cy={70}
@@ -771,6 +833,7 @@ export const TunedInPanels = () => {
           '--progress-height': '210px',
           height: 'var(--progress-height)',
           marginBottom: 'calc(-1 * var(--progress-height))',
+          pointerEvents: 'none',
           [WIDE_PANELS_QUERY]: {
             '--progress-height': '280px',
           },
@@ -779,29 +842,16 @@ export const TunedInPanels = () => {
       <div
         className={css({
           margin: '0 auto',
+          position: 'relative',
+          top: '-37px',
           width: '144px',
           [WIDE_PANELS_QUERY]: {
+            top: '-71px',
             width: '288px',
           },
         })}
       >
-        <div
-          className={css({
-            margin: '0 auto',
-            opacity: aboveZero ? 1 : 0,
-            pointerEvents: 'none',
-            position: 'absolute',
-            top: '-35.25px',
-            transition: aboveZero
-              ? 'opacity 0.2s ease-in-out'
-              : 'opacity 0.1s ease-in-out',
-            [WIDE_PANELS_QUERY]: {
-              top: '-70.75px',
-            },
-          })}
-        >
-          <Dial ref={dialRef} />
-        </div>
+        <Dial ref={dialRef} />
       </div>
 
       <div
