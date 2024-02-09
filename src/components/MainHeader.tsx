@@ -284,7 +284,7 @@ export const MainHeader = () => {
         >
           <Link
             href="https://pinecast.com/login"
-            style={{display: 'block', height: '24px'}}
+            className={css({display: 'block', height: '24px'})}
           >
             <SignIn size={24} color="var(--color-primary-dark)" />
           </Link>

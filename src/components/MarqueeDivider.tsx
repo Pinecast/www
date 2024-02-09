@@ -188,9 +188,10 @@ MarqueeDivider.MarqueeDividerHeight = MARQUEE_HEIGHT;
 MarqueeDivider.MarqueeDividerBullet = function MarqueeDividerBullet(
   children: string | React.ReactNode,
 ) {
+  const css = useCSS();
   return (
     <>
-      <tspan dx="100" style={{fontSize: '30px'}} dy="4">
+      <tspan dx="100" className={css({fontSize: '30px'})} dy="4">
         &bull;
       </tspan>
       <tspan dx="12" dy="-4">

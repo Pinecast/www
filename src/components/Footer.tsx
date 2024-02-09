@@ -22,19 +22,19 @@ export const Footer = () => {
 
   return (
     <div
-      style={{
+      className={css({
         backgroundColor: '#fe7575',
         overflow: 'hidden',
-      }}
+      })}
     >
       <div
         ref={ref}
-        style={{
+        className={css({
           // Clip out a thin black border that wraps the video.
           margin: '-4px',
           paddingTop: `${ASPECT_RATIO * 100}%`,
           position: 'relative',
-        }}
+        })}
       >
         <NoncriticalVideo
           sources={[
