@@ -4,7 +4,12 @@ import {Body3, Body4, Caption, H1, H2} from './Typography';
 import {useCSS} from '@/hooks/useCSS';
 import {useIntersectionProgress} from '@/hooks/useIntersectionProgress';
 import {useVisibleElements} from '@/hooks/useVisibleElements';
-import {CAN_HOVER_MEDIA_QUERY, MIN_TABLET_MEDIA_QUERY} from '@/constants';
+import {
+  CAN_HOVER_MEDIA_QUERY,
+  MIN_TABLET_MEDIA_QUERY,
+  MOBILE_MEDIA_QUERY,
+  TABLET_MEDIA_QUERY,
+} from '@/constants';
 import {SecondaryButton} from './SecondaryButton';
 import {AudioFiles, useSound} from '@/hooks/useSound';
 import {SectionDivider} from './SectionDivider';
@@ -103,6 +108,9 @@ type AudioPlayerProps = Omit<Testimonial, 'color'> & {};
 const [TICKER_WIDTH_SMALL, TICKER_WIDTH_LARGE] = [110, 160];
 const [TICKER_HEIGHT_SMALL, TICKER_HEIGHT_LARGE] = [30, 40];
 
+// const [QUOTE_HEIGHT_SMALL, QUOTE_HEIGHT_LARGE] = [162, 207];
+// const [QUOTE_WIDTH_SMALL, QUOTE_WIDTH_LARGE] = [250, 344];
+
 const [QUOTE_HEIGHT_SMALL, QUOTE_HEIGHT_LARGE] = [190, 207];
 const [QUOTE_WIDTH_SMALL, QUOTE_WIDTH_LARGE] = [294, 344];
 
@@ -118,9 +126,9 @@ const [PLAYER_WIDTH_SMALL, PLAYER_WIDTH_LARGE] = [
 
 const [CONTROLS_START, CONTROLS_END] = [0.3, 0.5];
 
-const calculateTickerLeft = (progress: number) => {
+const calculateTickerLeft = (progress: number): string => {
   if (progress <= CONTROLS_START) {
-    return 0;
+    return '0';
   }
   if (progress >= CONTROLS_END) {
     return `calc(var(--player-width) - var(--ticker-width))`;
@@ -171,9 +179,11 @@ const AudioPlayer = React.memo(
             transform: quoteRef.current.style.transform,
           };
           const tickerWrapper = {
-            left: tickerWrapperRef.current.style.left,
             opacity: tickerWrapperRef.current.style.opacity,
-            transform: tickerWrapperRef.current.style.transform,
+            transform: {
+              scale: '0',
+              translateX: `${calculateTickerLeft(progress)}`,
+            },
           };
           const tickerDot = {
             transform: tickerDotRef.current.style.transform,
@@ -184,7 +194,7 @@ const AudioPlayer = React.memo(
           };
 
           if (progress <= SCROLL_PERCENTAGE_TO_SHOW_PLAYER) {
-            tickerWrapper.transform = `scale(${scalePlayerEnter(progress)})`;
+            tickerWrapper.transform.scale = `${scalePlayerEnter(progress)}`;
 
             tickerTime.opacity = '0';
             tickerTime.transform = `scale(${scalePlayerEnter(progress)})`;
@@ -193,7 +203,7 @@ const AudioPlayer = React.memo(
 
             quote.opacity = '0';
           } else {
-            tickerWrapper.transform = 'scale(1)';
+            tickerWrapper.transform.scale = '1';
 
             tickerTime.opacity = '1';
             tickerTime.transform = 'scale(1)';
@@ -204,7 +214,7 @@ const AudioPlayer = React.memo(
           }
 
           if (progress >= SCROLL_PERCENTAGE_TO_HIDE_PLAYER) {
-            tickerWrapper.transform = 'scale(0)';
+            tickerWrapper.transform.scale = '0';
 
             tickerTime.opacity = '0';
             tickerTime.transform = `scale(${scalePlayerExit(progress)})`;
@@ -213,7 +223,7 @@ const AudioPlayer = React.memo(
 
             quote.opacity = `${scalePlayerExit(progress)}`;
           } else if (progress === 1) {
-            tickerWrapper.transform = 'scale(0)';
+            tickerWrapper.transform.scale = '0';
 
             tickerTime.opacity = '0';
             tickerTime.transform = 'scale(0)';
@@ -224,35 +234,25 @@ const AudioPlayer = React.memo(
           }
 
           player.transform = `translateX(${progress * 100}vw)`;
-          tickerWrapper.left = `${calculateTickerLeft(progress)}`;
+
+          const tickerWrapperTransform = `translateX(${tickerWrapper.transform.translateX}) scale(${tickerWrapper.transform.scale})`;
 
           if (typeof playerRef.current.animate === 'function') {
-            const animation = playerRef.current.animate(
+            playerRef.current.animate(
               [{transform: player.transform}],
               ANIMATION_OPTIONS,
             );
-
             tickerWrapperRef.current.animate(
-              [
-                {
-                  left: tickerWrapper.left,
-                  transform: tickerWrapper.transform,
-                },
-              ],
+              [{transform: tickerWrapperTransform}],
               ANIMATION_OPTIONS,
             );
-
-            if (typeof animation.finished === 'function') {
-              await animation.finished;
-            }
           }
 
           playerRef.current.style.opacity = player.opacity;
           playerRef.current.style.transform = player.transform;
 
-          tickerWrapperRef.current.style.left = tickerWrapper.left;
           tickerWrapperRef.current.style.opacity = tickerWrapper.opacity;
-          tickerWrapperRef.current.style.transform = tickerWrapper.transform;
+          tickerWrapperRef.current.style.transform = tickerWrapperTransform;
 
           tickerDotRef.current.style.transform = tickerDot.transform;
 
@@ -347,11 +347,9 @@ const AudioPlayer = React.memo(
                   transformOrigin: '10% 50%',
                   whiteSpace: 'nowrap',
                   willChange: 'opacity, transform',
-                  width: `${TICKER_WIDTH_SMALL}px`,
                   [MIN_TABLET_MEDIA_QUERY]: {
                     padding: '10px 27.5px',
                     transformOrigin: '5% 50%',
-                    width: `${TICKER_WIDTH_LARGE}px`,
                   },
                 })}
               >
@@ -363,10 +361,9 @@ const AudioPlayer = React.memo(
                     // Nudge the text so the vertical alignment is actually centered.
                     top: '0.5px',
                     fontSize: '10px',
-                    lineHeight: '10px',
+                    lineHeight: '1',
                     [MIN_TABLET_MEDIA_QUERY]: {
                       fontSize: '12px',
-                      lineHeight: '12px',
                     },
                     '::before': {
                       backgroundColor: 'var(--color-space)',
@@ -389,8 +386,8 @@ const AudioPlayer = React.memo(
                   <span
                     ref={tickerTimeRef}
                     className={css({
+                      opacity: 0,
                       transition: '0.2s linear',
-                      // transition: 'transform 0.1s linear',
                       willChange: 'opacity',
                     })}
                   >{`${formatTime(Math.trunc(currentTimeSec))} / ${formatTime(
@@ -426,7 +423,20 @@ const AudioPlayer = React.memo(
                 },
               })}
             >
-              <Body3 style={{fontSize: '20px'}}>
+              <Body3
+                style={{
+                  fontSize: '20px',
+                  lineHeight: '22px',
+                  [TABLET_MEDIA_QUERY]: {
+                    fontSize: '16px',
+                    lineHeight: '18px',
+                  },
+                  [MOBILE_MEDIA_QUERY]: {
+                    fontSize: '14px',
+                    lineHeight: '16px',
+                  },
+                }}
+              >
                 <TestimonialQuotation
                   audio={audioRef}
                   script={testimonial.script}
@@ -480,10 +490,9 @@ const AudioPlayer = React.memo(
                       paddingRight: '20px',
                       paddingBottom: '20px',
                       textAlign: 'right',
-
                       textDecoration: 'none',
                       textUnderlineOffset: '0.42em',
-                      transition: 'color 0.2s',
+                      transition: 'color 0.2s ease-in-out',
                       ':hover': {
                         [CAN_HOVER_MEDIA_QUERY]: {
                           color: 'var(--color-core-accent)',
