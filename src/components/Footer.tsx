@@ -103,6 +103,7 @@ export const Footer = () => {
               backgroundSize: 'auto 60px',
               backgroundPosition: '-11px calc(100% - 80px)',
               maxHeight: 'auto',
+              minHeight: '630px',
               paddingLeft: '30px',
               paddingRight: '30px',
               paddingTop: '25px',
@@ -196,7 +197,7 @@ export const Footer = () => {
               color: 'var(--color-core-accent)',
               borderTop: '1px solid var(--color-core-accent)',
               fontSize: '12px',
-              paddingTop: '20px',
+              paddingTop: '10px',
               paddingBottom: '20px',
               ...MonumentGroteskSemiMono,
               [MOBILE_MEDIA_QUERY]: {
