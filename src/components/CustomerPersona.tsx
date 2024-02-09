@@ -137,7 +137,7 @@ export const CustomerPersonaAnimation = ({
         right: 0,
         top: 0,
         transition: isActive
-          ? 'opacity 0.3s ease-in-out'
+          ? 'opacity 0.2s ease-in-out'
           : 'opacity 0.1s ease-in-out',
         zIndex,
       })}

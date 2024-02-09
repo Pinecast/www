@@ -421,7 +421,7 @@ const Panel = ({
             opacity: isActive ? 1 : 0,
             position: 'absolute',
             right: '0',
-            transition: 'opacity 0.3s ease-in-out',
+            transition: 'opacity 0.2s ease-in-out',
             top: '0',
           },
 
@@ -464,7 +464,7 @@ const Panel = ({
             right: 0,
             top: 0,
             transition: isActive
-              ? 'opacity 0.3s ease-in-out'
+              ? 'opacity 0.2s ease-in-out'
               : 'opacity 0.1s ease-in-out',
             zIndex: 2,
           })}
@@ -498,7 +498,7 @@ const Panel = ({
             width: '100%',
             position: 'relative',
             zIndex: 2,
-            transition: 'color 0.3s ease-in-out',
+            transition: 'color 0.2s ease-in-out',
             [WIDE_PANELS_QUERY]: {
               padding: '20px',
             },
@@ -511,7 +511,7 @@ const Panel = ({
               borderStyle: 'solid',
               borderWidth: '1px',
               padding: '20px',
-              transition: 'background-color 0.3s ease-in-out',
+              transition: 'background-color 0.2s ease-in-out',
               width: '100%',
               [WIDE_PANELS_QUERY]: {
                 minHeight: '120px',
