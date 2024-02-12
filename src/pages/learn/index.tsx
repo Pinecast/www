@@ -13,7 +13,6 @@ import {TunedInPanels} from '@/components/TunedIn';
 import {StickyLine} from '@/components/StickyLine';
 
 export default function Features() {
-  const css = useCSS();
   return (
     <>
       <Head>
@@ -51,17 +50,15 @@ const Header = () => {
       className={css({
         backgroundColor: 'var(--color-space)',
         color: 'var(--color-white)',
-        paddingTop: '200px',
-        paddingBottom: '200px',
+        paddingTop: '120px',
+        paddingBottom: '60px',
         textAlign: 'center',
-        [MOBILE_MEDIA_QUERY]: {
-          paddingTop: '120px',
-          paddingBottom: '0',
-        },
+        [MIN_TABLET_MEDIA_QUERY]: {paddingBottom: '200px'},
       })}
     >
       <H1
         style={{
+          marginBottom: '20px',
           padding: '0 5%',
           [MIN_TABLET_MEDIA_QUERY]: {marginBottom: '50px'},
         }}

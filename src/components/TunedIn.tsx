@@ -857,7 +857,7 @@ export const TunedInPanels = () => {
       <div
         className={css({
           cursor: 'default',
-          paddingTop: '112px',
+          paddingTop: '32px',
           [WIDE_PANELS_QUERY]: {
             // Space from the top of the middle panel
             paddingTop: '136px',
