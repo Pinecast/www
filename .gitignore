@@ -21,3 +21,4 @@ lerna_modules/
 dist/
 
 .next
+out/

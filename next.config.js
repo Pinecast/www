@@ -12,7 +12,11 @@ module.exports = async () => {
     },
   });
 
+  /** @type {import('next').NextConfig} */
   const nextConfig = {
+    output: 'export',
+    // Image Optimization API cannot be enabled for static builds.
+    images: {unoptimized: true},
     webpack: function (config) {
       config.externals ??= {};
       config.externals['styletron-server'] = 'styletron-server';

@@ -1,2 +1,12 @@
 [build]
   command = "npm run build"
+  publish = "out"
+  ignore = "if [ $CACHED_COMMIT_REF == $COMMIT_REF ]; then (exit 1); else git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ../..; fi;"
+
+# Netlify's Next.js Runtime will handle caching but won't generate any functions for SSR support
+# https://github.com/netlify/next-runtime/blob/main/README.md#use-with-next-export
+[build.environment]
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
