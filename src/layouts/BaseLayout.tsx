@@ -93,7 +93,7 @@ export function BaseLayout(
     const heroRef = React.useRef<HTMLDivElement>(null);
 
     const scrollHandler = React.useCallback((props: ElementOutput) => {
-      const windowWidth = window.innerWidth;
+      const windowWidth = document.body.offsetWidth;
       const maxWidthPercent = Number(props.width[1]);
       const maxWidth = (windowWidth - 550) * maxWidthPercent + 550;
       heroRef.current!.style.setProperty(
