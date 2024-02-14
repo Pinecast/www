@@ -211,14 +211,14 @@ export const MainHeader = () => {
           transition:
             'background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, border-radius 0.2s ease-in-out',
           // Prevent the width from shifting when opened.
-          width: 'calc(100vw - 20px - var(--scrollbar-width, 15px))',
+          width: 'calc(100vw - 20px - var(--scrollbar-width, 0))',
           zIndex: navOpen ? 130 : 95,
           [MIN_TABLET_MEDIA_QUERY]: {
             height: '80px',
             top: '20px',
             left: '20px',
             right: '20px',
-            width: 'calc(100vw - 40px - var(--scrollbar-width, 15px))',
+            width: 'calc(100vw - 40px - var(--scrollbar-width, 0))',
           },
         })}
       >
@@ -310,13 +310,13 @@ export const MainHeader = () => {
           transition: 'opacity 0.2s 0.1s ease-in-out, top 0.2s ease-in-out',
           visibility: navOpen ? 'visible' : 'hidden',
           zIndex: navOpen ? 130 : 90,
-          width: 'calc(100vw - 20px - var(--scrollbar-width, 15px))',
+          width: 'calc(100vw - 20px - var(--scrollbar-width, 0))',
           [MIN_TABLET_MEDIA_QUERY]: {
             height: 'min(500px, calc(100vh - 120px))',
             top: navOpen ? '82px' : '80px',
             left: '20px',
             right: '20px',
-            width: 'calc(100vw - 40px - var(--scrollbar-width, 15px))',
+            width: 'calc(100vw - 40px - var(--scrollbar-width, 0))',
           },
         })}
       >

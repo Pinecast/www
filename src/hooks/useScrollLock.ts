@@ -3,9 +3,6 @@ import * as React from 'react';
 let cachedScrollbarWidth: number | null = null;
 
 const calculateScrollbarWidth = (): number => {
-  if (cachedScrollbarWidth !== null) {
-    return cachedScrollbarWidth;
-  }
   let scrollbarWidth = window.innerWidth - document.body.offsetWidth;
   if (scrollbarWidth === 0) {
     const scrollDiv = document.createElement('div');
@@ -14,7 +11,6 @@ const calculateScrollbarWidth = (): number => {
     document.body.appendChild(scrollDiv);
     scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
     document.body.removeChild(scrollDiv);
-    document.body.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
   }
   return scrollbarWidth;
 };
@@ -27,8 +23,14 @@ const getScrollbarWidth = (): number => {
 };
 
 export function useScrollLock() {
+  React.useEffect(() => {
+    const scrollbarWidth = getScrollbarWidth();
+    document.body.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
+  }, []);
+
   const lock = React.useCallback(() => {
     const scrollbarWidth = getScrollbarWidth();
+    document.body.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
     document.body.style.paddingRight = `${scrollbarWidth}px`;
     document.body.style.overflow = 'hidden';
   }, []);
