@@ -202,12 +202,8 @@ export const MainHeader = () => {
           top: '10px',
           left: '10px',
           right: '10px',
-
           justifyContent: 'space-between',
-
-          padding: '20px',
           position: 'fixed',
-
           transition:
             'background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, border-radius 0.2s ease-in-out',
           // Prevent the width from shifting when opened.
@@ -217,6 +213,9 @@ export const MainHeader = () => {
             height: '80px',
             top: '20px',
             left: '20px',
+            paddingLeft: '20px',
+            paddingRight: '20px',
+            alignItems: 'center',
             right: '20px',
             width: 'calc(100vw - 40px - var(--scrollbar-width, 0))',
           },
@@ -229,9 +228,15 @@ export const MainHeader = () => {
             alignItems: 'center',
             appearance: 'none',
             background: 'none',
+            borderTopLeftRadius: 'inherit',
+            borderBottomLeftRadius: 'inherit',
             border: 'none',
             display: 'flex',
             cursor: 'pointer',
+            paddingTop: 0,
+            paddingRight: '24px',
+            paddingBottom: 0,
+            paddingLeft: '24px',
             WebkitAppearance: 'none',
             [MIN_TABLET_MEDIA_QUERY]: {display: 'none'},
           })}
@@ -284,7 +289,14 @@ export const MainHeader = () => {
         >
           <Link
             href="https://pinecast.com/login"
-            className={css({display: 'block', height: '24px'})}
+            className={css({
+              display: 'block',
+              borderTopRightRadius: '20px',
+              paddingTop: '15px',
+              paddingRight: '20px',
+              paddingBottom: '15px',
+              paddingLeft: '20px',
+            })}
           >
             <SignIn size={24} color="var(--color-primary-dark)" />
           </Link>
