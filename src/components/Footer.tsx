@@ -185,7 +185,7 @@ export const Footer = () => {
               title="Follow along"
               links={[
                 ['https://blog.pinecast.com', 'Blog'],
-                ['https://twitter.com/getpinecast', 'Twitter'],
+                ['https://bsky.app/profile/pinecast.bsky.social', 'Bluesky'],
                 ['https://reddit.com/r/pinecast', 'Reddit'],
               ]}
             />
