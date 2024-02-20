@@ -9,8 +9,10 @@ import {
 } from '@/constants';
 import Link from 'next/link';
 import {SignIn} from '@/icons/SignIn';
+import {AudioWaveformIcon} from './AudioWaveformIcon';
 import {MainHeaderLink} from './MainHeaderLink';
 import {Hamburger} from '@/icons/Hamburger';
+import {useAudioManager} from '@/hooks/useAudioManager';
 import {useDismiss} from '@/hooks/useDismiss';
 import {useScrollLock} from '@/hooks/useScrollLock';
 import {Body1, Caption} from './Typography';
@@ -22,6 +24,7 @@ import {
   PERSONAS,
   PersonaSlug,
 } from './CustomerPersona';
+import {Tooltip, TooltipPosition} from './Tooltip';
 
 const PersonaBlock = ({
   caption,
@@ -171,6 +174,8 @@ export const MainHeader = () => {
   const navRef = React.useRef<HTMLDivElement>(null);
   const [navOpen, setNavOpen] = React.useState(false);
 
+  const {loading: audioMangerLoading, muted, toggleMuted} = useAudioManager();
+
   // Prevent background scrolling of the document when the dropdown nav is open.
   const [lock, unlock] = useScrollLock();
 
@@ -252,10 +257,35 @@ export const MainHeader = () => {
             display: 'none',
             gap: '0 1px',
             alignItems: 'center',
-            marginLeft: '-15px',
+            marginLeft: '-18px',
             [MIN_TABLET_MEDIA_QUERY]: {display: 'flex'},
           })}
         >
+          <Tooltip
+            isActive={!audioMangerLoading && muted}
+            position={TooltipPosition.BOTTOM}
+            text="This site is better with sound!"
+          >
+            <button
+              className={css({
+                appearance: 'none',
+                backgroundColor: 'transparent',
+                borderRadius: '18px',
+                borderWidth: '0',
+                cursor: 'pointer',
+                paddingTop: '30px',
+                paddingRight: '23px',
+                paddingBottom: '30px',
+                paddingLeft: '35px',
+              })}
+              onClick={toggleMuted}
+            >
+              <AudioWaveformIcon
+                color="var(--color-primary-dark)"
+                muted={audioMangerLoading ? true : muted}
+              />
+            </button>
+          </Tooltip>
           <MainHeaderLink href="/features">Features</MainHeaderLink>
           <MainHeaderLink
             href="/learn"

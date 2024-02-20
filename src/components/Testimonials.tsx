@@ -11,6 +11,7 @@ import {
   TABLET_MEDIA_QUERY,
 } from '@/constants';
 import {SecondaryButton} from './SecondaryButton';
+import {useAudioManager} from '@/hooks/useAudioManager';
 import {AudioFiles, useSound} from '@/hooks/useSound';
 import {SectionDivider} from './SectionDivider';
 import {TestimonialQuotation, type Script} from './TestimonialQuotation';
@@ -114,15 +115,26 @@ const AudioPlayer = React.memo(
 
       const animationsRef = React.useRef<Animation[]>([]);
 
+      const {muted: globalMuted, setMuted: setGlobalMuted} = useAudioManager();
+
       const {
         element: audioElement,
-        controls: {play, pause},
+        controls: {play, pause, mute, unmute},
         state: {time: currentTimeSec, playing},
         ref: audioRef,
       } = useSound({
         sources: testimonial?.audioFiles,
         autoPlay: supportsWAAPI(),
+        muted: globalMuted,
       });
+
+      React.useEffect(() => {
+        if (globalMuted) {
+          mute();
+        } else {
+          unmute();
+        }
+      }, [globalMuted, mute, unmute]);
 
       React.useImperativeHandle(ref, () => ({
         play,
@@ -457,7 +469,14 @@ const AudioPlayer = React.memo(
               <button
                 type="button"
                 className={css({all: 'unset', appearance: 'none'})}
-                onClick={playing ? pause : play}
+                onClick={() => {
+                  if (playing) {
+                    pause();
+                  } else {
+                    setGlobalMuted(false);
+                    play();
+                  }
+                }}
               >
                 <Caption
                   style={{
