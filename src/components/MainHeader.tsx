@@ -25,6 +25,7 @@ import {
   PersonaSlug,
 } from './CustomerPersona';
 import {Tooltip, TooltipPosition} from './Tooltip';
+import {ScreenReaderText} from './ScreenReaderText';
 
 const PersonaBlock = ({
   caption,
@@ -266,25 +267,30 @@ export const MainHeader = () => {
             position={TooltipPosition.BOTTOM}
             text="This site is better with sound!"
           >
-            <button
-              className={css({
-                appearance: 'none',
-                backgroundColor: 'transparent',
-                borderRadius: '18px',
-                borderWidth: '0',
-                cursor: 'pointer',
-                paddingTop: '30px',
-                paddingRight: '23px',
-                paddingBottom: '30px',
-                paddingLeft: '35px',
-              })}
-              onClick={toggleMuted}
-            >
-              <AudioWaveformIcon
-                color="var(--color-primary-dark)"
-                muted={audioMangerLoading ? true : muted}
-              />
-            </button>
+            <label>
+              <ScreenReaderText>
+                {audioMangerLoading || muted ? 'Unmute' : 'Mute'}
+              </ScreenReaderText>
+              <button
+                className={css({
+                  appearance: 'none',
+                  backgroundColor: 'transparent',
+                  borderRadius: '18px',
+                  borderWidth: '0',
+                  cursor: 'pointer',
+                  paddingTop: '30px',
+                  paddingRight: '23px',
+                  paddingBottom: '30px',
+                  paddingLeft: '35px',
+                })}
+                onClick={toggleMuted}
+              >
+                <AudioWaveformIcon
+                  color="var(--color-primary-dark)"
+                  muted={audioMangerLoading ? true : muted}
+                />
+              </button>
+            </label>
           </Tooltip>
           <MainHeaderLink href="/features">Features</MainHeaderLink>
           <MainHeaderLink

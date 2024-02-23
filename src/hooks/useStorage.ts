@@ -3,7 +3,7 @@ import * as React from 'react';
 export function useStorage<T>(
   key: string,
   initialValue?: T,
-  channelName?: string,
+  onChannelMessage?: (message: T) => void,
 ) {
   const [storedValue, setStoredValue] = React.useState<T>(() => {
     if (typeof window === 'undefined') {
@@ -17,15 +17,22 @@ export function useStorage<T>(
     }
   });
 
+  // Expose this wrapper around useState's setter that also
+  // persists to localStorage and notifies background tabs.
   const setValue = (value: T | ((val: T) => T)) => {
     try {
+      // Values can be functions, following useState's API.
       const valueToStore =
         value instanceof Function ? value(storedValue) : value;
+
       setStoredValue(valueToStore);
+
       if (typeof window !== 'undefined') {
         window.localStorage.setItem(key, JSON.stringify(valueToStore));
-        if (channelName && typeof BroadcastChannel !== 'undefined') {
-          const broadcastChannel = new BroadcastChannel(channelName);
+
+        // Notify background tabs of the changed value.
+        if (typeof BroadcastChannel !== 'undefined') {
+          const broadcastChannel = new BroadcastChannel(key);
           broadcastChannel.postMessage(valueToStore);
           broadcastChannel.close();
         }
@@ -33,31 +40,22 @@ export function useStorage<T>(
     } catch {}
   };
 
+  // Listen for messages from background tabs so the
+  // current tab can react to changed values.
   React.useEffect(() => {
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === key && event.newValue !== null) {
-        setStoredValue(JSON.parse(event.newValue));
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    const broadcastChannel =
-      channelName && typeof BroadcastChannel !== 'undefined'
-        ? new BroadcastChannel(channelName)
+    const channel =
+      typeof BroadcastChannel !== 'undefined'
+        ? new BroadcastChannel(key)
         : null;
-
-    const handleMessage = (event: MessageEvent) => setStoredValue(event.data);
-    broadcastChannel?.addEventListener('message', handleMessage);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      broadcastChannel?.removeEventListener('message', handleMessage);
-      broadcastChannel?.close();
+    const channelMessageHandler = (event: MessageEvent) => {
+      onChannelMessage?.(event.data);
     };
-  }, [key, channelName]);
+    channel?.addEventListener('message', channelMessageHandler);
+    return () => {
+      channel?.removeEventListener('message', channelMessageHandler);
+      channel?.close();
+    };
+  }, [key, initialValue, onChannelMessage]);
 
   return [storedValue, setValue] as const;
 }
-
-export default useStorage;

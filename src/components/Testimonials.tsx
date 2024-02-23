@@ -131,10 +131,11 @@ const AudioPlayer = React.memo(
       React.useEffect(() => {
         if (globalMuted) {
           mute();
+          pause();
         } else {
           unmute();
         }
-      }, [globalMuted, mute, unmute]);
+      }, [globalMuted, mute, unmute, pause]);
 
       React.useImperativeHandle(ref, () => ({
         play,

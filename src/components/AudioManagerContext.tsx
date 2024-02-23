@@ -1,19 +1,25 @@
 import * as React from 'react';
-import useStorage from '@/hooks/useStorage';
+import {useStorage} from '@/hooks/useStorage';
 
-type AudioManagerSettings = {loading: boolean; muted: boolean};
+type AudioManagerSettings = {
+  muted: boolean;
+};
 
 type AudioManagerApi = {
+  loading: boolean;
   setMuted: (value: boolean) => void;
   toggleMuted: () => void;
 };
 
 export type AudioManager = AudioManagerSettings & AudioManagerApi;
 
-const DEFAULT_AUDIO_SETTINGS = {loading: true, muted: true};
+const DEFAULT_AUDIO_SETTINGS = {
+  muted: true,
+};
 
 export const Context = React.createContext<AudioManager>({
   ...DEFAULT_AUDIO_SETTINGS,
+  loading: true,
   setMuted: () => {},
   toggleMuted: () => {},
 });
@@ -22,11 +28,20 @@ type AudioManagerProviderProps = {children: React.ReactNode};
 
 export function AudioManagerProvider({children}: AudioManagerProviderProps) {
   const [loading, setLoading] = React.useState<boolean>(true);
+
   const [settings, setSettings] = useStorage<AudioManagerSettings>(
     'audioManagerSettings',
     DEFAULT_AUDIO_SETTINGS,
-    'audioManagerChannel',
+    handleBroadcastMessage,
   );
+
+  function handleBroadcastMessage(data: AudioManagerSettings) {
+    // Mute background tabs when this current tab becomes unmuted.
+    if (!data.muted) {
+      setMuted(true);
+    }
+  }
+
   const {muted} = settings;
 
   React.useEffect(() => {
