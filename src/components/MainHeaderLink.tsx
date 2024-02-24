@@ -18,9 +18,9 @@ export const MainHeaderLink = ({
     <Link
       className={css({
         ...MonumentGroteskBold,
-        borderRadius: '14px',
+        borderRadius: '18px',
         color: 'var(--color-primary-dark)',
-        padding: '24px 15px',
+        padding: '27px 20px',
         textDecoration: 'none',
         textUnderlineOffset: '0.2em',
         ':hover': {
