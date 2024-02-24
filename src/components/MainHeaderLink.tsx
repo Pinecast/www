@@ -3,7 +3,6 @@ import {MonumentGroteskBold} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
 import Link from 'next/link';
 import {ReactNode} from 'react';
-import {StyleObject} from 'styletron-react';
 
 export const MainHeaderLink = ({
   children,
