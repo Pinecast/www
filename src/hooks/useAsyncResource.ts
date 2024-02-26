@@ -111,6 +111,85 @@ export const useAsyncVideo = (
   return returnValue.current;
 };
 
+export enum AudioMimeType {
+  AAC = 'audio/aac',
+  MP3 = 'audio/mpeg',
+  OPUS = 'audio/ogg',
+}
+
+export const useAsyncAudio = (
+  tracks: {
+    [mimeType: string]: string;
+  },
+  doLoad: boolean,
+  autoplay: boolean = false,
+): [HTMLAudioElement, boolean] => {
+  const returnValue = React.useRef<[any, any]>([null, false]);
+  const audio = React.useRef<HTMLAudioElement>();
+  React.useEffect(() => {
+    return () => {
+      if (!audio.current) return;
+      audio.current!.pause();
+      audio.current!.remove();
+    };
+  }, []);
+  if (typeof Audio === 'undefined') {
+    return [null as any, false];
+  }
+  const [loaded, setLoaded] = React.useState(false);
+  React.useEffect(() => {
+    let unloaded = false;
+    if (!audio.current) return;
+    audio.current!.onload = () => {
+      if (unloaded) return;
+      setLoaded(true);
+    };
+    return () => {
+      unloaded = true;
+    };
+  });
+  if (!doLoad) {
+    return [null as any, false];
+  }
+  if (!audio.current) {
+    const aud = document.createElement('audio');
+    audio.current = aud;
+    Object.keys(tracks)
+      .sort((a, b) => b.length - a.length)
+      .forEach(mimeType => {
+        const track = tracks[mimeType];
+        if (!aud.canPlayType(mimeType)) {
+          return;
+        }
+        const source = document.createElement('source');
+        source.src = track;
+        source.type = mimeType;
+        aud.appendChild(source);
+      });
+    aud.loop = autoplay;
+    aud.controls = false;
+    aud.autoplay = autoplay;
+    aud.muted = true;
+    aud.oncanplaythrough = () => {
+      setLoaded(true);
+    };
+    aud.load();
+    if (aud.readyState >= 3) {
+      setLoaded(true);
+    }
+    aud.style.position = 'fixed';
+    aud.style.pointerEvents = 'none';
+    aud.style.top = '0';
+    aud.style.opacity = '0';
+    aud.style.height = '1px';
+    aud.style.width = '1px';
+    document.body.appendChild(aud);
+  }
+  returnValue.current[0] = audio.current;
+  returnValue.current[1] = loaded;
+  return returnValue.current;
+};
+
 export function preferDrawable(a: AsyncDrawable, b: AsyncDrawable) {
   return a[1] ? a : b;
 }
