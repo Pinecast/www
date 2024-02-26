@@ -214,7 +214,7 @@ export const MainHeader = () => {
             'background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, border-radius 0.2s ease-in-out',
           // Prevent the width from shifting when opened.
           width: 'calc(100vw - 20px - var(--scrollbar-width, 0))',
-          zIndex: navOpen ? 130 : 95,
+          zIndex: navOpen ? 140 : 95,
           [MIN_TABLET_MEDIA_QUERY]: {
             height: '80px',
             top: '20px',
@@ -224,6 +224,23 @@ export const MainHeader = () => {
             alignItems: 'center',
             right: '20px',
             width: 'calc(100vw - 40px - var(--scrollbar-width, 0))',
+          },
+          ['::before']: {
+            // Patch up the missing bottom border so the tooltip is layered correctly atop the nav + the dimmed overlay when the nav is expanded.
+            borderLeft: '1px solid var(--color-line)',
+            borderRight: '1px solid var(--color-line)',
+            content: '""',
+            display: 'block',
+            height: '1px',
+            left: '-1px',
+            opacity: navOpen ? 1 : 0,
+            pointerEvents: 'none',
+            position: 'absolute',
+            right: '-1px',
+            top: '58px',
+            [MIN_TABLET_MEDIA_QUERY]: {
+              top: '78px',
+            },
           },
         })}
       >
@@ -283,7 +300,10 @@ export const MainHeader = () => {
                   paddingBottom: '30px',
                   paddingLeft: '35px',
                 })}
-                onClick={toggleMuted}
+                onClick={evt => {
+                  evt.preventDefault();
+                  toggleMuted();
+                }}
               >
                 <AudioWaveformIcon
                   color="var(--color-primary-dark)"
