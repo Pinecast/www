@@ -226,7 +226,6 @@ export const Tooltip = React.memo(function Tooltip({
           display: 'block',
           opacity: '1',
           pointerEvents: 'unset',
-          transitionDelay: '0',
         },
         ['::before']: {
           ...MonumentGroteskSemiMono,
