@@ -12,7 +12,7 @@ import {SignIn} from '@/icons/SignIn';
 import {AudioWaveformIcon} from './AudioWaveformIcon';
 import {MainHeaderLink} from './MainHeaderLink';
 import {Hamburger} from '@/icons/Hamburger';
-import {useAudioManager, useSoundEffectManager} from '@/hooks/useAudioManager';
+import {SoundEffect, useAudioManager} from '@/hooks/useAudioManager';
 import {useDismiss} from '@/hooks/useDismiss';
 import {useScrollLock} from '@/hooks/useScrollLock';
 import {Body1, Caption} from './Typography';
@@ -175,9 +175,12 @@ export const MainHeader = () => {
   const navRef = React.useRef<HTMLDivElement>(null);
   const [navOpen, setNavOpen] = React.useState(false);
 
-  const {loading: audioMangerLoading, muted, toggleMuted} = useAudioManager();
-
-  const {play} = useSoundEffectManager();
+  const {
+    loading: audioMangerLoading,
+    muted,
+    toggleMuted,
+    playSoundEffect,
+  } = useAudioManager();
 
   // Prevent background scrolling of the document when the dropdown nav is open.
   const [lock, unlock] = useScrollLock();
@@ -318,7 +321,7 @@ export const MainHeader = () => {
           <MainHeaderLink
             href="/learn"
             onClick={() => {
-              play('clickDrop');
+              playSoundEffect(SoundEffect.CLICK_DROP);
               setNavOpen(prevNavOpen => !prevNavOpen);
             }}
           >
