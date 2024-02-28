@@ -16,7 +16,7 @@ export const SplashIntro = ({onComplete}: {onComplete: () => void}) => {
         left: '0',
         right: '0',
         bottom: '0',
-        zIndex: 130,
+        zIndex: 160,
       }}
     />
   );
