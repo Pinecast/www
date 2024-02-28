@@ -17,7 +17,7 @@ const baseStyles: any = {
   marginRight: 'auto',
   width: '50px',
   height: '50px',
-  zIndex: 140,
+  zIndex: 150,
   [TABLET_MEDIA_QUERY]: {
     height: '40px',
     width: '40px',
