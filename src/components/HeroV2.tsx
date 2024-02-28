@@ -22,6 +22,8 @@ import {
   roundedRectPath,
 } from '@/canvasHelpers';
 import {useCanvasDrawing} from '@/hooks/useCanvasDrawing';
+import {useAudioManager} from '@/hooks/useAudioManager';
+import {SoundEffect} from '@/hooks/useSoundEffects';
 
 const RADIUS_OFFSET = 60;
 const RADIUS_OFFSET_TABLET = 60;
@@ -47,6 +49,15 @@ type RadiusTween = {
 
 export const HeroV2 = () => {
   const css = useCSS();
+  const [entering, setEntering] = React.useState<boolean>(false);
+  const [exiting, setExiting] = React.useState<boolean>(false);
+  const enteringSoundPlayed = React.useRef<boolean>(false);
+  const exitingSoundPlayed = React.useRef<boolean>(false);
+  const prevScrollY = React.useRef(0);
+
+  const {
+    soundEffects: {play: playSoundEffect},
+  } = useAudioManager();
 
   const wrapper = React.useRef<HTMLElement>(null);
   const size = React.useRef({width: 0, height: 0, windowHeight: 0});
@@ -55,6 +66,22 @@ export const HeroV2 = () => {
     size.current.height = window.innerHeight;
     size.current.windowHeight = window.innerHeight;
   }
+
+  React.useEffect(() => {
+    if (!entering || enteringSoundPlayed.current) {
+      return;
+    }
+    enteringSoundPlayed.current = true;
+    playSoundEffect(SoundEffect.SWOOSH_TRANSITION);
+  }, [entering, playSoundEffect]);
+
+  React.useEffect(() => {
+    if (!exiting || exitingSoundPlayed.current) {
+      return;
+    }
+    exitingSoundPlayed.current = true;
+    playSoundEffect(SoundEffect.PAGE_TRANSITION_3);
+  }, [exiting, playSoundEffect]);
 
   const [isMobile, setIsMobile] = React.useState(
     size.current.width < MOBILE_BREAKPOINT,
@@ -151,12 +178,47 @@ export const HeroV2 = () => {
     outer: 0,
   });
 
+  React.useEffect(() => {
+    prevScrollY.current = window.scrollY;
+    const scrollHandler = () => {
+      const {scrollY} = window;
+      const {windowHeight} = size.current;
+      if (scrollY > windowHeight) {
+        return;
+      }
+
+      const scrollRatio = scrollY / windowHeight;
+      const scrollingDown = scrollY >= prevScrollY.current;
+
+      const nowEntering =
+        scrollingDown && scrollRatio >= 0.05 && scrollRatio < 0.1;
+      if (entering !== nowEntering) {
+        enteringSoundPlayed.current = false;
+        setEntering(nowEntering);
+      }
+
+      const nowExiting =
+        scrollingDown && scrollRatio >= 0.775 && scrollRatio < 0.85;
+      if (exiting !== nowExiting) {
+        exitingSoundPlayed.current = false;
+        setExiting(nowExiting);
+      }
+
+      prevScrollY.current = scrollY > 0 ? scrollY : 0;
+    };
+    document.addEventListener('scroll', scrollHandler);
+    return () => {
+      document.removeEventListener('scroll', scrollHandler);
+    };
+  });
+
   useCanvasDrawing(
     canvas,
     React.useCallback(
       ctx => {
         const {width, height, windowHeight} = size.current;
         const scrollY = window.scrollY;
+
         if (scrollY > windowHeight) {
           ctx.clearRect(0, 0, canvas.current!.width, canvas.current!.height);
           return;

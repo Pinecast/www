@@ -1,4 +1,5 @@
 import Lottie from 'lottie-react';
+import * as React from 'react';
 import * as splash from '@/animations/splash.json';
 import {useCSS} from '@/hooks/useCSS';
 

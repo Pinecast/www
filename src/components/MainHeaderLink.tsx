@@ -30,14 +30,7 @@ export const MainHeaderLink = ({
         },
       })}
       href={href}
-      onClick={
-        onClick
-          ? (evt: React.MouseEvent) => {
-              evt.preventDefault();
-              onClick(evt);
-            }
-          : undefined
-      }
+      onClick={onClick}
     >
       {children}
     </Link>

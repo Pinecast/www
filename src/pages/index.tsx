@@ -16,12 +16,28 @@ import {Testimonials} from '@/components/Testimonials';
 import {StickyLine} from '@/components/StickyLine';
 import {useCSS} from '@/hooks/useCSS';
 import {TunedInHeader, TunedInPanels} from '@/components/TunedIn';
+import {useAudioManager} from '@/hooks/useAudioManager';
+import {SoundEffect} from '@/hooks/useSoundEffects';
 
+const SPLASH_ENABLED = false;
 const STICKY_LINE_SIZE = 1.5;
 
 export default function Home() {
   const css = useCSS();
   const [splashEnded, setSplashEnded] = React.useState(false);
+
+  const {
+    loading: audioManagerLoading,
+    muted,
+    soundEffects: {play: playSoundEffect},
+  } = useAudioManager();
+
+  React.useEffect(() => {
+    if (!SPLASH_ENABLED || audioManagerLoading) {
+      return;
+    }
+    playSoundEffect(SoundEffect.SITE_INTRO);
+  }, [audioManagerLoading, muted, playSoundEffect]);
 
   return (
     <>
@@ -35,8 +51,16 @@ export default function Home() {
         <link rel="prefetch" href="/images/globe-full.jpg" />
         <link rel="prefetch" href="/videos/Footer2x.mp4" />
       </Head>
-      {/* {!splashEnded && <SplashIntro onComplete={() => setSplashEnded(true)} />} */}
-      <MainLogo />
+      {SPLASH_ENABLED ? (
+        <>
+          {!splashEnded && (
+            <SplashIntro onComplete={() => setSplashEnded(true)} />
+          )}
+          <MainLogo autoplayAnimation={splashEnded} />
+        </>
+      ) : (
+        <MainLogo />
+      )}
       <MainHeader />
       <HeroV2 />
       <Globe />

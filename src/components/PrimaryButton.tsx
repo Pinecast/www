@@ -8,10 +8,14 @@ import {StyleObject} from 'styletron-react';
 export const PrimaryButton = ({
   href,
   children,
+  onClick,
+  onPointerDown,
   style,
 }: {
   href: string;
   children: ReactNode;
+  onClick?: (evt: React.MouseEvent) => void;
+  onPointerDown?: (evt: React.PointerEvent) => void;
   style?: StyleObject;
 }) => {
   const css = useCSS();
@@ -47,6 +51,8 @@ export const PrimaryButton = ({
         },
       })}
       href={href}
+      onClick={onClick}
+      onPointerDown={onPointerDown}
     >
       {children}
     </Link>

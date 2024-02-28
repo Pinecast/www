@@ -1,8 +1,6 @@
 import * as React from 'react';
 import {useStorage} from '@/hooks/useStorage';
-import {SoundEffect} from '@/hooks/useAudioManager';
-
-export type SoundEffectSource = [SoundEffect, HTMLAudioElement, boolean];
+import {SoundEffectsApi, useSoundEffects} from '@/hooks/useSoundEffects';
 
 type AudioManagerSettings = {
   muted: boolean;
@@ -10,10 +8,9 @@ type AudioManagerSettings = {
 
 type AudioManagerApi = {
   loading: boolean;
-  soundEffects?: SoundEffectSource[];
+  soundEffects: SoundEffectsApi;
   setMuted: (value: boolean) => void;
   toggleMuted: () => void;
-  playSoundEffect: (src: SoundEffect) => Promise<void> | void;
 };
 
 export type AudioManager = AudioManagerSettings & AudioManagerApi;
@@ -25,21 +22,20 @@ const DEFAULT_AUDIO_SETTINGS = {
 export const Context = React.createContext<AudioManager>({
   ...DEFAULT_AUDIO_SETTINGS,
   loading: true,
-  soundEffects: [],
+  soundEffects: {
+    sounds: [],
+    play: () => {},
+  },
   setMuted: () => {},
   toggleMuted: () => {},
-  playSoundEffect: () => {},
 });
 
 type AudioManagerProviderProps = {
-  soundEffects?: SoundEffectSource[];
+  soundEffects?: SoundEffectsApi;
   children: React.ReactNode;
 };
 
-export function AudioManagerProvider({
-  soundEffects = [],
-  children,
-}: AudioManagerProviderProps) {
+export function AudioManagerProvider({children}: AudioManagerProviderProps) {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [settings, setSettings] = useStorage<AudioManagerSettings>(
     'audioManagerSettings',
@@ -53,21 +49,9 @@ export function AudioManagerProvider({
     }
   }
 
-  // Some browsers return `Promise` on `.play()` and may throw errors
-  // if one tries to execute another `.play()` or `.pause()` while that
-  // promise is resolving. So we prevent that with this lock.
-  // See: https://bugs.chromium.org/p/chromium/issues/detail?id=593273
-  const playLockMapRef = React.useRef(new Map<HTMLAudioElement, boolean>());
-
-  const soundEffectsMap = React.useMemo(() => {
-    const map = new Map<SoundEffect, [HTMLAudioElement | null, boolean]>(null);
-    soundEffects.map?.(([src, audioEl, loaded]) =>
-      map.set(src, [audioEl, loaded]),
-    );
-    return map;
-  }, [soundEffects]);
-
   const {muted} = settings;
+
+  const soundEffects = useSoundEffects({muted});
 
   React.useEffect(() => {
     setLoading(false);
@@ -98,43 +82,12 @@ export function AudioManagerProvider({
     [toggleSetting],
   );
 
-  // Enforce global mute for all sound effects.
+  // Enforce global mute on all sound effects.
   React.useEffect(() => {
-    for (const [audio] of soundEffectsMap.values()) {
-      if (audio) {
-        audio.muted = muted;
-      }
-    }
-  }, [muted, soundEffectsMap]);
-
-  const playSoundEffect = React.useCallback(
-    (src: SoundEffect) => {
-      const activeAudio = soundEffectsMap.get(src);
-      if (!activeAudio || activeAudio[0] === null) {
-        return;
-      }
-      const [audio, loaded] = activeAudio;
-      const playLock = playLockMapRef.current.get(audio);
-      if (playLock) {
-        return;
-      }
-      audio.currentTime = 0;
-      audio.muted = muted;
-      if (!loaded) {
-        audio.load();
-      }
-      const promise = audio.play();
-      const isPromise = typeof promise === 'object';
-      if (!isPromise) {
-        return;
-      }
-      const lock = () => playLockMapRef.current.set(audio, true);
-      const unlock = () => playLockMapRef.current.set(audio, false);
-      lock();
-      promise.then(unlock, unlock);
-    },
-    [muted, soundEffectsMap],
-  );
+    soundEffects.sounds.forEach(sound => {
+      sound.muted = muted;
+    });
+  }, [muted, soundEffects.sounds]);
 
   // Since the API is an object, when the parent re-renders, this
   // provider will re-render every consumer unless memoized.
@@ -145,9 +98,8 @@ export function AudioManagerProvider({
       muted,
       setMuted,
       toggleMuted,
-      playSoundEffect,
     }),
-    [loading, soundEffects, muted, setMuted, toggleMuted, playSoundEffect],
+    [loading, soundEffects, muted, setMuted, toggleMuted],
   );
 
   return <Context.Provider value={api}>{children}</Context.Provider>;

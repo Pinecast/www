@@ -35,6 +35,8 @@ import monetization5 from '@/icons/globe/monetization/5.svg';
 import Simplex from 'ts-perlin-simplex';
 import {useDualVideoManager} from '@/hooks/useDualVideoManager';
 import {dpi} from '@/canvasHelpers';
+import { useAudioManager } from '@/hooks/useAudioManager';
+import { SoundEffect } from '@/hooks/useSoundEffects';
 
 const callWhenIdle = (callback: IdleRequestCallback) => {
   if (typeof window.requestIdleCallback === 'undefined') {
@@ -536,6 +538,10 @@ export const Globe = () => {
   useDarkSection(ref);
   const menu = React.useRef<SVGSVGElement>(null);
 
+  const {
+    soundEffects: {play: playSoundEffect},
+  } = useAudioManager();
+
   const [isMobile, setIsMobile] = React.useState(false);
   // const [{width, height}, setWrapperSize] = React.useState<{
   //   width: number;
@@ -615,6 +621,14 @@ export const Globe = () => {
       setCurrentFeatureSlug(newFeature);
     }, []),
   );
+
+  React.useEffect(() => {
+    if (!currentFeatureSlug) {
+      return;
+    }
+    playSoundEffect(SoundEffect.GLOBE_TRANSITION_STATES);
+  }, [currentFeatureSlug, playSoundEffect]);
+
 
   const [segmentStart, segmentEnd] = getVideoSegmentBounds(
     currentFeatureSlug ?? 'distribution',

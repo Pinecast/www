@@ -12,7 +12,7 @@ import {SignIn} from '@/icons/SignIn';
 import {AudioWaveformIcon} from './AudioWaveformIcon';
 import {MainHeaderLink} from './MainHeaderLink';
 import {Hamburger} from '@/icons/Hamburger';
-import {SoundEffect, useAudioManager} from '@/hooks/useAudioManager';
+import {useAudioManager} from '@/hooks/useAudioManager';
 import {useDismiss} from '@/hooks/useDismiss';
 import {useScrollLock} from '@/hooks/useScrollLock';
 import {Body1, Caption} from './Typography';
@@ -26,6 +26,7 @@ import {
 } from './CustomerPersona';
 import {Tooltip, TooltipPosition} from './Tooltip';
 import {ScreenReaderText} from './ScreenReaderText';
+import {SoundEffect} from '@/hooks/useSoundEffects';
 
 const PersonaBlock = ({
   caption,
@@ -175,11 +176,13 @@ export const MainHeader = () => {
   const navRef = React.useRef<HTMLDivElement>(null);
   const [navOpen, setNavOpen] = React.useState(false);
 
+  const muteToggleTimer = React.useRef<NodeJS.Timeout>();
+
   const {
     loading: audioMangerLoading,
+    soundEffects: {play: playSoundEffect},
     muted,
     toggleMuted,
-    playSoundEffect,
   } = useAudioManager();
 
   // Prevent background scrolling of the document when the dropdown nav is open.
@@ -307,6 +310,18 @@ export const MainHeader = () => {
                 })}
                 onClick={evt => {
                   evt.preventDefault();
+
+                  if (muted) {
+                    playSoundEffect(SoundEffect.SOUND_ON_1);
+                  }
+
+                  clearTimeout(muteToggleTimer.current);
+                  muteToggleTimer.current = setTimeout(() => {
+                    if (!muted) {
+                      playSoundEffect(SoundEffect.SOUND_OFF_1);
+                    }
+                  }, 0);
+
                   toggleMuted();
                 }}
               >
@@ -317,10 +332,16 @@ export const MainHeader = () => {
               </button>
             </label>
           </Tooltip>
-          <MainHeaderLink href="/features">Features</MainHeaderLink>
+          <MainHeaderLink
+            href="/features"
+            onClick={() => playSoundEffect(SoundEffect.GLOBE_TRANSITION_STATES)}
+          >
+            Features
+          </MainHeaderLink>
           <MainHeaderLink
             href="/learn"
-            onClick={() => {
+            onClick={evt => {
+              evt.preventDefault();
               playSoundEffect(SoundEffect.CLICK_DROP);
               setNavOpen(prevNavOpen => !prevNavOpen);
             }}
@@ -338,7 +359,10 @@ export const MainHeader = () => {
           <SecondaryButton href="https://pinecast.com/login">
             Sign in
           </SecondaryButton>
-          <PrimaryButton href="https://pinecast.com/signup">
+          <PrimaryButton
+            href="https://pinecast.com/signup"
+            onPointerDown={() => playSoundEffect(SoundEffect.CTA_CLICK_3)}
+          >
             Sign up
           </PrimaryButton>
         </div>

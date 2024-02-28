@@ -7,6 +7,8 @@ import * as logoLoad from '@/animations/logo-load.json';
 import * as logoLoadDark from '@/animations/logo-load-dark.json';
 import Link from 'next/link';
 import {useCSS} from '@/hooks/useCSS';
+import {useAudioManager} from '@/hooks/useAudioManager';
+import {SoundEffect} from '@/hooks/useSoundEffects';
 
 const baseStyles: any = {
   position: 'fixed',
@@ -25,9 +27,21 @@ const baseStyles: any = {
   },
 };
 
-export const MainLogo = ({startDark = false}: {startDark?: boolean} = {}) => {
+export const MainLogo = ({
+  autoplayAnimation = true,
+  startDark = false,
+}: {
+  autoplayAnimation?: boolean;
+  startDark?: boolean;
+}) => {
   const css = useCSS();
   const [animated, setAnimated] = React.useState(false);
+  const {
+    soundEffects: {play: playSoundEffect},
+  } = useAudioManager();
+  const onCompleteAnimation = React.useCallback(() => {
+    setAnimated(true);
+  }, []);
   return (
     <Link
       href="/"
@@ -39,19 +53,20 @@ export const MainLogo = ({startDark = false}: {startDark?: boolean} = {}) => {
         },
         ':active svg': {transform: 'scale(0.9, 0.9)'},
       })}
+      onClick={() => playSoundEffect(SoundEffect.LOGO_ROLLOVER_1)}
     >
-      <Lottie
-        animationData={startDark ? logoLoadDark : logoLoad}
-        className={css({
-          ...baseStyles,
-          visibility: !animated ? 'visible' : 'hidden',
-        })}
-        loop={false}
-        aria-hidden="true"
-        onComplete={React.useCallback(() => {
-          setAnimated(true);
-        }, [])}
-      />
+      {autoplayAnimation && (
+        <Lottie
+          animationData={startDark ? logoLoadDark : logoLoad}
+          className={css({
+            ...baseStyles,
+            visibility: !animated ? 'visible' : 'hidden',
+          })}
+          loop={false}
+          aria-hidden="true"
+          onComplete={onCompleteAnimation}
+        />
+      )}
       <Logo
         size={50}
         color="var(--color-primary-dark)"

@@ -16,6 +16,8 @@ import {useIntersectionProgress} from '@/hooks/useIntersectionProgress';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
 import {PERSONAS} from './CustomerPersona';
+import { useAudioManager } from '@/hooks/useAudioManager';
+import { SoundEffect } from '@/hooks/useSoundEffects';
 
 const VIDEO_WIDTH = 1060;
 const VIDEO_HEIGHT = 1440;
@@ -216,6 +218,10 @@ const Dial = React.memo(
     const desktopDialRef = React.useRef<SVGGElement>(null);
     const desktopMarkingsRef = React.useRef<SVGGElement>(null);
 
+    const {
+      soundEffects: {play: playSoundEffect},
+    } = useAudioManager();
+
     React.useImperativeHandle(ref, () => ({
       rotateMobile: (degrees: number) => {
         mobileDialRef.current!.style.transform = `rotate(${degrees}deg)`;
@@ -232,6 +238,8 @@ const Dial = React.memo(
         mobileMarkingsRef.current!.style.opacity = degrees === 0 ? '0' : '1';
       },
       rotateDesktop: (degrees: number) => {
+        playSoundEffect(SoundEffect.KNOB_CLICK);
+
         desktopDialRef.current!.style.transform = `rotate(${degrees}deg)`;
         desktopDialRef.current!.style.setProperty(
           '--dial-line-transition-duration',
@@ -246,6 +254,7 @@ const Dial = React.memo(
         desktopMarkingsRef.current!.style.opacity = degrees === 0 ? '0' : '1';
       },
     }));
+
     return (
       <>
         <svg
@@ -773,6 +782,10 @@ export const TunedInPanels = () => {
     React.useState<boolean>(false);
   const [rightActiveDesktop, setRightActiveDesktop] =
     React.useState<boolean>(false);
+
+    const {
+      soundEffects: {play: playSoundEffect},
+    } = useAudioManager();
 
   const mobilePanels = [
     {...PANELS.left, isActive: leftActiveMobile},

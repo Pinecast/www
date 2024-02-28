@@ -10,6 +10,8 @@ import {Expandable} from './Expandable';
 import {Collapse} from '@/icons/Collapse';
 import {Expand} from '@/icons/Expand';
 import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY} from '@/constants';
+import { useAudioManager } from '@/hooks/useAudioManager';
+import { SoundEffect } from '@/hooks/useSoundEffects';
 
 const BUTTON_STYLE = {
   fontSize: '14px',
@@ -470,6 +472,9 @@ const AddonAccordionItem = ({
   const css = useCSS();
   const id = React.useId();
   const [open, setOpen] = React.useState(false);
+  const {
+    soundEffects: {play: playSoundEffect},
+  } = useAudioManager();
   return (
     <div
       role="button"
@@ -482,8 +487,8 @@ const AddonAccordionItem = ({
         // to preventing text selection with `user-select: none` or setting a transparent
         // `::selection` background, we clear the highlights using JS.
         document.getSelection()?.removeAllRanges?.();
-
         setOpen(!open);
+        playSoundEffect(SoundEffect.CLICK_DROP);
       }}
       className={css({
         ...(!open ? {userSelect: 'none'} : {}),

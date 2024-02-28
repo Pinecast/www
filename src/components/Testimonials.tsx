@@ -18,6 +18,8 @@ import {TestimonialQuotation, type Script} from './TestimonialQuotation';
 
 import * as livingBlindfully from '../../public/testimonials/living-blindfully.json';
 import * as makeLifeWork from '../../public/testimonials/make-life-work.json';
+import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
+import {SoundEffect} from '@/hooks/useSoundEffects';
 
 const supportsWAAPI = () =>
   Boolean(
@@ -703,6 +705,21 @@ export const Testimonials = ({
   zIndex: number;
 }) => {
   const css = useCSS();
+  const {
+    soundEffects: {play: playSoundEffect},
+  } = useAudioManager();
+  const soundSentinelRef = React.useRef<HTMLDivElement>(null);
+  useIntersectionVisibility(
+    soundSentinelRef,
+    React.useCallback(
+      intersecting => {
+        if (intersecting) {
+          playSoundEffect(SoundEffect.SWOOSH_TRANSITION);
+        }
+      },
+      [playSoundEffect],
+    ),
+  );
   return (
     <>
       <section
@@ -746,6 +763,7 @@ export const Testimonials = ({
             })}
           >
             <div
+              ref={soundSentinelRef}
               className={css({
                 gridColumnStart: '3',
                 gridColumnEnd: '-3',
