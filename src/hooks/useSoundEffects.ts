@@ -25,6 +25,26 @@ export enum SoundEffect {
   SWOOSH_TRANSITION = '/sounds/swoosh-transition.mp3',
 }
 
+const browserFirstClick = new Promise<void>(resolve => {
+  document.addEventListener('click', () => {
+    resolve();
+  });
+});
+
+// This will let us fire a callback on the first click event.
+// However, we don't want the callback to be preserved if a sound hasn't been played yet,
+// since this will cause all sounds before the first click to play at once.
+// Clearing the callback will prevent this from happening, but ensure that subsequent
+// sounds play as expected.
+let nextCallback: (() => void) | null = null;
+function playOnFirstClick(callback: () => void) {
+  nextCallback = callback;
+  browserFirstClick.then(() => {
+    nextCallback?.();
+    nextCallback = null;
+  });
+}
+
 const {
   CLICK_DROP,
   CLICK,
@@ -72,6 +92,11 @@ export const useSoundEffects = ({
   // See: https://bugs.chromium.org/p/chromium/issues/detail?id=593273
   const playLockMapRef = React.useRef(new Map<HTMLAudioElement, boolean>());
 
+  const soundEffectsMap = React.useRef(
+    new Map<SoundEffect, [HTMLAudioElement | null, boolean]>(),
+  );
+  const sounds = React.useRef<HTMLAudioElement[]>([]);
+
   const clickDrop = useAsyncAudio(mp3(CLICK_DROP), PRELOAD);
   const click = useAsyncAudio(mp3(CLICK), PRELOAD);
   const ctaClick1 = useAsyncAudio(mp3(CTA_CLICK_1), PRELOAD);
@@ -103,31 +128,30 @@ export const useSoundEffects = ({
   const soundOn1 = useAsyncAudio(mp3(SOUND_ON_1), PRELOAD);
   const swooshTransition = useAsyncAudio(mp3(SWOOSH_TRANSITION), PRELOAD);
 
-  const soundEffects: SoundEffectSource[] = React.useMemo(
-    () => [
-      [CLICK_DROP, ...clickDrop],
-      [CLICK, ...click],
-      [CTA_CLICK_1, ...ctaClick1],
-      [CTA_CLICK_2, ...ctaClick2],
-      [CTA_CLICK_3, ...ctaClick3],
-      [DROP, ...drop],
-      [GLOBE_ANALYTICS_LOOP, ...globeAnalyticsLoop],
-      [GLOBE_DISTRIBUTION_LOOP, ...globeDistributionLoop],
-      [GLOBE_MONETIZATION_LOOP, ...globeMonetizationLoop],
-      [GLOBE_TRANSITION_STATES, ...globeTransitionStates],
-      [KNOB_CLICK, ...knobClick],
-      [KNOB_TURNING, ...knobTurning],
-      [LOGO_ROLLOVER_1, ...logoRollover1],
-      [PAGE_TRANSITION_1, ...pageTransition1],
-      [PAGE_TRANSITION_3, ...pageTransition3],
-      [PAGE_TRANSITION_4, ...pageTransition4],
-      [SITE_AMBIENCE_LOOP, ...siteAmbienceLoop],
-      [SITE_INTRO, ...siteIntro],
-      [SOUND_OFF_1, ...soundOff1],
-      [SOUND_ON_1, ...soundOn1],
-      [SWOOSH_TRANSITION, ...swooshTransition],
-    ],
-    [
+  React.useEffect(() => {
+    soundEffectsMap.current.set(CLICK_DROP, clickDrop);
+    soundEffectsMap.current.set(CLICK, click);
+    soundEffectsMap.current.set(CTA_CLICK_1, ctaClick1);
+    soundEffectsMap.current.set(CTA_CLICK_2, ctaClick2);
+    soundEffectsMap.current.set(CTA_CLICK_3, ctaClick3);
+    soundEffectsMap.current.set(DROP, drop);
+    soundEffectsMap.current.set(GLOBE_ANALYTICS_LOOP, globeAnalyticsLoop);
+    soundEffectsMap.current.set(GLOBE_DISTRIBUTION_LOOP, globeDistributionLoop);
+    soundEffectsMap.current.set(GLOBE_MONETIZATION_LOOP, globeMonetizationLoop);
+    soundEffectsMap.current.set(GLOBE_TRANSITION_STATES, globeTransitionStates);
+    soundEffectsMap.current.set(KNOB_CLICK, knobClick);
+    soundEffectsMap.current.set(KNOB_TURNING, knobTurning);
+    soundEffectsMap.current.set(LOGO_ROLLOVER_1, logoRollover1);
+    soundEffectsMap.current.set(PAGE_TRANSITION_1, pageTransition1);
+    soundEffectsMap.current.set(PAGE_TRANSITION_3, pageTransition3);
+    soundEffectsMap.current.set(PAGE_TRANSITION_4, pageTransition4);
+    soundEffectsMap.current.set(SITE_AMBIENCE_LOOP, siteAmbienceLoop);
+    soundEffectsMap.current.set(SITE_INTRO, siteIntro);
+    soundEffectsMap.current.set(SOUND_OFF_1, soundOff1);
+    soundEffectsMap.current.set(SOUND_ON_1, soundOn1);
+    soundEffectsMap.current.set(SWOOSH_TRANSITION, swooshTransition);
+
+    sounds.current = [
       clickDrop,
       click,
       ctaClick1,
@@ -149,21 +173,32 @@ export const useSoundEffects = ({
       soundOff1,
       soundOn1,
       swooshTransition,
-    ],
-  );
-
-  const soundEffectsMap = React.useMemo(() => {
-    const map = new Map<SoundEffect, [HTMLAudioElement | null, boolean]>(null);
-    soundEffects.map?.(([src, audioEl, loaded]) =>
-      map.set(src, [audioEl, loaded]),
-    );
-    return map;
-  }, [soundEffects]);
-
-  const sounds = React.useMemo(
-    () => soundEffects.map(([_, audioEl]) => audioEl).filter(Boolean),
-    [soundEffects],
-  );
+    ]
+      .map(([audioEl]) => audioEl)
+      .filter(Boolean);
+  }, [
+    clickDrop,
+    click,
+    ctaClick1,
+    ctaClick2,
+    ctaClick3,
+    drop,
+    globeAnalyticsLoop,
+    globeDistributionLoop,
+    globeMonetizationLoop,
+    globeTransitionStates,
+    knobClick,
+    knobTurning,
+    logoRollover1,
+    pageTransition1,
+    pageTransition3,
+    pageTransition4,
+    siteAmbienceLoop,
+    siteIntro,
+    soundOff1,
+    soundOn1,
+    swooshTransition,
+  ]);
 
   const play = React.useCallback(
     (src: SoundEffect) => {
@@ -172,7 +207,7 @@ export const useSoundEffects = ({
         return;
       }
 
-      const activeAudio = soundEffectsMap.get(src);
+      const activeAudio = soundEffectsMap.current.get(src);
       if (!activeAudio || activeAudio[0] === null) {
         return;
       }
@@ -207,17 +242,12 @@ export const useSoundEffects = ({
       } else {
         // Browsers require a user-gesture event to be fired before calling `.play()`.
         // On the second click, the sound effect on the splash screen will play.
-        document.addEventListener('click', readyToPlay);
+        playOnFirstClick(readyToPlay);
       }
       readyToPlay();
     },
-    [muted, soundEffectsMap],
+    [muted],
   );
 
-  const api: SoundEffectsApi = React.useMemo(
-    () => ({sounds, play}),
-    [sounds, play],
-  );
-
-  return api;
+  return {sounds: sounds.current, play};
 };

@@ -94,12 +94,22 @@ export function AudioManagerProvider({children}: AudioManagerProviderProps) {
   const api: AudioManager = React.useMemo(
     () => ({
       loading,
-      soundEffects,
+      soundEffects: {
+        sounds: soundEffects.sounds,
+        play: soundEffects.play,
+      },
       muted,
       setMuted,
       toggleMuted,
     }),
-    [loading, soundEffects, muted, setMuted, toggleMuted],
+    [
+      loading,
+      soundEffects.sounds,
+      soundEffects.play,
+      muted,
+      setMuted,
+      toggleMuted,
+    ],
   );
 
   return <Context.Provider value={api}>{children}</Context.Provider>;
