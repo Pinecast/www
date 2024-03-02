@@ -26,6 +26,9 @@ export enum SoundEffect {
 }
 
 const browserFirstClick = new Promise<void>(resolve => {
+  if (typeof document === 'undefined') {
+    return;
+  }
   document.addEventListener('click', () => {
     resolve();
   });
