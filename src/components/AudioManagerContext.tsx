@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {useStorage} from '@/hooks/useStorage';
 import {SoundEffectsApi, useSoundEffects} from '@/hooks/useSoundEffects';
+import {useSyncTabStore} from '@/hooks/useSyncTabStore';
 
 type AudioManagerSettings = {
   muted: boolean;
@@ -37,7 +37,7 @@ type AudioManagerProviderProps = {
 
 export function AudioManagerProvider({children}: AudioManagerProviderProps) {
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [settings, setSettings] = useStorage<AudioManagerSettings>(
+  const [settings, setSettings] = useSyncTabStore<AudioManagerSettings>(
     'audioManagerSettings',
     DEFAULT_AUDIO_SETTINGS,
     handleBroadcastMessage,

@@ -25,29 +25,6 @@ export enum SoundEffect {
   SWOOSH_TRANSITION = '/sounds/swoosh-transition.mp3',
 }
 
-const browserFirstClick = new Promise<void>(resolve => {
-  if (typeof document === 'undefined') {
-    return;
-  }
-  document.addEventListener('click', () => {
-    resolve();
-  });
-});
-
-// This will let us fire a callback on the first click event.
-// However, we don't want the callback to be preserved if a sound hasn't been played yet,
-// since this will cause all sounds before the first click to play at once.
-// Clearing the callback will prevent this from happening, but ensure that subsequent
-// sounds play as expected.
-let nextCallback: (() => void) | null = null;
-function playOnFirstClick(callback: () => void) {
-  nextCallback = callback;
-  browserFirstClick.then(() => {
-    nextCallback?.();
-    nextCallback = null;
-  });
-}
-
 const {
   CLICK_DROP,
   CLICK,
@@ -204,8 +181,8 @@ export const useSoundEffects = ({
   ]);
 
   const play = React.useCallback(
-    (src: SoundEffect) => {
-      // Play sounds in only the active tab.
+    async (src: SoundEffect) => {
+      // Do not play the sound if we're in a background tab.
       if (document.hidden) {
         return;
       }
@@ -221,8 +198,16 @@ export const useSoundEffects = ({
         return;
       }
 
-      const readyToPlay = () => {
+      const startPlay = () => {
+        if (muted) {
+          // Browsers require a user-gesture event (e.g., click) to be fired before calling `.play()`;
+          // otherwise, a DOM exception `NotAllowedError` will be thrown.
+          // Tapping on the global mute button in the nav allows us to safely play future sounds.
+          return;
+        }
+
         const promise = audio.play();
+
         const isPromise = typeof promise === 'object';
         if (!isPromise) {
           return;
@@ -230,24 +215,25 @@ export const useSoundEffects = ({
 
         const lock = () => playLockMapRef.current.set(audio, true);
         const unlock = () => playLockMapRef.current.set(audio, false);
+
         lock();
-        promise.then(unlock, unlock);
+
+        return promise.then(unlock, (err: DOMException) => {
+          console.warn(`[${err.name}]`, err);
+          unlock();
+        });
       };
 
       audio.currentTime = 0;
       audio.muted = muted;
-      audio.addEventListener('oncanplaythrough', readyToPlay);
+      audio.oncanplaythrough = startPlay;
       if (!loaded) {
         audio.load();
-      }
-      if (audio.readyState >= 3) {
-        readyToPlay();
       } else {
-        // Browsers require a user-gesture event to be fired before calling `.play()`.
-        // On the second click, the sound effect on the splash screen will play.
-        playOnFirstClick(readyToPlay);
       }
-      readyToPlay();
+      if (audio.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA) {
+        startPlay();
+      }
     },
     [muted],
   );

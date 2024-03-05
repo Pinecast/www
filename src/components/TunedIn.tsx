@@ -16,8 +16,8 @@ import {useIntersectionProgress} from '@/hooks/useIntersectionProgress';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
 import {PERSONAS} from './CustomerPersona';
-import { useAudioManager } from '@/hooks/useAudioManager';
-import { SoundEffect } from '@/hooks/useSoundEffects';
+import {useAudioManager} from '@/hooks/useAudioManager';
+import {SoundEffect} from '@/hooks/useSoundEffects';
 
 const VIDEO_WIDTH = 1060;
 const VIDEO_HEIGHT = 1440;
@@ -783,9 +783,9 @@ export const TunedInPanels = () => {
   const [rightActiveDesktop, setRightActiveDesktop] =
     React.useState<boolean>(false);
 
-    const {
-      soundEffects: {play: playSoundEffect},
-    } = useAudioManager();
+  const {
+    soundEffects: {play: playSoundEffect},
+  } = useAudioManager();
 
   const mobilePanels = [
     {...PANELS.left, isActive: leftActiveMobile},
