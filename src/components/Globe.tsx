@@ -7,7 +7,6 @@ import * as ReactDOM from 'react-dom/client';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {MonumentGroteskBold} from '@/fonts';
 import Link from 'next/link';
-import {MOBILE_BREAKPOINT, TABLET_BREAKPOINT} from '@/constants';
 import {useScrollProgressEffect} from '@/hooks/useScrollProgress';
 import {AV1_MIME, useAsyncImage, useAsyncVideo} from '@/hooks/useAsyncResource';
 import {useCalculateResizableValue} from '@/hooks/useCalculateResizableValue';
@@ -35,8 +34,9 @@ import monetization5 from '@/icons/globe/monetization/5.svg';
 import Simplex from 'ts-perlin-simplex';
 import {useDualVideoManager} from '@/hooks/useDualVideoManager';
 import {dpi} from '@/canvasHelpers';
-import { useAudioManager } from '@/hooks/useAudioManager';
-import { SoundEffect } from '@/hooks/useSoundEffects';
+import {useAudioManager} from '@/hooks/useAudioManager';
+import {SoundEffect} from '@/hooks/useSoundEffects';
+import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
 
 const callWhenIdle = (callback: IdleRequestCallback) => {
   if (typeof window.requestIdleCallback === 'undefined') {
@@ -146,8 +146,8 @@ const FEATURES: Record<Feature, FeatureShape> = {
     title: <>Analytics</>,
     description: (
       <>
-        The most powerful analytics in podcasting, with premium features,
-        simple charts, and clean controls.
+        The most powerful analytics in podcasting, with premium features, simple
+        charts, and clean controls.
       </>
     ),
     href: '/features/analytics',
@@ -166,16 +166,48 @@ const FEATURES: Record<Feature, FeatureShape> = {
 
 const IntroSection = React.memo(function IntroSection() {
   const css = useCSS();
+
+  const enteringSoundSentinelRef = React.useRef<HTMLDivElement>(null);
+  const exitingSoundSentinelRef = React.useRef<HTMLDivElement>(null);
+
+  const {
+    soundEffects: {play: playSoundEffect},
+  } = useAudioManager();
+
+  useIntersectionVisibility(
+    enteringSoundSentinelRef,
+    React.useCallback(
+      intersecting => {
+        if (intersecting) {
+          playSoundEffect(SoundEffect.SWOOSH_TRANSITION);
+        }
+      },
+      [playSoundEffect],
+    ),
+  );
+
+  useIntersectionVisibility(
+    exitingSoundSentinelRef,
+    React.useCallback(
+      intersecting => {
+        if (intersecting) {
+          playSoundEffect(SoundEffect.PAGE_TRANSITION_3);
+        }
+      },
+      [playSoundEffect],
+    ),
+  );
+
   return (
     <div
       className={css({
         backgroundImage:
           'linear-gradient(to bottom, rgba(9,9,9,0.65) 30%,rgba(9,9,9,0) 90%)',
         borderRadius: '0 0 100% 100%',
+        alignItems: 'center',
         display: 'flex',
         flexDirection: 'column',
         gap: '40px',
-        alignItems: 'center',
         textAlign: 'center',
         margin: '0 auto -400px',
         maxWidth: '946px',
@@ -191,6 +223,7 @@ const IntroSection = React.memo(function IntroSection() {
         color: 'var(--color-primary-dark)',
       })}
     >
+      <div ref={enteringSoundSentinelRef} />
       <H1
         style={{
           marginBottom: 0,
@@ -203,7 +236,14 @@ const IntroSection = React.memo(function IntroSection() {
         Check, Check 1, 2, 3
       </H1>
       <Body4
-        style={{maxWidth: '32rem', paddingLeft: '10px', paddingRight: '10px'}}
+        style={{
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          maxWidth: '32rem',
+          paddingLeft: '10px',
+          paddingRight: '10px',
+          textAlign: 'center',
+        }}
       >
         Whether you&rsquo;re sharing to a handful of friends, your company, or
         the world, Pinecast has a solution that&rsquo;s right for you.
@@ -226,9 +266,11 @@ const IntroSection = React.memo(function IntroSection() {
         </PrimaryButton>
         <SecondaryButton href="/features">Discover features</SecondaryButton>
       </div>
+      <div ref={exitingSoundSentinelRef} />
     </div>
   );
 });
+
 const FeatureText = React.memo(function FeatureText({
   currentFeature,
 }: {
@@ -628,7 +670,6 @@ export const Globe = () => {
     }
     playSoundEffect(SoundEffect.GLOBE_TRANSITION_STATES);
   }, [currentFeatureSlug, playSoundEffect]);
-
 
   const [segmentStart, segmentEnd] = getVideoSegmentBounds(
     currentFeatureSlug ?? 'distribution',
