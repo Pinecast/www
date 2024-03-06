@@ -4,6 +4,8 @@ import {useMatchMedia} from '@/hooks/useMatchMedia';
 import {useSyncTabStore} from '@/hooks/useSyncTabStore';
 import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
 
+const MOBILE_SOUND_EFFECTS_ENABLED = false;
+
 type AudioManagerSettings = {
   muted: boolean;
 };
@@ -50,13 +52,15 @@ export function AudioManagerProvider({children}: AudioManagerProviderProps) {
       setMuted(true);
     }
   }
-  const canMute = useMatchMedia(MIN_TABLET_MEDIA_QUERY);
-
-  const {muted} = settings;
 
   // On mobile, there is no nav button to (un)mute. Use `muted`
   // as the global setting (e.g., for playing Testimonials),
   // whilst muting the sound effects.
+  const isDesktop = useMatchMedia(MIN_TABLET_MEDIA_QUERY);
+  const canMute = MOBILE_SOUND_EFFECTS_ENABLED || isDesktop;
+
+  const {muted} = settings;
+
   const soundsMuted = React.useMemo(
     () => (canMute ? muted : true),
     [canMute, muted],
