@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {SoundEffectsApi, useSoundEffects} from '@/hooks/useSoundEffects';
+import {useMatchMedia} from '@/hooks/useMatchMedia';
 import {useSyncTabStore} from '@/hooks/useSyncTabStore';
+import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
 
 type AudioManagerSettings = {
   muted: boolean;
@@ -48,10 +50,19 @@ export function AudioManagerProvider({children}: AudioManagerProviderProps) {
       setMuted(true);
     }
   }
+  const canMute = useMatchMedia(MIN_TABLET_MEDIA_QUERY);
 
   const {muted} = settings;
 
-  const soundEffects = useSoundEffects({muted});
+  // On mobile, there is no nav button to (un)mute. Use `muted`
+  // as the global setting (e.g., for playing Testimonials),
+  // whilst muting the sound effects.
+  const soundsMuted = React.useMemo(
+    () => (canMute ? muted : true),
+    [canMute, muted],
+  );
+
+  const soundEffects = useSoundEffects({muted: soundsMuted});
 
   React.useEffect(() => {
     setLoading(false);
@@ -85,9 +96,9 @@ export function AudioManagerProvider({children}: AudioManagerProviderProps) {
   // Enforce global mute on all sound effects.
   React.useEffect(() => {
     soundEffects.sounds.forEach(sound => {
-      sound.muted = muted;
+      sound.muted = soundsMuted;
     });
-  }, [muted, soundEffects.sounds]);
+  }, [soundsMuted, soundEffects.sounds]);
 
   // Since the API is an object, when the parent re-renders, this
   // provider will re-render every consumer unless memoized.

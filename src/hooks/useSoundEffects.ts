@@ -218,19 +218,22 @@ export const useSoundEffects = ({
 
         lock();
 
-        return promise.then(unlock, (err: DOMException) => {
+        const onError = (err: DOMException) => {
           console.warn(`[${err.name}]`, err);
           unlock();
-        });
+        };
+
+        return promise.then(unlock, onError);
       };
 
       audio.currentTime = 0;
       audio.muted = muted;
       audio.oncanplaythrough = startPlay;
+
       if (!loaded) {
         audio.load();
-      } else {
       }
+
       if (audio.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA) {
         startPlay();
       }
