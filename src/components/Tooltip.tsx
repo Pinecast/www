@@ -136,6 +136,8 @@ export const Tooltip = React.memo(function Tooltip({
           bottom: 'calc(100% + var(--tooltip-gap))',
           transform:
             'translateX(calc(-50% + 0.5 * var(--tooltip-triangle-inline-width)))',
+          minWidth: '100px',
+          padding: '10px 10px 6px',
         };
       case TooltipPosition.RIGHT:
         return {
@@ -143,6 +145,8 @@ export const Tooltip = React.memo(function Tooltip({
           left: 'calc(100% + var(--tooltip-gap))',
           transform:
             'translateY(calc(-50% + 0.5 * var(--tooltip-triangle-block-width)))',
+          minWidth: '145px',
+          padding: '10px 10px 8px',
         };
       case TooltipPosition.BOTTOM:
         return {
@@ -150,6 +154,8 @@ export const Tooltip = React.memo(function Tooltip({
           top: 'calc(100% + var(--tooltip-gap))',
           transform:
             'translateX(calc(-50% + 0.5 * var(--tooltip-triangle-inline-width)))',
+          minWidth: '100px',
+          padding: '10px 10px 6px',
         };
       case TooltipPosition.LEFT:
         return {
@@ -157,6 +163,8 @@ export const Tooltip = React.memo(function Tooltip({
           right: 'calc(100% + var(--tooltip-gap))',
           transform:
             'translateY(calc(-50% + 0.5 * var(--tooltip-triangle-block-width)))',
+          minWidth: '145px',
+          padding: '10px 10px 8px',
         };
     }
   }, [position]);
@@ -222,6 +230,7 @@ export const Tooltip = React.memo(function Tooltip({
           transition: `opacity ${TOOLTIP_FADE_TRANSITION_DURATION}ms ease-in-out 0.05s allow-discrete`,
           zIndex: 100,
         },
+        // TODO: Handle touchstart/touchend on mobile.
         [':hover::before, :hover::after']: {
           display: 'block',
           opacity: '1',
@@ -235,10 +244,8 @@ export const Tooltip = React.memo(function Tooltip({
           color: textColor,
           content: 'attr(aria-label)',
           fontWeight: 400,
-          fontSize: '10px',
-          lineHeight: '12px',
-          minWidth: '100px',
-          padding: '10px 10px 6px',
+          fontSize: '11px',
+          lineHeight: '13px',
           textAlign: 'center',
           [MIN_TABLET_MEDIA_QUERY]: {
             fontSize: '12px',

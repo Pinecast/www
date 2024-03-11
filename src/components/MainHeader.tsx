@@ -27,7 +27,7 @@ import {
 import {Tooltip, TooltipPosition} from './Tooltip';
 import {ScreenReaderText} from './ScreenReaderText';
 import {SoundEffect} from '@/hooks/useSoundEffects';
-import {BubbleButton} from './BubbleButton';
+import {Bubble} from './Bubble';
 
 const PersonaBlock = ({
   caption,
@@ -318,6 +318,7 @@ export const MainHeader = () => {
                 {audioMangerLoading || muted ? 'Unmute' : 'Mute'}
               </ScreenReaderText>
               <button
+                type="button"
                 className={css({
                   appearance: 'none',
                   backgroundColor: 'transparent',
@@ -494,15 +495,12 @@ export const MainHeader = () => {
           '--button-spacing': '24px',
           '--button-tap-size':
             'calc(var(--button-size) + var(--button-spacing))',
-          // backgroundColor: 'red',
-          // height: 'var(--button-tap-size)',
+          '--button-tooltip-height': '96px',
           position: 'fixed',
-          top: 'calc(100svh - var(--button-size) - var(--button-spacing))',
-          width: 'var(--button-tap-size)',
+          bottom: 'var(--button-spacing)',
+          width: 'var(--button-size)',
           zIndex: 140,
-          [MIN_TABLET_MEDIA_QUERY]: {
-            display: 'none',
-          },
+          [MIN_TABLET_MEDIA_QUERY]: {display: 'none'},
         })}
       >
         <Tooltip
@@ -515,25 +513,30 @@ export const MainHeader = () => {
               {audioMangerLoading || muted ? 'Unmute' : 'Mute'}
             </ScreenReaderText>
             <button
-              className={css({
+              type="button"
+              style={{
                 appearance: 'none',
                 backgroundColor: 'transparent',
                 borderWidth: '0',
                 cursor: 'pointer',
                 display: 'block',
-                height: '96px',
+                height: 'var(--button-tooltip-height)',
                 padding: 0,
-                width: 'var(--button-tap-size)',
-                // background: 'green',
-              })}
+                width: 'var(--button-size)',
+              }}
               onClick={onClickSoundButton}
             >
-              <BubbleButton size={96} offsetX={28} offsetY={0}>
+              <Bubble
+                color="var(--color-primary-dark)"
+                size={96}
+                offsetX={20}
+                offsetY={0}
+              >
                 <AudioWaveformIcon
-                  color="var(--color-primary-dark)"
+                  color="var(--bubble-text-color)"
                   muted={audioMangerLoading ? true : muted}
                 />
-              </BubbleButton>
+              </Bubble>
             </button>
           </label>
         </Tooltip>
