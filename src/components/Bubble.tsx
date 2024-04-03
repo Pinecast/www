@@ -73,7 +73,7 @@ const Bubble1 = ({
         width: 'var(--bubble-size)',
         [PREFERS_REDUCED_MOTION_QUERY]: {
           animationDuration: '0.01ms',
-          animationIterationCount: '1',
+          animationIterationCount: '3',
           transitionDuration: '0.01ms',
         },
         ':hover': {
@@ -283,21 +283,6 @@ export const Bubble = ({
       setCurrentBubble(bubbleNum - 1);
     }
   }, [router.isReady, router.query]);
-
-  React.useEffect(() => {
-    const onClick = (evt: MouseEvent) => {
-      const dblClicked = evt.detail >= 2;
-      if (dblClicked) {
-        setCurrentBubble(current =>
-          current === AVAILABLE_BUBBLES.length - 1 ? 0 : current + 1,
-        );
-      }
-    };
-    document.addEventListener('click', onClick);
-    return () => {
-      document.removeEventListener('click', onClick);
-    };
-  }, []);
 
   switch (currentBubble) {
     case 0:

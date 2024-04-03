@@ -28,6 +28,7 @@ import {Tooltip, TooltipPosition} from './Tooltip';
 import {ScreenReaderText} from './ScreenReaderText';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 import {Bubble} from './Bubble';
+import {useScrollListener} from '@/hooks/useScrollProgress';
 
 const PersonaBlock = ({
   caption,
@@ -176,6 +177,10 @@ export const MainHeader = () => {
 
   const navRef = React.useRef<HTMLDivElement>(null);
   const [navOpen, setNavOpen] = React.useState(false);
+  const [hasScrolled, setHasScrolled] = React.useState(false);
+  useScrollListener(
+    React.useCallback(scrollY => setHasScrolled(scrollY > 200), []),
+  );
 
   const muteToggleTimer = React.useRef<NodeJS.Timeout>();
 
@@ -221,6 +226,7 @@ export const MainHeader = () => {
     [muted, playSoundEffect, toggleMuted],
   );
 
+  const buttonSize = (audioMangerLoading || muted) && !hasScrolled ? 96 : 48;
   return (
     <>
       <header
@@ -495,7 +501,7 @@ export const MainHeader = () => {
           '--button-spacing': '24px',
           '--button-tap-size':
             'calc(var(--button-size) + var(--button-spacing))',
-          '--button-tooltip-height': '96px',
+          '--button-tooltip-height': `${buttonSize}px`,
           position: 'fixed',
           bottom: 'var(--button-spacing)',
           width: 'var(--button-size)',
@@ -504,7 +510,7 @@ export const MainHeader = () => {
         })}
       >
         <Tooltip
-          isActive={!audioMangerLoading && muted}
+          isActive={!audioMangerLoading && muted && !hasScrolled}
           position={TooltipPosition.RIGHT}
           text="This site is better with sound!"
         >
@@ -521,6 +527,8 @@ export const MainHeader = () => {
                 cursor: 'pointer',
                 display: 'block',
                 height: 'var(--button-tooltip-height)',
+                opacity: !hasScrolled ? 1 : 0.4,
+                transition: 'height 0.2s ease-in-out, opacity 0.2s ease-in-out',
                 padding: 0,
                 width: 'var(--button-size)',
               }}
@@ -528,13 +536,14 @@ export const MainHeader = () => {
             >
               <Bubble
                 color="var(--color-primary-dark)"
-                size={96}
-                offsetX={20}
+                size={buttonSize}
+                offsetX={!muted && hasScrolled ? -buttonSize : 20}
                 offsetY={0}
               >
                 <AudioWaveformIcon
                   color="var(--bubble-text-color)"
                   muted={audioMangerLoading ? true : muted}
+                  style={{transform: 'scale(1.5)'}}
                 />
               </Bubble>
             </button>
