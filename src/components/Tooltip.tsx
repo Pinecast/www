@@ -38,6 +38,18 @@ const TOOLTIP_BOUNCE_ANIMATION: KeyframesObject = {
   },
 };
 
+const sharedPseudoelementStyles = {
+  animationDuration: `${TOOLTIP_BOUNCE_ANIMATION_DURATION}ms`,
+  animationName: TOOLTIP_BOUNCE_ANIMATION,
+  animationTimingFunction: 'cubic-bezier(0.3, 0.7, 0.4, 1)',
+  display: 'none',
+  opacity: '0',
+  pointerEvents: 'none',
+  position: 'absolute',
+  transition: `opacity ${TOOLTIP_FADE_TRANSITION_DURATION}ms ease-in-out 0.05s allow-discrete`,
+  zIndex: 100,
+} as const;
+
 export enum TooltipPosition {
   TOP = 'top',
   RIGHT = 'right',
@@ -202,16 +214,13 @@ export const Tooltip = React.memo(function Tooltip({
     }
   }, [position]);
 
-  if (!isActive) {
-    return <div>{children}</div>;
-  }
-
   return (
     <div
       aria-label={text}
       role="tooltip"
       className={css({
         ...baseStyles,
+        display: isActive ? 'unset' : 'none',
         '--tooltip-bg': backgroundColor,
         '--tooltip-bounce-distance': '10px',
         '--tooltip-gap': '10px',
@@ -219,24 +228,19 @@ export const Tooltip = React.memo(function Tooltip({
         '--tooltip-triangle-width': '6px',
         cursor: 'pointer',
         position: 'relative',
-        ['::before, ::after']: {
-          animationDuration: `${TOOLTIP_BOUNCE_ANIMATION_DURATION}ms`,
-          animationName: TOOLTIP_BOUNCE_ANIMATION,
-          animationTimingFunction: 'cubic-bezier(0.3, 0.7, 0.4, 1)',
-          display: 'none',
-          opacity: '0',
-          pointerEvents: 'none',
-          position: 'absolute',
-          transition: `opacity ${TOOLTIP_FADE_TRANSITION_DURATION}ms ease-in-out 0.05s allow-discrete`,
-          zIndex: 100,
-        },
         // TODO: Handle touchstart/touchend on mobile.
-        [':hover::before, :hover::after']: {
+        [':hover::before']: {
+          display: 'block',
+          opacity: '1',
+          pointerEvents: 'unset',
+        },
+        [':hover::after']: {
           display: 'block',
           opacity: '1',
           pointerEvents: 'unset',
         },
         ['::before']: {
+          ...sharedPseudoelementStyles,
           ...MonumentGroteskSemiMono,
           ...tooltipPlacementStyles,
           backgroundColor: 'var(--tooltip-bg)',
@@ -253,6 +257,7 @@ export const Tooltip = React.memo(function Tooltip({
           },
         },
         ['::after']: {
+          ...sharedPseudoelementStyles,
           ...triangleBorderStyles,
           ...trianglePlacementStyles,
           borderBlockWidth: 'var(--tooltip-triangle-block-width)',
