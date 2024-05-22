@@ -220,7 +220,6 @@ export const Tooltip = React.memo(function Tooltip({
       role="tooltip"
       className={css({
         ...baseStyles,
-        display: isActive ? 'unset' : 'none',
         '--tooltip-bg': backgroundColor,
         '--tooltip-bounce-distance': '10px',
         '--tooltip-gap': '10px',
@@ -230,12 +229,12 @@ export const Tooltip = React.memo(function Tooltip({
         position: 'relative',
         // TODO: Handle touchstart/touchend on mobile.
         [':hover::before']: {
-          display: 'block',
+          display: isActive ? 'block' : 'none',
           opacity: '1',
           pointerEvents: 'unset',
         },
         [':hover::after']: {
-          display: 'block',
+          display: isActive ? 'block' : 'none',
           opacity: '1',
           pointerEvents: 'unset',
         },
@@ -247,6 +246,7 @@ export const Tooltip = React.memo(function Tooltip({
           borderRadius: '4px',
           color: textColor,
           content: 'attr(aria-label)',
+          display: isActive ? 'unset' : 'none',
           fontWeight: 400,
           fontSize: '11px',
           lineHeight: '13px',
@@ -264,6 +264,7 @@ export const Tooltip = React.memo(function Tooltip({
           borderInlineWidth: 'var(--tooltip-triangle-inline-width)',
           borderStyle: 'solid',
           content: '""',
+          display: isActive ? 'unset' : 'none',
           height: '0',
           width: '0',
         },
