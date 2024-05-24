@@ -480,22 +480,6 @@ const Panel = ({
           textDecoration: 'none',
           zIndex: 2,
 
-          '::after': {
-            backgroundColor: `${panel.color}`,
-            backgroundPosition: '50% 50%',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-            borderRadius: 'inherit',
-            bottom: '0',
-            content: '""',
-            left: '0',
-            opacity: isActive ? 1 : 0,
-            position: 'absolute',
-            right: '0',
-            transition: 'opacity 0.2s ease-in-out',
-            top: '0',
-          },
-
           [WIDE_PANELS_QUERY]: {
             backgroundColor: 'var(--panel-border-color)',
             border: 'unset',
