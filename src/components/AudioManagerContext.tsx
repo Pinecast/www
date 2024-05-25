@@ -4,7 +4,7 @@ import {useMatchMedia} from '@/hooks/useMatchMedia';
 import {useSyncTabStore} from '@/hooks/useSyncTabStore';
 import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
 
-const MOBILE_SOUND_EFFECTS_ENABLED = false;
+const MOBILE_SOUND_EFFECTS_ENABLED = true;
 
 type AudioManagerSettings = {
   muted: boolean;

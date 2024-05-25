@@ -27,6 +27,8 @@ import {
 import {Tooltip, TooltipPosition} from './Tooltip';
 import {ScreenReaderText} from './ScreenReaderText';
 import {SoundEffect} from '@/hooks/useSoundEffects';
+import {Bubble} from './Bubble';
+import {useScrollListener} from '@/hooks/useScrollProgress';
 
 const PersonaBlock = ({
   caption,
@@ -175,6 +177,10 @@ export const MainHeader = () => {
 
   const navRef = React.useRef<HTMLDivElement>(null);
   const [navOpen, setNavOpen] = React.useState(false);
+  const [hasScrolled, setHasScrolled] = React.useState(false);
+  useScrollListener(
+    React.useCallback(scrollY => setHasScrolled(scrollY > 200), []),
+  );
 
   const muteToggleTimer = React.useRef<NodeJS.Timeout>();
 
@@ -200,6 +206,27 @@ export const MainHeader = () => {
     document.body.classList.toggle('dimmed', navOpen);
   }, [lock, navOpen, unlock]);
 
+  const onClickSoundButton = React.useCallback(
+    (evt: React.MouseEvent) => {
+      evt.preventDefault();
+
+      if (muted) {
+        playSoundEffect(SoundEffect.SOUND_ON_1);
+      }
+
+      clearTimeout(muteToggleTimer.current);
+      muteToggleTimer.current = setTimeout(() => {
+        if (!muted) {
+          playSoundEffect(SoundEffect.SOUND_OFF_1);
+        }
+      }, 0);
+
+      toggleMuted();
+    },
+    [muted, playSoundEffect, toggleMuted],
+  );
+
+  const buttonSize = (audioMangerLoading || muted) && !hasScrolled ? 96 : 48;
   return (
     <>
       <header
@@ -297,6 +324,7 @@ export const MainHeader = () => {
                 {audioMangerLoading || muted ? 'Unmute' : 'Mute'}
               </ScreenReaderText>
               <button
+                type="button"
                 className={css({
                   appearance: 'none',
                   backgroundColor: 'transparent',
@@ -308,22 +336,7 @@ export const MainHeader = () => {
                   paddingBottom: '30px',
                   paddingLeft: '35px',
                 })}
-                onClick={evt => {
-                  evt.preventDefault();
-
-                  if (muted) {
-                    playSoundEffect(SoundEffect.SOUND_ON_1);
-                  }
-
-                  clearTimeout(muteToggleTimer.current);
-                  muteToggleTimer.current = setTimeout(() => {
-                    if (!muted) {
-                      playSoundEffect(SoundEffect.SOUND_OFF_1);
-                    }
-                  }, 0);
-
-                  toggleMuted();
-                }}
+                onClick={onClickSoundButton}
               >
                 <AudioWaveformIcon
                   color="var(--color-primary-dark)"
@@ -481,6 +494,61 @@ export const MainHeader = () => {
             <QuickTipsBlock isOpen={navOpen} />
           </div>
         </nav>
+      </div>
+      <div
+        className={css({
+          '--button-size': '120px',
+          '--button-spacing': '24px',
+          '--button-tap-size':
+            'calc(var(--button-size) + var(--button-spacing))',
+          '--button-tooltip-height': `${buttonSize}px`,
+          position: 'fixed',
+          bottom: 'var(--button-spacing)',
+          width: 'var(--button-size)',
+          zIndex: 140,
+          [MIN_TABLET_MEDIA_QUERY]: {display: 'none'},
+        })}
+      >
+        <Tooltip
+          isActive={!audioMangerLoading && muted && !hasScrolled}
+          position={TooltipPosition.RIGHT}
+          text="This site is better with sound!"
+        >
+          <label>
+            <ScreenReaderText>
+              {audioMangerLoading || muted ? 'Unmute' : 'Mute'}
+            </ScreenReaderText>
+            <button
+              type="button"
+              style={{
+                appearance: 'none',
+                backgroundColor: 'transparent',
+                borderWidth: '0',
+                cursor: 'pointer',
+                display: 'block',
+                height: 'var(--button-tooltip-height)',
+                opacity: !hasScrolled ? 1 : 0.4,
+                transition: 'height 0.2s ease-in-out, opacity 0.2s ease-in-out',
+                padding: 0,
+                width: 'var(--button-size)',
+              }}
+              onClick={onClickSoundButton}
+            >
+              <Bubble
+                color="var(--color-primary-dark)"
+                size={buttonSize}
+                offsetX={!muted && hasScrolled ? -buttonSize : 20}
+                offsetY={0}
+              >
+                <AudioWaveformIcon
+                  color="var(--bubble-text-color)"
+                  muted={audioMangerLoading ? true : muted}
+                  style={{transform: 'scale(1.5)'}}
+                />
+              </Bubble>
+            </button>
+          </label>
+        </Tooltip>
       </div>
     </>
   );

@@ -38,6 +38,18 @@ const TOOLTIP_BOUNCE_ANIMATION: KeyframesObject = {
   },
 };
 
+const sharedPseudoelementStyles = {
+  animationDuration: `${TOOLTIP_BOUNCE_ANIMATION_DURATION}ms`,
+  animationName: TOOLTIP_BOUNCE_ANIMATION,
+  animationTimingFunction: 'cubic-bezier(0.3, 0.7, 0.4, 1)',
+  display: 'none',
+  opacity: '0',
+  pointerEvents: 'none',
+  position: 'absolute',
+  transition: `opacity ${TOOLTIP_FADE_TRANSITION_DURATION}ms ease-in-out 0.05s allow-discrete`,
+  zIndex: 100,
+} as const;
+
 export enum TooltipPosition {
   TOP = 'top',
   RIGHT = 'right',
@@ -136,6 +148,8 @@ export const Tooltip = React.memo(function Tooltip({
           bottom: 'calc(100% + var(--tooltip-gap))',
           transform:
             'translateX(calc(-50% + 0.5 * var(--tooltip-triangle-inline-width)))',
+          minWidth: '100px',
+          padding: '10px 10px 6px',
         };
       case TooltipPosition.RIGHT:
         return {
@@ -143,6 +157,8 @@ export const Tooltip = React.memo(function Tooltip({
           left: 'calc(100% + var(--tooltip-gap))',
           transform:
             'translateY(calc(-50% + 0.5 * var(--tooltip-triangle-block-width)))',
+          minWidth: '145px',
+          padding: '10px 10px 8px',
         };
       case TooltipPosition.BOTTOM:
         return {
@@ -150,6 +166,8 @@ export const Tooltip = React.memo(function Tooltip({
           top: 'calc(100% + var(--tooltip-gap))',
           transform:
             'translateX(calc(-50% + 0.5 * var(--tooltip-triangle-inline-width)))',
+          minWidth: '100px',
+          padding: '10px 10px 6px',
         };
       case TooltipPosition.LEFT:
         return {
@@ -157,6 +175,8 @@ export const Tooltip = React.memo(function Tooltip({
           right: 'calc(100% + var(--tooltip-gap))',
           transform:
             'translateY(calc(-50% + 0.5 * var(--tooltip-triangle-block-width)))',
+          minWidth: '145px',
+          padding: '10px 10px 8px',
         };
     }
   }, [position]);
@@ -194,10 +214,6 @@ export const Tooltip = React.memo(function Tooltip({
     }
   }, [position]);
 
-  if (!isActive) {
-    return <div>{children}</div>;
-  }
-
   return (
     <div
       aria-label={text}
@@ -211,34 +227,29 @@ export const Tooltip = React.memo(function Tooltip({
         '--tooltip-triangle-width': '6px',
         cursor: 'pointer',
         position: 'relative',
-        ['::before, ::after']: {
-          animationDuration: `${TOOLTIP_BOUNCE_ANIMATION_DURATION}ms`,
-          animationName: TOOLTIP_BOUNCE_ANIMATION,
-          animationTimingFunction: 'cubic-bezier(0.3, 0.7, 0.4, 1)',
-          display: 'none',
-          opacity: '0',
-          pointerEvents: 'none',
-          position: 'absolute',
-          transition: `opacity ${TOOLTIP_FADE_TRANSITION_DURATION}ms ease-in-out 0.05s allow-discrete`,
-          zIndex: 100,
+        // TODO: Handle touchstart/touchend on mobile.
+        [':hover::before']: {
+          display: isActive ? 'block' : 'none',
+          opacity: '1',
+          pointerEvents: 'unset',
         },
-        [':hover::before, :hover::after']: {
-          display: 'block',
+        [':hover::after']: {
+          display: isActive ? 'block' : 'none',
           opacity: '1',
           pointerEvents: 'unset',
         },
         ['::before']: {
+          ...sharedPseudoelementStyles,
           ...MonumentGroteskSemiMono,
           ...tooltipPlacementStyles,
           backgroundColor: 'var(--tooltip-bg)',
           borderRadius: '4px',
           color: textColor,
           content: 'attr(aria-label)',
+          display: isActive ? 'unset' : 'none',
           fontWeight: 400,
-          fontSize: '10px',
-          lineHeight: '12px',
-          minWidth: '100px',
-          padding: '10px 10px 6px',
+          fontSize: '11px',
+          lineHeight: '13px',
           textAlign: 'center',
           [MIN_TABLET_MEDIA_QUERY]: {
             fontSize: '12px',
@@ -246,12 +257,14 @@ export const Tooltip = React.memo(function Tooltip({
           },
         },
         ['::after']: {
+          ...sharedPseudoelementStyles,
           ...triangleBorderStyles,
           ...trianglePlacementStyles,
           borderBlockWidth: 'var(--tooltip-triangle-block-width)',
           borderInlineWidth: 'var(--tooltip-triangle-inline-width)',
           borderStyle: 'solid',
           content: '""',
+          display: isActive ? 'unset' : 'none',
           height: '0',
           width: '0',
         },

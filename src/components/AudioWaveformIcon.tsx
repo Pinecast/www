@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {KeyframesObject} from 'styletron-standard';
 import {useCSS} from '@/hooks/useCSS';
+import { StyleObject } from 'styletron-react';
 
 const ANIMATION: KeyframesObject = {
   '10%': {transform: 'scaleY(0.3)'},
@@ -60,9 +61,11 @@ const Waveform = ({
 export const AudioWaveformIcon = ({
   color = 'var(--color-primary-dark)',
   muted = false,
+  style,
 }: {
   color: string;
   muted: boolean;
+  style?: StyleObject;
 }) => {
   const css = useCSS();
   return (
@@ -74,6 +77,7 @@ export const AudioWaveformIcon = ({
         justifyContent: 'space-between',
         position: 'relative',
         width: '14px',
+        ...style,
       })}
     >
       <Waveform muted={muted} color={color} height={8} />

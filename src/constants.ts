@@ -18,6 +18,8 @@ export const MIN_DESKTOP_MEDIA_QUERY = `@media (min-width: ${
 
 export const CAN_HOVER_MEDIA_QUERY = `@media (any-hover: hover)`;
 
+export const PREFERS_REDUCED_MOTION_QUERY = `@media (prefers-reduced-motion: reduce)`;
+
 export const ANTIALIASED: StyleObject = {
   WebkitFontSmoothing: 'antialiased',
   MozOsxFontSmooth: 'grayscale',
