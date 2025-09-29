@@ -1,5 +1,5 @@
-import Lottie from 'lottie-react';
 import * as React from 'react';
+import dynamic from 'next/dynamic';
 
 import {TABLET_MEDIA_QUERY} from '@/constants';
 import {Logo} from '@/icons/Logo';
@@ -9,6 +9,8 @@ import Link from 'next/link';
 import {useCSS} from '@/hooks/useCSS';
 import {useAudioManager} from '@/hooks/useAudioManager';
 import {SoundEffect} from '@/hooks/useSoundEffects';
+
+const Lottie = dynamic(() => import('lottie-react'), {ssr: false});
 
 const baseStyles: any = {
   position: 'fixed',

@@ -1,7 +1,9 @@
-import Lottie from 'lottie-react';
 import * as React from 'react';
+import dynamic from 'next/dynamic';
 import * as splash from '@/animations/splash.json';
 import {useCSS} from '@/hooks/useCSS';
+
+const Lottie = dynamic(() => import('lottie-react'), {ssr: false});
 
 export const SplashIntro = ({onComplete}: {onComplete: () => void}) => {
   const css = useCSS();
