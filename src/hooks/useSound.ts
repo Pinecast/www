@@ -209,6 +209,15 @@ function createHTMLMediaHook<T extends HTMLAudioElement | HTMLVideoElement>(
             lockPlayRef.current = false;
           };
           promise.then(resetLock, resetLock);
+          // Catch and suppress autoplay errors
+          promise.catch((err: DOMException) => {
+            if (err.name === 'NotAllowedError') {
+              console.warn('[Audio] Autoplay blocked by browser:', err.message);
+            } else {
+              console.warn('[Audio] Playback error:', err);
+            }
+          });
+          return promise;
         },
         pause: () => {
           const el = ref.current;
@@ -273,7 +282,14 @@ function createHTMLMediaHook<T extends HTMLAudioElement | HTMLVideoElement>(
       });
       // If autoplay was requested, play now.
       if (props.autoPlay && paused) {
-        controls.play();
+        const playPromise = controls.play();
+        playPromise?.catch?.((err: DOMException) => {
+          if (err.name === 'NotAllowedError') {
+            console.warn('[Audio] Autoplay blocked on mount:', err.message);
+          } else {
+            console.warn('[Audio] Mount playback error:', err);
+          }
+        });
       }
     }, [props.src, props.sources]); // eslint-disable-line react-hooks/exhaustive-deps
 

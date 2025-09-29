@@ -43,7 +43,14 @@ export const useDualVideoManager = (
     if (secondaryDrawableVideo.currentTime !== currentStart) {
       secondaryDrawableVideo.currentTime = currentStart;
     }
-    secondaryDrawableVideo.play();
+    const playPromise = secondaryDrawableVideo.play();
+    playPromise?.catch?.((err: DOMException) => {
+      if (err.name === 'NotAllowedError') {
+        console.warn('[DualVideo] Secondary autoplay blocked:', err.message);
+      } else if (err.name !== 'AbortError') {
+        console.warn('[DualVideo] Secondary playback error:', err);
+      }
+    });
 
     // Set the active video to the reset point
     activeDrawableVideo.pause();
@@ -123,7 +130,14 @@ export const useDualVideoManager = (
           drawable1[0].currentTime = currentStart;
           drawable2[0].currentTime = currentStart;
         }
-        drawable1[0].play();
+        const playPromise = drawable1[0].play();
+        playPromise?.catch?.((err: DOMException) => {
+          if (err.name === 'NotAllowedError') {
+            console.warn('[DualVideo] Initial autoplay blocked:', err.message);
+          } else if (err.name !== 'AbortError') {
+            console.warn('[DualVideo] Initial playback error:', err);
+          }
+        });
         state.current.running = true;
         console.log(`Scheduling video update in ${currentEnd - now} seconds`);
         timeUpdateTimer.current = setTimeout(

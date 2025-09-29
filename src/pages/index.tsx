@@ -36,7 +36,13 @@ export default function Home() {
     if (!SPLASH_ENABLED || audioManagerLoading) {
       return;
     }
-    playSoundEffect(SoundEffect.SITE_INTRO);
+    playSoundEffect(SoundEffect.SITE_INTRO).catch((err: DOMException) => {
+      if (err?.name === 'NotAllowedError') {
+        console.warn('[Home] Intro sound autoplay blocked:', err.message);
+      } else {
+        console.warn('[Home] Failed to play intro sound:', err);
+      }
+    });
   }, [audioManagerLoading, muted, playSoundEffect]);
 
   return (
