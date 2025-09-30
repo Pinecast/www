@@ -12,6 +12,7 @@
 .ipython
 *.stackdump
 npm-debug.log
+npm-debug.log*
 node_modules/
 Thumbs.db
 desktop.ini
@@ -22,3 +23,12 @@ dist/
 
 .next
 out/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
