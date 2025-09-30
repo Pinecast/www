@@ -42,7 +42,15 @@ export const NoncriticalVideo = ({
     videoRef,
     React.useCallback(intersecting => {
       if (intersecting) {
-        videoRef.current?.play();
+        const playPromise = videoRef.current?.play();
+        playPromise?.catch?.((err: DOMException) => {
+          if (err.name === 'NotAllowedError') {
+            console.warn('[Video] Autoplay blocked by browser:', err.message);
+          } else if (err.name !== 'AbortError') {
+            // Ignore `AbortError`, which happens when video is paused before fully loaded
+            console.warn('[Video] Playback error:', err);
+          }
+        });
       } else {
         videoRef.current?.pause();
       }

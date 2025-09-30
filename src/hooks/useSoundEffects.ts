@@ -53,7 +53,7 @@ export type SoundEffectSource = [SoundEffect, HTMLAudioElement, boolean];
 
 export type SoundEffectsApi = {
   sounds: HTMLAudioElement[];
-  play: (src: SoundEffect) => void;
+  play: (src: SoundEffect) => Promise<void>;
 };
 
 const {MP3} = AudioMimeType;
@@ -181,36 +181,36 @@ export const useSoundEffects = ({
   ]);
 
   const play = React.useCallback(
-    async (src: SoundEffect) => {
+    async (src: SoundEffect): Promise<void> => {
       // Do not play the sound if we're in a background tab.
       if (document.hidden) {
-        return;
+        return Promise.resolve();
       }
 
       const activeAudio = soundEffectsMap.current.get(src);
       if (!activeAudio || activeAudio[0] === null) {
-        return;
+        return Promise.resolve();
       }
       const [audio, loaded] = activeAudio;
 
       const playLock = playLockMapRef.current.get(audio);
       if (playLock) {
-        return;
+        return Promise.resolve();
       }
 
-      const startPlay = () => {
+      const startPlay = (): Promise<void> => {
         if (muted) {
           // Browsers require a user-gesture event (e.g., click) to be fired before calling `.play()`;
           // otherwise, a DOM exception `NotAllowedError` will be thrown.
           // Tapping on the global mute button in the nav allows us to safely play future sounds.
-          return;
+          return Promise.resolve();
         }
 
         const promise = audio.play();
 
-        const isPromise = typeof promise === 'object';
+        const isPromise = typeof promise === 'object' && promise !== null;
         if (!isPromise) {
-          return;
+          return Promise.resolve();
         }
 
         const lock = () => playLockMapRef.current.set(audio, true);
@@ -218,25 +218,39 @@ export const useSoundEffects = ({
 
         lock();
 
-        const onError = (err: DOMException) => {
-          console.warn(`[${err.name}]`, err);
-          unlock();
+        const onError = (err: DOMException): void => {
+          if (err.name === 'NotAllowedError') {
+            // Re-throw NotAllowedError so calling code can handle autoplay restrictions
+            unlock();
+            throw err;
+          } else {
+            console.warn(`[${err.name}]`, err);
+            unlock();
+          }
         };
 
-        return promise.then(unlock, onError);
+        return promise.then(() => {
+          unlock();
+        }, onError);
       };
 
       audio.currentTime = 0;
       audio.muted = muted;
-      audio.oncanplaythrough = startPlay;
 
-      if (!loaded) {
-        audio.load();
-      }
+      return new Promise<void>(resolve => {
+        audio.oncanplaythrough = () => {
+          // Always resolve to avoid unhandled rejections
+          startPlay().then(resolve).catch(resolve);
+        };
 
-      if (audio.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA) {
-        startPlay();
-      }
+        if (!loaded) {
+          audio.load();
+        }
+
+        if (audio.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA) {
+          startPlay().then(resolve).catch(resolve);
+        }
+      });
     },
     [muted],
   );

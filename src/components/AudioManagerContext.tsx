@@ -28,7 +28,7 @@ export const Context = React.createContext<AudioManager>({
   loading: true,
   soundEffects: {
     sounds: [],
-    play: () => {},
+    play: () => Promise.resolve(),
   },
   setMuted: () => {},
   toggleMuted: () => {},
