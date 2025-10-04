@@ -1,0 +1,39 @@
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Don't let your back catalog get stale. Keep cross-promotions, ads, and other content up-to-date with clip insertion.
+</Intro>
+
+# Adding clips
+
+Clip insertion allows you to add placeholders for audio clips to your episodes. You can then upload audio clips, and clips will be inserted into your episode audio at matching placeholders. You can use clip insertion for any kind of audio content, whether it be advertisements, intros, or credits.
+
+Clips are account-wide, so if you manage multiple podcasts, you can update clips across all of them in one operation.
+
+## Matching placeholders to clips
+
+Clips are matched and inserted into placeholders using a robust tagging system. Add tags to your placeholders, and clips that have those tags will be matched and inserted. We give you controls to make sure the right clips are inserted into the right places, with featuers like:
+
+1. **Priority**: Set the priority of a clip to ensure it is inserted into the right place. More important clips are given priority over less important clips.
+2. **Play at most once per episode**: Prevent a clip from being inserted into an episode more than once. If you run ads, this helps avoid having the same ad play multiple times in the same episode.
+5. **Choose podcasts**: Choose which podcasts the clip should be inserted into. This can be used to insert a clip into a specific podcast, or to insert a clip into all podcasts.
+3. **Discontinue after N listens**: If you sell ads by the listen, you can set a limit on the number of times a clip is listened to. After the limit is reached, the clip will be removed automatically or you'll be notified with a link to confirm new clip placements.
+
+## Clip management
+
+Clips can be managed centrally in a single dashboard. When you've made changes to your clips, you'll be presented with a plan for how the placeholders in your episodes will be re-matched with new clips. Publishing those changes happens quickly and prevents listeners from hearing clip-less episodes.
+
+We include quality-of-life features as well, like the ability to include affiliate codes right on the clip: no need to listen to each clip to find the one you're looking for. Clips can be discontinued without deleting them, and you can easily see which clips are still available to be inserted into your episodes.
+
+## Analytics
+
+You get the same great analytics for clips as you do for episodes and podcasts. Besides the analytics views you expect, like listens by source and app, you can count how many times each clip was listened to, and see which episodes and podcasts it was heard in. See our [analytics documentation](https://help.pinecast.com/article/158-analytics) for more details.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, {
+  title: 'Clip Insertion',
+  description: 'Keep your back catalog fresh with clip insertion.',
+  heroImage: '/images/hero/t-r.png',
+});

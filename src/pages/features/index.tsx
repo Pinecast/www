@@ -117,6 +117,13 @@ export const FEATURES: Array<Feature> = [
     ),
   },
   {
+    name: 'Clip Insertion',
+    url: '/features/clip-insertion',
+    description: (
+      <>Keep your back catalog fresh with clip insertion. Automatically insert audio clips into your episodes, no matter how recently the episodes were published.</>
+    ),
+  },
+  {
     name: 'Collaborators',
     url: '/features/collaborators',
     description: (
