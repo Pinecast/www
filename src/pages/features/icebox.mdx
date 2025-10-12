@@ -1,0 +1,37 @@
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Life happens. Sometimes you need to step away from podcasting for a while, and that's okay. With Pinecast, you don't pay full price while you're on break.
+</Intro>
+
+# The Icebox plan
+
+After sixty days of inactivity, you can switch to the Icebox plan to keep your account in a read-only state. You'll pay a low monthly rate of $2/month, billed annually.
+
+With the icebox, all of your episodes stay online, along with all of the features you get with the Starter plan:
+
+<ChecksList>
+  <li>Tip jar</li>
+  <li>Podcast website</li>
+  <li>Embeddable players</li>
+  <li>Analytics</li>
+  <li>Feedback</li>
+  <li>Inserted clips</li>
+  <li>Transcripts</li>
+  <li>Review monitoring</li>
+  <li>…and more</li>
+</ChecksList>
+
+During your time on the icebox, you won't be able to publish new episodes, edit existing episodes, or delete episodes. You will still have full read-only access to your account.
+
+Best of all, the icebox is fully prorated: if you've already paid your monthly rate, you'll only pay the difference between the unused time on the Starter plan and the annual cost of the Icebox. And when you're ready to switch back, the switch is also prorated and takes effect immediately.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, {
+  title: 'Icebox',
+  description: 'Keep your show online while you take a break from podcasting',
+  heroImage: '/images/hero/t-l.png',
+});

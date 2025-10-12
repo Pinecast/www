@@ -120,7 +120,11 @@ export const FEATURES: Array<Feature> = [
     name: 'Clip Insertion',
     url: '/features/clip-insertion',
     description: (
-      <>Keep your back catalog fresh with clip insertion. Automatically insert audio clips into your episodes, no matter how recently the episodes were published.</>
+      <>
+        Keep your back catalog fresh with clip insertion. Automatically insert
+        audio clips into your episodes, no matter how recently the episodes were
+        published.
+      </>
     ),
   },
   {
@@ -174,6 +178,17 @@ export const FEATURES: Array<Feature> = [
         Get feedback from your listeners collected to a single dashboard with a
         simple, customizable form. Moderation features protect against spam and
         abuse.
+      </>
+    ),
+  },
+  {
+    name: 'Icebox',
+    url: '/features/icebox',
+    description: (
+      <>
+        Sometimes you need to take a break from podcasting for a while. If your
+        account has been inactive for a while, you can switch to our Icebox plan
+        and keep your show online for a low monthly rate.
       </>
     ),
   },
