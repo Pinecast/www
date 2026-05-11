@@ -142,6 +142,13 @@ export const FEATURES: Array<Feature> = [
     ),
   },
   {
+    name: 'Email Privacy',
+    url: '/features/email-privacy',
+    description: (
+      <>Keep your personal email private.</>
+    ),
+  },
+  {
     name: 'Embeddable App Links',
     description: (
       <>

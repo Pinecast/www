@@ -1,0 +1,33 @@
+import {Intro, DefinitionList} from '@/components/TextBlocks';
+
+<Intro>
+  Keep your personal email hidden from the public.
+</Intro>
+
+# Your privacy is important
+
+Starting a podcast means putting a live email address out into the world. Pinecast allows you to do that without revealing your personal email to listeners, and without making you manage a separate inbox.
+
+Setting up email privacy is easy: opt-in by flipping a switch when setting up your show, or in your podcast settings. Enabling email privacy replaces the email address published in your feed with a forwarding address managed by Pinecast.
+
+<DefinitionList>
+    <dt>Without email privacy</dt>
+    <dd>your-email@gmail.com</dd>
+    <dt>With email privacy</dt>
+    <dd>your-show@listener.email</dd>
+</DefinitionList>
+
+## How does it work?
+
+Once you opt-in, Pinecast sets up an email address on <code>listener.email</code> just for your show. There's no second step. We'll use that forwarding address anywhere an email is published.
+
+When someone emails the address, we'll automatically forward it to the email we have on file for your account. Replying to messages replies from your personal email address.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, {
+  title: 'Email Privacy',
+  description: 'Keep your personal email address private with Pinecast email privacy.',
+  heroImage: '/images/hero/t-l.png',
+});
