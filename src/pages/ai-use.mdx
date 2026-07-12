@@ -1,0 +1,32 @@
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Podcasting is a medium for humans. Pinecast respects that.
+
+  You pay us to host your show as best as we can, not to replace you. AI at Pinecast is opt-in only.
+</Intro>
+
+## No training, full stop.
+
+We don't train AI models on your content. Never have, never will. Your content isn't for sale, and we're not trying to make more of it without you.
+
+We stand by this: we do our diligence to ensure that all of the vendors we use to host your show comply with this policy as well: no training, full stop.
+
+## AI that's opt-in
+
+Some features on Pinecast use AI, like transcriptions. We never enable these features by default. If you don't turn them on, they don't get used.
+
+## When and why AI
+
+Our philosophy is that AI should do the work that you can't or don't want to do. Transcribing audio is a great example: it's a slow, laborious process that's easy to get wrong. We give you the option to offload that work to the machines.
+
+We also believe AI is a powerful accessibility feature. For instance, blind podcasters can have a difficult time preparing cover art for their shows. Having the option to generate simple, tasteful artwork can help these folks overcome an annoying but necessary obstacle to getting their show set up.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LegalLayout} from '@/layouts/LegalLayout';
+
+export default layoutWrapper(LegalLayout, {
+  title: 'AI Use',
+  description: 'How artificial intelligence is used at Pinecast',
+  heroImage: '/images/hero/central.png',
+});

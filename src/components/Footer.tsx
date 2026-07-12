@@ -179,6 +179,7 @@ export const Footer = () => {
                 ['/learn', 'Learn'],
                 ['https://help.pinecast.com', 'Support'],
                 ['https://changelog.pinecast.com', 'Changelog'],
+                ['/ai-use', 'AI Use'],
               ]}
             />
             <FooterNavLinks
@@ -206,7 +207,7 @@ export const Footer = () => {
               },
             })}
           >
-            <span>&copy; Pinecast 2023</span>
+            <span>&copy; Pinecast 2026</span>
             <Link
               className={css({
                 color: 'var(--color-core-accent)',
