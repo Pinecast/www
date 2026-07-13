@@ -301,6 +301,7 @@ export const FEATURES: Array<Feature> = [
   },
   {
     name: 'Transcripts',
+    url: '/features/transcripts',
     description: (
       <>
         Pinecast will transcribe up to four hours of audio per month at no extra

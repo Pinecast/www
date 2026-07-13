@@ -32,3 +32,4 @@ out/
 
 # Optional eslint cache
 .eslintcache
+.claude

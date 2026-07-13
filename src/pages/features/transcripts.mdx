@@ -1,0 +1,61 @@
+import {Intro, ChecksList} from '@/components/TextBlocks';
+
+<Intro>
+  Effortless discoverability and accessibility. Opt-in to have episodes and clips get transcribed automatically at no extra cost (with generous limits).
+</Intro>
+
+# Your show, without the listening
+
+Podcasts lock up your content as audio. That's not a bug, it's a feature. But it means that people and machines machines who can't hear can't tune in.
+
+Adding transcriptions means your episodes reach more folks, and all you need to do is opt-in.
+
+## Let us transcribe, or bring your own
+
+You can opt-in to automatic transcription to transcribe episodes as they're published, manually choose which episodes to transcribe, or provide transcription files you've made yourself (VTT, SRT, or SBV). Transcripts will be available as VTT or TXT files to you and your listeners.
+
+## In all the right places.
+
+Transcripts can be added anywhere your listeners might want to find them.
+
+<ChecksList>
+  <li>In your feeds</li>
+  <li>On your Pinecast podcast website</li>
+  <li>On your WordPress with our plugin</li>
+  <li>As captions in our embed players</li>
+  <li>In the Tip Jar</li>
+  <li>Through [short links](/features/short-links)</li>
+</ChecksList>
+
+## We thought of everything
+
+We'll detect different voices in your episodes and let you assign them names. We'll even remember those names between episodes.
+
+Need to make changes? Any transcript—even ones you upload yourself—can be edited directly in your dashboard. Nothing to install, nothing to learn.
+
+Most of our players support captions: your transcripts will show up inline, highlighting words as your listeners play the episode.
+
+## Limits that work for you
+
+Every month (a 30-day rolling window), our Starter plan includes transcriptions at no additional cost:
+
+1. Four episodes up to 90 minutes each
+2. One episode up to two hours
+
+Additionally, we provide you with five episodes up to three minutes in length every two weeks (a 14-day rolling window).
+
+Need more? Our Growth add-on doubles the number of episodes you get of each length. Or, you can [purchase credits](https://help.pinecast.com/article/184-transcripts): credits can be spent on one-off transcriptions, or to transcribe your back catalog.
+
+## Why are transcripts opt-in?
+
+We use a vendor who transcribes your episodes using AI. Your episodes aren't used for training, but whether you use these services is *up to you*. See our policy on [AI use](/ai-use) for our philosophy on AI tools.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, {
+  title: 'Transcripts',
+  description: 'Automatically transcribe your episodes, recognize your speakers, and edit right in your browser.',
+  heroImage: '/images/hero/t-r.png',
+});
