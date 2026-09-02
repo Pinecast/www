@@ -30,10 +30,10 @@ export function drawImageProp(
   if (offsetX > 1) offsetX = 1;
   if (offsetY > 1) offsetY = 1;
 
-  let iw = 'videoWidth' in img ? img.videoWidth : img.width,
+  const iw = 'videoWidth' in img ? img.videoWidth : img.width,
     ih = 'videoHeight' in img ? img.videoHeight : img.height,
-    r = Math.min(w / iw, h / ih),
-    nw = iw * r, // new prop. width
+    r = Math.min(w / iw, h / ih);
+  let nw = iw * r, // new prop. width
     nh = ih * r, // new prop. height
     cx,
     cy,

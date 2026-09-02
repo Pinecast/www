@@ -2,9 +2,9 @@
  * rehype-image-size.js
  *
  * Requires:
- * - npm i image-size unist-util-visit
+ * - npm i unist-util-visit (dimensions come from ./image-dimensions.mjs)
  */
-import getImageSize from "image-size";
+import { getImageDimensions as getImageSize } from "./image-dimensions.mjs";
 import { visit } from "unist-util-visit";
 
 /**

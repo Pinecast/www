@@ -11,7 +11,7 @@ type AudioCodec = 'opus' | 'mp3' | 'aac';
 export type AudioFiles = Record<AudioCodec, string>;
 
 const parseTimeRanges = (ranges: TimeRanges) => {
-  const result: {start: number; end: number}[] = [];
+  const result: Array<{start: number; end: number}> = [];
   for (let i = 0; i < ranges.length; i++) {
     result.push({
       start: ranges.start(i),
@@ -40,15 +40,14 @@ const useSetState = <T extends object>(
 };
 
 interface HTMLMediaProps
-  extends React.AudioHTMLAttributes<any>,
-    React.VideoHTMLAttributes<any> {
+  extends React.AudioHTMLAttributes<any>, React.VideoHTMLAttributes<any> {
   src?: string;
 
   sources: AudioFiles | undefined;
 }
 
 interface HTMLMediaState {
-  buffered: any[];
+  buffered: Array<any>;
   duration: number;
   paused: boolean;
   muted: boolean;
@@ -180,7 +179,7 @@ function createHTMLMediaHook<T extends HTMLAudioElement | HTMLVideoElement>(
     // if one tries to execute another `.play()` or `.pause()` while that
     // promise is resolving. So we prevent that with this lock.
     // See: https://bugs.chromium.org/p/chromium/issues/detail?id=593273
-    let lockPlayRef = React.useRef<boolean>(false);
+    const lockPlayRef = React.useRef<boolean>(false);
 
     const controls: HTMLMediaControls = React.useMemo(() => {
       return {

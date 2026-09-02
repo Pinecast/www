@@ -178,7 +178,7 @@ type UseIntersectionProgressOptions<T extends Element> = Omit<
 };
 
 export function useIntersectionProgress<T extends Element>(
-  ref: RefObject<T>,
+  ref: RefObject<T | null>,
   options: UseIntersectionProgressOptions<T> = {},
 ) {
   const [sc, setSc] = useState<IntersectionProgressInstance<T> | null>(null);

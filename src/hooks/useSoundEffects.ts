@@ -52,7 +52,7 @@ const {
 export type SoundEffectSource = [SoundEffect, HTMLAudioElement, boolean];
 
 export type SoundEffectsApi = {
-  sounds: HTMLAudioElement[];
+  sounds: Array<HTMLAudioElement>;
   play: (src: SoundEffect) => Promise<void>;
 };
 
@@ -75,7 +75,7 @@ export const useSoundEffects = ({
   const soundEffectsMap = React.useRef(
     new Map<SoundEffect, [HTMLAudioElement | null, boolean]>(),
   );
-  const sounds = React.useRef<HTMLAudioElement[]>([]);
+  const sounds = React.useRef<Array<HTMLAudioElement>>([]);
 
   const clickDrop = useAsyncAudio(mp3(CLICK_DROP), PRELOAD);
   const click = useAsyncAudio(mp3(CLICK), PRELOAD);

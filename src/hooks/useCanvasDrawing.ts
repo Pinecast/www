@@ -2,10 +2,10 @@ import * as React from 'react';
 import {useIntersectionVisibility} from './useIntersectionVisibility';
 
 export const useCanvasDrawing = (
-  canvasRef: React.RefObject<HTMLCanvasElement>,
+  canvasRef: React.RefObject<HTMLCanvasElement | null>,
   renderCallback: (ctx: CanvasRenderingContext2D) => void,
 ) => {
-  const raf = React.useRef<number>();
+  const raf = React.useRef<number | undefined>(undefined);
   useIntersectionVisibility(
     canvasRef,
     React.useCallback(

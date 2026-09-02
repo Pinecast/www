@@ -5,14 +5,14 @@ import {useVisibleElements} from '@/hooks/useVisibleElements';
 type HorizontalCarouselProps<T> = {
   gap?: number;
   height: number;
-  items: T[];
+  items: Array<T>;
   onChange?: (currentPanelIndex: number) => void;
   renderItem: (props: T) => React.ReactNode;
   scrollSnapAlign?: 'start' | 'center' | 'end';
   width: number;
 };
 
-export const HorizontalCarousel = <T extends any>({
+export const HorizontalCarousel = <T,>({
   gap = 10,
   height,
   items,
@@ -24,7 +24,7 @@ export const HorizontalCarousel = <T extends any>({
   const css = useCSS();
   const scrollRef = React.useRef<HTMLElement>(null);
 
-  const panelsRef = React.useRef<Element[]>([]);
+  const panelsRef = React.useRef<Array<Element>>([]);
   const addPanelRef = React.useCallback(
     (index: number) => (el: Element | null) => {
       if (el) {

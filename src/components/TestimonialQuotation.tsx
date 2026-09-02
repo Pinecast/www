@@ -13,7 +13,7 @@ export const TestimonialQuotation = ({
   quotationStartIdx,
 }: {
   script: Script;
-  audio: React.RefObject<HTMLAudioElement>;
+  audio: React.RefObject<HTMLAudioElement | null>;
   quotation: string;
   quotationStartIdx: number;
 }) => {

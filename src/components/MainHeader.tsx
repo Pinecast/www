@@ -182,7 +182,7 @@ export const MainHeader = () => {
     React.useCallback(scrollY => setHasScrolled(scrollY > 200), []),
   );
 
-  const muteToggleTimer = React.useRef<NodeJS.Timeout>();
+  const muteToggleTimer = React.useRef<NodeJS.Timeout | undefined>(undefined);
 
   const {
     loading: audioMangerLoading,

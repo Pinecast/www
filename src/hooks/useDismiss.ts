@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export const useDismiss = (
-  activeElementRef: React.RefObject<HTMLElement>,
+  activeElementRef: React.RefObject<HTMLElement | null>,
   callback?: () => void,
   dismissOnClickOutside: boolean = true,
 ) => {

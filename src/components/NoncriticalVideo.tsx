@@ -31,7 +31,7 @@ export const NoncriticalVideo = ({
 }: {
   height: number;
   poster?: string;
-  sources: VideoSource[];
+  sources: Array<VideoSource>;
   style?: StyleObject;
   width: number;
 }) => {

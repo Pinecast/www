@@ -29,7 +29,7 @@ const clamp = (input: number, min: number, max: number) =>
   Math.max(min, Math.min(input, max));
 
 export const useScrollProgressEffect = (
-  containerRef: React.RefObject<HTMLElement>,
+  containerRef: React.RefObject<HTMLElement | null>,
   callback: (scrollRatio: number) => void,
 ) => {
   const handler = React.useCallback(
@@ -68,7 +68,7 @@ export const useScrollProgressEffect = (
 };
 
 export const useScrollProgress = (
-  containerRef: React.RefObject<HTMLElement>,
+  containerRef: React.RefObject<HTMLElement | null>,
 ) => {
   const [scrollRatio, setScrollRatio] = React.useState<number>(0);
   useScrollProgressEffect(containerRef, setScrollRatio);

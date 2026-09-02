@@ -30,7 +30,7 @@ export type ElementOutput = Record<
   [property: keyof React.CSSProperties | `--${string}`, value: string]
 >;
 export const useScrollTimeline = (
-  containerRef: React.RefObject<HTMLElement>,
+  containerRef: React.RefObject<HTMLElement | null>,
   timeline: Timeline,
   callback: (elements: ElementOutput) => void,
 ) => {

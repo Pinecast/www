@@ -72,7 +72,7 @@ const monetizationIcons = [
   monetization4,
   monetization5,
 ];
-let iconCache = new Map<unknown, HTMLImageElement>();
+const iconCache = new Map<unknown, HTMLImageElement>();
 if (typeof document !== 'undefined') {
   for (const Icon of [
     ...analyticsIcons,
@@ -595,7 +595,7 @@ export const Globe = () => {
   const size = React.useRef({width: 0, height: 0});
   useCalculateResizableValue(
     React.useCallback(() => {
-      let verticalScrollbarWidth =
+      const verticalScrollbarWidth =
         window.innerWidth - document.body.offsetWidth;
 
       // Use the dimensions of the viewport without scrollbars.
@@ -971,7 +971,7 @@ export const Globe = () => {
     ),
   );
 
-  let currentFeature = FEATURES[currentFeatureSlug as Feature] ?? null;
+  const currentFeature = FEATURES[currentFeatureSlug as Feature] ?? null;
 
   return (
     <section

@@ -52,20 +52,20 @@ type BaseLayoutOptions = {defaultColor?: string};
 
 export function BaseLayout(
   content: (props: Omit<Props, 'children'>) => React.ReactNode,
-): (props: Props) => JSX.Element;
+): (props: Props) => React.JSX.Element;
 export function BaseLayout(
   content: (props: Omit<Props, 'children'>) => React.ReactNode,
   options: BaseLayoutOptions,
-): (props: Props) => JSX.Element;
+): (props: Props) => React.JSX.Element;
 export function BaseLayout(
   content: (props: Omit<Props, 'children'>) => React.ReactNode,
   afterContent: () => React.ReactNode,
-): (props: Props) => JSX.Element;
+): (props: Props) => React.JSX.Element;
 export function BaseLayout(
   content: (props: Omit<Props, 'children'>) => React.ReactNode,
   afterContent: () => React.ReactNode,
   options: BaseLayoutOptions,
-): (props: Props) => JSX.Element;
+): (props: Props) => React.JSX.Element;
 export function BaseLayout(
   content: (props: Omit<Props, 'children'>) => React.ReactNode,
   optionsOrAfterContent?: BaseLayoutOptions | (() => React.ReactNode),
@@ -78,7 +78,7 @@ export function BaseLayout(
   const {defaultColor = 'var(--color-space)'} =
     typeof optionsOrAfterContent === 'object'
       ? optionsOrAfterContent
-      : options ?? {};
+      : (options ?? {});
   return function BaseLayout(props: Props) {
     const {
       children,
@@ -119,7 +119,6 @@ export function BaseLayout(
         props.mobileBorder[0],
         props.mobileBorder[1],
       );
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     useScrollTimeline(containerRef, timeline, scrollHandler);
 

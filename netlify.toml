@@ -7,6 +7,8 @@
 # https://github.com/netlify/next-runtime/blob/main/README.md#use-with-next-export
 [build.environment]
   NETLIFY_NEXT_PLUGIN_SKIP = "true"
+  # Next.js 16 needs Node 20.9+; pin an LTS so builds don't depend on the site default.
+  NODE_VERSION = "24"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

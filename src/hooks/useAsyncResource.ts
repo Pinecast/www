@@ -8,7 +8,7 @@ export const useAsyncImage = (src: string): [HTMLImageElement, boolean] => {
     return [null as any, false];
   }
   const returnValue = React.useRef<[any, any]>([null, false]);
-  const image = React.useRef<HTMLImageElement>();
+  const image = React.useRef<HTMLImageElement | undefined>(undefined);
   const [loaded, setLoaded] = React.useState(false);
   if (!image.current) {
     const img = new Image();
@@ -44,7 +44,7 @@ export const useAsyncVideo = (
   autoplay: boolean = false,
 ): [HTMLVideoElement, boolean] => {
   const returnValue = React.useRef<[any, any]>([null, false]);
-  const video = React.useRef<HTMLVideoElement>();
+  const video = React.useRef<HTMLVideoElement | undefined>(undefined);
   React.useEffect(() => {
     console.log('Loading');
     return () => {
@@ -125,7 +125,7 @@ export const useAsyncAudio = (
   autoplay: boolean = false,
 ): [HTMLAudioElement, boolean] => {
   const returnValue = React.useRef<[any, any]>([null, false]);
-  const audio = React.useRef<HTMLAudioElement>();
+  const audio = React.useRef<HTMLAudioElement | undefined>(undefined);
   React.useEffect(() => {
     return () => {
       if (!audio.current) return;

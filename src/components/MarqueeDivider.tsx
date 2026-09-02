@@ -49,7 +49,7 @@ export const MarqueeDivider = ({
   const pathRef = React.useRef<SVGPathElement>(null);
   const textPathRef = React.useRef<SVGTextPathElement>(null);
   const animateRef = React.useRef<SVGAnimateElement>(null);
-  const handlerTimer = React.useRef<NodeJS.Timeout>();
+  const handlerTimer = React.useRef<NodeJS.Timeout | undefined>(undefined);
   React.useEffect(() => {
     const handler = () => {
       // console.log('recomputing marquee');

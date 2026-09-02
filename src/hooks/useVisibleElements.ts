@@ -1,13 +1,13 @@
 import * as React from 'react';
 
 type CustomIntersectionObserverInit = {
-  root?: React.RefObject<HTMLElement> | null;
+  root?: React.RefObject<HTMLElement | null> | null;
   rootMargin?: string;
-  threshold?: number | number[];
+  threshold?: number | Array<number>;
 };
 
 export function useVisibleElements(
-  elementsRef: React.MutableRefObject<Element[]>,
+  elementsRef: React.MutableRefObject<Array<Element>>,
   observerOptions: CustomIntersectionObserverInit = {},
 ) {
   const [visibleElements, setVisibleElements] = React.useState<Array<Element>>(

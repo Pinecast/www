@@ -1,16 +1,15 @@
-import {FlatCompat} from '@eslint/eslintrc';
-import _import from 'eslint-plugin-import';
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
+import nextTypescript from 'eslint-config-next/typescript';
+import prettier from 'eslint-config-prettier';
 
-const compat = new FlatCompat();
-
-export default [
-  {ignores: ['**/.next']},
-  ...compat.config({
-    extends: ['next/core-web-vitals', 'next/typescript', 'prettier'],
+const config = [
+  {ignores: ['**/.next/', '**/out/', '.claude/', 'next-env.d.ts']},
+  ...nextCoreWebVitals,
+  ...nextTypescript,
+  prettier,
+  {
     rules: {
       '@typescript-eslint/array-type': ['error', {default: 'generic'}],
-      '@typescript-eslint/camelcase': 0,
-      '@typescript-eslint/class-name-casing': 0,
       '@typescript-eslint/consistent-type-assertions': [
         'error',
         {assertionStyle: 'as'},
@@ -30,7 +29,6 @@ export default [
       '@typescript-eslint/no-unused-vars': 0,
       '@typescript-eslint/no-unused-expressions': 0,
       '@typescript-eslint/no-use-before-define': 0,
-      '@typescript-eslint/no-var-requires': 0,
       '@typescript-eslint/prefer-as-const': 'error',
       // '@typescript-eslint/prefer-includes': 'error',
       // '@typescript-eslint/prefer-optional-chain': 'error',
@@ -46,45 +44,16 @@ export default [
       'import/first': 'error',
       'import/no-duplicates': 'error',
       // 'import/exports-last': 1,
+
+      // eslint-plugin-react-hooks 7 (pulled in by eslint-config-next 16) adds
+      // React Compiler rules to its recommended set. This site doesn't use the
+      // compiler and its canvas/audio code predates the rules, so keep them off.
+      'react-hooks/immutability': 0,
+      'react-hooks/purity': 0,
+      'react-hooks/refs': 0,
+      'react-hooks/set-state-in-effect': 0,
     },
-  }),
+  },
 ];
 
-// export default tseslint.config(
-//   {
-//     ignores: [
-//       '**/dist/*',
-//       '**/*.example.*',
-//       '**/node_modules/*',
-//       '**/build/*',
-//       '**/fontPreviews/compression/modules/*',
-//       '**/webpack.config.*',
-//       'enzymeSetup.js',
-//       'webpack.aliases.js',
-//       'webpack.devServer.js',
-//     ],
-//   },
-//   eslint.configs.recommended,
-//   tseslint.configs.recommended,
-//   {
-//     extends: ['next/core-web-vitals'],
-
-//     languageOptions: {
-//       globals: {...globals.browser},
-
-//       ecmaVersion: 2023,
-//       sourceType: 'module',
-//     },
-
-//     plugins: {import: _import, react},
-
-//   },
-//   {
-//     files: ['**/*.js', '**/*.jsx'],
-//     rules: {'@typescript-eslint/no-require-imports': 0},
-//   },
-//   {
-//     files: ['**/*.d.ts'],
-//     rules: {'@typescript-eslint/consistent-type-definitions': 0},
-//   },
-// );
+export default config;

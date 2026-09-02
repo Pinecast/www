@@ -18,7 +18,7 @@ export const useDualVideoManager = (
     running: false,
   });
 
-  const timeUpdateTimer = React.useRef<NodeJS.Timeout>();
+  const timeUpdateTimer = React.useRef<NodeJS.Timeout | undefined>(undefined);
 
   const onTimeUpdate = React.useCallback(() => {
     const [activeDrawableVideo] =
@@ -204,7 +204,7 @@ export const useDualVideoManager = (
 // state.current.currentStart = segmentStart;
 // state.current.currentEnd = segmentEnd;
 
-// const timeUpdateTimer = React.useRef<NodeJS.Timeout>();
+// const timeUpdateTimer = React.useRef<NodeJS.Timeout | undefined>(undefined);
 // const onTimeUpdate = React.useCallback(() => {
 //   const [video] = drawable;
 //   const {currentStart, currentEnd} = state.current;

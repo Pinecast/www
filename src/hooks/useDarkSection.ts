@@ -21,7 +21,9 @@ if (typeof window !== 'undefined') {
   document.addEventListener('scroll', handler, {passive: true});
 }
 
-export const useDarkSection = (sectionRef: React.RefObject<HTMLElement>) => {
+export const useDarkSection = (
+  sectionRef: React.RefObject<HTMLElement | null>,
+) => {
   React.useEffect(() => {
     const section = sectionRef.current!;
     sections.add(section);

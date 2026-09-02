@@ -24,7 +24,7 @@ import {SoundEffect} from '@/hooks/useSoundEffects';
 const supportsWAAPI = () =>
   Boolean(
     typeof window !== 'undefined' &&
-      Object.hasOwnProperty.call(Element.prototype, 'animate'),
+    Object.hasOwnProperty.call(Element.prototype, 'animate'),
   );
 
 type Testimonial = {
@@ -38,7 +38,7 @@ type Testimonial = {
   script: Script;
 };
 
-const TESTIMONIALS: Testimonial[] = [
+const TESTIMONIALS: Array<Testimonial> = [
   {
     audioFiles: {
       opus: '/testimonials/living-blindfully.opus.webm',
@@ -115,7 +115,7 @@ const AudioPlayer = React.memo(
       const tickerInnerRef = React.useRef<HTMLDivElement>(null);
       const tickerTimeRef = React.useRef<HTMLDivElement>(null);
 
-      const animationsRef = React.useRef<Animation[]>([]);
+      const animationsRef = React.useRef<Array<Animation>>([]);
 
       const {muted: globalMuted, setMuted: setGlobalMuted} = useAudioManager();
 
@@ -543,7 +543,7 @@ const Customers = ({}) => {
 
   const audioPlayerRef = React.useRef<AudioPlayerRef>(null);
 
-  const customersRef = React.useRef<Element[]>([]);
+  const customersRef = React.useRef<Array<Element>>([]);
 
   const addCustomerRef = (index: number) => (el: Element | null) => {
     if (!el) {

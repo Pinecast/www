@@ -41,7 +41,7 @@ type Panel = {
   color: string;
   url: string;
   image: string;
-  videos: VideoSource[];
+  videos: Array<VideoSource>;
   sizes: ResponsiveSizes;
 };
 
@@ -194,7 +194,7 @@ const scaleDialAngle = (progress: number) => {
   let closestIndex = 0;
   let minDifference = Math.abs(progress - intervals[0]);
   for (let idx = 1; idx < intervals.length; idx++) {
-    let difference = Math.abs(progress - intervals[idx]);
+    const difference = Math.abs(progress - intervals[idx]);
     if (difference < minDifference) {
       minDifference = difference;
       closestIndex = idx;
@@ -207,7 +207,7 @@ type DialRef = {
   rotateMobile(degrees: number): void;
   rotateDesktop(degrees: number): void;
 };
-type DialProps = {};
+type DialProps = object;
 
 const Dial = React.memo(
   React.forwardRef<DialRef, DialProps>(function Dial(_, ref) {
