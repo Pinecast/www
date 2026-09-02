@@ -13,6 +13,11 @@ import {
 import {Link, PillButton} from './Typography';
 import {StyleObject} from 'styletron-react';
 
+// Headings get `id`s from vendor/rehype-heading-ids.mjs so they can be linked
+// to. These keep the fixed header from covering a heading that's jumped to.
+const ANCHOR_SCROLL_MARGIN = '80px';
+const ANCHOR_SCROLL_MARGIN_TABLET = '110px';
+
 export const Intro = ({children}: {children: React.ReactNode}) => {
   const css = useCSS();
   return (
@@ -46,14 +51,17 @@ export const Intro = ({children}: {children: React.ReactNode}) => {
 
 export const Title = ({
   children,
+  id,
   style,
 }: {
   children: React.ReactNode;
+  id?: string;
   style?: StyleObject;
 }) => {
   const css = useCSS();
   return (
     <h2
+      id={id}
       className={css({
         ...GintoNordCondensed,
         fontSize: '48px',
@@ -64,6 +72,7 @@ export const Title = ({
         textTransform: 'uppercase',
         marginBottom: '80px',
         marginTop: '60px',
+        scrollMarginTop: ANCHOR_SCROLL_MARGIN,
         ...style,
 
         [MIN_TABLET_MEDIA_QUERY]: {
@@ -71,6 +80,7 @@ export const Title = ({
           lineHeight: '72px',
           marginBottom: '150px',
           marginTop: '130px',
+          scrollMarginTop: ANCHOR_SCROLL_MARGIN_TABLET,
           ...(style as any)?.[MIN_TABLET_MEDIA_QUERY],
         },
       })}
@@ -140,10 +150,17 @@ export const Step = ({
   );
 };
 
-export const Subtitle = ({children}: {children: React.ReactNode}) => {
+export const Subtitle = ({
+  children,
+  id,
+}: {
+  children: React.ReactNode;
+  id?: string;
+}) => {
   const css = useCSS();
   return (
     <h3
+      id={id}
       className={css({
         ...MonumentGroteskBold,
         fontSize: '28px',
@@ -152,6 +169,7 @@ export const Subtitle = ({children}: {children: React.ReactNode}) => {
         marginTop: '60px',
         marginRight: 'var(--text-gutter)',
         marginLeft: 'var(--text-gutter)',
+        scrollMarginTop: ANCHOR_SCROLL_MARGIN,
 
         [MIN_TABLET_MEDIA_QUERY]: {
           fontSize: '42px',
@@ -161,6 +179,7 @@ export const Subtitle = ({children}: {children: React.ReactNode}) => {
           maxWidth: '805px',
           marginRight: 'auto',
           marginLeft: 'auto',
+          scrollMarginTop: ANCHOR_SCROLL_MARGIN_TABLET,
         },
       })}
     >
@@ -169,10 +188,17 @@ export const Subtitle = ({children}: {children: React.ReactNode}) => {
   );
 };
 
-export const ContentSection = ({children}: {children: React.ReactNode}) => {
+export const ContentSection = ({
+  children,
+  id,
+}: {
+  children: React.ReactNode;
+  id?: string;
+}) => {
   const css = useCSS();
   return (
     <h5
+      id={id}
       className={css({
         ...MonumentGroteskBold,
         fontSize: '1em',
@@ -181,6 +207,7 @@ export const ContentSection = ({children}: {children: React.ReactNode}) => {
         marginTop: '10px',
         marginRight: 'var(--text-gutter)',
         marginLeft: 'var(--text-gutter)',
+        scrollMarginTop: ANCHOR_SCROLL_MARGIN,
 
         [MIN_TABLET_MEDIA_QUERY]: {
           // fontSize: '42px',
@@ -190,6 +217,7 @@ export const ContentSection = ({children}: {children: React.ReactNode}) => {
           maxWidth: '805px',
           marginRight: 'auto',
           marginLeft: 'auto',
+          scrollMarginTop: ANCHOR_SCROLL_MARGIN_TABLET,
         },
       })}
     >

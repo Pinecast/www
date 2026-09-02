@@ -8,6 +8,7 @@ module.exports = async () => {
           (await import('./vendor/rehype-image-size.mjs')).default,
           {root: process.cwd() + '/public'},
         ],
+        (await import('./vendor/rehype-heading-ids.mjs')).default,
       ],
     },
   });
