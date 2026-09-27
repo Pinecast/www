@@ -403,9 +403,12 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
             textAnchor="middle"
           >
             <Link
+              aria-current={
+                currentFeatureSlug === 'distribution' ? 'true' : undefined
+              }
               className={css({
                 fill: 'inherit',
-                opacity: currentFeatureSlug === 'distribution' ? 1 : 0.3,
+                opacity: currentFeatureSlug === 'distribution' ? 1 : 0.46,
                 color: '#fff',
                 transition: 'opacity 0.2s, text-shadow 0.2s, color 0.2s',
                 textShadow:
@@ -425,9 +428,12 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
             </Link>
             <tspan dx={10}>
               <Link
+                aria-current={
+                  currentFeatureSlug === 'analytics' ? 'true' : undefined
+                }
                 className={css({
                   fill: 'inherit',
-                  opacity: currentFeatureSlug === 'analytics' ? 1 : 0.3,
+                  opacity: currentFeatureSlug === 'analytics' ? 1 : 0.46,
                   color: '#fff',
                   transition: 'opacity 0.2s, text-shadow 0.2s, color 0.2s',
                   textShadow:
@@ -448,9 +454,12 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
             </tspan>
             <tspan dx={10}>
               <Link
+                aria-current={
+                  currentFeatureSlug === 'monetization' ? 'true' : undefined
+                }
                 className={css({
                   fill: 'inherit',
-                  opacity: currentFeatureSlug === 'monetization' ? 1 : 0.3,
+                  opacity: currentFeatureSlug === 'monetization' ? 1 : 0.46,
                   color: '#fff',
                   transition: 'opacity 0.2s, text-shadow 0.2s, color 0.2s',
                   textShadow:
