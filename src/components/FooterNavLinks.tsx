@@ -28,28 +28,32 @@ export const FooterNavLinks = ({
           listStyle: 'none',
           padding: 0,
           margin: 0,
-          display: 'contents',
+          display: 'flex',
+          flexDirection: 'column',
         })}
       >
         {links.map(([href, title]) => (
-          <Link
-            href={href}
-            key={href}
-            className={css({
-              color: 'var(--color-core-accent)',
-              textDecoration: 'none',
-              transition: 'color 0.2s',
-              textUnderlineOffset: '0.2em',
-              ':hover': {
-                [CAN_HOVER_MEDIA_QUERY]: {
-                  color: '#fff',
-                  textDecoration: 'underline',
-                }
-              },
-            })}
-          >
-            {title}
-          </Link>
+          <li key={href}>
+            <Link
+              href={href}
+              className={css({
+                color: 'var(--color-core-accent)',
+                // Fill the row, as the link did when it was the flex item.
+                display: 'block',
+                textDecoration: 'none',
+                transition: 'color 0.2s',
+                textUnderlineOffset: '0.2em',
+                ':hover': {
+                  [CAN_HOVER_MEDIA_QUERY]: {
+                    color: '#fff',
+                    textDecoration: 'underline',
+                  },
+                },
+              })}
+            >
+              {title}
+            </Link>
+          </li>
         ))}
       </ul>
     </div>
