@@ -6,7 +6,8 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "check:structure": "node scripts/check-structure.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

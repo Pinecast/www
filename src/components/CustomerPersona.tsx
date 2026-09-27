@@ -160,7 +160,8 @@ export const CustomerPersonaAnimation = ({
         />
         <Image
           src={persona.images[0].src}
-          alt={persona.name}
+          // The link around it already names the persona.
+          alt=""
           width={200}
           height={100}
           loading="lazy"
@@ -195,7 +196,8 @@ export const CustomerPersonaAnimation = ({
         />
         <Image
           src={persona.images[1].src}
-          alt={persona.name}
+          // The link around it already names the persona.
+          alt=""
           // This is the image's intrinsic size, not the rendered size,
           // used to cover the parent with the correct aspect ratio.
           width={1060}

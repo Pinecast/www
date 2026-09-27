@@ -694,7 +694,7 @@ export const HeroV2 = () => {
                 },
               })}
             >
-              <H2>
+              <H2 level={1}>
                 Hi! I&rsquo;m
                 <br />
                 your host
@@ -737,6 +737,7 @@ export const HeroV2 = () => {
         })}
       />
       <canvas
+        aria-hidden="true"
         className={css({
           position: 'fixed',
           top: 0,

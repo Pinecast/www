@@ -3,6 +3,7 @@ import * as React from 'react';
 import {useCSS} from '@/hooks/useCSS';
 import {MonumentGroteskSemiMono} from '@/fonts';
 import {ANTIALIASED} from '@/constants';
+import {ScreenReaderText} from './ScreenReaderText';
 
 export const MARQUEE_HEIGHT = 165;
 const MARQUEE_WIDTH = 900;
@@ -27,7 +28,7 @@ function getPath(width: number) {
 
 type Props = {
   bottomBackgroundColor?: string;
-  children: Iterable<React.ReactNode>;
+  items: Array<React.ReactNode>;
   marqueeColor?: string;
   textColor?: string;
   topBackgroundColor?: string;
@@ -37,7 +38,7 @@ type Props = {
 export const MarqueeDivider = ({
   bottomBackgroundColor = '#fff',
   marqueeColor = 'var(--color-lime)',
-  children,
+  items,
   textColor = '#000',
   topBackgroundColor = '#fff',
   zIndex = 2,
@@ -113,6 +114,10 @@ export const MarqueeDivider = ({
     };
   }, []);
 
+  const bullets = items.map((item, i) => (
+    <MarqueeDividerBullet key={i}>{item}</MarqueeDividerBullet>
+  ));
+
   return (
     <div
       className={css({
@@ -122,7 +127,16 @@ export const MarqueeDivider = ({
         zIndex,
       })}
     >
+      {/* The marquee shows each item twice so that the loop has no gap, and
+          hides the items that don't fit. Screen readers get each item once
+          from this list instead. */}
+      <ScreenReaderText as="ul">
+        {items.map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ScreenReaderText>
       <svg
+        aria-hidden="true"
         ref={marqueeRef}
         height={MARQUEE_HEIGHT}
         preserveAspectRatio="none"
@@ -165,8 +179,8 @@ export const MarqueeDivider = ({
             startOffset="0"
             ref={textPathRef}
           >
-            {children}
-            {children}
+            {bullets}
+            {bullets}
             <animate
               attributeName="startOffset"
               dur="300s"
@@ -185,9 +199,7 @@ export const MarqueeDivider = ({
 
 MarqueeDivider.MarqueeDividerHeight = MARQUEE_HEIGHT;
 
-MarqueeDivider.MarqueeDividerBullet = function MarqueeDividerBullet(
-  children: string | React.ReactNode,
-) {
+const MarqueeDividerBullet = ({children}: {children: React.ReactNode}) => {
   const css = useCSS();
   return (
     <>
@@ -201,30 +213,20 @@ MarqueeDivider.MarqueeDividerBullet = function MarqueeDividerBullet(
   );
 };
 
-export const StandardMarqueeDivider = (props: Omit<Props, 'children'>) => (
-  <MarqueeDivider {...props}>
-    {MarqueeDivider.MarqueeDividerBullet('Kick-ass customer support')}
-    {MarqueeDivider.MarqueeDividerBullet('Fair, no-nonsense pricing')}
-    {MarqueeDivider.MarqueeDividerBullet(
-      'Everything you need to be successful',
-    )}
-    {MarqueeDivider.MarqueeDividerBullet('Built by podcasters, for podcasters')}
-    {MarqueeDivider.MarqueeDividerBullet(
-      'Billions of listens served since 2015',
-    )}
-    {MarqueeDivider.MarqueeDividerBullet('Get paid for your content')}
-    {MarqueeDivider.MarqueeDividerBullet(
-      <>You&rsquo;re the customer, not the product</>,
-    )}
-    {MarqueeDivider.MarqueeDividerBullet(
-      'Worry about your next episode, not your host',
-    )}
-    {MarqueeDivider.MarqueeDividerBullet(
-      '$0 advertising budget, 100% focus on great software',
-    )}
-    {MarqueeDivider.MarqueeDividerBullet(
-      'Your batteries-included podcast host',
-    )}
-    {MarqueeDivider.MarqueeDividerBullet('Crafted with care in Raleigh, NC')}
-  </MarqueeDivider>
+const STANDARD_ITEMS = [
+  'Kick-ass customer support',
+  'Fair, no-nonsense pricing',
+  'Everything you need to be successful',
+  'Built by podcasters, for podcasters',
+  'Billions of listens served since 2015',
+  'Get paid for your content',
+  <>You&rsquo;re the customer, not the product</>,
+  'Worry about your next episode, not your host',
+  '$0 advertising budget, 100% focus on great software',
+  'Your batteries-included podcast host',
+  'Crafted with care in Raleigh, NC',
+];
+
+export const StandardMarqueeDivider = (props: Omit<Props, 'items'>) => (
+  <MarqueeDivider {...props} items={STANDARD_ITEMS} />
 );

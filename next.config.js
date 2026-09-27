@@ -9,6 +9,11 @@ module.exports = async () => {
           {root: process.cwd() + '/public'},
         ],
         (await import('./vendor/rehype-heading-ids.mjs')).default,
+        [
+          (await import('./vendor/rehype-heading-levels.mjs')).default,
+          // <Step> renders a title with the look of a `#` heading.
+          {components: {Step: 1}},
+        ],
       ],
     },
   });

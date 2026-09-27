@@ -37,6 +37,7 @@ import {dpi} from '@/canvasHelpers';
 import {useAudioManager} from '@/hooks/useAudioManager';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
+import {ScreenReaderText, VISUALLY_HIDDEN} from './ScreenReaderText';
 
 const callWhenIdle = (callback: IdleRequestCallback) => {
   if (typeof window.requestIdleCallback === 'undefined') {
@@ -225,6 +226,7 @@ const IntroSection = React.memo(function IntroSection() {
     >
       <div ref={enteringSoundSentinelRef} />
       <H1
+        level={2}
         style={{
           marginBottom: 0,
           marginLeft: 'auto',
@@ -271,10 +273,12 @@ const IntroSection = React.memo(function IntroSection() {
   );
 });
 
+// Scrolling picks the feature that shows. All three descriptions stay in the
+// page for screen readers, and the others are visually hidden.
 const FeatureText = React.memo(function FeatureText({
-  currentFeature,
+  currentFeatureSlug,
 }: {
-  currentFeature: FeatureShape | null;
+  currentFeatureSlug: Feature | null;
 }) {
   const css = useCSS();
   return (
@@ -285,12 +289,11 @@ const FeatureText = React.memo(function FeatureText({
         gap: '10px',
         gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
         height: '50vh',
-        opacity: currentFeature ? '1' : '0',
+        opacity: currentFeatureSlug ? '1' : '0',
         paddingBottom: '20px',
         placeItems: 'end',
-        pointerEvents: currentFeature ? 'auto' : 'none',
+        pointerEvents: currentFeatureSlug ? 'auto' : 'none',
         position: 'absolute',
-        visibility: currentFeature ? 'visible' : 'hidden',
         width: '100%',
         zIndex: 4,
 
@@ -322,31 +325,46 @@ const FeatureText = React.memo(function FeatureText({
             },
           })}
         >
-          {currentFeature && (
-            <>
-              <Body1
-                as="h3"
-                style={{
-                  color: 'var(--color-white)',
-                  lineHeight: 1.05,
-                  marginBottom: '10px',
-                  transition: '0.2s opacity ease',
-                }}
-              >
-                {currentFeature.description}
-              </Body1>
-              <ProseLink
-                href={currentFeature.href}
-                style={{
-                  marginBottom: '-8px',
-                  paddingBottom: '8px',
-                  paddingTop: '8px',
-                }}
-              >
-                Learn more
-              </ProseLink>
-            </>
-          )}
+          <ul className={css({listStyle: 'none', margin: 0, padding: 0})}>
+            {(Object.keys(FEATURES) as Array<Feature>).map(slug => {
+              const feature = FEATURES[slug];
+              const isCurrent = slug === currentFeatureSlug;
+              return (
+                <li
+                  aria-current={isCurrent ? 'true' : undefined}
+                  className={isCurrent ? undefined : css(VISUALLY_HIDDEN)}
+                  key={slug}
+                >
+                  <Body1
+                    as="p"
+                    style={{
+                      color: 'var(--color-white)',
+                      lineHeight: 1.05,
+                      marginBottom: '10px',
+                      transition: '0.2s opacity ease',
+                    }}
+                  >
+                    <ScreenReaderText>{feature.title}: </ScreenReaderText>
+                    {feature.description}
+                  </Body1>
+                  {/* Only the feature on screen has a link, so that focus
+                      never lands on a hidden one. */}
+                  {isCurrent && (
+                    <ProseLink
+                      href={feature.href}
+                      style={{
+                        marginBottom: '-8px',
+                        paddingBottom: '8px',
+                        paddingTop: '8px',
+                      }}
+                    >
+                      Learn more
+                    </ProseLink>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </div>
@@ -980,8 +998,6 @@ export const Globe = () => {
     ),
   );
 
-  const currentFeature = FEATURES[currentFeatureSlug as Feature] ?? null;
-
   return (
     <section
       ref={ref}
@@ -1000,6 +1016,7 @@ export const Globe = () => {
         })}
       >
         <canvas
+          aria-hidden="true"
           className={css({
             position: 'absolute',
             top: 0,
@@ -1015,7 +1032,7 @@ export const Globe = () => {
           width={size.current.width}
         />
         {/* <SideTicks /> */}
-        <FeatureText currentFeature={currentFeature} />
+        <FeatureText currentFeatureSlug={currentFeatureSlug} />
         <FeatureMenu
           currentFeatureSlug={currentFeatureSlug}
           ref={menu}

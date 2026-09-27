@@ -35,7 +35,7 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
       })}
     >
       <Body1
-        as="h3"
+        as="h2"
         style={{
           maxWidth: '8em',
           display: 'none',
@@ -49,7 +49,7 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
         Quick tips for getting started
       </Body1>
       <Caption
-        as="h3"
+        as="h2"
         style={{
           color: 'var(--color-core-accent-text)',
           marginTop: '0',

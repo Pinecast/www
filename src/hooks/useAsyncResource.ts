@@ -98,6 +98,8 @@ export const useAsyncVideo = (
     if (vid.readyState >= 3) {
       setLoaded(true);
     }
+    // It only feeds frames to a canvas, so keep it from screen readers.
+    vid.setAttribute('aria-hidden', 'true');
     vid.style.position = 'fixed';
     vid.style.pointerEvents = 'none';
     vid.style.top = '0';

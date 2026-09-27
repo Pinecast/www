@@ -15,6 +15,7 @@ import {SecondaryButton} from './SecondaryButton';
 import {useAudioManager} from '@/hooks/useAudioManager';
 import {AudioFiles, useSound} from '@/hooks/useSound';
 import {SectionDivider} from './SectionDivider';
+import {ScreenReaderText} from './ScreenReaderText';
 import {TestimonialQuotation, type Script} from './TestimonialQuotation';
 
 import * as livingBlindfully from '../../public/testimonials/living-blindfully.json';
@@ -324,6 +325,7 @@ const AudioPlayer = React.memo(
           {audioElement}
           {/* White pill for time ticker */}
           <div
+            aria-hidden="true"
             ref={tickerWrapperRef}
             className={css({
               alignContent: 'center',
@@ -435,12 +437,16 @@ const AudioPlayer = React.memo(
                 },
               }}
             >
-              <TestimonialQuotation
-                audio={audioRef}
-                script={testimonial.script}
-                quotation={testimonial.quotation}
-                quotationStartIdx={testimonial.quotationStartIdx}
-              />
+              {/* Each customer block below holds this quote for screen
+                  readers, whatever the scroll position. */}
+              <span aria-hidden="true">
+                <TestimonialQuotation
+                  audio={audioRef}
+                  script={testimonial.script}
+                  quotation={testimonial.quotation}
+                  quotationStartIdx={testimonial.quotationStartIdx}
+                />
+              </span>
             </Body3>
             <footer
               className={css({
@@ -643,12 +649,14 @@ const Customers = ({}) => {
         >
           {TESTIMONIALS.map(item => (
             <div key={item.customer} className={css(CUSTOMER_BLOCK_STYLE)}>
-              <H1>{item.customer}</H1>
+              <H1 level={3}>{item.customer}</H1>
             </div>
           ))}
         </div>
 
         <div
+          // The filled copy below is the one that screen readers read.
+          aria-hidden="true"
           className={css({
             // Outlined Text
             color: 'var(--color-space)',
@@ -664,7 +672,7 @@ const Customers = ({}) => {
         >
           {TESTIMONIALS.map(item => (
             <div key={item.customer} className={css(CUSTOMER_BLOCK_STYLE)}>
-              <H1>{item.customer}</H1>
+              <H1 level={3}>{item.customer}</H1>
             </div>
           ))}
         </div>
@@ -686,11 +694,17 @@ const Customers = ({}) => {
         >
           {TESTIMONIALS.map((item, idx) => (
             <div
+              aria-current={item === currentTestimonial ? 'true' : undefined}
               key={item.customer}
               ref={addCustomerRef(idx)}
               className={css(CUSTOMER_BLOCK_STYLE)}
             >
-              <H1>{item.customer}</H1>
+              <H1 level={3}>{item.customer}</H1>
+              {/* The player shows the quote only while its customer is at
+                  the middle of the viewport, so keep every quote here. */}
+              <ScreenReaderText as="blockquote">
+                {item.quotation.replace(/'/g, '’')}
+              </ScreenReaderText>
             </div>
           ))}
         </div>
