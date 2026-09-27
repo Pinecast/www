@@ -76,3 +76,30 @@ test.describe('page titles at 375px', () => {
     await expect(title).toHaveCSS('font-size', '54px');
   });
 });
+
+// From 1281px to 1599px the page titles are 144px instead of 160px, for the
+// same reason. At 1440px every word fits.
+test.describe('page titles at 1440px', () => {
+  test.use({viewport: {width: 1440, height: 900}});
+  for (const path of exportedPages()) {
+    test(`${path} keeps the words of its title whole`, async ({page}) => {
+      await load(page, path);
+      expect(await splitWords(page.locator('h1'))).toEqual([]);
+    });
+  }
+
+  test('the smaller size applies from 1281px to 1599px', async ({page}) => {
+    const title = page.locator('h1');
+    await load(page, '/features/collaborators');
+    await expect(title).toHaveCSS('font-size', '144px');
+    for (const [width, size] of [
+      [1280, '112px'],
+      [1281, '144px'],
+      [1599, '144px'],
+      [1600, '160px'],
+    ] as const) {
+      await page.setViewportSize({width, height: 900});
+      await expect(title).toHaveCSS('font-size', size);
+    }
+  });
+});

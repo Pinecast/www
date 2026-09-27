@@ -7,7 +7,11 @@ import {
   MarqueeDivider,
   StandardMarqueeDivider,
 } from '@/components/MarqueeDivider';
-import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY} from '@/constants';
+import {
+  MIN_DESKTOP_MEDIA_QUERY,
+  MIN_TABLET_MEDIA_QUERY,
+  MOBILE_MEDIA_QUERY,
+} from '@/constants';
 import {MonumentGroteskRegular} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
 import {
@@ -19,18 +23,29 @@ import Head from 'next/head';
 import * as React from 'react';
 import {StyleObject} from 'styletron-react';
 
-// The page title of the content layouts. At 54px, a long word in a title
-// ("Podcasting", "Embeddable") was wider than its line on screens up to about
-// 525px, and a browser without a hyphenation dictionary broke it in the
-// middle. At 46px, only the longest ("Collaborators", "Monetization") are
-// still too wide at 375px. The title keeps `hyphens: auto`, so browsers that
-// can hyphenate do so.
+// The page title of the content layouts. A long word in a title that is wider
+// than its line breaks in the middle in a browser without a hyphenation
+// dictionary. The title keeps `hyphens: auto`, so browsers that can hyphenate
+// do so, and it is smaller where the words did not fit:
+// - At 54px ("Podcasting", "Embeddable") on screens up to about 525px. At
+//   46px, only the longest ("Collaborators", "Monetization") are still too
+//   wide at 375px.
+// - At 160px ("Collaborators", "Monetization") from 1281px to about 1565px.
+//   At 144px, only "Collaborators" is still too wide, below about 1410px.
 export const PAGE_TITLE_STYLE: StyleObject = {
   padding: '0 10%',
   marginBottom: '50px',
   '@media (max-width: 549px)': {
     fontSize: '46px',
     lineHeight: '48px',
+  },
+  [MIN_DESKTOP_MEDIA_QUERY]: {
+    fontSize: '144px',
+    lineHeight: '130px',
+  },
+  '@media (min-width: 1600px)': {
+    fontSize: '160px',
+    lineHeight: '144px',
   },
 };
 
