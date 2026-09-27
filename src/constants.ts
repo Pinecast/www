@@ -19,6 +19,8 @@ export const MIN_DESKTOP_MEDIA_QUERY = `@media (min-width: ${
 export const CAN_HOVER_MEDIA_QUERY = `@media (any-hover: hover)`;
 
 export const PREFERS_REDUCED_MOTION_QUERY = `@media (prefers-reduced-motion: reduce)`;
+// Put optional motion under this query, so that it is off by default.
+export const NO_MOTION_PREFERENCE_QUERY = `@media (prefers-reduced-motion: no-preference)`;
 
 export const ANTIALIASED: StyleObject = {
   WebkitFontSmoothing: 'antialiased',

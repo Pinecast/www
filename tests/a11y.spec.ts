@@ -51,11 +51,10 @@ test.describe('page structure', () => {
 
       // The skip link is the first stop, and shows only while it has focus.
       const skip = page.getByRole('link', {name: 'Skip to main content'});
-      expect((await skip.boundingBox())!.width).toBeLessThanOrEqual(1);
+      await expect(skip).not.toBeInViewport();
       await page.keyboard.press('Tab');
       await expect(skip).toBeFocused();
-      await expect(skip).toBeInViewport();
-      expect((await skip.boundingBox())!.width).toBeGreaterThan(100);
+      await expect(skip).toBeInViewport({ratio: 1});
 
       // After the skip link, Tab goes on from the start of the main content.
       await page.keyboard.press('Enter');
@@ -77,6 +76,41 @@ test.describe('page structure', () => {
       ).toBe(true);
     });
   }
+
+  test('the skip link slides out only without a reduced motion preference', async ({
+    page,
+  }) => {
+    const skip = page.getByRole('link', {name: 'Skip to main content'});
+    const durations = () =>
+      skip.evaluate(link => getComputedStyle(link).transitionDuration);
+
+    await page.emulateMedia({reducedMotion: 'no-preference'});
+    await page.goto('/privacy');
+    await page.keyboard.press('Tab');
+    await expect(skip).toBeFocused();
+    expect(await durations()).not.toMatch(/^0s(, 0s)*$/);
+    await expect(skip).toBeInViewport({ratio: 1});
+
+    await page.emulateMedia({reducedMotion: 'reduce'});
+    await page.goto('/privacy');
+    await page.keyboard.press('Tab');
+    await expect(skip).toBeFocused();
+    expect(await durations()).toMatch(/^0s(, 0s)*$/);
+    await expect(skip).toBeInViewport({ratio: 1});
+  });
+
+  test('the skip link does not scroll the page when it gets focus', async ({
+    page,
+  }) => {
+    await page.goto('/privacy');
+    await page.evaluate(() =>
+      window.scrollTo({top: 1500, behavior: 'instant'}),
+    );
+    await page
+      .getByRole('link', {name: 'Skip to main content'})
+      .evaluate(link => (link as HTMLElement).focus());
+    expect(await page.evaluate(() => window.scrollY)).toBe(1500);
+  });
 
   for (const viewport of [WIDE, {width: 320, height: 900}]) {
     test.describe(`at ${viewport.width}px`, () => {
