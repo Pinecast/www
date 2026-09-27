@@ -120,24 +120,27 @@ export async function hasSidewaysScroll(page: Page): Promise<boolean> {
   );
 }
 
-// The words in `root` that a line break splits in two.
+// The words in the elements of `root` that a line break splits in two. A line
+// can break after a hyphen ("add-/ons"), so each part of a hyphenated word
+// counts as a word.
 export async function splitWords(root: Locator): Promise<Array<string>> {
-  return root.evaluate(element => {
+  return root.evaluateAll(elements => {
     const split: Array<string> = [];
-    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
-    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
-      for (const match of node.textContent!.matchAll(/\S+/g)) {
-        const range = document.createRange();
-        range.setStart(node, match.index!);
-        range.setEnd(node, match.index! + match[0].length);
-        const lines = new Set(
-          [...range.getClientRects()]
-            .filter(rect => rect.width > 0)
-            .map(rect => Math.round(rect.top)),
-        );
-        // A break after a hyphen ("add-/ons") is a normal break.
-        if (lines.size > 1 && !match[0].includes('-')) {
-          split.push(match[0]);
+    for (const element of elements) {
+      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+      for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+        for (const match of node.textContent!.matchAll(/[^\s-]+-?/g)) {
+          const range = document.createRange();
+          range.setStart(node, match.index!);
+          range.setEnd(node, match.index! + match[0].length);
+          const lines = new Set(
+            [...range.getClientRects()]
+              .filter(rect => rect.width > 0)
+              .map(rect => Math.round(rect.top)),
+          );
+          if (lines.size > 1) {
+            split.push(match[0]);
+          }
         }
       }
     }

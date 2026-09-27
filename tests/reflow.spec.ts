@@ -46,60 +46,90 @@ test.describe('pricing at 320px', () => {
   });
 });
 
-// Below 550px the page titles are 46px instead of 54px, so that their words
-// fit on their line. A browser without a hyphenation dictionary breaks a word
-// that does not fit in the middle, with no hyphen. These four words were wider
-// than a 375px screen at 54px. At 46px the first two still are, and the
-// others only just fit.
-const TOO_LONG_AT_375 = [
-  'Collaborators',
-  'Monetization',
-  'Distribution',
-  'Transcripts',
+// A display heading whose widest word is wider than its line breaks the word
+// in the middle. Chrome and Firefox do not hyphenate English words that start
+// with a capital letter, so no hyphen shows either. The titles are smaller
+// where their widest word would not fit (src/fitText.ts). These widths include
+// common phones and each side of the breakpoints.
+const TITLE_WIDTHS = [
+  320, 340, 360, 375, 390, 412, 430, 480, 540, 600, 700, 701, 768, 1024, 1180,
+  1181, 1280, 1281, 1366, 1440, 1536, 1600, 1920,
 ];
 
-test.describe('page titles at 375px', () => {
-  test.use({viewport: {width: 375, height: 812}});
+test.describe('headings at all widths', () => {
   for (const path of exportedPages()) {
-    test(`${path} keeps the words of its title whole`, async ({page}) => {
+    test(`${path} keeps the words of its headings whole`, async ({page}) => {
+      // The animations of the home page make each resize slow.
+      test.slow(path === '/');
       await load(page, path);
-      const split = await splitWords(page.locator('h1'));
-      expect(split.filter(word => !TOO_LONG_AT_375.includes(word))).toEqual([]);
+      // Visible headings only: a hidden one has no lines.
+      const headings = page
+        .getByRole('main')
+        .locator('h1, h2, h3')
+        .filter({visible: true});
+      const split: Array<string> = [];
+      for (const width of TITLE_WIDTHS) {
+        await page.setViewportSize({width, height: 800});
+        for (const word of await splitWords(headings)) {
+          split.push(`${width}px: ${word}`);
+        }
+      }
+      expect(split).toEqual([]);
     });
   }
-
-  test('the smaller size stops at 550px', async ({page}) => {
-    const title = page.locator('h1');
-    await load(page, '/learn/podcasting-for-beginners');
-    await expect(title).toHaveCSS('font-size', '46px');
-    await page.setViewportSize({width: 550, height: 812});
-    await expect(title).toHaveCSS('font-size', '54px');
-  });
 });
 
-// From 1281px to 1599px the page titles are 144px instead of 160px, for the
-// same reason. At 1440px every word fits.
-test.describe('page titles at 1440px', () => {
-  test.use({viewport: {width: 1440, height: 900}});
-  for (const path of exportedPages()) {
-    test(`${path} keeps the words of its title whole`, async ({page}) => {
-      await load(page, path);
-      expect(await splitWords(page.locator('h1'))).toEqual([]);
-    });
-  }
-
-  test('the smaller size applies from 1281px to 1599px', async ({page}) => {
+test.describe('title sizes', () => {
+  test('a page title that fits keeps its size', async ({page}) => {
     const title = page.locator('h1');
-    await load(page, '/features/collaborators');
-    await expect(title).toHaveCSS('font-size', '144px');
+    await load(page, '/features/icebox');
     for (const [width, size] of [
+      [320, '54px'],
       [1280, '112px'],
-      [1281, '144px'],
-      [1599, '144px'],
-      [1600, '160px'],
+      [1366, '160px'],
     ] as const) {
-      await page.setViewportSize({width, height: 900});
+      await page.setViewportSize({width, height: 800});
       await expect(title).toHaveCSS('font-size', size);
     }
+  });
+
+  test('a page title with a long word is smaller only where the word does not fit', async ({
+    page,
+  }) => {
+    const title = page.locator('h1');
+    await load(page, '/features/collaborators');
+    for (const [width, fits] of [
+      [375, false],
+      [600, true],
+      [1366, false],
+      [1920, true],
+    ] as const) {
+      await page.setViewportSize({width, height: 800});
+      const size = parseFloat(
+        await title.evaluate(element => getComputedStyle(element).fontSize),
+      );
+      const nominal = width > 1280 ? 160 : 54;
+      if (fits) {
+        expect(size).toBe(nominal);
+      } else {
+        expect(size).toBeLessThan(nominal);
+      }
+    }
+  });
+
+  test('a section title with a long word is smaller where it does not fit', async ({
+    page,
+  }) => {
+    const title = page.getByRole('heading', {name: 'Thoughtfully designed'});
+    await load(page, '/features/feedback');
+    await page.setViewportSize({width: 320, height: 800});
+    const size = await title.evaluate(element =>
+      parseFloat(getComputedStyle(element).fontSize),
+    );
+    expect(size).toBeLessThan(48);
+    await page.setViewportSize({width: 480, height: 800});
+    await expect(title).toHaveCSS('font-size', '48px');
+    await page.setViewportSize({width: 1440, height: 800});
+    await expect(title).toHaveCSS('font-size', '80px');
   });
 });
