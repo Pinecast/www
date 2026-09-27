@@ -15,7 +15,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Checks
 
 ```sh
-npm run lint
+npm run lint        # ESLint, with the jsx-a11y recommended rules
 npx tsc --noEmit
 npm run build       # static export to out/
 npm test            # Playwright: keyboard, landmark and axe checks on out/

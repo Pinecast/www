@@ -1034,7 +1034,7 @@ export const Globe = () => {
           top: '-100vh',
         })}
       >
-        <a
+        <span
           id="distribution"
           className={css({
             position: 'absolute',
@@ -1043,7 +1043,7 @@ export const Globe = () => {
             } * 100vh)`,
           })}
         />
-        <a
+        <span
           id="analytics"
           className={css({
             position: 'absolute',
@@ -1052,7 +1052,7 @@ export const Globe = () => {
             } * 100vh)`,
           })}
         />
-        <a
+        <span
           id="monetization"
           className={css({
             position: 'absolute',
