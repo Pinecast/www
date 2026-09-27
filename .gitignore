@@ -24,6 +24,10 @@ dist/
 .next
 out/
 
+# Playwright
+test-results/
+playwright-report/
+
 # TypeScript cache
 *.tsbuildinfo
 

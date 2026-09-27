@@ -9,7 +9,11 @@ import {Check} from '@/icons/Check';
 import {Expandable} from './Expandable';
 import {Collapse} from '@/icons/Collapse';
 import {Expand} from '@/icons/Expand';
-import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY} from '@/constants';
+import {
+  BUTTON_RESET,
+  MIN_TABLET_MEDIA_QUERY,
+  MOBILE_MEDIA_QUERY,
+} from '@/constants';
 import { useAudioManager } from '@/hooks/useAudioManager';
 import { SoundEffect } from '@/hooks/useSoundEffects';
 
@@ -476,11 +480,11 @@ const AddonAccordionItem = ({
     soundEffects: {play: playSoundEffect},
   } = useAudioManager();
   return (
+    // A click anywhere on the row opens or closes it. The button in the
+    // heading is the control for the keyboard and for assistive technology.
+    // Its clicks, from Enter and Space too, come up to this handler.
     <div
-      role="button"
-      aria-label={`Toggle details about ${name}`}
-      aria-expanded={open ? 'true' : 'false'}
-      aria-controls={id}
+      role="presentation"
       onClick={() => {
         // Undo any text sections that were accidentally highlighted when the user
         // tapped the accordion open/close. For accessibility purposes, as opposed
@@ -510,7 +514,14 @@ const AddonAccordionItem = ({
           [MIN_TABLET_MEDIA_QUERY]: {lineHeight: '70px'},
         }}
       >
-        {name}
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls={id}
+          className={css(BUTTON_RESET)}
+        >
+          {name}
+        </button>
       </Subhead>
       <Expandable
         open={open}

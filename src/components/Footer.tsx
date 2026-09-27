@@ -111,6 +111,7 @@ export const Footer = () => {
           })}
         >
           <nav
+            aria-label="Footer"
             className={css({
               display: 'grid',
               gap: '100px',

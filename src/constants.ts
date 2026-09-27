@@ -24,3 +24,25 @@ export const ANTIALIASED: StyleObject = {
   WebkitFontSmoothing: 'antialiased',
   MozOsxFontSmooth: 'grayscale',
 };
+
+// Removes the browser's button look, so that a <button> can take the look of
+// the text or link it replaces. Spread it first and override from there.
+export const BUTTON_RESET: StyleObject = {
+  appearance: 'none',
+  backgroundColor: 'transparent',
+  borderStyle: 'none',
+  borderWidth: 0,
+  color: 'inherit',
+  cursor: 'pointer',
+  fontFamily: 'inherit',
+  fontSize: 'inherit',
+  fontStyle: 'inherit',
+  fontWeight: 'inherit',
+  letterSpacing: 'inherit',
+  lineHeight: 'inherit',
+  margin: 0,
+  padding: 0,
+  textAlign: 'inherit',
+  textTransform: 'inherit',
+  wordSpacing: 'inherit',
+};

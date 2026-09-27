@@ -2,6 +2,7 @@ import {Footer} from '@/components/Footer';
 import {InfoPageFooterUpsell} from '@/components/InfoPageFooterUpsell';
 import {MainHeader} from '@/components/MainHeader';
 import {MainLogo} from '@/components/MainLogo';
+import {MAIN_CONTENT_ID, SkipLink} from '@/components/SkipLink';
 import {
   MarqueeDivider,
   StandardMarqueeDivider,
@@ -128,55 +129,59 @@ export function BaseLayout(
           <title>{title}</title>
           <meta name="description" content={description} />
         </Head>
-        <div ref={containerRef}>
-          <MainLogo />
-          <MainHeader />
-          <div
-            className={css({
-              backgroundColor: color,
-              minHeight: '175vh',
-              textAlign: 'center',
-            })}
-          >
+        <SkipLink />
+        {/* The logo and the header are fixed, so they take no space here. */}
+        <MainLogo />
+        <MainHeader />
+        <main id={MAIN_CONTENT_ID}>
+          <div ref={containerRef}>
             <div
               className={css({
-                position: 'sticky',
-                paddingTop: '200px',
-                top: 0,
+                backgroundColor: color,
+                minHeight: '175vh',
+                textAlign: 'center',
               })}
             >
-              {content(props)}
-              <BaseHero color={color} heroImage={heroImage} ref={heroRef} />
+              <div
+                className={css({
+                  position: 'sticky',
+                  paddingTop: '200px',
+                  top: 0,
+                })}
+              >
+                {content(props)}
+                <BaseHero color={color} heroImage={heroImage} ref={heroRef} />
+              </div>
             </div>
           </div>
-        </div>
-        <section
-          className={css({
-            backgroundColor: 'var(--color-sand)',
-            maxWidth: '1375px',
-            marginBottom: 0,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            marginTop: 0,
-            padding: '80px 10px',
-            '--text-gutter': '30px',
-
-            // Base MDX styles
-            ...MonumentGroteskRegular,
-            fontSize: '18px',
-
-            [MIN_TABLET_MEDIA_QUERY]: {
-              padding: '150px 150px',
-              '--text-gutter': '0px',
+          <section
+            className={css({
+              backgroundColor: 'var(--color-sand)',
+              maxWidth: '1375px',
+              marginBottom: 0,
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              marginTop: 0,
+              padding: '80px 10px',
+              '--text-gutter': '30px',
 
               // Base MDX styles
-              fontSize: '28px',
-            },
-          })}
-        >
-          {children}
-        </section>
-        {afterContent?.()}
+              ...MonumentGroteskRegular,
+              fontSize: '18px',
+
+              [MIN_TABLET_MEDIA_QUERY]: {
+                padding: '150px 150px',
+                '--text-gutter': '0px',
+
+                // Base MDX styles
+                fontSize: '28px',
+              },
+            })}
+          >
+            {children}
+          </section>
+          {afterContent?.()}
+        </main>
         <StandardMarqueeDivider
           topBackgroundColor="var(--color-sand)"
           bottomBackgroundColor="var(--color-space)"

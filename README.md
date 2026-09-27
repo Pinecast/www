@@ -12,6 +12,19 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 
+## Checks
+
+```sh
+npm run lint
+npx tsc --noEmit
+npm run build       # static export to out/
+npm test            # Playwright: keyboard, landmark and axe checks on out/
+```
+
+`npm test` serves `out/`, so build first. It needs Playwright's Chromium once:
+`npx playwright install chromium`.
+
+
 ## Design
 
 The identity lives in this repo as the `--color-*` block in

@@ -6,7 +6,8 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "playwright test"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -24,6 +25,8 @@
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.11.0",
+    "@playwright/test": "1.56.1",
     "@svgr/webpack": "^8.1.0",
     "@types/mdx": "^2.0.14",
     "@types/node": "24.13.3",
@@ -32,6 +35,8 @@
     "eslint": "9.39.5",
     "eslint-config-next": "16.3.4",
     "eslint-config-prettier": "^10.1.8",
-    "prettier": "^3.9.6"
+    "playwright-core": "1.56.1",
+    "prettier": "^3.9.6",
+    "serve": "^14.2.6"
   }
 }

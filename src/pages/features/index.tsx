@@ -22,6 +22,7 @@ import {
 import {Collapse} from '@/icons/Collapse';
 import {Expand} from '@/icons/Expand';
 import {Expandable} from '@/components/Expandable';
+import {MAIN_CONTENT_ID, SkipLink} from '@/components/SkipLink';
 
 export default function Features() {
   return (
@@ -33,16 +34,19 @@ export default function Features() {
           content="All the features you could want from a podcast hosting service"
         />
       </Head>
+      <SkipLink />
       <MainLogo startDark />
       <MainHeader />
-      <Header />
-      <StandardMarqueeDivider
-        marqueeColor="var(--color-sand)"
-        textColor="var(--color-space)"
-        topBackgroundColor="var(--color-space)"
-        bottomBackgroundColor="var(--color-sand)"
-      />
-      <FeatureAccordion />
+      <main id={MAIN_CONTENT_ID}>
+        <Header />
+        <StandardMarqueeDivider
+          marqueeColor="var(--color-sand)"
+          textColor="var(--color-space)"
+          topBackgroundColor="var(--color-space)"
+          bottomBackgroundColor="var(--color-sand)"
+        />
+        <FeatureAccordion />
+      </main>
       <StandardMarqueeDivider
         topBackgroundColor="var(--color-sand)"
         bottomBackgroundColor="var(--color-space)"
@@ -356,6 +360,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
   selected: boolean;
 }) {
   const css = useCSS();
+  const panelId = React.useId();
   return (
     <li
       className={css({
@@ -372,6 +377,8 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
       <button
         onClick={() => onSelectName(selected ? null : feature.name)}
         type="button"
+        aria-expanded={selected}
+        aria-controls={panelId}
         className={css({
           ...MonumentGroteskBold,
           backgroundColor: selected
@@ -413,7 +420,9 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
           },
         })}
       >
-        <div
+        {/* The letter repeats the first letter of the name. */}
+        <span
+          aria-hidden="true"
           className={css({
             ...MonumentGroteskBold,
             color: 'var(--color-space)',
@@ -432,10 +441,9 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
             zIndex: 3,
             [MIN_TABLET_MEDIA_QUERY]: {display: 'flex'},
           })}
-          role="presentation"
         >
           {feature.name.charAt(0)}
-        </div>
+        </span>
         <span
           className={css({
             ...GintoNordCondensed,
@@ -465,7 +473,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
           {feature.name}
         </span>
         <span
-          role="presentation"
+          aria-hidden="true"
           className={css({
             alignItems: 'center',
             justifyContent: 'center',
@@ -499,6 +507,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
         </span>
       </button>
       <Expandable
+        id={panelId}
         open={selected}
         innerStyle={{
           textAlign: 'center',
