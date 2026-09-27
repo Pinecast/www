@@ -1,5 +1,12 @@
 import * as React from 'react';
-import {Body4, Caption, H2, Subhead, Link as ProseLink} from './Typography';
+import {
+  Body4,
+  Caption,
+  H2,
+  HeadingLevel,
+  Subhead,
+  Link as ProseLink,
+} from './Typography';
 import {useCSS} from '@/hooks/useCSS';
 import {AspectRatioBox} from './AspectRatioBox';
 import {HorizontalCarousel} from './HorizontalCarousel';
@@ -258,6 +265,7 @@ const Dial = React.memo(
     return (
       <>
         <svg
+          aria-hidden="true"
           width={144}
           height={108}
           viewBox="0 0 144 108"
@@ -344,6 +352,7 @@ const Dial = React.memo(
           </g>
         </svg>
         <svg
+          aria-hidden="true"
           width={288}
           height={214}
           viewBox="0 0 288 214"
@@ -431,9 +440,11 @@ const Dial = React.memo(
 );
 
 const Panel = ({
+  headingLevel,
   isActive,
   position,
 }: {
+  headingLevel: HeadingLevel;
   isActive: boolean;
   position: PanelPosition;
 }) => {
@@ -576,7 +587,10 @@ const Panel = ({
               },
             })}
           >
-            <Subhead style={{marginBottom: '16px', maxWidth: '16ch'}}>
+            <Subhead
+              level={headingLevel}
+              style={{marginBottom: '16px', maxWidth: '16ch'}}
+            >
               {heading}
             </Subhead>
             <ProseLink
@@ -747,7 +761,14 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
   );
 };
 
-export const TunedInPanels = () => {
+// The panel titles are headings one level below the heading before the
+// panels: h3 under the "Tuned-in" h2 on the home page, h2 under the h1 on
+// /learn.
+export const TunedInPanels = ({
+  headingLevel = 3,
+}: {
+  headingLevel?: HeadingLevel;
+}) => {
   const css = useCSS();
 
   // const [hasLeft, setHasLeft] = React.useState<boolean>(false);
@@ -864,6 +885,7 @@ export const TunedInPanels = () => {
         })}
       >
         <svg
+          aria-hidden="true"
           className={css({
             position: 'absolute',
             width: 0,
@@ -903,6 +925,7 @@ export const TunedInPanels = () => {
             items={mobilePanels}
             renderItem={item => (
               <Panel
+                headingLevel={headingLevel}
                 key={item.url}
                 position={item.position}
                 isActive={item.isActive}
@@ -961,12 +984,21 @@ export const TunedInPanels = () => {
             },
           })}
         >
-          <Panel position={PanelPosition.LEFT} isActive={leftActiveDesktop} />
           <Panel
+            headingLevel={headingLevel}
+            position={PanelPosition.LEFT}
+            isActive={leftActiveDesktop}
+          />
+          <Panel
+            headingLevel={headingLevel}
             position={PanelPosition.MIDDLE}
             isActive={middleActiveDesktop}
           />
-          <Panel position={PanelPosition.RIGHT} isActive={rightActiveDesktop} />
+          <Panel
+            headingLevel={headingLevel}
+            position={PanelPosition.RIGHT}
+            isActive={rightActiveDesktop}
+          />
         </div>
       </div>
     </div>

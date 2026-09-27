@@ -21,6 +21,7 @@ export const SideTicks = () => {
 
   return (
     <svg
+      aria-hidden="true"
       ref={ref}
       className={css({
         position: 'absolute',

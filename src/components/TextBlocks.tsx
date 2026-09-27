@@ -10,7 +10,7 @@ import {
   MOBILE_BREAKPOINT,
   MOBILE_MEDIA_QUERY,
 } from '@/constants';
-import {Link, PillButton} from './Typography';
+import {HeadingLevel, Link, PillButton} from './Typography';
 import {StyleObject} from 'styletron-react';
 
 // Headings get `id`s from vendor/rehype-heading-ids.mjs so they can be linked
@@ -49,18 +49,23 @@ export const Intro = ({children}: {children: React.ReactNode}) => {
   );
 };
 
+// Like the Typography headings, these take their element from `level` and
+// keep their look at every level.
 export const Title = ({
   children,
   id,
+  level = 2,
   style,
 }: {
   children: React.ReactNode;
   id?: string;
+  level?: HeadingLevel;
   style?: StyleObject;
 }) => {
   const css = useCSS();
+  const Tag = `h${level}` as const;
   return (
-    <h2
+    <Tag
       id={id}
       className={css({
         ...GintoNordCondensed,
@@ -86,7 +91,7 @@ export const Title = ({
       })}
     >
       {children}
-    </h2>
+    </Tag>
   );
 };
 
@@ -153,13 +158,16 @@ export const Step = ({
 export const Subtitle = ({
   children,
   id,
+  level = 3,
 }: {
   children: React.ReactNode;
   id?: string;
+  level?: HeadingLevel;
 }) => {
   const css = useCSS();
+  const Tag = `h${level}` as const;
   return (
-    <h3
+    <Tag
       id={id}
       className={css({
         ...MonumentGroteskBold,
@@ -184,20 +192,23 @@ export const Subtitle = ({
       })}
     >
       {children}
-    </h3>
+    </Tag>
   );
 };
 
 export const ContentSection = ({
   children,
   id,
+  level = 4,
 }: {
   children: React.ReactNode;
   id?: string;
+  level?: HeadingLevel;
 }) => {
   const css = useCSS();
+  const Tag = `h${level}` as const;
   return (
-    <h5
+    <Tag
       id={id}
       className={css({
         ...MonumentGroteskBold,
@@ -222,7 +233,7 @@ export const ContentSection = ({
       })}
     >
       {children}
-    </h5>
+    </Tag>
   );
 };
 
@@ -472,7 +483,12 @@ export const ProductFeature = ({
           gridArea: 'url',
         })}
       >
-        <Link target="_blank" href={url}>
+        {/* Each product has this link, so its name says which product. */}
+        <Link
+          aria-label={`See it on Amazon: ${name}`}
+          target="_blank"
+          href={url}
+        >
           See it on Amazon
         </Link>
       </div>

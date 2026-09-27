@@ -17,16 +17,22 @@ import {StyleObject} from 'styletron-react';
 import NextLink, {LinkProps} from 'next/link';
 import {RightArrow} from '@/icons/RightArrow';
 
-export const H1 = ({
-  children,
-  style,
-}: {
+export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+
+// The heading components pick their look from their name and their element
+// from `level`, so a heading can move in the page outline without changing
+// how it looks.
+type HeadingProps = {
   children: ReactNode;
+  level?: HeadingLevel;
   style?: StyleObject;
-}) => {
+};
+
+export const H1 = ({children, level = 1, style}: HeadingProps) => {
   const css = useCSS();
+  const Tag = `h${level}` as const;
   return (
-    <h1
+    <Tag
       className={css({
         ...GintoNordCondensed,
         fontWeight: '400',
@@ -54,20 +60,15 @@ export const H1 = ({
       })}
     >
       {children}
-    </h1>
+    </Tag>
   );
 };
 
-export const H2 = ({
-  children,
-  style,
-}: {
-  children: ReactNode;
-  style?: StyleObject;
-}) => {
+export const H2 = ({children, level = 2, style}: HeadingProps) => {
   const css = useCSS();
+  const Tag = `h${level}` as const;
   return (
-    <h2
+    <Tag
       className={css({
         ...GintoNordCondensed,
         fontWeight: '400',
@@ -88,20 +89,15 @@ export const H2 = ({
       })}
     >
       {children}
-    </h2>
+    </Tag>
   );
 };
 
-export const H3 = ({
-  children,
-  style,
-}: {
-  children: ReactNode;
-  style?: StyleObject;
-}) => {
+export const H3 = ({children, level = 3, style}: HeadingProps) => {
   const css = useCSS();
+  const Tag = `h${level}` as const;
   return (
-    <h3
+    <Tag
       className={css({
         ...GintoNordCondensed,
         fontWeight: '400',
@@ -120,7 +116,7 @@ export const H3 = ({
       })}
     >
       {children}
-    </h3>
+    </Tag>
   );
 };
 
@@ -262,16 +258,11 @@ export const Body4 = ({
   );
 };
 
-export const Subhead = ({
-  children,
-  style,
-}: {
-  children: ReactNode;
-  style?: StyleObject;
-}) => {
+export const Subhead = ({children, level = 3, style}: HeadingProps) => {
   const css = useCSS();
+  const Tag = `h${level}` as const;
   return (
-    <h3
+    <Tag
       className={css({
         ...MonumentGroteskBold,
         display: 'block',
@@ -290,7 +281,7 @@ export const Subhead = ({
       })}
     >
       {children}
-    </h3>
+    </Tag>
   );
 };
 
@@ -432,6 +423,7 @@ export const Link = ({
   style,
   ...rest
 }: Omit<LinkProps, 'children' | 'style' | 'href'> & {
+  'aria-label'?: string;
   href?: string | URL;
   children: ReactNode;
   style?: StyleObject;

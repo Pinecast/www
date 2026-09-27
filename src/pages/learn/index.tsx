@@ -36,7 +36,7 @@ export default function Features() {
             zIndex={2}
           />
         </div>
-        <TunedInPanels />
+        <TunedInPanels headingLevel={2} />
       </main>
       <InfoPageFooterUpsell />
       <Footer />
