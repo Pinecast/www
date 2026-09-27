@@ -51,7 +51,7 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
       <Caption
         as="h3"
         style={{
-          color: 'var(--color-core-accent)',
+          color: 'var(--color-core-accent-text)',
           marginTop: '0',
           marginRight: 'auto',
           marginBottom: '10px',

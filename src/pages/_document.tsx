@@ -80,6 +80,9 @@ export default function Document({
             --color-primary-light: var(--color-sand);
             --color-theme-mode: var(--color-sand);
             --color-core-accent: #888;
+            /* Stone is under 4.5:1 on sand, lime and sky, so gray text on
+               those sections uses this darker gray (4.53:1 on sky). */
+            --color-core-accent-text: #676767;
           }
           *, *:before, *:after {
             box-sizing: border-box;
@@ -100,6 +103,12 @@ export default function Document({
             --color-primary-light: #090909;
             --color-theme-mode: #090909;
             --color-core-accent: #888;
+          }
+          /* Only the theme-adaptive menu goes dark with the page. Other text
+             that uses the variable sits on its own light background, which
+             can still be on screen while a dark section sets the class. */
+          body.darkSection [data-theme-adaptive] {
+            --color-core-accent-text: #888;
           }
           body.dimmed {
             position: relative;
