@@ -119,3 +119,28 @@ export async function hasSidewaysScroll(page: Page): Promise<boolean> {
       document.documentElement.clientWidth,
   );
 }
+
+// The words in `root` that a line break splits in two.
+export async function splitWords(root: Locator): Promise<Array<string>> {
+  return root.evaluate(element => {
+    const split: Array<string> = [];
+    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      for (const match of node.textContent!.matchAll(/\S+/g)) {
+        const range = document.createRange();
+        range.setStart(node, match.index!);
+        range.setEnd(node, match.index! + match[0].length);
+        const lines = new Set(
+          [...range.getClientRects()]
+            .filter(rect => rect.width > 0)
+            .map(rect => Math.round(rect.top)),
+        );
+        // A break after a hyphen ("add-/ons") is a normal break.
+        if (lines.size > 1 && !match[0].includes('-')) {
+          split.push(match[0]);
+        }
+      }
+    }
+    return split;
+  });
+}

@@ -17,6 +17,22 @@ import {
 } from '@/hooks/useScrollTimeline';
 import Head from 'next/head';
 import * as React from 'react';
+import {StyleObject} from 'styletron-react';
+
+// The page title of the content layouts. At 54px, a long word in a title
+// ("Podcasting", "Embeddable") was wider than its line on screens up to about
+// 525px, and a browser without a hyphenation dictionary broke it in the
+// middle. At 46px, only the longest ("Collaborators", "Monetization") are
+// still too wide at 375px. The title keeps `hyphens: auto`, so browsers that
+// can hyphenate do so.
+export const PAGE_TITLE_STYLE: StyleObject = {
+  padding: '0 10%',
+  marginBottom: '50px',
+  '@media (max-width: 549px)': {
+    fontSize: '46px',
+    lineHeight: '48px',
+  },
+};
 
 const CURVE_DEPTH = 100;
 

@@ -1,5 +1,11 @@
 import {expect, test} from '@playwright/test';
-import {clippedText, exportedPages, hasSidewaysScroll, load} from './helpers';
+import {
+  clippedText,
+  exportedPages,
+  hasSidewaysScroll,
+  load,
+  splitWords,
+} from './helpers';
 
 // WCAG 1.4.10: at 320 CSS pixels wide (and at 400% zoom, 320 by 256), no page
 // scrolls sideways. With the text spacing of 1.4.12 it must not either.
@@ -37,5 +43,36 @@ test.describe('pricing at 320px', () => {
       has: page.getByRole('heading', {name: 'Grab your ticket'}),
     });
     expect(await clippedText(pricing)).toEqual([]);
+  });
+});
+
+// Below 550px the page titles are 46px instead of 54px, so that their words
+// fit on their line. A browser without a hyphenation dictionary breaks a word
+// that does not fit in the middle, with no hyphen. These four words were wider
+// than a 375px screen at 54px. At 46px the first two still are, and the
+// others only just fit.
+const TOO_LONG_AT_375 = [
+  'Collaborators',
+  'Monetization',
+  'Distribution',
+  'Transcripts',
+];
+
+test.describe('page titles at 375px', () => {
+  test.use({viewport: {width: 375, height: 812}});
+  for (const path of exportedPages()) {
+    test(`${path} keeps the words of its title whole`, async ({page}) => {
+      await load(page, path);
+      const split = await splitWords(page.locator('h1'));
+      expect(split.filter(word => !TOO_LONG_AT_375.includes(word))).toEqual([]);
+    });
+  }
+
+  test('the smaller size stops at 550px', async ({page}) => {
+    const title = page.locator('h1');
+    await load(page, '/learn/podcasting-for-beginners');
+    await expect(title).toHaveCSS('font-size', '46px');
+    await page.setViewportSize({width: 550, height: 812});
+    await expect(title).toHaveCSS('font-size', '54px');
   });
 });

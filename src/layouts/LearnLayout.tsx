@@ -1,6 +1,6 @@
 import {H1, PillButton} from '@/components/Typography';
 import * as React from 'react';
-import {BaseLayout} from './BaseLayout';
+import {BaseLayout, PAGE_TITLE_STYLE} from './BaseLayout';
 
 export const LearnLayout = BaseLayout(
   ({title}) => (
@@ -8,7 +8,7 @@ export const LearnLayout = BaseLayout(
       <PillButton style={{textTransform: 'uppercase', marginBottom: '30px'}}>
         Learn with Pinecast
       </PillButton>
-      <H1 style={{padding: '0 10%', marginBottom: '50px'}}>{title}</H1>
+      <H1 style={PAGE_TITLE_STYLE}>{title}</H1>
     </>
   ),
   {defaultColor: 'var(--color-lime)'},
