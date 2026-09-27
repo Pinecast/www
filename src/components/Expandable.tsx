@@ -7,11 +7,13 @@ export const Expandable = ({
   children,
   id,
   open,
+  style,
   innerStyle,
 }: {
   children: React.ReactNode;
   id?: string;
   open: boolean;
+  style?: StyleObject;
   innerStyle?: StyleObject;
 }) => {
   const css = useCSS();
@@ -23,6 +25,7 @@ export const Expandable = ({
         overflow: 'hidden',
         maxHeight: open ? '400px' : '0',
         transition: 'max-height 0.2s',
+        ...style,
       })}
       // A closed panel is inert, so that the keyboard and assistive technology
       // cannot reach its links. `hidden` would do the same, but it would stop

@@ -511,14 +511,22 @@ const AddonAccordionItem = ({
         textAlign: 'left',
         WebkitTapHighlightColor: 'transparent',
         width: '100%',
+        // The name and the details share one grid cell, so they overlap as
+        // before, but a name that wraps (a narrow screen, larger text
+        // spacing) makes the row taller instead of covering the next row.
+        display: 'grid',
+        gridTemplateAreas: '"stack"',
       })}
     >
       <Subhead
         style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
+          gridArea: 'stack',
           lineHeight: '70px',
+          // The 70px minimum height of the row includes its 1px border, so
+          // the name overlaps the bottom edge by 1px.
+          marginBottom: '-1px',
+          // Keep a wrapped name clear of the expand icon.
+          paddingRight: '24px',
           [MIN_TABLET_MEDIA_QUERY]: {lineHeight: '70px'},
         }}
       >
@@ -534,6 +542,7 @@ const AddonAccordionItem = ({
       <Expandable
         open={open}
         id={id}
+        style={{gridArea: 'stack'}}
         innerStyle={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr 24px',

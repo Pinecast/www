@@ -350,6 +350,8 @@ const BACKGROUND_TICK =
     `<svg viewBox="0 0 11 16" width="11" height="16" xmlns="http://www.w3.org/2000/svg"><line x1="3" x2="8" y1="0" y2="0" stroke="#090909" opacity="0.5" /></svg>`.trim(),
   );
 
+const TITLE_LINE_HEIGHT = '44px';
+
 const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
   feature,
   onSelectName,
@@ -458,7 +460,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
               : '1px var(--color-space)',
             textTransform: 'uppercase',
             fontSize: '28px',
-            lineHeight: '44px',
+            lineHeight: TITLE_LINE_HEIGHT,
             padding: '0 20px',
             position: 'relative',
             textDecoration: 'none',
@@ -466,6 +468,13 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
             [MIN_TABLET_MEDIA_QUERY]: {
               fontSize: '36px',
               top: '15px',
+              // The row has a fixed height and crops the title. When the
+              // line height grows (larger text spacing), move the title up by
+              // the extra half-leading, so the same part of it shows. At the
+              // default line height this is 0. `translate` needs a box, so
+              // this is an inline-block (with the same line box as the inline).
+              display: 'inline-block',
+              translate: `0 calc((${TITLE_LINE_HEIGHT} - 1lh) / 2)`,
             },
             [MIN_DESKTOP_MEDIA_QUERY]: {fontSize: '80px'},
           })}
