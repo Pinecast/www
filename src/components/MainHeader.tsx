@@ -650,7 +650,6 @@ export const MainHeader = () => {
         </nav>
       </div>
       <div
-        {...aboveOverlayProps}
         className={css({
           '--button-size': '120px',
           '--button-spacing': '24px',
@@ -661,6 +660,12 @@ export const MainHeader = () => {
           bottom: 'var(--button-spacing)',
           width: 'var(--button-size)',
           zIndex: 140,
+          // Hidden while the menu is open: on a short screen or at zoom it
+          // covered the links of the menu. Like the rest of the page, it is
+          // not usable behind the open menu.
+          opacity: navOpen ? 0 : 1,
+          visibility: navOpen ? 'hidden' : 'visible',
+          transition: 'opacity 0.2s ease-in-out, visibility 0.2s',
           [MIN_TABLET_MEDIA_QUERY]: {display: 'none'},
         })}
       >

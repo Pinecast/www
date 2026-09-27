@@ -51,6 +51,18 @@ test.describe('header menu', () => {
     });
   }
 
+  test('hides the sound button while it is open', async ({page}) => {
+    // At 400% zoom the round sound button covered links of the menu.
+    await page.setViewportSize({width: 320, height: 256});
+    await load(page, '/learn');
+    const sound = page.getByRole('button', {name: /^(Unmute|Mute)$/});
+    await expect(sound).toBeVisible();
+    await openMenu(page);
+    await expect(sound).toBeHidden();
+    await page.keyboard.press('Escape');
+    await expect(sound).toBeVisible();
+  });
+
   test('does not show a scroll bar while it grows', async ({page}) => {
     await page.setViewportSize({width: 320, height: 256});
     await load(page, '/learn');
