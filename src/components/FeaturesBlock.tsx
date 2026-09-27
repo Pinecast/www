@@ -26,7 +26,7 @@ export const FeaturesBlock = () => {
         })}
       >
         <Caption
-          as="h3"
+          as="h2"
           style={{
             color: 'var(--color-core-accent-text)',
             marginTop: '0',

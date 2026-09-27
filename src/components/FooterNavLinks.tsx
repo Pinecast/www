@@ -22,7 +22,18 @@ export const FooterNavLinks = ({
         maxWidth: '145px',
       })}
     >
-      <h3 className={css({fontSize: 'inherit', margin: 0, fontWeight: 500, whiteSpace: 'nowrap'})}>{title}</h3>
+      {/* The footer isn't part of the page's last section, so its column
+          titles are top-level sections too. */}
+      <h2
+        className={css({
+          fontSize: 'inherit',
+          margin: 0,
+          fontWeight: 500,
+          whiteSpace: 'nowrap',
+        })}
+      >
+        {title}
+      </h2>
       <ul
         className={css({
           listStyle: 'none',

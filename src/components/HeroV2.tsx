@@ -694,7 +694,7 @@ export const HeroV2 = () => {
                 },
               })}
             >
-              <H2>
+              <H2 level={1}>
                 Hi! I&rsquo;m
                 <br />
                 your host

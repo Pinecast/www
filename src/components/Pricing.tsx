@@ -69,7 +69,9 @@ export const Pricing = () => {
           color: 'var(--color-primary-dark)',
         })}
       >
-        <H1 style={{textWrap: 'balance'}}>Grab your ticket</H1>
+        <H1 level={2} style={{textWrap: 'balance'}}>
+          Grab your ticket
+        </H1>
         <Body4 style={{maxWidth: '32rem'}}>
           Try Pinecast for free. No credit card required, no time limits,
           upgrade whenever. We think you&rsquo;ll love it.
