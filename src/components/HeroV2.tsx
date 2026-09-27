@@ -717,7 +717,7 @@ export const HeroV2 = () => {
               >
                 Start for free
               </SecondaryButton>
-              <Caption style={{color: 'var(--color-core-accent)'}}>
+              <Caption style={{color: 'var(--color-core-accent-text)'}}>
                 No credit card required
               </Caption>
             </div>
