@@ -189,6 +189,7 @@ export const MainHeader = () => {
   const router = useRouter();
 
   const navRef = React.useRef<HTMLDivElement>(null);
+  const navScrollRef = React.useRef<HTMLElement>(null);
   // The button that opened the menu. Focus goes back to it when the menu closes.
   const triggerRef = React.useRef<HTMLButtonElement | null>(null);
   const [navOpen, setNavOpen] = React.useState(false);
@@ -252,6 +253,8 @@ export const MainHeader = () => {
   React.useEffect(() => {
     if (navOpen) {
       lock();
+      // Show the top of the menu each time it opens.
+      navScrollRef.current?.scrollTo({top: 0});
     } else {
       unlock();
     }
@@ -566,6 +569,7 @@ export const MainHeader = () => {
         })}
       >
         <nav
+          ref={navScrollRef}
           aria-label="Menu"
           className={css({
             background: 'var(--color-primary-light)',
@@ -574,12 +578,25 @@ export const MainHeader = () => {
             // Set `flex: 1` to give the illusion of growing from zero to the full height.
             flex: navOpen ? 1 : 0,
             height: 'auto',
-            overflow: 'hidden',
+            // Scroll inside the menu when its links do not fit (a short
+            // screen, zoom or larger text). `overflow-y` changes to `auto`
+            // only when the menu stops growing, so that no scroll bar shows
+            // during the animation. A browser without `transition-behavior`
+            // changes it at once.
+            overflowX: 'hidden',
+            overflowY: navOpen ? 'auto' : 'hidden',
+            overscrollBehavior: 'contain',
             justifyContent: 'space-between',
             padding: '0 10px',
-            transition: navOpen
-              ? 'all 0.2s ease-in-out'
-              : 'background 0.2s ease-in-out, flex 0.2s ease-in-out',
+            // Longhands, so that a browser that does not know
+            // `transition-behavior` ignores only that declaration.
+            transitionProperty: navOpen
+              ? 'all, overflow-y'
+              : 'background, flex',
+            transitionDuration: navOpen ? '0.2s, 0s' : '0.2s',
+            transitionTimingFunction: 'ease-in-out',
+            transitionDelay: navOpen ? '0s, 0.2s' : '0s',
+            transitionBehavior: navOpen ? 'normal, allow-discrete' : 'normal',
 
             top: '10px',
             left: '10px',
@@ -603,7 +620,9 @@ export const MainHeader = () => {
               [MIN_TABLET_MEDIA_QUERY]: {
                 gap: '20px',
                 gridTemplateColumns: '1fr 1fr 1fr 1.25fr',
-                gridTemplateRows: '100%',
+                // Fill the menu, but never shrink the tiles below their
+                // content: the menu scrolls instead.
+                gridTemplateRows: 'minmax(min-content, 100%)',
               },
             })}
           >
