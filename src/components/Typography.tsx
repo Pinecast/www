@@ -432,6 +432,7 @@ export const Link = ({
   style,
   ...rest
 }: Omit<LinkProps, 'children' | 'style' | 'href'> & {
+  'aria-label'?: string;
   href?: string | URL;
   children: ReactNode;
   style?: StyleObject;

@@ -472,7 +472,12 @@ export const ProductFeature = ({
           gridArea: 'url',
         })}
       >
-        <Link target="_blank" href={url}>
+        {/* Each product has this link, so its name says which product. */}
+        <Link
+          aria-label={`See it on Amazon: ${name}`}
+          target="_blank"
+          href={url}
+        >
           See it on Amazon
         </Link>
       </div>
