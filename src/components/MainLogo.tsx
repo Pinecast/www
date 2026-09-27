@@ -9,6 +9,7 @@ import Link from 'next/link';
 import {useCSS} from '@/hooks/useCSS';
 import {useAudioManager} from '@/hooks/useAudioManager';
 import {SoundEffect} from '@/hooks/useSoundEffects';
+import {aboveOverlayProps} from '@/hooks/useInertOutside';
 
 const Lottie = dynamic(() => import('lottie-react'), {ssr: false});
 
@@ -48,6 +49,8 @@ export const MainLogo = ({
     <Link
       href="/"
       aria-label="Return home"
+      // The logo shows above the dim overlay of the open header menu.
+      {...aboveOverlayProps}
       className={css({
         ':not(:active) svg': {
           transform: 'scale(1, 1)',

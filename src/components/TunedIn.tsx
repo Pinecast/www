@@ -960,7 +960,7 @@ export const TunedInPanels = ({
           />
         </div>
 
-        <nav
+        <div
           className={css({
             display: 'none',
             [WIDE_PANELS_QUERY]: {
@@ -999,7 +999,7 @@ export const TunedInPanels = ({
             position={PanelPosition.RIGHT}
             isActive={rightActiveDesktop}
           />
-        </nav>
+        </div>
       </div>
     </div>
   );

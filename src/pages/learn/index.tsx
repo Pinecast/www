@@ -11,6 +11,7 @@ import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY} from '@/constants';
 import {InfoPageFooterUpsell} from '@/components/InfoPageFooterUpsell';
 import {TunedInPanels} from '@/components/TunedIn';
 import {StickyLine} from '@/components/StickyLine';
+import {MAIN_CONTENT_ID, SkipLink} from '@/components/SkipLink';
 
 export default function Features() {
   return (
@@ -22,18 +23,21 @@ export default function Features() {
           content="Get started on your podcast journey"
         />
       </Head>
+      <SkipLink />
       <MainLogo startDark />
       <MainHeader />
-      <div>
-        <Header />
-        <StickyLine
-          color="var(--color-white)"
-          invertColor
-          size={1.5}
-          zIndex={2}
-        />
-      </div>
-      <TunedInPanels headingLevel={2} />
+      <main id={MAIN_CONTENT_ID}>
+        <div>
+          <Header />
+          <StickyLine
+            color="var(--color-white)"
+            invertColor
+            size={1.5}
+            zIndex={2}
+          />
+        </div>
+        <TunedInPanels headingLevel={2} />
+      </main>
       <InfoPageFooterUpsell />
       <Footer />
     </>

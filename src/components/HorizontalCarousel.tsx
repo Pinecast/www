@@ -22,7 +22,7 @@ export const HorizontalCarousel = <T,>({
   width,
 }: HorizontalCarouselProps<T>) => {
   const css = useCSS();
-  const scrollRef = React.useRef<HTMLElement>(null);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
 
   const panelsRef = React.useRef<Array<Element>>([]);
   const addPanelRef = React.useCallback(
@@ -48,7 +48,7 @@ export const HorizontalCarousel = <T,>({
   }, [onChange, visiblePanel]);
 
   return (
-    <nav
+    <div
       ref={scrollRef}
       className={css({
         display: 'flex',
@@ -95,6 +95,6 @@ export const HorizontalCarousel = <T,>({
           {renderItem(item)}
         </div>
       ))}
-    </nav>
+    </div>
   );
 };

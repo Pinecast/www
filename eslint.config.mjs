@@ -1,12 +1,20 @@
 import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
 import nextTypescript from 'eslint-config-next/typescript';
 import prettier from 'eslint-config-prettier';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
 
 const config = [
   {ignores: ['**/.next/', '**/out/', '.claude/', 'next-env.d.ts']},
   ...nextCoreWebVitals,
   ...nextTypescript,
   prettier,
+  // eslint-config-next registers the jsx-a11y plugin but turns on only six of
+  // its rules, as warnings. Turn on the plugin's recommended set. Do not
+  // register the plugin again: the next config already has it.
+  {
+    files: ['**/*.{js,jsx,mjs,ts,tsx,mts,cts}'],
+    rules: jsxA11y.flatConfigs.recommended.rules,
+  },
   {
     rules: {
       '@typescript-eslint/array-type': ['error', {default: 'generic'}],

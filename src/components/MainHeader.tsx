@@ -8,12 +8,14 @@ import {
   TABLET_MEDIA_QUERY,
 } from '@/constants';
 import Link from 'next/link';
+import {useRouter} from 'next/router';
 import {SignIn} from '@/icons/SignIn';
 import {AudioWaveformIcon} from './AudioWaveformIcon';
-import {MainHeaderLink} from './MainHeaderLink';
+import {MainHeaderButton, MainHeaderLink} from './MainHeaderLink';
 import {Hamburger} from '@/icons/Hamburger';
 import {useAudioManager} from '@/hooks/useAudioManager';
 import {useDismiss} from '@/hooks/useDismiss';
+import {aboveOverlayProps, useInertOutside} from '@/hooks/useInertOutside';
 import {useScrollLock} from '@/hooks/useScrollLock';
 import {Body1, Caption} from './Typography';
 import {QuickTipsBlock} from './QuickLinks';
@@ -172,10 +174,23 @@ const PersonaBlock = ({
   );
 };
 
+const MENU_ID = 'site-menu';
+
+// The links and buttons in `root` that Tab can reach, in order.
+const getTabbableElements = (root: HTMLElement) =>
+  Array.from(
+    root.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ),
+  ).filter(element => element.getClientRects().length > 0);
+
 export const MainHeader = () => {
   const css = useCSS();
+  const router = useRouter();
 
   const navRef = React.useRef<HTMLDivElement>(null);
+  // The button that opened the menu. Focus goes back to it when the menu closes.
+  const triggerRef = React.useRef<HTMLButtonElement | null>(null);
   const [navOpen, setNavOpen] = React.useState(false);
   const [hasScrolled, setHasScrolled] = React.useState(false);
   useScrollListener(
@@ -194,8 +209,45 @@ export const MainHeader = () => {
   // Prevent background scrolling of the document when the dropdown nav is open.
   const [lock, unlock] = useScrollLock();
 
-  // Allow any clicks outside of the dropdown nav to dismiss the nav.
-  useDismiss(navRef, () => setNavOpen(false), navOpen);
+  const closeNav = React.useCallback(() => {
+    // Return focus to the trigger, unless the user moved it to something
+    // outside the menu (a click on the dim overlay moves it to the body).
+    const active = document.activeElement;
+    if (
+      !active ||
+      active === document.body ||
+      navRef.current?.contains(active)
+    ) {
+      triggerRef.current?.focus({preventScroll: true});
+    }
+    setNavOpen(false);
+  }, []);
+
+  const toggleNav = (trigger: HTMLButtonElement) => {
+    if (navOpen) {
+      closeNav();
+    } else {
+      triggerRef.current = trigger;
+      setNavOpen(true);
+    }
+  };
+
+  // Allow Escape and any clicks outside of the dropdown nav to dismiss the nav.
+  useDismiss(navRef, closeNav, navOpen);
+
+  // A link in the menu to the page that is already open does not load a new
+  // page, so close the menu when a navigation completes.
+  React.useEffect(() => {
+    if (!navOpen) {
+      return;
+    }
+    router.events.on('routeChangeComplete', closeNav);
+    router.events.on('hashChangeComplete', closeNav);
+    return () => {
+      router.events.off('routeChangeComplete', closeNav);
+      router.events.off('hashChangeComplete', closeNav);
+    };
+  }, [closeNav, navOpen, router.events]);
 
   React.useEffect(() => {
     if (navOpen) {
@@ -205,6 +257,66 @@ export const MainHeader = () => {
     }
     document.body.classList.toggle('dimmed', navOpen);
   }, [lock, navOpen, unlock]);
+
+  // The open menu is a modal dialog: the page behind the dim overlay is inert.
+  useInertOutside(navOpen);
+
+  // Move focus into the open menu, and keep Tab and Shift+Tab inside it.
+  React.useEffect(() => {
+    const nav = navRef.current;
+    if (!navOpen || !nav) {
+      return;
+    }
+    // The nav fades in with `transition: all`, and that includes visibility:
+    // on the first frame its links are still hidden and cannot take focus. So
+    // try again on the next frames, while focus has not gone elsewhere.
+    let frame = 0;
+    let attempts = 0;
+    const focusFirstLink = () => {
+      const first = getTabbableElements(nav)[0];
+      // The menu does not scroll the page, and it grows from the top, so do
+      // not scroll anything to show the link.
+      first?.focus({preventScroll: true});
+      const active = document.activeElement;
+      if (
+        first &&
+        active !== first &&
+        (active === document.body || active === triggerRef.current) &&
+        ++attempts < 30
+      ) {
+        frame = requestAnimationFrame(focusFirstLink);
+      }
+    };
+    focusFirstLink();
+
+    const handleKeyDown = (evt: KeyboardEvent) => {
+      if (evt.key !== 'Tab') {
+        return;
+      }
+      const elements = getTabbableElements(nav);
+      if (!elements.length) {
+        return;
+      }
+      const first = elements[0];
+      const last = elements[elements.length - 1];
+      const active = document.activeElement;
+      if (!nav.contains(active)) {
+        evt.preventDefault();
+        (evt.shiftKey ? last : first).focus();
+      } else if (evt.shiftKey && active === first) {
+        evt.preventDefault();
+        last.focus();
+      } else if (!evt.shiftKey && active === last) {
+        evt.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      cancelAnimationFrame(frame);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [navOpen]);
 
   const onClickSoundButton = React.useCallback(
     (evt: React.MouseEvent) => {
@@ -230,6 +342,7 @@ export const MainHeader = () => {
   return (
     <>
       <header
+        {...aboveOverlayProps}
         className={css({
           background: 'var(--color-primary-light)',
           borderStyle: 'solid',
@@ -281,7 +394,9 @@ export const MainHeader = () => {
       >
         <button
           type="button"
-          aria-label="Toggle menu"
+          aria-label="Menu"
+          aria-expanded={navOpen}
+          aria-controls={MENU_ID}
           className={css({
             alignItems: 'center',
             appearance: 'none',
@@ -300,7 +415,7 @@ export const MainHeader = () => {
           })}
           onClick={evt => {
             evt.preventDefault();
-            setNavOpen(prevNavOpen => !prevNavOpen);
+            toggleNav(evt.currentTarget);
           }}
         >
           <Hamburger size={24} color="var(--color-primary-dark)" />
@@ -345,22 +460,35 @@ export const MainHeader = () => {
               </button>
             </label>
           </Tooltip>
-          <MainHeaderLink
-            href="/features"
-            onClick={() => playSoundEffect(SoundEffect.GLOBE_TRANSITION_STATES)}
+          <nav
+            aria-label="Primary"
+            className={css({
+              alignItems: 'center',
+              display: 'flex',
+              gap: '0 1px',
+            })}
           >
-            Features
-          </MainHeaderLink>
-          <MainHeaderLink
-            href="/learn"
-            onClick={evt => {
-              evt.preventDefault();
-              playSoundEffect(SoundEffect.CLICK_DROP);
-              setNavOpen(prevNavOpen => !prevNavOpen);
-            }}
-          >
-            Learn
-          </MainHeaderLink>
+            <MainHeaderLink
+              href="/features"
+              onClick={() =>
+                playSoundEffect(SoundEffect.GLOBE_TRANSITION_STATES)
+              }
+            >
+              Features
+            </MainHeaderLink>
+            {/* "Learn" opens the menu. The footer links to the /learn page. */}
+            <MainHeaderButton
+              aria-expanded={navOpen}
+              aria-controls={MENU_ID}
+              onClick={evt => {
+                evt.preventDefault();
+                playSoundEffect(SoundEffect.CLICK_DROP);
+                toggleNav(evt.currentTarget);
+              }}
+            >
+              Learn
+            </MainHeaderButton>
+          </nav>
         </div>
         <div
           className={css({
@@ -388,6 +516,7 @@ export const MainHeader = () => {
         >
           <Link
             href="https://pinecast.com/login"
+            aria-label="Sign in"
             className={css({
               display: 'block',
               borderTopRightRadius: '20px',
@@ -402,7 +531,12 @@ export const MainHeader = () => {
         </div>
       </header>
       <div
+        {...aboveOverlayProps}
         ref={navRef}
+        id={MENU_ID}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu"
         className={css({
           borderRadius: '0 0 20px 20px',
           borderWidth: '0 1px 1px',
@@ -432,6 +566,7 @@ export const MainHeader = () => {
         })}
       >
         <nav
+          aria-label="Menu"
           className={css({
             background: 'var(--color-primary-light)',
             color: 'var(--color-primary-dark)',
@@ -496,6 +631,7 @@ export const MainHeader = () => {
         </nav>
       </div>
       <div
+        {...aboveOverlayProps}
         className={css({
           '--button-size': '120px',
           '--button-spacing': '24px',

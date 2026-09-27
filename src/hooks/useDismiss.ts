@@ -1,13 +1,16 @@
 import * as React from 'react';
 
+// While `active`, Escape, a click outside the element or a right-click calls
+// `callback`. While not active, the hook listens to nothing, so that it does
+// not take Escape from the rest of the page.
 export const useDismiss = (
   activeElementRef: React.RefObject<HTMLElement | null>,
   callback?: () => void,
-  dismissOnClickOutside: boolean = true,
+  active: boolean = true,
 ) => {
   React.useEffect(() => {
     const element = activeElementRef.current;
-    if (!element) {
+    if (!element || !active) {
       return;
     }
 
@@ -25,11 +28,7 @@ export const useDismiss = (
     };
 
     const handleMouseEvent = (evt: MouseEvent) => {
-      if (
-        evt.defaultPrevented ||
-        !dismissOnClickOutside ||
-        element?.contains(evt.target as Node)
-      ) {
+      if (evt.defaultPrevented || element?.contains(evt.target as Node)) {
         return;
       }
       evt.preventDefault();
@@ -46,5 +45,5 @@ export const useDismiss = (
       document.removeEventListener('click', handleMouseEvent);
       document.removeEventListener('contextmenu', handleCallback);
     };
-  }, [activeElementRef, callback, dismissOnClickOutside]);
+  }, [activeElementRef, callback, active]);
 };
