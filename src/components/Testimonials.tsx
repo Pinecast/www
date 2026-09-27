@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Link from 'next/link';
 import {StyleObject} from 'styletron-react';
 import {Body3, Body4, Caption, H1, H2} from './Typography';
 import {useCSS} from '@/hooks/useCSS';
@@ -38,7 +39,8 @@ type Testimonial = {
   script: Script;
 };
 
-const TESTIMONIALS: Array<Testimonial> = [
+// The transcripts page renders the full `script.text` of each of these.
+export const TESTIMONIALS: Array<Testimonial> = [
   {
     audioFiles: {
       opus: '/testimonials/living-blindfully.opus.webm',
@@ -796,6 +798,20 @@ export const Testimonials = ({
               >
                 We take pride in running a top-notch service. People really like
                 us. So much so, they left nice messages for you.
+              </Body4>
+              <Body4 style={{marginTop: '-20px', marginBottom: '26px'}}>
+                <Link
+                  href="/testimonial-transcripts"
+                  className={css({
+                    color: 'inherit',
+                    display: 'inline-block',
+                    padding: '4px 0',
+                    textDecoration: 'underline',
+                    textUnderlineOffset: '0.2em',
+                  })}
+                >
+                  Transcripts
+                </Link>
               </Body4>
             </div>
             <div
