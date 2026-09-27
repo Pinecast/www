@@ -96,6 +96,11 @@ export default function Document({
           }
           body {
             background: var(--color-theme-mode);
+            /* Break a word that is wider than its line (a display heading
+               at 320px, a long URL) instead of scrolling the page sideways.
+               It only applies where the word would overflow, so it does not
+               change text that fits. */
+            overflow-wrap: break-word;
           }
           body.darkSection, body.darkSection [data-theme-adaptive] {
             --color-line: #888;

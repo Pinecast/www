@@ -329,7 +329,9 @@ export const DefinitionList = ({children}: {children: React.ReactNode}) => {
         marginLeft: 'var(--text-gutter)',
 
         display: 'grid',
-        gridTemplateColumns: 'min-content 1fr',
+        // `minmax(0, 1fr)`: a long word (a URL) breaks instead of making the
+        // column wider than the screen.
+        gridTemplateColumns: 'min-content minmax(0, 1fr)',
 
         ':not(:empty) > dt': {
           ...MonumentGroteskBold,

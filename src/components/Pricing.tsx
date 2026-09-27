@@ -31,6 +31,17 @@ const BUTTON_STYLE = {
   },
 };
 const MAX_WIDTH = 1300;
+// Centered on the dashed line, which is 30px above the buttons.
+const MOBILE_NOTCH = {
+  backgroundColor: 'var(--color-space)',
+  borderRadius: '40px',
+  content: '""',
+  display: 'block',
+  height: '40px',
+  position: 'absolute',
+  top: '-50px',
+  width: '40px',
+} as const;
 
 export const Pricing = () => {
   const css = useCSS();
@@ -273,14 +284,8 @@ const PricingTicket = ({
           width: '60px',
           borderRadius: '60px',
 
-          [MOBILE_MEDIA_QUERY]: {
-            height: '40px',
-            width: '40px',
-            borderRadius: '40px',
-            right: '-25px',
-            top: 'unset',
-            bottom: '90px',
-          },
+          // On narrow screens the notches go with the buttons (below).
+          [MOBILE_MEDIA_QUERY]: {display: 'none'},
         },
         '::after': {
           backgroundColor: 'var(--color-space)',
@@ -293,15 +298,8 @@ const PricingTicket = ({
           width: '60px',
           borderRadius: '60px',
 
-          [MOBILE_MEDIA_QUERY]: {
-            height: '40px',
-            width: '40px',
-            borderRadius: '40px',
-            right: 'unset',
-            left: '-25px',
-            top: 'unset',
-            bottom: '90px',
-          },
+          // On narrow screens the notches go with the buttons (below).
+          [MOBILE_MEDIA_QUERY]: {display: 'none'},
         },
 
         display: 'grid',
@@ -347,11 +345,19 @@ const PricingTicket = ({
           justifyContent: 'center',
           justifyItems: 'stretch',
           padding: '30px',
+          position: 'relative',
           [MOBILE_MEDIA_QUERY]: {
             gap: '8px',
             gridTemplateRows: 'unset',
-            gridTemplateColumns: '1fr 1fr',
+            // Two columns when both buttons fit, else one. Two fixed columns
+            // made the ticket wider than a 320px screen, and the ticket cut
+            // off its right side.
+            gridTemplateColumns: `repeat(auto-fit, minmax(min(${BUTTON_STYLE.minWidth}, 100%), 1fr))`,
             padding: '20px',
+            // The notches of the ticket, on the dashed line above the
+            // buttons, also when the buttons are in one column.
+            '::before': {...MOBILE_NOTCH, right: '-25px'},
+            '::after': {...MOBILE_NOTCH, left: '-25px'},
           },
         })}
       >
