@@ -1000,6 +1000,7 @@ export const Globe = () => {
         })}
       >
         <canvas
+          aria-hidden="true"
           className={css({
             position: 'absolute',
             top: 0,

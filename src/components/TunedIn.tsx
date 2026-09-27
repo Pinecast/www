@@ -258,6 +258,7 @@ const Dial = React.memo(
     return (
       <>
         <svg
+          aria-hidden="true"
           width={144}
           height={108}
           viewBox="0 0 144 108"
@@ -344,6 +345,7 @@ const Dial = React.memo(
           </g>
         </svg>
         <svg
+          aria-hidden="true"
           width={288}
           height={214}
           viewBox="0 0 288 214"
@@ -864,6 +866,7 @@ export const TunedInPanels = () => {
         })}
       >
         <svg
+          aria-hidden="true"
           className={css({
             position: 'absolute',
             width: 0,

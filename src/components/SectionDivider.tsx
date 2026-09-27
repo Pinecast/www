@@ -8,6 +8,7 @@ export const SectionDivider = () => {
   const css = useCSS();
   return (
     <div
+      aria-hidden="true"
       className={css({
         height: `${DIVIDER_HEIGHT}px`,
         marginBottom: `${-1 * DIVIDER_HEIGHT}px`,

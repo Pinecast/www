@@ -737,6 +737,7 @@ export const HeroV2 = () => {
         })}
       />
       <canvas
+        aria-hidden="true"
         className={css({
           position: 'fixed',
           top: 0,
