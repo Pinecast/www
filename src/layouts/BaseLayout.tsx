@@ -14,10 +14,12 @@ import {
   MIN_DESKTOP_MEDIA_QUERY,
   MIN_TABLET_MEDIA_QUERY,
   MOBILE_MEDIA_QUERY,
+  PREFERS_REDUCED_MOTION_QUERY,
 } from '@/constants';
 import {fitText, PAGE_WIDTH} from '@/fitText';
 import {MonumentGroteskRegular} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
+import {useMotion} from '@/hooks/useMotion';
 import {
   ElementOutput,
   Timeline,
@@ -144,7 +146,10 @@ export function BaseLayout(
         props.mobileBorder[1],
       );
     }, []);
-    useScrollTimeline(containerRef, timeline, scrollHandler);
+    // With reduced motion, the hero does not grow as the page scrolls: it
+    // keeps the size it has at the top of the page, and scrolls with the page.
+    const {reducedMotion} = useMotion();
+    useScrollTimeline(containerRef, timeline, scrollHandler, reducedMotion);
 
     return (
       <>
@@ -163,6 +168,7 @@ export function BaseLayout(
                 backgroundColor: color,
                 minHeight: '175vh',
                 textAlign: 'center',
+                [PREFERS_REDUCED_MOTION_QUERY]: {minHeight: 'auto'},
               })}
             >
               <div
@@ -170,6 +176,7 @@ export function BaseLayout(
                   position: 'sticky',
                   paddingTop: '200px',
                   top: 0,
+                  [PREFERS_REDUCED_MOTION_QUERY]: {position: 'static'},
                 })}
               >
                 {content(props)}

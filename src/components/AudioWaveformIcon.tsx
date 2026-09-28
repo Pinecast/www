@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {KeyframesObject} from 'styletron-standard';
 import {useCSS} from '@/hooks/useCSS';
+import {loopingAnimationProps} from '@/hooks/useMotion';
 import { StyleObject } from 'styletron-react';
 
 const ANIMATION: KeyframesObject = {
@@ -41,6 +42,7 @@ const Waveform = ({
   return (
     <span
       ref={ref}
+      {...loopingAnimationProps}
       className={css({
         animationDuration: '2.2s',
         animationFillMode: 'alternate',

@@ -11,6 +11,7 @@ import {Provider as StyletronProvider} from 'styletron-react';
 import {styletron} from '../styletron';
 import StyletronServer from 'styletron-engine-atomic/lib/server/server';
 import {Provider as UserAgentContextProvider} from '../components/UserAgentContext';
+import {MOTION_ATTRIBUTE, MOTION_INIT_SCRIPT} from '../hooks/useMotion';
 
 Document.getInitialProps = async (context: DocumentContext) => {
   const renderPage = () =>
@@ -45,6 +46,7 @@ export default function Document({
     <Html lang="en">
       <Head>
         <link rel="icon" href="/favicon.png" />
+        <script dangerouslySetInnerHTML={{__html: MOTION_INIT_SCRIPT}} />
         <style
           dangerouslySetInnerHTML={{
             __html: `
@@ -87,8 +89,33 @@ export default function Document({
           *, *:before, *:after {
             box-sizing: border-box;
           }
-          html {
-            scroll-behavior: smooth;
+          @media (prefers-reduced-motion: no-preference) {
+            html {
+              scroll-behavior: smooth;
+            }
+          }
+          /* The "Pause animations" toggle (useMotion) freezes the looping
+             CSS animations where they are. */
+          html[${MOTION_ATTRIBUTE}="paused"] [data-looping],
+          html[${MOTION_ATTRIBUTE}="paused"] [data-looping]::before,
+          html[${MOTION_ATTRIBUTE}="paused"] [data-looping]::after {
+            animation-play-state: paused !important;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            /* The looping animations start paused, also before the script
+               in the head has run. */
+            html:not([${MOTION_ATTRIBUTE}]) [data-looping],
+            html:not([${MOTION_ATTRIBUTE}]) [data-looping]::before,
+            html:not([${MOTION_ATTRIBUTE}]) [data-looping]::after {
+              animation-play-state: paused !important;
+            }
+            /* Other animations and transitions jump to their end. */
+            *:not([data-looping]),
+            *:not([data-looping])::before,
+            *:not([data-looping])::after {
+              animation-duration: 0s !important;
+              transition-duration: 0s !important;
+            }
           }
           html, body, #__next {
             margin: 0;

@@ -33,8 +33,11 @@ export const useScrollTimeline = (
   containerRef: React.RefObject<HTMLElement | null>,
   timeline: Timeline,
   callback: (elements: ElementOutput) => void,
+  // A static timeline stays at its first keyframe, whatever the scroll.
+  isStatic: boolean = false,
 ) => {
-  const percentagePosition = useScrollProgress(containerRef);
+  const scrollPosition = useScrollProgress(containerRef);
+  const percentagePosition = isStatic ? 0 : scrollPosition;
 
   const timelineRef = React.useRef<Array<[string, ElementDef]>>(null as any);
   if (timelineRef.current === null) {

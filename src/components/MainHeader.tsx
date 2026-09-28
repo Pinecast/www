@@ -31,6 +31,7 @@ import {ScreenReaderText} from './ScreenReaderText';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 import {Bubble} from './Bubble';
 import {useScrollListener} from '@/hooks/useScrollProgress';
+import {MotionToggle} from './MotionToggle';
 
 const PersonaBlock = ({
   caption,
@@ -459,10 +460,23 @@ export const MainHeader = () => {
                 <AudioWaveformIcon
                   color="var(--color-primary-dark)"
                   muted={audioMangerLoading ? true : muted}
+                  // Flex, not inline-flex: an inline icon sits on the text
+                  // baseline, with room for descenders under it, 1.5px
+                  // above the center of the header.
+                  style={{display: 'flex'}}
                 />
               </button>
             </label>
           </Tooltip>
+          <MotionToggle
+            style={{
+              borderRadius: '18px',
+              paddingTop: '29px',
+              paddingRight: '12px',
+              paddingBottom: '29px',
+              paddingLeft: '4px',
+            }}
+          />
           <nav
             aria-label="Primary"
             className={css({
@@ -517,11 +531,22 @@ export const MainHeader = () => {
             [MIN_TABLET_MEDIA_QUERY]: {display: 'none'},
           })}
         >
+          <MotionToggle
+            style={{
+              alignSelf: 'stretch',
+              paddingTop: 0,
+              paddingRight: '6px',
+              paddingBottom: 0,
+              paddingLeft: '6px',
+            }}
+          />
           <Link
             href="https://pinecast.com/login"
             aria-label="Sign in"
             className={css({
-              display: 'block',
+              // Flex, not block: an inline icon sits on the text baseline,
+              // with room for descenders under it, 2px above the center.
+              display: 'flex',
               borderTopRightRadius: '20px',
               paddingTop: '15px',
               paddingRight: '20px',

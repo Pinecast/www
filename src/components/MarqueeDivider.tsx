@@ -3,6 +3,7 @@ import * as React from 'react';
 import {useCSS} from '@/hooks/useCSS';
 import {MonumentGroteskSemiMono} from '@/fonts';
 import {ANTIALIASED} from '@/constants';
+import {isMotionPaused, useMotion} from '@/hooks/useMotion';
 import {ScreenReaderText} from './ScreenReaderText';
 
 export const MARQUEE_HEIGHT = 165;
@@ -113,6 +114,19 @@ export const MarqueeDivider = ({
       window.removeEventListener('resize', handler);
     };
   }, []);
+
+  // The "Pause animations" toggle stops the clock of the SVG, so the text
+  // stays where it is.
+  const {paused} = useMotion();
+  React.useEffect(() => {
+    // Not `paused`: in the first render in the browser, it is still the value
+    // of the static export.
+    if (isMotionPaused()) {
+      marqueeRef.current?.pauseAnimations();
+    } else {
+      marqueeRef.current?.unpauseAnimations();
+    }
+  }, [paused]);
 
   const bullets = items.map((item, i) => (
     <MarqueeDividerBullet key={i}>{item}</MarqueeDividerBullet>

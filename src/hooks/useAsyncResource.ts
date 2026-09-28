@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import * as React from 'react';
+import {isMotionPaused, useMotion} from './useMotion';
 
 export type AsyncDrawable = [HTMLImageElement | HTMLVideoElement, boolean];
 
@@ -45,6 +46,27 @@ export const useAsyncVideo = (
 ): [HTMLVideoElement, boolean] => {
   const returnValue = React.useRef<[any, any]>([null, false]);
   const video = React.useRef<HTMLVideoElement | undefined>(undefined);
+  // With `autoplay`, the video loops, unless the "Pause animations" toggle is
+  // on. Then it stops on the frame it shows.
+  const {paused} = useMotion();
+  React.useEffect(() => {
+    const vid = video.current;
+    if (!vid || !autoplay) {
+      return;
+    }
+    // Not `paused`: in the first render in the browser, it is still the value
+    // of the static export.
+    if (isMotionPaused()) {
+      // This also keeps `autoplay` from starting it later.
+      vid.pause();
+    } else {
+      vid.play()?.catch?.((err: DOMException) => {
+        if (err.name !== 'AbortError') {
+          console.warn('[Video] Playback error:', err);
+        }
+      });
+    }
+  }, [autoplay, doLoad, paused]);
   React.useEffect(() => {
     console.log('Loading');
     return () => {
@@ -88,11 +110,22 @@ export const useAsyncVideo = (
       });
     vid.loop = autoplay;
     vid.controls = false;
-    vid.autoplay = autoplay;
+    vid.autoplay = autoplay && !isMotionPaused();
     vid.muted = true;
     vid.playsInline = true;
+    let seekedForFrame = false;
     vid.oncanplaythrough = () => {
-      setLoaded(true);
+      if (!vid.paused || seekedForFrame) {
+        setLoaded(true);
+        return;
+      }
+      // A paused video can have enough data and still no frame to draw. A
+      // canvas that paints only when something changes (while the animations
+      // are paused) would then paint it empty. A seek to where it is decodes
+      // the frame: it is ready when `seeked` fires.
+      seekedForFrame = true;
+      vid.addEventListener('seeked', () => setLoaded(true), {once: true});
+      vid.currentTime = vid.currentTime;
     };
     vid.load();
     if (vid.readyState >= 3) {

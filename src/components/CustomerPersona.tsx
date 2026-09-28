@@ -1,5 +1,9 @@
+import * as React from 'react';
 import Image from 'next/image';
+import {StyleObject} from 'styletron-react';
 import {useCSS} from '@/hooks/useCSS';
+import {useAnimatedImage} from '@/hooks/useAnimatedImage';
+import {useMotion} from '@/hooks/useMotion';
 import {MIN_TABLET_MEDIA_QUERY, TABLET_BREAKPOINT} from '@/constants';
 
 export enum ImageMimeType {
@@ -113,6 +117,75 @@ export const PERSONAS: PersonaItems = {
   },
 };
 
+// One size of the persona image. It plays while `playing`, and a pause keeps
+// the frame it shows (see useAnimatedImage).
+const PersonaImage = ({
+  animatedImage,
+  image,
+  media,
+  playing,
+  width,
+  height,
+  style,
+}: {
+  animatedImage: ImageSource;
+  image: ImageSource;
+  media: string;
+  playing: boolean;
+  width: number;
+  height: number;
+  style: StyleObject;
+}) => {
+  const css = useCSS();
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const {canPause} = useAnimatedImage(
+    canvasRef,
+    animatedImage.src,
+    animatedImage.mimeType,
+    playing,
+  );
+  return (
+    <>
+      <picture className={css({borderRadius: 'inherit'})}>
+        {/* Where the frames cannot be decoded, the browser plays the
+            animated image. Then only the still image can show a pause. */}
+        {!canPause && playing && (
+          <source
+            srcSet={animatedImage.src}
+            type={animatedImage.mimeType}
+            media={media}
+          />
+        )}
+        <source srcSet={image.src} type={image.mimeType} media={media} />
+        <Image
+          src={image.src}
+          // The link around it already names the persona.
+          alt=""
+          width={width}
+          height={height}
+          loading="lazy"
+          className={css(style)}
+        />
+      </picture>
+      {canPause && (
+        // The frames of the animated image, drawn over the still image.
+        <canvas
+          ref={canvasRef}
+          aria-hidden="true"
+          width={width}
+          height={height}
+          className={css({
+            ...style,
+            backgroundColor: 'transparent',
+            height: style.height ?? `${height}px`,
+            width: style.width ?? `${width}px`,
+          })}
+        />
+      )}
+    </>
+  );
+};
+
 export const CustomerPersonaAnimation = ({
   slug,
   isActive = false,
@@ -124,6 +197,8 @@ export const CustomerPersonaAnimation = ({
 }) => {
   const css = useCSS();
   const persona = PERSONAS[slug];
+  const {paused} = useMotion();
+  const playing = isActive && !paused;
   return (
     <div
       className={css({
@@ -142,40 +217,30 @@ export const CustomerPersonaAnimation = ({
         zIndex,
       })}
     >
-      <picture
+      <div
         className={css({
           borderRadius: 'inherit',
           [MIN_TABLET_MEDIA_QUERY]: {display: 'none'},
         })}
       >
-        <source
-          srcSet={persona.animatedImages[0].src}
-          type={persona.animatedImages[0].mimeType}
+        <PersonaImage
+          animatedImage={persona.animatedImages[0]}
+          image={persona.images[0]}
           media={PICTURE_QUERY_SMALL}
-        />
-        <source
-          srcSet={persona.images[0].src}
-          type={persona.images[0].mimeType}
-          media={PICTURE_QUERY_SMALL}
-        />
-        <Image
-          src={persona.images[0].src}
-          // The link around it already names the persona.
-          alt=""
+          playing={playing}
           width={200}
           height={100}
-          loading="lazy"
-          className={css({
+          style={{
             backgroundColor: `${persona.color}`,
             left: 0,
             position: 'absolute',
             right: 0,
             top: 0,
-          })}
+          }}
         />
-      </picture>
+      </div>
 
-      <picture
+      <div
         className={css({
           borderRadius: 'inherit',
           display: 'none',
@@ -184,26 +249,16 @@ export const CustomerPersonaAnimation = ({
           },
         })}
       >
-        <source
-          srcSet={persona.animatedImages[1].src}
-          type="image/webp"
+        <PersonaImage
+          animatedImage={persona.animatedImages[1]}
+          image={persona.images[1]}
           media={PICTURE_QUERY_WIDE}
-        />
-        <source
-          srcSet={persona.images[1].src}
-          type="image/png"
-          media={PICTURE_QUERY_WIDE}
-        />
-        <Image
-          src={persona.images[1].src}
-          // The link around it already names the persona.
-          alt=""
+          playing={playing}
           // This is the image's intrinsic size, not the rendered size,
           // used to cover the parent with the correct aspect ratio.
           width={1060}
           height={1440}
-          loading="lazy"
-          className={css({
+          style={{
             backgroundColor: `${persona.color}`,
             bottom: 0,
             height: '100%',
@@ -213,9 +268,9 @@ export const CustomerPersonaAnimation = ({
             right: 0,
             top: 0,
             width: '100%',
-          })}
+          }}
         />
-      </picture>
+      </div>
     </div>
   );
 };
