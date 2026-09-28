@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {StyleObject} from 'styletron-react';
 import {KeyframesObject} from 'styletron-standard';
 import {useCSS} from '@/hooks/useCSS';
 import {CAN_HOVER_MEDIA_QUERY, PREFERS_REDUCED_MOTION_QUERY} from '@/constants';
@@ -7,6 +8,19 @@ import {loopingAnimationProps} from '@/hooks/useMotion';
 const DRIFT_ANIMATION: KeyframesObject = {
   '0%, 100%': {translate: '0 -5%'},
   '50%': {translate: '0 5%'},
+};
+
+const INSET_GLOW =
+  'inset 0 0 calc(var(--bubble-size) / 8) rgba(255, 255, 255, 0.25)';
+
+// The focus ring of a control that shows a bubble. Spread it on the bubble
+// while the control has `:focus-visible`. It has two colors, the icon color
+// next to the bubble and the bubble color outside that, because the bubble
+// floats over any part of the page: one of them stands out on what is behind.
+export const BUBBLE_FOCUS_RING: StyleObject = {
+  boxShadow: `0 0 0 2px var(--bubble-text-color), ${INSET_GLOW}`,
+  outline: '2px solid var(--bubble-bg-color)',
+  outlineOffset: '2px',
 };
 
 type BubbleProps = {
@@ -50,8 +64,7 @@ export const Bubble = ({
         borderRadius: '50%',
         borderStyle: 'solid',
         borderWidth: '2px',
-        boxShadow:
-          'inset 0 0 calc(var(--bubble-size) / 8) rgba(255, 255, 255, 0.25)',
+        boxShadow: INSET_GLOW,
         display: 'grid',
         cursor: 'pointer',
         filter: 'drop-shadow(var(--bubble-drop-shadow))',

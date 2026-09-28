@@ -479,7 +479,18 @@ const AudioPlayer = React.memo(
               </Caption>
               <button
                 type="button"
-                className={css({all: 'unset', appearance: 'none'})}
+                className={css({
+                  all: 'unset',
+                  appearance: 'none',
+                  // The black box clips what goes outside it (contain), and
+                  // the hit area of the text below fills its corner. Put
+                  // the ring around the word instead.
+                  ':focus-visible [data-focus-ring]': {
+                    borderRadius: '2px',
+                    outline: '2px solid var(--color-white)',
+                    outlineOffset: '2px',
+                  },
+                })}
                 onClick={() => {
                   if (playing) {
                     pause();
@@ -514,7 +525,10 @@ const AudioPlayer = React.memo(
                     },
                   }}
                 >
-                  {playing ? 'Pause' : 'Play'}
+                  <span data-focus-ring>{playing ? 'Pause' : 'Play'}</span>
+                  <ScreenReaderText>
+                    {` ${testimonial.customer} testimonial`}
+                  </ScreenReaderText>
                 </Caption>
               </button>
             </footer>

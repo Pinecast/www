@@ -9,6 +9,7 @@ import {
 import {Provider as StyletronProvider} from 'styletron-react';
 
 import {styletron} from '../styletron';
+import {TABLET_BREAKPOINT} from '../constants';
 import StyletronServer from 'styletron-engine-atomic/lib/server/server';
 import {Provider as UserAgentContextProvider} from '../components/UserAgentContext';
 import {MOTION_ATTRIBUTE, MOTION_INIT_SCRIPT} from '../hooks/useMotion';
@@ -85,6 +86,12 @@ export default function Document({
             /* Stone is under 4.5:1 on sand, lime and sky, so gray text on
                those sections uses this darker gray (4.53:1 on sky). */
             --color-core-accent-text: #676767;
+
+            /* The keyboard focus ring. It is primary-dark on light
+               sections. A dark surface sets it to white (DARK_SURFACE in
+               constants.ts), and the header, whose colors follow the dark
+               sections, sets it to its own primary-dark. */
+            --color-focus-ring: var(--color-primary-dark);
           }
           *, *:before, *:after {
             box-sizing: border-box;
@@ -115,6 +122,22 @@ export default function Document({
             *:not([data-looping])::after {
               animation-duration: 0s !important;
               transition-duration: 0s !important;
+            }
+          }
+          /* Only for the keyboard: a mouse click shows no ring. */
+          :focus-visible {
+            outline: 2px solid var(--color-focus-ring);
+            outline-offset: 2px;
+          }
+          html {
+            /* Keep a focused element clear of the fixed header and logo
+               and, up to ${TABLET_BREAKPOINT}px, of the mute button at the
+               bottom. */
+            scroll-padding-top: 110px;
+          }
+          @media (max-width: ${TABLET_BREAKPOINT}px) {
+            html {
+              scroll-padding-bottom: 130px;
             }
           }
           html, body, #__next {

@@ -47,9 +47,29 @@ export const HorizontalCarousel = <T,>({
     }
   }, [onChange, visiblePanel]);
 
+  // Keyboard focus does not scroll a panel that is partly in view. Bring the
+  // focused panel into view, so that its focus ring is not cut off. A click
+  // or a tap, which also gives focus, changes nothing.
+  const onFocus = React.useCallback((evt: React.FocusEvent) => {
+    const scroller = scrollRef.current;
+    const panel = panelsRef.current.find(el => el.contains(evt.target));
+    if (!scroller || !panel || !evt.target.matches(':focus-visible')) {
+      return;
+    }
+    const panelBox = panel.getBoundingClientRect();
+    const scrollerBox = scroller.getBoundingClientRect();
+    if (
+      panelBox.left < scrollerBox.left ||
+      panelBox.right > scrollerBox.right
+    ) {
+      panel.scrollIntoView({block: 'nearest', inline: 'nearest'});
+    }
+  }, []);
+
   return (
     <div
       ref={scrollRef}
+      onFocus={onFocus}
       className={css({
         display: 'flex',
         flexDirection: 'row',

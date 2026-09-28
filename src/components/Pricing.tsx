@@ -10,7 +10,9 @@ import {Expandable} from './Expandable';
 import {Collapse} from '@/icons/Collapse';
 import {Expand} from '@/icons/Expand';
 import {
+  ADAPTIVE_SURFACE,
   BUTTON_RESET,
+  DARK_SURFACE,
   MIN_TABLET_MEDIA_QUERY,
   MOBILE_MEDIA_QUERY,
 } from '@/constants';
@@ -53,6 +55,7 @@ export const Pricing = () => {
     <section
       ref={sectionRef}
       className={css({
+        ...DARK_SURFACE,
         backgroundColor: 'var(--color-space)',
         display: 'flex',
         flexDirection: 'column',
@@ -259,6 +262,7 @@ const PricingTicket = ({
       className={css({
         '--color-primary-dark': 'var(--color-space)',
         '--color-primary-light': '#fff',
+        ...ADAPTIVE_SURFACE,
         backgroundColor: color,
         borderRadius: '20px',
         padding: '0',

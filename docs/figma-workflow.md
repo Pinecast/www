@@ -147,7 +147,6 @@ reconciled deliberately rather than by accident.
 | --- | --- | --- |
 | `Line` | Space @ 50% (`#09090980`) light, White @ 50% dark | solid `var(--color-space)` light, `#888` dark |
 | MDX link tracking | `Link` style is 0% | `mdx-components.tsx` adds `-1px` |
-| Focus ring | no Illustration colour in UI | `PrimaryButton`/`SecondaryButton` use `--color-sky` |
 | Gray text | Stone `#888` on every surface | Stone on space; `--color-core-accent-text` `#676767` on sand, lime and sky, where Stone is under 4.5:1 |
 | Pale ramp step | named `20%` | named `-25` (`--color-sky-25`, etc.) |
 | Grape ramp | 100% and 50% only | also defines `--color-grape-25` |
@@ -161,3 +160,7 @@ stays `#888` for lines and for text on space. Text in a box that paints its own
 dark background keeps `--color-core-accent`, because
 `--color-core-accent-text` changes back to Stone only inside the
 theme-adaptive menu.
+
+The keyboard focus ring uses no Illustration colour either: it is Space on
+light surfaces and White on dark ones (`--color-focus-ring`, WCAG 2.4.7 and
+1.4.11). It shows only for `:focus-visible`, so a mouse click shows nothing.

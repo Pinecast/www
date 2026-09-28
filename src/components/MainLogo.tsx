@@ -1,7 +1,7 @@
 import * as React from 'react';
 import dynamic from 'next/dynamic';
 
-import {TABLET_MEDIA_QUERY} from '@/constants';
+import {ADAPTIVE_SURFACE, TABLET_MEDIA_QUERY} from '@/constants';
 import {Logo} from '@/icons/Logo';
 import * as logoLoad from '@/animations/logo-load.json';
 import * as logoLoadDark from '@/animations/logo-load-dark.json';
@@ -14,7 +14,12 @@ import {useMotion} from '@/hooks/useMotion';
 
 const Lottie = dynamic(() => import('lottie-react'), {ssr: false});
 
-const baseStyles: any = {
+// The link is the fixed box, so that it has the size of the logo and its
+// focus ring goes around the logo. The two copies of the logo fill it.
+const linkStyles: any = {
+  ...ADAPTIVE_SURFACE,
+  borderRadius: '50%',
+  display: 'block',
   position: 'fixed',
   top: '35px',
   left: 0,
@@ -29,6 +34,14 @@ const baseStyles: any = {
     width: '40px',
     top: '20px',
   },
+};
+
+const baseStyles: any = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
 };
 
 export const MainLogo = ({
@@ -58,6 +71,7 @@ export const MainLogo = ({
       // The logo shows above the dim overlay of the open header menu.
       {...aboveOverlayProps}
       className={css({
+        ...linkStyles,
         ':not(:active) svg': {
           transform: 'scale(1, 1)',
           transition: 'transform 0.2s',

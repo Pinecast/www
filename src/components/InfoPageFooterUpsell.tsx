@@ -2,6 +2,7 @@ import {useCSS} from '@/hooks/useCSS';
 import {Body4, Caption, H2} from './Typography';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
+import {DARK_SURFACE} from '@/constants';
 
 export const InfoPageFooterUpsell = () => {
   const css = useCSS();
@@ -9,6 +10,7 @@ export const InfoPageFooterUpsell = () => {
   return (
     <section
       className={css({
+        ...DARK_SURFACE,
         backgroundColor: 'var(--color-space)',
       })}
     >

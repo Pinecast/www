@@ -20,6 +20,12 @@ export const FeaturesBlock = () => {
         href="/features"
         className={css({
           color: 'inherit',
+          // A block, as wide as its heading, so that the focus ring goes
+          // around the heading. An inline link around a block draws none.
+          display: 'block',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          width: 'fit-content',
           textAlign: 'center',
           textDecoration: 'none',
           ':hover': {textDecoration: 'underline'},

@@ -21,7 +21,7 @@ import {
 } from './NoncriticalVideo';
 import {useIntersectionProgress} from '@/hooks/useIntersectionProgress';
 import {useDarkSection} from '@/hooks/useDarkSection';
-import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
+import {DARK_SURFACE, MIN_TABLET_MEDIA_QUERY} from '@/constants';
 import {PERSONAS} from './CustomerPersona';
 import {useAudioManager} from '@/hooks/useAudioManager';
 import {SoundEffect} from '@/hooks/useSoundEffects';
@@ -490,6 +490,18 @@ const Panel = ({
           position: 'relative',
           textDecoration: 'none',
           zIndex: 2,
+          // The clip-path of the wide panel and the scroll container of the
+          // carousel both cut an outline on the link. Draw the focus ring
+          // inside the card, on the card's own background.
+          ':focus-visible': {outline: 'none'},
+          ':focus-visible header': {
+            outlineColor: isActive
+              ? 'var(--color-space)'
+              : 'var(--color-white)',
+            outlineOffset: '-5px',
+            outlineStyle: 'solid',
+            outlineWidth: '2px',
+          },
 
           [WIDE_PANELS_QUERY]: {
             backgroundColor: 'var(--panel-border-color)',
@@ -622,6 +634,7 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
       ref={sectionRef}
       id="tuned-in"
       className={css({
+        ...DARK_SURFACE,
         color: 'var(--color-white)',
         cursor: 'default',
         position: 'relative',
@@ -840,6 +853,7 @@ export const TunedInPanels = ({
     <div
       ref={sectionRef}
       className={css({
+        ...DARK_SURFACE,
         backgroundColor: 'var(--color-space)',
         position: 'relative',
         zIndex: 2,

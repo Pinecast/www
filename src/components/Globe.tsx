@@ -39,6 +39,7 @@ import {SoundEffect} from '@/hooks/useSoundEffects';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
 import {ScreenReaderText, VISUALLY_HIDDEN} from './ScreenReaderText';
 import {isMotionPaused, useMotion} from '@/hooks/useMotion';
+import {DARK_SURFACE} from '@/constants';
 
 const callWhenIdle = (callback: IdleRequestCallback) => {
   if (typeof window.requestIdleCallback === 'undefined') {
@@ -1158,6 +1159,7 @@ export const Globe = () => {
     <section
       ref={ref}
       className={css({
+        ...DARK_SURFACE,
         backgroundColor: 'var(--color-space)',
         position: 'relative',
         zIndex: 2,
