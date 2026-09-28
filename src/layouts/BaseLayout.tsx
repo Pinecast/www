@@ -7,7 +7,15 @@ import {
   MarqueeDivider,
   StandardMarqueeDivider,
 } from '@/components/MarqueeDivider';
-import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY} from '@/constants';
+import {
+  CONTENT_MAX_WIDTH,
+  CONTENT_SIDE_PADDING,
+  CONTENT_SIDE_PADDING_TABLET,
+  MIN_DESKTOP_MEDIA_QUERY,
+  MIN_TABLET_MEDIA_QUERY,
+  MOBILE_MEDIA_QUERY,
+} from '@/constants';
+import {fitText, PAGE_WIDTH} from '@/fitText';
 import {MonumentGroteskRegular} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
 import {
@@ -17,6 +25,21 @@ import {
 } from '@/hooks/useScrollTimeline';
 import Head from 'next/head';
 import * as React from 'react';
+import {StyleObject} from 'styletron-react';
+
+// The page title of the content layouts. It is smaller where its widest word
+// would not fit on its line (see fitText).
+export function pageTitleStyle(title: string): StyleObject {
+  // The side padding is 10% of the page on each side.
+  const lineWidth = `(${PAGE_WIDTH}) * 0.8`;
+  return {
+    padding: '0 10%',
+    marginBottom: '50px',
+    ...fitText(title, 54, 56, lineWidth),
+    [MIN_TABLET_MEDIA_QUERY]: fitText(title, 112, 100, lineWidth),
+    [MIN_DESKTOP_MEDIA_QUERY]: fitText(title, 160, 144, lineWidth),
+  };
+}
 
 const CURVE_DEPTH = 100;
 
@@ -157,12 +180,12 @@ export function BaseLayout(
           <section
             className={css({
               backgroundColor: 'var(--color-sand)',
-              maxWidth: '1375px',
+              maxWidth: `${CONTENT_MAX_WIDTH}px`,
               marginBottom: 0,
               marginLeft: 'auto',
               marginRight: 'auto',
               marginTop: 0,
-              padding: '80px 10px',
+              padding: `80px ${CONTENT_SIDE_PADDING}px`,
               '--text-gutter': '30px',
 
               // Base MDX styles
@@ -170,7 +193,7 @@ export function BaseLayout(
               fontSize: '18px',
 
               [MIN_TABLET_MEDIA_QUERY]: {
-                padding: '150px 150px',
+                padding: `150px ${CONTENT_SIDE_PADDING_TABLET}px`,
                 '--text-gutter': '0px',
 
                 // Base MDX styles

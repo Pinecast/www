@@ -16,6 +16,12 @@ export const MIN_DESKTOP_MEDIA_QUERY = `@media (min-width: ${
   DESKTOP_BREAKPOINT + 1
 }px)`;
 
+// The maximum width and the side padding of the content section of the page
+// layouts. The titles in it fit their words to the width that is left.
+export const CONTENT_MAX_WIDTH = 1375;
+export const CONTENT_SIDE_PADDING = 10;
+export const CONTENT_SIDE_PADDING_TABLET = 150;
+
 export const CAN_HOVER_MEDIA_QUERY = `@media (any-hover: hover)`;
 
 export const PREFERS_REDUCED_MOTION_QUERY = `@media (prefers-reduced-motion: reduce)`;

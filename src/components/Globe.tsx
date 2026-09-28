@@ -132,6 +132,21 @@ type FeatureShape = {
 
 const WIDE_DESCRIPTION_PLACEMENT_QUERY = '@media (min-width: 900px)';
 
+// The feature links on the globe, in the order of the curved text.
+const MENU_LINKS: Array<Feature> = [
+  'distribution',
+  'analytics',
+  'monetization',
+];
+// The smallest hit area of a feature link, in CSS pixels (WCAG 2.5.8). On a
+// narrow screen the link text is only about 11 pixels tall. The words follow
+// a curve, so the band under each word is thick enough to hold a square of
+// this size at any angle.
+const MIN_LINK_TARGET_SIZE = 24;
+const LINK_HIT_AREA_THICKNESS = MIN_LINK_TARGET_SIZE * Math.SQRT2 + 2;
+const LINK_HOVER_TEXT_SHADOW =
+  '0 0 10px rgba(255, 255, 255, 0.85), 0 0 7px #c4ff7e, 0 0 4px #090909';
+
 const FEATURES: Record<Feature, FeatureShape> = {
   distribution: {
     title: <>Distribution</>,
@@ -385,14 +400,100 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
 ) {
   const css = useCSS();
   const radius = Math.min(getGlobeWidth(width, height) / 2 + 80, width);
+
+  const svgRef = React.useRef<SVGSVGElement>(null);
+  React.useImperativeHandle(ref, () => svgRef.current!, []);
+  const textRef = React.useRef<SVGTextElement>(null);
+  const hitAreaRefs = React.useRef<Partial<Record<Feature, SVGPathElement>>>(
+    {},
+  );
+  const radiusRef = React.useRef(radius);
+  radiusRef.current = radius;
+
+  // Draw each hit area as a band along the curve, under its word: it starts
+  // and ends with the word, and it is at least LINK_HIT_AREA_THICKNESS thick.
+  const layOutHitAreas = React.useCallback(() => {
+    const text = textRef.current;
+    const scale = svgRef.current?.getScreenCTM()?.a;
+    if (!text || !scale) {
+      return;
+    }
+    // The circle of `globeCurvedTextPath`.
+    const r = radiusRef.current;
+    const centerX = 200;
+    const centerY = 50 - r;
+    const fontSize = parseFloat(getComputedStyle(text).fontSize);
+    // The glyphs sit inside the curve, so center the band a little inward
+    // of the baseline.
+    const bandRadius = r - fontSize * 0.35;
+    const thickness = Math.max(LINK_HIT_AREA_THICKNESS / scale, fontSize * 1.2);
+    const onBand = ({x, y}: DOMPoint) => {
+      const angle = Math.atan2(y - centerY, x - centerX);
+      return `${centerX + bandRadius * Math.cos(angle)} ${
+        centerY + bandRadius * Math.sin(angle)
+      }`;
+    };
+
+    let charIndex = 0;
+    for (const link of text.querySelectorAll('a')) {
+      const length = link.textContent?.length ?? 0;
+      const first = charIndex;
+      charIndex += length;
+      // Next renders `#analytics` as `/#analytics`.
+      const slug = link.getAttribute('href')?.split('#')[1] as Feature;
+      const hitArea = hitAreaRefs.current[slug];
+      if (!hitArea || !length) {
+        continue;
+      }
+      let start: DOMPoint, end: DOMPoint;
+      try {
+        start = text.getStartPositionOfChar(first);
+        end = text.getEndPositionOfChar(first + length - 1);
+      } catch {
+        // The text is not laid out (for example, it is not displayed).
+        continue;
+      }
+      hitArea.setAttribute(
+        'd',
+        `M ${onBand(start)} A ${bandRadius} ${bandRadius} 0 0 0 ${onBand(end)}`,
+      );
+      hitArea.setAttribute('stroke-width', String(thickness));
+    }
+  }, []);
+
+  // The font size follows the radius, so lay out again after each render,
+  // after a resize (which changes the scale) and when the font loads.
+  React.useEffect(layOutHitAreas);
+  React.useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) {
+      return;
+    }
+    const observer = new ResizeObserver(layOutHitAreas);
+    observer.observe(svg);
+    document.fonts.ready.then(layOutHitAreas);
+    document.fonts.addEventListener('loadingdone', layOutHitAreas);
+    return () => {
+      observer.disconnect();
+      document.fonts.removeEventListener('loadingdone', layOutHitAreas);
+    };
+  }, [layOutHitAreas]);
+
   return (
     <svg
-      ref={ref}
+      ref={svgRef}
       className={css({
         position: 'absolute',
         margin: '0 auto',
         width: '400px',
         zIndex: 4,
+        // Hovering a hit area lights up its link, as hovering the link does.
+        ...Object.fromEntries(
+          MENU_LINKS.map(slug => [
+            `:has([data-hit-area="${slug}"]:hover) [href$="#${slug}"]`,
+            {textShadow: LINK_HOVER_TEXT_SHADOW},
+          ]),
+        ),
       })}
       viewBox="0 0 400 100"
       width="400"
@@ -407,7 +508,31 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
           id="globeCurvedTextPath"
           fill="transparent"
         />
+        {/* Larger hit areas for pointer users, between the curve (which
+            also takes pointer events) and the text. Each is a copy of a link
+            in the text, so it is hidden from assistive technology and from
+            the tab order. */}
+        {MENU_LINKS.map(slug => (
+          <Link
+            key={slug}
+            href={`#${slug}`}
+            tabIndex={-1}
+            aria-hidden="true"
+            data-hit-area={slug}
+            className={css({cursor: 'pointer'})}
+          >
+            <path
+              ref={(elem: SVGPathElement | null) => {
+                hitAreaRefs.current[slug] = elem ?? undefined;
+              }}
+              fill="none"
+              stroke="transparent"
+              pointerEvents="stroke"
+            />
+          </Link>
+        ))}
         <text
+          ref={textRef}
           fill="var(--color-white)"
           className={css({
             ...MonumentGroteskBold,
@@ -435,10 +560,7 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
                   color: '#c4ff7e',
                   opacity: 1,
                 },
-                ':hover': {
-                  textShadow:
-                    '0 0 10px rgba(255, 255, 255, 0.85), 0 0 7px #c4ff7e, 0 0 4px #090909',
-                },
+                ':hover': {textShadow: LINK_HOVER_TEXT_SHADOW},
               })}
               href="#distribution"
             >
@@ -460,10 +582,7 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
                     color: '#c4ff7e',
                     opacity: 1,
                   },
-                  ':hover': {
-                    textShadow:
-                      '0 0 10px rgba(255, 255, 255, 0.85), 0 0 7px #c4ff7e, 0 0 4px #090909',
-                  },
+                  ':hover': {textShadow: LINK_HOVER_TEXT_SHADOW},
                 })}
                 href="#analytics"
               >
@@ -486,10 +605,7 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
                     color: '#c4ff7e',
                     opacity: 1,
                   },
-                  ':hover': {
-                    textShadow:
-                      '0 0 10px rgba(255, 255, 255, 0.85), 0 0 7px #c4ff7e, 0 0 4px #090909',
-                  },
+                  ':hover': {textShadow: LINK_HOVER_TEXT_SHADOW},
                 })}
                 href="#monetization"
               >

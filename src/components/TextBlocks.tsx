@@ -6,10 +6,14 @@ import {
   MonumentGroteskSemiMono,
 } from '@/fonts';
 import {
+  CONTENT_MAX_WIDTH,
+  CONTENT_SIDE_PADDING,
+  CONTENT_SIDE_PADDING_TABLET,
   MIN_TABLET_MEDIA_QUERY,
   MOBILE_BREAKPOINT,
   MOBILE_MEDIA_QUERY,
 } from '@/constants';
+import {fitText, PAGE_WIDTH, textOf} from '@/fitText';
 import {HeadingLevel, Link, PillButton} from './Typography';
 import {StyleObject} from 'styletron-react';
 
@@ -49,8 +53,16 @@ export const Intro = ({children}: {children: React.ReactNode}) => {
   );
 };
 
+// The width of a line in the content section of the page layouts.
+const CONTENT_LINE_WIDTH = `${PAGE_WIDTH} - ${2 * CONTENT_SIDE_PADDING}px`;
+const CONTENT_LINE_WIDTH_TABLET = `min(${PAGE_WIDTH}, ${CONTENT_MAX_WIDTH}px) - ${
+  2 * CONTENT_SIDE_PADDING_TABLET
+}px`;
+
 // Like the Typography headings, these take their element from `level` and
 // keep their look at every level.
+// A Title is smaller where its widest word would not fit on its line (see
+// fitText).
 export const Title = ({
   children,
   id,
@@ -64,15 +76,15 @@ export const Title = ({
 }) => {
   const css = useCSS();
   const Tag = `h${level}` as const;
+  const text = textOf(children);
   return (
     <Tag
       id={id}
       className={css({
         ...GintoNordCondensed,
-        fontSize: '48px',
+        ...fitText(text, 48, 43, CONTENT_LINE_WIDTH),
         fontWeight: '400',
         letterSpacing: '-0.04em',
-        lineHeight: '43px',
         textAlign: 'center',
         textTransform: 'uppercase',
         marginBottom: '80px',
@@ -81,8 +93,7 @@ export const Title = ({
         ...style,
 
         [MIN_TABLET_MEDIA_QUERY]: {
-          fontSize: '80px',
-          lineHeight: '72px',
+          ...fitText(text, 80, 72, CONTENT_LINE_WIDTH_TABLET),
           marginBottom: '150px',
           marginTop: '130px',
           scrollMarginTop: ANCHOR_SCROLL_MARGIN_TABLET,
@@ -329,7 +340,9 @@ export const DefinitionList = ({children}: {children: React.ReactNode}) => {
         marginLeft: 'var(--text-gutter)',
 
         display: 'grid',
-        gridTemplateColumns: 'min-content 1fr',
+        // `minmax(0, 1fr)`: a long word (a URL) breaks instead of making the
+        // column wider than the screen.
+        gridTemplateColumns: 'min-content minmax(0, 1fr)',
 
         ':not(:empty) > dt': {
           ...MonumentGroteskBold,

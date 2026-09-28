@@ -19,7 +19,8 @@ npm run lint        # ESLint, with the jsx-a11y recommended rules
 npx tsc --noEmit
 npm run build       # static export to out/
 npm run check:structure  # headings, lists and alt text in out/
-npm test            # Playwright: keyboard, landmark and axe checks on out/
+npm test            # Playwright: keyboard, landmark, axe, reflow, text spacing
+                    # and target size checks on out/
 ```
 
 `npm test` serves `out/`, so build first. It needs Playwright's Chromium once:
