@@ -43,6 +43,10 @@ type Stop = {
   // be on an inner element.
   box: Box | null;
   neededPixels: number;
+  // The box of the part that has the ring, where the ring must be whole (see
+  // `ringGaps`). Null for a link that wraps, and for SVG text, whose outline
+  // follows the letters.
+  ringBox: Box | null;
   // Fixed parts of the page that are on top of some part of the element.
   coveredBy: Array<string>;
 };
@@ -104,12 +108,22 @@ const describeFocus = (page: Page) =>
     const lines = Array.from(ringElement.getClientRects())
       .map(clamp)
       .filter((r): r is Box => !!r);
-    const ringBox = lines.length
+    const longestLine = lines.length
       ? lines.reduce((a, b) => (a.width > b.width ? a : b))
       : box;
-    const neededPixels = ringBox
-      ? Math.round((Math.PI / 4) * 2 * (ringBox.width + ringBox.height))
+    const neededPixels = longestLine
+      ? Math.round((Math.PI / 4) * 2 * (longestLine.width + longestLine.height))
       : 0;
+    const ringRects = ringElement.getClientRects();
+    const ringBox =
+      ringRects.length === 1 && !(ringElement instanceof SVGElement)
+        ? {
+            x: ringRects[0].x,
+            y: ringRects[0].y,
+            width: ringRects[0].width,
+            height: ringRects[0].height,
+          }
+        : null;
 
     const coveredBy: Array<string> = [];
     if (box) {
@@ -140,21 +154,31 @@ const describeFocus = (page: Page) =>
         }
       }
     }
-    return {name, box, neededPixels, coveredBy};
+    return {name, box, neededPixels, ringBox, coveredBy};
   });
 
-// The number of pixels in `box` (and a margin around it) whose color differs
-// between the two screenshots with a contrast of at least 3:1. The decoding
-// runs in a blank page, so that it does not touch the page under test.
-const contrastingPixels = async (
+// Compares the two screenshots of `clip` (a part of the viewport). A pixel
+// "changes" when its two colors have a contrast of at least 3:1. Returns:
+//
+// - `pixels`: the changed pixels in `box` and 8px around it.
+// - `gaps`: the sides of `ringBox` where the ring has a gap. The ring can be
+//   up to 12px outside or inside that box. Along the middle half of each side
+//   (a round shape leaves the corners), each 4px step must have a changed
+//   pixel. Something that paints over the ring, or the edge of the viewport,
+//   leaves a gap.
+//
+// The decoding runs in a blank page, so that it does not touch the page under
+// test.
+const analyzeRing = async (
   decoder: Page,
   focused: Buffer,
   unfocused: Buffer,
+  clip: Box,
   box: Box,
-  margin = 8,
+  ringBox: Box | null,
 ) =>
   decoder.evaluate(
-    async ({a, b, box, margin}) => {
+    async ({a, b, clip, box, ringBox}) => {
       const decode = async (base64: string) => {
         const bitmap = await createImageBitmap(
           await (await fetch(`data:image/png;base64,${base64}`)).blob(),
@@ -165,6 +189,7 @@ const contrastingPixels = async (
         return context.getImageData(0, 0, bitmap.width, bitmap.height);
       };
       const [imageA, imageB] = await Promise.all([decode(a), decode(b)]);
+      const {width, height} = imageA;
       const channel = (value: number) => {
         const c = value / 255;
         return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
@@ -173,31 +198,83 @@ const contrastingPixels = async (
         0.2126 * channel(data[i]) +
         0.7152 * channel(data[i + 1]) +
         0.0722 * channel(data[i + 2]);
-      const x0 = Math.max(0, Math.floor(box.x - margin));
-      const y0 = Math.max(0, Math.floor(box.y - margin));
-      const x1 = Math.min(imageA.width, Math.ceil(box.x + box.width + margin));
-      const y1 = Math.min(
-        imageA.height,
-        Math.ceil(box.y + box.height + margin),
-      );
-      let count = 0;
-      for (let y = y0; y < y1; y++) {
-        for (let x = x0; x < x1; x++) {
-          const i = (y * imageA.width + x) * 4;
-          const la = luminance(imageA.data, i);
-          const lb = luminance(imageB.data, i);
-          if ((Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05) >= 3) {
-            count++;
+      const changes = new Uint8Array(width * height);
+      for (let p = 0; p < width * height; p++) {
+        const la = luminance(imageA.data, p * 4);
+        const lb = luminance(imageB.data, p * 4);
+        changes[p] =
+          (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05) >= 3 ? 1 : 0;
+      }
+      // In viewport coordinates. Outside the clip, nothing changes.
+      const changed = (x: number, y: number) => {
+        const cx = Math.round(x - clip.x);
+        const cy = Math.round(y - clip.y);
+        return (
+          cx >= 0 &&
+          cy >= 0 &&
+          cx < width &&
+          cy < height &&
+          changes[cy * width + cx] === 1
+        );
+      };
+
+      const MARGIN = 8;
+      let pixels = 0;
+      for (let y = box.y - MARGIN; y < box.y + box.height + MARGIN; y++) {
+        for (let x = box.x - MARGIN; x < box.x + box.width + MARGIN; x++) {
+          if (changed(x, y)) {
+            pixels++;
           }
         }
       }
-      return count;
+
+      const gaps: Array<string> = [];
+      if (ringBox) {
+        const BAND = 12;
+        const STEP = 4;
+        // The point on each side at `along`, and the direction across it.
+        const sides = {
+          top: (along: number) => [along, ringBox.y, 0, 1],
+          bottom: (along: number) => [along, ringBox.y + ringBox.height, 0, 1],
+          left: (along: number) => [ringBox.x, along, 1, 0],
+          right: (along: number) => [ringBox.x + ringBox.width, along, 1, 0],
+        };
+        for (const [side, at] of Object.entries(sides)) {
+          const horizontal = side === 'top' || side === 'bottom';
+          const start = horizontal ? ringBox.x : ringBox.y;
+          const length = horizontal ? ringBox.width : ringBox.height;
+          let steps = 0;
+          let missed = 0;
+          for (
+            let along = start + length / 4;
+            along < start + (3 * length) / 4;
+            along += STEP
+          ) {
+            steps++;
+            const [x, y, dx, dy] = at(along);
+            let hit = false;
+            for (let d = -BAND; d <= BAND && !hit; d++) {
+              for (let s = 0; s < STEP && !hit; s++) {
+                hit = changed(x + d * dx + s * dy, y + d * dy + s * dx);
+              }
+            }
+            if (!hit) {
+              missed++;
+            }
+          }
+          if (steps && missed / steps > 0.05) {
+            gaps.push(`${side} ${Math.round((100 * missed) / steps)}%`);
+          }
+        }
+      }
+      return {pixels, gaps};
     },
     {
       a: focused.toString('base64'),
       b: unfocused.toString('base64'),
+      clip,
       box,
-      margin,
+      ringBox,
     },
   );
 
@@ -239,7 +316,7 @@ const markFocus = (page: Page) =>
     return el.dataset.focusWalk;
   });
 
-type Result = {stop: Stop; pixels: number};
+type Result = {stop: Stop; pixels: number; gaps: Array<string>};
 
 // Measures the indicator of the focused element: a screenshot with focus, a
 // screenshot without it, and then focus back on the element.
@@ -254,12 +331,26 @@ const measureFocus = async (
     return null;
   }
   if (!stop.box) {
-    return {stop, pixels: 0};
+    return {stop, pixels: 0, gaps: []};
   }
-  const focused = await page.screenshot();
+  // Only the part of the viewport around the element and its ring.
+  const {width, height} = page.viewportSize()!;
+  const around = [stop.box, stop.ringBox].filter((b): b is Box => !!b);
+  const x0 = Math.max(0, Math.floor(Math.min(...around.map(b => b.x)) - 16));
+  const y0 = Math.max(0, Math.floor(Math.min(...around.map(b => b.y)) - 16));
+  const x1 = Math.min(
+    width,
+    Math.ceil(Math.max(...around.map(b => b.x + b.width)) + 16),
+  );
+  const y1 = Math.min(
+    height,
+    Math.ceil(Math.max(...around.map(b => b.y + b.height)) + 16),
+  );
+  const clip = {x: x0, y: y0, width: x1 - x0, height: y1 - y0};
+  const focused = await page.screenshot({clip});
   await page.evaluate(() => (document.activeElement as HTMLElement).blur());
   await settle(page);
-  const unfocused = await page.screenshot();
+  const unfocused = await page.screenshot({clip});
   // After a key press, focus from a script also matches :focus-visible.
   await page.evaluate(
     k =>
@@ -268,8 +359,15 @@ const measureFocus = async (
         .focus({preventScroll: true}),
     key,
   );
-  const pixels = await contrastingPixels(decoder, focused, unfocused, stop.box);
-  return {stop, pixels};
+  const {pixels, gaps} = await analyzeRing(
+    decoder,
+    focused,
+    unfocused,
+    clip,
+    stop.box,
+    stop.ringBox,
+  );
+  return {stop, pixels, gaps};
 };
 
 // Tab through the page, and measure the indicator at each stop.
@@ -329,10 +427,13 @@ const walkBack = async (page: Page): Promise<Array<Stop>> => {
 };
 
 const problems = (results: Array<Result>) =>
-  results.flatMap(({stop, pixels}) => [
+  results.flatMap(({stop, pixels, gaps}) => [
     ...(stop.box ? [] : [`${stop.name}: has no box on screen`]),
     ...(stop.box && pixels < stop.neededPixels
       ? [`${stop.name}: ${pixels} of ${stop.neededPixels} pixels change`]
+      : []),
+    ...(gaps.length
+      ? [`${stop.name}: the ring has gaps (${gaps.join(', ')})`]
       : []),
     ...stop.coveredBy.map(what => `${stop.name}: covered by ${what}`),
   ]);

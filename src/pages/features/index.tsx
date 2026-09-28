@@ -400,9 +400,24 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
           position: 'relative',
           transition: 'background-color 0.2s, color 0.2s, height 0.2s',
           width: '100%',
-          // The rows touch each other and the edges of the page, which would
-          // cover a ring outside the button. Draw it inside.
-          ':focus-visible': {outlineOffset: '-4px'},
+          // The rows touch each other and the edges of the page, and the
+          // letter and the name paint over the button's own outline. Draw
+          // the ring inside the button, above them.
+          ':focus-visible': {outline: 'none'},
+          '::after': {
+            borderColor: 'var(--color-focus-ring)',
+            borderRadius: '2px',
+            borderStyle: 'solid',
+            borderWidth: '2px',
+            content: '""',
+            display: 'none',
+            // Closer at the bottom, where the name comes down to the line.
+            inset: '4px 4px 2px',
+            pointerEvents: 'none',
+            position: 'absolute',
+            zIndex: 4,
+          },
+          ':focus-visible::after': {display: 'block'},
 
           '::before': {
             display: 'block',

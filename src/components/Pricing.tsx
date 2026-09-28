@@ -538,7 +538,27 @@ const AddonAccordionItem = ({
           type="button"
           aria-expanded={open}
           aria-controls={id}
-          className={css(BUTTON_RESET)}
+          className={css({
+            ...BUTTON_RESET,
+            position: 'relative',
+            // The name is as tall as the row, so an outline would sit on
+            // the lines between the rows. Put the ring around the name,
+            // inside the row.
+            ':focus-visible': {outline: 'none'},
+            ':focus-visible::after': {
+              borderColor: 'var(--color-focus-ring)',
+              borderRadius: '6px',
+              borderStyle: 'solid',
+              borderWidth: '2px',
+              content: '""',
+              inset: '10px -8px',
+              pointerEvents: 'none',
+              position: 'absolute',
+            },
+            [MIN_TABLET_MEDIA_QUERY]: {
+              ':focus-visible::after': {inset: '8px -8px'},
+            },
+          })}
         >
           {name}
         </button>

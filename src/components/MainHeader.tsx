@@ -419,9 +419,9 @@ export const MainHeader = () => {
             alignItems: 'center',
             appearance: 'none',
             background: 'none',
-            borderTopLeftRadius: 'inherit',
-            borderBottomLeftRadius: 'inherit',
             border: 'none',
+            // Round, so that the focus ring stays inside the header.
+            borderRadius: '18px',
             display: 'flex',
             cursor: 'pointer',
             paddingTop: 0,
@@ -488,7 +488,6 @@ export const MainHeader = () => {
           </Tooltip>
           <MotionToggle
             style={{
-              ...HEADER_FOCUS_STYLE,
               borderRadius: '18px',
               paddingTop: '29px',
               paddingRight: '12px',
@@ -552,7 +551,6 @@ export const MainHeader = () => {
         >
           <MotionToggle
             style={{
-              ...HEADER_FOCUS_STYLE,
               alignSelf: 'stretch',
               paddingTop: 0,
               paddingRight: '6px',
@@ -568,7 +566,8 @@ export const MainHeader = () => {
               // Flex, not block: an inline icon sits on the text baseline,
               // with room for descenders under it, 2px above the center.
               display: 'flex',
-              borderTopRightRadius: '20px',
+              // Round, so that the focus ring stays inside the header.
+              borderRadius: '18px',
               paddingTop: '15px',
               paddingRight: '20px',
               paddingBottom: '15px',

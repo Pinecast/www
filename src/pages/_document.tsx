@@ -132,8 +132,10 @@ export default function Document({
           html {
             /* Keep a focused element clear of the fixed header and logo
                and, up to ${TABLET_BREAKPOINT}px, of the mute button at the
-               bottom. */
+               bottom. The browser scrolls the element into view, but not
+               its ring, which is outside it: leave room for that too. */
             scroll-padding-top: 110px;
+            scroll-padding-bottom: 16px;
           }
           @media (max-width: ${TABLET_BREAKPOINT}px) {
             html {

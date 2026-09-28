@@ -23,8 +23,10 @@ export const FeaturesBlock = () => {
           // A block, as wide as its heading, so that the focus ring goes
           // around the heading. An inline link around a block draws none.
           display: 'block',
-          marginLeft: 'auto',
-          marginRight: 'auto',
+          margin: '-4px auto',
+          // Room between the ring and the text. The negative margin keeps
+          // the text where it was.
+          padding: '4px 8px',
           width: 'fit-content',
           textAlign: 'center',
           textDecoration: 'none',
