@@ -460,6 +460,10 @@ export const MainHeader = () => {
                 <AudioWaveformIcon
                   color="var(--color-primary-dark)"
                   muted={audioMangerLoading ? true : muted}
+                  // Flex, not inline-flex: an inline icon sits on the text
+                  // baseline, with room for descenders under it, 1.5px
+                  // above the center of the header.
+                  style={{display: 'flex'}}
                 />
               </button>
             </label>

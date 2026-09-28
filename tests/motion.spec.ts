@@ -141,28 +141,40 @@ test.describe('the pause animations toggle', () => {
     }) => {
       await page.setViewportSize(viewport);
       await page.goto('/privacy');
-      // The vertical center of what each icon draws, and of the header.
+      // The vertical center of what each icon control draws, and of the
+      // header. The icons are SVG shapes, and the bars of the sound waveform
+      // are empty spans.
       const centers = await page.getByRole('banner').evaluate(header => {
+        const visible = (element: Element) => element.getClientRects().length;
         const middle = (rects: Array<DOMRect>) =>
           (Math.min(...rects.map(r => r.top)) +
             Math.max(...rects.map(r => r.bottom))) /
           2;
-        return {
-          header: middle([header.getBoundingClientRect()]),
-          icons: Array.from(header.querySelectorAll('svg'))
-            .filter(svg => svg.getClientRects().length)
-            .map(svg =>
-              middle(
-                Array.from(svg.querySelectorAll('path, rect'), shape =>
-                  shape.getBoundingClientRect(),
-                ),
-              ),
-            ),
-        };
+        const icons: Record<string, number> = {};
+        for (const control of header.querySelectorAll('a, button')) {
+          const shapes = Array.from(
+            control.querySelectorAll('path, rect, span:empty'),
+          ).filter(visible);
+          if (visible(control) && shapes.length) {
+            // The sound button takes its name from the <label> around it.
+            const name =
+              control.getAttribute('aria-label') ??
+              ((control as HTMLButtonElement).labels?.[0] ?? control)
+                .textContent!;
+            icons[name] = middle(shapes.map(s => s.getBoundingClientRect()));
+          }
+        }
+        return {header: middle([header.getBoundingClientRect()]), icons};
       });
-      expect(centers.icons.length).toBeGreaterThan(0);
-      for (const icon of centers.icons) {
-        expect(icon).toBeCloseTo(centers.header, 0);
+      expect(Object.keys(centers.icons)).toEqual(
+        expect.arrayContaining(
+          viewport === WIDE
+            ? ['Unmute', 'Pause animations']
+            : ['Menu', 'Pause animations', 'Sign in'],
+        ),
+      );
+      for (const [name, center] of Object.entries(centers.icons)) {
+        expect(center, name).toBeCloseTo(centers.header, 0);
       }
     });
   }
