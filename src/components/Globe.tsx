@@ -38,6 +38,7 @@ import {useAudioManager} from '@/hooks/useAudioManager';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
 import {ScreenReaderText, VISUALLY_HIDDEN} from './ScreenReaderText';
+import {isMotionPaused, useMotion} from '@/hooks/useMotion';
 
 const callWhenIdle = (callback: IdleRequestCallback) => {
   if (typeof window.requestIdleCallback === 'undefined') {
@@ -486,6 +487,9 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
         position: 'absolute',
         margin: '0 auto',
         width: '400px',
+        // The globe sets the size from the screen once the page script runs.
+        // Until then, do not make a narrow page scroll sideways.
+        maxWidth: '100%',
         zIndex: 4,
         // Hovering a hit area lights up its link, as hovering the link does.
         ...Object.fromEntries(
@@ -775,6 +779,22 @@ export const Globe = () => {
   const canvas = React.useRef<HTMLCanvasElement>(null);
   const gi = useAsyncImage('/images/globe-full.jpg');
 
+  // The "Pause animations" toggle stops the video and the drift of the orbs
+  // where they are. With reduced motion, the globe also does not follow the
+  // scroll: it stays as it is at the top of the section, and only the text and
+  // the current link change.
+  const {paused, reducedMotion: isStatic} = useMotion();
+  // Load the video when the animations first play. Until then, the still
+  // image of the globe shows, as it does while the video loads.
+  const [animationsPlayed, setAnimationsPlayed] = React.useState(false);
+  React.useEffect(() => {
+    // Read the store: in the first render, `paused` is the value of the
+    // static export, not the choice of the user.
+    if (!isMotionPaused()) {
+      setAnimationsPlayed(true);
+    }
+  }, [paused]);
+
   // We load two versions of the video. They are switched between by the
   // dual video manager.
   const gv1 = useAsyncVideo(
@@ -783,7 +803,7 @@ export const Globe = () => {
       [AV1_MIME]: '/videos/globe/globe2x.av1.mp4',
     },
     // Disable the video on mobile
-    !isMobile,
+    !isMobile && animationsPlayed,
     false,
   );
   const gv2 = useAsyncVideo(
@@ -792,7 +812,7 @@ export const Globe = () => {
       [AV1_MIME]: '/videos/globe/globe2x.av1.mp4',
     },
     // Disable the video on mobile
-    !isMobile,
+    !isMobile && animationsPlayed,
     false,
   );
 
@@ -815,7 +835,7 @@ export const Globe = () => {
   }, [currentFeatureSlug, playSoundEffect]);
 
   const [segmentStart, segmentEnd] = getVideoSegmentBounds(
-    currentFeatureSlug ?? 'distribution',
+    isStatic ? 'distribution' : (currentFeatureSlug ?? 'distribution'),
   );
   const gv = useDualVideoManager(gv1, gv2, segmentStart, segmentEnd, 0.6);
 
@@ -824,6 +844,8 @@ export const Globe = () => {
     xPerc2: 0,
     xPerc3: 0,
     lastTs: Date.now(),
+    // The time of the drift of the orbs. It does not move while paused.
+    driftTime: Date.now(),
   });
 
   useCanvasDrawing(
@@ -836,17 +858,27 @@ export const Globe = () => {
         ctx.fillStyle = '#090909';
         ctx.fillRect(0, 0, width, height);
 
-        const imageOffsetPercent = getImageOffset(currentFeatureSlug);
+        const imageOffsetPercent = isStatic
+          ? 0
+          : getImageOffset(currentFeatureSlug);
         const {xPerc, xPerc2, xPerc3, lastTs} = imageState.current;
         const now = Date.now();
         const delta = now - lastTs;
         imageState.current.lastTs = now;
+        if (!isMotionPaused()) {
+          imageState.current.driftTime += delta;
+        }
+        // A step never goes past the target, also after a long gap between
+        // two paints (off screen or paused). A static globe jumps to it.
+        const step = (rate: number) =>
+          isStatic ? 1 : Math.min(1, delta * rate);
         imageState.current.xPerc =
-          xPerc + (imageOffsetPercent - xPerc) * (delta * 0.008);
+          xPerc + (imageOffsetPercent - xPerc) * step(0.008);
         imageState.current.xPerc2 =
-          xPerc2 + (imageOffsetPercent - xPerc2) * (delta * 0.004);
+          xPerc2 + (imageOffsetPercent - xPerc2) * step(0.004);
         imageState.current.xPerc3 =
-          xPerc3 + (imageOffsetPercent - xPerc3) * (delta * 0.002);
+          xPerc3 + (imageOffsetPercent - xPerc3) * step(0.002);
+        const driftTime = imageState.current.driftTime;
         const imageOffset =
           Math.max(IMAGE_HEIGHT / 2, xPerc * IMAGE_WIDTH) - IMAGE_HEIGHT / 2;
         // console.log(xPerc);
@@ -861,7 +893,7 @@ export const Globe = () => {
         // a 3px gap along the edge of the canvas. The lines should be spaced every 14px.
         ctx.save();
         ctx.beginPath();
-        const scrollOffset = -((scrollY / 2) % 14) * dpi;
+        const scrollOffset = isStatic ? 0 : -((scrollY / 2) % 14) * dpi;
         const sideTickOpacity =
           Math.max(0, Math.min(1, getSignedCloseness(xPerc, 0.1, 0.1))) * 0.5;
         ctx.globalAlpha = sideTickOpacity;
@@ -1017,7 +1049,7 @@ export const Globe = () => {
             (1 + radiusIncrement * (dist === 0 ? 0.75 : dist + 1));
 
           const perlinRotationOffset =
-            perlin.noise3d(now / 1000 / 3, dist / 4, rotation) / 50;
+            perlin.noise3d(driftTime / 1000 / 3, dist / 4, rotation) / 50;
 
           const distributionSectionOpacity =
             getCloseness(animPerc, DISTRIBUTION_IMAGE_OFFSET, 0.07) * 1; // No scale factor, it's a percent
@@ -1109,8 +1141,16 @@ export const Globe = () => {
           }
         }
         ctx.restore();
+
+        // While paused, paint until the orbs reach the feature that the
+        // scroll picked, and until the video shows the frame it seeks to.
+        const {xPerc3: slowest} = imageState.current;
+        return (
+          Math.abs(imageOffsetPercent - slowest) > 0.001 ||
+          (gvLoaded && gvVideo.seeking)
+        );
       },
-      [currentFeatureSlug, gi, gv],
+      [currentFeatureSlug, gi, gv, isStatic],
     ),
   );
 

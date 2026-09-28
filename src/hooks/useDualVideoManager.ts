@@ -1,6 +1,7 @@
 import {clear, time} from 'console';
 import {on} from 'events';
 import * as React from 'react';
+import {isMotionPaused, useMotion} from './useMotion';
 
 export const useDualVideoManager = (
   drawable1: [HTMLVideoElement, boolean],
@@ -9,6 +10,9 @@ export const useDualVideoManager = (
   segmentEnd: number,
   firstSegmentStart: number,
 ): React.RefObject<[HTMLVideoElement, boolean]> => {
+  // While the "Pause animations" toggle is on, the active video stops on the
+  // frame it shows, and a change of segment only seeks to its start.
+  const {paused} = useMotion();
   const activeVideoIndex = React.useRef(0);
   const activeVideo = React.useRef<[HTMLVideoElement, boolean]>(drawable1);
   const state = React.useRef({
@@ -20,7 +24,17 @@ export const useDualVideoManager = (
 
   const timeUpdateTimer = React.useRef<NodeJS.Timeout | undefined>(undefined);
 
+  // The videos can load after the first render (the globe waits until the
+  // animations play). Point the active video at the loaded one.
+  React.useEffect(() => {
+    activeVideo.current =
+      activeVideoIndex.current === 0 ? drawable1 : drawable2;
+  }, [drawable1, drawable2]);
+
   const onTimeUpdate = React.useCallback(() => {
+    if (isMotionPaused()) {
+      return;
+    }
     const [activeDrawableVideo] =
       activeVideoIndex.current === 0 ? drawable1 : drawable2;
     const [secondaryDrawableVideo] =
@@ -76,8 +90,15 @@ export const useDualVideoManager = (
     }
     // Store the new state
     const oldEnd = state.current.currentEnd;
+    const oldStart = state.current.currentStart;
     state.current.currentStart = segmentStart;
     state.current.currentEnd = segmentEnd;
+    if (isMotionPaused()) {
+      if (activeVideo.current[0] && oldStart !== segmentStart) {
+        activeVideo.current[0].currentTime = segmentStart;
+      }
+      return;
+    }
     // If we rewound, trigger a video update immediately so we don't wait
     if (activeVideo.current[0]?.currentTime > segmentEnd) {
       console.log('Video rewind detected; resetting');
@@ -129,6 +150,11 @@ export const useDualVideoManager = (
         if (firstSegmentStart < currentStart) {
           drawable1[0].currentTime = currentStart;
           drawable2[0].currentTime = currentStart;
+        }
+        state.current.running = true;
+        if (isMotionPaused()) {
+          // The effect below plays it when the toggle turns off.
+          return;
         }
         const playPromise = drawable1[0].play();
         playPromise?.catch?.((err: DOMException) => {
@@ -191,6 +217,23 @@ export const useDualVideoManager = (
       video.removeEventListener('play', onResume);
     };
   }, [drawable1, drawable2, onTimeUpdate]);
+
+  React.useEffect(() => {
+    const [video] = activeVideo.current;
+    if (isMotionPaused()) {
+      clearTimeout(timeUpdateTimer.current!);
+      // Both, in case a swap has just started the other one.
+      drawable1[0]?.pause();
+      drawable2[0]?.pause();
+    } else if (video && state.current.running) {
+      // Its `play` event schedules the next swap.
+      video.play()?.catch?.((err: DOMException) => {
+        if (err.name !== 'AbortError') {
+          console.warn('[DualVideo] Playback error:', err);
+        }
+      });
+    }
+  }, [paused, drawable1, drawable2]);
 
   return activeVideo;
 };

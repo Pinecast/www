@@ -3,6 +3,7 @@ import {useIsBot} from './UserAgentContext';
 import {StyleObject} from 'styletron-react';
 import * as React from 'react';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
+import {isMotionPaused, useMotion} from '@/hooks/useMotion';
 
 export enum VideoMimeType {
   MP4 = 'video/mp4',
@@ -38,24 +39,43 @@ export const NoncriticalVideo = ({
   const css = useCSS();
 
   const videoRef = React.useRef<HTMLVideoElement>(null);
+  const visibleRef = React.useRef(false);
+  const {paused} = useMotion();
+
+  // The video loops while it is on screen, unless the "Pause animations"
+  // toggle is on. Then it stops on the frame it shows.
+  const update = React.useCallback(() => {
+    const video = videoRef.current;
+    if (!video) {
+      return;
+    }
+    // Not `paused`: in the first render in the browser, it is still the value
+    // of the static export.
+    if (visibleRef.current && !isMotionPaused()) {
+      const playPromise = video.play();
+      playPromise?.catch?.((err: DOMException) => {
+        if (err.name === 'NotAllowedError') {
+          console.warn('[Video] Autoplay blocked by browser:', err.message);
+        } else if (err.name !== 'AbortError') {
+          // Ignore `AbortError`, which happens when video is paused before fully loaded
+          console.warn('[Video] Playback error:', err);
+        }
+      });
+    } else {
+      video.pause();
+    }
+  }, []);
   useIntersectionVisibility(
     videoRef,
-    React.useCallback(intersecting => {
-      if (intersecting) {
-        const playPromise = videoRef.current?.play();
-        playPromise?.catch?.((err: DOMException) => {
-          if (err.name === 'NotAllowedError') {
-            console.warn('[Video] Autoplay blocked by browser:', err.message);
-          } else if (err.name !== 'AbortError') {
-            // Ignore `AbortError`, which happens when video is paused before fully loaded
-            console.warn('[Video] Playback error:', err);
-          }
-        });
-      } else {
-        videoRef.current?.pause();
-      }
-    }, []),
+    React.useCallback(
+      intersecting => {
+        visibleRef.current = intersecting;
+        update();
+      },
+      [update],
+    ),
   );
+  React.useEffect(update, [paused, update]);
 
   const isBot = useIsBot();
   if (isBot) {
@@ -74,7 +94,8 @@ export const NoncriticalVideo = ({
       <video
         ref={videoRef}
         muted
-        autoPlay
+        // No `autoPlay`: it would start before React knows whether the
+        // animations are paused. The effect above plays it.
         loop
         // For iOS, opt in to inline video playback so the video can autoplay without entering full-screen mode.
         playsInline

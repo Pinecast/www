@@ -55,3 +55,30 @@ same alt text.
 ```sh
 npm run build && npm run check:structure
 ```
+
+
+## Motion
+
+The "Pause animations" toggle in the header pauses every animation that starts
+by itself and runs for more than five seconds (WCAG 2.2.2). Each animation
+stops where it is: do not show a still image in its place. With
+`prefers-reduced-motion: reduce`, the animations start paused, and the user can
+still play them. `src/hooks/useMotion.ts` holds the state, and keeps the choice
+in `localStorage`.
+
+When you add an animation:
+
+- A looping CSS animation: spread `loopingAnimationProps` on the element. The
+  style block in `src/pages/_document.tsx` pauses it. Reduced motion stops all
+  other CSS animations and transitions at their end.
+- A canvas loop or a video that feeds a canvas: use `useCanvasDrawing` and
+  `useAsyncVideo`. They follow the toggle. Read `isMotionPaused()`, not the
+  `paused` value of `useMotion`, in code that starts or stops media: in the
+  first render in the browser, `paused` is still the value of the static
+  export.
+- A `<video>` on the page: use `NoncriticalVideo`. Do not give it `autoPlay`.
+- An effect that follows the scroll: with reduced motion, show it in one fixed
+  state (`reducedMotion` of `useMotion`), as the page heroes, the home hero and
+  the globe do.
+
+`tests/motion.spec.ts` checks each kind.

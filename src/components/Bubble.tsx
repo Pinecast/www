@@ -2,6 +2,7 @@ import * as React from 'react';
 import {KeyframesObject} from 'styletron-standard';
 import {useCSS} from '@/hooks/useCSS';
 import {CAN_HOVER_MEDIA_QUERY, PREFERS_REDUCED_MOTION_QUERY} from '@/constants';
+import {loopingAnimationProps} from '@/hooks/useMotion';
 
 const DRIFT_ANIMATION: KeyframesObject = {
   '0%, 100%': {translate: '0 -5%'},
@@ -26,6 +27,9 @@ export const Bubble = ({
   const css = useCSS();
   return (
     <div
+      // The drift loops: the "Pause animations" toggle pauses it, and it
+      // starts paused with reduced motion.
+      {...loopingAnimationProps}
       className={css({
         '--bubble-bg-color': color,
         '--bubble-border-color': 'rgba(0, 0, 0, 0.05)',
@@ -62,8 +66,6 @@ export const Bubble = ({
         WebkitTapHighlightColor: 'transparent',
         width: 'var(--bubble-size)',
         [PREFERS_REDUCED_MOTION_QUERY]: {
-          animationDuration: '0.01ms',
-          animationIterationCount: '3',
           transitionDuration: '0.01ms',
         },
         ':hover': {

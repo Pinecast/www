@@ -10,6 +10,7 @@ import {useCSS} from '@/hooks/useCSS';
 import {useAudioManager} from '@/hooks/useAudioManager';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 import {aboveOverlayProps} from '@/hooks/useInertOutside';
+import {useMotion} from '@/hooks/useMotion';
 
 const Lottie = dynamic(() => import('lottie-react'), {ssr: false});
 
@@ -45,6 +46,11 @@ export const MainLogo = ({
   const onCompleteAnimation = React.useCallback(() => {
     setAnimated(true);
   }, []);
+  // With reduced motion, or while the animations are paused, show the logo as
+  // it is at the end of the animation.
+  const {paused, reducedMotion} = useMotion();
+  const playAnimation = autoplayAnimation && !paused && !reducedMotion;
+  const showLogo = animated || (autoplayAnimation && !playAnimation);
   return (
     <Link
       href="/"
@@ -60,7 +66,7 @@ export const MainLogo = ({
       })}
       onClick={() => playSoundEffect(SoundEffect.LOGO_ROLLOVER_1)}
     >
-      {autoplayAnimation && (
+      {playAnimation && !animated && (
         <Lottie
           animationData={startDark ? logoLoadDark : logoLoad}
           className={css({
@@ -77,7 +83,7 @@ export const MainLogo = ({
         color="var(--color-primary-dark)"
         style={{
           ...baseStyles,
-          visibility: animated ? 'visible' : 'hidden',
+          visibility: showLogo ? 'visible' : 'hidden',
         }}
       />
     </Link>

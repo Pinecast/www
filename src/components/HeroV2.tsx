@@ -22,6 +22,7 @@ import {
   roundedRectPath,
 } from '@/canvasHelpers';
 import {useCanvasDrawing} from '@/hooks/useCanvasDrawing';
+import {isMotionPaused, useMotion} from '@/hooks/useMotion';
 
 const RADIUS_OFFSET = 60;
 const RADIUS_OFFSET_TABLET = 60;
@@ -64,6 +65,12 @@ export const HeroV2 = () => {
   );
 
   const canvas = React.useRef<HTMLCanvasElement>(null);
+
+  // With reduced motion, the hero does not follow the scroll: it shows how it
+  // looks at the top of the page, and it scrolls away with the page. (The
+  // videos and the canvas loop follow the "Pause animations" toggle by
+  // themselves.)
+  const {reducedMotion: isStatic} = useMotion();
 
   const tli = useAsyncImage('/images/hero/t-l.jpg');
   const tri = useAsyncImage('/images/hero/t-r.jpg');
@@ -156,7 +163,12 @@ export const HeroV2 = () => {
     React.useCallback(
       ctx => {
         const {width, height, windowHeight} = size.current;
-        const scrollY = window.scrollY;
+        const scrollY = isStatic ? 0 : window.scrollY;
+
+        // The circles grow when the page loads. When paused, show them grown.
+        if (isMotionPaused() || isStatic) {
+          radiusState.current = {...radiusTarget.current};
+        }
 
         if (scrollY > windowHeight) {
           ctx.clearRect(0, 0, canvas.current!.width, canvas.current!.height);
@@ -561,7 +573,7 @@ export const HeroV2 = () => {
         radiusState.current.outer +=
           (radiusTarget.current.outer - radiusState.current.outer) * 0.025;
       },
-      [bl, br, c, ml, mr, tl, tr],
+      [bl, br, c, isStatic, ml, mr, tl, tr],
     ),
   );
 
@@ -739,7 +751,7 @@ export const HeroV2 = () => {
       <canvas
         aria-hidden="true"
         className={css({
-          position: 'fixed',
+          position: isStatic ? 'absolute' : 'fixed',
           top: 0,
           zIndex: 3,
           pointerEvents: 'none',
