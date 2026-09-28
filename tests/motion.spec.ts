@@ -135,6 +135,36 @@ test.describe('the pause animations toggle', () => {
       await page.goto('/features');
       await expect(toggle(page)).toHaveAttribute('aria-pressed', 'false');
     });
+
+    test(`lines up with the header icons at ${viewport.width}px`, async ({
+      page,
+    }) => {
+      await page.setViewportSize(viewport);
+      await page.goto('/privacy');
+      // The vertical center of what each icon draws, and of the header.
+      const centers = await page.getByRole('banner').evaluate(header => {
+        const middle = (rects: Array<DOMRect>) =>
+          (Math.min(...rects.map(r => r.top)) +
+            Math.max(...rects.map(r => r.bottom))) /
+          2;
+        return {
+          header: middle([header.getBoundingClientRect()]),
+          icons: Array.from(header.querySelectorAll('svg'))
+            .filter(svg => svg.getClientRects().length)
+            .map(svg =>
+              middle(
+                Array.from(svg.querySelectorAll('path, rect'), shape =>
+                  shape.getBoundingClientRect(),
+                ),
+              ),
+            ),
+        };
+      });
+      expect(centers.icons.length).toBeGreaterThan(0);
+      for (const icon of centers.icons) {
+        expect(icon).toBeCloseTo(centers.header, 0);
+      }
+    });
   }
 
   test('freezes the videos, the canvases and the marquee where they are', async ({

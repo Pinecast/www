@@ -465,12 +465,11 @@ export const MainHeader = () => {
             </label>
           </Tooltip>
           <MotionToggle
-            iconSize={16}
             style={{
               borderRadius: '18px',
-              paddingTop: '27px',
+              paddingTop: '29px',
               paddingRight: '12px',
-              paddingBottom: '27px',
+              paddingBottom: '29px',
               paddingLeft: '4px',
             }}
           />
@@ -529,20 +528,21 @@ export const MainHeader = () => {
           })}
         >
           <MotionToggle
-            iconSize={20}
             style={{
               alignSelf: 'stretch',
               paddingTop: 0,
-              paddingRight: '4px',
+              paddingRight: '6px',
               paddingBottom: 0,
-              paddingLeft: '8px',
+              paddingLeft: '6px',
             }}
           />
           <Link
             href="https://pinecast.com/login"
             aria-label="Sign in"
             className={css({
-              display: 'block',
+              // Flex, not block: an inline icon sits on the text baseline,
+              // with room for descenders under it, 2px above the center.
+              display: 'flex',
               borderTopRightRadius: '20px',
               paddingTop: '15px',
               paddingRight: '20px',

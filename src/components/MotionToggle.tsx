@@ -5,16 +5,14 @@ import {useMotion} from '@/hooks/useMotion';
 import {Pause} from '@/icons/Pause';
 import {ScreenReaderText} from './ScreenReaderText';
 
+// The pause bars are 12px tall at this size, as tall as the sound waveform and
+// the menu icon beside them.
+const ICON_SIZE = 18;
+
 // The "Pause animations" toggle of the header. Its name stays the same, and
 // `aria-pressed` tells whether the animations are paused. On screen, the pause
-// icon sits in a filled square while it is pressed.
-export const MotionToggle = ({
-  iconSize,
-  style,
-}: {
-  iconSize: number;
-  style?: StyleObject;
-}) => {
+// icon gets the ghost outline of the secondary buttons while it is pressed.
+export const MotionToggle = ({style}: {style?: StyleObject}) => {
   const css = useCSS();
   const {paused, togglePaused} = useMotion();
   return (
@@ -25,6 +23,7 @@ export const MotionToggle = ({
         appearance: 'none',
         backgroundColor: 'transparent',
         borderWidth: '0',
+        color: 'var(--color-primary-dark)',
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
@@ -38,20 +37,17 @@ export const MotionToggle = ({
       <ScreenReaderText>Pause animations</ScreenReaderText>
       <span
         className={css({
-          backgroundColor: paused ? 'var(--color-primary-dark)' : 'transparent',
-          borderRadius: '6px',
+          // Transparent while not pressed, so that the icon does not move.
+          borderColor: paused ? 'currentcolor' : 'transparent',
+          borderRadius: '5px',
+          borderStyle: 'solid',
+          borderWidth: '1px',
           display: 'block',
           lineHeight: 0,
-          padding: '3px',
-          transition: 'background-color 0.2s ease-in-out',
+          transition: 'border-color 0.2s ease-in-out',
         })}
       >
-        <Pause
-          size={iconSize}
-          color={
-            paused ? 'var(--color-primary-light)' : 'var(--color-primary-dark)'
-          }
-        />
+        <Pause size={ICON_SIZE} />
       </span>
     </button>
   );
