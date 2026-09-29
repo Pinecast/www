@@ -37,9 +37,9 @@ import {dpi} from '@/canvasHelpers';
 import {useAudioManager} from '@/hooks/useAudioManager';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
-import {ScreenReaderText, VISUALLY_HIDDEN} from './ScreenReaderText';
+import {ScreenReaderText} from './ScreenReaderText';
 import {isMotionPaused, useMotion} from '@/hooks/useMotion';
-import {DARK_SURFACE} from '@/constants';
+import {DARK_SURFACE, TABLET_BREAKPOINT} from '@/constants';
 
 const callWhenIdle = (callback: IdleRequestCallback) => {
   if (typeof window.requestIdleCallback === 'undefined') {
@@ -146,6 +146,12 @@ const MENU_LINKS: Array<Feature> = [
 // this size at any angle.
 const MIN_LINK_TARGET_SIZE = 24;
 const LINK_HIT_AREA_THICKNESS = MIN_LINK_TARGET_SIZE * Math.SQRT2 + 2;
+// How far inward of the baseline the band of a hit area is centered, in em.
+const HIT_AREA_INSET = 0.35;
+// The thickness of a hit area in the units of the menu, where one unit is
+// `scale` CSS pixels.
+const getHitAreaThickness = (scale: number, fontSize: number) =>
+  Math.max(LINK_HIT_AREA_THICKNESS / scale, fontSize * 1.2);
 const LINK_HOVER_TEXT_SHADOW =
   '0 0 10px rgba(255, 255, 255, 0.85), 0 0 7px #c4ff7e, 0 0 4px #090909';
 
@@ -306,11 +312,15 @@ const IntroSection = React.memo(function IntroSection() {
 });
 
 // Scrolling picks the feature that shows. All three descriptions stay in the
-// page for screen readers, and the others are visually hidden.
+// page for screen readers, and the others are invisible. They take the same
+// place, so that the list is as tall as the longest one, whichever shows: on a
+// narrow screen the globe makes room for it (see layOut in Globe).
 const FeatureText = React.memo(function FeatureText({
   currentFeatureSlug,
+  listRef,
 }: {
   currentFeatureSlug: Feature | null;
+  listRef: React.Ref<HTMLUListElement>;
 }) {
   const css = useCSS();
   return (
@@ -357,14 +367,28 @@ const FeatureText = React.memo(function FeatureText({
             },
           })}
         >
-          <ul className={css({listStyle: 'none', margin: 0, padding: 0})}>
+          <ul
+            ref={listRef}
+            className={css({
+              display: 'grid',
+              listStyle: 'none',
+              margin: 0,
+              padding: 0,
+            })}
+          >
             {(Object.keys(FEATURES) as Array<Feature>).map(slug => {
               const feature = FEATURES[slug];
               const isCurrent = slug === currentFeatureSlug;
               return (
                 <li
                   aria-current={isCurrent ? 'true' : undefined}
-                  className={isCurrent ? undefined : css(VISUALLY_HIDDEN)}
+                  className={css({
+                    gridArea: '1 / 1',
+                    // Where the container puts the list.
+                    alignSelf: 'end',
+                    [WIDE_DESCRIPTION_PLACEMENT_QUERY]: {alignSelf: 'center'},
+                    ...(isCurrent ? {} : {opacity: 0, pointerEvents: 'none'}),
+                  })}
                   key={slug}
                 >
                   <Body1
@@ -379,20 +403,20 @@ const FeatureText = React.memo(function FeatureText({
                     <ScreenReaderText>{feature.title}: </ScreenReaderText>
                     {feature.description}
                   </Body1>
-                  {/* Only the feature on screen has a link, so that focus
-                      never lands on a hidden one. */}
-                  {isCurrent && (
-                    <ProseLink
-                      href={feature.href}
-                      style={{
-                        marginBottom: '-8px',
-                        paddingBottom: '8px',
-                        paddingTop: '8px',
-                      }}
-                    >
-                      Learn more
-                    </ProseLink>
-                  )}
+                  {/* Only the link of the feature on screen shows, so that
+                      focus never lands on a hidden one. The others keep its
+                      place. */}
+                  <ProseLink
+                    href={feature.href}
+                    style={{
+                      marginBottom: '-8px',
+                      paddingBottom: '8px',
+                      paddingTop: '8px',
+                      visibility: isCurrent ? undefined : 'hidden',
+                    }}
+                  >
+                    Learn more
+                  </ProseLink>
                 </li>
               );
             })}
@@ -406,17 +430,14 @@ const FeatureText = React.memo(function FeatureText({
 const FeatureMenu = React.forwardRef(function FeatureMenu(
   {
     currentFeatureSlug,
-    height,
-    width,
+    geometry: {radius, fontSize},
   }: {
     currentFeatureSlug: Feature | null;
-    height: number;
-    width: number;
+    geometry: MenuGeometry;
   },
   ref: React.Ref<SVGSVGElement>,
 ) {
   const css = useCSS();
-  const radius = Math.min(getGlobeWidth(width, height) / 2 + 80, width);
 
   const svgRef = React.useRef<SVGSVGElement>(null);
   React.useImperativeHandle(ref, () => svgRef.current!, []);
@@ -442,8 +463,8 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
     const fontSize = parseFloat(getComputedStyle(text).fontSize);
     // The glyphs sit inside the curve, so center the band a little inward
     // of the baseline.
-    const bandRadius = r - fontSize * 0.35;
-    const thickness = Math.max(LINK_HIT_AREA_THICKNESS / scale, fontSize * 1.2);
+    const bandRadius = r - fontSize * HIT_AREA_INSET;
+    const thickness = getHitAreaThickness(scale, fontSize);
     const onBand = ({x, y}: DOMPoint) => {
       const angle = Math.atan2(y - centerY, x - centerX);
       return `${centerX + bandRadius * Math.cos(angle)} ${
@@ -478,7 +499,7 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
     }
   }, []);
 
-  // The font size follows the radius, so lay out again after each render,
+  // The font size follows the geometry, so lay out again after each render,
   // after a resize (which changes the scale) and when the font loads.
   React.useEffect(layOutHitAreas);
   React.useEffect(() => {
@@ -520,7 +541,7 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
       height="100"
       preserveAspectRatio="none"
     >
-      <g transform="translate(0 20)">
+      <g transform={`translate(0 ${MENU_BASELINE - 50})`}>
         <path
           d={`M ${-radius + 200} ${-(
             radius - 50
@@ -556,7 +577,7 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
           fill="var(--color-white)"
           className={css({
             ...MonumentGroteskBold,
-            fontSize: `${Math.max(14, Math.min(24, radius * 0.075))}px`,
+            fontSize: `${fontSize}px`,
             fontWeight: 400,
           })}
         >
@@ -722,6 +743,62 @@ function getGlobeWidth(width: number, height: number) {
   );
 }
 
+// The link menu is 400 by 100 units (its viewBox), and it is `width` CSS
+// pixels wide. Its text follows a circle of `radius` units, at `fontSize`
+// units. The circle is at the bottom of the text, MENU_BASELINE units from the
+// top.
+type MenuGeometry = {width: number; radius: number; fontSize: number};
+const MENU_BASELINE = 70;
+// The space between the menu and the text of the feature, in CSS pixels.
+const MENU_MARGIN = 10;
+
+// The menu that fits the globe at this size of the viewport.
+function getGlobeMenuGeometry(width: number, height: number): MenuGeometry {
+  const globeWidth = getGlobeWidth(width, height);
+  const isMobile = width < height;
+  const radius = Math.min(globeWidth / 2 + 80, width);
+  return {
+    width: Math.min((globeWidth / 850) * 400 * (isMobile ? 3 : 1.5), width),
+    radius,
+    fontSize: Math.max(14, Math.min(24, radius * 0.075)),
+  };
+}
+
+// The size of the link text in CSS pixels.
+const getMenuTextSize = ({width, fontSize}: MenuGeometry) =>
+  (fontSize * width) / 400;
+
+// The globe gets its size from the viewport, and zoom makes the viewport
+// smaller in CSS pixels. So that the link text grows with zoom (WCAG 1.4.4),
+// the menu is never smaller than at 1280 by 800 (landscape) or 375 by 667
+// (portrait). Only a page narrower than that menu makes it smaller.
+const MIN_MENU_GEOMETRY = {
+  landscape: getGlobeMenuGeometry(1280, 800),
+  portrait: getGlobeMenuGeometry(375, 667),
+};
+
+function getMenuGeometry(width: number, height: number): MenuGeometry {
+  const geometry = getGlobeMenuGeometry(width, height);
+  const min =
+    width < height ? MIN_MENU_GEOMETRY.portrait : MIN_MENU_GEOMETRY.landscape;
+  if (getMenuTextSize(geometry) >= getMenuTextSize(min)) {
+    return geometry;
+  }
+  return {...min, width: Math.min(min.width, width)};
+}
+
+// The distance from the top of the menu to the bottom of its text and of the
+// hit areas of its links, in CSS pixels.
+function getMenuContentHeight({width, fontSize}: MenuGeometry) {
+  const scale = width / 400;
+  const textBottom = MENU_BASELINE + fontSize * 0.25;
+  const hitAreaBottom =
+    MENU_BASELINE -
+    fontSize * HIT_AREA_INSET +
+    getHitAreaThickness(scale, fontSize) / 2;
+  return Math.max(textBottom, hitAreaBottom) * scale;
+}
+
 function getCloseness(value: number, target: number, threshold: number) {
   return Math.max(0, threshold - Math.abs(value - target)) / threshold;
 }
@@ -759,41 +836,103 @@ export const Globe = () => {
   //   height: 0,
   // });
   const size = React.useRef({width: 0, height: 0});
-  useCalculateResizableValue(
-    React.useCallback(() => {
-      const verticalScrollbarWidth =
-        window.innerWidth - document.body.offsetWidth;
-
-      // Use the dimensions of the viewport without scrollbars.
-      const width = window.innerWidth - verticalScrollbarWidth;
-      const height = window.innerHeight;
-      size.current = {
-        width: width * dpi,
-        height: height * dpi,
-      };
-      const m = menu.current!;
-      const globeCenterPosition = getGlobeCenterPosition(width, height, false);
-      const globeWidth = getGlobeWidth(width, height);
-      const isMobile = width < height;
-      const menuWidth = Math.min(
-        (globeWidth / 850) * 400 * (isMobile ? 3 : 1.5),
-        width,
-      );
-      m.style.left = `${(width - menuWidth) / 2}px`;
-      m.style.top = `${globeCenterPosition + globeWidth / 2}px`;
-      m.style.width = `${menuWidth}px`;
-      m.style.height = `${menuWidth / 4}px`;
-
-      if (canvas.current) {
-        canvas.current.style.width = `${width}px`;
-        canvas.current.style.height = `${height}px`;
-        canvas.current.width = width * dpi;
-        canvas.current.height = height * dpi;
-      }
-
-      setIsMobile(isMobile);
-    }, []),
+  const [menuGeometry, setMenuGeometry] = React.useState(
+    MIN_MENU_GEOMETRY.landscape,
   );
+  const stage = React.useRef<HTMLDivElement>(null);
+  const featureText = React.useRef<HTMLUListElement>(null);
+  // The center and the width of the globe in CSS pixels, when it is smaller
+  // to make room for the menu. Null when it has its usual size. A change
+  // renders again, and so paints the canvas again also while paused.
+  const [globeBox, setGlobeBox] = React.useState<{
+    center: number;
+    width: number;
+  } | null>(null);
+  const layOut = React.useCallback(() => {
+    const verticalScrollbarWidth =
+      window.innerWidth - document.body.offsetWidth;
+
+    // Use the dimensions of the viewport without scrollbars.
+    const width = window.innerWidth - verticalScrollbarWidth;
+    const height = window.innerHeight;
+    size.current = {
+      width: width * dpi,
+      height: height * dpi,
+    };
+    const m = menu.current!;
+    const isMobile = width < height;
+    const geometry = getMenuGeometry(width, height);
+    const menuLeft = (width - geometry.width) / 2;
+    const menuContentHeight = getMenuContentHeight(geometry);
+    let globeCenterPosition = getGlobeCenterPosition(width, height, false);
+    let globeWidth = getGlobeWidth(width, height);
+    let menuTop = globeCenterPosition + globeWidth / 2;
+
+    // The menu is under the globe. Its text must end above the bottom of the
+    // screen, and above the text of the feature where that is under the menu
+    // (on a narrow screen).
+    let bottom = height - MENU_MARGIN;
+    const list = featureText.current?.getBoundingClientRect();
+    const stageTop = stage.current?.getBoundingClientRect().top ?? 0;
+    if (
+      list &&
+      list.left < menuLeft + geometry.width &&
+      list.right > menuLeft
+    ) {
+      bottom = Math.min(bottom, list.top - stageTop - MENU_MARGIN);
+    }
+    let box: {center: number; width: number} | null = null;
+    if (menuTop + menuContentHeight > bottom) {
+      // Move the menu up, and make the globe smaller where it must be to
+      // stay between the header and the menu.
+      const headerSize = width > TABLET_BREAKPOINT ? 120 : 80;
+      menuTop = Math.max(headerSize, bottom - menuContentHeight);
+      globeWidth = Math.max(0, Math.min(globeWidth, menuTop - headerSize));
+      globeCenterPosition = menuTop - globeWidth / 2;
+      box = {center: globeCenterPosition, width: globeWidth};
+    }
+
+    m.style.left = `${menuLeft}px`;
+    m.style.top = `${menuTop}px`;
+    m.style.width = `${geometry.width}px`;
+    m.style.height = `${geometry.width / 4}px`;
+
+    // Setting the size clears the canvas, so set it only when it changes:
+    // this also runs when the text of the feature changes its size.
+    const c = canvas.current;
+    if (c && (c.width !== width * dpi || c.height !== height * dpi)) {
+      c.style.width = `${width}px`;
+      c.style.height = `${height}px`;
+      c.width = width * dpi;
+      c.height = height * dpi;
+    }
+
+    setGlobeBox(current =>
+      current?.center === box?.center && current?.width === box?.width
+        ? current
+        : box,
+    );
+    setMenuGeometry(current =>
+      current.width === geometry.width &&
+      current.radius === geometry.radius &&
+      current.fontSize === geometry.fontSize
+        ? current
+        : geometry,
+    );
+    setIsMobile(isMobile);
+  }, []);
+  useCalculateResizableValue(layOut);
+  // Lay out again when the text of the feature changes its size: when the
+  // font loads, or with other text settings.
+  React.useEffect(() => {
+    const list = featureText.current;
+    if (!list) {
+      return;
+    }
+    const observer = new ResizeObserver(layOut);
+    observer.observe(list);
+    return () => observer.disconnect();
+  }, [layOut]);
 
   const canvas = React.useRef<HTMLCanvasElement>(null);
   const gi = useAsyncImage('/images/globe-full.jpg');
@@ -904,8 +1043,12 @@ export const Globe = () => {
 
         const isMobile = width < height;
 
-        const globeCenterPosition = getGlobeCenterPosition(width, height);
-        const globeWidth = getGlobeWidth(width, height);
+        const globeCenterPosition = globeBox
+          ? globeBox.center * dpi
+          : getGlobeCenterPosition(width, height);
+        const globeWidth = globeBox
+          ? globeBox.width * dpi
+          : getGlobeWidth(width, height);
         const globeRadius = globeWidth / 2;
 
         // Draw 5px long horizontal white lines at 50% opacity along the left and right edges of the canvas, giving
@@ -1169,7 +1312,7 @@ export const Globe = () => {
           (gvLoaded && gvVideo.seeking)
         );
       },
-      [currentFeatureSlug, gi, gv, isStatic],
+      [currentFeatureSlug, gi, gv, globeBox, isStatic],
     ),
   );
 
@@ -1185,6 +1328,7 @@ export const Globe = () => {
     >
       <IntroSection />
       <div
+        ref={stage}
         className={css({
           position: 'sticky',
           height: '100vh',
@@ -1208,12 +1352,14 @@ export const Globe = () => {
           width={size.current.width}
         />
         {/* <SideTicks /> */}
-        <FeatureText currentFeatureSlug={currentFeatureSlug} />
+        <FeatureText
+          currentFeatureSlug={currentFeatureSlug}
+          listRef={featureText}
+        />
         <FeatureMenu
           currentFeatureSlug={currentFeatureSlug}
           ref={menu}
-          height={size.current.height / dpi}
-          width={size.current.width / dpi}
+          geometry={menuGeometry}
         />
       </div>
 
