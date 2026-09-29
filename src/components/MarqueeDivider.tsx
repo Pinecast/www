@@ -12,6 +12,8 @@ const MARQUEE_BORDER_WIDTH = 50;
 const VERT_HANDLE_OFFSET = 50;
 
 const FONT_SIZE = 16;
+// How fast the text moves along the path, in pixels per second.
+const TEXT_SPEED = 12;
 
 function getPath(width: number) {
   width = Math.max(width, MARQUEE_WIDTH);
@@ -103,6 +105,9 @@ export const MarqueeDivider = ({
       const animate = animateRef.current!;
       animate.setAttribute('to', `${textLen}`);
       // animate.setAttribute('to', `0`);
+      // The number of slogans that fit changes with the width of the page, so
+      // time the loop by its length to keep the same pace.
+      animate.setAttribute('dur', `${textLen / TEXT_SPEED}s`);
 
       marqueeRef.current!.style.opacity = '1';
     };
