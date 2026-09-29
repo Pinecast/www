@@ -78,6 +78,10 @@ export const MarqueeDivider = ({
         const twinBullet = elements[
           i + 1 + nonTwinCount
         ] as SVGTextContentElement;
+        // A slogan that an earlier pass hid measures as empty, so show it
+        // before measuring it.
+        element.style.display = 'initial';
+        elementBullet.style.display = 'initial';
         const nodeLen =
           element.getComputedTextLength() +
           elementBullet.getComputedTextLength();
