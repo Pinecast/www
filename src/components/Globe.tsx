@@ -39,7 +39,12 @@ import {SoundEffect} from '@/hooks/useSoundEffects';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
 import {ScreenReaderText} from './ScreenReaderText';
 import {isMotionPaused, useMotion} from '@/hooks/useMotion';
-import {DARK_SURFACE, SCROLL_PADDING_TOP, TABLET_BREAKPOINT} from '@/constants';
+import {
+  DARK_SURFACE,
+  SCROLL_PADDING_TOP,
+  TABLET_BREAKPOINT,
+  underMuteButtonProps,
+} from '@/constants';
 
 const callWhenIdle = (callback: IdleRequestCallback) => {
   if (typeof window.requestIdleCallback === 'undefined') {
@@ -311,10 +316,12 @@ const IntroSection = React.memo(function IntroSection() {
   );
 });
 
-// Scrolling picks the feature that shows. All three descriptions stay in the
-// page for screen readers, and the others are invisible. They take the same
-// place, so that the list is as tall as the longest one, whichever shows: on a
-// narrow screen the globe makes room for it (see layOut in Globe).
+// Scrolling picks the feature that shows. All three descriptions and their
+// links stay in the page for screen readers and the keyboard, and the others
+// are invisible. They take the same place, so that the list is as tall as the
+// longest one, whichever shows: on a narrow screen the globe makes room for it
+// (see layOut in Globe). The feature whose link has focus shows instead of the
+// one that the scroll picked, also before the scroll gets to the first one.
 const FeatureText = React.memo(function FeatureText({
   currentFeatureSlug,
   listRef,
@@ -338,6 +345,7 @@ const FeatureText = React.memo(function FeatureText({
         position: 'absolute',
         width: '100%',
         zIndex: 4,
+        ':focus-within': {opacity: '1', pointerEvents: 'auto'},
 
         [WIDE_DESCRIPTION_PLACEMENT_QUERY]: {
           gap: '20px',
@@ -374,6 +382,11 @@ const FeatureText = React.memo(function FeatureText({
               listStyle: 'none',
               margin: 0,
               padding: 0,
+              // Only the feature with focus shows.
+              ':focus-within > li:not(:focus-within)': {
+                opacity: 0,
+                pointerEvents: 'none',
+              },
             })}
           >
             {(Object.keys(FEATURES) as Array<Feature>).map(slug => {
@@ -388,6 +401,7 @@ const FeatureText = React.memo(function FeatureText({
                     alignSelf: 'end',
                     [WIDE_DESCRIPTION_PLACEMENT_QUERY]: {alignSelf: 'center'},
                     ...(isCurrent ? {} : {opacity: 0, pointerEvents: 'none'}),
+                    ':focus-within': {opacity: 1, pointerEvents: 'auto'},
                   })}
                   key={slug}
                 >
@@ -403,16 +417,18 @@ const FeatureText = React.memo(function FeatureText({
                     <ScreenReaderText>{feature.title}: </ScreenReaderText>
                     {feature.description}
                   </Body1>
-                  {/* Only the link of the feature on screen shows, so that
-                      focus never lands on a hidden one. The others keep its
-                      place. */}
+                  {/* Each link can take focus at every scroll position. Its
+                      feature shows while it has focus. On a narrow screen
+                      the link is at the bottom of the sticky stage, where
+                      the mute button is, and a scroll cannot move it clear
+                      of the button. */}
                   <ProseLink
+                    {...underMuteButtonProps}
                     href={feature.href}
                     style={{
                       marginBottom: '-8px',
                       paddingBottom: '8px',
                       paddingTop: '8px',
-                      visibility: isCurrent ? undefined : 'hidden',
                     }}
                   >
                     Learn more

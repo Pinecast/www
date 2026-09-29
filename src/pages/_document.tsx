@@ -10,9 +10,14 @@ import {Provider as StyletronProvider} from 'styletron-react';
 
 import {styletron} from '../styletron';
 import {
+  MUTE_BUTTON_ATTRIBUTE,
+  MUTE_BUTTON_SCROLL_PADDING_BOTTOM,
   NOT_MIN_TABLET_MEDIA_QUERY,
+  SCROLL_PADDING_BOTTOM,
   SCROLL_PADDING_TOP,
   TABLET_BREAKPOINT,
+  UNDER_MUTE_BUTTON_SCROLL_PADDING_BOTTOM,
+  UNDER_MUTE_BUTTON_SELECTOR,
 } from '../constants';
 import StyletronServer from 'styletron-engine-atomic/lib/server/server';
 import {Provider as UserAgentContextProvider} from '../components/UserAgentContext';
@@ -139,7 +144,7 @@ export default function Document({
                bottom. The browser scrolls the element into view, but not
                its ring, which is outside it: leave room for that too. */
             scroll-padding-top: ${SCROLL_PADDING_TOP}px;
-            scroll-padding-bottom: 16px;
+            scroll-padding-bottom: ${SCROLL_PADDING_BOTTOM}px;
           }
           /* Wherever the mute button shows: MainHeader hides it with
              MIN_TABLET_MEDIA_QUERY. (max-width: ${TABLET_BREAKPOINT}px) did not
@@ -147,8 +152,19 @@ export default function Document({
              ${TABLET_BREAKPOINT + 1}px. */
           ${NOT_MIN_TABLET_MEDIA_QUERY} {
             html {
-              scroll-padding-bottom: 130px;
+              scroll-padding-bottom: ${MUTE_BUTTON_SCROLL_PADDING_BOTTOM}px;
             }
+          }
+          /* A sticky part of the page cannot scroll clear of the mute
+             button. While an element there has keyboard focus, the button
+             hides, and the page needs no room for it. */
+          body:has(${UNDER_MUTE_BUTTON_SELECTOR}:focus-visible)
+            [${MUTE_BUTTON_ATTRIBUTE}] {
+            opacity: 0;
+            visibility: hidden;
+          }
+          html:has(${UNDER_MUTE_BUTTON_SELECTOR}:focus-visible) {
+            scroll-padding-bottom: ${UNDER_MUTE_BUTTON_SCROLL_PADDING_BOTTOM}px;
           }
           html, body, #__next {
             margin: 0;

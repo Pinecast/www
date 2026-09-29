@@ -8,6 +8,7 @@ import {
   ADAPTIVE_SURFACE,
   MIN_TABLET_MEDIA_QUERY,
   MOBILE_MEDIA_QUERY,
+  MUTE_BUTTON_ATTRIBUTE,
   TABLET_MEDIA_QUERY,
 } from '@/constants';
 import Link from 'next/link';
@@ -756,6 +757,7 @@ export const MainHeader = () => {
         </nav>
       </div>
       <div
+        {...{[MUTE_BUTTON_ATTRIBUTE]: true}}
         className={css({
           '--button-size': '120px',
           '--button-spacing': '24px',

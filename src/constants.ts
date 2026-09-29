@@ -31,6 +31,24 @@ export const CONTENT_SIDE_PADDING_TABLET = 150;
 // The space that the page keeps free under the fixed header when it scrolls
 // to an element (`scroll-padding-top` in _document.tsx).
 export const SCROLL_PADDING_TOP = 110;
+// The space that the page keeps free at the bottom when it scrolls to an
+// element: room for the focus ring, and up to 1180px room for the floating
+// mute button (`scroll-padding-bottom` in _document.tsx).
+export const SCROLL_PADDING_BOTTOM = 16;
+export const MUTE_BUTTON_SCROLL_PADDING_BOTTOM = 130;
+
+// The floating mute button (MainHeader) has this attribute. An element in a
+// sticky part of the page, at the bottom of the screen, cannot scroll clear of
+// the button. Give it `underMuteButtonProps`: while it has keyboard focus, the
+// button hides (_document.tsx), as it does while the menu is open, and the
+// page keeps only this room at the bottom, for the focus ring (2px, 2px from
+// the element). With more room than there is under the element, the browser
+// scrolls the page at each Tab, and the sticky element stays where it is.
+export const UNDER_MUTE_BUTTON_SCROLL_PADDING_BOTTOM = 8;
+export const MUTE_BUTTON_ATTRIBUTE = 'data-mute-button';
+const UNDER_MUTE_BUTTON_ATTRIBUTE = 'data-under-mute-button';
+export const UNDER_MUTE_BUTTON_SELECTOR = `[${UNDER_MUTE_BUTTON_ATTRIBUTE}]`;
+export const underMuteButtonProps = {[UNDER_MUTE_BUTTON_ATTRIBUTE]: true};
 
 export const CAN_HOVER_MEDIA_QUERY = `@media (any-hover: hover)`;
 
