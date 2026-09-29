@@ -20,6 +20,10 @@ const PAGES = [
   '/learn',
   '/features/analytics',
   '/learn/create-a-podcast',
+  // The persona pages have product boxes, and scrolling cards in them.
+  '/learn/podcasting-for-beginners',
+  '/learn/podcasting-for-power-users',
+  '/learn/corporate-podcasting',
   '/privacy',
   '/testimonial-transcripts',
 ];
@@ -465,6 +469,47 @@ for (const viewport of [WIDE, NARROW]) {
       });
     }
 
+    // A closed panel is inert, so the walk of the page does not get to the
+    // links in the panels.
+    test('/features: the link in each open panel has a clear indicator', async ({
+      page,
+      context,
+    }) => {
+      test.setTimeout(120_000);
+      const decoder = await context.newPage();
+      await load(page, '/features');
+      const buttons = page.locator('main button[aria-controls]');
+      const withLink = await buttons.evaluateAll(elements =>
+        elements.map(
+          el =>
+            !!document
+              .getElementById(el.getAttribute('aria-controls')!)
+              ?.querySelector('a[href]'),
+        ),
+      );
+      const results: Array<Result> = [];
+      for (const [i, hasLink] of withLink.entries()) {
+        if (!hasLink) {
+          continue;
+        }
+        // Open the panel with the keyboard, and Tab to its link.
+        await page.keyboard.press('Shift');
+        await buttons.nth(i).focus();
+        await page.keyboard.press('Enter');
+        await expect(buttons.nth(i)).toHaveAttribute('aria-expanded', 'true');
+        await page.keyboard.press('Tab');
+        await expect(page.locator(':focus')).toHaveText('Learn more');
+        const result = await measureFocus(
+          page,
+          decoder,
+          (await markFocus(page))!,
+        );
+        results.push(result!);
+      }
+      expect(results.length).toBeGreaterThan(5);
+      expect(problems(results)).toEqual([]);
+    });
+
     test('the open menu: each Tab stop has a clear indicator', async ({
       page,
       context,
@@ -595,6 +640,28 @@ test.describe('the mute tooltip', () => {
     await expect(mute).toBeFocused();
     await expect(tooltip(page)).toHaveCount(0);
     await expect(mute).not.toHaveAttribute('aria-describedby');
+  });
+});
+
+test.describe('the scrolling product cards', () => {
+  // At this width, the second card is partly in view. Keyboard focus does not
+  // scroll such an element into view by itself.
+  test.use({viewport: {width: 600, height: 900}});
+
+  test('a card that gets keyboard focus scrolls clear of the fade, with its ring', async ({
+    page,
+    context,
+  }) => {
+    const decoder = await context.newPage();
+    await load(page, '/learn/podcasting-for-beginners');
+    await page.keyboard.press('Shift');
+    await page.getByRole('link', {name: /^Scissor Mic Boom/}).focus();
+    await page.keyboard.press('Tab');
+    await expect(
+      page.getByRole('link', {name: /^Knox Shock Mount/}),
+    ).toBeFocused();
+    const result = await measureFocus(page, decoder, (await markFocus(page))!);
+    expect(problems([result!])).toEqual([]);
   });
 });
 

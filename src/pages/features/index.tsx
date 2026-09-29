@@ -545,16 +545,19 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
           {feature.description}
         </p>
         {feature.url && (
-          <div
-            className={css({
+          // The link is the dark pill, so that its focus ring goes around
+          // the pill, on the light panel. A ring on the pill had its color.
+          <Link
+            href={feature.url}
+            style={{
               backgroundColor: 'var(--color-space)',
               borderRadius: '32px',
               display: 'inline-block',
               padding: '4px 12px',
-            })}
+            }}
           >
-            <Link href={feature.url}>Learn more</Link>
-          </div>
+            Learn more
+          </Link>
         )}
       </Expandable>
     </li>

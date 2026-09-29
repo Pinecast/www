@@ -9,6 +9,7 @@ import {
   CONTENT_MAX_WIDTH,
   CONTENT_SIDE_PADDING,
   CONTENT_SIDE_PADDING_TABLET,
+  DARK_SURFACE,
   MIN_TABLET_MEDIA_QUERY,
   MOBILE_BREAKPOINT,
   MOBILE_MEDIA_QUERY,
@@ -416,6 +417,30 @@ type Product = {
   url: string;
 };
 
+// The fade at the right of the accessory cards. It shows that they scroll.
+const ACCESSORY_FADE_WIDTH = 40;
+// The focus ring is this far outside a card: 2px of offset and 2px of width.
+const RING_ROOM = 4;
+
+// Keyboard focus does not scroll a card that is partly in view. Bring the
+// focused card into view, clear of the fade, so that its focus ring is not cut
+// off or covered. A click or a tap, which also gives focus, changes nothing.
+const scrollFocusedAccessoryIntoView = (evt: React.FocusEvent<HTMLElement>) => {
+  const card = evt.target;
+  if (!card.matches(':focus-visible')) {
+    return;
+  }
+  const cardBox = card.getBoundingClientRect();
+  const scrollerBox = evt.currentTarget.getBoundingClientRect();
+  if (
+    cardBox.left - RING_ROOM < scrollerBox.left ||
+    cardBox.right + RING_ROOM > scrollerBox.right - ACCESSORY_FADE_WIDTH
+  ) {
+    // `nearest` keeps the card out of the scroll padding.
+    card.scrollIntoView({block: 'nearest', inline: 'nearest'});
+  }
+};
+
 export const ProductFeature = ({
   name,
   imageUrl,
@@ -430,6 +455,7 @@ export const ProductFeature = ({
   return (
     <div
       className={css({
+        ...DARK_SURFACE,
         background: 'var(--color-space)',
         color: 'var(--color-sand)',
         width: '100%',
@@ -518,19 +544,27 @@ export const ProductFeature = ({
               right: 0,
               top: 0,
               bottom: 0,
-              width: '40px',
+              width: `${ACCESSORY_FADE_WIDTH}px`,
               background:
                 'linear-gradient(to left, var(--color-space), transparent)',
             },
           })}
         >
           <div
+            onFocus={scrollFocusedAccessoryIntoView}
             className={css({
               display: 'flex',
               flexDirection: 'row',
               gap: '10px',
               overflowX: 'scroll',
-              paddingRight: '40px',
+              // The scroll container clips what is outside its padding.
+              // Give the focus ring of a card room on each side, and take
+              // the room back with the margin, so that the cards stay where
+              // they are. On the right, the last card and its ring can
+              // scroll out from under the fade.
+              margin: `-${RING_ROOM}px 0 -${RING_ROOM}px -${RING_ROOM}px`,
+              padding: `${RING_ROOM}px ${ACCESSORY_FADE_WIDTH + RING_ROOM}px ${RING_ROOM}px ${RING_ROOM}px`,
+              scrollPadding: `0 ${ACCESSORY_FADE_WIDTH + RING_ROOM}px 0 ${RING_ROOM}px`,
             })}
           >
             {accessories.map(accessory => (
@@ -542,6 +576,10 @@ export const ProductFeature = ({
     </div>
   );
 };
+
+// At most the width between the scroll padding (100% of the content box), so
+// that a card and its focus ring always fit clear of the fade.
+const ACCESSORY_WIDTH = 'min(300px, 100%)';
 
 const ProductFeatureAccessory = ({
   name,
@@ -568,8 +606,8 @@ const ProductFeatureAccessory = ({
         gridTemplateColumns: '20% 1fr',
         gridTemplateRows: 'min-content',
 
-        flex: '0 0 300px',
-        width: '300px',
+        flex: `0 0 ${ACCESSORY_WIDTH}`,
+        width: ACCESSORY_WIDTH,
 
         textDecoration: 'none',
         ':hover .ProductFeatureAccessory-Title': {
