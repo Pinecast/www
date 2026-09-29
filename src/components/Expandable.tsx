@@ -36,8 +36,12 @@ export const Expandable = ({
       // the animation.
       inert={!open}
     >
-      {/* No minimum height, so that the row can close to 0. */}
-      <div className={css({minHeight: 0, ...innerStyle})}>{children}</div>
+      {/* The grid item. It has no minimum height, so that the row can close
+          to 0. A 0fr row cannot close up the padding or the border of its
+          item, so `innerStyle` goes on the element inside it. */}
+      <div className={css({minHeight: 0})}>
+        <div className={css({...innerStyle})}>{children}</div>
+      </div>
     </div>
   );
 };
