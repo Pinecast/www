@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {StyleObject} from 'styletron-react';
-import {MonumentGroteskBold} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
@@ -35,7 +34,7 @@ import {
   PersonaSlug,
 } from './CustomerPersona';
 import {Tooltip, TooltipPosition} from './Tooltip';
-import {ScreenReaderText, VISUALLY_HIDDEN} from './ScreenReaderText';
+import {FOCUS_ONLY_BUBBLE, ScreenReaderText} from './ScreenReaderText';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 import {Bubble, BUBBLE_FOCUS_RING} from './Bubble';
 import {useScrollListener} from '@/hooks/useScrollProgress';
@@ -206,26 +205,13 @@ const getTabbableElements = (root: HTMLElement) =>
 // element of the dialog, next to the trigger, and it shows only while it has
 // focus, like the skip link.
 const CLOSE_BUTTON_STYLE: StyleObject = {
-  ...MonumentGroteskBold,
-  backgroundColor: 'var(--color-white)',
-  borderColor: 'var(--color-space)',
+  ...FOCUS_ONLY_BUBBLE,
   // The tight corner points at the trigger, at the top left.
   borderRadius: '3px 22px 22px 22px',
-  borderStyle: 'solid',
-  borderWidth: '2px',
-  boxShadow: '3px 4px 0 rgba(9, 9, 9, 0.18)',
-  color: 'var(--color-space)',
-  cursor: 'pointer',
-  fontSize: '16px',
   left: '10px',
-  lineHeight: '20px',
-  padding: '10px 18px',
-  position: 'absolute',
   top: '10px',
-  whiteSpace: 'nowrap',
   zIndex: 1,
   [MIN_TABLET_MEDIA_QUERY]: {left: '20px', top: '20px'},
-  ':not(:focus)': VISUALLY_HIDDEN,
 };
 
 export const MainHeader = () => {

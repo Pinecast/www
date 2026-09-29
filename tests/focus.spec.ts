@@ -779,46 +779,34 @@ test.describe('the scrolling product cards', () => {
   });
 });
 
-test.describe('the testimonial player', () => {
+test.describe('the testimonials', () => {
   for (const viewport of [WIDE, NARROW]) {
-    test(`at ${viewport.width}px, its button has a name and a clear indicator`, async ({
+    test(`at ${viewport.width}px, the Play button of each customer has a clear indicator that nothing covers`, async ({
       page,
       context,
     }) => {
       await page.setViewportSize(viewport);
       const decoder = await context.newPage();
       await load(page, '/');
-      // The player shows while a customer is at the middle of the viewport.
-      await page
-        .locator('#testimonials h3', {hasText: 'Living Blindfully'})
-        .last()
-        .evaluate(el => {
-          const r = el.getBoundingClientRect();
-          window.scrollTo({
-            top: scrollY + r.top + r.height / 2 - innerHeight / 2,
-            behavior: 'instant',
-          });
-        });
-      // The player scrubs its animation on scroll events, and it appears
-      // after the first one. Scroll a little more, as a user does.
-      await page.waitForTimeout(500);
-      for (let i = 0; i < 3; i++) {
-        await page.mouse.wheel(0, 4);
-        await page.waitForTimeout(300);
-      }
-      const play = page.getByRole('button', {
-        name: 'Play Living Blindfully testimonial',
-      });
-      await expect(play).toBeVisible();
-
-      // A key press first, so that the focus from the script is a keyboard
-      // focus. Do not scroll: the player exists only at this position.
+      // Tab from the link before the customers, from wherever the page is:
+      // each customer has its own button at every scroll position. The
+      // player of the customer is on the screen too, under the middle.
       await page.keyboard.press('Shift');
-      await play.evaluate(el => el.focus({preventScroll: true}));
-      await expect(play).toBeFocused();
-      const key = (await markFocus(page))!;
-      const result = (await measureFocus(page, decoder, key))!;
-      expect(problems([result])).toEqual([]);
+      await page
+        .locator('#testimonials')
+        .getByRole('link', {name: 'Start for free'})
+        .focus();
+      const results: Array<Result> = [];
+      for (const customer of ['Living Blindfully', 'Make Life Work']) {
+        await page.keyboard.press('Tab');
+        await expect(
+          page.getByRole('button', {name: `Play ${customer} testimonial`}),
+        ).toBeFocused();
+        results.push(
+          (await measureFocus(page, decoder, (await markFocus(page))!))!,
+        );
+      }
+      expect(problems(results)).toEqual([]);
     });
   }
 });

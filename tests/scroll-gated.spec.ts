@@ -158,3 +158,253 @@ for (const viewport of [WIDE, NARROW]) {
     });
   });
 }
+
+// The testimonials show the player of one customer at a time: the one at the
+// middle of the screen. The player came before the customer blocks in the
+// page, and it existed only at that scroll position.
+const CUSTOMERS = [
+  {name: 'Living Blindfully', since: 2020, color: 'var(--color-lime)'},
+  {name: 'Make Life Work', since: 2019, color: 'var(--color-sky)'},
+];
+
+const customerBlock = (page: Page, name: string) =>
+  page
+    .locator('#testimonials')
+    .getByRole('heading', {level: 3, name})
+    .locator('xpath=..');
+
+const playButton = (page: Page, name: string) =>
+  page.getByRole('button', {name: `${name} testimonial`});
+
+// Put the name of a customer at the middle of the screen.
+const scrollToCustomer = (page: Page, name: string) =>
+  customerBlock(page, name)
+    .getByRole('heading')
+    .evaluate(el => {
+      const r = el.getBoundingClientRect();
+      window.scrollTo({
+        top: scrollY + r.top + r.height / 2 - innerHeight / 2,
+        behavior: 'instant',
+      });
+    });
+
+// The part of the screen where the Play button of a customer must be: under
+// the header, and above the time ticker of the player in the middle.
+const aboveThePlayer = (button: Locator) =>
+  button.evaluate(el => {
+    const r = el.getBoundingClientRect();
+    const header = document.querySelector('header')!.getBoundingClientRect();
+    const ticker = matchMedia('(min-width: 1181px)').matches ? 40 : 30;
+    return (
+      r.width > 40 &&
+      r.top >= header.bottom + 4 &&
+      r.bottom <= innerHeight / 2 - ticker / 2 - 4
+    );
+  });
+
+const pageColor = (page: Page) =>
+  page.evaluate(() => document.body.style.getPropertyValue('--page-bg'));
+
+for (const viewport of [WIDE, NARROW]) {
+  test.describe(`the testimonials at ${viewport.width}px`, () => {
+    test.use({viewport});
+
+    test('each customer block has its quote, "Customer since" and its own Play button at every scroll position', async ({
+      page,
+    }) => {
+      await load(page, '/');
+      for (const position of [null, ...CUSTOMERS.map(c => c.name)]) {
+        if (position) {
+          await scrollToCustomer(page, position);
+        }
+        // Only the buttons of the blocks: the player is hidden from screen
+        // readers.
+        await expect(
+          page.locator('#testimonials').getByRole('button'),
+          String(position),
+        ).toHaveText(['Play Living Blindfully testimonial', /Make Life Work/]);
+        for (const {name, since} of CUSTOMERS) {
+          const block = customerBlock(page, name);
+          await expect(block.locator('blockquote')).toHaveCount(1);
+          await expect(block).toContainText(`Customer since ${since}`);
+          await expect(playButton(page, name)).toHaveCount(1);
+          await expect(block.getByRole('button')).toHaveAccessibleName(
+            `Play ${name} testimonial`,
+          );
+        }
+      }
+    });
+
+    test('Tab goes to the Play button of each customer, which shows above the player, and the player shows that customer', async ({
+      page,
+    }) => {
+      await load(page, '/');
+      await page.keyboard.press('Shift');
+      await page
+        .locator('#testimonials')
+        .getByRole('link', {name: 'Start for free'})
+        .focus();
+      for (const {name, color} of CUSTOMERS) {
+        await page.keyboard.press('Tab');
+        const button = playButton(page, name);
+        await expect(button).toBeFocused();
+        await expect.poll(() => aboveThePlayer(button), name).toBe(true);
+        await expect(customerBlock(page, name)).toHaveAttribute(
+          'aria-current',
+          'true',
+        );
+        await expect.poll(() => pageColor(page), name).toBe(color);
+        await expect(page.locator('#testimonials footer')).toContainText(name);
+      }
+      // After the last customer, focus goes on to the next part of the page.
+      await page.keyboard.press('Tab');
+      expect(
+        await page.evaluate(
+          () => !!document.activeElement?.closest('#testimonials'),
+        ),
+      ).toBe(false);
+
+      // From below, Shift+Tab also shows the button above the player.
+      await page.keyboard.press('Shift+Tab');
+      const last = playButton(page, CUSTOMERS[1].name);
+      await expect(last).toBeFocused();
+      await expect.poll(() => aboveThePlayer(last)).toBe(true);
+    });
+  });
+}
+
+test.describe('a Play button of a customer', () => {
+  test.use({viewport: WIDE});
+
+  // The testimonials must play here, so let only their audio load.
+  test.beforeEach(async ({page}) => {
+    await page.unroute(/\.(mp3|mp4|webm)(\?|$)/);
+    await page.route(/\.(mp3|mp4|webm)(\?|$)/, route =>
+      route.request().url().includes('/testimonials/')
+        ? route.continue()
+        : route.abort(),
+    );
+  });
+
+  const audio = (page: Page) =>
+    page.locator('#testimonials audio').evaluate(el => {
+      const media = el as HTMLAudioElement;
+      return {
+        src: media.currentSrc.split('/').pop(),
+        playing: !media.paused && !media.muted,
+        time: media.currentTime,
+      };
+    });
+
+  test('plays its customer, also when another one is at the middle of the screen', async ({
+    page,
+  }) => {
+    await load(page, '/');
+    await scrollToCustomer(page, 'Living Blindfully');
+    await expect(customerBlock(page, 'Living Blindfully')).toHaveAttribute(
+      'aria-current',
+      'true',
+    );
+    // A screen reader on a phone presses a button without focus.
+    await playButton(page, 'Make Life Work').dispatchEvent('click');
+    await expect(customerBlock(page, 'Make Life Work')).toHaveAttribute(
+      'aria-current',
+      'true',
+    );
+    await expect
+      .poll(async () => (await audio(page)).src)
+      .toMatch(/^make-life-work\./);
+    await expect
+      .poll(async () => (await audio(page)).time)
+      .toBeGreaterThan(0.5);
+    expect((await audio(page)).playing).toBe(true);
+    await expect(playButton(page, 'Make Life Work')).toHaveAccessibleName(
+      'Pause Make Life Work testimonial',
+    );
+
+    // It pauses the same way.
+    await playButton(page, 'Make Life Work').dispatchEvent('click');
+    await expect.poll(async () => (await audio(page)).playing).toBe(false);
+    await expect(playButton(page, 'Make Life Work')).toHaveAccessibleName(
+      'Play Make Life Work testimonial',
+    );
+
+    // With the keyboard.
+    await page.keyboard.press('Shift');
+    await playButton(page, 'Living Blindfully').focus();
+    await page.keyboard.press('Enter');
+    await expect
+      .poll(async () => (await audio(page)).src)
+      .toMatch(/^living-blindfully\./);
+    await expect.poll(async () => (await audio(page)).playing).toBe(true);
+    await page.keyboard.press('Enter');
+    await expect.poll(async () => (await audio(page)).playing).toBe(false);
+  });
+});
+
+// WCAG 2.3.3: the player slid across the screen and grew and shrank as the
+// page scrolled, also with reduced motion.
+test.describe('the testimonial player', () => {
+  // The box of the quote.
+  const quoteBox = async (page: Page) => {
+    const box = (await page.locator('#testimonials footer').evaluate(el => {
+      const r = el.parentElement!.getBoundingClientRect();
+      return {x: r.x, y: r.y, width: r.width, height: r.height};
+    }))!;
+    return {
+      x: Math.round(box.x),
+      y: Math.round(box.y),
+      width: Math.round(box.width),
+    };
+  };
+  const animations = (page: Page) =>
+    page
+      .locator('#testimonials audio')
+      .evaluate(el => el.parentElement!.getAnimations({subtree: true}).length);
+
+  for (const viewport of [WIDE, NARROW]) {
+    test(`stays in one place with reduced motion at ${viewport.width}px`, async ({
+      page,
+    }) => {
+      await page.setViewportSize(viewport);
+      await page.emulateMedia({reducedMotion: 'reduce'});
+      await load(page, '/');
+      const boxes = [];
+      for (const [name, by] of [
+        ['Living Blindfully', 0],
+        ['Living Blindfully', 30],
+        ['Make Life Work', 0],
+        ['Make Life Work', 30],
+      ] as const) {
+        await scrollToCustomer(page, name);
+        await page.mouse.wheel(0, by);
+        await page.waitForTimeout(300);
+        await expect(page.locator('#testimonials footer')).toContainText(name);
+        expect(await animations(page)).toBe(0);
+        boxes.push(await quoteBox(page));
+      }
+      // Full size, in the middle, the same for both customers.
+      const {width} = page.viewportSize()!;
+      expect(boxes[0].width).toBe(width > 1180 ? 344 : 294);
+      expect(Math.abs(boxes[0].x - (width - boxes[0].width) / 2)).toBeLessThan(
+        2,
+      );
+      for (const box of boxes) {
+        expect(box).toEqual(boxes[0]);
+      }
+    });
+  }
+
+  // Without reduced motion it moves, so the test above can see a move.
+  test('slides as the page scrolls without reduced motion', async ({page}) => {
+    await page.setViewportSize(WIDE);
+    await page.emulateMedia({reducedMotion: 'no-preference'});
+    await load(page, '/');
+    await scrollToCustomer(page, 'Living Blindfully');
+    await page.mouse.wheel(0, 4);
+    await expect.poll(() => animations(page)).toBeGreaterThan(0);
+    const before = await quoteBox(page);
+    await page.mouse.wheel(0, 80);
+    await expect.poll(async () => (await quoteBox(page)).x).not.toBe(before.x);
+  });
+});
