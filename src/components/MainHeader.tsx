@@ -1,4 +1,6 @@
 import * as React from 'react';
+import {StyleObject} from 'styletron-react';
+import {MonumentGroteskBold} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
@@ -32,7 +34,7 @@ import {
   PersonaSlug,
 } from './CustomerPersona';
 import {Tooltip, TooltipPosition} from './Tooltip';
-import {ScreenReaderText} from './ScreenReaderText';
+import {ScreenReaderText, VISUALLY_HIDDEN} from './ScreenReaderText';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 import {Bubble, BUBBLE_FOCUS_RING} from './Bubble';
 import {useScrollListener} from '@/hooks/useScrollProgress';
@@ -197,6 +199,34 @@ const getTabbableElements = (root: HTMLElement) =>
     ),
   ).filter(element => element.getClientRects().length > 0);
 
+// The close button of the open menu. The buttons that open the menu are in the
+// header, outside the dialog, so a screen reader that obeys aria-modal cannot
+// reach them, and a touch screen reader has no Escape key. It is the first
+// element of the dialog, next to the trigger, and it shows only while it has
+// focus, like the skip link.
+const CLOSE_BUTTON_STYLE: StyleObject = {
+  ...MonumentGroteskBold,
+  backgroundColor: 'var(--color-white)',
+  borderColor: 'var(--color-space)',
+  // The tight corner points at the trigger, at the top left.
+  borderRadius: '3px 22px 22px 22px',
+  borderStyle: 'solid',
+  borderWidth: '2px',
+  boxShadow: '3px 4px 0 rgba(9, 9, 9, 0.18)',
+  color: 'var(--color-space)',
+  cursor: 'pointer',
+  fontSize: '16px',
+  left: '10px',
+  lineHeight: '20px',
+  padding: '10px 18px',
+  position: 'absolute',
+  top: '10px',
+  whiteSpace: 'nowrap',
+  zIndex: 1,
+  [MIN_TABLET_MEDIA_QUERY]: {left: '20px', top: '20px'},
+  ':not(:focus)': VISUALLY_HIDDEN,
+};
+
 export const MainHeader = () => {
   const css = useCSS();
   const router = useRouter();
@@ -289,7 +319,11 @@ export const MainHeader = () => {
     let frame = 0;
     let attempts = 0;
     const focusFirstLink = () => {
-      const first = getTabbableElements(nav)[0];
+      // The first link, not the close button before it: the close button is
+      // one Shift+Tab away.
+      const first = getTabbableElements(nav).find(
+        element => element.localName === 'a',
+      );
       // The menu does not scroll the page, and it grows from the top, so do
       // not scroll anything to show the link.
       first?.focus({preventScroll: true});
@@ -620,6 +654,16 @@ export const MainHeader = () => {
           },
         })}
       >
+        <button
+          type="button"
+          className={css(CLOSE_BUTTON_STYLE)}
+          onClick={evt => {
+            evt.preventDefault();
+            closeNav();
+          }}
+        >
+          Close menu
+        </button>
         <nav
           ref={navScrollRef}
           aria-label="Menu"
