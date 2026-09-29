@@ -1,4 +1,13 @@
-import {expect, test, type Browser, type Page} from '@playwright/test';
+import {mkdirSync, mkdtempSync, rmSync, writeFileSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {
+  chromium,
+  expect,
+  test,
+  type Browser,
+  type Page,
+} from '@playwright/test';
 import {load} from './helpers';
 
 // WCAG 2.5.8: the feature links on the globe (Distribution, Analytics,
@@ -192,4 +201,99 @@ test('the globe links are as large at 200% zoom', async ({browser}) => {
       normal.squares[slug] - 1,
     );
   }
+});
+
+// The browser zoom itself, not a smaller viewport: the page can tell the zoom
+// in Chrome (outerWidth has no zoom), and then the menu is at least as large
+// as in the same window at 100%. On a window larger than 1280 by 800, the
+// link text was smaller at 200% than at 100% in CSS pixels (1920 by 1080:
+// 27.1 to 18.4). This needs the full Chromium (the "chromium" channel): the
+// zoom comes from the profile, as a user's zoom does.
+async function textSizeWithZoom(
+  baseURL: string,
+  [width, height]: [number, number],
+  zoom: number,
+) {
+  const dir = mkdtempSync(join(tmpdir(), 'globe-zoom-'));
+  try {
+    mkdirSync(join(dir, 'Default'));
+    writeFileSync(
+      join(dir, 'Default', 'Preferences'),
+      JSON.stringify({
+        // Chrome keeps a zoom as a level: the zoom is 1.2 to its power.
+        partition: {default_zoom_level: {x: Math.log(zoom) / Math.log(1.2)}},
+      }),
+    );
+    const context = await chromium.launchPersistentContext(dir, {
+      baseURL,
+      channel: 'chromium',
+      // The window sets the size, not the Desktop Chrome device.
+      viewport: null,
+      deviceScaleFactor: undefined,
+      args: [`--window-size=${width},${height}`],
+    });
+    try {
+      const page = context.pages()[0] ?? (await context.newPage());
+      await page.route(/\.(mp3|mp4|webm)(\?|$)/, route => route.abort());
+      await showGlobe(page);
+      expect(await page.evaluate(() => devicePixelRatio)).toBeCloseTo(zoom);
+      return (await measureLinks(page)).textSize;
+    } finally {
+      await context.close();
+    }
+  } finally {
+    rmSync(dir, {recursive: true, force: true});
+  }
+}
+
+test.describe('with the zoom of the browser', () => {
+  test.setTimeout(120_000);
+
+  // The size of the window, with the toolbars of the browser (139px).
+  for (const window of [
+    [1440, 1040],
+    [1920, 1220],
+    [2560, 1580],
+  ] as Array<[number, number]>) {
+    test(`the globe links keep their size in CSS pixels at 200% in a ${window[0]} by ${window[1]} window`, async ({
+      baseURL,
+    }) => {
+      const normal = await textSizeWithZoom(baseURL!, window, 1);
+      const zoomed = await textSizeWithZoom(baseURL!, window, 2);
+      expect(normal).toBeGreaterThan(20);
+      // At 200% the page is a whole number of CSS pixels high, so the window
+      // without the zoom can be 1px lower: the text can be 0.03px smaller.
+      expect(zoomed).toBeGreaterThanOrEqual(normal - 0.1);
+    });
+  }
+
+  // In a portrait window, the page at 200% is too narrow for the curve to
+  // hold the links at their size at 100%, and the curve is not wider than
+  // the page. The owner keeps the curve: the links are larger on the screen
+  // than at 100% (144% of it at 768 by 1024), but not twice as large.
+  for (const window of [
+    [768, 1164],
+    [834, 1100],
+  ] as Array<[number, number]>) {
+    test(`the globe links are larger on the screen at 200% in a ${window[0]} by ${window[1]} window`, async ({
+      baseURL,
+    }) => {
+      const normal = await textSizeWithZoom(baseURL!, window, 1);
+      const zoomed = await textSizeWithZoom(baseURL!, window, 2);
+      expect(zoomed * 2).toBeGreaterThanOrEqual(normal * 1.3);
+    });
+  }
+});
+
+// The menu takes the largest of its sizes once it is no wider than the page.
+// At 320 by 700 the page's own menu has larger text (12.2 CSS pixels) than
+// the smallest menu cut to the width of the page (11.8), but the smaller one
+// showed.
+test.describe('at 320 by 700', () => {
+  test.use({viewport: {width: 320, height: 700}});
+
+  test('the globe links have the text of the larger menu', async ({page}) => {
+    await showGlobe(page);
+    expect((await measureLinks(page)).textSize).toBeGreaterThan(12.2);
+  });
 });

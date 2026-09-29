@@ -787,20 +787,47 @@ const getMenuTextSize = ({width, fontSize}: MenuGeometry) =>
 // The globe gets its size from the viewport, and zoom makes the viewport
 // smaller in CSS pixels. So that the link text grows with zoom (WCAG 1.4.4),
 // the menu is never smaller than at 1280 by 800 (landscape) or 375 by 667
-// (portrait). Only a page narrower than that menu makes it smaller.
+// (portrait), and never smaller than the menu of the same window without the
+// zoom. Only a page narrower than the menu makes it smaller.
 const MIN_MENU_GEOMETRY = {
   landscape: getGlobeMenuGeometry(1280, 800),
   portrait: getGlobeMenuGeometry(375, 667),
 };
 
-function getMenuGeometry(width: number, height: number): MenuGeometry {
-  const geometry = getGlobeMenuGeometry(width, height);
-  const min =
-    width < height ? MIN_MENU_GEOMETRY.portrait : MIN_MENU_GEOMETRY.landscape;
-  if (getMenuTextSize(geometry) >= getMenuTextSize(min)) {
-    return geometry;
+// The zoom of the page, as CSS pixels to the pixels of the window. Chrome and
+// Safari give the size of the window without the zoom (outerWidth) and the
+// size of the page with it (innerWidth). A side panel or the developer tools
+// make the page narrower but not lower, so the page must be at least as much
+// smaller in height, where the toolbars also are, as in width. Where it is
+// not, or where the browser gives both sizes with the zoom (Firefox), this is
+// 1: the menu is then at least as large as at 1280 by 800 or 375 by 667.
+function getPageZoom() {
+  const {innerHeight, innerWidth, outerHeight, outerWidth} = window;
+  if (!innerHeight || !innerWidth || !outerHeight || !outerWidth) {
+    return 1;
   }
-  return {...min, width: Math.min(min.width, width)};
+  const byWidth = outerWidth / innerWidth;
+  const byHeight = outerHeight / innerHeight;
+  return byWidth > 1.05 && byHeight >= byWidth - 0.05 ? byWidth : 1;
+}
+
+// Of the menu of the page, the menu of the window without the zoom and the
+// smallest menu, the one with the largest text once it is no wider than the
+// page.
+function getMenuGeometry(
+  width: number,
+  height: number,
+  zoom: number,
+): MenuGeometry {
+  return [
+    getGlobeMenuGeometry(width, height),
+    getGlobeMenuGeometry(width * zoom, height * zoom),
+    width < height ? MIN_MENU_GEOMETRY.portrait : MIN_MENU_GEOMETRY.landscape,
+  ]
+    .map(geometry => ({...geometry, width: Math.min(geometry.width, width)}))
+    .reduce((largest, geometry) =>
+      getMenuTextSize(geometry) > getMenuTextSize(largest) ? geometry : largest,
+    );
 }
 
 // The distance from the top of the menu to the bottom of its text and of the
@@ -877,7 +904,7 @@ export const Globe = () => {
     };
     const m = menu.current!;
     const isMobile = width < height;
-    const geometry = getMenuGeometry(width, height);
+    const geometry = getMenuGeometry(width, height, getPageZoom());
     const menuLeft = (width - geometry.width) / 2;
     const menuContentHeight = getMenuContentHeight(geometry);
     let globeCenterPosition = getGlobeCenterPosition(width, height, false);
