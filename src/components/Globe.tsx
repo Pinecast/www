@@ -39,6 +39,7 @@ import {SoundEffect} from '@/hooks/useSoundEffects';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
 import {ScreenReaderText, VISUALLY_HIDDEN} from './ScreenReaderText';
 import {isMotionPaused, useMotion} from '@/hooks/useMotion';
+import {DARK_SURFACE} from '@/constants';
 
 const callWhenIdle = (callback: IdleRequestCallback) => {
   if (typeof window.requestIdleCallback === 'undefined') {
@@ -147,6 +148,21 @@ const MIN_LINK_TARGET_SIZE = 24;
 const LINK_HIT_AREA_THICKNESS = MIN_LINK_TARGET_SIZE * Math.SQRT2 + 2;
 const LINK_HOVER_TEXT_SHADOW =
   '0 0 10px rgba(255, 255, 255, 0.85), 0 0 7px #c4ff7e, 0 0 4px #090909';
+
+// The outline of text on a curved path is a staircase of letter boxes. With
+// keyboard focus, give the link its hover glow and underline it along the
+// curve instead, in full white.
+const LINK_FOCUS_STYLE = {
+  ':focus-visible': {
+    opacity: 1,
+    outline: 'none',
+    textShadow: LINK_HOVER_TEXT_SHADOW,
+    textDecorationColor: 'var(--color-white)',
+    textDecorationLine: 'underline',
+    textDecorationThickness: '2px',
+    textUnderlineOffset: '4px',
+  },
+} as const;
 
 const FEATURES: Record<Feature, FeatureShape> = {
   distribution: {
@@ -565,6 +581,7 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
                   opacity: 1,
                 },
                 ':hover': {textShadow: LINK_HOVER_TEXT_SHADOW},
+                ...LINK_FOCUS_STYLE,
               })}
               href="#distribution"
             >
@@ -587,6 +604,7 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
                     opacity: 1,
                   },
                   ':hover': {textShadow: LINK_HOVER_TEXT_SHADOW},
+                  ...LINK_FOCUS_STYLE,
                 })}
                 href="#analytics"
               >
@@ -610,6 +628,7 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
                     opacity: 1,
                   },
                   ':hover': {textShadow: LINK_HOVER_TEXT_SHADOW},
+                  ...LINK_FOCUS_STYLE,
                 })}
                 href="#monetization"
               >
@@ -1158,6 +1177,7 @@ export const Globe = () => {
     <section
       ref={ref}
       className={css({
+        ...DARK_SURFACE,
         backgroundColor: 'var(--color-space)',
         position: 'relative',
         zIndex: 2,

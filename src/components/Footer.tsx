@@ -6,7 +6,11 @@ import {useCSS} from '@/hooks/useCSS';
 import {Body4, Caption} from './Typography';
 import {PrimaryButton} from './PrimaryButton';
 import {FooterNavLinks} from './FooterNavLinks';
-import {MOBILE_MEDIA_QUERY, CAN_HOVER_MEDIA_QUERY} from '@/constants';
+import {
+  MOBILE_MEDIA_QUERY,
+  CAN_HOVER_MEDIA_QUERY,
+  DARK_SURFACE,
+} from '@/constants';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {Codec, VideoMimeType, NoncriticalVideo} from './NoncriticalVideo';
 
@@ -81,6 +85,7 @@ export const Footer = () => {
           className={css({
             '--color-primary-dark': '#fff',
             '--color-primary-light': 'var(--color-space)',
+            ...DARK_SURFACE,
             backgroundColor: 'var(--color-primary-light)',
             backgroundImage: 'url(/images/logotype.svg)',
             backgroundRepeat: 'repeat-x',

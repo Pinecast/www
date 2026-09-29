@@ -59,7 +59,9 @@ export enum TooltipPosition {
 
 type TooltipProps = {
   backgroundColor?: string;
-  children: React.ReactNode;
+  // Gets the id of the tooltip while it is active. Put it in the
+  // `aria-describedby` of the control that the tooltip is for.
+  children: (describedBy: string | undefined) => React.ReactNode;
   isActive?: boolean;
   position?: TooltipPosition;
   text: string;
@@ -214,10 +216,44 @@ export const Tooltip = React.memo(function Tooltip({
     }
   }, [position]);
 
+  const tooltipId = React.useId();
+  const wrapperRef = React.useRef<HTMLDivElement>(null);
+  // Keyboard focus on the control shows the tooltip, as a hover does. A
+  // mouse click, which also gives focus, does not.
+  const [hasFocusVisible, setHasFocusVisible] = React.useState(false);
+  // Escape hides the tooltip until the pointer and the focus have both left
+  // (WCAG 1.4.13).
+  const [dismissed, setDismissed] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!isActive) {
+      return;
+    }
+    const handleKeyDown = (evt: KeyboardEvent) => {
+      const wrapper = wrapperRef.current;
+      if (
+        evt.key === 'Escape' &&
+        wrapper &&
+        (wrapper.matches(':hover') || wrapper.contains(document.activeElement))
+      ) {
+        setDismissed(true);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isActive]);
+
+  const shown: StyleObject = {
+    opacity: '1',
+    pointerEvents: 'unset',
+    visibility: 'visible',
+  };
+  const canShow = isActive && !dismissed;
+  const isShown = canShow && hasFocusVisible;
+
   return (
     <div
-      aria-label={text}
-      role="tooltip"
+      ref={wrapperRef}
       className={css({
         ...baseStyles,
         '--tooltip-bg': backgroundColor,
@@ -228,34 +264,12 @@ export const Tooltip = React.memo(function Tooltip({
         cursor: 'pointer',
         position: 'relative',
         // TODO: Handle touchstart/touchend on mobile.
-        [':hover::before']: {
-          display: isActive ? 'block' : 'none',
-          opacity: '1',
-          pointerEvents: 'unset',
-        },
-        [':hover::after']: {
-          display: isActive ? 'block' : 'none',
-          opacity: '1',
-          pointerEvents: 'unset',
-        },
-        ['::before']: {
-          ...sharedPseudoelementStyles,
-          ...MonumentGroteskSemiMono,
-          ...tooltipPlacementStyles,
-          backgroundColor: 'var(--tooltip-bg)',
-          borderRadius: '4px',
-          color: textColor,
-          content: 'attr(aria-label)',
-          display: isActive ? 'unset' : 'none',
-          fontWeight: 400,
-          fontSize: '11px',
-          lineHeight: '13px',
-          textAlign: 'center',
-          [MIN_TABLET_MEDIA_QUERY]: {
-            fontSize: '12px',
-            lineHeight: '14px',
-          },
-        },
+        ...(canShow
+          ? {
+              ':hover::after': {display: 'block', ...shown},
+              ':hover > [role=tooltip]': shown,
+            }
+          : {}),
         ['::after']: {
           ...sharedPseudoelementStyles,
           ...triangleBorderStyles,
@@ -267,10 +281,60 @@ export const Tooltip = React.memo(function Tooltip({
           display: isActive ? 'unset' : 'none',
           height: '0',
           width: '0',
+          ...(isShown ? {display: 'block', ...shown} : {}),
         },
       })}
+      onFocus={evt => setHasFocusVisible(evt.target.matches(':focus-visible'))}
+      onBlur={evt => {
+        setHasFocusVisible(false);
+        if (
+          !wrapperRef.current?.contains(evt.relatedTarget) &&
+          !wrapperRef.current?.matches(':hover')
+        ) {
+          setDismissed(false);
+        }
+      }}
+      onMouseLeave={() => {
+        if (!wrapperRef.current?.contains(document.activeElement)) {
+          setDismissed(false);
+        }
+      }}
     >
-      {children}
+      {children(isActive ? tooltipId : undefined)}
+      {isActive && (
+        // A real element, not generated content, so that the control can
+        // point to it with `aria-describedby`.
+        <span
+          id={tooltipId}
+          role="tooltip"
+          className={css({
+            ...sharedPseudoelementStyles,
+            ...MonumentGroteskSemiMono,
+            ...tooltipPlacementStyles,
+            backgroundColor: 'var(--tooltip-bg)',
+            borderRadius: '4px',
+            color: textColor,
+            display: 'block',
+            fontWeight: 400,
+            fontSize: '11px',
+            lineHeight: '13px',
+            textAlign: 'center',
+            // Hidden also from assistive technology until it shows. The
+            // description stays: `aria-describedby` reads hidden text.
+            transition:
+              `opacity ${TOOLTIP_FADE_TRANSITION_DURATION}ms ease-in-out 0.05s, ` +
+              `visibility ${TOOLTIP_FADE_TRANSITION_DURATION}ms ease-in-out 0.05s`,
+            visibility: 'hidden',
+            [MIN_TABLET_MEDIA_QUERY]: {
+              fontSize: '12px',
+              lineHeight: '14px',
+            },
+            ...(isShown ? shown : {}),
+          })}
+        >
+          {text}
+        </span>
+      )}
     </div>
   );
 });

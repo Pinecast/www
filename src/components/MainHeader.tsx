@@ -3,6 +3,7 @@ import {useCSS} from '@/hooks/useCSS';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
 import {
+  ADAPTIVE_SURFACE,
   MIN_TABLET_MEDIA_QUERY,
   MOBILE_MEDIA_QUERY,
   TABLET_MEDIA_QUERY,
@@ -11,7 +12,11 @@ import Link from 'next/link';
 import {useRouter} from 'next/router';
 import {SignIn} from '@/icons/SignIn';
 import {AudioWaveformIcon} from './AudioWaveformIcon';
-import {MainHeaderButton, MainHeaderLink} from './MainHeaderLink';
+import {
+  HEADER_FOCUS_STYLE,
+  MainHeaderButton,
+  MainHeaderLink,
+} from './MainHeaderLink';
 import {Hamburger} from '@/icons/Hamburger';
 import {useAudioManager} from '@/hooks/useAudioManager';
 import {useDismiss} from '@/hooks/useDismiss';
@@ -29,7 +34,7 @@ import {
 import {Tooltip, TooltipPosition} from './Tooltip';
 import {ScreenReaderText} from './ScreenReaderText';
 import {SoundEffect} from '@/hooks/useSoundEffects';
-import {Bubble} from './Bubble';
+import {Bubble, BUBBLE_FOCUS_RING} from './Bubble';
 import {useScrollListener} from '@/hooks/useScrollProgress';
 import {MotionToggle} from './MotionToggle';
 
@@ -67,6 +72,8 @@ const PersonaBlock = ({
       <Link
         href={url}
         className={css({
+          // The tile is always light, whatever the menu around it.
+          '--color-focus-ring': 'var(--color-space)',
           borderRadius: 'inherit',
           color: 'var(--color-space)',
           display: 'grid',
@@ -75,6 +82,9 @@ const PersonaBlock = ({
           width: '100%',
           placeContent: 'stretch',
           placeItems: 'stretch',
+          // Below the tablet size the link fills the tile, which clips
+          // anything outside it (overflow: hidden). Draw the ring inside.
+          ':focus-visible': {outlineOffset: '-4px'},
 
           [MIN_TABLET_MEDIA_QUERY]: {
             background: color,
@@ -85,6 +95,8 @@ const PersonaBlock = ({
             height: 'auto',
             margin: '10px',
             padding: '30px 20px',
+            // Here the link has a margin inside the tile: room for the ring.
+            ':focus-visible': {outlineOffset: '2px'},
           },
         })}
       >
@@ -348,6 +360,7 @@ export const MainHeader = () => {
       <header
         {...aboveOverlayProps}
         className={css({
+          ...ADAPTIVE_SURFACE,
           background: 'var(--color-primary-light)',
           borderStyle: 'solid',
           borderColor: navOpen
@@ -402,12 +415,13 @@ export const MainHeader = () => {
           aria-expanded={navOpen}
           aria-controls={MENU_ID}
           className={css({
+            ...HEADER_FOCUS_STYLE,
             alignItems: 'center',
             appearance: 'none',
             background: 'none',
-            borderTopLeftRadius: 'inherit',
-            borderBottomLeftRadius: 'inherit',
             border: 'none',
+            // Round, so that the focus ring stays inside the header.
+            borderRadius: '18px',
             display: 'flex',
             cursor: 'pointer',
             paddingTop: 0,
@@ -438,35 +452,39 @@ export const MainHeader = () => {
             position={TooltipPosition.BOTTOM}
             text="This site is better with sound!"
           >
-            <label>
-              <ScreenReaderText>
-                {audioMangerLoading || muted ? 'Unmute' : 'Mute'}
-              </ScreenReaderText>
-              <button
-                type="button"
-                className={css({
-                  appearance: 'none',
-                  backgroundColor: 'transparent',
-                  borderRadius: '18px',
-                  borderWidth: '0',
-                  cursor: 'pointer',
-                  paddingTop: '30px',
-                  paddingRight: '23px',
-                  paddingBottom: '30px',
-                  paddingLeft: '35px',
-                })}
-                onClick={onClickSoundButton}
-              >
-                <AudioWaveformIcon
-                  color="var(--color-primary-dark)"
-                  muted={audioMangerLoading ? true : muted}
-                  // Flex, not inline-flex: an inline icon sits on the text
-                  // baseline, with room for descenders under it, 1.5px
-                  // above the center of the header.
-                  style={{display: 'flex'}}
-                />
-              </button>
-            </label>
+            {describedBy => (
+              <label>
+                <ScreenReaderText>
+                  {audioMangerLoading || muted ? 'Unmute' : 'Mute'}
+                </ScreenReaderText>
+                <button
+                  type="button"
+                  aria-describedby={describedBy}
+                  className={css({
+                    ...HEADER_FOCUS_STYLE,
+                    appearance: 'none',
+                    backgroundColor: 'transparent',
+                    borderRadius: '18px',
+                    borderWidth: '0',
+                    cursor: 'pointer',
+                    paddingTop: '30px',
+                    paddingRight: '23px',
+                    paddingBottom: '30px',
+                    paddingLeft: '35px',
+                  })}
+                  onClick={onClickSoundButton}
+                >
+                  <AudioWaveformIcon
+                    color="var(--color-primary-dark)"
+                    muted={audioMangerLoading ? true : muted}
+                    // Flex, not inline-flex: an inline icon sits on the text
+                    // baseline, with room for descenders under it, 1.5px
+                    // above the center of the header.
+                    style={{display: 'flex'}}
+                  />
+                </button>
+              </label>
+            )}
           </Tooltip>
           <MotionToggle
             style={{
@@ -544,10 +562,12 @@ export const MainHeader = () => {
             href="https://pinecast.com/login"
             aria-label="Sign in"
             className={css({
+              ...HEADER_FOCUS_STYLE,
               // Flex, not block: an inline icon sits on the text baseline,
               // with room for descenders under it, 2px above the center.
               display: 'flex',
-              borderTopRightRadius: '20px',
+              // Round, so that the focus ring stays inside the header.
+              borderRadius: '18px',
               paddingTop: '15px',
               paddingRight: '20px',
               paddingBottom: '15px',
@@ -566,6 +586,7 @@ export const MainHeader = () => {
         aria-modal="true"
         aria-label="Menu"
         className={css({
+          ...ADAPTIVE_SURFACE,
           borderRadius: '0 0 20px 20px',
           borderWidth: '0 1px 1px',
           borderStyle: 'solid',
@@ -699,40 +720,51 @@ export const MainHeader = () => {
           position={TooltipPosition.RIGHT}
           text="This site is better with sound!"
         >
-          <label>
-            <ScreenReaderText>
-              {audioMangerLoading || muted ? 'Unmute' : 'Mute'}
-            </ScreenReaderText>
-            <button
-              type="button"
-              style={{
-                appearance: 'none',
-                backgroundColor: 'transparent',
-                borderWidth: '0',
-                cursor: 'pointer',
-                display: 'block',
-                height: 'var(--button-tooltip-height)',
-                opacity: !hasScrolled ? 1 : 0.4,
-                transition: 'height 0.2s ease-in-out, opacity 0.2s ease-in-out',
-                padding: 0,
-                width: 'var(--button-size)',
-              }}
-              onClick={onClickSoundButton}
-            >
-              <Bubble
-                color="var(--color-primary-dark)"
-                size={buttonSize}
-                offsetX={!muted && hasScrolled ? -buttonSize : 20}
-                offsetY={0}
+          {describedBy => (
+            <label>
+              <ScreenReaderText>
+                {audioMangerLoading || muted ? 'Unmute' : 'Mute'}
+              </ScreenReaderText>
+              <button
+                type="button"
+                aria-describedby={describedBy}
+                className={css({
+                  opacity: !hasScrolled ? 1 : 0.4,
+                  // The ring goes around the bubble, not the wider button. With
+                  // keyboard focus, the bubble shows in full and in view, also
+                  // when it has faded or moved off the screen after a scroll.
+                  ':focus-visible': {opacity: 1, outline: 'none'},
+                  ':focus-visible > *': {...BUBBLE_FOCUS_RING, left: '20px'},
+                })}
+                style={{
+                  appearance: 'none',
+                  backgroundColor: 'transparent',
+                  borderWidth: '0',
+                  cursor: 'pointer',
+                  display: 'block',
+                  height: 'var(--button-tooltip-height)',
+                  transition:
+                    'height 0.2s ease-in-out, opacity 0.2s ease-in-out',
+                  padding: 0,
+                  width: 'var(--button-size)',
+                }}
+                onClick={onClickSoundButton}
               >
-                <AudioWaveformIcon
-                  color="var(--bubble-text-color)"
-                  muted={audioMangerLoading ? true : muted}
-                  style={{transform: 'scale(1.5)'}}
-                />
-              </Bubble>
-            </button>
-          </label>
+                <Bubble
+                  color="var(--color-primary-dark)"
+                  size={buttonSize}
+                  offsetX={!muted && hasScrolled ? -buttonSize : 20}
+                  offsetY={0}
+                >
+                  <AudioWaveformIcon
+                    color="var(--bubble-text-color)"
+                    muted={audioMangerLoading ? true : muted}
+                    style={{transform: 'scale(1.5)'}}
+                  />
+                </Bubble>
+              </button>
+            </label>
+          )}
         </Tooltip>
       </div>
     </>

@@ -27,6 +27,13 @@ export const MotionToggle = ({style}: {style?: StyleObject}) => {
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
+        // The button is as tall as the header. Put the focus ring around
+        // the icon, as for the pressed state.
+        ':focus-visible': {outline: 'none'},
+        ':focus-visible [data-focus-ring]': {
+          outline: '2px solid var(--color-focus-ring)',
+          outlineOffset: '2px',
+        },
         ...style,
       })}
       onClick={evt => {
@@ -36,6 +43,7 @@ export const MotionToggle = ({style}: {style?: StyleObject}) => {
     >
       <ScreenReaderText>Pause animations</ScreenReaderText>
       <span
+        data-focus-ring
         className={css({
           // Transparent while not pressed, so that the icon does not move.
           borderColor: paused ? 'currentcolor' : 'transparent',

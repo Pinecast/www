@@ -54,3 +54,16 @@ export const BUTTON_RESET: StyleObject = {
   textTransform: 'inherit',
   wordSpacing: 'inherit',
 };
+
+// The keyboard focus ring (`:focus-visible` in _document.tsx) is
+// `--color-focus-ring`: primary-dark, unless a surface changes it. Spread
+// DARK_SURFACE on a dark surface, so that the ring is white on it. Spread
+// ADAPTIVE_SURFACE on the header parts, whose colors follow the dark
+// sections, and on a light surface inside a dark one after it sets its own
+// primary-dark.
+export const DARK_SURFACE: StyleObject = {
+  '--color-focus-ring': 'var(--color-white)',
+};
+export const ADAPTIVE_SURFACE: StyleObject = {
+  '--color-focus-ring': 'var(--color-primary-dark)',
+};

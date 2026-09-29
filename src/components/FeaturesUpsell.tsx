@@ -25,7 +25,17 @@ export const FeaturesUpsell = () => {
         features
       </H2>
 
-      <SecondaryButton href="/features">See all features</SecondaryButton>
+      <SecondaryButton
+        href="/features"
+        style={{
+          // The divider under the button overlaps its bottom edge (z-index
+          // 2). Lift the button above it while it shows its focus ring.
+          position: 'relative',
+          ':focus-visible': {zIndex: 3},
+        }}
+      >
+        See all features
+      </SecondaryButton>
     </div>
   );
 };

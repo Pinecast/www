@@ -10,7 +10,9 @@ import {Expandable} from './Expandable';
 import {Collapse} from '@/icons/Collapse';
 import {Expand} from '@/icons/Expand';
 import {
+  ADAPTIVE_SURFACE,
   BUTTON_RESET,
+  DARK_SURFACE,
   MIN_TABLET_MEDIA_QUERY,
   MOBILE_MEDIA_QUERY,
 } from '@/constants';
@@ -53,6 +55,7 @@ export const Pricing = () => {
     <section
       ref={sectionRef}
       className={css({
+        ...DARK_SURFACE,
         backgroundColor: 'var(--color-space)',
         display: 'flex',
         flexDirection: 'column',
@@ -259,6 +262,7 @@ const PricingTicket = ({
       className={css({
         '--color-primary-dark': 'var(--color-space)',
         '--color-primary-light': '#fff',
+        ...ADAPTIVE_SURFACE,
         backgroundColor: color,
         borderRadius: '20px',
         padding: '0',
@@ -534,7 +538,27 @@ const AddonAccordionItem = ({
           type="button"
           aria-expanded={open}
           aria-controls={id}
-          className={css(BUTTON_RESET)}
+          className={css({
+            ...BUTTON_RESET,
+            position: 'relative',
+            // The name is as tall as the row, so an outline would sit on
+            // the lines between the rows. Put the ring around the name,
+            // inside the row.
+            ':focus-visible': {outline: 'none'},
+            ':focus-visible::after': {
+              borderColor: 'var(--color-focus-ring)',
+              borderRadius: '6px',
+              borderStyle: 'solid',
+              borderWidth: '2px',
+              content: '""',
+              inset: '10px -8px',
+              pointerEvents: 'none',
+              position: 'absolute',
+            },
+            [MIN_TABLET_MEDIA_QUERY]: {
+              ':focus-visible::after': {inset: '8px -8px'},
+            },
+          })}
         >
           {name}
         </button>

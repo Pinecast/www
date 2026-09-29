@@ -1,4 +1,8 @@
-import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
+import {
+  ADAPTIVE_SURFACE,
+  DARK_SURFACE,
+  MIN_TABLET_MEDIA_QUERY,
+} from '@/constants';
 import React from 'react';
 import Link from 'next/link';
 import {Body1, Caption, PillButton} from './Typography';
@@ -19,7 +23,9 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
     <div
       data-theme-adaptive
       className={css({
+        ...ADAPTIVE_SURFACE,
         [MIN_TABLET_MEDIA_QUERY]: {
+          ...DARK_SURFACE,
           background: 'var(--color-space)',
           border: '1px solid var(--color-sand)',
           borderRadius: '20px',
@@ -94,6 +100,13 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
               className={css({
                 color: 'inherit',
                 whiteSpace: 'nowrap',
+                // The inline link is shorter than its pill. Put the ring
+                // around the pill.
+                ':focus-visible': {outline: 'none'},
+                ':focus-visible > *': {
+                  outline: '2px solid var(--color-focus-ring)',
+                  outlineOffset: '2px',
+                },
               })}
             >
               <PillButton
