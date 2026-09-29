@@ -474,6 +474,63 @@ test.describe('with reduced motion', () => {
   }
 });
 
+// A choice to play the animations holds only under the reduced motion setting
+// that it was made under. A choice from an earlier visit won over reduced
+// motion that the user turned on later (WCAG 2.3.3).
+test.describe('a choice to play the animations', () => {
+  test('gives way to reduced motion that the user turns on later', async ({
+    page,
+  }) => {
+    await page.emulateMedia({reducedMotion: 'no-preference'});
+    await page.goto('/privacy');
+    // Pause, and play again: a choice to play.
+    await toggle(page).click();
+    await toggle(page).click();
+    await expect(toggle(page)).toHaveAttribute('aria-pressed', 'false');
+
+    // The user turns on reduced motion: on this page, and on the next load.
+    await page.emulateMedia({reducedMotion: 'reduce'});
+    await expect(toggle(page)).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('html')).toHaveAttribute('data-motion', 'paused');
+    await page.reload();
+    await expect(toggle(page)).toHaveAttribute('aria-pressed', 'true');
+
+    // A choice to play with reduced motion on holds.
+    await toggle(page).click();
+    await page.reload();
+    await expect(toggle(page)).toHaveAttribute('aria-pressed', 'false');
+
+    // A choice to pause holds with either setting.
+    await toggle(page).click();
+    await page.emulateMedia({reducedMotion: 'no-preference'});
+    await page.reload();
+    await expect(toggle(page)).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  // The script in the head sets the state before the page scripts load. It
+  // reads the stored choice as useMotion does, also the "playing" that the
+  // site kept before.
+  for (const [stored, state] of [
+    ['playing', 'paused'],
+    ['playing:no-preference', 'paused'],
+    ['playing:reduce', 'playing'],
+    ['paused', 'paused'],
+  ]) {
+    test(`with reduced motion, "${stored}" makes the page ${state} before React loads`, async ({
+      page,
+    }) => {
+      await page.emulateMedia({reducedMotion: 'reduce'});
+      await page.addInitScript(
+        value => localStorage.setItem('motion', value),
+        stored,
+      );
+      await page.route(/\/_next\/static\/chunks\//, route => route.abort());
+      await page.goto('/privacy');
+      await expect(page.locator('html')).toHaveAttribute('data-motion', state);
+    });
+  }
+});
+
 // The style block in the head pauses the looping CSS animations before the
 // page script runs, and without it.
 for (const reducedMotion of ['reduce', 'no-preference'] as const) {

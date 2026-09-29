@@ -64,7 +64,9 @@ by itself and runs for more than five seconds (WCAG 2.2.2). Each animation
 stops where it is: do not show a still image in its place. With
 `prefers-reduced-motion: reduce`, the animations start paused, and the user can
 still play them. `src/hooks/useMotion.ts` holds the state, and keeps the choice
-in `localStorage`.
+in `localStorage`. A choice to pause always holds. A choice to play holds only
+under the reduced motion setting that it was made under, so a user who turns on
+reduced motion later gets paused animations again.
 
 When you add an animation:
 
