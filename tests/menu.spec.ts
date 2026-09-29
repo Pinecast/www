@@ -51,6 +51,52 @@ test.describe('header menu', () => {
     });
   }
 
+  // On a phone, 100vh is the height with the browser toolbar hidden, so the
+  // end of the menu could be under the toolbar while it shows. The menu must
+  // be no taller than the dynamic viewport (dvh), which follows the toolbar.
+  // This browser has no toolbar (dvh is vh here), so check the style rules.
+  for (const viewport of [
+    {width: 375, height: 667},
+    {width: 1280, height: 720},
+  ]) {
+    test(`is no taller than the dynamic viewport at ${viewport.width}x${viewport.height}`, async ({
+      page,
+    }) => {
+      await page.setViewportSize(viewport);
+      await load(page, '/learn');
+      await openMenu(page);
+      const dialog = page.getByRole('dialog', {name: 'Menu'});
+      const maxHeights = await dialog.evaluate(element => {
+        const values: Array<string> = [];
+        const visit = (rules: CSSRuleList) => {
+          for (const rule of rules) {
+            if (rule instanceof CSSMediaRule) {
+              if (matchMedia(rule.media.mediaText).matches) {
+                visit(rule.cssRules);
+              }
+            } else if (
+              rule instanceof CSSStyleRule &&
+              rule.style.maxHeight &&
+              element.matches(rule.selectorText)
+            ) {
+              values.push(rule.style.maxHeight);
+            }
+          }
+        };
+        for (const sheet of document.styleSheets) {
+          visit(sheet.cssRules);
+        }
+        return values;
+      });
+      expect(maxHeights.length).toBeGreaterThan(0);
+      for (const value of maxHeights) {
+        expect(value).toContain('100dvh');
+      }
+      const box = (await dialog.boundingBox())!;
+      expect(box.y + box.height).toBeLessThanOrEqual(viewport.height);
+    });
+  }
+
   test('hides the sound button while it is open', async ({page}) => {
     // At 400% zoom the round sound button covered links of the menu.
     await page.setViewportSize({width: 320, height: 256});
