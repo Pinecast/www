@@ -643,6 +643,62 @@ test.describe('the mute tooltip', () => {
   });
 });
 
+// With a device scale factor of 1.33, a window of 1180px is 1180.47 CSS pixels
+// wide. Neither (max-width: 1180px) nor (min-width: 1181px) matches there, but
+// the mute button shows.
+test('at a zoomed width between 1180 and 1181px, the mute button does not cover an element that gets focus near the bottom', async ({
+  playwright,
+}) => {
+  const browser = await playwright.chromium.launch({
+    args: ['--force-device-scale-factor=1.33'],
+  });
+  try {
+    const context = await browser.newContext({
+      baseURL: test.info().project.use.baseURL,
+      reducedMotion: 'reduce',
+      // The window sets the size, not the Desktop Chrome device.
+      viewport: null,
+      deviceScaleFactor: undefined,
+    });
+    const page = await context.newPage();
+    await page.route(MEDIA, route => route.abort());
+    const cdp = await context.newCDPSession(page);
+    const {windowId} = await cdp.send('Browser.getWindowForTarget');
+    await cdp.send('Browser.setWindowBounds', {
+      windowId,
+      bounds: {width: 1180, height: 800},
+    });
+    await load(page, '/features');
+    expect(
+      await page.evaluate(() => [
+        matchMedia('(max-width: 1180px)').matches,
+        matchMedia('(min-width: 1181px)').matches,
+      ]),
+    ).toEqual([false, false]);
+    const mute = page.getByRole('button', {name: 'Unmute', exact: true});
+    await expect(mute).toBeVisible();
+
+    // A row that is 60px above the bottom of the window, where the mute
+    // button is, gets keyboard focus.
+    const row = page.getByRole('button', {name: 'Analytics', exact: true});
+    await row.evaluate(el =>
+      window.scrollBy({
+        top: el.getBoundingClientRect().bottom - (innerHeight - 60),
+        behavior: 'instant',
+      }),
+    );
+    await page.keyboard.press('Shift');
+    await row.focus();
+    await settle(page);
+    // The page scrolls the row and its ring (4px) clear of the mute button.
+    const rowBox = (await row.boundingBox())!;
+    const muteBox = (await mute.boundingBox())!;
+    expect(rowBox.y + rowBox.height + 4).toBeLessThanOrEqual(muteBox.y);
+  } finally {
+    await browser.close();
+  }
+});
+
 test.describe('the scrolling product cards', () => {
   // At this width, the second card is partly in view. Keyboard focus does not
   // scroll such an element into view by itself.
