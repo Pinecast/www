@@ -99,6 +99,18 @@ test.describe('page structure', () => {
     await expect(skip).toBeInViewport({ratio: 1});
   });
 
+  // The h1 has short words, so that it fits at 320px, and it does not say
+  // what the page holds. The title must say it (WCAG 2.4.2).
+  test('the title of /testimonial-transcripts says that it holds transcripts', async ({
+    page,
+  }) => {
+    await page.goto('/testimonial-transcripts');
+    await expect(page).toHaveTitle('Testimonial transcripts – Pinecast');
+    await expect(page.getByRole('heading', {level: 1})).toHaveText(
+      'In Their Own Words',
+    );
+  });
+
   test('the skip link does not scroll the page when it gets focus', async ({
     page,
   }) => {

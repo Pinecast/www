@@ -69,6 +69,9 @@ const timeline: Timeline = {
 type Props = {
   color?: string;
   children: React.ReactNode;
+  // The <title>, where the page title (`title`, the h1) does not say what the
+  // page is. By default it is `title`.
+  documentTitle?: string;
   heroImage: string;
   title: string;
   description: string;
@@ -110,6 +113,7 @@ export function BaseLayout(
       children,
       heroImage,
       title,
+      documentTitle = title,
       description,
       color = defaultColor,
     } = props;
@@ -154,7 +158,7 @@ export function BaseLayout(
     return (
       <>
         <Head>
-          <title>{title}</title>
+          <title>{documentTitle}</title>
           <meta name="description" content={description} />
         </Head>
         <SkipLink />
