@@ -233,8 +233,10 @@ export const MainHeader = () => {
 
   const navRef = React.useRef<HTMLDivElement>(null);
   const navScrollRef = React.useRef<HTMLElement>(null);
-  // The button that opened the menu. Focus goes back to it when the menu closes.
-  const triggerRef = React.useRef<HTMLButtonElement | null>(null);
+  // The two buttons that open the menu: "Menu" below 1181px, and "Learn"
+  // above it. One of them shows at each width.
+  const menuButtonRef = React.useRef<HTMLButtonElement>(null);
+  const learnButtonRef = React.useRef<HTMLButtonElement>(null);
   const [navOpen, setNavOpen] = React.useState(false);
   const [hasScrolled, setHasScrolled] = React.useState(false);
   useScrollListener(
@@ -262,16 +264,20 @@ export const MainHeader = () => {
       active === document.body ||
       navRef.current?.contains(active)
     ) {
-      triggerRef.current?.focus({preventScroll: true});
+      // The trigger that shows now. The width can cross 1181px while the
+      // menu is open (zoom, a turned tablet), and then the trigger that
+      // opened the menu is hidden and cannot take focus.
+      [menuButtonRef.current, learnButtonRef.current]
+        .find(button => button?.getClientRects().length)
+        ?.focus({preventScroll: true});
     }
     setNavOpen(false);
   }, []);
 
-  const toggleNav = (trigger: HTMLButtonElement) => {
+  const toggleNav = () => {
     if (navOpen) {
       closeNav();
     } else {
-      triggerRef.current = trigger;
       setNavOpen(true);
     }
   };
@@ -331,7 +337,9 @@ export const MainHeader = () => {
       if (
         first &&
         active !== first &&
-        (active === document.body || active === triggerRef.current) &&
+        (active === document.body ||
+          active === menuButtonRef.current ||
+          active === learnButtonRef.current) &&
         ++attempts < 30
       ) {
         frame = requestAnimationFrame(focusFirstLink);
@@ -444,6 +452,7 @@ export const MainHeader = () => {
         })}
       >
         <button
+          ref={menuButtonRef}
           type="button"
           aria-label="Menu"
           aria-expanded={navOpen}
@@ -467,7 +476,7 @@ export const MainHeader = () => {
           })}
           onClick={evt => {
             evt.preventDefault();
-            toggleNav(evt.currentTarget);
+            toggleNav();
           }}
         >
           <Hamburger size={24} color="var(--color-primary-dark)" />
@@ -547,12 +556,13 @@ export const MainHeader = () => {
             </MainHeaderLink>
             {/* "Learn" opens the menu. The footer links to the /learn page. */}
             <MainHeaderButton
+              ref={learnButtonRef}
               aria-expanded={navOpen}
               aria-controls={MENU_ID}
               onClick={evt => {
                 evt.preventDefault();
                 playSoundEffect(SoundEffect.CLICK_DROP);
-                toggleNav(evt.currentTarget);
+                toggleNav();
               }}
             >
               Learn

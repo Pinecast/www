@@ -369,6 +369,44 @@ test.describe('the close button of the menu', () => {
     });
   }
 
+  // The header has one trigger below 1181px and another above it. When the
+  // width crosses 1181px while the menu is open (zoom, a turned tablet), the
+  // trigger that opened the menu is hidden, and focus fell to the body.
+  for (const [from, to] of [
+    [WIDE, NARROW],
+    [NARROW, WIDE],
+  ]) {
+    test(`after a change from ${from.width}px to ${to.width}px, closing the menu focuses the trigger that shows`, async ({
+      page,
+    }) => {
+      await page.setViewportSize(from);
+      await page.goto('/privacy');
+      const menu = page.getByRole('dialog', {name: 'Menu'});
+      const shown = trigger(page, to.width);
+
+      // Escape, the close button and a click on the dim overlay.
+      for (const close of ['Escape', 'button', 'overlay']) {
+        await page.setViewportSize(from);
+        await trigger(page, from.width).focus();
+        await page.keyboard.press('Enter');
+        await expect(menu.getByRole('link').first()).toBeFocused();
+        await page.setViewportSize(to);
+        if (close === 'Escape') {
+          await page.keyboard.press('Escape');
+        } else if (close === 'button') {
+          // The first link can change with the width, so go straight to the
+          // button.
+          const button = menu.getByRole('button', {name: 'Close menu'});
+          await button.focus();
+          await page.keyboard.press('Enter');
+        } else {
+          await page.mouse.click(to.width / 2, to.height - 10);
+        }
+        await expect(menu, close).toBeHidden();
+        await expect(shown, close).toBeFocused();
+      }
+    });
+  }
 });
 
 test.describe('expandable widgets', () => {
