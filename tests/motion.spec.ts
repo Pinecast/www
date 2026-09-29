@@ -28,13 +28,41 @@ const canvasPixels = (page: Page, selector: string) =>
       }),
   );
 
-// What a canvas shows once its images and videos have loaded: the same
-// fingerprint twice, half a second apart.
+// The page counts the animation frames that it asked for and did not get yet.
+// A canvas that has stopped asks for none.
+type FrameCounter = {pendingFrames: () => number};
+test.beforeEach(async ({page}) => {
+  await page.addInitScript(() => {
+    const pending = new Set<number>();
+    const request = window.requestAnimationFrame.bind(window);
+    const cancel = window.cancelAnimationFrame.bind(window);
+    window.requestAnimationFrame = callback => {
+      const id = request(time => {
+        pending.delete(id);
+        callback(time);
+      });
+      pending.add(id);
+      return id;
+    };
+    window.cancelAnimationFrame = id => {
+      pending.delete(id);
+      cancel(id);
+    };
+    (window as unknown as FrameCounter).pendingFrames = () => pending.size;
+  });
+});
+
+// What a canvas shows once it has stopped. The same fingerprint half a second
+// apart does not prove that: on a busy machine one frame can take longer than
+// that, and the seek of a video can take seconds. So the page must also ask
+// for no animation frames, and no video that feeds the canvas (`videos`
+// matches its URL) can be seeking or loading its first frames. All of it must
+// be true twice in a row, with the same fingerprint.
 // A canvas that keeps moving never settles, and the poll fails.
 const settledCanvasPixels = async (
   page: Page,
   selector: string,
-  timeout = 10_000,
+  {videos, timeout = 30_000}: {videos?: RegExp; timeout?: number} = {},
 ) => {
   let last: Array<string> = [];
   await expect
@@ -42,7 +70,22 @@ const settledCanvasPixels = async (
       async () => {
         const previous = last;
         await page.waitForTimeout(500);
-        last = await canvasPixels(page, selector);
+        const idle = await page.evaluate(
+          source =>
+            (window as unknown as FrameCounter).pendingFrames() === 0 &&
+            Array.from(document.querySelectorAll('video'))
+              .filter(
+                video => !!source && new RegExp(source).test(video.currentSrc),
+              )
+              .every(
+                video =>
+                  !video.seeking &&
+                  (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA ||
+                    video.networkState !== HTMLMediaElement.NETWORK_LOADING),
+              ),
+          videos?.source,
+        );
+        last = idle ? await canvasPixels(page, selector) : [];
         return previous.length > 0 && previous.join() === last.join();
       },
       {timeout},
@@ -234,10 +277,14 @@ test.describe('the pause animations toggle', () => {
   });
 
   test('freezes the globe and the footer video', async ({page}) => {
+    // Its videos load and seek while the test waits. On a busy machine, that
+    // takes several seconds each time.
+    test.setTimeout(120_000);
     await page.setViewportSize(WIDE);
     await page.goto('/');
     await scrollInGlobe(page, 0.35);
     const globe = 'main section canvas';
+    const GLOBE_VIDEO = /\/videos\/globe\//;
     // The orbs drift.
     const drifting = await canvasPixels(page, globe);
     await expect.poll(() => canvasPixels(page, globe)).not.toEqual(drifting);
@@ -245,7 +292,9 @@ test.describe('the pause animations toggle', () => {
     // It stops. (A turn that the scroll started, or a video frame that is
     // still loading, can finish first.)
     await toggle(page).click();
-    const frozen = await settledCanvasPixels(page, globe);
+    const frozen = await settledCanvasPixels(page, globe, {
+      videos: GLOBE_VIDEO,
+    });
     await page.waitForTimeout(1000);
     expect(await canvasPixels(page, globe)).toEqual(frozen);
 
@@ -253,7 +302,9 @@ test.describe('the pause animations toggle', () => {
     // stops again.
     await scrollInGlobe(page, 0.6);
     await expect.poll(() => canvasPixels(page, globe)).not.toEqual(frozen);
-    const settled = await settledCanvasPixels(page, globe);
+    const settled = await settledCanvasPixels(page, globe, {
+      videos: GLOBE_VIDEO,
+    });
     await page.waitForTimeout(1000);
     expect(await canvasPixels(page, globe)).toEqual(settled);
 
@@ -270,7 +321,8 @@ test.describe('the pause animations toggle', () => {
       await footerVideo.evaluate(video => (video as HTMLVideoElement).paused),
     ).toBe(true);
     await toggle(page).click();
-    await expect.poll(footerTime).toBeGreaterThan(0.2);
+    // It loads only now. On a busy machine, that can take a few seconds.
+    await expect.poll(footerTime, {timeout: 30_000}).toBeGreaterThan(0.2);
     await toggle(page).click();
     await expect
       .poll(() =>
