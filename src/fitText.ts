@@ -6,6 +6,13 @@ import {StyleObject} from 'styletron-react';
 // capital letter, so `hyphens: auto` does not add a hyphen there either. These
 // helpers make a heading smaller only when its widest word would not fit on
 // its line. A heading whose words fit keeps its size.
+//
+// The size comes from the page width, and zoom makes the page narrower in CSS
+// pixels. Thus, at 200% zoom a heading with a long word grows less than 200%:
+// in a 700px window, "Collaborators" grows to about 123%. This is the pattern
+// of WCAG failure F94. CSS cannot tell zoom from a narrow window, and the owner
+// prefers headings that fit to headings that break a word. Thus this is a
+// known gap (finding www-title-fit-zoom).
 
 // The advance widths of Ginto Nord Condensed, in em: the `hmtx` advances of
 // public/fonts/ginto-nord-condensed.woff2 over its 1000 units per em. The

@@ -594,7 +594,12 @@ export const MainHeader = () => {
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
+          // On a phone, 100vh is the height with the browser toolbar hidden.
+          // The max-height in dvh follows the toolbar, so that the end of the
+          // menu stays above it. A browser that does not know dvh ignores the
+          // max-height and uses the height in vh.
           height: 'min(550px, calc(100vh - 80px))',
+          maxHeight: 'calc(100dvh - 80px)',
           justifyContent: 'flex-start',
           left: '10px',
           opacity: navOpen ? 1 : 0,
@@ -607,6 +612,7 @@ export const MainHeader = () => {
           width: 'calc(100vw - 20px - var(--scrollbar-width, 0))',
           [MIN_TABLET_MEDIA_QUERY]: {
             height: 'min(500px, calc(100vh - 120px))',
+            maxHeight: 'calc(100dvh - 120px)',
             top: navOpen ? '82px' : '80px',
             left: '20px',
             right: '20px',

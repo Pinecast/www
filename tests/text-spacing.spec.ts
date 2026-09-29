@@ -36,6 +36,40 @@ test.describe('with larger text spacing', () => {
     });
   }
 
+  // An open panel had `max-height: 400px` and `overflow: hidden`. At 320px
+  // the add-ons need up to 470px, so the end of their text was cut off.
+  for (const {path, buttons} of [
+    {path: '/', buttons: / add-on$/},
+    {path: '/features', buttons: /./},
+  ]) {
+    test(`each open panel of ${path} shows all its text`, async ({page}) => {
+      await page.setViewportSize({width: 320, height: 800});
+      await load(page, path, {spacing: true});
+      const main = page.getByRole('main');
+      const toggles = main.locator('button[aria-controls]', {
+        hasText: buttons,
+      });
+      expect(await toggles.count()).toBeGreaterThan(0);
+      for (const toggle of await toggles.all()) {
+        await toggle.press('Enter');
+        await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+        const panel = main.locator(
+          `[id="${await toggle.getAttribute('aria-controls')}"]`,
+        );
+        // Not inert, so that clippedText checks its text.
+        await expect(panel).not.toHaveAttribute('inert');
+        await expect(panel).toHaveCSS('max-height', 'none');
+        // Wait until the panel stops growing.
+        await expect
+          .poll(() => panel.evaluate(el => el.scrollHeight - el.clientHeight))
+          .toBe(0);
+        expect(await clippedText(panel)).toEqual([]);
+        await toggle.press('Enter');
+        await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
   test('an add-on name does not cover the next add-on', async ({page}) => {
     await page.setViewportSize({width: 320, height: 800});
     await load(page, '/', {spacing: true});
