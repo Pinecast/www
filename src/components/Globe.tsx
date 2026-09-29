@@ -794,13 +794,14 @@ const MIN_MENU_GEOMETRY = {
   portrait: getGlobeMenuGeometry(375, 667),
 };
 
-// The zoom of the page, as CSS pixels to the pixels of the window. Chrome and
-// Safari give the size of the window without the zoom (outerWidth) and the
-// size of the page with it (innerWidth). A side panel or the developer tools
-// make the page narrower but not lower, so the page must be at least as much
-// smaller in height, where the toolbars also are, as in width. Where it is
-// not, or where the browser gives both sizes with the zoom (Firefox), this is
-// 1: the menu is then at least as large as at 1280 by 800 or 375 by 667.
+// The zoom of the page, as CSS pixels to the pixels of the window. Chrome
+// gives the size of the window without the zoom (outerWidth) and the size of
+// the page with it (innerWidth). Other browsers were not checked. A side panel
+// or the developer tools make the page narrower but not lower, so the page
+// must be at least as much smaller in height, where the toolbars also are, as
+// in width. Where it is not, or where a browser gives both sizes with the
+// zoom, this is 1: the menu is then at least as large as at 1280 by 800 or 375
+// by 667.
 function getPageZoom() {
   const {innerHeight, innerWidth, outerHeight, outerWidth} = window;
   if (!innerHeight || !innerWidth || !outerHeight || !outerWidth) {
