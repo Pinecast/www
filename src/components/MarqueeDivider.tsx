@@ -7,26 +7,63 @@ import {isMotionPaused, useMotion} from '@/hooks/useMotion';
 import {ScreenReaderText} from './ScreenReaderText';
 
 export const MARQUEE_HEIGHT = 165;
-const MARQUEE_WIDTH = 900;
 const MARQUEE_BORDER_WIDTH = 50;
-const VERT_HANDLE_OFFSET = 50;
+// How far past each side of the page the path starts and ends, so that the
+// text comes in from off screen.
+const PATH_OVERHANG = 50;
+// The ends of the band stay at least this far below the top of the marquee.
+const MIN_BAND_TOP = 10;
+
+// The Figma file draws the band along an ellipse. In the 1670px desktop frame,
+// the middle of the band follows an ellipse with radii of 1413 × 366.5. The
+// 375px mobile frame uses the same ellipse at half the size. (It also halves
+// the band and the text, which stay full size here so that they can be read.)
+const DESIGN_WIDTH = 1670;
+const DESIGN_RADIUS_X = 1413;
+const DESIGN_RADIUS_Y = 366.5;
+const MOBILE_DESIGN_WIDTH = 375;
+// Scaling the ellipse by (width / DESIGN_WIDTH) ** ELLIPSE_GROWTH matches both
+// frames: the ellipse halves while the page narrows to MOBILE_DESIGN_WIDTH.
+const ELLIPSE_GROWTH =
+  Math.log(2) / Math.log(DESIGN_WIDTH / MOBILE_DESIGN_WIDTH);
 
 const FONT_SIZE = 16;
 // How fast the text moves along the path, in pixels per second.
 const TEXT_SPEED = 12;
 
+function getEllipse(width: number) {
+  const growth = (width / DESIGN_WIDTH) ** ELLIPSE_GROWTH;
+  // Past the desktop frame, the ellipse widens as fast as the page does, so
+  // that the page keeps showing the same stretch of it. Otherwise the ends of
+  // the band would turn up more and more steeply.
+  const rx = DESIGN_RADIUS_X * Math.max(growth, width / DESIGN_WIDTH);
+  // From the middle of the page to its sides, the band rises by ry times this.
+  const rise = 1 - Math.sqrt(1 - (width / 2 / rx) ** 2);
+  // On very wide pages, flatten the ellipse so that the ends of the band stay
+  // inside the marquee.
+  const ry = Math.min(
+    DESIGN_RADIUS_Y * growth,
+    (MARQUEE_HEIGHT - MARQUEE_BORDER_WIDTH - MIN_BAND_TOP) / rise,
+  );
+  return {
+    cx: width / 2,
+    // The bottom of the band sits on the bottom of the marquee.
+    cy: MARQUEE_HEIGHT - MARQUEE_BORDER_WIDTH / 2 - ry,
+    rx,
+    ry,
+  };
+}
+
 function getPath(width: number) {
-  width = Math.max(width, MARQUEE_WIDTH);
-  const horizHandleWidth = width * 0.2;
-  return `M-${MARQUEE_BORDER_WIDTH} 0C-${MARQUEE_BORDER_WIDTH} ${VERT_HANDLE_OFFSET} ${
-    width / 2 - horizHandleWidth
-  } 140 ${width / 2} 140C${width / 2 + horizHandleWidth} 140 ${
-    width + MARQUEE_BORDER_WIDTH
-  } 70 ${width + MARQUEE_BORDER_WIDTH} 0C${width + MARQUEE_BORDER_WIDTH} -70 ${
-    width / 2 + horizHandleWidth
-  } -140 ${width / 2} -140C${
-    width / 2 - horizHandleWidth
-  } -140 -${MARQUEE_BORDER_WIDTH} -70 -${MARQUEE_BORDER_WIDTH} 0`;
+  const {cx, cy, rx, ry} = getEllipse(width);
+  // The path runs along the bottom of the ellipse, from just off the left side
+  // of the page to just off the right side, and back around the top. The top is
+  // above the marquee, out of view.
+  const dx = width / 2 + PATH_OVERHANG;
+  const y = cy + ry * Math.sqrt(1 - (dx / rx) ** 2);
+  return `M${cx - dx} ${y}A${rx} ${ry} 0 0 0 ${cx + dx} ${y}A${rx} ${ry} 0 1 0 ${
+    cx - dx
+  } ${y}Z`;
 }
 
 type Props = {
@@ -61,10 +98,6 @@ export const MarqueeDivider = ({
         pathRef.current!.parentNode as SVGElement
       ).getClientRects()[0].width;
       pathRef.current!.setAttribute('d', getPath(width));
-      pathRef.current!.setAttribute(
-        'transform',
-        `translate(${Math.min(0, -(MARQUEE_WIDTH - width) / 2)}, 0)`,
-      );
 
       const pathLen = pathRef.current!.getTotalLength();
 
