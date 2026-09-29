@@ -9,7 +9,7 @@ import {
 import {Provider as StyletronProvider} from 'styletron-react';
 
 import {styletron} from '../styletron';
-import {TABLET_BREAKPOINT} from '../constants';
+import {SCROLL_PADDING_TOP, TABLET_BREAKPOINT} from '../constants';
 import StyletronServer from 'styletron-engine-atomic/lib/server/server';
 import {Provider as UserAgentContextProvider} from '../components/UserAgentContext';
 import {MOTION_ATTRIBUTE, MOTION_INIT_SCRIPT} from '../hooks/useMotion';
@@ -134,7 +134,7 @@ export default function Document({
                and, up to ${TABLET_BREAKPOINT}px, of the mute button at the
                bottom. The browser scrolls the element into view, but not
                its ring, which is outside it: leave room for that too. */
-            scroll-padding-top: 110px;
+            scroll-padding-top: ${SCROLL_PADDING_TOP}px;
             scroll-padding-bottom: 16px;
           }
           @media (max-width: ${TABLET_BREAKPOINT}px) {

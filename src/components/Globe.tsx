@@ -39,7 +39,7 @@ import {SoundEffect} from '@/hooks/useSoundEffects';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
 import {ScreenReaderText} from './ScreenReaderText';
 import {isMotionPaused, useMotion} from '@/hooks/useMotion';
-import {DARK_SURFACE, TABLET_BREAKPOINT} from '@/constants';
+import {DARK_SURFACE, SCROLL_PADDING_TOP, TABLET_BREAKPOINT} from '@/constants';
 
 const callWhenIdle = (callback: IdleRequestCallback) => {
   if (typeof window.requestIdleCallback === 'undefined') {
@@ -1363,7 +1363,9 @@ export const Globe = () => {
         />
       </div>
 
-      {/* Spacer */}
+      {/* Spacer. The links of the menu scroll to its anchors. The anchors
+          are scroll positions, not content, so they cancel the scroll padding
+          of the page. With it, each link showed the feature before its own. */}
       <div
         className={css({
           height: `calc(${VIEWPORT_HEIGHTS} * 100vh)`,
@@ -1377,6 +1379,7 @@ export const Globe = () => {
           id="distribution"
           className={css({
             position: 'absolute',
+            scrollMarginTop: `-${SCROLL_PADDING_TOP}px`,
             top: `calc(${
               getScrollOffset(DISTRIBUTION_SCROLL_OFFSET) * VIEWPORT_HEIGHTS
             } * 100vh)`,
@@ -1386,6 +1389,7 @@ export const Globe = () => {
           id="analytics"
           className={css({
             position: 'absolute',
+            scrollMarginTop: `-${SCROLL_PADDING_TOP}px`,
             top: `calc(${
               getScrollOffset(ANALYTICS_SCROLL_OFFSET) * VIEWPORT_HEIGHTS
             } * 100vh)`,
@@ -1395,6 +1399,7 @@ export const Globe = () => {
           id="monetization"
           className={css({
             position: 'absolute',
+            scrollMarginTop: `-${SCROLL_PADDING_TOP}px`,
             top: `calc(${
               getScrollOffset(MONETIZATION_SCROLL_OFFSET) * VIEWPORT_HEIGHTS
             } * 100vh)`,

@@ -137,6 +137,34 @@ for (const {viewport, deviceScaleFactor} of VIEWPORTS) {
   });
 }
 
+// A link scrolls to its anchor, and the scroll position picks the feature.
+// The scroll padding of the page under the header moved each anchor into the
+// range of the feature before it.
+for (const viewport of [
+  {width: 1280, height: 800},
+  {width: 375, height: 667},
+]) {
+  test(`each globe link shows its feature at ${viewport.width}x${viewport.height}`, async ({
+    page,
+  }) => {
+    // Without smooth scrolling (reduced motion), each link jumps at once to
+    // the same place. A smooth scroll past the moving globe took most of the
+    // time of the test.
+    await page.emulateMedia({reducedMotion: 'reduce'});
+    await page.setViewportSize(viewport);
+    await load(page, '/');
+    await page
+      .locator('#distribution')
+      .evaluate(anchor => anchor.scrollIntoView({behavior: 'instant'}));
+    for (const slug of SLUGS) {
+      const link = page.locator(`text a[href$="#${slug}"]`);
+      await link.focus();
+      await page.keyboard.press('Enter');
+      await expect(link).toHaveAttribute('aria-current', 'true');
+    }
+  });
+}
+
 // WCAG 1.4.4: the globe gets its size from the viewport, and zoom makes the
 // viewport smaller in CSS pixels. The menu got its size from the globe, so at
 // 200% zoom its text was 4.6 CSS pixels instead of 18.4, and its hit areas

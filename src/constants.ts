@@ -22,6 +22,10 @@ export const CONTENT_MAX_WIDTH = 1375;
 export const CONTENT_SIDE_PADDING = 10;
 export const CONTENT_SIDE_PADDING_TABLET = 150;
 
+// The space that the page keeps free under the fixed header when it scrolls
+// to an element (`scroll-padding-top` in _document.tsx).
+export const SCROLL_PADDING_TOP = 110;
+
 export const CAN_HOVER_MEDIA_QUERY = `@media (any-hover: hover)`;
 
 export const PREFERS_REDUCED_MOTION_QUERY = `@media (prefers-reduced-motion: reduce)`;
