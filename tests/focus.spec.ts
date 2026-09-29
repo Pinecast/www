@@ -629,6 +629,64 @@ test.describe('the mute tooltip', () => {
     await expect(tooltip(page)).toBeVisible();
   });
 
+  // In the gap between the button and the tooltip, the pointer was on
+  // neither of them, and the tooltip closed. A move in one jump does not see
+  // that, so move 1px at a time.
+  for (const {viewport, place} of [
+    {viewport: WIDE, place: 'below the header button'},
+    {viewport: NARROW, place: 'beside the floating button'},
+  ]) {
+    test(`stays while the pointer moves onto it, ${place}`, async ({page}) => {
+      await page.setViewportSize(viewport);
+      await load(page, '/privacy');
+      const scope =
+        viewport.width > 1180 ? page.getByRole('banner') : page.locator('body');
+      const mute = scope.getByRole('button', {name: 'Unmute', exact: true});
+      const tip = scope.getByRole('tooltip');
+      await mute.hover();
+      await expect(tip).toBeVisible();
+      const from = (await mute.boundingBox())!;
+      const to = (await tip.boundingBox())!;
+      const [x0, y0] = [from.x + from.width / 2, from.y + from.height / 2];
+      const [x1, y1] = [to.x + to.width / 2, to.y + to.height / 2];
+      await page.mouse.move(x0, y0);
+      await page.mouse.move(x1, y1, {
+        steps: Math.ceil(Math.hypot(x1 - x0, y1 - y0)),
+      });
+      // Longer than the fade-out, so that a tooltip that closed is hidden.
+      await page.waitForTimeout(500);
+      await expect(tip).toBeVisible();
+    });
+  }
+
+  // Escape reached both the tooltip and the menu: it closed the menu and
+  // moved focus to "Learn".
+  test('with the menu open, Escape hides only the tooltip', async ({page}) => {
+    await load(page, '/privacy');
+    const banner = page.getByRole('banner');
+    const learn = banner.getByRole('button', {name: 'Learn', exact: true});
+    await learn.focus();
+    await page.keyboard.press('Enter');
+    await expect(learn).toHaveAttribute('aria-expanded', 'true');
+    // The header stays above the dim overlay, so the pointer can reach the
+    // mute button.
+    await muteButton(page).hover();
+    await expect(tooltip(page)).toBeVisible();
+
+    await page.keyboard.press('Escape');
+    await expect(tooltip(page)).toBeHidden();
+    await expect(learn).toHaveAttribute('aria-expanded', 'true');
+    expect(
+      await page.evaluate(
+        () => !!document.activeElement?.closest('#site-menu'),
+      ),
+    ).toBe(true);
+
+    // The next Escape closes the menu.
+    await page.keyboard.press('Escape');
+    await expect(learn).toHaveAttribute('aria-expanded', 'false');
+  });
+
   test('does not show when a mouse click gives the button focus', async ({
     page,
   }) => {

@@ -183,6 +183,34 @@ export const Tooltip = React.memo(function Tooltip({
     }
   }, [position]);
 
+  // An invisible part of the tooltip that fills the gap between the control
+  // and the tooltip, and a little more on each side. The pointer is on one of
+  // the two all the way to the tooltip, so the tooltip does not close while
+  // the pointer moves onto it (WCAG 1.4.13). It takes its pointer-events from
+  // the tooltip, so it is there only while the tooltip shows.
+  const bridgePlacementStyles: StyleObject = React.useMemo(() => {
+    const across = {
+      top: 'calc(-1 * var(--tooltip-gap))',
+      bottom: 'calc(-1 * var(--tooltip-gap))',
+      width: 'var(--tooltip-gap)',
+    };
+    const along = {
+      left: 'calc(-1 * var(--tooltip-gap))',
+      right: 'calc(-1 * var(--tooltip-gap))',
+      height: 'var(--tooltip-gap)',
+    };
+    switch (position) {
+      case TooltipPosition.TOP:
+        return {...along, top: '100%'};
+      case TooltipPosition.RIGHT:
+        return {...across, right: '100%'};
+      case TooltipPosition.BOTTOM:
+        return {...along, bottom: '100%'};
+      case TooltipPosition.LEFT:
+        return {...across, left: '100%'};
+    }
+  }, [position]);
+
   const baseStyles: StyleObject = React.useMemo(() => {
     switch (position) {
       case TooltipPosition.TOP:
@@ -226,22 +254,28 @@ export const Tooltip = React.memo(function Tooltip({
   const [dismissed, setDismissed] = React.useState(false);
 
   React.useEffect(() => {
-    if (!isActive) {
+    if (!isActive || dismissed) {
       return;
     }
     const handleKeyDown = (evt: KeyboardEvent) => {
       const wrapper = wrapperRef.current;
+      // Only while the tooltip shows: on hover or on keyboard focus.
       if (
-        evt.key === 'Escape' &&
-        wrapper &&
-        (wrapper.matches(':hover') || wrapper.contains(document.activeElement))
+        evt.key !== 'Escape' ||
+        !wrapper ||
+        !(wrapper.matches(':hover') || hasFocusVisible)
       ) {
-        setDismissed(true);
+        return;
       }
+      // This listens in the capture phase and stops the event, so that
+      // Escape hides only the tooltip. Other Escape handlers on the page, such
+      // as the open header menu (useDismiss), do not get it.
+      evt.stopPropagation();
+      setDismissed(true);
     };
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isActive]);
+    document.addEventListener('keydown', handleKeyDown, true);
+    return () => document.removeEventListener('keydown', handleKeyDown, true);
+  }, [dismissed, hasFocusVisible, isActive]);
 
   const shown: StyleObject = {
     opacity: '1',
@@ -330,6 +364,11 @@ export const Tooltip = React.memo(function Tooltip({
               lineHeight: '14px',
             },
             ...(isShown ? shown : {}),
+            '::before': {
+              ...bridgePlacementStyles,
+              content: '""',
+              position: 'absolute',
+            },
           })}
         >
           {text}
