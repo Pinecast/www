@@ -15,6 +15,12 @@ export const MIN_TABLET_MEDIA_QUERY = `@media (min-width: ${
 export const MIN_DESKTOP_MEDIA_QUERY = `@media (min-width: ${
   DESKTOP_BREAKPOINT + 1
 }px)`;
+// Matches exactly where MIN_TABLET_MEDIA_QUERY does not. TABLET_MEDIA_QUERY
+// is not its opposite: with zoom, the width can be a fraction between the two
+// breakpoints (1180.5px), and then neither of them matches.
+export const NOT_MIN_TABLET_MEDIA_QUERY = `@media not all and (min-width: ${
+  TABLET_BREAKPOINT + 1
+}px)`;
 
 // The maximum width and the side padding of the content section of the page
 // layouts. The titles in it fit their words to the width that is left.

@@ -20,6 +20,10 @@ const PAGES = [
   '/learn',
   '/features/analytics',
   '/learn/create-a-podcast',
+  // The persona pages have product boxes, and scrolling cards in them.
+  '/learn/podcasting-for-beginners',
+  '/learn/podcasting-for-power-users',
+  '/learn/corporate-podcasting',
   '/privacy',
   '/testimonial-transcripts',
 ];
@@ -465,6 +469,47 @@ for (const viewport of [WIDE, NARROW]) {
       });
     }
 
+    // A closed panel is inert, so the walk of the page does not get to the
+    // links in the panels.
+    test('/features: the link in each open panel has a clear indicator', async ({
+      page,
+      context,
+    }) => {
+      test.setTimeout(120_000);
+      const decoder = await context.newPage();
+      await load(page, '/features');
+      const buttons = page.locator('main button[aria-controls]');
+      const withLink = await buttons.evaluateAll(elements =>
+        elements.map(
+          el =>
+            !!document
+              .getElementById(el.getAttribute('aria-controls')!)
+              ?.querySelector('a[href]'),
+        ),
+      );
+      const results: Array<Result> = [];
+      for (const [i, hasLink] of withLink.entries()) {
+        if (!hasLink) {
+          continue;
+        }
+        // Open the panel with the keyboard, and Tab to its link.
+        await page.keyboard.press('Shift');
+        await buttons.nth(i).focus();
+        await page.keyboard.press('Enter');
+        await expect(buttons.nth(i)).toHaveAttribute('aria-expanded', 'true');
+        await page.keyboard.press('Tab');
+        await expect(page.locator(':focus')).toHaveText('Learn more');
+        const result = await measureFocus(
+          page,
+          decoder,
+          (await markFocus(page))!,
+        );
+        results.push(result!);
+      }
+      expect(results.length).toBeGreaterThan(5);
+      expect(problems(results)).toEqual([]);
+    });
+
     test('the open menu: each Tab stop has a clear indicator', async ({
       page,
       context,
@@ -584,6 +629,64 @@ test.describe('the mute tooltip', () => {
     await expect(tooltip(page)).toBeVisible();
   });
 
+  // In the gap between the button and the tooltip, the pointer was on
+  // neither of them, and the tooltip closed. A move in one jump does not see
+  // that, so move 1px at a time.
+  for (const {viewport, place} of [
+    {viewport: WIDE, place: 'below the header button'},
+    {viewport: NARROW, place: 'beside the floating button'},
+  ]) {
+    test(`stays while the pointer moves onto it, ${place}`, async ({page}) => {
+      await page.setViewportSize(viewport);
+      await load(page, '/privacy');
+      const scope =
+        viewport.width > 1180 ? page.getByRole('banner') : page.locator('body');
+      const mute = scope.getByRole('button', {name: 'Unmute', exact: true});
+      const tip = scope.getByRole('tooltip');
+      await mute.hover();
+      await expect(tip).toBeVisible();
+      const from = (await mute.boundingBox())!;
+      const to = (await tip.boundingBox())!;
+      const [x0, y0] = [from.x + from.width / 2, from.y + from.height / 2];
+      const [x1, y1] = [to.x + to.width / 2, to.y + to.height / 2];
+      await page.mouse.move(x0, y0);
+      await page.mouse.move(x1, y1, {
+        steps: Math.ceil(Math.hypot(x1 - x0, y1 - y0)),
+      });
+      // Longer than the fade-out, so that a tooltip that closed is hidden.
+      await page.waitForTimeout(500);
+      await expect(tip).toBeVisible();
+    });
+  }
+
+  // Escape reached both the tooltip and the menu: it closed the menu and
+  // moved focus to "Learn".
+  test('with the menu open, Escape hides only the tooltip', async ({page}) => {
+    await load(page, '/privacy');
+    const banner = page.getByRole('banner');
+    const learn = banner.getByRole('button', {name: 'Learn', exact: true});
+    await learn.focus();
+    await page.keyboard.press('Enter');
+    await expect(learn).toHaveAttribute('aria-expanded', 'true');
+    // The header stays above the dim overlay, so the pointer can reach the
+    // mute button.
+    await muteButton(page).hover();
+    await expect(tooltip(page)).toBeVisible();
+
+    await page.keyboard.press('Escape');
+    await expect(tooltip(page)).toBeHidden();
+    await expect(learn).toHaveAttribute('aria-expanded', 'true');
+    expect(
+      await page.evaluate(
+        () => !!document.activeElement?.closest('#site-menu'),
+      ),
+    ).toBe(true);
+
+    // The next Escape closes the menu.
+    await page.keyboard.press('Escape');
+    await expect(learn).toHaveAttribute('aria-expanded', 'false');
+  });
+
   test('does not show when a mouse click gives the button focus', async ({
     page,
   }) => {
@@ -595,6 +698,84 @@ test.describe('the mute tooltip', () => {
     await expect(mute).toBeFocused();
     await expect(tooltip(page)).toHaveCount(0);
     await expect(mute).not.toHaveAttribute('aria-describedby');
+  });
+});
+
+// With a device scale factor of 1.33, a window of 1180px is 1180.47 CSS pixels
+// wide. Neither (max-width: 1180px) nor (min-width: 1181px) matches there, but
+// the mute button shows.
+test('at a zoomed width between 1180 and 1181px, the mute button does not cover an element that gets focus near the bottom', async ({
+  playwright,
+}) => {
+  const browser = await playwright.chromium.launch({
+    args: ['--force-device-scale-factor=1.33'],
+  });
+  try {
+    const context = await browser.newContext({
+      baseURL: test.info().project.use.baseURL,
+      reducedMotion: 'reduce',
+      // The window sets the size, not the Desktop Chrome device.
+      viewport: null,
+      deviceScaleFactor: undefined,
+    });
+    const page = await context.newPage();
+    await page.route(MEDIA, route => route.abort());
+    const cdp = await context.newCDPSession(page);
+    const {windowId} = await cdp.send('Browser.getWindowForTarget');
+    await cdp.send('Browser.setWindowBounds', {
+      windowId,
+      bounds: {width: 1180, height: 800},
+    });
+    await load(page, '/features');
+    expect(
+      await page.evaluate(() => [
+        matchMedia('(max-width: 1180px)').matches,
+        matchMedia('(min-width: 1181px)').matches,
+      ]),
+    ).toEqual([false, false]);
+    const mute = page.getByRole('button', {name: 'Unmute', exact: true});
+    await expect(mute).toBeVisible();
+
+    // A row that is 60px above the bottom of the window, where the mute
+    // button is, gets keyboard focus.
+    const row = page.getByRole('button', {name: 'Analytics', exact: true});
+    await row.evaluate(el =>
+      window.scrollBy({
+        top: el.getBoundingClientRect().bottom - (innerHeight - 60),
+        behavior: 'instant',
+      }),
+    );
+    await page.keyboard.press('Shift');
+    await row.focus();
+    await settle(page);
+    // The page scrolls the row and its ring (4px) clear of the mute button.
+    const rowBox = (await row.boundingBox())!;
+    const muteBox = (await mute.boundingBox())!;
+    expect(rowBox.y + rowBox.height + 4).toBeLessThanOrEqual(muteBox.y);
+  } finally {
+    await browser.close();
+  }
+});
+
+test.describe('the scrolling product cards', () => {
+  // At this width, the second card is partly in view. Keyboard focus does not
+  // scroll such an element into view by itself.
+  test.use({viewport: {width: 600, height: 900}});
+
+  test('a card that gets keyboard focus scrolls clear of the fade, with its ring', async ({
+    page,
+    context,
+  }) => {
+    const decoder = await context.newPage();
+    await load(page, '/learn/podcasting-for-beginners');
+    await page.keyboard.press('Shift');
+    await page.getByRole('link', {name: /^Scissor Mic Boom/}).focus();
+    await page.keyboard.press('Tab');
+    await expect(
+      page.getByRole('link', {name: /^Knox Shock Mount/}),
+    ).toBeFocused();
+    const result = await measureFocus(page, decoder, (await markFocus(page))!);
+    expect(problems([result!])).toEqual([]);
   });
 });
 

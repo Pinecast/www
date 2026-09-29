@@ -333,6 +333,32 @@ test.describe('expandable widgets', () => {
     await expect(panel).toHaveAttribute('inert', '');
   });
 
+  // The panel is a grid with one row that closes to 0fr. A 0fr row cannot
+  // close up the padding of its item, so a closed panel on /features kept a
+  // strip of 28px.
+  const rowHeight = async (panel: Locator) =>
+    panel.evaluate(el => el.firstElementChild!.getBoundingClientRect().height);
+  for (const path of ['/', '/features']) {
+    test(`each closed panel of ${path} closes to 0`, async ({page}) => {
+      await page.emulateMedia({reducedMotion: 'reduce'});
+      await page.goto(path);
+      const toggles = page.getByRole('main').locator('button[aria-controls]');
+      expect(await toggles.count()).toBeGreaterThan(0);
+      for (const toggle of await toggles.all()) {
+        const panel = await panelOf(page, toggle);
+        await expect(panel).toHaveAttribute('inert', '');
+        expect(await rowHeight(panel)).toBe(0);
+      }
+      // Also after a panel opens and closes again.
+      const toggle = toggles.first();
+      const panel = await panelOf(page, toggle);
+      await toggle.press('Enter');
+      await expect.poll(() => rowHeight(panel)).toBeGreaterThan(0);
+      await toggle.press('Enter');
+      await expect.poll(() => rowHeight(panel)).toBe(0);
+    });
+  }
+
   test('the pricing add-ons open with the keyboard and with a click on the row', async ({
     page,
   }) => {

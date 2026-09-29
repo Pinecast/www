@@ -9,7 +9,11 @@ import {
 import {Provider as StyletronProvider} from 'styletron-react';
 
 import {styletron} from '../styletron';
-import {SCROLL_PADDING_TOP, TABLET_BREAKPOINT} from '../constants';
+import {
+  NOT_MIN_TABLET_MEDIA_QUERY,
+  SCROLL_PADDING_TOP,
+  TABLET_BREAKPOINT,
+} from '../constants';
 import StyletronServer from 'styletron-engine-atomic/lib/server/server';
 import {Provider as UserAgentContextProvider} from '../components/UserAgentContext';
 import {MOTION_ATTRIBUTE, MOTION_INIT_SCRIPT} from '../hooks/useMotion';
@@ -137,7 +141,11 @@ export default function Document({
             scroll-padding-top: ${SCROLL_PADDING_TOP}px;
             scroll-padding-bottom: 16px;
           }
-          @media (max-width: ${TABLET_BREAKPOINT}px) {
+          /* Wherever the mute button shows: MainHeader hides it with
+             MIN_TABLET_MEDIA_QUERY. (max-width: ${TABLET_BREAKPOINT}px) did not
+             match at a zoomed width between ${TABLET_BREAKPOINT} and
+             ${TABLET_BREAKPOINT + 1}px. */
+          ${NOT_MIN_TABLET_MEDIA_QUERY} {
             html {
               scroll-padding-bottom: 130px;
             }
