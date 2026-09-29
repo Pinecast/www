@@ -321,9 +321,10 @@ test.describe('header menu, narrow', () => {
 // reader has no Escape key. So the dialog has its own close button.
 test.describe('the close button of the menu', () => {
   const trigger = (page: Page, width: number) =>
-    page
-      .getByRole('banner')
-      .getByRole('button', {name: width > 1180 ? 'Learn' : 'Menu', exact: true});
+    page.getByRole('banner').getByRole('button', {
+      name: width > 1180 ? 'Learn' : 'Menu',
+      exact: true,
+    });
 
   for (const viewport of [WIDE, NARROW]) {
     test(`at ${viewport.width}px, it is in the dialog, shows with focus and closes the menu`, async ({
