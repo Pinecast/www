@@ -95,7 +95,11 @@ type AudioPlayerRef = {
 };
 
 type AudioPlayerProps = Omit<Testimonial, 'color'> & {
+  // Whether the player starts by itself when it shows.
+  autoPlay: boolean;
   onPlayingChange: (playing: boolean) => void;
+  // The audio stopped: a pause, or its end.
+  onStop: (customer: string) => void;
 };
 
 const [TICKER_WIDTH_SMALL, TICKER_WIDTH_LARGE] = [110, 160];
@@ -127,7 +131,11 @@ const AudioPlayer = React.memo(
   React.forwardRef<AudioPlayerRef, AudioPlayerProps>(
     function AudioPlayer(testimonial, ref) {
       const css = useCSS();
-      const {onPlayingChange} = testimonial;
+      const {customer, onPlayingChange, onStop} = testimonial;
+      const stop = React.useCallback(
+        () => onStop(customer),
+        [onStop, customer],
+      );
 
       const quoteRef = React.useRef<HTMLDivElement>(null);
       const tickerWrapperRef = React.useRef<HTMLDivElement>(null);
@@ -154,8 +162,12 @@ const AudioPlayer = React.memo(
         ref: audioRef,
       } = useSound({
         sources: testimonial?.audioFiles,
-        autoPlay: supportsWAAPI(),
+        // Each customer gets a new player (see its key in Customers), so
+        // this starts the audio when the customer shows.
+        autoPlay: testimonial.autoPlay,
         muted: globalMuted,
+        onPause: stop,
+        onEnded: stop,
       });
 
       React.useEffect(() => {
@@ -669,22 +681,44 @@ const Customers = ({}) => {
     : null;
 
   // The block that has focus. A screen reader on a phone can press a button
-  // without focus: then its customer shows until the scroll moves on.
+  // without focus: then its customer shows and plays, but only in the scroll
+  // state of the press.
   const [focusIndex, setFocusIndex] = React.useState<number | null>(null);
   const [pick, setPick] = React.useState<{
-    index: number;
+    // The customer of the press. Null once its audio stopped (a pause, or
+    // its end): then the customer at the middle of the screen shows again,
+    // and it does not start by itself.
+    index: number | null;
+    // The customer at the middle of the screen at the press, if any.
     scrollIndex: number | null;
   } | null>(null);
-  const pickIndex = pick?.scrollIndex === scrollIndex ? pick.index : null;
-  const shownIndex = focusIndex ?? pickIndex ?? scrollIndex;
+  // The pick goes when the scroll moves on. It stayed, and it applied again
+  // each time the page came back to the scroll state of the press: the
+  // player then played by itself, with sound, over the screen reader.
+  if (pick && pick.scrollIndex !== scrollIndex) {
+    setPick(null);
+  }
+  const shownIndex = focusIndex ?? pick?.index ?? scrollIndex;
   const currentTestimonial =
     shownIndex === null ? null : TESTIMONIALS[shownIndex];
+  const autoPlay = !(pick && pick.index === null);
+
+  const stopPick = React.useCallback((customer: string) => {
+    setPick(current =>
+      current &&
+      current.index !== null &&
+      TESTIMONIALS[current.index].customer === customer
+        ? {...current, index: null}
+        : current,
+    );
+  }, []);
 
   const [playing, setPlaying] = React.useState(false);
   const {setMuted: setGlobalMuted} = useAudioManager();
   const togglePlaying = (index: number) => {
     if (index === shownIndex && playing) {
       audioPlayerRef.current?.pause();
+      stopPick(TESTIMONIALS[index].customer);
       return;
     }
     setGlobalMuted(false);
@@ -703,7 +737,6 @@ const Customers = ({}) => {
     const setPageColor = () =>
       document.body.style.setProperty('--page-bg', currentTestimonial.color);
     setPageColor();
-    audioPlayerRef.current?.play();
     // useDarkSection clears the style of the body while a dark section is at
     // the top of the screen. Focus can show a customer before the scroll to
     // the block has passed the globe, so set the color again as it scrolls.
@@ -758,7 +791,9 @@ const Customers = ({}) => {
           key={currentTestimonial.customer}
           ref={audioPlayerRef}
           {...currentTestimonial}
+          autoPlay={autoPlay}
           onPlayingChange={setPlaying}
+          onStop={stopPick}
         />
       )}
       <div
