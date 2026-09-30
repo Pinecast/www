@@ -203,7 +203,9 @@ const getTabbableElements = (root: HTMLElement) =>
 // header, outside the dialog, so a screen reader that obeys aria-modal cannot
 // reach them, and a touch screen reader has no Escape key. It is the first
 // element of the dialog, next to the trigger, and it shows only while it has
-// focus, like the skip link.
+// focus, like the skip link. The header is above the dialog and covers its top
+// 2px, or 18px from 1181px, so the button stays 8px below the header: room for
+// its focus ring (4px) and a gap.
 const CLOSE_BUTTON_STYLE: StyleObject = {
   ...FOCUS_ONLY_BUBBLE,
   // The tight corner points at the trigger, at the top left.
@@ -211,7 +213,7 @@ const CLOSE_BUTTON_STYLE: StyleObject = {
   left: '10px',
   top: '10px',
   zIndex: 1,
-  [MIN_TABLET_MEDIA_QUERY]: {left: '20px', top: '20px'},
+  [MIN_TABLET_MEDIA_QUERY]: {left: '20px', top: '26px'},
 };
 
 export const MainHeader = () => {

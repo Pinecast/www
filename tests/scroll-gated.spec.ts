@@ -322,12 +322,19 @@ test.describe('a Play button of a customer', () => {
       'Pause Make Life Work testimonial',
     );
 
-    // It pauses the same way.
+    // It pauses the same way. Then the customer at the middle of the screen
+    // shows again, and it does not start by itself.
     await playButton(page, 'Make Life Work').dispatchEvent('click');
     await expect.poll(async () => (await audio(page)).playing).toBe(false);
     await expect(playButton(page, 'Make Life Work')).toHaveAccessibleName(
       'Play Make Life Work testimonial',
     );
+    await expect(customerBlock(page, 'Living Blindfully')).toHaveAttribute(
+      'aria-current',
+      'true',
+    );
+    await page.waitForTimeout(1000);
+    expect((await audio(page)).playing).toBe(false);
 
     // With the keyboard.
     await page.keyboard.press('Shift');
@@ -337,8 +344,86 @@ test.describe('a Play button of a customer', () => {
       .poll(async () => (await audio(page)).src)
       .toMatch(/^living-blindfully\./);
     await expect.poll(async () => (await audio(page)).playing).toBe(true);
+    // The button says Pause only once the audio plays. Until then, Enter
+    // presses Play again.
+    await expect(playButton(page, 'Living Blindfully')).toHaveAccessibleName(
+      'Pause Living Blindfully testimonial',
+    );
     await page.keyboard.press('Enter');
     await expect.poll(async () => (await audio(page)).playing).toBe(false);
+  });
+
+  // A press without focus picks its customer for the scroll position of the
+  // press. The pick stayed, and each time the page came back to that
+  // position, the player of the customer played by itself, with sound, over
+  // the screen reader. It must go when the scroll moves on, when the user
+  // pauses and when the audio ends.
+  const noCustomerShows = async (page: Page) => {
+    await expect(
+      page.locator('#testimonials [aria-current="true"]'),
+    ).toHaveCount(0);
+    await expect(page.locator('#testimonials audio')).toHaveCount(0);
+  };
+  const scrollToTop = (page: Page) =>
+    page.evaluate(() => window.scrollTo({top: 0, behavior: 'instant'}));
+  // A screen reader on a phone presses the button without focus. The button
+  // says Pause once the audio plays: until then, a press is a Play again.
+  const playWithoutFocus = async (page: Page, name: string) => {
+    await playButton(page, name).dispatchEvent('click');
+    await expect(playButton(page, name)).toHaveAccessibleName(
+      `Pause ${name} testimonial`,
+    );
+  };
+
+  test('a press without focus plays only until the scroll moves on', async ({
+    page,
+  }) => {
+    await load(page, '/');
+    // At the top of the page, no customer is at the middle of the screen.
+    await playWithoutFocus(page, 'Make Life Work');
+    await scrollToCustomer(page, 'Living Blindfully');
+    await expect(customerBlock(page, 'Living Blindfully')).toHaveAttribute(
+      'aria-current',
+      'true',
+    );
+    await scrollToTop(page);
+    await noCustomerShows(page);
+  });
+
+  test('a press without focus plays only until the user pauses', async ({
+    page,
+  }) => {
+    // With reduced motion, the still player also showed over other parts of
+    // the page.
+    await page.emulateMedia({reducedMotion: 'reduce'});
+    await load(page, '/');
+    await playWithoutFocus(page, 'Make Life Work');
+    const button = playButton(page, 'Make Life Work');
+    await button.dispatchEvent('click');
+    await noCustomerShows(page);
+    await expect(button).toHaveAccessibleName(
+      'Play Make Life Work testimonial',
+    );
+    // It does not come back after a scroll away and back.
+    await scrollToCustomer(page, 'Living Blindfully');
+    await expect(customerBlock(page, 'Living Blindfully')).toHaveAttribute(
+      'aria-current',
+      'true',
+    );
+    await scrollToTop(page);
+    await noCustomerShows(page);
+  });
+
+  test('a press without focus plays only until the audio ends', async ({
+    page,
+  }) => {
+    await load(page, '/');
+    await playWithoutFocus(page, 'Make Life Work');
+    await page.locator('#testimonials audio').evaluate(el => {
+      const media = el as HTMLAudioElement;
+      media.currentTime = media.duration - 0.5;
+    });
+    await noCustomerShows(page);
   });
 });
 

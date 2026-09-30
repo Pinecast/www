@@ -100,12 +100,13 @@ test.describe('page structure', () => {
   });
 
   // The h1 has short words, so that it fits at 320px, and it does not say
-  // what the page holds. The title must say it (WCAG 2.4.2).
+  // what the page holds. The title must say it (WCAG 2.4.2). Page titles do
+  // not add the site name (www-titles-and-marquee).
   test('the title of /testimonial-transcripts says that it holds transcripts', async ({
     page,
   }) => {
     await page.goto('/testimonial-transcripts');
-    await expect(page).toHaveTitle('Testimonial transcripts – Pinecast');
+    await expect(page).toHaveTitle('Testimonial transcripts');
     await expect(page.getByRole('heading', {level: 1})).toHaveText(
       'In Their Own Words',
     );
@@ -364,6 +365,27 @@ test.describe('the close button of the menu', () => {
           );
         }),
       ).toBe(true);
+      // Its focus ring is below the header, which is above the dialog. From
+      // 1181px, the header covered the top edge of the ring.
+      const ring = () =>
+        close.evaluate(el => {
+          const style = getComputedStyle(el);
+          const size =
+            parseFloat(style.outlineOffset) + parseFloat(style.outlineWidth);
+          const header = document.querySelector('header')!;
+          return {
+            size,
+            gap:
+              el.getBoundingClientRect().top -
+              size -
+              header.getBoundingClientRect().bottom,
+          };
+        });
+      expect((await ring()).size).toBeGreaterThan(0);
+      // The menu moves down by 2px as it opens.
+      await expect
+        .poll(async () => (await ring()).gap)
+        .toBeGreaterThanOrEqual(0);
       await page.keyboard.press('Enter');
       await expect(menu).toBeHidden();
       await expect(opener).toBeFocused();
