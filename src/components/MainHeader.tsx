@@ -584,12 +584,12 @@ export const MainHeader = () => {
         >
           <MotionToggle
             style={{
-              alignSelf: 'stretch',
               paddingTop: 0,
               paddingRight: '6px',
               paddingBottom: 0,
               paddingLeft: '6px',
             }}
+            wrapperStyle={{alignSelf: 'stretch'}}
           />
           <Link
             href="https://pinecast.com/login"
