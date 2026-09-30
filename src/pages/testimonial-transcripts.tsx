@@ -14,7 +14,7 @@ export default function TestimonialTranscripts() {
       // Short words: the layout's h1 can't wrap a longer one at 320px. The
       // h1 does not say what the page holds, so the <title> does.
       title="In Their Own Words"
-      documentTitle="Testimonial transcripts – Pinecast"
+      documentTitle="Testimonial transcripts"
       description="Transcripts of the audio testimonials from Pinecast customers"
       heroImage="/images/hero/central.png"
     >

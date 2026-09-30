@@ -100,12 +100,13 @@ test.describe('page structure', () => {
   });
 
   // The h1 has short words, so that it fits at 320px, and it does not say
-  // what the page holds. The title must say it (WCAG 2.4.2).
+  // what the page holds. The title must say it (WCAG 2.4.2). Page titles do
+  // not add the site name (www-titles-and-marquee).
   test('the title of /testimonial-transcripts says that it holds transcripts', async ({
     page,
   }) => {
     await page.goto('/testimonial-transcripts');
-    await expect(page).toHaveTitle('Testimonial transcripts – Pinecast');
+    await expect(page).toHaveTitle('Testimonial transcripts');
     await expect(page.getByRole('heading', {level: 1})).toHaveText(
       'In Their Own Words',
     );
