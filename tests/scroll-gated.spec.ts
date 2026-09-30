@@ -1,5 +1,5 @@
 import {expect, test, type Locator, type Page} from '@playwright/test';
-import {load} from './helpers';
+import {load, scrollSettled} from './helpers';
 
 // The globe and the testimonials on the home page show one feature or one
 // customer at a time, as the page scrolls. Their controls must be in the page
@@ -39,8 +39,9 @@ const scrollToAnchor = (page: Page, slug: string) =>
 // On a narrow screen the links are at the bottom of the sticky stage of the
 // globe, under the floating mute button. A scroll cannot move them clear of
 // it: the browser scrolled the page by a screen at each Tab, and the link
-// stayed where it was.
-test('at 375px, a "Learn more" link with focus is clear of the mute button, and Tab does not scroll the page', async ({
+// stayed where it was. Tab still scrolls the page, to the feature of the link
+// (see globe-keyboard.spec.ts), but the stage holds the link in the same place.
+test('at 375px, a "Learn more" link with focus is clear of the mute button, and Tab keeps it in place', async ({
   page,
 }) => {
   await page.setViewportSize(NARROW);
@@ -52,12 +53,17 @@ test('at 375px, a "Learn more" link with focus is clear of the mute button, and 
   await page.keyboard.press('Shift');
   const links = learnMoreLinks(page);
   await links.first().focus();
-  const scrollY = await page.evaluate(() => window.scrollY);
+  const top = (link: Locator) =>
+    link.evaluate(el => Math.round(el.getBoundingClientRect().top));
+  const linkTop = await top(links.first());
   for (const i of [1, 2]) {
     await page.keyboard.press('Tab');
     await expect(links.nth(i)).toBeFocused();
-    expect(await page.evaluate(() => window.scrollY)).toBe(scrollY);
+    await scrollSettled(page);
     await expect(mute).toBeHidden();
+    // The scroll does not move the link on the screen, and it is all in view.
+    expect(await top(links.nth(i))).toBe(linkTop);
+    await expect(links.nth(i)).toBeInViewport({ratio: 1});
     // Nothing is on top of the link.
     expect(
       await links.nth(i).evaluate(el => {
@@ -73,7 +79,7 @@ test('at 375px, a "Learn more" link with focus is clear of the mute button, and 
       }),
     ).toBe(true);
   }
-  // Focus goes on to the links on the globe, and the button shows again.
+  // Focus goes on, out of the globe, and the button shows again.
   await page.keyboard.press('Tab');
   await expect(mute).toBeVisible();
 });
@@ -128,9 +134,14 @@ for (const viewport of [WIDE, NARROW]) {
             .toBe(i === j ? 1 : 0);
         }
       }
-      // Then the links on the globe.
+      // The links on the globe are not in the tab order: the next Tab goes out
+      // of the globe (see globe-keyboard.spec.ts).
       await page.keyboard.press('Tab');
-      await expect(page.locator('text a[href$="#distribution"]')).toBeFocused();
+      expect(
+        await page.evaluate(
+          () => !!document.activeElement?.closest('section:has(#distribution)'),
+        ),
+      ).toBe(false);
     });
 
     test('the feature whose link has focus shows instead of the one that the scroll picked', async ({
@@ -150,11 +161,11 @@ for (const viewport of [WIDE, NARROW]) {
       await expect(items.nth(1)).toHaveAttribute('aria-current', 'true');
 
       // When focus leaves the list, the feature of the scroll shows again.
-      await page.keyboard.press('Tab');
-      await page.keyboard.press('Tab');
-      await page.keyboard.press('Tab');
-      await expect(page.locator('text a[href$="#distribution"]')).toBeFocused();
+      await page.evaluate(() =>
+        (document.activeElement as HTMLElement | null)?.blur(),
+      );
       await expect.poll(() => shownOpacity(items.nth(0))).toBe(0);
+      await expect.poll(() => shownOpacity(items.nth(1))).toBe(1);
     });
   });
 }

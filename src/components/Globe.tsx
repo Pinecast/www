@@ -7,7 +7,10 @@ import * as ReactDOM from 'react-dom/client';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {MonumentGroteskBold} from '@/fonts';
 import Link from 'next/link';
-import {useScrollProgressEffect} from '@/hooks/useScrollProgress';
+import {
+  getScrollForProgress,
+  useScrollProgressEffect,
+} from '@/hooks/useScrollProgress';
 import {AV1_MIME, useAsyncImage, useAsyncVideo} from '@/hooks/useAsyncResource';
 import {useCalculateResizableValue} from '@/hooks/useCalculateResizableValue';
 import {useCanvasDrawing} from '@/hooks/useCanvasDrawing';
@@ -38,7 +41,7 @@ import {useAudioManager} from '@/hooks/useAudioManager';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
 import {ScreenReaderText} from './ScreenReaderText';
-import {isMotionPaused, useMotion} from '@/hooks/useMotion';
+import {getScrollBehavior, isMotionPaused, useMotion} from '@/hooks/useMotion';
 import {
   DARK_SURFACE,
   SCROLL_PADDING_TOP,
@@ -316,18 +319,40 @@ const IntroSection = React.memo(function IntroSection() {
   );
 });
 
+// Keyboard focus follows a press of Tab. Focus with no Tab just before it does
+// not move the page: for example, when the window gets focus again, the link
+// that had focus gets a focus event, and the user may have scrolled away since.
+const TAB_FOCUS_MS = 100;
+let lastTabKeyTime = -Infinity;
+if (typeof document !== 'undefined') {
+  document.addEventListener(
+    'keydown',
+    evt => {
+      if (evt.key === 'Tab') {
+        lastTabKeyTime = evt.timeStamp;
+      }
+    },
+    true,
+  );
+}
+
 // Scrolling picks the feature that shows. All three descriptions and their
 // links stay in the page for screen readers and the keyboard, and the others
 // are invisible. They take the same place, so that the list is as tall as the
 // longest one, whichever shows: on a narrow screen the globe makes room for it
 // (see layOut in Globe). The feature whose link has focus shows instead of the
 // one that the scroll picked, also before the scroll gets to the first one.
+// The "Learn more" links are the keyboard path through the globe: the links on
+// the globe are not in the tab order. When a "Learn more" link gets keyboard
+// focus, the page scrolls to its feature, so that the globe and the text match.
 const FeatureText = React.memo(function FeatureText({
   currentFeatureSlug,
   listRef,
+  onKeyboardFocus,
 }: {
   currentFeatureSlug: Feature | null;
   listRef: React.Ref<HTMLUListElement>;
+  onKeyboardFocus: (slug: Feature) => void;
 }) {
   const css = useCSS();
   return (
@@ -425,6 +450,12 @@ const FeatureText = React.memo(function FeatureText({
                   <ProseLink
                     {...underMuteButtonProps}
                     href={feature.href}
+                    // Only focus that Tab gave: a click follows the link.
+                    onFocus={evt => {
+                      if (evt.timeStamp - lastTabKeyTime < TAB_FOCUS_MS) {
+                        onKeyboardFocus(slug);
+                      }
+                    }}
                     style={{
                       marginBottom: '-8px',
                       paddingBottom: '8px',
@@ -602,6 +633,10 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
             startOffset="50%"
             textAnchor="middle"
           >
+            {/* These links are for the pointer and for screen readers. The
+                keyboard goes to the "Learn more" link of each feature, which
+                scrolls the globe to it. So that Tab visits each feature one
+                time, these are out of the tab order. */}
             <Link
               aria-current={
                 currentFeatureSlug === 'distribution' ? 'true' : undefined
@@ -621,6 +656,7 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
                 ...LINK_FOCUS_STYLE,
               })}
               href="#distribution"
+              tabIndex={-1}
             >
               Distribution
             </Link>
@@ -644,6 +680,7 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
                   ...LINK_FOCUS_STYLE,
                 })}
                 href="#analytics"
+                tabIndex={-1}
               >
                 Analytics
               </Link>
@@ -668,6 +705,7 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
                   ...LINK_FOCUS_STYLE,
                 })}
                 href="#monetization"
+                tabIndex={-1}
               >
                 Monetization
               </Link>
@@ -737,6 +775,14 @@ function chooseFeature(scrollRatio: number) {
   }
   return null;
 }
+
+// The scroll progress (see useScrollProgressEffect) at which each feature
+// shows: from its first value up to, and not including, its last value.
+const FEATURE_SCROLL_RANGES: Record<Feature, [number, number]> = {
+  distribution: [DISTRIBUTION_SCROLL_OFFSET, ANALYTICS_SCROLL_OFFSET],
+  analytics: [ANALYTICS_SCROLL_OFFSET, MONETIZATION_SCROLL_OFFSET],
+  monetization: [MONETIZATION_SCROLL_OFFSET, 1],
+};
 
 function getGlobeCenterPosition(
   width: number,
@@ -986,6 +1032,27 @@ export const Globe = () => {
     observer.observe(list);
     return () => observer.disconnect();
   }, [layOut]);
+
+  // Scroll to the middle of the range of a feature, where it shows with room on
+  // both sides. The anchors of the links on the globe are at the start of each
+  // range, and in a tall window the scroll does not reach the range: the
+  // progress follows from the height of the section, which the anchors do not
+  // use.
+  const scrollToFeature = React.useCallback((slug: Feature) => {
+    const section = ref.current;
+    if (!section) {
+      return;
+    }
+    const [first, last] = FEATURE_SCROLL_RANGES[slug];
+    window.scrollTo({
+      top: getScrollForProgress(
+        section,
+        (first + last) / 2,
+        window.innerHeight,
+      ),
+      behavior: getScrollBehavior(),
+    });
+  }, []);
 
   const canvas = React.useRef<HTMLCanvasElement>(null);
   const gi = useAsyncImage('/images/globe-full.jpg');
@@ -1408,6 +1475,7 @@ export const Globe = () => {
         <FeatureText
           currentFeatureSlug={currentFeatureSlug}
           listRef={featureText}
+          onKeyboardFocus={scrollToFeature}
         />
         <FeatureMenu
           currentFeatureSlug={currentFeatureSlug}

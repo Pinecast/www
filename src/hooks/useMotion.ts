@@ -84,6 +84,13 @@ export const isMotionPaused = () => {
     : reduce;
 };
 
+// How to scroll the page when the page starts the scroll, not the user: at
+// once while motion is paused and under reduced motion, also when the user
+// played the animations there. Otherwise as the page scrolls for a link that
+// the user follows.
+export const getScrollBehavior = (): ScrollBehavior =>
+  isMotionPaused() || prefersReducedMotion() ? 'instant' : 'smooth';
+
 const update = () => {
   document.documentElement.setAttribute(
     MOTION_ATTRIBUTE,
