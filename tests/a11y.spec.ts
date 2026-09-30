@@ -364,6 +364,27 @@ test.describe('the close button of the menu', () => {
           );
         }),
       ).toBe(true);
+      // Its focus ring is below the header, which is above the dialog. From
+      // 1181px, the header covered the top edge of the ring.
+      const ring = () =>
+        close.evaluate(el => {
+          const style = getComputedStyle(el);
+          const size =
+            parseFloat(style.outlineOffset) + parseFloat(style.outlineWidth);
+          const header = document.querySelector('header')!;
+          return {
+            size,
+            gap:
+              el.getBoundingClientRect().top -
+              size -
+              header.getBoundingClientRect().bottom,
+          };
+        });
+      expect((await ring()).size).toBeGreaterThan(0);
+      // The menu moves down by 2px as it opens.
+      await expect
+        .poll(async () => (await ring()).gap)
+        .toBeGreaterThanOrEqual(0);
       await page.keyboard.press('Enter');
       await expect(menu).toBeHidden();
       await expect(opener).toBeFocused();
