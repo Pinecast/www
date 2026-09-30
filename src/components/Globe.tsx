@@ -815,6 +815,15 @@ function getPageZoom() {
 // Of the menu of the page, the menu of the window without the zoom and the
 // smallest menu, the one with the largest text once it is no wider than the
 // page.
+//
+// In a portrait window at 200% zoom, the page is too narrow for the links at
+// their size without the zoom. A 768 by 1024 window has a page 384 CSS pixels
+// wide at 200%. The links at their size without the zoom (26.9 CSS pixels)
+// need 425 of the 400 units of the menu, so the ends of "Distribution" and
+// "Monetization" go past the edges of the page. The menu is as wide as the
+// page, and the links grow to 144% on the screen. A full 200% needs another
+// layout of the links (two lines, or a list), and the owner keeps the curve.
+// Thus this is a known gap (finding www-globe-links-zoom-portrait).
 function getMenuGeometry(
   width: number,
   height: number,
