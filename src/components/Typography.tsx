@@ -12,7 +12,7 @@ import {
   MonumentGroteskSemiMono,
 } from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
-import {ReactNode, useCallback} from 'react';
+import {FocusEventHandler, ReactNode, useCallback} from 'react';
 import {StyleObject} from 'styletron-react';
 import NextLink, {LinkProps} from 'next/link';
 import {RightArrow} from '@/icons/RightArrow';
@@ -426,6 +426,7 @@ export const Link = ({
   'aria-label'?: string;
   href?: string | URL;
   children: ReactNode;
+  onFocus?: FocusEventHandler<HTMLAnchorElement>;
   style?: StyleObject;
   target?: '_blank';
 }) => {

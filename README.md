@@ -84,3 +84,26 @@ When you add an animation:
   the globe do.
 
 `tests/motion.spec.ts` checks each kind.
+
+The toggle shows its pressed state as a filled square with a light icon (the
+colors of the header reversed). The focus ring is an outline around the icon.
+So, the four combinations of pressed and focused all look different, and the
+pressed toggle does not look like a focus ring. The toggle has a tooltip, like
+the one of the mute button (`Tooltip`). `tests/motion-toggle.spec.ts` checks
+the four states and the tooltip.
+
+
+## Keyboard path through the globe
+
+The globe on the home page shows one feature at a time, as the page scrolls.
+The "Learn more" link of each feature is the keyboard path: Tab goes to each one
+one time. The three links on the globe (Distribution, Analytics, Monetization)
+are for the pointer and for screen readers. They have `tabIndex={-1}`.
+
+When Tab gives a "Learn more" link focus, the page scrolls to the middle of the
+scroll range of its feature (`FEATURE_SCROLL_RANGES` in `Globe.tsx`), so that
+the globe and the text match. The scroll is smooth. It is at once under reduced
+motion and while the animations are paused (`getScrollBehavior` in
+`src/hooks/useMotion.ts`). Focus that Tab did not give does not scroll the
+page, and the mouse does what it did before.
+`tests/globe-keyboard.spec.ts` checks this.

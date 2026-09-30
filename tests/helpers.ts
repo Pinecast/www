@@ -147,3 +147,68 @@ export async function splitWords(root: Locator): Promise<Array<string>> {
     return split;
   });
 }
+
+// Wait until the page has stopped scrolling: its position stays the same for
+// about 15 frames. A smooth scroll runs for some time after its cause.
+export async function scrollSettled(page: Page) {
+  await page.evaluate(
+    () =>
+      new Promise<void>(resolve => {
+        let last = scrollY;
+        let still = 0;
+        const tick = () => {
+          if (scrollY === last) {
+            if (++still >= 15) {
+              resolve();
+              return;
+            }
+          } else {
+            still = 0;
+            last = scrollY;
+          }
+          requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }),
+  );
+}
+
+// The share of the pixels that differ clearly between two screenshots of the
+// same size: a channel that differs by more than 40 of 255.
+export async function pixelDifference(
+  page: Page,
+  a: Buffer,
+  b: Buffer,
+): Promise<number> {
+  return page.evaluate(
+    async ([first, second]) => {
+      const pixels = async (base64: string) => {
+        const bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+        const bitmap = await createImageBitmap(
+          new Blob([bytes], {type: 'image/png'}),
+        );
+        const canvas = document.createElement('canvas');
+        canvas.width = bitmap.width;
+        canvas.height = bitmap.height;
+        const ctx = canvas.getContext('2d')!;
+        ctx.drawImage(bitmap, 0, 0);
+        return ctx.getImageData(0, 0, bitmap.width, bitmap.height).data;
+      };
+      const [x, y] = await Promise.all([pixels(first), pixels(second)]);
+      let different = 0;
+      for (let i = 0; i < x.length; i += 4) {
+        if (
+          Math.max(
+            Math.abs(x[i] - y[i]),
+            Math.abs(x[i + 1] - y[i + 1]),
+            Math.abs(x[i + 2] - y[i + 2]),
+          ) > 40
+        ) {
+          different++;
+        }
+      }
+      return different / (x.length / 4);
+    },
+    [a.toString('base64'), b.toString('base64')],
+  );
+}

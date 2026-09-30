@@ -64,6 +64,9 @@ type TooltipProps = {
   children: (describedBy: string | undefined) => React.ReactNode;
   isActive?: boolean;
   position?: TooltipPosition;
+  // Styles for the element that wraps the control, for example to place it in
+  // the layout of its parent.
+  style?: StyleObject;
   text: string;
   textColor?: string;
 };
@@ -73,6 +76,7 @@ export const Tooltip = React.memo(function Tooltip({
   children,
   isActive = true,
   position = TooltipPosition.BOTTOM,
+  style,
   text,
   textColor = 'var(--color-primary-light)',
 }: TooltipProps) {
@@ -297,6 +301,7 @@ export const Tooltip = React.memo(function Tooltip({
         '--tooltip-triangle-width': '6px',
         cursor: 'pointer',
         position: 'relative',
+        ...style,
         // TODO: Handle touchstart/touchend on mobile.
         ...(canShow
           ? {
