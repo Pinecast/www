@@ -7,7 +7,10 @@ import * as React from 'react';
 // paused, and the user can still play them.
 //
 // The choice is kept in localStorage, so it stays while the user moves between
-// pages. Without a choice, the reduced motion preference decides.
+// pages. Without a choice, the reduced motion preference decides. A choice to
+// pause always holds. A choice to play holds only under the preference that it
+// was made under: a user who turns on reduced motion later gets paused
+// animations again.
 
 const STORAGE_KEY = 'motion';
 const REDUCED_MOTION_MEDIA = '(prefers-reduced-motion: reduce)';
@@ -21,22 +24,40 @@ export const MOTION_ATTRIBUTE = 'data-motion';
 // all other animations and transitions: the toggle controls it instead.
 export const loopingAnimationProps = {'data-looping': ''};
 
+// The stored value is "paused", or "playing:reduce" or "playing:no-preference"
+// with the preference of the choice. A "playing" from before counts as made
+// without reduced motion. readChoice and the script below read it the same way.
+const REDUCE = 'reduce';
+const NO_PREFERENCE = 'no-preference';
+
 // Sets MOTION_ATTRIBUTE before the first paint, so that a paused page does not
 // start to move before React loads. _document puts it in the <head>.
-export const MOTION_INIT_SCRIPT = `try{var c=localStorage.getItem(${JSON.stringify(
-  STORAGE_KEY,
-)});var p=c?c==="paused":matchMedia(${JSON.stringify(
+export const MOTION_INIT_SCRIPT = `try{var r=matchMedia(${JSON.stringify(
   REDUCED_MOTION_MEDIA,
-)}).matches;document.documentElement.setAttribute(${JSON.stringify(
+)}).matches,c=(localStorage.getItem(${JSON.stringify(
+  STORAGE_KEY,
+)})||"").split(":"),p=c[0]==="paused"||(c[0]==="playing"&&(c[1]===${JSON.stringify(
+  REDUCE,
+)})===r?false:r);document.documentElement.setAttribute(${JSON.stringify(
   MOTION_ATTRIBUTE,
 )},p?"paused":"playing")}catch(e){}`;
 
-type Choice = 'paused' | 'playing' | null;
+// `reduce` is the preference that a choice to play was made under, and null
+// for a choice to pause.
+type Choice = {paused: boolean; reduce: boolean | null} | null;
 
 const readChoice = (): Choice => {
   try {
-    const value = window.localStorage.getItem(STORAGE_KEY);
-    return value === 'paused' || value === 'playing' ? value : null;
+    const [state, preference] = (
+      window.localStorage.getItem(STORAGE_KEY) ?? ''
+    ).split(':');
+    if (state === 'paused') {
+      return {paused: true, reduce: null};
+    }
+    if (state === 'playing') {
+      return {paused: false, reduce: preference === REDUCE};
+    }
+    return null;
   } catch {
     return null;
   }
@@ -57,7 +78,10 @@ export const isMotionPaused = () => {
   if (choice === undefined) {
     choice = readChoice();
   }
-  return choice ? choice === 'paused' : prefersReducedMotion();
+  const reduce = prefersReducedMotion();
+  return choice && (choice.reduce === null || choice.reduce === reduce)
+    ? choice.paused
+    : reduce;
 };
 
 const update = () => {
@@ -69,9 +93,13 @@ const update = () => {
 };
 
 export const setMotionPaused = (paused: boolean) => {
-  choice = paused ? 'paused' : 'playing';
+  const reduce = prefersReducedMotion();
+  choice = {paused, reduce: paused ? null : reduce};
   try {
-    window.localStorage.setItem(STORAGE_KEY, choice);
+    window.localStorage.setItem(
+      STORAGE_KEY,
+      paused ? 'paused' : `playing:${reduce ? REDUCE : NO_PREFERENCE}`,
+    );
   } catch {}
   update();
 };

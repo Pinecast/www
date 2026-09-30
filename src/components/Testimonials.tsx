@@ -9,13 +9,17 @@ import {
   CAN_HOVER_MEDIA_QUERY,
   MIN_TABLET_MEDIA_QUERY,
   MOBILE_MEDIA_QUERY,
+  MUTE_BUTTON_SCROLL_PADDING_BOTTOM,
+  SCROLL_PADDING_BOTTOM,
+  SCROLL_PADDING_TOP,
   TABLET_MEDIA_QUERY,
 } from '@/constants';
 import {SecondaryButton} from './SecondaryButton';
 import {useAudioManager} from '@/hooks/useAudioManager';
+import {useMotion} from '@/hooks/useMotion';
 import {AudioFiles, useSound} from '@/hooks/useSound';
 import {SectionDivider} from './SectionDivider';
-import {ScreenReaderText} from './ScreenReaderText';
+import {FOCUS_ONLY_BUBBLE, ScreenReaderText} from './ScreenReaderText';
 import {TestimonialQuotation, type Script} from './TestimonialQuotation';
 
 import * as livingBlindfully from '../../public/testimonials/living-blindfully.json';
@@ -90,7 +94,9 @@ type AudioPlayerRef = {
   slideTo(progress: number): void;
 };
 
-type AudioPlayerProps = Omit<Testimonial, 'color'> & {};
+type AudioPlayerProps = Omit<Testimonial, 'color'> & {
+  onPlayingChange: (playing: boolean) => void;
+};
 
 const [TICKER_WIDTH_SMALL, TICKER_WIDTH_LARGE] = [110, 160];
 const [TICKER_HEIGHT_SMALL, TICKER_HEIGHT_LARGE] = [30, 40];
@@ -108,10 +114,20 @@ const [PLAYER_WIDTH_SMALL, PLAYER_WIDTH_LARGE] = [
   QUOTE_WIDTH_LARGE,
 ];
 
+// With reduced motion, the player does not slide and grow with the scroll. It
+// stays where the slide has it halfway: in the middle of the screen.
+const STILL_TICKER_TRANSLATE =
+  'calc((100vw - var(--ticker-width) + 10px) / 2) 0';
+const STILL_QUOTE_TRANSLATE = 'calc((100vw - var(--player-width)) / 2) 0';
+
+// The player of the customer in the middle of the screen, for the eye. It is
+// hidden from screen readers and out of the focus order: each customer block
+// has the same text and its own button (see Customers).
 const AudioPlayer = React.memo(
   React.forwardRef<AudioPlayerRef, AudioPlayerProps>(
     function AudioPlayer(testimonial, ref) {
       const css = useCSS();
+      const {onPlayingChange} = testimonial;
 
       const quoteRef = React.useRef<HTMLDivElement>(null);
       const tickerWrapperRef = React.useRef<HTMLDivElement>(null);
@@ -119,6 +135,15 @@ const AudioPlayer = React.memo(
       const tickerTimeRef = React.useRef<HTMLDivElement>(null);
 
       const animationsRef = React.useRef<Array<Animation>>([]);
+
+      // Reduced motion also stops the slide that already started.
+      const {reducedMotion} = useMotion();
+      React.useEffect(() => {
+        if (reducedMotion) {
+          animationsRef.current.forEach(animation => animation.cancel());
+          animationsRef.current = [];
+        }
+      }, [reducedMotion]);
 
       const {muted: globalMuted, setMuted: setGlobalMuted} = useAudioManager();
 
@@ -142,11 +167,18 @@ const AudioPlayer = React.memo(
         }
       }, [globalMuted, mute, unmute, pause]);
 
+      // The buttons of the customer blocks say Play or Pause.
+      React.useEffect(() => {
+        onPlayingChange(playing);
+      }, [onPlayingChange, playing]);
+      React.useEffect(() => () => onPlayingChange(false), [onPlayingChange]);
+
       React.useImperativeHandle(ref, () => ({
         play,
         pause,
         async slideTo(progress: number) {
           if (
+            reducedMotion ||
             !supportsWAAPI() ||
             !quoteRef.current ||
             !tickerWrapperRef.current ||
@@ -297,6 +329,7 @@ const AudioPlayer = React.memo(
 
       return (
         <div
+          aria-hidden="true"
           className={css({
             '--player-height': `${PLAYER_HEIGHT_SMALL}px`,
             '--player-width': `${PLAYER_WIDTH_SMALL}px`,
@@ -325,7 +358,6 @@ const AudioPlayer = React.memo(
           {audioElement}
           {/* White pill for time ticker */}
           <div
-            aria-hidden="true"
             ref={tickerWrapperRef}
             className={css({
               alignContent: 'center',
@@ -339,11 +371,11 @@ const AudioPlayer = React.memo(
               height: 'var(--ticker-height)',
               justifyContent: 'center',
               position: 'absolute',
-              scale: '0',
+              scale: reducedMotion ? '1' : '0',
               top: 'calc(-0.5px - 0.5 * var(--ticker-height))',
               transformOrigin: '0% 50%',
               transition: '0.2s linear',
-              translate: '0',
+              translate: reducedMotion ? STILL_TICKER_TRANSLATE : '0',
               width: 'var(--ticker-width)',
               zIndex: 4,
             })}
@@ -353,7 +385,7 @@ const AudioPlayer = React.memo(
               className={css({
                 borderRadius: 'inherit',
                 padding: '6px 14.5px',
-                scale: '0',
+                scale: reducedMotion ? '1' : '0',
                 transition: '0.2s linear',
                 whiteSpace: 'nowrap',
                 [MIN_TABLET_MEDIA_QUERY]: {
@@ -393,7 +425,10 @@ const AudioPlayer = React.memo(
               >
                 <span
                   ref={tickerTimeRef}
-                  className={css({opacity: 0, transition: '0.2s linear'})}
+                  className={css({
+                    opacity: reducedMotion ? 1 : 0,
+                    transition: '0.2s linear',
+                  })}
                 >{`${formatTime(Math.trunc(currentTimeSec))} / ${formatTime(
                   testimonial.audioDuration,
                 )}`}</span>
@@ -415,11 +450,11 @@ const AudioPlayer = React.memo(
               justifyContent: 'space-between',
               padding: '20px',
               position: 'relative',
-              scale: '0',
+              scale: reducedMotion ? '1' : '0',
               textAlign: 'left',
               top: 'var(calc(--ticker-height) + 2) / 2',
               transition: '0.2s linear',
-              translate: '0',
+              translate: reducedMotion ? STILL_QUOTE_TRANSLATE : '0',
               width: 'var(--quote-width)',
             })}
           >
@@ -437,16 +472,12 @@ const AudioPlayer = React.memo(
                 },
               }}
             >
-              {/* Each customer block below holds this quote for screen
-                  readers, whatever the scroll position. */}
-              <span aria-hidden="true">
-                <TestimonialQuotation
-                  audio={audioRef}
-                  script={testimonial.script}
-                  quotation={testimonial.quotation}
-                  quotationStartIdx={testimonial.quotationStartIdx}
-                />
-              </span>
+              <TestimonialQuotation
+                audio={audioRef}
+                script={testimonial.script}
+                quotation={testimonial.quotation}
+                quotationStartIdx={testimonial.quotationStartIdx}
+              />
             </Body3>
             <footer
               className={css({
@@ -477,19 +508,14 @@ const AudioPlayer = React.memo(
               >
                 {`Customer since ${testimonial.joinYear}`}
               </Caption>
+              {/* For the mouse. The keyboard and screen readers use the
+                  button of the customer block. */}
               <button
                 type="button"
+                tabIndex={-1}
                 className={css({
                   all: 'unset',
                   appearance: 'none',
-                  // The black box clips what goes outside it (contain), and
-                  // the hit area of the text below fills its corner. Put
-                  // the ring around the word instead.
-                  ':focus-visible [data-focus-ring]': {
-                    borderRadius: '2px',
-                    outline: '2px solid var(--color-white)',
-                    outlineOffset: '2px',
-                  },
                 })}
                 onClick={() => {
                   if (playing) {
@@ -525,10 +551,7 @@ const AudioPlayer = React.memo(
                     },
                   }}
                 >
-                  <span data-focus-ring>{playing ? 'Pause' : 'Play'}</span>
-                  <ScreenReaderText>
-                    {` ${testimonial.customer} testimonial`}
-                  </ScreenReaderText>
+                  {playing ? 'Pause' : 'Play'}
                 </Caption>
               </button>
             </footer>
@@ -539,11 +562,16 @@ const AudioPlayer = React.memo(
   ),
 );
 
+const [BLOCK_PADDING_BOTTOM_SMALL, BLOCK_PADDING_BOTTOM_LARGE] = [
+  '10vh',
+  '1vh',
+];
+
 const CUSTOMER_BLOCK_STYLE: StyleObject = {
   display: 'grid',
   marginBottom: '-9vh',
   marginTop: '-10vh',
-  paddingBottom: '10vh',
+  paddingBottom: BLOCK_PADDING_BOTTOM_SMALL,
   paddingLeft: '10vw',
   paddingRight: '10vw',
   paddingTop: '14vh',
@@ -553,7 +581,7 @@ const CUSTOMER_BLOCK_STYLE: StyleObject = {
   [MIN_TABLET_MEDIA_QUERY]: {
     marginBottom: '-4vh',
     marginTop: '-12vh',
-    paddingBottom: '1vh',
+    paddingBottom: BLOCK_PADDING_BOTTOM_LARGE,
     paddingLeft: '10vw',
     paddingRight: '10vw',
     paddingTop: '24vh',
@@ -565,6 +593,59 @@ const CUSTOMER_BLOCK_STYLE: StyleObject = {
 // clipped edges of the section.
 const CUSTOMER_NAME_STYLE: StyleObject = {maxWidth: '100vw'};
 
+// The lower half of the screen is not a place for the button of a customer
+// block: the façade hides the filled names there, and the player is under the
+// middle. The button stays this far above the time ticker of the player, which
+// is in the middle of the screen: room for its ring.
+const ABOVE_TICKER = 12;
+
+// The Play button of a customer block shows only while it has focus, under
+// the name. Its scroll margin, less the scroll padding of the page, is the
+// distance from the bottom of the screen to ABOVE_TICKER over the ticker, so
+// that a scroll to its end puts it there.
+const BLOCK_BUTTON_STYLE: StyleObject = {
+  ...FOCUS_ONLY_BUBBLE,
+  left: '50%',
+  top: `calc(100% - ${BLOCK_PADDING_BOTTOM_SMALL} + 10px)`,
+  translate: '-50%',
+  scrollMarginBottom: `calc(50lvh + ${
+    TICKER_HEIGHT_SMALL / 2 + ABOVE_TICKER - MUTE_BUTTON_SCROLL_PADDING_BOTTOM
+  }px)`,
+  // The filled names draw their letters with a stroke.
+  WebkitTextFillColor: 'currentcolor',
+  WebkitTextStrokeWidth: '0',
+  [MIN_TABLET_MEDIA_QUERY]: {
+    top: `calc(100% - ${BLOCK_PADDING_BOTTOM_LARGE} + 10px)`,
+    scrollMarginBottom: `calc(50lvh + ${
+      TICKER_HEIGHT_LARGE / 2 + ABOVE_TICKER - SCROLL_PADDING_BOTTOM
+    }px)`,
+  },
+};
+
+// The browser scrolls a focused element into view only when it is out of
+// view, and it may leave the button in the lower half. So scroll it up to its
+// place, as the page scrolls (smooth, unless the user prefers reduced motion).
+// From below, show the name over the button too.
+const scrollAbovePlayer = (button: HTMLElement) => {
+  const ticker = window.matchMedia(
+    MIN_TABLET_MEDIA_QUERY.replace(/^@media\s*/, ''),
+  ).matches
+    ? TICKER_HEIGHT_LARGE
+    : TICKER_HEIGHT_SMALL;
+  const name = button.parentElement?.querySelector('h3');
+  if (
+    button.getBoundingClientRect().bottom >
+    window.innerHeight / 2 - ticker / 2 - ABOVE_TICKER
+  ) {
+    button.scrollIntoView({block: 'end', inline: 'nearest'});
+  } else if (name && name.getBoundingClientRect().top < SCROLL_PADDING_TOP) {
+    name.scrollIntoView({block: 'start', inline: 'nearest'});
+  }
+};
+
+// The customer in the middle of the screen shows in the player, or the one
+// whose block has focus. Each block has the quote, "Customer since" and a
+// Play button, in the page and in the focus order at every scroll position.
 const Customers = ({}) => {
   const css = useCSS();
 
@@ -583,19 +664,62 @@ const Customers = ({}) => {
     // Observe when a customer block intersects at the middle of viewport, where StickyLine is
     rootMargin: '-50% 0% -50% 0%',
   });
+  const scrollIndex = visibleCustomer
+    ? customersRef.current.indexOf(visibleCustomer)
+    : null;
 
+  // The block that has focus. A screen reader on a phone can press a button
+  // without focus: then its customer shows until the scroll moves on.
+  const [focusIndex, setFocusIndex] = React.useState<number | null>(null);
+  const [pick, setPick] = React.useState<{
+    index: number;
+    scrollIndex: number | null;
+  } | null>(null);
+  const pickIndex = pick?.scrollIndex === scrollIndex ? pick.index : null;
+  const shownIndex = focusIndex ?? pickIndex ?? scrollIndex;
   const currentTestimonial =
-    visibleCustomer &&
-    TESTIMONIALS[customersRef.current.findIndex(el => el === visibleCustomer)];
+    shownIndex === null ? null : TESTIMONIALS[shownIndex];
+
+  const [playing, setPlaying] = React.useState(false);
+  const {setMuted: setGlobalMuted} = useAudioManager();
+  const togglePlaying = (index: number) => {
+    if (index === shownIndex && playing) {
+      audioPlayerRef.current?.pause();
+      return;
+    }
+    setGlobalMuted(false);
+    if (index === shownIndex) {
+      audioPlayerRef.current?.play();
+    } else {
+      // The player changes to this customer, and plays it.
+      setPick({index, scrollIndex});
+    }
+  };
 
   React.useEffect(() => {
-    if (currentTestimonial) {
-      document.body.style.setProperty('--page-bg', currentTestimonial.color);
-      audioPlayerRef.current?.play();
+    if (!currentTestimonial) {
+      return;
     }
+    const setPageColor = () =>
+      document.body.style.setProperty('--page-bg', currentTestimonial.color);
+    setPageColor();
+    audioPlayerRef.current?.play();
+    // useDarkSection clears the style of the body while a dark section is at
+    // the top of the screen. Focus can show a customer before the scroll to
+    // the block has passed the globe, so set the color again as it scrolls.
+    document.addEventListener('scroll', setPageColor, {passive: true});
     return () => {
+      document.removeEventListener('scroll', setPageColor);
       document.body.style.removeProperty('--page-bg');
     };
+  }, [currentTestimonial]);
+
+  // Each customer gets a new player (see its key), and it starts at the
+  // point of the slide where the last one was: the slide follows the scroll,
+  // and the progress changes only when the page scrolls.
+  const progressRef = React.useRef(0);
+  React.useLayoutEffect(() => {
+    audioPlayerRef.current?.slideTo(progressRef.current);
   }, [currentTestimonial]);
 
   const intersectionProgressRef = React.useRef<HTMLDivElement>(null);
@@ -604,6 +728,7 @@ const Customers = ({}) => {
     React.useMemo(
       () => ({
         async onProgress(target: HTMLDivElement, progress: number) {
+          progressRef.current = progress;
           if (audioPlayerRef.current) {
             await audioPlayerRef.current.slideTo(progress);
           }
@@ -626,7 +751,15 @@ const Customers = ({}) => {
       })}
     >
       {currentTestimonial && (
-        <AudioPlayer ref={audioPlayerRef} {...currentTestimonial} />
+        <AudioPlayer
+          // A new player for another customer: the audio of the last one
+          // stops, and this one loads. With one player for all, the audio
+          // that played went on when the customer changed.
+          key={currentTestimonial.customer}
+          ref={audioPlayerRef}
+          {...currentTestimonial}
+          onPlayingChange={setPlaying}
+        />
       )}
       <div
         className={css({
@@ -720,7 +853,13 @@ const Customers = ({}) => {
               aria-current={item === currentTestimonial ? 'true' : undefined}
               key={item.customer}
               ref={addCustomerRef(idx)}
-              className={css(CUSTOMER_BLOCK_STYLE)}
+              className={css({...CUSTOMER_BLOCK_STYLE, position: 'relative'})}
+              onFocus={() => setFocusIndex(idx)}
+              onBlur={evt => {
+                if (!evt.currentTarget.contains(evt.relatedTarget)) {
+                  setFocusIndex(current => (current === idx ? null : current));
+                }
+              }}
             >
               <H1 level={3} style={CUSTOMER_NAME_STYLE}>
                 {item.customer}
@@ -730,6 +869,18 @@ const Customers = ({}) => {
               <ScreenReaderText as="blockquote">
                 {item.quotation.replace(/'/g, '’')}
               </ScreenReaderText>
+              <ScreenReaderText as="p">
+                {`Customer since ${item.joinYear}`}
+              </ScreenReaderText>
+              <button
+                type="button"
+                className={css(BLOCK_BUTTON_STYLE)}
+                onClick={() => togglePlaying(idx)}
+                onFocus={evt => scrollAbovePlayer(evt.currentTarget)}
+              >
+                {idx === shownIndex && playing ? 'Pause' : 'Play'}
+                <ScreenReaderText>{` ${item.customer} testimonial`}</ScreenReaderText>
+              </button>
             </div>
           ))}
         </div>

@@ -99,6 +99,18 @@ test.describe('page structure', () => {
     await expect(skip).toBeInViewport({ratio: 1});
   });
 
+  // The h1 has short words, so that it fits at 320px, and it does not say
+  // what the page holds. The title must say it (WCAG 2.4.2).
+  test('the title of /testimonial-transcripts says that it holds transcripts', async ({
+    page,
+  }) => {
+    await page.goto('/testimonial-transcripts');
+    await expect(page).toHaveTitle('Testimonial transcripts – Pinecast');
+    await expect(page.getByRole('heading', {level: 1})).toHaveText(
+      'In Their Own Words',
+    );
+  });
+
   test('the skip link does not scroll the page when it gets focus', async ({
     page,
   }) => {
@@ -173,14 +185,18 @@ const expectOpenModalMenu = async (page: Page, trigger: Locator) => {
     ),
   ).toBe(true);
 
-  // Tab goes around the menu and back to the first link. Shift+Tab goes from
-  // the first link to the last. Neither leaves the menu.
-  const count = await links.count();
+  // Tab goes around the menu, through each link and the close button, and
+  // back to the first link. Shift+Tab goes from the first link to the close
+  // button, and then to the last link. Neither leaves the menu.
+  const close = menu.getByRole('button', {name: 'Close menu'});
+  const count = (await links.count()) + 1;
   for (let i = 0; i < count; i++) {
     await page.keyboard.press('Tab');
     expect(await focusIsInside(page, '#site-menu')).toBe(true);
   }
   await expect(links.first()).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
+  await expect(close).toBeFocused();
   await page.keyboard.press('Shift+Tab');
   await expect(links.last()).toBeFocused();
 
@@ -298,6 +314,100 @@ test.describe('header menu, narrow', () => {
       await expect(svg).toHaveAttribute('focusable', 'false');
     }
   });
+});
+
+// The triggers of the menu are in the header, outside the modal dialog. A
+// screen reader that obeys aria-modal cannot reach them, and a touch screen
+// reader has no Escape key. So the dialog has its own close button.
+test.describe('the close button of the menu', () => {
+  const trigger = (page: Page, width: number) =>
+    page.getByRole('banner').getByRole('button', {
+      name: width > 1180 ? 'Learn' : 'Menu',
+      exact: true,
+    });
+
+  for (const viewport of [WIDE, NARROW]) {
+    test(`at ${viewport.width}px, it is in the dialog, shows with focus and closes the menu`, async ({
+      page,
+    }) => {
+      await page.setViewportSize(viewport);
+      await page.goto('/privacy');
+      const menu = page.getByRole('dialog', {name: 'Menu'});
+      const close = menu.getByRole('button', {name: 'Close menu'});
+      const opener = trigger(page, viewport.width);
+
+      // A screen reader on a phone activates it without keyboard focus.
+      await opener.click();
+      await expect(menu.getByRole('link').first()).toBeFocused();
+      // Until it has focus, it takes no room on the screen.
+      expect((await close.boundingBox())!.width).toBeLessThanOrEqual(1);
+      await close.dispatchEvent('click');
+      await expect(menu).toBeHidden();
+      await expect(opener).toHaveAttribute('aria-expanded', 'false');
+      await expect(opener).toBeFocused();
+
+      // With the keyboard, it is one Shift+Tab from the first link, and it
+      // shows in full while it has focus.
+      await page.keyboard.press('Enter');
+      await expect(menu.getByRole('link').first()).toBeFocused();
+      await page.keyboard.press('Shift+Tab');
+      await expect(close).toBeFocused();
+      const box = (await close.boundingBox())!;
+      expect(box.width).toBeGreaterThan(80);
+      expect(box.height).toBeGreaterThanOrEqual(24);
+      await expect(close).toBeInViewport({ratio: 1});
+      expect(
+        await close.evaluate(el => {
+          const {left, top, width, height} = el.getBoundingClientRect();
+          return el.contains(
+            document.elementFromPoint(left + width / 2, top + height / 2),
+          );
+        }),
+      ).toBe(true);
+      await page.keyboard.press('Enter');
+      await expect(menu).toBeHidden();
+      await expect(opener).toBeFocused();
+    });
+  }
+
+  // The header has one trigger below 1181px and another above it. When the
+  // width crosses 1181px while the menu is open (zoom, a turned tablet), the
+  // trigger that opened the menu is hidden, and focus fell to the body.
+  for (const [from, to] of [
+    [WIDE, NARROW],
+    [NARROW, WIDE],
+  ]) {
+    test(`after a change from ${from.width}px to ${to.width}px, closing the menu focuses the trigger that shows`, async ({
+      page,
+    }) => {
+      await page.setViewportSize(from);
+      await page.goto('/privacy');
+      const menu = page.getByRole('dialog', {name: 'Menu'});
+      const shown = trigger(page, to.width);
+
+      // Escape, the close button and a click on the dim overlay.
+      for (const close of ['Escape', 'button', 'overlay']) {
+        await page.setViewportSize(from);
+        await trigger(page, from.width).focus();
+        await page.keyboard.press('Enter');
+        await expect(menu.getByRole('link').first()).toBeFocused();
+        await page.setViewportSize(to);
+        if (close === 'Escape') {
+          await page.keyboard.press('Escape');
+        } else if (close === 'button') {
+          // The first link can change with the width, so go straight to the
+          // button.
+          const button = menu.getByRole('button', {name: 'Close menu'});
+          await button.focus();
+          await page.keyboard.press('Enter');
+        } else {
+          await page.mouse.click(to.width / 2, to.height - 10);
+        }
+        await expect(menu, close).toBeHidden();
+        await expect(shown, close).toBeFocused();
+      }
+    });
+  }
 });
 
 test.describe('expandable widgets', () => {

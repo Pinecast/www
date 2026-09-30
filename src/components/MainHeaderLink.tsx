@@ -52,6 +52,7 @@ export const MainHeaderButton = ({
 }: {
   children: ReactNode;
   onClick: (evt: React.MouseEvent<HTMLButtonElement>) => void;
+  ref?: React.Ref<HTMLButtonElement>;
   'aria-controls'?: string;
   'aria-expanded'?: boolean;
 }) => {

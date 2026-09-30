@@ -39,7 +39,12 @@ import {SoundEffect} from '@/hooks/useSoundEffects';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
 import {ScreenReaderText} from './ScreenReaderText';
 import {isMotionPaused, useMotion} from '@/hooks/useMotion';
-import {DARK_SURFACE, SCROLL_PADDING_TOP, TABLET_BREAKPOINT} from '@/constants';
+import {
+  DARK_SURFACE,
+  SCROLL_PADDING_TOP,
+  TABLET_BREAKPOINT,
+  underMuteButtonProps,
+} from '@/constants';
 
 const callWhenIdle = (callback: IdleRequestCallback) => {
   if (typeof window.requestIdleCallback === 'undefined') {
@@ -311,10 +316,12 @@ const IntroSection = React.memo(function IntroSection() {
   );
 });
 
-// Scrolling picks the feature that shows. All three descriptions stay in the
-// page for screen readers, and the others are invisible. They take the same
-// place, so that the list is as tall as the longest one, whichever shows: on a
-// narrow screen the globe makes room for it (see layOut in Globe).
+// Scrolling picks the feature that shows. All three descriptions and their
+// links stay in the page for screen readers and the keyboard, and the others
+// are invisible. They take the same place, so that the list is as tall as the
+// longest one, whichever shows: on a narrow screen the globe makes room for it
+// (see layOut in Globe). The feature whose link has focus shows instead of the
+// one that the scroll picked, also before the scroll gets to the first one.
 const FeatureText = React.memo(function FeatureText({
   currentFeatureSlug,
   listRef,
@@ -338,6 +345,7 @@ const FeatureText = React.memo(function FeatureText({
         position: 'absolute',
         width: '100%',
         zIndex: 4,
+        ':focus-within': {opacity: '1', pointerEvents: 'auto'},
 
         [WIDE_DESCRIPTION_PLACEMENT_QUERY]: {
           gap: '20px',
@@ -374,6 +382,11 @@ const FeatureText = React.memo(function FeatureText({
               listStyle: 'none',
               margin: 0,
               padding: 0,
+              // Only the feature with focus shows.
+              ':focus-within > li:not(:focus-within)': {
+                opacity: 0,
+                pointerEvents: 'none',
+              },
             })}
           >
             {(Object.keys(FEATURES) as Array<Feature>).map(slug => {
@@ -388,6 +401,7 @@ const FeatureText = React.memo(function FeatureText({
                     alignSelf: 'end',
                     [WIDE_DESCRIPTION_PLACEMENT_QUERY]: {alignSelf: 'center'},
                     ...(isCurrent ? {} : {opacity: 0, pointerEvents: 'none'}),
+                    ':focus-within': {opacity: 1, pointerEvents: 'auto'},
                   })}
                   key={slug}
                 >
@@ -403,16 +417,18 @@ const FeatureText = React.memo(function FeatureText({
                     <ScreenReaderText>{feature.title}: </ScreenReaderText>
                     {feature.description}
                   </Body1>
-                  {/* Only the link of the feature on screen shows, so that
-                      focus never lands on a hidden one. The others keep its
-                      place. */}
+                  {/* Each link can take focus at every scroll position. Its
+                      feature shows while it has focus. On a narrow screen
+                      the link is at the bottom of the sticky stage, where
+                      the mute button is, and a scroll cannot move it clear
+                      of the button. */}
                   <ProseLink
+                    {...underMuteButtonProps}
                     href={feature.href}
                     style={{
                       marginBottom: '-8px',
                       paddingBottom: '8px',
                       paddingTop: '8px',
-                      visibility: isCurrent ? undefined : 'hidden',
                     }}
                   >
                     Learn more
@@ -771,20 +787,48 @@ const getMenuTextSize = ({width, fontSize}: MenuGeometry) =>
 // The globe gets its size from the viewport, and zoom makes the viewport
 // smaller in CSS pixels. So that the link text grows with zoom (WCAG 1.4.4),
 // the menu is never smaller than at 1280 by 800 (landscape) or 375 by 667
-// (portrait). Only a page narrower than that menu makes it smaller.
+// (portrait), and never smaller than the menu of the same window without the
+// zoom. Only a page narrower than the menu makes it smaller.
 const MIN_MENU_GEOMETRY = {
   landscape: getGlobeMenuGeometry(1280, 800),
   portrait: getGlobeMenuGeometry(375, 667),
 };
 
-function getMenuGeometry(width: number, height: number): MenuGeometry {
-  const geometry = getGlobeMenuGeometry(width, height);
-  const min =
-    width < height ? MIN_MENU_GEOMETRY.portrait : MIN_MENU_GEOMETRY.landscape;
-  if (getMenuTextSize(geometry) >= getMenuTextSize(min)) {
-    return geometry;
+// The zoom of the page, as CSS pixels to the pixels of the window. Chrome
+// gives the size of the window without the zoom (outerWidth) and the size of
+// the page with it (innerWidth). Other browsers were not checked. A side panel
+// or the developer tools make the page narrower but not lower, so the page
+// must be at least as much smaller in height, where the toolbars also are, as
+// in width. Where it is not, or where a browser gives both sizes with the
+// zoom, this is 1: the menu is then at least as large as at 1280 by 800 or 375
+// by 667.
+function getPageZoom() {
+  const {innerHeight, innerWidth, outerHeight, outerWidth} = window;
+  if (!innerHeight || !innerWidth || !outerHeight || !outerWidth) {
+    return 1;
   }
-  return {...min, width: Math.min(min.width, width)};
+  const byWidth = outerWidth / innerWidth;
+  const byHeight = outerHeight / innerHeight;
+  return byWidth > 1.05 && byHeight >= byWidth - 0.05 ? byWidth : 1;
+}
+
+// Of the menu of the page, the menu of the window without the zoom and the
+// smallest menu, the one with the largest text once it is no wider than the
+// page.
+function getMenuGeometry(
+  width: number,
+  height: number,
+  zoom: number,
+): MenuGeometry {
+  return [
+    getGlobeMenuGeometry(width, height),
+    getGlobeMenuGeometry(width * zoom, height * zoom),
+    width < height ? MIN_MENU_GEOMETRY.portrait : MIN_MENU_GEOMETRY.landscape,
+  ]
+    .map(geometry => ({...geometry, width: Math.min(geometry.width, width)}))
+    .reduce((largest, geometry) =>
+      getMenuTextSize(geometry) > getMenuTextSize(largest) ? geometry : largest,
+    );
 }
 
 // The distance from the top of the menu to the bottom of its text and of the
@@ -861,7 +905,7 @@ export const Globe = () => {
     };
     const m = menu.current!;
     const isMobile = width < height;
-    const geometry = getMenuGeometry(width, height);
+    const geometry = getMenuGeometry(width, height, getPageZoom());
     const menuLeft = (width - geometry.width) / 2;
     const menuContentHeight = getMenuContentHeight(geometry);
     let globeCenterPosition = getGlobeCenterPosition(width, height, false);

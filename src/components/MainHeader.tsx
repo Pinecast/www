@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {StyleObject} from 'styletron-react';
 import {useCSS} from '@/hooks/useCSS';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
@@ -6,6 +7,7 @@ import {
   ADAPTIVE_SURFACE,
   MIN_TABLET_MEDIA_QUERY,
   MOBILE_MEDIA_QUERY,
+  MUTE_BUTTON_ATTRIBUTE,
   TABLET_MEDIA_QUERY,
 } from '@/constants';
 import Link from 'next/link';
@@ -32,7 +34,7 @@ import {
   PersonaSlug,
 } from './CustomerPersona';
 import {Tooltip, TooltipPosition} from './Tooltip';
-import {ScreenReaderText} from './ScreenReaderText';
+import {FOCUS_ONLY_BUBBLE, ScreenReaderText} from './ScreenReaderText';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 import {Bubble, BUBBLE_FOCUS_RING} from './Bubble';
 import {useScrollListener} from '@/hooks/useScrollProgress';
@@ -197,14 +199,31 @@ const getTabbableElements = (root: HTMLElement) =>
     ),
   ).filter(element => element.getClientRects().length > 0);
 
+// The close button of the open menu. The buttons that open the menu are in the
+// header, outside the dialog, so a screen reader that obeys aria-modal cannot
+// reach them, and a touch screen reader has no Escape key. It is the first
+// element of the dialog, next to the trigger, and it shows only while it has
+// focus, like the skip link.
+const CLOSE_BUTTON_STYLE: StyleObject = {
+  ...FOCUS_ONLY_BUBBLE,
+  // The tight corner points at the trigger, at the top left.
+  borderRadius: '3px 22px 22px 22px',
+  left: '10px',
+  top: '10px',
+  zIndex: 1,
+  [MIN_TABLET_MEDIA_QUERY]: {left: '20px', top: '20px'},
+};
+
 export const MainHeader = () => {
   const css = useCSS();
   const router = useRouter();
 
   const navRef = React.useRef<HTMLDivElement>(null);
   const navScrollRef = React.useRef<HTMLElement>(null);
-  // The button that opened the menu. Focus goes back to it when the menu closes.
-  const triggerRef = React.useRef<HTMLButtonElement | null>(null);
+  // The two buttons that open the menu: "Menu" below 1181px, and "Learn"
+  // above it. One of them shows at each width.
+  const menuButtonRef = React.useRef<HTMLButtonElement>(null);
+  const learnButtonRef = React.useRef<HTMLButtonElement>(null);
   const [navOpen, setNavOpen] = React.useState(false);
   const [hasScrolled, setHasScrolled] = React.useState(false);
   useScrollListener(
@@ -232,16 +251,20 @@ export const MainHeader = () => {
       active === document.body ||
       navRef.current?.contains(active)
     ) {
-      triggerRef.current?.focus({preventScroll: true});
+      // The trigger that shows now. The width can cross 1181px while the
+      // menu is open (zoom, a turned tablet), and then the trigger that
+      // opened the menu is hidden and cannot take focus.
+      [menuButtonRef.current, learnButtonRef.current]
+        .find(button => button?.getClientRects().length)
+        ?.focus({preventScroll: true});
     }
     setNavOpen(false);
   }, []);
 
-  const toggleNav = (trigger: HTMLButtonElement) => {
+  const toggleNav = () => {
     if (navOpen) {
       closeNav();
     } else {
-      triggerRef.current = trigger;
       setNavOpen(true);
     }
   };
@@ -289,7 +312,11 @@ export const MainHeader = () => {
     let frame = 0;
     let attempts = 0;
     const focusFirstLink = () => {
-      const first = getTabbableElements(nav)[0];
+      // The first link, not the close button before it: the close button is
+      // one Shift+Tab away.
+      const first = getTabbableElements(nav).find(
+        element => element.localName === 'a',
+      );
       // The menu does not scroll the page, and it grows from the top, so do
       // not scroll anything to show the link.
       first?.focus({preventScroll: true});
@@ -297,7 +324,9 @@ export const MainHeader = () => {
       if (
         first &&
         active !== first &&
-        (active === document.body || active === triggerRef.current) &&
+        (active === document.body ||
+          active === menuButtonRef.current ||
+          active === learnButtonRef.current) &&
         ++attempts < 30
       ) {
         frame = requestAnimationFrame(focusFirstLink);
@@ -410,6 +439,7 @@ export const MainHeader = () => {
         })}
       >
         <button
+          ref={menuButtonRef}
           type="button"
           aria-label="Menu"
           aria-expanded={navOpen}
@@ -433,7 +463,7 @@ export const MainHeader = () => {
           })}
           onClick={evt => {
             evt.preventDefault();
-            toggleNav(evt.currentTarget);
+            toggleNav();
           }}
         >
           <Hamburger size={24} color="var(--color-primary-dark)" />
@@ -513,12 +543,13 @@ export const MainHeader = () => {
             </MainHeaderLink>
             {/* "Learn" opens the menu. The footer links to the /learn page. */}
             <MainHeaderButton
+              ref={learnButtonRef}
               aria-expanded={navOpen}
               aria-controls={MENU_ID}
               onClick={evt => {
                 evt.preventDefault();
                 playSoundEffect(SoundEffect.CLICK_DROP);
-                toggleNav(evt.currentTarget);
+                toggleNav();
               }}
             >
               Learn
@@ -620,6 +651,16 @@ export const MainHeader = () => {
           },
         })}
       >
+        <button
+          type="button"
+          className={css(CLOSE_BUTTON_STYLE)}
+          onClick={evt => {
+            evt.preventDefault();
+            closeNav();
+          }}
+        >
+          Close menu
+        </button>
         <nav
           ref={navScrollRef}
           aria-label="Menu"
@@ -702,6 +743,7 @@ export const MainHeader = () => {
         </nav>
       </div>
       <div
+        {...{[MUTE_BUTTON_ATTRIBUTE]: true}}
         className={css({
           '--button-size': '120px',
           '--button-spacing': '24px',
