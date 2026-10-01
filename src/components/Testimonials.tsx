@@ -16,7 +16,7 @@ import {
 } from '@/constants';
 import {SecondaryButton} from './SecondaryButton';
 import {useAudioManager} from '@/hooks/useAudioManager';
-import {useMotion} from '@/hooks/useMotion';
+import {stopScroll, useMotion} from '@/hooks/useMotion';
 import {AudioFiles, useSound} from '@/hooks/useSound';
 import {SectionDivider} from './SectionDivider';
 import {FOCUS_ONLY_BUBBLE, ScreenReaderText} from './ScreenReaderText';
@@ -639,6 +639,11 @@ const BLOCK_BUTTON_STYLE: StyleObject = {
 // place, as the page scrolls (smooth, unless the user prefers reduced motion).
 // From below, show the name over the button too.
 const scrollAbovePlayer = (button: HTMLElement) => {
+  // The page can still scroll (smooth) to the control that had focus before.
+  // The button is then not where it will be. It can seem to be in its place,
+  // and the scroll goes on and takes it off the screen. Stop the scroll where
+  // it is, and place the button from there.
+  stopScroll();
   const ticker = window.matchMedia(
     MIN_TABLET_MEDIA_QUERY.replace(/^@media\s*/, ''),
   ).matches

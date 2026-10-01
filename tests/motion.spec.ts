@@ -225,16 +225,23 @@ test.describe('the pause animations toggle', () => {
   test('freezes the videos, the canvases and the marquee where they are', async ({
     page,
   }) => {
+    // The videos load and start while the test waits. On a busy machine, that
+    // takes several seconds each time.
+    test.setTimeout(120_000);
     await page.setViewportSize(WIDE);
     await page.goto('/');
     // The hero videos play.
     await expect
-      .poll(async () =>
-        (await videoTimes(page)).some(v => !v.paused && v.time > 0.3),
+      .poll(
+        async () =>
+          (await videoTimes(page)).some(v => !v.paused && v.time > 0.3),
+        {timeout: 30_000},
       )
       .toBe(true);
     await expect
-      .poll(async () => (await marqueeTimes(page))[0]?.time ?? 0)
+      .poll(async () => (await marqueeTimes(page))[0]?.time ?? 0, {
+        timeout: 30_000,
+      })
       .toBeGreaterThan(0.3);
 
     await toggle(page).click();
@@ -265,13 +272,15 @@ test.describe('the pause animations toggle', () => {
     // Play again, from where they stopped.
     await toggle(page).click();
     await expect
-      .poll(async () => (await marqueeTimes(page))[0].time)
+      .poll(async () => (await marqueeTimes(page))[0].time, {timeout: 30_000})
       .toBeGreaterThan(marquee[0].time);
     await expect
-      .poll(async () =>
-        (await videoTimes(page)).some(
-          (v, i) => !v.paused && v.time > videos[i].time,
-        ),
+      .poll(
+        async () =>
+          (await videoTimes(page)).some(
+            (v, i) => !v.paused && v.time > videos[i].time,
+          ),
+        {timeout: 30_000},
       )
       .toBe(true);
   });
@@ -400,7 +409,9 @@ test.describe('with reduced motion', () => {
       .poll(async () => (await cssLoops(page)).map(a => a.state))
       .toContain('running');
     await expect
-      .poll(async () => (await videoTimes(page)).some(v => v.time > 0.2))
+      .poll(async () => (await videoTimes(page)).some(v => v.time > 0.2), {
+        timeout: 30_000,
+      })
       .toBe(true);
     await page.reload();
     await expect(toggle(page)).toHaveAttribute('aria-pressed', 'false');
@@ -439,20 +450,25 @@ test.describe('with reduced motion', () => {
     test(`the home hero and the globe stay still at ${viewport.width}px`, async ({
       page,
     }) => {
+      // The videos load while the test waits. On a busy machine, that takes
+      // several seconds.
+      test.setTimeout(120_000);
       await page.setViewportSize(viewport);
       await page.goto('/');
       const hero = 'main > canvas';
       await expect(page.locator(hero)).toHaveCSS('position', 'absolute');
       // The hero draws the first frame of each video once it has loaded.
       await expect
-        .poll(() =>
-          page
-            .locator('body > video')
-            .evaluateAll(videos =>
-              (videos as Array<HTMLVideoElement>).every(
-                video => video.readyState >= 3 && !video.seeking,
+        .poll(
+          () =>
+            page
+              .locator('body > video')
+              .evaluateAll(videos =>
+                (videos as Array<HTMLVideoElement>).every(
+                  video => video.readyState >= 3 && !video.seeking,
+                ),
               ),
-            ),
+          {timeout: 30_000},
         )
         .toBe(true);
       const top = await settledCanvasPixels(page, hero);

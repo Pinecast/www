@@ -116,3 +116,17 @@ motion and while the animations are paused (`getScrollBehavior` in
 `src/hooks/useMotion.ts`). Focus that Tab did not give does not scroll the
 page, and the mouse does what it did before.
 `tests/globe-keyboard.spec.ts` checks this.
+
+Two rules keep this stable on a busy page:
+
+- Tab is known by a flag that is up during the key press (`isTabPress` in
+  `Globe.tsx`), not by the time stamps of the key and of the focus. The time
+  stamp of a key press is the time of the press. A busy page gets it some
+  hundreds of milliseconds later, and then a window of 100 ms is too short.
+- A scroll for a control that got focus starts with `stopScroll`
+  (`src/hooks/useMotion.ts`), as the globe and the Play buttons of the
+  testimonials do. The browser scrolls (smooth) to the control that had focus
+  before, and under load that scroll can start late. A smooth scroll to the
+  place where the page still is does not stop it, and then the old scroll takes
+  the page away from the new place.
+

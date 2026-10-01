@@ -179,6 +179,9 @@ for (const viewport of [
 // 200% zoom its text was 4.6 CSS pixels instead of 18.4, and its hit areas
 // were smaller. They must be at least as large as at 100%.
 test('the globe links are as large at 200% zoom', async ({browser}) => {
+  // It opens two browsers that load and draw the globe. On a busy machine,
+  // that takes more than the 30 seconds of a test.
+  test.setTimeout(120_000);
   const measure = async (
     b: Browser,
     viewport: {width: number; height: number},

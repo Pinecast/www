@@ -41,7 +41,12 @@ import {useAudioManager} from '@/hooks/useAudioManager';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
 import {ScreenReaderText} from './ScreenReaderText';
-import {getScrollBehavior, isMotionPaused, useMotion} from '@/hooks/useMotion';
+import {
+  getScrollBehavior,
+  isMotionPaused,
+  stopScroll,
+  useMotion,
+} from '@/hooks/useMotion';
 import {
   DARK_SURFACE,
   SCROLL_PADDING_TOP,
@@ -322,14 +327,24 @@ const IntroSection = React.memo(function IntroSection() {
 // Keyboard focus follows a press of Tab. Focus with no Tab just before it does
 // not move the page: for example, when the window gets focus again, the link
 // that had focus gets a focus event, and the user may have scrolled away since.
-const TAB_FOCUS_MS = 100;
-let lastTabKeyTime = -Infinity;
+//
+// The browser moves focus after the key handlers, in the same task as the
+// `keydown`. So, a focus event that comes while the flag is up is the one of
+// the key. A timer puts the flag down in a later task. Do not compare the time
+// stamps of the two events: the stamp of a key press is the time of the press,
+// not the time that the page got it. On a busy main thread, the page gets it
+// some hundreds of milliseconds later, and the focus came too late for a window
+// of 100 ms.
+let isTabPress = false;
 if (typeof document !== 'undefined') {
   document.addEventListener(
     'keydown',
     evt => {
       if (evt.key === 'Tab') {
-        lastTabKeyTime = evt.timeStamp;
+        isTabPress = true;
+        setTimeout(() => {
+          isTabPress = false;
+        }, 0);
       }
     },
     true,
@@ -451,8 +466,8 @@ const FeatureText = React.memo(function FeatureText({
                     {...underMuteButtonProps}
                     href={feature.href}
                     // Only focus that Tab gave: a click follows the link.
-                    onFocus={evt => {
-                      if (evt.timeStamp - lastTabKeyTime < TAB_FOCUS_MS) {
+                    onFocus={() => {
+                      if (isTabPress) {
                         onKeyboardFocus(slug);
                       }
                     }}
@@ -1044,6 +1059,7 @@ export const Globe = () => {
       return;
     }
     const [first, last] = FEATURE_SCROLL_RANGES[slug];
+    stopScroll();
     window.scrollTo({
       top: getScrollForProgress(
         section,
