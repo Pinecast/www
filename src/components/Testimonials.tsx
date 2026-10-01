@@ -889,7 +889,19 @@ const Customers = ({}) => {
               key={item.customer}
               ref={addCustomerRef(idx)}
               className={css({...CUSTOMER_BLOCK_STYLE, position: 'relative'})}
-              onFocus={() => setFocusIndex(idx)}
+              onFocus={() => {
+                setFocusIndex(idx);
+                // The player changes to this customer, so the audio of a pick
+                // of another one stops. That ends the pick, as a pause does
+                // (see stopPick). Else the pick came back when the focus left,
+                // and its player played by itself, with sound, also when the
+                // user had paused this customer.
+                setPick(current =>
+                  current && current.index !== null && current.index !== idx
+                    ? {...current, index: null}
+                    : current,
+                );
+              }}
               onBlur={evt => {
                 if (!evt.currentTarget.contains(evt.relatedTarget)) {
                   setFocusIndex(current => (current === idx ? null : current));
