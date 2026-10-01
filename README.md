@@ -92,6 +92,15 @@ pressed toggle does not look like a focus ring. The toggle has a tooltip, like
 the one of the mute button (`Tooltip`). `tests/motion-toggle.spec.ts` checks
 the four states and the tooltip.
 
+A tooltip stays open while the pointer goes to it (WCAG 1.4.13). The bridge
+under the tooltip covers the gap, and the "safe area" covers the rest: while
+the pointer is inside the convex shape of its last place on the control and the
+tooltip, the tooltip stays open. So, the pointer can go on a straight line from
+any part of a control, also one that is taller or narrower than its tooltip,
+to each part of the tooltip. A pointer that goes away, or jumps away, closes
+it at once. `Tooltip` does this, so each tooltip of the site has it.
+`tests/motion-toggle.spec.ts` moves the pointer 1px at a time to check it.
+
 
 ## Keyboard path through the globe
 
