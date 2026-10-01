@@ -1,4 +1,4 @@
-import {expect, test, type Page} from '@playwright/test';
+import {expect, test, type Locator, type Page} from '@playwright/test';
 import {load, pixelDifference, scrollSettled} from './helpers';
 
 // The "Pause animations" toggle of the header: how its four states look
@@ -267,3 +267,198 @@ for (const viewport of [WIDE, NARROW]) {
     });
   });
 }
+
+// WCAG 1.4.13: the pointer can move onto a tooltip without the tooltip closing.
+// The pause toggle is a narrow, tall target (36 by 78px) in the desktop header,
+// and its tooltip is wider than it is. A pointer that goes from the icon to an
+// end of the tooltip leaves the toggle at its side, above the gap that the
+// tooltip bridges, and a tooltip that closes then closes. A move in one jump
+// does not show it, so these tests move the pointer 1px at a time, on a
+// straight line.
+test.describe('a tooltip that the pointer moves onto', () => {
+  test.use({viewport: WIDE});
+
+  type Box = {x: number; y: number; width: number; height: number};
+  const TARGETS: Array<{
+    name: string;
+    at: (box: Box) => {x: number; y: number};
+  }> = [
+    {
+      name: 'the left end',
+      at: b => ({x: b.x + 2, y: b.y + b.height / 2}),
+    },
+    {
+      name: 'the middle',
+      at: b => ({x: b.x + b.width / 2, y: b.y + b.height / 2}),
+    },
+    {
+      name: 'the right end',
+      at: b => ({x: b.x + b.width - 2, y: b.y + b.height / 2}),
+    },
+    {name: 'the top left corner', at: b => ({x: b.x + 2, y: b.y + 2})},
+    {
+      name: 'the top right corner',
+      at: b => ({x: b.x + b.width - 2, y: b.y + 2}),
+    },
+  ];
+
+  // Hover the middle of `icon`, wait until the tooltip shows in full, and move
+  // the pointer to `target`, 1px at a time. The tooltip must not start to fade
+  // out on the way: a tooltip that closes and opens again is not one that
+  // stays open, and it can look open when the pointer arrives.
+  async function walk(
+    page: Page,
+    icon: Locator,
+    tip: Locator,
+    target: (box: Box) => {x: number; y: number},
+  ) {
+    const iconBox = (await icon.boundingBox())!;
+    const from = {
+      x: iconBox.x + iconBox.width / 2,
+      y: iconBox.y + iconBox.height / 2,
+    };
+    await page.mouse.move(from.x, from.y);
+    await expect(tip).toBeVisible();
+    await expect(tip).toHaveCSS('opacity', '1');
+    const to = target((await tip.boundingBox())!);
+    await tip.locator('xpath=..').evaluate(wrapper => {
+      (window as any).fades = 0;
+      wrapper.addEventListener('transitionrun', evt => {
+        if (
+          ['opacity', 'visibility'].includes(
+            (evt as TransitionEvent).propertyName,
+          )
+        ) {
+          (window as any).fades++;
+        }
+      });
+    });
+    await page.mouse.move(to.x, to.y, {
+      steps: Math.ceil(Math.hypot(to.x - from.x, to.y - from.y)),
+    });
+    return page.evaluate(() => (window as any).fades as number);
+  }
+
+  for (const {name, at} of TARGETS) {
+    test(`the tooltip of the pause toggle stays open from the icon to ${name}`, async ({
+      page,
+    }) => {
+      await load(page, '/privacy');
+      expect(await walk(page, mark(page), tooltip(page), at)).toBe(0);
+      // Longer than the fade-out, so that a tooltip that closed is hidden.
+      await page.waitForTimeout(500);
+      await expect(tooltip(page)).toBeVisible();
+      // It closes when the pointer leaves it and the toggle.
+      await page.mouse.move(WIDE.width / 2, WIDE.height - 5);
+      await expect(tooltip(page)).toBeHidden();
+    });
+  }
+
+  // Walk from the icon toward the right end of the tooltip, and stop between
+  // the toggle and the tooltip: the pointer is on neither of them.
+  async function walkAndStopBetween(page: Page) {
+    const wrapper = toggle(page).locator('xpath=..');
+    const iconBox = (await mark(page).boundingBox())!;
+    const wrapperBox = (await wrapper.boundingBox())!;
+    const from = {
+      x: iconBox.x + iconBox.width / 2,
+      y: iconBox.y + iconBox.height / 2,
+    };
+    await page.mouse.move(from.x, from.y);
+    await expect(tooltip(page)).toBeVisible();
+    await expect(tooltip(page)).toHaveCSS('opacity', '1');
+    const tipBox = (await tooltip(page).boundingBox())!;
+    const to = {x: tipBox.x + tipBox.width - 2, y: tipBox.y + 2};
+    // On the line, 6px to the right of the toggle.
+    const stop = wrapperBox.x + wrapperBox.width + 6;
+    const t = (stop - from.x) / (to.x - from.x);
+    const end = {x: stop, y: from.y + (to.y - from.y) * t};
+    await page.mouse.move(end.x, end.y, {
+      steps: Math.ceil(Math.hypot(end.x - from.x, end.y - from.y)),
+    });
+    expect(
+      await wrapper.evaluate(el => el.matches(':hover')),
+      'the pointer is off the toggle and the tooltip',
+    ).toBe(false);
+    return end;
+  }
+
+  test('Escape hides the tooltip while the pointer is between the toggle and the tooltip', async ({
+    page,
+  }) => {
+    await load(page, '/privacy');
+    await page.evaluate(() => {
+      (window as any).escapes = 0;
+      addEventListener('keydown', evt => {
+        if (evt.key === 'Escape') {
+          (window as any).escapes++;
+        }
+      });
+    });
+    await walkAndStopBetween(page);
+    // Longer than the fade-out: the tooltip stays while the pointer is there.
+    await page.waitForTimeout(500);
+    await expect(tooltip(page)).toBeVisible();
+
+    await page.keyboard.press('Escape');
+    await expect(tooltip(page)).toBeHidden();
+    // Only the tooltip takes the key.
+    expect(await page.evaluate(() => (window as any).escapes)).toBe(0);
+
+    // Nothing waits for the pointer to leave: it shows again on the next hover.
+    await page.mouse.move(WIDE.width / 2, WIDE.height - 5);
+    await toggle(page).hover();
+    await expect(tooltip(page)).toBeVisible();
+  });
+
+  test('a pointer between the toggle and the tooltip that moves away closes the tooltip', async ({
+    page,
+  }) => {
+    await load(page, '/privacy');
+    const end = await walkAndStopBetween(page);
+    await page.waitForTimeout(500);
+    await expect(tooltip(page)).toBeVisible();
+    // Away from the tooltip, 1px at a time.
+    await page.mouse.move(end.x + 40, end.y - 40, {steps: 57});
+    await expect(tooltip(page)).toBeHidden();
+  });
+
+  test('a pointer that leaves the toggle away from the tooltip closes it at once', async ({
+    page,
+  }) => {
+    await load(page, '/privacy');
+    const iconBox = (await mark(page).boundingBox())!;
+    const wrapperBox = (await toggle(page).locator('xpath=..').boundingBox())!;
+    const [x, y] = [iconBox.x + iconBox.width / 2, iconBox.y + 10];
+    await page.mouse.move(x, y);
+    await expect(tooltip(page)).toBeVisible();
+    await expect(tooltip(page)).toHaveCSS('opacity', '1');
+    // Up and out of the top of the toggle, 1px at a time.
+    await page.mouse.move(x, wrapperBox.y - 10, {
+      steps: Math.ceil(y - wrapperBox.y + 10),
+    });
+    await expect(tooltip(page)).toBeHidden();
+  });
+
+  // The tooltip of the mute button, which the same code makes. It shows only
+  // after the sounds load, so let them load.
+  test('the tooltip of the mute button stays open from the icon to each part of it', async ({
+    page,
+  }) => {
+    await page.unroute(/\.(mp3|mp4|webm)(\?|$)/);
+    await load(page, '/privacy');
+    const mute = page
+      .getByRole('banner')
+      .getByRole('button', {name: 'Unmute'})
+      .filter({visible: true});
+    await expect(mute).toHaveAccessibleDescription(
+      'This site is better with sound!',
+    );
+    const tip = mute.locator('xpath=ancestor::div[1]').getByRole('tooltip');
+    for (const {name, at} of TARGETS) {
+      await page.mouse.move(WIDE.width / 2, WIDE.height - 5);
+      await expect(tip, name).toBeHidden();
+      expect(await walk(page, mute, tip, at), name).toBe(0);
+    }
+  });
+});

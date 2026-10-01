@@ -91,6 +91,16 @@ export const isMotionPaused = () => {
 export const getScrollBehavior = (): ScrollBehavior =>
   isMotionPaused() || prefersReducedMotion() ? 'instant' : 'smooth';
 
+// Stop a scroll that is on its way, or about to start, where the page is now.
+// Call it before the page scrolls to a place for a control that got focus. The
+// browser scrolls (smooth) to the control that had focus before, and under
+// load that scroll can start some hundreds of milliseconds late. A smooth
+// scroll to the place where the page still is does not stop it. Then the old
+// scroll starts, and it takes the page away from the place that the new scroll
+// was for. When no scroll is on its way, this does nothing.
+export const stopScroll = () =>
+  window.scrollTo({top: window.scrollY, behavior: 'instant'});
+
 const update = () => {
   document.documentElement.setAttribute(
     MOTION_ATTRIBUTE,

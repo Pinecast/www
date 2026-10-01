@@ -436,6 +436,73 @@ test.describe('a Play button of a customer', () => {
     });
     await noCustomerShows(page);
   });
+
+  // The player changes to the customer whose block has focus, and the audio of
+  // a pick of another customer stops. The pick stayed: when the focus left
+  // again, its player showed and played by itself, with sound, also when the
+  // user had paused the customer with focus, and with reduced motion the still
+  // player showed over the other sections of the page. It must end with the
+  // audio, as a pause ends it.
+
+  // Put the end of the last customer block above the middle of the screen, so
+  // that no customer is at the middle. The Play button of the last customer is
+  // under its name, close to its place: focus on it moves the page only by a
+  // little, and no customer comes to the middle. At other places, the scroll
+  // that focus makes brings a customer to the middle, and that ends the pick
+  // with or without the rule that this test is for.
+  const scrollPastCustomers = async (page: Page) => {
+    await customerBlock(page, CUSTOMERS[1].name).evaluate(block =>
+      window.scrollTo({
+        top: scrollY + block.getBoundingClientRect().bottom - 330,
+        behavior: 'instant',
+      }),
+    );
+    await scrollSettled(page);
+    await expect(
+      page.locator('#testimonials [aria-current="true"]'),
+    ).toHaveCount(0);
+  };
+  // The user pauses the audio, as the media keys of a keyboard do.
+  const pauseAudio = (page: Page) =>
+    page.locator('#testimonials audio').evaluate(el => {
+      (el as HTMLAudioElement).pause();
+    });
+
+  for (const reducedMotion of [false, true]) {
+    test(`a press without focus does not come back after focus visits another customer, ${
+      reducedMotion ? 'with' : 'without'
+    } reduced motion`, async ({page}) => {
+      await page.emulateMedia({
+        reducedMotion: reducedMotion ? 'reduce' : 'no-preference',
+      });
+      await load(page, '/');
+      await scrollPastCustomers(page);
+      await playWithoutFocus(page, 'Living Blindfully');
+
+      // Keyboard focus goes to the other customer, which shows. The user
+      // pauses it.
+      await page.keyboard.press('Shift');
+      await playButton(page, 'Make Life Work').focus();
+      await expect(customerBlock(page, 'Make Life Work')).toHaveAttribute(
+        'aria-current',
+        'true',
+      );
+      await pauseAudio(page);
+      await scrollSettled(page);
+
+      // Focus leaves the customers. No customer is at the middle, so none
+      // shows, and no audio plays.
+      await page.keyboard.press('Tab');
+      expect(
+        await page.evaluate(
+          () => !!document.activeElement?.closest('#testimonials'),
+        ),
+      ).toBe(false);
+      await noCustomerShows(page);
+      await page.waitForTimeout(1000);
+      await noCustomerShows(page);
+    });
+  }
 });
 
 // WCAG 2.3.3: the player slid across the screen and grew and shrank as the

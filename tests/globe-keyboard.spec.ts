@@ -177,6 +177,9 @@ for (const {name, smooth, reducedMotion, stored} of MODES) {
     }
     await load(page, '/');
     await focusBeforeGlobe(page);
+    // The focus above can start a smooth scroll of the browser. Wait until the
+    // page is at rest, so that the positions below are only those of Tab.
+    await scrollSettled(page);
     await page.evaluate(() => {
       (window as any).positions = [];
       addEventListener(

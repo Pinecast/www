@@ -92,6 +92,15 @@ pressed toggle does not look like a focus ring. The toggle has a tooltip, like
 the one of the mute button (`Tooltip`). `tests/motion-toggle.spec.ts` checks
 the four states and the tooltip.
 
+A tooltip stays open while the pointer goes to it (WCAG 1.4.13). The bridge
+under the tooltip covers the gap, and the "safe area" covers the rest: while
+the pointer is inside the convex shape of its last place on the control and the
+tooltip, the tooltip stays open. So, the pointer can go on a straight line from
+any part of a control, also one that is taller or narrower than its tooltip,
+to each part of the tooltip. A pointer that goes away, or jumps away, closes
+it at once. `Tooltip` does this, so each tooltip of the site has it.
+`tests/motion-toggle.spec.ts` moves the pointer 1px at a time to check it.
+
 
 ## Keyboard path through the globe
 
@@ -107,3 +116,17 @@ motion and while the animations are paused (`getScrollBehavior` in
 `src/hooks/useMotion.ts`). Focus that Tab did not give does not scroll the
 page, and the mouse does what it did before.
 `tests/globe-keyboard.spec.ts` checks this.
+
+Two rules keep this stable on a busy page:
+
+- Tab is known by a flag that is up during the key press (`isTabPress` in
+  `Globe.tsx`), not by the time stamps of the key and of the focus. The time
+  stamp of a key press is the time of the press. A busy page gets it some
+  hundreds of milliseconds later, and then a window of 100 ms is too short.
+- A scroll for a control that got focus starts with `stopScroll`
+  (`src/hooks/useMotion.ts`), as the globe and the Play buttons of the
+  testimonials do. The browser scrolls (smooth) to the control that had focus
+  before, and under load that scroll can start late. A smooth scroll to the
+  place where the page still is does not stop it, and then the old scroll takes
+  the page away from the new place.
+

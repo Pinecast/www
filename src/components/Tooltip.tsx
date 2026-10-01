@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {flushSync} from 'react-dom';
 import {StyleObject} from 'styletron-react';
 import {KeyframesObject} from 'styletron-standard';
 import {MonumentGroteskSemiMono} from '@/fonts';
@@ -56,6 +57,49 @@ export enum TooltipPosition {
   BOTTOM = 'bottom',
   LEFT = 'left',
 }
+
+type Point = {x: number; y: number};
+
+// How far the safe area goes past each side of the tooltip. A pointer on a
+// straight line to a point at the edge of the tooltip stays inside it.
+const SAFE_AREA_MARGIN = 4;
+
+// The smallest convex polygon that holds all of the points (Andrew's monotone
+// chain). The points go around it in the same direction, as `isInPolygon`
+// needs.
+const convexHull = (points: ReadonlyArray<Point>): Array<Point> => {
+  const sorted = [...points].sort((a, b) => a.x - b.x || a.y - b.y);
+  const cross = (o: Point, a: Point, b: Point) =>
+    (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
+  const half = (input: ReadonlyArray<Point>) => {
+    const chain: Array<Point> = [];
+    for (const point of input) {
+      while (
+        chain.length >= 2 &&
+        cross(chain[chain.length - 2], chain[chain.length - 1], point) <= 0
+      ) {
+        chain.pop();
+      }
+      chain.push(point);
+    }
+    chain.pop();
+    return chain;
+  };
+  return [...half(sorted), ...half([...sorted].reverse())];
+};
+
+// Whether the point is in the convex polygon, or on its edge, or less than a
+// pixel outside it: a pointer on a line to the edge of the tooltip can be
+// there, with the rounding of its place.
+const isInPolygon = (polygon: ReadonlyArray<Point>, {x, y}: Point) =>
+  polygon.every((a, i) => {
+    const b = polygon[(i + 1) % polygon.length];
+    const length = Math.hypot(b.x - a.x, b.y - a.y);
+    return (
+      length === 0 ||
+      ((b.x - a.x) * (y - a.y) - (b.y - a.y) * (x - a.x)) / length >= -1
+    );
+  });
 
 type TooltipProps = {
   backgroundColor?: string;
@@ -250,12 +294,54 @@ export const Tooltip = React.memo(function Tooltip({
 
   const tooltipId = React.useId();
   const wrapperRef = React.useRef<HTMLDivElement>(null);
+  const tooltipRef = React.useRef<HTMLSpanElement>(null);
   // Keyboard focus on the control shows the tooltip, as a hover does. A
   // mouse click, which also gives focus, does not.
   const [hasFocusVisible, setHasFocusVisible] = React.useState(false);
   // Escape hides the tooltip until the pointer and the focus have both left
   // (WCAG 1.4.13).
   const [dismissed, setDismissed] = React.useState(false);
+  // The pointer has left the control, and it goes to the tooltip. The tooltip
+  // stays open while the pointer is inside this polygon (WCAG 1.4.13). The
+  // invisible bridge covers only the gap between the control and the tooltip.
+  // The polygon covers all of the straight lines from the last place of the
+  // pointer on the control to each part of the tooltip, also where the control
+  // is taller or narrower than the tooltip.
+  const [safeArea, setSafeArea] = React.useState<Array<Point> | null>(null);
+  // The last place of the pointer on the control (not on the tooltip). The
+  // pointer can leave in one jump, so the place where it left says little
+  // about where it goes. The line from the place before it does.
+  const lastPointerRef = React.useRef<Point | null>(null);
+  const trackPointer = (evt: React.PointerEvent) => {
+    lastPointerRef.current = tooltipRef.current?.contains(evt.target as Node)
+      ? null
+      : {x: evt.clientX, y: evt.clientY};
+  };
+
+  React.useEffect(() => {
+    if (!safeArea) {
+      return;
+    }
+    const end = () => setSafeArea(null);
+    const handlePointerMove = (evt: PointerEvent) => {
+      if (!isInPolygon(safeArea, {x: evt.clientX, y: evt.clientY})) {
+        end();
+      }
+    };
+    // The polygon is for the page as it was when the pointer left. A press or
+    // a scroll ends it, and so does a pointer that leaves the page, because a
+    // page gets no move from it.
+    document.addEventListener('pointermove', handlePointerMove);
+    document.addEventListener('pointerdown', end, true);
+    document.addEventListener('scroll', end, true);
+    document.documentElement.addEventListener('mouseleave', end);
+    return () => {
+      document.removeEventListener('pointermove', handlePointerMove);
+      document.removeEventListener('pointerdown', end, true);
+      document.removeEventListener('scroll', end, true);
+      document.documentElement.removeEventListener('mouseleave', end);
+    };
+  }, [safeArea]);
 
   React.useEffect(() => {
     if (!isActive || dismissed) {
@@ -263,11 +349,13 @@ export const Tooltip = React.memo(function Tooltip({
     }
     const handleKeyDown = (evt: KeyboardEvent) => {
       const wrapper = wrapperRef.current;
-      // Only while the tooltip shows: on hover or on keyboard focus.
+      const isHovered = !!wrapper?.matches(':hover');
+      // Only while the tooltip shows: on hover, on keyboard focus, or while
+      // the pointer goes from the control to the tooltip.
       if (
         evt.key !== 'Escape' ||
         !wrapper ||
-        !(wrapper.matches(':hover') || hasFocusVisible)
+        !(isHovered || hasFocusVisible || safeArea)
       ) {
         return;
       }
@@ -275,11 +363,16 @@ export const Tooltip = React.memo(function Tooltip({
       // Escape hides only the tooltip. Other Escape handlers on the page, such
       // as the open header menu (useDismiss), do not get it.
       evt.stopPropagation();
-      setDismissed(true);
+      // With the pointer and the focus gone, there is nothing left to wait
+      // for, and the tooltip can show again at once.
+      if (isHovered || hasFocusVisible) {
+        setDismissed(true);
+      }
+      setSafeArea(null);
     };
     document.addEventListener('keydown', handleKeyDown, true);
     return () => document.removeEventListener('keydown', handleKeyDown, true);
-  }, [dismissed, hasFocusVisible, isActive]);
+  }, [dismissed, hasFocusVisible, isActive, safeArea]);
 
   const shown: StyleObject = {
     opacity: '1',
@@ -287,7 +380,7 @@ export const Tooltip = React.memo(function Tooltip({
     visibility: 'visible',
   };
   const canShow = isActive && !dismissed;
-  const isShown = canShow && hasFocusVisible;
+  const isShown = canShow && (hasFocusVisible || safeArea !== null);
 
   return (
     <div
@@ -333,6 +426,39 @@ export const Tooltip = React.memo(function Tooltip({
           setDismissed(false);
         }
       }}
+      // Pointer events, not mouse events: they give the place of the pointer
+      // with its fraction, and the direction of a pointer that moves 1px at a
+      // time needs it.
+      onPointerEnter={trackPointer}
+      onPointerMove={trackPointer}
+      onPointerLeave={evt => {
+        const tooltip = tooltipRef.current;
+        const from = lastPointerRef.current;
+        lastPointerRef.current = null;
+        // A pointer that leaves the page (no related target) does not come
+        // back to the tooltip on a line.
+        if (canShow && tooltip && from && evt.relatedTarget) {
+          const box = tooltip.getBoundingClientRect();
+          const left = box.left - SAFE_AREA_MARGIN;
+          const right = box.right + SAFE_AREA_MARGIN;
+          const top = box.top - SAFE_AREA_MARGIN;
+          const bottom = box.bottom + SAFE_AREA_MARGIN;
+          const area = convexHull([
+            from,
+            {x: left, y: top},
+            {x: right, y: top},
+            {x: right, y: bottom},
+            {x: left, y: bottom},
+          ]);
+          // Only a pointer that goes toward the tooltip. One that goes away,
+          // or jumps away, closes it at once.
+          if (isInPolygon(area, {x: evt.clientX, y: evt.clientY})) {
+            // At once: until the new state is in the page, the hover has
+            // ended and the tooltip would start to fade out.
+            flushSync(() => setSafeArea(area));
+          }
+        }
+      }}
       onMouseLeave={() => {
         if (!wrapperRef.current?.contains(document.activeElement)) {
           setDismissed(false);
@@ -344,6 +470,7 @@ export const Tooltip = React.memo(function Tooltip({
         // A real element, not generated content, so that the control can
         // point to it with `aria-describedby`.
         <span
+          ref={tooltipRef}
           id={tooltipId}
           role="tooltip"
           className={css({
