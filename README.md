@@ -106,6 +106,57 @@ it at once. `Tooltip` does this, so each tooltip of the site has it.
 `tests/motion-toggle.spec.ts` moves the pointer 1px at a time to check it.
 
 
+## Loading order of the home page
+
+The user sees the hero first. A tile of the hero is purple or lime until its
+still image is in. So the stills load first, and nothing that can wait uses the
+bandwidth until they are in.
+
+- `src/heroStills.ts` lists the stills and the layouts that draw them. Mobile
+  draws one (`central`), tablet five and desktop seven.
+- `src/pages/_document.tsx` preloads them, each one with the `media` of the
+  layouts that draw it. `HeroV2` loads the same stills (`useAsyncImage`), and
+  only the ones that its layout draws. The CSS skeleton of the hero shows them
+  too, so the user sees a still when it is in, before the page script runs.
+  The canvas reads `img.complete` (`isReady` in `src/canvasHelpers.ts`), so it
+  does not paint a placeholder over a still that the skeleton showed.
+- `src/hooks/useLoadOrder.ts` makes the rest wait. An image that calls
+  `markCritical` (the stills) holds back each hook that calls
+  `useAfterCritical`, until the image loads or fails. These wait: the sounds,
+  the videos of the hero and of the globe, the image of the globe, the prefetch
+  of the footer video, `NoncriticalVideo` (no poster and `preload="none"`
+  until then) and the art of the header menu. The sounds also start at the first
+  key press or pointer press, so a sound is there when the user asks for it. A
+  page without critical images opens the gate after its first render, so on
+  the other pages, nothing waits.
+
+Two rules keep the stills from slowing the page script. The hero needs the
+script to take over from its CSS layout, and the menu and the buttons need it
+too.
+
+- The preloads have `fetchpriority="low"`. At the normal or the high priority,
+  the stills took the connections first. At 4 Mbps and 150 ms, the canvas took
+  over at 5 to 8 s, not at 1.5 s.
+- The preloads come after the scripts in the `<head>`. A browser asks for files
+  in the order of the page, and it has six connections to a server that speaks
+  HTTP/1.1. React moves a `<link>` to the start of the `<head>` unless it has an
+  event handler, so the stills have a handler that does nothing.
+
+`tests/hero-loading.spec.ts` checks the preloads, the order of the requests,
+and the change from the CSS layout to the canvas. To measure the times on a
+slow connection (4 Mbps and 150 ms by default, a cold cache):
+
+```sh
+npm run build
+node scripts/measure-hero-loading.mjs out --runs 3 --width 1440 --height 900
+```
+
+It also takes `--width 1024` (tablet), `--width 390` (mobile), `--filmstrip`
+(the share of the viewport that is still a placeholder color) and a
+`CHROMIUM_PATH` for a browser other than the one of Playwright. To compare two
+versions, build each one, copy `out/` aside, and run it on each copy.
+
+
 ## Keyboard path through the globe
 
 The globe on the home page shows one feature at a time, as the page scrolls.

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {AudioMimeType, useAsyncAudio} from '@/hooks/useAsyncResource';
+import {useAfterCritical} from '@/hooks/useLoadOrder';
 
 export enum SoundEffect {
   CLICK_DROP = '/sounds/click-drop.mp3',
@@ -57,7 +58,6 @@ export type SoundEffectsApi = {
 };
 
 const {MP3} = AudioMimeType;
-const PRELOAD = true;
 
 const mp3 = (value: string) => ({[MP3]: value});
 
@@ -77,36 +77,42 @@ export const useSoundEffects = ({
   );
   const sounds = React.useRef<Array<HTMLAudioElement>>([]);
 
-  const clickDrop = useAsyncAudio(mp3(CLICK_DROP), PRELOAD);
-  const click = useAsyncAudio(mp3(CLICK), PRELOAD);
-  const ctaClick1 = useAsyncAudio(mp3(CTA_CLICK_1), PRELOAD);
-  const ctaClick2 = useAsyncAudio(mp3(CTA_CLICK_2), PRELOAD);
-  const ctaClick3 = useAsyncAudio(mp3(CTA_CLICK_3), PRELOAD);
-  const drop = useAsyncAudio(mp3(DROP), PRELOAD);
-  const globeAnalyticsLoop = useAsyncAudio(mp3(GLOBE_ANALYTICS_LOOP), PRELOAD);
+  // The sounds are silent until the user unmutes them, which takes a click.
+  // They load when the stills of the hero are in, or when the user presses a
+  // key or a pointer button, whichever is first: they should not hold up the
+  // stills. A sound that the user asks for before it loads plays when it is in.
+  const preload = useAfterCritical({orInput: true});
+
+  const clickDrop = useAsyncAudio(mp3(CLICK_DROP), preload);
+  const click = useAsyncAudio(mp3(CLICK), preload);
+  const ctaClick1 = useAsyncAudio(mp3(CTA_CLICK_1), preload);
+  const ctaClick2 = useAsyncAudio(mp3(CTA_CLICK_2), preload);
+  const ctaClick3 = useAsyncAudio(mp3(CTA_CLICK_3), preload);
+  const drop = useAsyncAudio(mp3(DROP), preload);
+  const globeAnalyticsLoop = useAsyncAudio(mp3(GLOBE_ANALYTICS_LOOP), preload);
   const globeDistributionLoop = useAsyncAudio(
     mp3(GLOBE_DISTRIBUTION_LOOP),
-    PRELOAD,
+    preload,
   );
   const globeMonetizationLoop = useAsyncAudio(
     mp3(GLOBE_MONETIZATION_LOOP),
-    PRELOAD,
+    preload,
   );
   const globeTransitionStates = useAsyncAudio(
     mp3(GLOBE_TRANSITION_STATES),
-    PRELOAD,
+    preload,
   );
-  const knobClick = useAsyncAudio(mp3(KNOB_CLICK), PRELOAD);
-  const knobTurning = useAsyncAudio(mp3(KNOB_TURNING), PRELOAD);
-  const logoRollover1 = useAsyncAudio(mp3(LOGO_ROLLOVER_1), PRELOAD);
-  const pageTransition1 = useAsyncAudio(mp3(PAGE_TRANSITION_1), PRELOAD);
-  const pageTransition3 = useAsyncAudio(mp3(PAGE_TRANSITION_3), PRELOAD);
-  const pageTransition4 = useAsyncAudio(mp3(PAGE_TRANSITION_4), PRELOAD);
-  const siteAmbienceLoop = useAsyncAudio(mp3(SITE_AMBIENCE_LOOP), PRELOAD);
-  const siteIntro = useAsyncAudio(mp3(SITE_INTRO), PRELOAD);
-  const soundOff1 = useAsyncAudio(mp3(SOUND_OFF_1), PRELOAD);
-  const soundOn1 = useAsyncAudio(mp3(SOUND_ON_1), PRELOAD);
-  const swooshTransition = useAsyncAudio(mp3(SWOOSH_TRANSITION), PRELOAD);
+  const knobClick = useAsyncAudio(mp3(KNOB_CLICK), preload);
+  const knobTurning = useAsyncAudio(mp3(KNOB_TURNING), preload);
+  const logoRollover1 = useAsyncAudio(mp3(LOGO_ROLLOVER_1), preload);
+  const pageTransition1 = useAsyncAudio(mp3(PAGE_TRANSITION_1), preload);
+  const pageTransition3 = useAsyncAudio(mp3(PAGE_TRANSITION_3), preload);
+  const pageTransition4 = useAsyncAudio(mp3(PAGE_TRANSITION_4), preload);
+  const siteAmbienceLoop = useAsyncAudio(mp3(SITE_AMBIENCE_LOOP), preload);
+  const siteIntro = useAsyncAudio(mp3(SITE_INTRO), preload);
+  const soundOff1 = useAsyncAudio(mp3(SOUND_OFF_1), preload);
+  const soundOn1 = useAsyncAudio(mp3(SOUND_ON_1), preload);
+  const swooshTransition = useAsyncAudio(mp3(SWOOSH_TRANSITION), preload);
 
   React.useEffect(() => {
     soundEffectsMap.current.set(CLICK_DROP, clickDrop);
@@ -178,6 +184,9 @@ export const useSoundEffects = ({
     soundOff1,
     soundOn1,
     swooshTransition,
+    // The hooks return the same arrays when their sounds load later, so
+    // without this, `sounds` would stay the empty list from before.
+    preload,
   ]);
 
   const play = React.useCallback(

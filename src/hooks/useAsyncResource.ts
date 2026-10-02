@@ -1,23 +1,34 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import * as React from 'react';
+import {markCritical} from './useLoadOrder';
 import {isMotionPaused, useMotion} from './useMotion';
 
 export type AsyncDrawable = [HTMLImageElement | HTMLVideoElement, boolean];
 
-export const useAsyncImage = (src: string): [HTMLImageElement, boolean] => {
+// With `doLoad` false, nothing loads (a layout that does not draw the image).
+// With `critical`, the files that wait for it (`useAfterCritical`) wait until it
+// is in.
+export const useAsyncImage = (
+  src: string,
+  doLoad: boolean = true,
+  critical: boolean = false,
+): [HTMLImageElement, boolean] => {
   if (typeof Image === 'undefined') {
     return [null as any, false];
   }
   const returnValue = React.useRef<[any, any]>([null, false]);
   const image = React.useRef<HTMLImageElement | undefined>(undefined);
   const [loaded, setLoaded] = React.useState(false);
-  if (!image.current) {
+  if (!image.current && doLoad) {
     const img = new Image();
     img.src = src;
     image.current = img;
     img.onload = () => {
       setLoaded(true);
     };
+    if (critical) {
+      markCritical(img);
+    }
   }
   React.useEffect(() => {
     let unloaded = false;
@@ -30,7 +41,7 @@ export const useAsyncImage = (src: string): [HTMLImageElement, boolean] => {
       unloaded = true;
     };
   });
-  returnValue.current[0] = image.current;
+  returnValue.current[0] = image.current ?? null;
   returnValue.current[1] = loaded;
   return returnValue.current;
 };

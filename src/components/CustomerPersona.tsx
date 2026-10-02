@@ -3,6 +3,7 @@ import Image from 'next/image';
 import {StyleObject} from 'styletron-react';
 import {useCSS} from '@/hooks/useCSS';
 import {useAnimatedImage} from '@/hooks/useAnimatedImage';
+import {useAfterCritical} from '@/hooks/useLoadOrder';
 import {useMotion} from '@/hooks/useMotion';
 import {MIN_TABLET_MEDIA_QUERY, TABLET_BREAKPOINT} from '@/constants';
 
@@ -138,6 +139,12 @@ const PersonaImage = ({
 }) => {
   const css = useCSS();
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  // The menu is closed when the page loads, and these images are big (the PNG
+  // of the wide menu is 800 KB). They wait for the stills of the home hero,
+  // which they would share the bandwidth with: Chrome fetches a lazy image
+  // early on a slow connection. On the other pages, they load after the first
+  // render.
+  const afterCritical = useAfterCritical();
   const {canPause} = useAnimatedImage(
     canvasRef,
     animatedImage.src,
@@ -146,27 +153,31 @@ const PersonaImage = ({
   );
   return (
     <>
-      <picture className={css({borderRadius: 'inherit'})}>
-        {/* Where the frames cannot be decoded, the browser plays the
+      {afterCritical && (
+        <picture className={css({borderRadius: 'inherit'})}>
+          {/* Where the frames cannot be decoded, the browser plays the
             animated image. Then only the still image can show a pause. */}
-        {!canPause && playing && (
-          <source
-            srcSet={animatedImage.src}
-            type={animatedImage.mimeType}
-            media={media}
+          {!canPause && playing && (
+            <source
+              srcSet={animatedImage.src}
+              type={animatedImage.mimeType}
+              media={media}
+            />
+          )}
+          <source srcSet={image.src} type={image.mimeType} media={media} />
+          <Image
+            src={image.src}
+            // The link around it already names the persona.
+            alt=""
+            width={width}
+            height={height}
+            loading="lazy"
+            // Behind the hero videos and the sounds, which show or play first.
+            fetchPriority="low"
+            className={css(style)}
           />
-        )}
-        <source srcSet={image.src} type={image.mimeType} media={media} />
-        <Image
-          src={image.src}
-          // The link around it already names the persona.
-          alt=""
-          width={width}
-          height={height}
-          loading="lazy"
-          className={css(style)}
-        />
-      </picture>
+        </picture>
+      )}
       {canPause && (
         // The frames of the animated image, drawn over the still image.
         <canvas

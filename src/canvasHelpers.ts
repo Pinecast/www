@@ -3,9 +3,17 @@ import {AsyncDrawable} from './hooks/useAsyncResource';
 // Clamp dpi to 2 for performance
 export const dpi = Math.min(2, global.devicePixelRatio ?? 1);
 
+// An image can be in before React knows it: a cached or preloaded one is in at
+// once, and a still can arrive between its `load` event and the next frame. The
+// CSS skeleton of the home hero shows such a still already, and a placeholder
+// over it would flash. So, read the element, and not only the flag.
+const isReady = ([img, loaded]: AsyncDrawable) =>
+  loaded ||
+  (img instanceof HTMLImageElement && img.complete && img.naturalWidth > 0);
+
 // Until the image loads, it fills the rectangle with `placeholder`.
 export function drawImageProp(
-  [img, loaded]: AsyncDrawable,
+  drawable: AsyncDrawable,
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
@@ -13,11 +21,12 @@ export function drawImageProp(
   h: number,
   placeholder: string,
 ) {
-  if (!loaded) {
+  if (!isReady(drawable)) {
     ctx.fillStyle = placeholder;
     ctx.fillRect(x, y, w, h);
     return;
   }
+  const [img] = drawable;
   // default offset is center
   let offsetX = 0.5;
   let offsetY = 0.5;
