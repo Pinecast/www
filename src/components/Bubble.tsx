@@ -5,9 +5,13 @@ import {useCSS} from '@/hooks/useCSS';
 import {CAN_HOVER_MEDIA_QUERY, PREFERS_REDUCED_MOTION_QUERY} from '@/constants';
 import {loopingAnimationProps} from '@/hooks/useMotion';
 
+// One keyframe selector per key: styletron does not hydrate a list such as
+// '0%, 100%', and it then gives the name of these keyframes to the next ones
+// that the browser renders, over the keyframes that have that name.
 const DRIFT_ANIMATION: KeyframesObject = {
-  '0%, 100%': {translate: '0 -5%'},
+  '0%': {translate: '0 -5%'},
   '50%': {translate: '0 5%'},
+  '100%': {translate: '0 -5%'},
 };
 
 const INSET_GLOW =
