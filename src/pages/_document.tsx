@@ -22,6 +22,7 @@ import {
 import StyletronServer from 'styletron-engine-atomic/lib/server/server';
 import {Provider as UserAgentContextProvider} from '../components/UserAgentContext';
 import {MOTION_ATTRIBUTE, MOTION_INIT_SCRIPT} from '../hooks/useMotion';
+import {FONT_URLS} from '../fonts';
 
 Document.getInitialProps = async (context: DocumentContext) => {
   const renderPage = () =>
@@ -42,10 +43,13 @@ Document.getInitialProps = async (context: DocumentContext) => {
     renderPage,
   });
   const stylesheets = (styletron as StyletronServer).getStylesheets() || [];
-  return {...initialProps, stylesheets};
+  // The error page of Next.js has no text in the faces.
+  const preloadFonts = !['/404', '/_error'].includes(context.pathname);
+  return {...initialProps, preloadFonts, stylesheets};
 };
 
 export default function Document({
+  preloadFonts,
   stylesheets,
 }: typeof Document.getInitialProps extends (
   context: DocumentContext,
@@ -56,6 +60,17 @@ export default function Document({
     <Html lang="en">
       <Head>
         <link rel="icon" href="/favicon.png" />
+        {preloadFonts &&
+          FONT_URLS.map(url => (
+            <link
+              key={url}
+              rel="preload"
+              href={url}
+              as="font"
+              type="font/woff2"
+              crossOrigin="anonymous"
+            />
+          ))}
         <script dangerouslySetInnerHTML={{__html: MOTION_INIT_SCRIPT}} />
         <style
           dangerouslySetInnerHTML={{
