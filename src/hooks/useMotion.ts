@@ -24,6 +24,11 @@ export const MOTION_ATTRIBUTE = 'data-motion';
 // all other animations and transitions: the toggle controls it instead.
 export const loopingAnimationProps = {'data-looping': ''};
 
+// Put these props on an element with an animation that plays once as the page
+// loads, so that it shows its end at once while the toggle is on, as all
+// animations but the looping ones do with reduced motion.
+export const introAnimationProps = {'data-intro': ''};
+
 // The stored value is "paused", or "playing:reduce" or "playing:no-preference"
 // with the preference of the choice. A "playing" from before counts as made
 // without reduced motion. readChoice and the script below read it the same way.

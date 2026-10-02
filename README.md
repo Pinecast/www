@@ -73,6 +73,10 @@ When you add an animation:
 - A looping CSS animation: spread `loopingAnimationProps` on the element. The
   style block in `src/pages/_document.tsx` pauses it. Reduced motion stops all
   other CSS animations and transitions at their end.
+- A CSS animation that plays once as the page loads, such as the circles that
+  the home hero grows before its canvas takes over: spread
+  `introAnimationProps` on the element. While the toggle is on, it shows its
+  end at once, as all of them do with reduced motion.
 - A canvas loop or a video that feeds a canvas: use `useCanvasDrawing` and
   `useAsyncVideo`. They follow the toggle. Read `isMotionPaused()`, not the
   `paused` value of `useMotion`, in code that starts or stops media: in the

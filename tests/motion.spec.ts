@@ -547,6 +547,36 @@ test.describe('a choice to play the animations', () => {
   }
 });
 
+// The home hero grows its circles in CSS until the page script runs. With the
+// toggle on, they show grown at once, as its canvas shows them.
+test.describe('the animations that play as the page loads', () => {
+  test.beforeEach(async ({page}) => {
+    // The page script of the home page never comes: the static page stays.
+    await page.route(/\/chunks\/pages\/index-/, route => route.abort());
+  });
+
+  const introAnimations = (page: Page) =>
+    page
+      .locator('[data-intro]')
+      .evaluateAll(elements =>
+        elements
+          .flatMap(element => element.getAnimations())
+          .map(animation => animation.playState),
+      );
+
+  test('play', async ({page}) => {
+    await page.goto('/');
+    expect(await introAnimations(page)).toContain('running');
+  });
+
+  test('show their end while the toggle is on', async ({page}) => {
+    await page.addInitScript(() => localStorage.setItem('motion', 'paused'));
+    await page.goto('/');
+    await expect(page.locator('html')).toHaveAttribute('data-motion', 'paused');
+    expect(await introAnimations(page)).toEqual([]);
+  });
+});
+
 // The style block in the head pauses the looping CSS animations before the
 // page script runs, and without it.
 for (const reducedMotion of ['reduce', 'no-preference'] as const) {

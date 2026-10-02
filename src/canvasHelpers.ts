@@ -3,6 +3,7 @@ import {AsyncDrawable} from './hooks/useAsyncResource';
 // Clamp dpi to 2 for performance
 export const dpi = Math.min(2, global.devicePixelRatio ?? 1);
 
+// Until the image loads, it fills the rectangle with `placeholder`.
 export function drawImageProp(
   [img, loaded]: AsyncDrawable,
   ctx: CanvasRenderingContext2D,
@@ -10,13 +11,10 @@ export function drawImageProp(
   y: number,
   w: number,
   h: number,
+  placeholder: string,
 ) {
   if (!loaded) {
-    if (y < ctx.canvas.height / 2) {
-      ctx.fillStyle = '#cf8aea';
-    } else {
-      ctx.fillStyle = '#c4ff7e';
-    }
+    ctx.fillStyle = placeholder;
     ctx.fillRect(x, y, w, h);
     return;
   }
@@ -90,13 +88,14 @@ export function drawImageInRoundedRect(
   y: number,
   width: number,
   height: number,
-  radius: number = 20,
+  radius: number,
+  placeholder: string,
 ) {
   ctx.save();
   ctx.beginPath();
   roundedRectPath(ctx, x, y, width, height, radius);
   ctx.closePath();
   ctx.clip();
-  drawImageProp(image, ctx, x, y, width, height);
+  drawImageProp(image, ctx, x, y, width, height, placeholder);
   ctx.restore();
 }

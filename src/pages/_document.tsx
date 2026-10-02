@@ -117,6 +117,11 @@ export default function Document({
           html[${MOTION_ATTRIBUTE}="paused"] [data-looping]::after {
             animation-play-state: paused !important;
           }
+          /* It shows the animations that play as the page loads at their
+             end (introAnimationProps). */
+          html[${MOTION_ATTRIBUTE}="paused"] [data-intro] {
+            animation-duration: 0s !important;
+          }
           @media (prefers-reduced-motion: reduce) {
             /* The looping animations start paused, also before the script
                in the head has run. */
