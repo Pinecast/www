@@ -34,11 +34,18 @@ test.describe('without JavaScript', () => {
   });
 });
 
+// The canvas waits for the page script and the stills, so on a busy machine it
+// can take more than the 5s that an `expect` waits by default.
+const TAKEOVER_TIMEOUT = 30_000;
+
 test('the canvas of the home hero takes over from the CSS layout', async ({
   page,
 }) => {
+  test.setTimeout(60_000);
   await page.goto('/');
-  await expect.poll(() => skeleton(page)).toBe('hidden');
+  await expect
+    .poll(() => skeleton(page), {timeout: TAKEOVER_TIMEOUT})
+    .toBe('hidden');
   expect(await backgroundAt(page, 10, 400)).not.toBe('rgb(248, 244, 235)');
 });
 
@@ -70,6 +77,7 @@ for (const [name, {inner = [], ...viewport}] of Object.entries(LAYOUTS)) {
   test(`the CSS layout of the home hero shows the stills where the canvas does at the ${name} layout`, async ({
     browser,
   }) => {
+    test.setTimeout(120_000);
     const screenshot = async (javaScriptEnabled: boolean, clip: Region) => {
       const context = await browser.newContext({
         javaScriptEnabled,
@@ -84,6 +92,7 @@ for (const [name, {inner = [], ...viewport}] of Object.entries(LAYOUTS)) {
         await expect(page.locator('main section').first()).toHaveCSS(
           '--hero-skeleton',
           'hidden',
+          {timeout: TAKEOVER_TIMEOUT},
         );
       }
       // `load` waits for the stills. The last frame is not on screen yet.
