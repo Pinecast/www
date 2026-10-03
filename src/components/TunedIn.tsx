@@ -23,6 +23,7 @@ import {useIntersectionProgress} from '@/hooks/useIntersectionProgress';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {DARK_SURFACE, MIN_TABLET_MEDIA_QUERY} from '@/constants';
 import {PERSONAS} from './CustomerPersona';
+import {POSTER_PLACEHOLDERS} from '@/posterPlaceholders';
 import {useAudioManager} from '@/hooks/useAudioManager';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 
@@ -47,7 +48,8 @@ type Panel = {
   heading: React.ReactNode;
   color: string;
   url: string;
-  image: string;
+  // A blurred copy of the art, as a data URI (see posterPlaceholders.ts).
+  poster: string;
   videos: Array<VideoSource>;
   sizes: ResponsiveSizes;
 };
@@ -62,7 +64,7 @@ const PANELS: PanelItems = {
     heading: <>You are just getting started</>,
     color: PERSONAS.beginner.color,
     url: PERSONAS.beginner.url,
-    image: PERSONAS.beginner.images[1].src,
+    poster: POSTER_PLACEHOLDERS.beginner,
     videos: [
       {
         // Smallest
@@ -97,7 +99,7 @@ const PANELS: PanelItems = {
     heading: <>You need advanced tools</>,
     color: PERSONAS.advanced.color,
     url: PERSONAS.advanced.url,
-    image: PERSONAS.advanced.images[1].src,
+    poster: POSTER_PLACEHOLDERS.advanced,
     videos: [
       {
         src: '/videos/user-advanced.vp9.webm',
@@ -130,7 +132,7 @@ const PANELS: PanelItems = {
     heading: <>You are an organization</>,
     color: PERSONAS.organizations.color,
     url: PERSONAS.organizations.url,
-    image: PERSONAS.organizations.images[1].src,
+    poster: POSTER_PLACEHOLDERS.organizations,
     videos: [
       {
         src: '/videos/user-organizations.vp9.webm',
@@ -551,7 +553,7 @@ const Panel = ({
             sources={panel.videos}
             height={VIDEO_HEIGHT}
             width={VIDEO_WIDTH}
-            poster={panel.image}
+            poster={panel.poster}
             style={{
               backgroundColor: `${panel.color}`,
               borderRadius: 'inherit',

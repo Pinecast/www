@@ -44,9 +44,10 @@ export const NoncriticalVideo = ({
   const {paused} = useMotion();
   // These videos are far from the top of the page. Until the stills of the
   // home hero are in (on the other pages, from the first render), the video
-  // asks for nothing: its poster and its first bytes would share the bandwidth
-  // with the stills, which the user sees first. So, the static page has
-  // neither.
+  // asks for nothing: its first bytes would share the bandwidth with the
+  // stills, which the user sees first. So, the static page has `preload="none"`.
+  // The poster is not part of this: it is a data URI (see
+  // posterPlaceholders.ts), which costs no request, so it is in the static page.
   const afterCritical = useAfterCritical();
 
   // The video loops while it is on screen, unless the "Pause animations"
@@ -111,7 +112,7 @@ export const NoncriticalVideo = ({
         preload={afterCritical ? 'metadata' : 'none'}
         height={height}
         width={width}
-        poster={afterCritical ? poster : undefined}
+        poster={poster}
         className={css({
           // position: 'absolute',
           // minHeight: '100%',
