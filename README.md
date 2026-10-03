@@ -124,11 +124,11 @@ bandwidth until they are in.
   `markCritical` (the stills) holds back each hook that calls
   `useAfterCritical`, until the image loads or fails. These wait: the sounds,
   the videos of the hero and of the globe, the image of the globe, the prefetch
-  of the footer video, `NoncriticalVideo` (no poster and `preload="none"`
-  until then) and the art of the header menu. The sounds also start at the first
-  key press or pointer press, so a sound is there when the user asks for it. A
-  page without critical images opens the gate after its first render, so on
-  the other pages, nothing waits.
+  of the footer video, `NoncriticalVideo` (`preload="none"` until then) and
+  the art of the header menu. The sounds also start at the first key press or
+  pointer press, so a sound is there when the user asks for it. A page without
+  critical images opens the gate after its first render, so on the other pages,
+  nothing waits.
 
 Two rules keep the stills from slowing the page script. The hero needs the
 script to take over from its CSS layout, and the menu and the buttons need it
@@ -141,6 +141,14 @@ too.
   in the order of the page, and it has six connections to a server that speaks
   HTTP/1.1. React moves a `<link>` to the start of the `<head>` unless it has an
   event handler, so the stills have a handler that does nothing.
+
+The posters of the videos of `TunedIn` are data URIs, not files: a blurred copy
+of the art, 32 px wide and about 0.5 KB, in `src/posterPlaceholders.ts`. They
+are in the static page, so they show from the first paint (also without
+JavaScript) and cost no request. The posters were three PNGs of 800 KB each, and
+they took the bandwidth that the stills needed. When the art in
+`public/images/art/` changes, run `node scripts/generate-poster-placeholders.mjs`
+and commit the file that it writes.
 
 `tests/hero-loading.spec.ts` checks the preloads, the order of the requests,
 and the change from the CSS layout to the canvas. To measure the times on a

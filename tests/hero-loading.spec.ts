@@ -376,3 +376,56 @@ test.describe('the hand-off from the CSS layout to the canvas', () => {
     });
   });
 });
+
+test.describe('the videos below the hero, without JavaScript', () => {
+  test.use({javaScriptEnabled: false});
+
+  // The static page has the poster of each video of the TunedIn section, as a
+  // data URI (src/posterPlaceholders.ts): it shows from the first paint and
+  // costs no request. No video asks for anything until the stills are in.
+  test('have an inline poster, and ask for nothing', async ({page}) => {
+    await page.goto('/');
+    const videos = await page.locator('video').evaluateAll(elements =>
+      elements.map(video => ({
+        poster: video.getAttribute('poster'),
+        preload: video.getAttribute('preload'),
+      })),
+    );
+    expect(videos.length).toBeGreaterThan(0);
+    for (const {preload} of videos) {
+      expect(preload).toBe('none');
+    }
+
+    // The three panels of TunedIn have a poster, and the page has each panel
+    // twice (the carousel, and the wide layout). The video of the footer has
+    // none.
+    const posters = videos.flatMap(({poster}) => (poster ? [poster] : []));
+    expect(posters).toHaveLength(6);
+    expect(new Set(posters).size).toBe(3);
+    for (const poster of posters) {
+      expect(poster).toMatch(/^data:image\/webp;base64,/);
+      // About 0.5 KB. A big one means that the art, not a small copy of it, is
+      // in the page.
+      expect(poster.length).toBeLessThan(1500);
+    }
+
+    // Each one is an image that the browser decodes, in the proportions of the
+    // art (2629 x 3421).
+    const sizes = await page.evaluate(
+      async posters =>
+        Promise.all(
+          posters.map(async src => {
+            const image = new Image();
+            image.src = src;
+            await image.decode();
+            return [image.naturalWidth, image.naturalHeight];
+          }),
+        ),
+      posters,
+    );
+    for (const [width, height] of sizes) {
+      expect(width).toBeGreaterThan(8);
+      expect(height / width).toBeCloseTo(3421 / 2629, 1);
+    }
+  });
+});
