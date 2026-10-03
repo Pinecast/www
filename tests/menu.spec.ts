@@ -1,5 +1,5 @@
 import {expect, test} from '@playwright/test';
-import {clippedText, load, menuPanel, openMenu} from './helpers';
+import {clippedText, load, openMenu} from './helpers';
 
 // The header menu has a fixed height. On a short screen or when zoomed, it
 // cut off its lower links, and the page behind it does not scroll. It must
@@ -112,15 +112,25 @@ test.describe('header menu', () => {
   test('does not show a scroll bar while it grows', async ({page}) => {
     await page.setViewportSize({width: 320, height: 256});
     await load(page, '/learn');
-    const menu = menuPanel(page);
+    // The menu grows for 0.2s, and only then can it scroll. Stop the clock of
+    // the animations first: on a busy machine, the 0.2s can pass between the
+    // click and the check. The menu fades in with `visibility` in the same
+    // animation, so it counts as hidden until the clock runs again.
+    const menu = page.getByRole('navigation', {
+      name: 'Menu',
+      includeHidden: true,
+    });
+    const client = await page.context().newCDPSession(page);
+    await client.send('Animation.enable');
+    await client.send('Animation.setPlaybackRate', {playbackRate: 0});
     await page
       .getByRole('banner')
       .getByRole('button', {name: 'Menu', exact: true})
       .click();
-    // The menu grows for 0.2s, and only then can it scroll.
     expect(await menu.evaluate(el => getComputedStyle(el).overflowY)).toBe(
       'hidden',
     );
+    await client.send('Animation.setPlaybackRate', {playbackRate: 1});
     await expect(menu).toHaveCSS('overflow-y', 'auto');
   });
 });

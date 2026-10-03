@@ -121,9 +121,16 @@ test('the preloads of the stills come after the scripts of the page', async ({
   // the script that takes the hero over from its CSS layout comes late.
   // React moves a <link> to the start of the <head> unless it has a handler:
   // see the stills in _document.tsx.
-  await page.goto('/');
-  const order = await page.evaluate(() => {
-    const nodes = [...document.head.children];
+  //
+  // Read the HTML that the server sent, not the live <head>: webpack adds the
+  // <script> of a lazy chunk (lottie-react) to the end of the live <head> some
+  // time after the page loads, and how soon depends on how busy the machine is.
+  const response = await page.goto('/');
+  const html = await response!.text();
+  const order = await page.evaluate(html => {
+    const nodes = [
+      ...new DOMParser().parseFromString(html, 'text/html').head.children,
+    ];
     const lastScript = nodes.findLastIndex(
       node => node.tagName === 'SCRIPT' && node.hasAttribute('src'),
     );
@@ -134,7 +141,7 @@ test('the preloads of the stills come after the scripts of the page', async ({
         node.getAttribute('as') === 'image',
     );
     return {lastScript, firstStill};
-  });
+  }, html);
   expect(order.lastScript).toBeGreaterThan(-1);
   expect(order.firstStill).toBeGreaterThan(order.lastScript);
 });
