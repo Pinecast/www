@@ -17,6 +17,7 @@ import {StickyLine} from '@/components/StickyLine';
 import {useCSS} from '@/hooks/useCSS';
 import {TunedInHeader, TunedInPanels} from '@/components/TunedIn';
 import {useAudioManager} from '@/hooks/useAudioManager';
+import {useAfterCritical} from '@/hooks/useLoadOrder';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 import {MAIN_CONTENT_ID, SkipLink} from '@/components/SkipLink';
 
@@ -26,6 +27,7 @@ const STICKY_LINE_SIZE = 1.5;
 export default function Home() {
   const css = useCSS();
   const [splashEnded, setSplashEnded] = React.useState(false);
+  const heroStillsIn = useAfterCritical();
 
   const {
     loading: audioManagerLoading,
@@ -54,9 +56,11 @@ export default function Home() {
           name="description"
           content="Kick-ass podcast hosting for the 21st century"
         />
-        <link rel="prefetch" href="/videos/hero/central.av1.mp4" />
-        <link rel="prefetch" href="/images/globe-full.jpg" />
-        <link rel="prefetch" href="/videos/Footer2x.mp4" />
+        {/* The only prefetch: the big video of the footer, the end of the page.
+            It waits for the stills of the hero (see useLoadOrder), as the
+            videos of the hero and of the globe do. The stills have their
+            preloads in _document. */}
+        {heroStillsIn && <link rel="prefetch" href="/videos/Footer2x.mp4" />}
       </Head>
       <SkipLink />
       {SPLASH_ENABLED ? (

@@ -3,6 +3,7 @@ import {useIsBot} from './UserAgentContext';
 import {StyleObject} from 'styletron-react';
 import * as React from 'react';
 import {useIntersectionVisibility} from '@/hooks/useIntersectionVisibility';
+import {useAfterCritical} from '@/hooks/useLoadOrder';
 import {isMotionPaused, useMotion} from '@/hooks/useMotion';
 
 export enum VideoMimeType {
@@ -41,6 +42,12 @@ export const NoncriticalVideo = ({
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const visibleRef = React.useRef(false);
   const {paused} = useMotion();
+  // These videos are far from the top of the page. Until the stills of the
+  // home hero are in (on the other pages, from the first render), the video
+  // asks for nothing: its poster and its first bytes would share the bandwidth
+  // with the stills, which the user sees first. So, the static page has
+  // neither.
+  const afterCritical = useAfterCritical();
 
   // The video loops while it is on screen, unless the "Pause animations"
   // toggle is on. Then it stops on the frame it shows.
@@ -101,10 +108,10 @@ export const NoncriticalVideo = ({
         playsInline
         disablePictureInPicture
         disableRemotePlayback
-        preload="metadata"
+        preload={afterCritical ? 'metadata' : 'none'}
         height={height}
         width={width}
-        poster={poster}
+        poster={afterCritical ? poster : undefined}
         className={css({
           // position: 'absolute',
           // minHeight: '100%',

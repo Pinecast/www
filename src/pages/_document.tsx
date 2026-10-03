@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
   default as NextDocument,
   Html,
@@ -23,6 +24,7 @@ import StyletronServer from 'styletron-engine-atomic/lib/server/server';
 import {Provider as UserAgentContextProvider} from '../components/UserAgentContext';
 import {MOTION_ATTRIBUTE, MOTION_INIT_SCRIPT} from '../hooks/useMotion';
 import {FONT_URLS} from '../fonts';
+import {HERO_STILLS, stillMedia} from '../heroStills';
 
 Document.getInitialProps = async (context: DocumentContext) => {
   const renderPage = () =>
@@ -45,7 +47,41 @@ Document.getInitialProps = async (context: DocumentContext) => {
   const stylesheets = (styletron as StyletronServer).getStylesheets() || [];
   // The error page of Next.js has no text in the faces.
   const preloadFonts = !['/404', '/_error'].includes(context.pathname);
-  return {...initialProps, preloadFonts, stylesheets};
+  // Next.js renders `styles` at the end of the <head>, after its scripts.
+  const styles = [...React.Children.toArray(initialProps.styles)];
+  if (context.pathname === '/') {
+    // The stills of the home hero are the first files to load after the page
+    // itself: the tiles of the hero show a flat color until they are in. Each
+    // one has the `media` of the layouts that draw it, so a phone loads one
+    // still, and not seven. The sounds, the videos and the globe wait for the
+    // stills (useLoadOrder), so nothing else takes the bandwidth.
+    //
+    // The stills must not slow the page script, which the hero needs to take
+    // over from its CSS layout. Two things keep them behind it, and
+    // tests/hero-loading.spec.ts checks both:
+    // - `fetchpriority="low"`. At the normal or the high priority, they got
+    //   the connections first, and the script was seconds late.
+    // - Their place in the page, after the scripts. A browser with six
+    //   connections to the server (HTTP/1.1) asks in the order of the page,
+    //   and links ahead of the scripts fill the connections. React moves a
+    //   <link> to the start of the <head>, unless it has an event handler, as
+    //   one that a script loads has: so these have a handler that does
+    //   nothing. (It is not in the HTML.)
+    styles.push(
+      ...Object.values(HERO_STILLS).map(still => (
+        <link
+          key={still.src}
+          rel="preload"
+          as="image"
+          href={still.src}
+          media={stillMedia(still)}
+          fetchPriority="low"
+          onError={() => {}}
+        />
+      )),
+    );
+  }
+  return {...initialProps, preloadFonts, stylesheets, styles};
 };
 
 export default function Document({

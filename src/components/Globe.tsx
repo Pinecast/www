@@ -12,6 +12,7 @@ import {
   useScrollProgressEffect,
 } from '@/hooks/useScrollProgress';
 import {AV1_MIME, useAsyncImage, useAsyncVideo} from '@/hooks/useAsyncResource';
+import {useAfterCritical} from '@/hooks/useLoadOrder';
 import {useCalculateResizableValue} from '@/hooks/useCalculateResizableValue';
 import {useCanvasDrawing} from '@/hooks/useCanvasDrawing';
 
@@ -1071,7 +1072,9 @@ export const Globe = () => {
   }, []);
 
   const canvas = React.useRef<HTMLCanvasElement>(null);
-  const gi = useAsyncImage('/images/globe-full.jpg');
+  // The globe is under the hero: its files wait for the stills of the hero.
+  const heroStillsIn = useAfterCritical();
+  const gi = useAsyncImage('/images/globe-full.jpg', heroStillsIn);
 
   // The "Pause animations" toggle stops the video and the drift of the orbs
   // where they are. With reduced motion, the globe also does not follow the
@@ -1097,7 +1100,7 @@ export const Globe = () => {
       [AV1_MIME]: '/videos/globe/globe2x.av1.mp4',
     },
     // Disable the video on mobile
-    !isMobile && animationsPlayed,
+    !isMobile && animationsPlayed && heroStillsIn,
     false,
   );
   const gv2 = useAsyncVideo(
@@ -1106,7 +1109,7 @@ export const Globe = () => {
       [AV1_MIME]: '/videos/globe/globe2x.av1.mp4',
     },
     // Disable the video on mobile
-    !isMobile && animationsPlayed,
+    !isMobile && animationsPlayed && heroStillsIn,
     false,
   );
 

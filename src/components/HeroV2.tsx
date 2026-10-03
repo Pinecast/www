@@ -3,10 +3,12 @@ import {KeyframesObject} from 'styletron-standard';
 import {useCSS} from '@/hooks/useCSS';
 import {Body4, Caption, H2} from './Typography';
 import {
+  mediaCondition,
   MOBILE_MEDIA_QUERY,
   TABLET_BREAKPOINT,
   TABLET_MEDIA_QUERY,
 } from '@/constants';
+import {drawsStill, HERO_STILLS, HeroStill, Layout} from '@/heroStills';
 import {SecondaryButton} from './SecondaryButton';
 import * as React from 'react';
 import {useCalculateResizableValue} from '@/hooks/useCalculateResizableValue';
@@ -23,6 +25,7 @@ import {
   roundedRectPath,
 } from '@/canvasHelpers';
 import {useCanvasDrawing} from '@/hooks/useCanvasDrawing';
+import {useAfterCritical} from '@/hooks/useLoadOrder';
 import {
   introAnimationProps,
   isMotionPaused,
@@ -75,13 +78,11 @@ type RadiusTween = {
 // by this part of what it has left to grow.
 const GROWTH: RadiusTween = {inner: 0.1, middle: 0.05, outer: 0.025};
 
-type Layout = 'mobile' | 'tablet' | 'desktop';
-
 // The canvas switches its layout where the grid of the hero does.
 const getLayout = (): Layout =>
-  matchMedia(MOBILE_MEDIA_QUERY.replace(/^@media\s*/, '')).matches
+  matchMedia(mediaCondition(MOBILE_MEDIA_QUERY)).matches
     ? 'mobile'
-    : matchMedia(TABLET_MEDIA_QUERY.replace(/^@media\s*/, '')).matches
+    : matchMedia(mediaCondition(TABLET_MEDIA_QUERY)).matches
       ? 'tablet'
       : 'desktop';
 
@@ -174,18 +175,49 @@ const skeletonCircleSize = (down: number) =>
 const skeletonInnerCircleSize = (columnHalf: string, offset: number) =>
   `calc(2 * hypot(${columnHalf}, 100% + ${offset + 20}px))`;
 
+// A still shows in its tile as the canvas draws it: scaled to cover the tile,
+// from the middle. The color of the tile is under it until it is in.
+const skeletonStill = (src: string): StyleObject => ({
+  backgroundImage: `url(${src})`,
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
+});
+
 const skeletonTile = (
   grow: number,
   color: string,
   zIndex: number,
+  still?: string,
 ): StyleObject => ({
   backgroundColor: color,
   borderRadius: '20px',
   flex: `${grow} 1 0`,
   minHeight: 0,
+  overflow: 'hidden',
+  position: 'relative',
+  ...(still && skeletonStill(still)),
   // The canvas paints the bottom tiles of the outer columns, the outer circle,
   // the top tiles, the middle circle, and then the inner columns.
   zIndex,
+});
+
+// The canvas draws the image of an inner column once, over the whole column,
+// and its two tiles are windows on it. This layer is as high as the column, at
+// the top or the bottom of its tile, so that the tile shows its part of the
+// image. The tile is `rows` of the `ROWS` parts of the column, which is also
+// 20px high for the gap between the tiles, so `100%` of the tile is the height
+// of the column, less the gap, times `rows / ROWS`.
+const skeletonWindow = (
+  src: string,
+  rows: number,
+  edge: 'top' | 'bottom',
+): StyleObject => ({
+  ...skeletonStill(src),
+  [edge]: 0,
+  height: `calc(100% * ${ROWS} / ${rows} + 20px)`,
+  left: 0,
+  position: 'absolute',
+  width: '100%',
 });
 
 const skeletonColumn = (hideFrom: string): StyleObject => ({
@@ -199,9 +231,15 @@ const skeletonColumn = (hideFrom: string): StyleObject => ({
 // The central tile is in the grid of the text, under it, as wide as the
 // canvas draws it.
 const skeletonCentralTile = (width: string): StyleObject => ({
+  ...skeletonStill(HERO_STILLS.central.src),
   marginLeft: `calc((100% - ${width}) / 2)`,
   width: `calc(${width})`,
 });
+
+// A still of the hero: it loads where the layout draws it, and the files that
+// wait for the stills (`useAfterCritical`) wait for it.
+const useStill = (still: HeroStill, layout: Layout) =>
+  useAsyncImage(still.src, drawsStill(layout, still), true);
 
 export const HeroV2 = () => {
   const css = useCSS();
@@ -240,20 +278,26 @@ export const HeroV2 = () => {
   // themselves.)
   const {reducedMotion: isStatic} = useMotion();
 
-  const tli = useAsyncImage('/images/hero/t-l.jpg');
-  const tri = useAsyncImage('/images/hero/t-r.jpg');
-  const bli = useAsyncImage('/images/hero/b-l.jpg');
-  const bri = useAsyncImage('/images/hero/b-r.jpg');
-  const mli = useAsyncImage('/images/hero/ml.jpg');
-  const mri = useAsyncImage('/images/hero/mr.jpg');
-  const ci = useAsyncImage('/images/hero/central.jpg');
+  // Only the stills that the layout draws load, and the rest of the page waits
+  // for them: the sounds, the videos and the globe start when they are in.
+  // pages/index.tsx preloads the same stills, so they are in the cache, or on
+  // their way, when this runs.
+  const layout: Layout = isMobile ? 'mobile' : isTablet ? 'tablet' : 'desktop';
+  const tli = useStill(HERO_STILLS.tl, layout);
+  const tri = useStill(HERO_STILLS.tr, layout);
+  const bli = useStill(HERO_STILLS.bl, layout);
+  const bri = useStill(HERO_STILLS.br, layout);
+  const mli = useStill(HERO_STILLS.ml, layout);
+  const mri = useStill(HERO_STILLS.mr, layout);
+  const ci = useStill(HERO_STILLS.central, layout);
+  const stillsIn = useAfterCritical();
 
   const tlv = useAsyncVideo(
     {
       'video/mp4': '/videos/hero/t-l.mp4',
       [AV1_MIME]: '/videos/hero/t-l.av1.mp4',
     },
-    !isMobile,
+    !isMobile && stillsIn,
     true,
   );
   const trv = useAsyncVideo(
@@ -261,7 +305,7 @@ export const HeroV2 = () => {
       'video/mp4': '/videos/hero/t-r.mp4',
       [AV1_MIME]: '/videos/hero/t-r.av1.mp4',
     },
-    !isMobile,
+    !isMobile && stillsIn,
     true,
   );
   const blv = useAsyncVideo(
@@ -269,7 +313,7 @@ export const HeroV2 = () => {
       'video/mp4': '/videos/hero/b-l.mp4',
       [AV1_MIME]: '/videos/hero/b-l.av1.mp4',
     },
-    !isMobile,
+    !isMobile && stillsIn,
     true,
   );
   const brv = useAsyncVideo(
@@ -277,7 +321,7 @@ export const HeroV2 = () => {
       'video/mp4': '/videos/hero/b-r.mp4',
       [AV1_MIME]: '/videos/hero/b-r.av1.mp4',
     },
-    !isMobile,
+    !isMobile && stillsIn,
     true,
   );
   const mlv = useAsyncVideo(
@@ -285,7 +329,7 @@ export const HeroV2 = () => {
       'video/mp4': '/videos/hero/ml.mp4',
       [AV1_MIME]: '/videos/hero/ml.av1.mp4',
     },
-    !isMobile && !isTablet,
+    !isMobile && !isTablet && stillsIn,
     true,
   );
   const mrv = useAsyncVideo(
@@ -293,7 +337,7 @@ export const HeroV2 = () => {
       'video/mp4': '/videos/hero/mr.mp4',
       [AV1_MIME]: '/videos/hero/mr.av1.mp4',
     },
-    !isMobile && !isTablet,
+    !isMobile && !isTablet && stillsIn,
     true,
   );
   const cv = useAsyncVideo(
@@ -301,7 +345,7 @@ export const HeroV2 = () => {
       'video/mp4': '/videos/hero/central.mp4',
       [AV1_MIME]: '/videos/hero/central.av1.mp4',
     },
-    true,
+    stillsIn,
     true,
   );
 
@@ -896,29 +940,75 @@ export const HeroV2 = () => {
           })}
         >
           <div className={css(skeletonColumn(MOBILE_MEDIA_QUERY))}>
-            <div className={css(skeletonTile(OUTER_TOP, PLACEHOLDER_TOP, 3))} />
             <div
-              className={css(skeletonTile(OUTER_BOTTOM, PLACEHOLDER_BOTTOM, 1))}
+              className={css(
+                skeletonTile(OUTER_TOP, PLACEHOLDER_TOP, 3, HERO_STILLS.tl.src),
+              )}
+            />
+            <div
+              className={css(
+                skeletonTile(
+                  OUTER_BOTTOM,
+                  PLACEHOLDER_BOTTOM,
+                  1,
+                  HERO_STILLS.bl.src,
+                ),
+              )}
             />
           </div>
           <div className={css(skeletonColumn(TABLET_MEDIA_QUERY))}>
-            <div className={css(skeletonTile(INNER_TOP, PLACEHOLDER_TOP, 5))} />
+            <div className={css(skeletonTile(INNER_TOP, PLACEHOLDER_TOP, 5))}>
+              <div
+                className={css(
+                  skeletonWindow(HERO_STILLS.ml.src, INNER_TOP, 'top'),
+                )}
+              />
+            </div>
             <div
               className={css(skeletonTile(INNER_BOTTOM, PLACEHOLDER_TOP, 5))}
-            />
+            >
+              <div
+                className={css(
+                  skeletonWindow(HERO_STILLS.ml.src, INNER_BOTTOM, 'bottom'),
+                )}
+              />
+            </div>
           </div>
           {/* The central tile is under the text. */}
           <div />
           <div className={css(skeletonColumn(TABLET_MEDIA_QUERY))}>
-            <div className={css(skeletonTile(INNER_TOP, PLACEHOLDER_TOP, 5))} />
+            <div className={css(skeletonTile(INNER_TOP, PLACEHOLDER_TOP, 5))}>
+              <div
+                className={css(
+                  skeletonWindow(HERO_STILLS.mr.src, INNER_TOP, 'top'),
+                )}
+              />
+            </div>
             <div
               className={css(skeletonTile(INNER_BOTTOM, PLACEHOLDER_TOP, 5))}
-            />
+            >
+              <div
+                className={css(
+                  skeletonWindow(HERO_STILLS.mr.src, INNER_BOTTOM, 'bottom'),
+                )}
+              />
+            </div>
           </div>
           <div className={css(skeletonColumn(MOBILE_MEDIA_QUERY))}>
-            <div className={css(skeletonTile(OUTER_TOP, PLACEHOLDER_TOP, 3))} />
             <div
-              className={css(skeletonTile(OUTER_BOTTOM, PLACEHOLDER_BOTTOM, 1))}
+              className={css(
+                skeletonTile(OUTER_TOP, PLACEHOLDER_TOP, 3, HERO_STILLS.tr.src),
+              )}
+            />
+            <div
+              className={css(
+                skeletonTile(
+                  OUTER_BOTTOM,
+                  PLACEHOLDER_BOTTOM,
+                  1,
+                  HERO_STILLS.br.src,
+                ),
+              )}
             />
           </div>
           <div
