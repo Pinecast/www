@@ -613,7 +613,9 @@ const AddonAccordionItem = ({
           })}
         >
           <Body3 style={{maxWidth: '310px'}}>{description}</Body3>
-          <Link href={link}>Learn more</Link>
+          <Link href={link} target="_blank">
+            Learn more
+          </Link>
         </div>
       </Expandable>
       {open ? (
