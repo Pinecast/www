@@ -12,7 +12,7 @@ import {
   MonumentGroteskSemiMono,
 } from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
-import {FocusEventHandler, ReactNode, useCallback} from 'react';
+import {FocusEventHandler, ReactNode} from 'react';
 import {StyleObject} from 'styletron-react';
 import NextLink, {LinkProps} from 'next/link';
 import {RightArrow} from '@/icons/RightArrow';
@@ -431,46 +431,44 @@ export const Link = ({
   target?: '_blank';
 }) => {
   const css = useCSS();
-  const Tag = href ? 'a' : 'span';
-  const renderLink = useCallback(
-    () => (
-      <Tag
-        {...rest}
-        className={css({
-          ...MonumentGroteskSemiMono,
-          color: '#C7F182',
-          display: 'block',
-          fontSize: '16px',
-          fontWeight: 400,
-          lineHeight: '16px',
-          textDecoration: 'none',
-          textUnderlineOffset: '0.3em',
-          ...style,
-          ':hover': {
-            [CAN_HOVER_MEDIA_QUERY]: {
-              textDecoration: 'underline',
-              ...(style as Record<string, any>)?.[':hover'],
-            },
-          },
-          [MOBILE_MEDIA_QUERY]: {
-            fontSize: '14px',
-            lineHeight: '14px',
-            ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
-          },
-        })}
-      >
-        <span className={css({verticalAlign: 'middle'})}>{children}</span>
-        <RightArrow size={24} />
-      </Tag>
-    ),
-    [Tag, children, css, rest, style],
+  const className = css({
+    ...MonumentGroteskSemiMono,
+    color: '#C7F182',
+    display: 'block',
+    fontSize: '16px',
+    fontWeight: 400,
+    lineHeight: '16px',
+    textDecoration: 'none',
+    textUnderlineOffset: '0.3em',
+    ...style,
+    ':hover': {
+      [CAN_HOVER_MEDIA_QUERY]: {
+        textDecoration: 'underline',
+        ...(style as Record<string, any>)?.[':hover'],
+      },
+    },
+    [MOBILE_MEDIA_QUERY]: {
+      fontSize: '14px',
+      lineHeight: '14px',
+      ...(style as Record<string, any>)?.[MOBILE_MEDIA_QUERY],
+    },
+  });
+  const content = (
+    <>
+      <span className={css({verticalAlign: 'middle'})}>{children}</span>
+      <RightArrow size={24} />
+    </>
   );
   if (href) {
     return (
-      <NextLink legacyBehavior href={href}>
-        {renderLink()}
+      <NextLink {...rest} href={href} className={className}>
+        {content}
       </NextLink>
     );
   }
-  return <Tag>{renderLink()}</Tag>;
+  return (
+    <span {...rest} className={className}>
+      {content}
+    </span>
+  );
 };
