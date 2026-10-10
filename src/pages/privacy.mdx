@@ -58,7 +58,7 @@ In accordance with the Children’s Online Privacy Protection Act, Pinecast will
 ## Listener and subscriber privacy
 Information about podcast listeners and subscribers is saved to provide analytics for podcast owners. If you listen to a Pinecast podcast or visit a podcast short link, Pinecast records the request. This information is not available to podcast owners in its raw form and can only be accessed in aggregate.
 
-- In Pinecast's analytics records, we keep a hashed version of your IP address, your user agent string, your approximate location (down to the city), and other metadata sent by your browser or podcast app. These records may be stored indefinitely. A hash of an IP address is not anonymous. With enough effort, the original address can be recovered from it, so we treat it as personal information.
+- In Pinecast's analytics records, we keep a hashed version of your IP address, your user agent string, your approximate location (down to the city), and other metadata sent by your browser or podcast app. These records may be stored indefinitely. A hash of an IP address is not anonymous. With enough effort, the original address can be recovered from it, so we treat it as personal information. Historical hashed IPs used a less cryptographically-secure format.
 
 - Your IP address and user agent string are also kept as they were received in server logs, which Pinecast uses to fix problems and to recalculate analytics. Pinecast keeps these logs for no longer than a year. The logs that Pinecast keeps of requests to Cloudflare are kept for no longer than 15 days.
 
