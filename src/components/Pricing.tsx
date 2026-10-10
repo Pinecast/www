@@ -217,28 +217,28 @@ export const Pricing = () => {
           monthlyPrice="$10"
           yearlyPrice="$110"
           description="Gain additional insights about your listeners with geographic data, listen growth analytics, sparklines, and more."
-          link=""
+          link="https://help.pinecast.com/article/71-add-on-packages#pro-analytics-add-on"
         />
         <AddonAccordionItem
           name="Crew add-on"
           monthlyPrice="$10"
           yearlyPrice="$110"
           description="Create a network for all of your shows, with a combined analytics dashboard. Share access to collaborators with configurable options."
-          link=""
+          link="https://help.pinecast.com/article/71-add-on-packages#crew-add-on"
         />
         <AddonAccordionItem
           name="Growth add-on"
           monthlyPrice="$10"
           yearlyPrice="$110"
           description="Grow your podcast with more options and features. Customize your tip jar, gather reviews from directories, solicit feedback from listeners, and more."
-          link=""
+          link="https://help.pinecast.com/article/71-add-on-packages#growth-add-on"
         />
         <AddonAccordionItem
           name="Hi-Fi add-on"
           monthlyPrice="$15"
           yearlyPrice="$165"
           description="Upload audio files up to 256MB, with an extra 256MB buffer every thirty days. RSS feeds update 66% faster."
-          link=""
+          link="https://help.pinecast.com/article/71-add-on-packages#hi-fi-add-on"
         />
       </AddonAccordion>
     </section>
@@ -613,7 +613,9 @@ const AddonAccordionItem = ({
           })}
         >
           <Body3 style={{maxWidth: '310px'}}>{description}</Body3>
-          <Link href={link}>Learn more</Link>
+          <Link href={link} target="_blank">
+            Learn more
+          </Link>
         </div>
       </Expandable>
       {open ? (
