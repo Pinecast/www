@@ -11,18 +11,23 @@ import {Intro} from '@/components/TextBlocks';
 Pinecast may collect your email address in order to create an account, leave feedback on a podcast, or leave a tip. If you are leaving feedback or a tip, your email address will be shared with the owner of the podcast. If you collaborate with other users on Pinecast, your email address may be shared with those users. A podcast owner's email address is provided in RSS feeds to allow podcasting services and directories to function correctly.
 
 ### Information you give us
-You may provide us with information, like a Slack webhook URL, to enable a Pinecast feature. This information is not shared unless explicitly stated.
+You may provide us with information, like a Slack webhook URL, to enable a Pinecast feature. Pinecast uses this information only to provide that feature. When a notification is sent, its contents go to the destination that you chose. Depending on the notification, the contents can include the email address and message of a listener who left feedback, or the email address and amount of a person who left a tip.
 
-If you send a message to Pinecast, such as through our support channels or through a "Report a problem" form, we may store that message and general information about the state of the page that you're currently on.
+If you contact Pinecast for support, including through the help widget in the dashboard, we may store your message, your email address, and general information about the page that you're currently on. Support conversations are handled by Help Scout.
 
 #### Financial data
-Pinecast collects credit card information to charge customers for paid subscriptions and to charge listeners for tips. This data never passes through Pinecast servers; it is transmitted directly from your browser to Stripe, our payment processor. Because Pinecast never has access to payment card information, the information cannot be transmitted to any other third party.
+Pinecast collects credit card information to charge customers for paid subscriptions and to charge listeners for tips. This data never passes through Pinecast servers; it is transmitted directly from your browser to Stripe, our payment processor. Pinecast does not have access to the full card number and does not store it.
 
-Pinecast does have access to less private information, like the name of a credit card holder or the last few digits of a bank account number. This information may be displayed on your Pinecast dashboard to clarify billing information, but it is never cached or stored in a Pinecast-controlled database. Any information is requested from Stripe as needed.
+Stripe's scripts run on Pinecast dashboard pages and on tip jar pages. Stripe may collect information about your device and how you use those pages to prevent fraud. Stripe's use of that information is described in its privacy policy.
+
+Pinecast does have access to less private information, like the name of a credit card holder or the last few digits of a bank account number. This information may be displayed on your Pinecast dashboard to clarify billing information, but it is never cached or stored in a Pinecast-controlled database. Any information is requested from Stripe as needed. Pinecast does store the identifiers that Stripe gives us, such as customer and account IDs, along with payment amounts. Pinecast sends your email address to Stripe, and the email address of a person who leaves a tip.
 
 If you opt-in to setting up a tip jar, we may request personal information from you to satisfy the requirements of our payments processor. This may include your name, birthdate, address, government issued ID number, and more. We will also collect bank account or debit card information. This information is sent directly to Stripe from your browser and never passes through Pinecast servers.
 
 You can read more about Stripe's practices here: https://stripe.com/privacy
+
+### Reviews and comments
+Pinecast collects public reviews and comments about your podcast from Apple Podcasts, Podchaser, and YouTube. We store the reviewer's username, rating, and text, and show them to the owner of the podcast.
 
 ### Information about your browser
 We use data that your web browser (or other user agent) makes available to us in order to provide you with a better experience. This may include information about which timezone you're located in, your IP address, or which operating system you use. We use this data to improve Pinecast and your user experience. Some data may be used to provide podcast owners with anonymous aggregate information about who accesses or listens to their podcasts.
@@ -30,24 +35,88 @@ We use data that your web browser (or other user agent) makes available to us in
 Your computer's IP address may be processed to determine your rough location.
 
 ### How you use Pinecast
-Pinecast will track how you use the service. This includes things like which pages you visit, the actions you perform on those pages, and any errors you may encounter. This information is used to improve Pinecast.
+Pinecast records the actions that you take in the dashboard, such as creating an episode or changing a setting, in an audit log. The log keeps the action, your email address, and your browser's user agent. It also keeps your IP address, which is removed after 90 days. This information is used to improve Pinecast and to investigate problems and abuse.
 
-Pinecast will use a cookie to allow you to remain logged in.
+When something goes wrong, Pinecast's error monitoring service receives a report. The report can include the page you were on, the steps that led to the error, details about your browser, and your user ID and email address if you are signed in. These reports can come from the dashboard and from pages that are shown to listeners.
 
-Pinecast allows its users to add Google Analytics to their websites (hosted at *.pinecast.co or a non-Pinecast domain name). Google Analytics is only available on sites that explicitly enable it. Only Google and the site owner has access to the data collected.
+Pinecast sends your email address and events about your account, like creating a podcast or an episode or changing your subscription, to a service that Pinecast uses to manage communication with customers.
+
+Pinecast uses cookies to keep you signed in and to protect forms from forgery. A separate cookie keeps a person who leaves tips signed in to the tip jar. Podcast websites that are protected by a password use cookies to remember that a visitor entered it. The dashboard also stores preferences, like dark mode and unsaved drafts, in your browser. The third parties described below, such as Stripe, Google, and Help Scout, may set their own cookies or store data in your browser.
+
+Pinecast allows its users to add Google Analytics to their websites (hosted at *.pinecast.co or a non-Pinecast domain name). Google Analytics is only available on sites that explicitly enable it. Only Google and the site owner has access to the data collected. Separately, podcast websites load fonts from Google Fonts unless the site uses only fonts that are built in to the browser. Google receives the IP address and browser details of each visitor.
 
 Pinecast does not track your behavior outside of the Pinecast ecosystem. We do not purchase behavior information from third parties.
 
 If you interact with Pinecast emails or other communication, a record of your interaction may be logged.
 
 ### Imported podcasts
-If you use Pinecast's import tool, Pinecast will download information from the feed you provide us in order to copy that information to our servers. Pinecast keeps records of all imported files, including the original feed and audio file URLs. This information is used to improve Pinecast and is not shared with third parties.
+If you use Pinecast's import tool, Pinecast will download information from the feed you provide us in order to copy that information to our servers. Pinecast keeps records of all imported files, including the original feed and audio file URLs. This information is used to improve Pinecast. Imports run on Amazon Web Services. The host of the feed that you import can see that Pinecast fetched it, and Pinecast may keep checking the original feed for a period after the import. If you import from Descript, Pinecast reads the audio and transcript from the share link that you provide. Pinecast does not give imported information to any third party other than the service providers listed below.
 
 ### Information about children younger than 13 years old
 In accordance with the Children’s Online Privacy Protection Act, Pinecast will never knowingly collect information about any person that we believe to be younger than thirteen years old.
 
 ## Listener and subscriber privacy
-Information about podcast listeners and subscribers is saved to provide analytics for podcast owners. If you listen to a Pinecast podcast or visit a podcast short link, a fingerprint (cryptographically hashed version) of your IP address, user agent string, and other metadata sent by your browser may be recorded and stored indefinitely. This information is not available to podcast owners in its raw form and can only be accessed in aggregate.
+Information about podcast listeners and subscribers is saved to provide analytics for podcast owners. If you listen to a Pinecast podcast or visit a podcast short link, Pinecast records the request. This information is not available to podcast owners in its raw form and can only be accessed in aggregate.
+
+- In Pinecast's analytics records, we keep a hashed version of your IP address, your user agent string, your approximate location (down to the city), and other metadata sent by your browser or podcast app. These records may be stored indefinitely. A hash of an IP address is not anonymous. With enough effort, the original address can be recovered from it, so we treat it as personal information.
+
+- Your IP address and user agent string are also kept as they were received in server logs, which Pinecast uses to fix problems and to recalculate analytics. Pinecast keeps these logs for no longer than a year. The logs that Pinecast keeps of requests to Cloudflare are kept for no longer than 15 days.
+
+- Cloudflare delivers Pinecast's websites, feeds, and audio, and Bunny.net delivers audio. Each of them handles every request, including your IP address and user agent, and keeps its own logs. Bunny.net anonymizes the IP addresses in its logs.
+
+- Pinecast does not record a listen to episode audio in a podcast's analytics if the request includes a Do Not Track signal.
+
+- If you leave feedback for a podcast, Pinecast stores your message, your IP address, and your email address if you provide one. Messages sent to a podcast's listener email address are received by Amazon SES and kept for 14 days. Pinecast keeps a record of who sent each message that it forwards to the podcast owner.
+
+- A podcast owner can choose to send listen information to a listen measurement service. Your podcast app contacts that service first, so the service receives your IP address and user agent. The services are listed below.
+
+## Service providers and other third parties
+Pinecast uses other companies to run the service. Each one receives only the information that it needs to do its job.
+
+Any service that your browser contacts directly, such as Stripe, Google, or Help Scout, can see your IP address and details about your browser, as Pinecast does.
+
+### Companies that run Pinecast
+- **Amazon Web Services** hosts Pinecast. It stores our databases, uploaded audio and images, logs, and copies of the email that Pinecast sends, in the United States. Pinecast sends and receives email through Amazon SES.
+
+- **Cloudflare** provides DNS, security, and caching for Pinecast's websites, feeds, and audio. It handles every request, including the IP address and user agent.
+
+- **Bunny.net** delivers podcast audio to listeners. It handles the IP address and user agent of each request, and keeps a copy of the audio.
+
+- **Stripe** processes payments for subscriptions and tips, and verifies the identity of people who receive tips.
+
+- **Rollbar** monitors Pinecast for errors. Reports can include a user's ID and email address.
+
+- **Help Scout** provides support and the help widget in the dashboard. The widget identifies you by your email address. Email that you send to Pinecast is also handled by our email and support providers.
+
+- **Userlist** receives the email address, sign-up date, and account events of Pinecast customers, which Pinecast uses to manage communication with them.
+
+- **Slack** is used by Pinecast's staff for internal alerts. An alert about a podcast that may be spam includes the owner's email address and the titles of the podcast and episode.
+
+### Features that use more companies
+- **Transcription.** When an episode is transcribed, Pinecast sends a link to the episode's audio to AssemblyAI, which returns the transcript and the speaker labels. Voices of guests and other people in the audio are included.
+
+- **Spam checks and feedback summaries.** Pinecast checks new podcasts on free accounts for spam by sending details of the podcast and its episodes (such as the name, description, links, and audio file name) and the domain of the owner's email address to an AI model that Cloudflare hosts. If the owner of a podcast asks for a summary of listener feedback, the text of the feedback messages is sent to the same service. See [AI Use](/ai-use) for more on how Pinecast uses AI.
+
+- **Studio.** Live recording sessions use LiveKit to carry audio and video between the host and guests. The display name of each participant is shared with it, and for a host that can be their email address.
+
+- **Maps.** The maps in analytics are drawn by Mapbox, which receives the IP address and browser details of the person viewing the map.
+
+- **Profile pictures.** Pinecast shows pictures from Gravatar. A podcast's hosts page can show them too. The address of the picture contains a hash of the person's email address.
+
+- **Bot checks.** Google reCAPTCHA protects sign-up, tip jar sign-in, and listener feedback forms. Google receives the IP address and browser details of the person using the form.
+
+- **Fonts.** Google Fonts supplies fonts to podcast websites, the flat player, and listener feedback pages.
+
+### Services that you choose to use
+- **Directories.** If you submit a podcast to a directory, the directory receives the podcast's feed and details. The directories are Apple Podcasts, Spotify, Amazon Music, YouTube, iHeartRadio, JioSaavn, Boomplay, Pocket Casts, Podchaser, and Listen Notes. Listen Notes also receives the email address of the podcast owner. Spotify sends Pinecast the number of streams by country.
+
+- **Listen measurement services.** A podcast owner can send listens to Claritas, Dynamo (Voxnest), OP3, Podcorn, Podder, Podkite, Podtrac, or Zencastr. These services receive the IP address and user agent of each listener.
+
+- **Google Analytics.** A podcast owner can add Google Analytics to a podcast website.
+
+- **Notifications.** A podcast owner can send notifications to Slack, Discord, email, or a web hook.
+
+- **Imports.** Pinecast fetches information from the feed or the Descript link that you give it.
 
 ## How your information is used
 Pinecast will never sell or trade your information with any third party without your direct consent.
@@ -74,7 +143,7 @@ You may opt out of all non-essential communication with Pinecast. Some messages,
 
 If you request that Pinecast contact you through an alternative channel, such as Twitter, we may send you messages at your request.
 
-Your account may have opt-in to alerts or notifications through other mediums, such as Slack or web hooks. These communications are logged in order to avoid sending duplicate messages. You may opt-out of these notifications at any time through the interface that you used to configure them.
+Your account may have opt-in to alerts or notifications through other mediums, such as Slack, Discord, email, or web hooks. These communications are logged in order to avoid sending duplicate messages. You may opt-out of these notifications at any time through the interface that you used to configure them.
 
 ## Links and embedding
 Pinecast contains links to third parties that we do not control. Content on Pinecast may also be embedded in third party services or websites. Pinecast does not endorse any third party service or website, and take no responsibility or position on their actions.
@@ -84,10 +153,10 @@ Pinecast contains links to third parties that we do not control. Content on Pine
 Some information cannot be removed from Pinecast, such as tip jar information. This is in order to comply with regulations which require information collected to facilitate money movement to be stored for a minimum amount of time. Pinecast can close your account(s) with Stripe, but information may be retained until regulations no longer apply.
 
 ### Removing content
-You may choose to delete a Pinecast podcast at any time. Assets like audio files and image files may not be deleted from their URLs immediately.
+You may choose to delete a Pinecast podcast at any time. Audio files and image files may remain available at their URLs, and in the caches of our delivery providers, after you delete a podcast or an episode. Contact Pinecast if a file must be removed.
 
 ### Deleting your account
-You may contact Pinecast to have your account deleted. Some information about your account and podcasts may be retained for compliance purposes.
+Closing your account from your settings turns the account off, but does not delete your information. You may contact Pinecast to have your account deleted. Some information about your account and podcasts may be retained for compliance purposes.
 
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {LegalLayout} from '@/layouts/LegalLayout';
