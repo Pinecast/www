@@ -8,6 +8,7 @@ import {
   MIN_TABLET_MEDIA_QUERY,
   MOBILE_MEDIA_QUERY,
   MUTE_BUTTON_ATTRIBUTE,
+  PREFERS_REDUCED_MOTION_QUERY,
   TABLET_MEDIA_QUERY,
 } from '@/constants';
 import Link from 'next/link';
@@ -780,6 +781,12 @@ export const MainHeader = () => {
                 aria-describedby={describedBy}
                 className={css({
                   opacity: !hasScrolled ? 1 : 0.4,
+                  transition:
+                    'height 0.2s ease-in-out, opacity 0.2s ease-in-out',
+                  // The button does not change its height with reduced motion.
+                  [PREFERS_REDUCED_MOTION_QUERY]: {
+                    transition: 'opacity 0.2s ease-in-out',
+                  },
                   // The ring goes around the bubble, not the wider button. With
                   // keyboard focus, the bubble shows in full and in view, also
                   // when it has faded or moved off the screen after a scroll.
@@ -793,8 +800,6 @@ export const MainHeader = () => {
                   cursor: 'pointer',
                   display: 'block',
                   height: 'var(--button-tooltip-height)',
-                  transition:
-                    'height 0.2s ease-in-out, opacity 0.2s ease-in-out',
                   padding: 0,
                   width: 'var(--button-size)',
                 }}

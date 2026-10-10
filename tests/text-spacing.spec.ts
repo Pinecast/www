@@ -84,32 +84,56 @@ test.describe('with larger text spacing', () => {
     }
   });
 
-  test('the feature list shows the same part of each title', async ({page}) => {
-    // Above 1280px the titles are 80px tall in 70px rows, which crop them on
-    // purpose. More line height must not push them further down. They can
-    // move up a little (the line of the row no longer starts above them),
-    // which shows more of them.
-    await page.setViewportSize({width: 1440, height: 900});
-    await load(page, '/features');
-    const titles = page.locator('ul li button > span:not([aria-hidden])');
-    const offsets = async () =>
-      titles.evaluateAll(spans =>
-        spans.map(span => {
-          const range = document.createRange();
-          range.selectNodeContents(span);
-          const button = span.parentElement!.getBoundingClientRect();
-          return Math.round(range.getBoundingClientRect().top - button.top);
-        }),
-      );
-    const before = await offsets();
-    expect(before.length).toBeGreaterThan(0);
-    await page.addStyleTag({content: TEXT_SPACING});
-    const after = await offsets();
-    for (let i = 0; i < before.length; i++) {
-      expect(after[i]).toBeLessThanOrEqual(before[i] + 1);
-      expect(after[i]).toBeGreaterThanOrEqual(before[i] - 8);
-    }
-  });
+  // From 1181px the titles are taller than their rows, which crop them on
+  // purpose: 80px titles in 70px rows above 1280px, and 60px titles in 52px
+  // rows below. More line height must not push them further down. They can
+  // move up a little (the line of the row no longer starts above them),
+  // which shows more of them.
+  for (const width of [1181, 1240, 1440]) {
+    test(`the feature list shows the same part of each title at ${width}px`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({width, height: 900});
+      await load(page, '/features');
+      const titles = page.locator('ul li button > span:not([aria-hidden])');
+      const offsets = async () =>
+        titles.evaluateAll(spans =>
+          spans.map(span => {
+            const range = document.createRange();
+            range.selectNodeContents(span);
+            const button = span.parentElement!.getBoundingClientRect();
+            return Math.round(range.getBoundingClientRect().top - button.top);
+          }),
+        );
+      const before = await offsets();
+      expect(before.length).toBeGreaterThan(0);
+      await page.addStyleTag({content: TEXT_SPACING});
+      const after = await offsets();
+      for (let i = 0; i < before.length; i++) {
+        expect(after[i]).toBeLessThanOrEqual(before[i] + 1);
+        expect(after[i]).toBeGreaterThanOrEqual(before[i] - 8);
+      }
+    });
+  }
+
+  // The letter and the icon of a row, 60px wide and 43px from the sides, are
+  // painted over by a title that is wider than the space between them.
+  for (const width of [1181, 1280]) {
+    test(`the feature titles stay between the letter and the icon at ${width}px`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({width, height: 900});
+      await load(page, '/features', {spacing: true});
+      const titles = page.locator('ul li button > span:not([aria-hidden])');
+      expect(await titles.count()).toBeGreaterThan(0);
+      for (const title of await titles.all()) {
+        const name = (await title.textContent()) ?? '';
+        const box = await textBox(title);
+        expect(box.left, name).toBeGreaterThanOrEqual(103);
+        expect(box.right, name).toBeLessThanOrEqual(width - 103);
+      }
+    });
+  }
 
   test('the customer names stay on the screen', async ({page}) => {
     await page.setViewportSize({width: 320, height: 800});

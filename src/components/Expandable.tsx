@@ -1,8 +1,10 @@
 import {useCSS} from '@/hooks/useCSS';
 import {StyleObject} from 'styletron-react';
+import {PREFERS_REDUCED_MOTION_QUERY} from '@/constants';
 
 // A panel that opens and closes with a height animation. Give it an `id` and
-// point the aria-controls of its button at it.
+// point the aria-controls of its button at it. With reduced motion, it opens
+// and closes at once.
 //
 // The panel is a grid with one row that grows from `0fr` to `1fr`. An open
 // panel is as tall as its content, so that no text is cut off when the text
@@ -29,6 +31,7 @@ export const Expandable = ({
         gridTemplateRows: open ? '1fr' : '0fr',
         overflow: 'hidden',
         transition: 'grid-template-rows 0.2s',
+        [PREFERS_REDUCED_MOTION_QUERY]: {transition: 'none'},
         ...style,
       })}
       // A closed panel is inert, so that the keyboard and assistive technology

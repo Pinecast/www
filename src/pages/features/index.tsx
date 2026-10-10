@@ -12,6 +12,7 @@ import {
   MIN_DESKTOP_MEDIA_QUERY,
   MIN_TABLET_MEDIA_QUERY,
   MOBILE_MEDIA_QUERY,
+  PREFERS_REDUCED_MOTION_QUERY,
 } from '@/constants';
 import {InfoPageFooterUpsell} from '@/components/InfoPageFooterUpsell';
 import {
@@ -352,6 +353,23 @@ const BACKGROUND_TICK =
 
 const TITLE_LINE_HEIGHT = '44px';
 
+// The sizes of a feature row from 1181px wide. See FeatureAccordionItem.
+// `titleTop` moves the title from where the row centers it. Set it so that the
+// bottom of the capital letters is 1px below the bottom of the row. A different
+// title size needs a different value.
+const DESKTOP_ROW = {
+  height: '70px',
+  heightSelected: '80px',
+  titleSize: '80px',
+  titleTop: '15px',
+};
+const TABLET_ROW = {
+  height: '52px',
+  heightSelected: '60px',
+  titleSize: '60px',
+  titleTop: '10px',
+};
+
 const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
   feature,
   onSelectName,
@@ -399,6 +417,10 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
           padding: '0',
           position: 'relative',
           transition: 'background-color 0.2s, color 0.2s, height 0.2s',
+          // The row does not change its height with reduced motion.
+          [PREFERS_REDUCED_MOTION_QUERY]: {
+            transition: 'background-color 0.2s, color 0.2s',
+          },
           width: '100%',
           // The rows touch each other and the edges of the page, and the
           // letter and the name paint over the button's own outline. Draw
@@ -432,11 +454,32 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
             opacity: selected ? 1 : 0,
             transition: 'opacity 0.2s',
             zIndex: 2,
+            // The line goes through the middle of the row.
+            [MIN_TABLET_MEDIA_QUERY]: {
+              top: 'calc(var(--row-height) / 2 - 1px)',
+            },
           },
 
+          // From here the row has a fixed height, and the title is cropped by
+          // the bottom of it. The title and the row get their sizes from the
+          // variables, so that the crop is the same at all widths: at 1281px
+          // and up this is the design (an 80px title in a 70px row). A
+          // narrower row, with a smaller title, has the same proportions.
           [MIN_TABLET_MEDIA_QUERY]: {
-            height: selected ? '80px' : '70px',
+            '--row-height': TABLET_ROW.height,
+            '--row-height-selected': TABLET_ROW.heightSelected,
+            '--title-size': TABLET_ROW.titleSize,
+            '--title-top': TABLET_ROW.titleTop,
+            height: selected
+              ? 'var(--row-height-selected)'
+              : 'var(--row-height)',
             willChange: 'height',
+          },
+          [MIN_DESKTOP_MEDIA_QUERY]: {
+            '--row-height': DESKTOP_ROW.height,
+            '--row-height-selected': DESKTOP_ROW.heightSelected,
+            '--title-size': DESKTOP_ROW.titleSize,
+            '--title-top': DESKTOP_ROW.titleTop,
           },
         })}
       >
@@ -455,11 +498,13 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
             top: '0',
             transition: 'background-color 0.2s, color 0.2s',
             width: '60px',
-            height: '70px',
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 3,
-            [MIN_TABLET_MEDIA_QUERY]: {display: 'flex'},
+            [MIN_TABLET_MEDIA_QUERY]: {
+              display: 'flex',
+              height: 'var(--row-height)',
+            },
           })}
         >
           {feature.name.charAt(0)}
@@ -484,8 +529,8 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
             textDecoration: 'none',
             zIndex: 3,
             [MIN_TABLET_MEDIA_QUERY]: {
-              fontSize: '36px',
-              top: '15px',
+              fontSize: 'var(--title-size)',
+              top: 'var(--title-top)',
               // The row has a fixed height and crops the title. When the
               // line height grows (larger text spacing), move the title up by
               // the extra half-leading, so the same part of it shows. At the
@@ -494,7 +539,6 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
               display: 'inline-block',
               translate: `0 calc((${TITLE_LINE_HEIGHT} - 1lh) / 2)`,
             },
-            [MIN_DESKTOP_MEDIA_QUERY]: {fontSize: '80px'},
           })}
         >
           {feature.name}
@@ -511,11 +555,13 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
             position: 'absolute',
             top: 0,
             right: '43px',
-            height: '70px',
             width: '60px',
             zIndex: 3,
             display: 'none',
-            [MIN_TABLET_MEDIA_QUERY]: {display: 'flex'},
+            [MIN_TABLET_MEDIA_QUERY]: {
+              display: 'flex',
+              height: 'var(--row-height)',
+            },
           })}
         >
           {selected ? (

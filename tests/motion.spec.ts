@@ -426,6 +426,37 @@ test.describe('with reduced motion', () => {
     ).toBe('auto');
   });
 
+  // The style sheet of the page makes all transitions instant with reduced
+  // motion. A row and a panel of the feature list also do not list their size
+  // as a transition then, so they stay still if that rule goes.
+  test('the rows and panels of the feature list do not animate their size', async ({
+    page,
+  }) => {
+    await page.setViewportSize(WIDE);
+    await page.goto('/features');
+    const transitions = () =>
+      page.evaluate(() => {
+        const row = document.querySelector('li > button[aria-controls]')!;
+        const panel = document.getElementById(
+          row.getAttribute('aria-controls')!,
+        )!;
+        return {
+          row: getComputedStyle(row).transitionProperty,
+          panel: getComputedStyle(panel).transitionProperty,
+        };
+      });
+    expect(await transitions()).toEqual({
+      row: 'background-color, color',
+      panel: 'none',
+    });
+
+    await page.emulateMedia({reducedMotion: 'no-preference'});
+    expect(await transitions()).toEqual({
+      row: 'background-color, color, height',
+      panel: 'grid-template-rows',
+    });
+  });
+
   for (const viewport of [WIDE, NARROW]) {
     test(`the page heroes keep one size at ${viewport.width}px`, async ({
       page,
