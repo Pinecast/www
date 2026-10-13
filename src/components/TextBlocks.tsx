@@ -252,7 +252,9 @@ export const ContentSection = ({
 export const ChecksList = ({children}: {children: React.ReactNode}) => {
   const css = useCSS();
   return (
+    // eslint-disable-next-line jsx-a11y/no-redundant-roles -- `listStyle: none` overrides
     <ul
+      role="list"
       className={css({
         listStyle: 'none',
         marginBottom: '40px',

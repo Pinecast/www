@@ -1,0 +1,123 @@
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Podcasting is one of the most accessible forms of artistic expression online. Not just for listeners, but for creators.
+
+  Pinecast treats it that way.
+</Intro>
+
+# Accessibility is priority zero at Pinecast
+
+We're on a mission to make Pinecast the *most accessible podcast host* in the world. If a feature has an accessibility problem, that's a bug.
+
+What does that mean, though? Every feature must work for folks no matter what accommodations they need in order to use their devices.
+
+<ChecksList>
+  <li>Uses a screen reader</li>
+  <li>Needs larger text or higher contrast</li>
+  <li>Requires reduced motion</li>
+  <li>Has color blindness</li>
+  <li>Hard of hearing</li>
+  <li>Sensitivity to light</li>
+  <li>Doesn't use a pointing device</li>
+  <li>Uses voice control</li>
+  <li>Is deaf or hard of hearing</li>
+  <li>Has sensitivity to light</li>
+</ChecksList>
+
+You don't have to be disabled to [benefit from accessibility features](https://en.wikipedia.org/wiki/Curb_cut_effect). Dark mode accommodates folks who are sensitive to light, but many people who aren't sensitive to light find it to be a better way to use their computer. Transcripts, the ability to zoom in, and the ability to tab through the interface elements on a page are all accessibility features that _anyone_ can benefit from and enjoy.
+
+# Where we're at
+
+Our company target is full WCAG 2.2 Level AA, Revised Section 508 standards, and EN 301 549 V3.2.1 conformance.
+
+Today, we're "partially conformant": some parts of our websites do not fully meet WCAG 2.2 Level AA. This information is current as of October 9, 2026.
+
+## How we check
+
+We use a combination of techniques to ensure we're doing the best we can:
+
+1. Code reviews on all code that runs on Pinecast
+2. Automated tests with axe-core
+3. "Lint" checks against code
+4. Manual testing with assistive technology
+5. Automated testing with artificial intelligence
+
+A full audit is to be performed annually, but smaller audits may be performed more frequently.
+
+## Known limitations
+
+The following are issues that are known limitations:
+
+1. The forgot password form expires after thirty minutes. A new link can be requested as a workaround.
+2. Some articles in our help center lack alt text.
+3. Web players cut off long titles and captions.
+
+This list will be kept up to date.
+
+## We do our best, but rely on others
+
+Our customers make their own content, and we do our best to empower them to make their content and web presence as accessible as possible, with features like color contrast checking on podcast websites and episode transcription. We can't ensure this content is fully accessible, though, and creators may publish content that isn't fully conformant with best practices.
+
+We use external vendors for certain functionality. We do our best to ensure we use accessible software vendors only, but their support may vary.
+
+1. We use Stripe for payment processing. You may encounter UIs from Stripe while using Pinecast.
+2. [ReCAPTCHA](https://support.google.com/recaptcha/answer/6175971?hl=en) (v2) is a Google service that we use to protect our pages from bots. You may be prompted with a CAPTCHA on certain pages.
+3. [Help Scout](https://www.helpscout.com/company/legal/accessibility-statement/) is the company we rely on for our support software.
+4. Mapbox is used to add maps to our Pro Analytics offering.
+5. Creators can pick their own fonts from Google Fonts, and some fonts may not be fully accessible for all sighted users.
+6. Gravatar is used to provide profile pictures to accounts.
+
+# Have feedback or need help?
+
+If you have feedback about the accessibility of our product, you can always email <a href="mailto:support@pinecast.com">support@pinecast.com</a>. We do our best to respond within 24 hours, but wait times may vary.
+
+We're glad to help you finish a task if you're blocked by an accessibility problem, or provide you with a workaround.
+
+# Putting our money where our mouth is
+
+Just saying we're doing a great job isn't enough. If you find a qualifying accessibility bug, we'll give you $10 in account credit (or an equivalent discount code) towards your Pinecast subscription. Serious issues might earn more, at our discretion.
+
+We're serious about it, too: the bounty will grow by $5 every October 1. $15 in October 2027, $20 in October 2028, etc.
+
+If you find an issue, email <a href="mailto:support@pinecast.com">support@pinecast.com</a> with the full details.
+
+## A qualifying report
+
+You should clearly explain the issue you found, the software you found it with (browser, screen reader, etc.), and the device you encountered it on. The issue must:
+
+1. Be a failure of WCAG 2.2 Level AA in a part of Pinecast is hosted on `pinecast.com`, `pinecast.co`, `pnc.st`, or `pinecast.net`
+2. Not be listed in the known limitations
+3. Be reproducible by us
+4. Not have been reported by someone else already—the first report gets the reward
+5. Be tested against your own account, never other peoples' data
+
+The following items do not qualify:
+
+- Content from Pinecast creators
+- The services of other companies
+- Issues with downloadable software (like our WordPress plugin) and Pinecoder
+- Pinecast features that have not yet been released publicly
+- The output of automated tools that have not been verified by a human
+
+The following issues are handled on a case-by-case basis at our discretion:
+
+- A problem that occurs in only one browser
+- A problem that affects only one screen reader, when Pinecast follows best practices
+- Multiple problems with the same root cause spread across multiple locations
+
+Problems considered non-qualifying may still be fixed by Pinecast. Account credit has no cash value, and the amount is set by the report date. Pinecast staff are not eligible. The rules laid out in our [terms of service](/terms) apply to your approach for testing. We can change or end the program at any time.
+
+# Proudly reporting our progress
+
+Pinecast isn't perfect, but we're proud to self-report our support for accessibility with an ACR (Accessibility Conformance Report). We're preparing this document now and will post it here soon.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LegalLayout} from '@/layouts/LegalLayout';
+
+export default layoutWrapper(LegalLayout, {
+  title: 'Accessibility',
+  description: 'Pinecast is built for everyone',
+  heroImage: '/images/hero/t-l.png',
+});

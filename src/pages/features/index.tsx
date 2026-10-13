@@ -102,6 +102,17 @@ type Feature = {
 
 export const FEATURES: Array<Feature> = [
   {
+    name: 'Accessibility',
+    url: '/features/accessibility',
+    description: (
+      <>
+        We treat accessibility like a feature, not an afterthought. We are
+        obsessive over making Pinecast the most accessible hosting platform
+        in the world for users who need many different kinds of affordances.
+      </>
+    ),
+  },
+  {
     name: 'Analytics',
     url: '/features/analytics',
     description: (
