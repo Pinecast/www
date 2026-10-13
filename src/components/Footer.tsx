@@ -24,6 +24,21 @@ export const Footer = () => {
   const ref = React.useRef<HTMLDivElement>(null);
   useDarkSection(ref);
 
+  const legalLinkClass = css({
+    color: 'var(--color-core-accent)',
+    textDecoration: 'none',
+    textUnderlineOffset: '0.2em',
+    transition: 'color 0.2s',
+    // A label wraps to the next row of the footer as a whole, not inside.
+    whiteSpace: 'nowrap',
+    ':hover': {
+      [CAN_HOVER_MEDIA_QUERY]: {
+        color: '#fff',
+        textDecoration: 'underline',
+      },
+    },
+  });
+
   return (
     <div
       className={css({
@@ -79,6 +94,18 @@ export const Footer = () => {
           paddingLeft: '20px',
           paddingBottom: '20px',
           position: 'relative',
+
+          // The floating mute button (MainHeader) covers the bottom left of
+          // the screen up to 1180px: 120px wide, 48px high, 24px from the
+          // bottom. At the end of the page, the page cannot scroll a link out
+          // from under it, and on a phone the links of the footer wrap into
+          // that corner. This room under the card is for the button: it floats
+          // in the room, and not over the card. The room is in the container
+          // and not in the card, because the logotype in the card is placed
+          // from the bottom of the card.
+          [MOBILE_MEDIA_QUERY]: {
+            paddingBottom: '80px',
+          },
         })}
       >
         <footer
@@ -208,45 +235,24 @@ export const Footer = () => {
               paddingBottom: '20px',
               ...MonumentGroteskSemiMono,
               [MOBILE_MEDIA_QUERY]: {
-                gap: 0,
+                // The row has four items, and they do not fit on one line at
+                // the width of a phone. The rows are 26px apart, so a link is
+                // at least 24px from the links above and below it (WCAG 2.5.8).
+                flexWrap: 'wrap',
+                gap: '12px 16px',
                 justifyContent: 'space-between',
               },
             })}
           >
             <span>&copy; Pinecast 2026</span>
-            <Link
-              className={css({
-                color: 'var(--color-core-accent)',
-                textDecoration: 'none',
-                textUnderlineOffset: '0.2em',
-                transition: 'color 0.2s',
-                ':hover': {
-                  [CAN_HOVER_MEDIA_QUERY]: {
-                    color: '#fff',
-                    textDecoration: 'underline',
-                  },
-                },
-              })}
-              href="/terms"
-            >
+            <Link className={legalLinkClass} href="/terms">
               Terms &amp; conditions
             </Link>
-            <Link
-              className={css({
-                color: 'var(--color-core-accent)',
-                textDecoration: 'none',
-                textUnderlineOffset: '0.2em',
-                transition: 'color 0.2s',
-                ':hover': {
-                  [CAN_HOVER_MEDIA_QUERY]: {
-                    color: '#fff',
-                    textDecoration: 'underline',
-                  },
-                },
-              })}
-              href="/privacy"
-            >
+            <Link className={legalLinkClass} href="/privacy">
               Privacy
+            </Link>
+            <Link className={legalLinkClass} href="/features/accessibility">
+              Accessibility
             </Link>
           </div>
         </footer>
