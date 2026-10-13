@@ -196,6 +196,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
 
+    // A markdown table has one row of headers, at the top, so each header is
+    // the header of its column. `scope` says so to every browser and tool.
+    // The <Table> of a page styles it.
+    th: (props: React.ComponentProps<'th'>) => <th scope="col" {...props} />,
+
     img: ((props: {
       src: string;
       alt: string;

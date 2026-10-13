@@ -411,6 +411,91 @@ export const DefinitionList = ({children}: {children: React.ReactNode}) => {
   );
 };
 
+// A markdown table, in MDX:
+//
+//   <Table label="Subprocessors">
+//
+//   | Name | Purpose |
+//   | --- | --- |
+//
+//   </Table>
+//
+// A table that is wider than the screen scrolls inside this box, and the page
+// does not scroll sideways (WCAG 1.4.10 lets a data table scroll). The box
+// takes keyboard focus so that the arrow keys can scroll it, and `label` names
+// it for screen readers.
+export const Table = ({
+  children,
+  label,
+}: {
+  children: React.ReactNode;
+  label: string;
+}) => {
+  const css = useCSS();
+  return (
+    <div
+      role="region"
+      aria-label={label}
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- a scrolling region needs focus for the keyboard
+      tabIndex={0}
+      className={css({
+        marginBottom: '80px',
+        marginTop: '20px',
+        marginRight: 'var(--text-gutter)',
+        marginLeft: 'var(--text-gutter)',
+        overflowX: 'auto',
+
+        ':not(:empty) > table': {
+          borderCollapse: 'collapse',
+          // Narrower than this, the long cells get too tall to read.
+          minWidth: '800px',
+          width: '100%',
+
+          fontSize: '14px',
+          lineHeight: '17px',
+        },
+        ':not(:empty) th': {
+          ...MonumentGroteskBold,
+          paddingBottom: '10px',
+          paddingRight: '20px',
+          textAlign: 'left',
+          verticalAlign: 'bottom',
+
+          fontSize: '16px',
+          fontWeight: 400,
+          lineHeight: '18px',
+        },
+        ':not(:empty) td': {
+          borderTop: '1px solid var(--color-core-accent)',
+          paddingBottom: '20px',
+          paddingRight: '20px',
+          paddingTop: '10px',
+          verticalAlign: 'top',
+        },
+
+        [MIN_TABLET_MEDIA_QUERY]: {
+          marginBottom: '150px',
+
+          ':not(:empty) > table': {
+            fontSize: '16px',
+            lineHeight: '20px',
+          },
+          ':not(:empty) th': {
+            fontSize: '18px',
+            lineHeight: '20px',
+          },
+        },
+
+        ':last-child': {
+          marginBottom: 0,
+        },
+      })}
+    >
+      {children}
+    </div>
+  );
+};
+
 type Product = {
   name: string;
   imageUrl: string;

@@ -2,7 +2,10 @@ module.exports = async () => {
   const withMDX = require('@next/mdx')({
     extension: /\.mdx?$/,
     options: {
-      remarkPlugins: [(await import('remark-unwrap-images')).default],
+      remarkPlugins: [
+        (await import('remark-unwrap-images')).default,
+        (await import('./vendor/remark-gfm-table.mjs')).default,
+      ],
       rehypePlugins: [
         [
           (await import('./vendor/rehype-image-size.mjs')).default,

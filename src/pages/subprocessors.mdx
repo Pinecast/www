@@ -1,4 +1,12 @@
-# Pinecast Subprocessors
+import {Intro, Table} from '@/components/TextBlocks';
+
+<Intro>
+  These companies process personal data on Pinecast's behalf. Each one receives only the information that it needs to do its job.
+</Intro>
+
+This list is current as of October 13, 2026.
+
+<Table label="Subprocessors">
 
 | Subprocessor | Purpose | Personal data processed | Location | Agreements |
 | --- | --- | --- | --- | --- |
@@ -16,11 +24,13 @@
 | **Google reCAPTCHA** (Google LLC) | Bot checks on sign-up, tip jar sign-in and feedback forms | Visitor IP address, browser details, interaction signals | United States and Google's network | [Google Cloud DPA](https://cloud.google.com/terms/data-processing-addendum) · [Subprocessors](https://cloud.google.com/terms/subprocessors) |
 | **Mapbox** (Mapbox, Inc.) | Maps in dashboard analytics | Creator IP address, browser details, map tile requests. No listener data | United States | [DPA](https://www.mapbox.com/legal/dpa) · [Subprocessors](https://www.mapbox.com/legal/subprocessors) |
 
+</Table>
+
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {LegalLayout} from '@/layouts/LegalLayout';
 
 export default layoutWrapper(LegalLayout, {
-  title: 'AI Use',
-  description: 'How artificial intelligence is used at Pinecast',
+  title: 'Subprocessors',
+  description: 'The companies that process personal data for Pinecast',
   heroImage: '/images/hero/central.png',
 });

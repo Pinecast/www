@@ -16,6 +16,7 @@ const PAGES = [
   '/features/analytics',
   '/learn/create-a-podcast',
   '/privacy',
+  '/subprocessors', // the legal layout again, for its <Table>
   '/testimonial-transcripts',
 ];
 
