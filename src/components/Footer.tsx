@@ -19,11 +19,29 @@ const VIDEO_HEIGHT = 1045;
 const ASPECT_RATIO = VIDEO_HEIGHT / VIDEO_WIDTH;
 
 const LOGOTYPE = 'url(/images/logotype.svg)';
-// On a phone, the logotype is a band of this height in the flow of the card,
-// between the links and the legal row, with this much room above and below it.
+// The logotype is a band in the flow of the card, between the links and the
+// legal row, at all sizes. These are its height (the height of the image on a
+// desktop) and the room that the card keeps above and below it. On a desktop,
+// the room below is what put the logotype 100px above the bottom of the card,
+// clear of a legal row that is one line high.
+const LOGOTYPE_HEIGHT = 200;
+const LOGOTYPE_GAP_ABOVE = 32;
+const LOGOTYPE_GAP_BELOW = 52;
+const CARD_SIDE_PADDING = 83;
+const LOGOTYPE_OFFSET = -50;
 const LOGOTYPE_HEIGHT_MOBILE = 60;
 const LOGOTYPE_GAP_MOBILE = 16;
 const CARD_SIDE_PADDING_MOBILE = 30;
+const LOGOTYPE_OFFSET_MOBILE = -11;
+
+// The room under the video that the card and its container have at least, so
+// that the footer is as tall as the window, down to the aspect of the video.
+const CONTAINER_MIN_HEIGHT = `max(100vw * ${ASPECT_RATIO} - 380px, 70vh)`;
+const CONTAINER_PADDING_BOTTOM = 20;
+// The card fills that room, but not past this height. A window that is taller
+// has empty room above the card. A card whose content is taller than the room
+// is taller, and so is the page.
+const CARD_MAX_MIN_HEIGHT = 690;
 
 export const Footer = () => {
   const css = useCSS();
@@ -93,13 +111,13 @@ export const Footer = () => {
         className={css({
           alignItems: 'flex-end',
           marginTop: '-11%',
-          minHeight: `calc(max(100vw * ${ASPECT_RATIO} - 380px, 70vh))`,
+          minHeight: `calc(${CONTAINER_MIN_HEIGHT})`,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-end',
           paddingRight: '20px',
           paddingLeft: '20px',
-          paddingBottom: '20px',
+          paddingBottom: `${CONTAINER_PADDING_BOTTOM}px`,
           position: 'relative',
 
           // The floating mute button (MainHeader) covers the bottom left of
@@ -119,30 +137,24 @@ export const Footer = () => {
             '--color-primary-light': 'var(--color-space)',
             ...DARK_SURFACE,
             backgroundColor: 'var(--color-primary-light)',
-            // The logotype stands 100px above the bottom of the card. This is
-            // clear of the legal row, which is one line high. On a phone, the
-            // row wraps to more lines, so the logotype is not here: see the
-            // band below.
-            backgroundImage: LOGOTYPE,
-            backgroundRepeat: 'repeat-x',
-            backgroundPosition: '-50px calc(100% - 100px)',
             color: 'var(--color-primary-dark)',
             display: 'flex',
-            flex: '1 1',
+            flex: 'none',
             flexDirection: 'column',
             justifyContent: 'space-between',
             borderRadius: '20px',
-            height: '100%',
-            maxHeight: '690px',
-            paddingLeft: '83px',
-            paddingRight: '83px',
+            // The card is as tall as its content, and no shorter than this.
+            // It has no maximum height: a maximum would cut the card short of
+            // its content, and the legal row would fall out of the card, on a
+            // window that is zoomed or that has the text spacing of WCAG 1.4.12.
+            minHeight: `min(${CONTAINER_MIN_HEIGHT} - ${CONTAINER_PADDING_BOTTOM}px, ${CARD_MAX_MIN_HEIGHT}px)`,
+            paddingLeft: `${CARD_SIDE_PADDING}px`,
+            paddingRight: `${CARD_SIDE_PADDING}px`,
             paddingTop: '83px',
             position: 'relative',
             width: '100%',
 
             [MOBILE_MEDIA_QUERY]: {
-              backgroundImage: 'none',
-              maxHeight: 'auto',
               minHeight: '630px',
               paddingLeft: `${CARD_SIDE_PADDING_MOBILE}px`,
               paddingRight: `${CARD_SIDE_PADDING_MOBILE}px`,
@@ -232,36 +244,50 @@ export const Footer = () => {
               ]}
             />
           </nav>
-          {/* The logotype on a phone. It is a band in the flow of the card, so
-              the card grows to hold it, and no text can run into it, however
-              many lines the links and the legal row wrap to (also with the text
-              spacing of WCAG 1.4.12). A logotype at a fixed distance from the
-              bottom of the card did not do this: the legal row grew up into it.
-              It stands out to the edges of the card, as the background of the
-              card does on a larger screen. tests/footer.spec.ts finds it as the
-              one element of the footer with a background image. */}
+          {/* The logotype. It is a band in the flow of the card, so the card
+              grows to hold it, and no text can run into it, however many lines
+              the links and the legal row wrap to, and however tall the window
+              is (also with the text spacing of WCAG 1.4.12, and at 200% zoom).
+              A logotype at a fixed distance from the bottom of the card did not
+              do this: the card is as tall as the window, and on a short window
+              the links went down onto the logotype, and on a phone the legal
+              row grew up into it. If there is room, the band takes it, and the
+              logotype stays at the bottom of the band. It stands out to the
+              edges of the card. tests/footer.spec.ts finds it as the one
+              element of the footer with a background image. */}
           <div
             className={css({
-              display: 'none',
+              flex: '1 0 auto',
+              minHeight: `${LOGOTYPE_HEIGHT}px`,
+              marginTop: `${LOGOTYPE_GAP_ABOVE}px`,
+              marginBottom: `${LOGOTYPE_GAP_BELOW}px`,
+              marginLeft: `-${CARD_SIDE_PADDING}px`,
+              marginRight: `-${CARD_SIDE_PADDING}px`,
+              backgroundImage: LOGOTYPE,
+              backgroundRepeat: 'repeat-x',
+              backgroundSize: `auto ${LOGOTYPE_HEIGHT}px`,
+              backgroundPosition: `${LOGOTYPE_OFFSET}px 100%`,
               [MOBILE_MEDIA_QUERY]: {
-                display: 'block',
-                flex: '1 0 auto',
                 minHeight: `${LOGOTYPE_HEIGHT_MOBILE}px`,
                 marginTop: `${LOGOTYPE_GAP_MOBILE}px`,
                 marginBottom: `${LOGOTYPE_GAP_MOBILE}px`,
                 marginLeft: `-${CARD_SIDE_PADDING_MOBILE}px`,
                 marginRight: `-${CARD_SIDE_PADDING_MOBILE}px`,
-                backgroundImage: LOGOTYPE,
-                backgroundRepeat: 'repeat-x',
                 backgroundSize: `auto ${LOGOTYPE_HEIGHT_MOBILE}px`,
-                backgroundPosition: '-11px 100%',
+                backgroundPosition: `${LOGOTYPE_OFFSET_MOBILE}px 100%`,
               },
             })}
           />
           <div
             className={css({
               display: 'flex',
-              gap: '50px',
+              // The row has four items. They do not fit on one line at the
+              // width of a phone, and from 701px they do not fit with the
+              // text spacing of WCAG 1.4.12 either. The rows are 26px apart,
+              // so a link is at least 24px from the links above and below it
+              // (WCAG 2.5.8).
+              flexWrap: 'wrap',
+              gap: '12px 50px',
               color: 'var(--color-core-accent)',
               borderTop: '1px solid var(--color-core-accent)',
               fontSize: '12px',
@@ -269,10 +295,6 @@ export const Footer = () => {
               paddingBottom: '20px',
               ...MonumentGroteskSemiMono,
               [MOBILE_MEDIA_QUERY]: {
-                // The row has four items, and they do not fit on one line at
-                // the width of a phone. The rows are 26px apart, so a link is
-                // at least 24px from the links above and below it (WCAG 2.5.8).
-                flexWrap: 'wrap',
                 gap: '12px 16px',
                 justifyContent: 'space-between',
               },

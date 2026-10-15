@@ -10,6 +10,10 @@ import {hasSidewaysScroll, load} from './helpers';
 
 const VIEWPORTS = [
   {width: 1280, height: 800},
+  {width: 853, height: 533},
+  {width: 768, height: 640},
+  {width: 720, height: 450},
+  {width: 701, height: 800},
   {width: 390, height: 844},
   {width: 320, height: 640},
 ];
@@ -29,7 +33,7 @@ async function legalLinks(page: Page): Promise<Array<Locator>> {
 test.describe('footer: the legal row', () => {
   for (const viewport of VIEWPORTS) {
     for (const spacing of [false, true]) {
-      test(`fits at ${viewport.width}px${
+      test(`fits at ${viewport.width}x${viewport.height}${
         spacing ? ' with larger text spacing' : ''
       }`, async ({page}) => {
         await page.setViewportSize(viewport);
@@ -80,7 +84,22 @@ test.describe('footer: the legal row', () => {
 // where the image is painted from the styles of the element. It does not know
 // any text or address. It finds the logotype as the one element of the footer
 // with an image for a background.
+//
+// The windows below are the ones that broke it. On a window from 701px wide,
+// the logotype once stood at a fixed distance from the bottom of the card, and
+// the height of the card follows the height of the window. On a short window,
+// the links moved down onto the logotype. The list has a short window of each
+// width, and the windows of a zoomed browser: a browser at 150% zoom is 853px
+// wide in CSS pixels on a 1280px screen, and at 200% zoom it is 720px wide on a
+// 1440px screen and 960px wide on a 1920px screen.
 const LOGOTYPE_VIEWPORTS = [
+  {width: 1440, height: 900},
+  {width: 1280, height: 720},
+  {width: 960, height: 540},
+  {width: 853, height: 533},
+  {width: 768, height: 640},
+  {width: 720, height: 450},
+  {width: 701, height: 800},
   {width: 700, height: 800},
   {width: 375, height: 667},
   {width: 320, height: 640},
@@ -184,7 +203,7 @@ async function footerLayout(page: Page) {
 test.describe('footer: the logotype', () => {
   for (const viewport of LOGOTYPE_VIEWPORTS) {
     for (const spacing of [false, true]) {
-      test(`is clear of the text at ${viewport.width}px${
+      test(`is clear of the text at ${viewport.width}x${viewport.height}${
         spacing ? ' with larger text spacing' : ''
       }`, async ({page}) => {
         await page.setViewportSize(viewport);
@@ -218,6 +237,9 @@ test.describe('footer: the logotype', () => {
 // cannot reach is a defect in any case).
 const MUTE_BUTTON_VIEWPORTS = [
   {width: 1180, height: 800},
+  {width: 853, height: 533},
+  {width: 768, height: 640},
+  {width: 701, height: 800},
   {width: 700, height: 800},
   {width: 390, height: 844},
   {width: 375, height: 667},
