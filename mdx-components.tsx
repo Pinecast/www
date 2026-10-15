@@ -198,7 +198,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
     // A markdown table has one row of headers, at the top, so each header is
     // the header of its column. `scope` says so to every browser and tool.
-    // The <Table> of a page styles it.
+    // The first cell of each body row is a row header. It does not come from
+    // the markdown: vendor/rehype-table-row-headers.mjs makes it a `th` with
+    // `scope="row"`, and its props replace the default below.
+    // The <Table> of a page styles both.
     th: (props: React.ComponentProps<'th'>) => <th scope="col" {...props} />,
 
     img: ((props: {
