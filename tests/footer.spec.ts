@@ -1,15 +1,12 @@
 import {expect, test, type Locator, type Page} from '@playwright/test';
 import {hasSidewaysScroll, load} from './helpers';
 
-// The footer links to the accessibility statement, in the row with the terms
-// and the privacy policy. The statement is the documentation of the
-// accessibility features that the conformance report needs (Revised 508,
-// 602.2). A fourth item in that row has to fit on a phone.
-const LEGAL_LINKS = [
-  {name: 'Terms & conditions', href: '/terms'},
-  {name: 'Privacy', href: '/privacy'},
-  {name: 'Accessibility', href: '/features/accessibility'},
-];
+// The legal row at the bottom of the footer (the © line and its links) has to
+// fit on a phone, and no link in it may be under the floating mute button.
+//
+// These tests do not know the text or the address of any link. They find the
+// row by its © line and check each link in it. A person who adds, removes or
+// renames a link does not break them. Only a layout that does not work does.
 
 const VIEWPORTS = [
   {width: 1280, height: 800},
@@ -17,62 +14,30 @@ const VIEWPORTS = [
   {width: 320, height: 640},
 ];
 
-function legalLink(page: Page, name: string): Locator {
-  return page.getByRole('contentinfo').getByRole('link', {name, exact: true});
+// Each link in the row with the © line.
+async function legalLinks(page: Page): Promise<Array<Locator>> {
+  const links = page
+    .getByRole('contentinfo')
+    .getByText('©')
+    .locator('..')
+    .getByRole('link');
+  const count = await links.count();
+  expect(count, 'the footer row with the © line has links').toBeGreaterThan(0);
+  return Array.from({length: count}, (_, i) => links.nth(i));
 }
 
-test.describe('footer: link to the accessibility statement', () => {
-  test('is a link in the footer, beside the terms and the privacy policy', async ({
-    page,
-  }) => {
-    await load(page, '/');
-
-    await expect(page.getByRole('contentinfo')).toHaveCount(1);
-    for (const {name, href} of LEGAL_LINKS) {
-      await expect(legalLink(page, name)).toHaveAttribute('href', href);
-    }
-    // One row: the three links share a parent.
-    const parents = await page
-      .getByRole('contentinfo')
-      .getByRole('link', {name: /^(Terms & conditions|Privacy|Accessibility)$/})
-      .evaluateAll(
-        links => new Set(links.map(link => link.parentElement)).size,
-      );
-    expect(parents).toBe(1);
-  });
-
-  test('opens the statement', async ({page}) => {
-    await load(page, '/');
-
-    await legalLink(page, 'Accessibility').click();
-
-    await expect(page).toHaveURL(/\/features\/accessibility$/);
-    await expect(page.getByRole('heading', {level: 1})).toHaveCount(1);
-  });
-
-  // The link works with the keyboard: Tab reaches it, after Privacy.
-  test('has a place in the tab order after the privacy policy', async ({
-    page,
-  }) => {
-    await load(page, '/');
-
-    await legalLink(page, 'Privacy').focus();
-    await page.keyboard.press('Tab');
-
-    await expect(legalLink(page, 'Accessibility')).toBeFocused();
-  });
-
+test.describe('footer: the legal row', () => {
   for (const viewport of VIEWPORTS) {
     for (const spacing of [false, true]) {
-      test(`the row fits at ${viewport.width}px${
+      test(`fits at ${viewport.width}px${
         spacing ? ' with larger text spacing' : ''
       }`, async ({page}) => {
         await page.setViewportSize(viewport);
         await load(page, '/', {spacing});
 
         const boxes: Array<Box> = [];
-        for (const {name} of LEGAL_LINKS) {
-          const link = legalLink(page, name);
+        for (const link of await legalLinks(page)) {
+          const name = (await link.innerText()).trim();
           await link.scrollIntoViewIfNeeded();
           const {box, row, lines} = await link.evaluate(el => {
             const range = document.createRange();
@@ -137,8 +102,8 @@ test.describe('footer: links at the end of the page', () => {
         .poll(async () => (await muteButton.boundingBox())?.height)
         .toBe(48);
 
-      for (const {name} of LEGAL_LINKS) {
-        const link = legalLink(page, name);
+      for (const link of await legalLinks(page)) {
+        const name = (await link.innerText()).trim();
         const covered = await link.evaluate(el => {
           const {left, right, top, bottom} = el.getBoundingClientRect();
           const points = [

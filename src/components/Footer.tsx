@@ -244,6 +244,10 @@ export const Footer = () => {
               },
             })}
           >
+            {/* tests/footer.spec.ts finds this row by the © line, and checks
+                that each link in it fits and is clear of the mute button. Add,
+                remove or rename links as you need. Keep the © line and the
+                links in the same element. */}
             <span>&copy; Pinecast 2026</span>
             <Link className={legalLinkClass} href="/terms">
               Terms &amp; conditions
@@ -251,6 +255,9 @@ export const Footer = () => {
             <Link className={legalLinkClass} href="/privacy">
               Privacy
             </Link>
+            {/* The link to the accessibility statement is part of the
+                documentation that Revised 508 (602.2) and EN 301 549 (12.1.1)
+                need. Keep it in the footer of every page. */}
             <Link className={legalLinkClass} href="/features/accessibility">
               Accessibility
             </Link>
