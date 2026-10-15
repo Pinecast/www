@@ -411,6 +411,15 @@ export const DefinitionList = ({children}: {children: React.ReactNode}) => {
   );
 };
 
+// A cell of a table body, which is a `td` or the `th` of its row.
+const BODY_CELL: StyleObject = {
+  borderTop: '1px solid var(--color-core-accent)',
+  paddingBottom: '20px',
+  paddingRight: '20px',
+  paddingTop: '10px',
+  verticalAlign: 'top',
+};
+
 // A markdown table, in MDX:
 //
 //   <Table label="Subprocessors">
@@ -424,6 +433,11 @@ export const DefinitionList = ({children}: {children: React.ReactNode}) => {
 // does not scroll sideways (WCAG 1.4.10 lets a data table scroll). The box
 // takes keyboard focus so that the arrow keys can scroll it, and `label` names
 // it for screen readers.
+//
+// The first cell of each row is the row header (WCAG 1.3.1): a screen reader
+// reads it with each other cell of the row, so it must say what the row is
+// about. Put the name of the thing there. vendor/rehype-table-row-headers.mjs
+// makes it a `th`, and the styles below show it as plain text of the body.
 export const Table = ({
   children,
   label,
@@ -454,7 +468,8 @@ export const Table = ({
           fontSize: '14px',
           lineHeight: '17px',
         },
-        ':not(:empty) th': {
+        // The headers of the columns.
+        ':not(:empty) thead th': {
           ...MonumentGroteskBold,
           paddingBottom: '10px',
           paddingRight: '20px',
@@ -465,12 +480,13 @@ export const Table = ({
           fontWeight: 400,
           lineHeight: '18px',
         },
-        ':not(:empty) td': {
-          borderTop: '1px solid var(--color-core-accent)',
-          paddingBottom: '20px',
-          paddingRight: '20px',
-          paddingTop: '10px',
-          verticalAlign: 'top',
+        // The cells of the body. The row header is one of them: it looks like
+        // the cells next to it, and the text that a page makes bold is bold.
+        ':not(:empty) td': BODY_CELL,
+        ':not(:empty) tbody th': {
+          ...BODY_CELL,
+          fontWeight: 400,
+          textAlign: 'left',
         },
 
         [MIN_TABLET_MEDIA_QUERY]: {
@@ -480,7 +496,7 @@ export const Table = ({
             fontSize: '16px',
             lineHeight: '20px',
           },
-          ':not(:empty) th': {
+          ':not(:empty) thead th': {
             fontSize: '18px',
             lineHeight: '20px',
           },

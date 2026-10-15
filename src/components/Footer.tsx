@@ -18,6 +18,13 @@ const VIDEO_WIDTH = 1670;
 const VIDEO_HEIGHT = 1045;
 const ASPECT_RATIO = VIDEO_HEIGHT / VIDEO_WIDTH;
 
+const LOGOTYPE = 'url(/images/logotype.svg)';
+// On a phone, the logotype is a band of this height in the flow of the card,
+// between the links and the legal row, with this much room above and below it.
+const LOGOTYPE_HEIGHT_MOBILE = 60;
+const LOGOTYPE_GAP_MOBILE = 16;
+const CARD_SIDE_PADDING_MOBILE = 30;
+
 export const Footer = () => {
   const css = useCSS();
 
@@ -100,9 +107,7 @@ export const Footer = () => {
           // bottom. At the end of the page, the page cannot scroll a link out
           // from under it, and on a phone the links of the footer wrap into
           // that corner. This room under the card is for the button: it floats
-          // in the room, and not over the card. The room is in the container
-          // and not in the card, because the logotype in the card is placed
-          // from the bottom of the card.
+          // in the room, and not over the card.
           [MOBILE_MEDIA_QUERY]: {
             paddingBottom: '80px',
           },
@@ -114,7 +119,11 @@ export const Footer = () => {
             '--color-primary-light': 'var(--color-space)',
             ...DARK_SURFACE,
             backgroundColor: 'var(--color-primary-light)',
-            backgroundImage: 'url(/images/logotype.svg)',
+            // The logotype stands 100px above the bottom of the card. This is
+            // clear of the legal row, which is one line high. On a phone, the
+            // row wraps to more lines, so the logotype is not here: see the
+            // band below.
+            backgroundImage: LOGOTYPE,
             backgroundRepeat: 'repeat-x',
             backgroundPosition: '-50px calc(100% - 100px)',
             color: 'var(--color-primary-dark)',
@@ -132,12 +141,11 @@ export const Footer = () => {
             width: '100%',
 
             [MOBILE_MEDIA_QUERY]: {
-              backgroundSize: 'auto 60px',
-              backgroundPosition: '-11px calc(100% - 80px)',
+              backgroundImage: 'none',
               maxHeight: 'auto',
               minHeight: '630px',
-              paddingLeft: '30px',
-              paddingRight: '30px',
+              paddingLeft: `${CARD_SIDE_PADDING_MOBILE}px`,
+              paddingRight: `${CARD_SIDE_PADDING_MOBILE}px`,
               paddingTop: '25px',
             },
           })}
@@ -224,6 +232,32 @@ export const Footer = () => {
               ]}
             />
           </nav>
+          {/* The logotype on a phone. It is a band in the flow of the card, so
+              the card grows to hold it, and no text can run into it, however
+              many lines the links and the legal row wrap to (also with the text
+              spacing of WCAG 1.4.12). A logotype at a fixed distance from the
+              bottom of the card did not do this: the legal row grew up into it.
+              It stands out to the edges of the card, as the background of the
+              card does on a larger screen. tests/footer.spec.ts finds it as the
+              one element of the footer with a background image. */}
+          <div
+            className={css({
+              display: 'none',
+              [MOBILE_MEDIA_QUERY]: {
+                display: 'block',
+                flex: '1 0 auto',
+                minHeight: `${LOGOTYPE_HEIGHT_MOBILE}px`,
+                marginTop: `${LOGOTYPE_GAP_MOBILE}px`,
+                marginBottom: `${LOGOTYPE_GAP_MOBILE}px`,
+                marginLeft: `-${CARD_SIDE_PADDING_MOBILE}px`,
+                marginRight: `-${CARD_SIDE_PADDING_MOBILE}px`,
+                backgroundImage: LOGOTYPE,
+                backgroundRepeat: 'repeat-x',
+                backgroundSize: `auto ${LOGOTYPE_HEIGHT_MOBILE}px`,
+                backgroundPosition: '-11px 100%',
+              },
+            })}
+          />
           <div
             className={css({
               display: 'flex',
@@ -245,9 +279,10 @@ export const Footer = () => {
             })}
           >
             {/* tests/footer.spec.ts finds this row by the © line, and checks
-                that each link in it fits and is clear of the mute button. Add,
-                remove or rename links as you need. Keep the © line and the
-                links in the same element. */}
+                that each link in it fits, is clear of the mute button, and that
+                the row is clear of the logotype. Add, remove or rename links
+                as you need. Keep the © line and the links in the same
+                element. */}
             <span>&copy; Pinecast 2026</span>
             <Link className={legalLinkClass} href="/terms">
               Terms &amp; conditions
