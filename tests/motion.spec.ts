@@ -159,12 +159,12 @@ test.describe('the pause animations toggle', () => {
         'paused',
       );
 
-      // A link to another page of the site, and a new page load.
-      await page
-        .locator('footer')
-        .getByRole('link', {name: 'Terms & conditions'})
-        .click();
-      await expect(page).toHaveURL(/\/terms$/);
+      // A link to another page of the site, and a new page load. Any link of
+      // the footer to a page of the site will do, whatever its text.
+      const link = page.locator('footer a[href^="/"]').first();
+      const path = await link.getAttribute('href');
+      await link.click();
+      await expect(page).toHaveURL(url => url.pathname === path);
       await expect(toggle(page)).toHaveAttribute('aria-pressed', 'true');
       await page.reload();
       await expect(toggle(page)).toHaveAttribute('aria-pressed', 'true');

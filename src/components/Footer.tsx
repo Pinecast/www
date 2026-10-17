@@ -8,6 +8,7 @@ import {PrimaryButton} from './PrimaryButton';
 import {FooterNavLinks} from './FooterNavLinks';
 import {
   MOBILE_MEDIA_QUERY,
+  NOT_MIN_TABLET_MEDIA_QUERY,
   CAN_HOVER_MEDIA_QUERY,
   DARK_SURFACE,
 } from '@/constants';
@@ -37,7 +38,11 @@ const LOGOTYPE_OFFSET_MOBILE = -11;
 // The room under the video that the card and its container have at least, so
 // that the footer is as tall as the window, down to the aspect of the video.
 const CONTAINER_MIN_HEIGHT = `max(100vw * ${ASPECT_RATIO} - 380px, 70vh)`;
+// The room under the card. Where the floating mute button shows, it is room for
+// the button (see the container below). The card's minimum height takes it
+// away, so that the footer is still as tall as the window.
 const CONTAINER_PADDING_BOTTOM = 20;
+const CONTAINER_PADDING_BOTTOM_MUTE_BUTTON = 80;
 // The card fills that room, but not past this height. A window that is taller
 // has empty room above the card. A card whose content is taller than the room
 // is taller, and so is the page.
@@ -117,17 +122,20 @@ export const Footer = () => {
           justifyContent: 'flex-end',
           paddingRight: '20px',
           paddingLeft: '20px',
-          paddingBottom: `${CONTAINER_PADDING_BOTTOM}px`,
+          '--footer-room': `${CONTAINER_PADDING_BOTTOM}px`,
+          paddingBottom: 'var(--footer-room)',
           position: 'relative',
 
           // The floating mute button (MainHeader) covers the bottom left of
           // the screen up to 1180px: 120px wide, 48px high, 24px from the
           // bottom. At the end of the page, the page cannot scroll a link out
-          // from under it, and on a phone the links of the footer wrap into
-          // that corner. This room under the card is for the button: it floats
-          // in the room, and not over the card.
-          [MOBILE_MEDIA_QUERY]: {
-            paddingBottom: '80px',
+          // from under it. The legal row wraps on a phone, and wherever its
+          // links do not fit, and a link then starts a line in that corner.
+          // This room under the card is for the button wherever the button
+          // shows: it floats in the room, and not over the card, however the
+          // row wraps.
+          [NOT_MIN_TABLET_MEDIA_QUERY]: {
+            '--footer-room': `${CONTAINER_PADDING_BOTTOM_MUTE_BUTTON}px`,
           },
         })}
       >
@@ -147,7 +155,7 @@ export const Footer = () => {
             // It has no maximum height: a maximum would cut the card short of
             // its content, and the legal row would fall out of the card, on a
             // window that is zoomed or that has the text spacing of WCAG 1.4.12.
-            minHeight: `min(${CONTAINER_MIN_HEIGHT} - ${CONTAINER_PADDING_BOTTOM}px, ${CARD_MAX_MIN_HEIGHT}px)`,
+            minHeight: `min(${CONTAINER_MIN_HEIGHT} - var(--footer-room), ${CARD_MAX_MIN_HEIGHT}px)`,
             paddingLeft: `${CARD_SIDE_PADDING}px`,
             paddingRight: `${CARD_SIDE_PADDING}px`,
             paddingTop: '83px',
@@ -282,9 +290,8 @@ export const Footer = () => {
             className={css({
               display: 'flex',
               // The row has four items. They do not fit on one line at the
-              // width of a phone, and from 701px they do not fit with the
-              // text spacing of WCAG 1.4.12 either. The rows are 26px apart,
-              // so a link is at least 24px from the links above and below it
+              // width of a phone, and they wrap. The rows are 26px apart, so a
+              // link is at least 24px from the links above and below it
               // (WCAG 2.5.8).
               flexWrap: 'wrap',
               gap: '12px 50px',
@@ -307,7 +314,21 @@ export const Footer = () => {
                 element. */}
             <span>&copy; Pinecast 2026</span>
             <Link className={legalLinkClass} href="/terms">
-              Terms &amp; conditions
+              {/* Up to 900px the link says only "Terms". Then the row fits on
+                  one line from about 500px, also with the text spacing of WCAG
+                  1.4.12: with the long label it wrapped from 701px to 785px.
+                  The rest of the label is hidden from a screen reader too, so
+                  the name of the link is the text that it shows (WCAG 2.5.3).
+                  If you change the label, keep its first word as the short
+                  form, or shorten it in another way. */}
+              Terms
+              <span
+                className={css({
+                  '@media (max-width: 900px)': {display: 'none'},
+                })}
+              >
+                {' & conditions'}
+              </span>
             </Link>
             <Link className={legalLinkClass} href="/privacy">
               Privacy

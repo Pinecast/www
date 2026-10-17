@@ -44,15 +44,34 @@ test.describe('footer: the legal row', () => {
           const name = (await link.innerText()).trim();
           await link.scrollIntoViewIfNeeded();
           const {box, row, lines} = await link.evaluate(el => {
-            const range = document.createRange();
-            range.selectNodeContents(el);
+            // The rectangles of the text of the link. A label can have more
+            // than one text node (a part of it can be hidden on a narrow
+            // window), so a rectangle that starts below the line before it
+            // starts a new line.
+            const rects: Array<DOMRect> = [];
+            const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+            for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+              const range = document.createRange();
+              range.selectNodeContents(node);
+              rects.push(
+                ...[...range.getClientRects()].filter(r => r.width > 0),
+              );
+            }
+            rects.sort((a, b) => a.top - b.top);
+            let lines = 0;
+            let lineBottom = -Infinity;
+            for (const r of rects) {
+              if (r.top >= lineBottom - 1) {
+                lines += 1;
+              }
+              lineBottom = Math.max(lineBottom, r.bottom);
+            }
             const {left, right, top, bottom} = el.getBoundingClientRect();
             const rowBox = el.parentElement!.getBoundingClientRect();
             return {
               box: {left, right, top, bottom},
               row: {left: rowBox.left, right: rowBox.right},
-              // One rectangle for each line of text.
-              lines: range.getClientRects().length,
+              lines,
             };
           });
           // A label stays whole: it does not break into two lines.
@@ -235,10 +254,16 @@ test.describe('footer: the logotype', () => {
 // At the end of the page, the page cannot scroll a link out from under it, so
 // no link of the footer may be there (WCAG 2.4.11, and a link that a pointer
 // cannot reach is a defect in any case).
+//
+// When the legal row wraps, a link starts a line at the left of the card. With
+// the text spacing of WCAG 1.4.12 it once wrapped from 701px to about 785px,
+// and at 720x450 (200% zoom), and the button covered the start of that link.
 const MUTE_BUTTON_VIEWPORTS = [
   {width: 1180, height: 800},
   {width: 853, height: 533},
+  {width: 785, height: 800},
   {width: 768, height: 640},
+  {width: 720, height: 450},
   {width: 701, height: 800},
   {width: 700, height: 800},
   {width: 390, height: 844},
@@ -248,62 +273,64 @@ const MUTE_BUTTON_VIEWPORTS = [
 
 test.describe('footer: links at the end of the page', () => {
   for (const viewport of MUTE_BUTTON_VIEWPORTS) {
-    test(`are not under the mute button at ${viewport.width}px`, async ({
-      page,
-    }) => {
-      await page.setViewportSize(viewport);
-      await load(page, '/');
-      await page.evaluate(() =>
-        window.scrollTo({
-          top: document.documentElement.scrollHeight,
-          behavior: 'instant',
-        }),
-      );
-      // The button is smaller once the page has scrolled.
-      const muteButton = page.locator('[data-mute-button] button');
-      await expect(muteButton).toBeVisible();
-      await expect
-        .poll(async () => (await muteButton.boundingBox())?.height)
-        .toBe(48);
+    for (const spacing of [false, true]) {
+      test(`are not under the mute button at ${viewport.width}x${
+        viewport.height
+      }${spacing ? ' with larger text spacing' : ''}`, async ({page}) => {
+        await page.setViewportSize(viewport);
+        await load(page, '/', {spacing});
+        await page.evaluate(() =>
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'instant',
+          }),
+        );
+        // The button is smaller once the page has scrolled.
+        const muteButton = page.locator('[data-mute-button] button');
+        await expect(muteButton).toBeVisible();
+        await expect
+          .poll(async () => (await muteButton.boundingBox())?.height)
+          .toBe(48);
 
-      for (const link of await legalLinks(page)) {
-        const name = (await link.innerText()).trim();
-        const covered = await link.evaluate(el => {
-          const {left, right, top, bottom} = el.getBoundingClientRect();
-          const points = [
-            [left + 1, top + 1],
-            [right - 1, top + 1],
-            [(left + right) / 2, (top + bottom) / 2],
-            [left + 1, bottom - 1],
-            [right - 1, bottom - 1],
-          ];
-          return points.filter(([x, y]) => {
-            const hit = document.elementFromPoint(x, y);
-            return !hit || !(hit === el || el.contains(hit));
-          }).length;
-        });
-        expect(covered, `${name} has points that something covers`).toBe(0);
-        // The circle of a small target does not meet the button (2.5.8).
-        const buttonBox = (await muteButton.boundingBox())!;
-        const linkBox = (await link.boundingBox())!;
-        const cx = linkBox.x + linkBox.width / 2;
-        const cy = linkBox.y + linkBox.height / 2;
-        const dx = Math.max(
-          buttonBox.x - cx,
-          0,
-          cx - (buttonBox.x + buttonBox.width),
-        );
-        const dy = Math.max(
-          buttonBox.y - cy,
-          0,
-          cy - (buttonBox.y + buttonBox.height),
-        );
-        expect(
-          Math.hypot(dx, dy),
-          `the circle of ${name} does not meet the mute button`,
-        ).toBeGreaterThanOrEqual(12);
-      }
-    });
+        for (const link of await legalLinks(page)) {
+          const name = (await link.innerText()).trim();
+          const covered = await link.evaluate(el => {
+            const {left, right, top, bottom} = el.getBoundingClientRect();
+            const points = [
+              [left + 1, top + 1],
+              [right - 1, top + 1],
+              [(left + right) / 2, (top + bottom) / 2],
+              [left + 1, bottom - 1],
+              [right - 1, bottom - 1],
+            ];
+            return points.filter(([x, y]) => {
+              const hit = document.elementFromPoint(x, y);
+              return !hit || !(hit === el || el.contains(hit));
+            }).length;
+          });
+          expect(covered, `${name} has points that something covers`).toBe(0);
+          // The circle of a small target does not meet the button (2.5.8).
+          const buttonBox = (await muteButton.boundingBox())!;
+          const linkBox = (await link.boundingBox())!;
+          const cx = linkBox.x + linkBox.width / 2;
+          const cy = linkBox.y + linkBox.height / 2;
+          const dx = Math.max(
+            buttonBox.x - cx,
+            0,
+            cx - (buttonBox.x + buttonBox.width),
+          );
+          const dy = Math.max(
+            buttonBox.y - cy,
+            0,
+            cy - (buttonBox.y + buttonBox.height),
+          );
+          expect(
+            Math.hypot(dx, dy),
+            `the circle of ${name} does not meet the mute button`,
+          ).toBeGreaterThanOrEqual(12);
+        }
+      });
+    }
   }
 });
 
