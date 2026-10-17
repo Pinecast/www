@@ -44,15 +44,34 @@ test.describe('footer: the legal row', () => {
           const name = (await link.innerText()).trim();
           await link.scrollIntoViewIfNeeded();
           const {box, row, lines} = await link.evaluate(el => {
-            const range = document.createRange();
-            range.selectNodeContents(el);
+            // The rectangles of the text of the link. A label can have more
+            // than one text node (a part of it can be hidden on a narrow
+            // window), so a rectangle that starts below the line before it
+            // starts a new line.
+            const rects: Array<DOMRect> = [];
+            const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+            for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+              const range = document.createRange();
+              range.selectNodeContents(node);
+              rects.push(
+                ...[...range.getClientRects()].filter(r => r.width > 0),
+              );
+            }
+            rects.sort((a, b) => a.top - b.top);
+            let lines = 0;
+            let lineBottom = -Infinity;
+            for (const r of rects) {
+              if (r.top >= lineBottom - 1) {
+                lines += 1;
+              }
+              lineBottom = Math.max(lineBottom, r.bottom);
+            }
             const {left, right, top, bottom} = el.getBoundingClientRect();
             const rowBox = el.parentElement!.getBoundingClientRect();
             return {
               box: {left, right, top, bottom},
               row: {left: rowBox.left, right: rowBox.right},
-              // One rectangle for each line of text.
-              lines: range.getClientRects().length,
+              lines,
             };
           });
           // A label stays whole: it does not break into two lines.
@@ -236,9 +255,9 @@ test.describe('footer: the logotype', () => {
 // no link of the footer may be there (WCAG 2.4.11, and a link that a pointer
 // cannot reach is a defect in any case).
 //
-// The legal row wraps from 701px with the text spacing of WCAG 1.4.12, and a
-// link then starts a line at the left of the card. From 701px to about 785px,
-// and at 720x450 (200% zoom), the button covered the start of that link.
+// When the legal row wraps, a link starts a line at the left of the card. With
+// the text spacing of WCAG 1.4.12 it once wrapped from 701px to about 785px,
+// and at 720x450 (200% zoom), and the button covered the start of that link.
 const MUTE_BUTTON_VIEWPORTS = [
   {width: 1180, height: 800},
   {width: 853, height: 533},
