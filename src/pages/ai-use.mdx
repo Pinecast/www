@@ -1,4 +1,4 @@
-import {Intro} from '@/components/TextBlocks';
+import {Intro, Table} from '@/components/TextBlocks';
 
 <Intro>
   Podcasting is a medium for humans. Pinecast respects that.
@@ -30,12 +30,54 @@ Note: We use AI features behind the scenes to detect spam and protect our servic
 
 ## What features use AI?
 
-1. Episode transcription
-2. Listener feedback insights (Growth add-on)
+<Table label="Features that use AI">
+
+| Feature | Model and vendor | What it receives | When it runs |
+| --- | --- | --- | --- |
+| Episode transcription | AssemblyAI | The episode's audio | When you choose it for an episode. A podcast setting can choose it for you on new episodes |
+| Listener feedback insights (Growth add-on) | Gemma, an open model that Cloudflare runs on Workers AI | The text of your listeners' feedback and your show notes, with email addresses removed | Only when you ask |
+
+</Table>
 
 ### AI behind the scenes
 
 Pinecast uses AI to check new episodes for spam and AI-generated audio. On a free account, a check can suspend the account automatically. Paid accounts are never suspended automatically. If your account was suspended and you think it's a mistake, email support@pinecast.com and a person will review it.
+
+These checks are the only places where AI acts on its own. We see each automatic suspension as it happens, and we look into every mistake.
+
+- The spam check sends the public text of a new podcast and its episodes, the domain of the owner's email address (never the address itself), the plan, and the sign-up date to gpt-oss-120b, an open model that Cloudflare runs on Workers AI.
+- The AI-generated audio detector is an open-source model that runs on our own servers. Your audio isn't sent anywhere for it.
+
+### What our vendors keep
+
+AssemblyAI deletes the audio and the transcript about a day after it finishes. Cloudflare doesn't keep what we send to Workers AI once it has answered. Neither one trains AI models on it.
+
+We keep your transcripts as part of your podcast, and feedback insights for 48 hours.
+
+## How we manage the risks
+
+We hold our use of AI to three rules:
+
+- No critical or paid part of Pinecast relies on a decision made by AI by default.
+- If that ever changes, we'll tell the people who use the feature about its risks, and remind them over time.
+- AI never takes a destructive action, like deleting something for good or moving money.
+
+These are the main risks we watch for, and what we do about each one.
+
+<Table label="AI risks and what we do about them">
+
+| Risk | What we do |
+| --- | --- |
+| A transcript gets words wrong | You can edit any transcript in your dashboard, or remove it. A podcast setting hides transcripts from listeners |
+| Feedback insights misread your listeners, or suggest a change you shouldn't make | They run only when you ask, they're labeled as AI, each point is tied to something a listener said, and they're only advice: nothing acts on them |
+| A free account is suspended by mistake | Only free accounts, and only when the check is confident. We see every suspension, and a person reviews any that you ask about |
+| Someone hides instructions for the AI in podcast text | Our models can't use tools or reach any data. We read their answers as text, and never run them |
+| Personal information reaches a model | Each feature sends only the fields it needs. Email addresses are removed, or cut down to the domain |
+| A model changes without warning | We pin each model to an exact version, and change it the way we change any of our code |
+
+</Table>
+
+We can turn off any AI feature within minutes. We review this page, and the practice behind it, every year.
 
 
 import {layoutWrapper} from '@/layouts/layoutWrapper';
