@@ -97,6 +97,8 @@ Any service that your browser contacts directly, such as Stripe, Google, or Help
 
 - **Spam checks and feedback summaries.** Pinecast checks new podcasts on free accounts for spam by sending details of the podcast and its episodes (such as the name, description, links, and audio file name) and the domain of the owner's email address to an AI model that Cloudflare hosts. If the owner of a podcast asks for a summary of listener feedback, the text of the feedback messages is sent to the same service. See [AI Use](/ai-use) for more on how Pinecast uses AI.
 
+- **Cover art.** If you ask Pinecast to make cover art, the podcast's name and description and the words you type about its look are sent to an AI image model that Cloudflare hosts. The image it makes is sent to another AI model that Cloudflare hosts, which describes the image for people who can't see it. Pinecast keeps the images that it makes, like other images that you upload, but not the words that you typed or the descriptions.
+
 - **Studio.** Live recording sessions use LiveKit to carry audio and video between the host and guests. The display name of each participant is shared with it, and for a host that can be their email address.
 
 - **Maps.** The maps in analytics are drawn by Mapbox, which receives the IP address and browser details of the person viewing the map.
