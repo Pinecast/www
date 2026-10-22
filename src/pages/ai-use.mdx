@@ -35,8 +35,8 @@ Note: We use AI features behind the scenes to detect spam and protect our servic
 | Feature | Model and vendor | What it receives | When it runs |
 | --- | --- | --- | --- |
 | Episode transcription | AssemblyAI | The episode's audio | When you choose it for an episode. A podcast setting can choose it for you on new episodes |
-| Listener feedback insights (Growth add-on) | Gemma, an open model that Cloudflare runs on Workers AI | The text of your listeners' feedback and your show notes, with email addresses removed | Only when you ask |
-| Cover art (paid plans) | FLUX.2 [dev], an image model from Black Forest Labs, and Gemma to describe each image. Cloudflare runs both on Workers AI | Your podcast's name and description, and the words you type about the look. The model that describes a cover gets only the image | Only when you ask, while you create or edit a podcast |
+| Listener feedback insights (Growth add-on) | Gemma from Google, a model running on Cloudflare | The text of your listeners' feedback and your show notes, with email addresses removed | Only when you ask |
+| Cover art (paid plans) | FLUX.2 [dev] from Black Forest Labs and Gemma, both running on Cloudflare. | Your podcast's name and description, and the words you type about the look. The model that describes a cover gets only the image | Only when you ask, while you create or edit a podcast |
 
 </Table>
 
@@ -46,12 +46,12 @@ Pinecast uses AI to check new episodes for spam and AI-generated audio. On a fre
 
 These checks are the only places where AI acts on its own. We see each automatic suspension as it happens, and we look into every mistake.
 
-- The spam check sends the public text of a new podcast and its episodes, the domain of the owner's email address (never the address itself), the plan, and the sign-up date to gpt-oss-120b, an open model that Cloudflare runs on Workers AI.
+- The spam check sends the public text of a new podcast and its episodes, the domain of the owner's email address (never the address itself), the plan, and the sign-up date to gpt-oss-120b, a model from OpenAI running on Cloudflare.
 - The AI-generated audio detector is an open-source model that runs on our own servers. Your audio isn't sent anywhere for it.
 
 ### What our vendors keep
 
-AssemblyAI deletes the audio and the transcript about a day after it finishes. Cloudflare doesn't keep what we send to Workers AI once it has answered. Neither one trains AI models on it.
+AssemblyAI deletes the audio and the transcript about a day after it finishes. Cloudflare doesn't keep what we send once it has answered. Neither one trains AI models on it.
 
 We keep your transcripts as part of your podcast, and feedback insights for 48 hours. For cover art, we keep the images we make for you, like any image you upload. We don't keep the words you typed, or the description of the image.
 
