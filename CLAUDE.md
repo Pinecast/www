@@ -6,6 +6,20 @@ and `npm test`). Its sections on accessibility structure, motion and the
 loading order of the home page say how the site works. Read them before you
 change a page, a header, a footer or an animation.
 
+## Help center docs: tell the help center when a claim changes
+
+help.pinecast.com repeats some of what this site says: plans and prices, what the
+Icebox keeps, what the importer carries over, transcripts, how long data is kept,
+how to reach support. When a change to a page here makes one of those claims
+different, or shows that the help center is already wrong, file a task in the
+Notion database "Help Scout Docs Tasks" before the first push. The procedure is
+the `help-docs-task` skill in the `pinecast` repo
+(`.claude/skills/help-docs-task/SKILL.md`). If you cannot read it, the minimum is
+one task for each article: `Type` `Update content`, `Status` `Not started`,
+`Docs page` the Help Scout link of the article, and a body with "What changed",
+"What the docs need" (the sentence now, and the sentence it should be),
+"Evidence" and "Open questions". Never edit Help Scout yourself.
+
 ## Tests do not check copy
 
 **Do not write a test that fails when a person changes the text or the address
