@@ -111,7 +111,6 @@ export const Pricing = () => {
               'Ten episodes limit',
               '48MB file sizes',
               'Basic analytics',
-              'Tip jar',
             ]}
           />
         }
@@ -161,6 +160,7 @@ export const Pricing = () => {
               'Premium analytics',
               'Free transcripts',
               'Podcast website',
+              'Tip jar',
             ]}
           />
         }

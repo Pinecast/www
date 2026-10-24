@@ -67,7 +67,12 @@ import {DefinitionList, Intro, Step} from '@/components/TextBlocks';
     </dd>
     <dt>Audio</dt>
     <dd>
-      An MP3 or M4A file of your episode audio. If it's missing tags or artwork, we'll ask you for them before you can continue.
+      {/* The switch's label and its default (off today, soon on for audio with no metadata) come from pinecast-ts, MetadataSwitch.tsx. Keep this copy free of the default and of file types, which are changing. */}
+      An MP3 or M4A file of your episode audio. If it doesn't have a title, artist or album of its own, you can turn on the "Add metadata tags to episode audio" switch, and Pinecast will write them into the file after you save.
+    </dd>
+    <dt>Episode artwork</dt>
+    <dd>
+      An optional image for the episode. You can skip it. We'll do our best to make sure the artwork is available in every podcast app that supports it.
     </dd>
     <dt>Publish date</dt>
     <dd>
