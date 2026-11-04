@@ -1,0 +1,40 @@
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Help your listeners jump to exactly the segment they want to hear.
+</Intro>
+
+# Let your listeners jump right in
+
+Podcast chapters work like a table of contents for your podcast. You can mark the timecodes where each chapter of your podcast episodes start. Your listeners will see the chapters in their podcast app, and be able to jump to each timecode.
+
+# They work everywhere
+
+Our chapters work everywhere:
+
+1. We include chapter data in your feeds, supporting all apps that implement the Podcasting 2.0 chapters tag
+2. You can optionally include chapters in your show notes
+3. We embed your chapters in your audio files' ID3 or M4A metadata, making them available to folks who download your audio
+4. Our podcast websites, short links, and WordPress plugin support showing chapters to your visitors
+
+Oh, and if you use [clip insertion](/features/clip-insertion), your chapters will update automatically: chapters will appear at the correct adjusted timecodes.
+
+# Setting chapters up is easy
+
+We make it easy to set up chapters for your episode. If your audio file already has chapters baked in, we'll read them and add them to your episode. If not, you can add chapters in the editor just below the Audio field.
+
+![A screenshot of the podcast chapters and clip placeholders editor when creating or editing an episode](/images/content/features/chapters-and-placeholders.png)
+
+Chapters and clip placeholders can be added by scrubbing to a timecode in the audio player, then choosing the button to add a chapter or placeholder. You can edit the details of what you've added below. Chapters allow you to specify a name and a URL along with the timecode.
+
+That's it: when you save your episode, we'll take care of the rest.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, {
+  title: 'Podcast Chapters',
+  description: 'Link to each segment in your episodes',
+  heroImage: '/images/hero/b-r.png',
+});

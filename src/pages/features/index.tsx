@@ -264,6 +264,16 @@ export const FEATURES: Array<Feature> = [
     ),
   },
   {
+    name: 'Podcast Chapters',
+    url: '/features/podcast-chapters',
+    description: (
+      <>
+        Link your listeners to specific timecodes within your episode. This helps
+        folks find the exact segment they&apos;re looking for within a larger episode.
+      </>
+    ),
+  },
+  {
     name: 'Referrals',
     description: (
       <>
