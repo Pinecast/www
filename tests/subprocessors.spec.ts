@@ -18,7 +18,7 @@ test.describe('subprocessors', () => {
       'Agreements',
     ]);
     const rows = table.locator('tbody').getByRole('row');
-    await expect(rows).toHaveCount(13);
+    await expect(rows).toHaveCount(14);
     // Each company links its data processing terms.
     for (const row of await rows.all()) {
       await expect(row.getByRole('link', {name: /DPA/})).toHaveCount(1);
