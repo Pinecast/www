@@ -26,7 +26,7 @@ We stand by this: we do our diligence to ensure that all of the vendors we use t
 
 Some features on Pinecast use AI, like transcriptions. If you don't choose to run them, they don't get used. You're always presented with a choice.
 
-Note: We use AI features behind the scenes to detect spam and protect our services from abuse. We choose vendors that handle your data responsibly, and it's not provided with any information that isn't otherwise made public. AI agents also help us run Pinecast, and they can read our billing records and internal notes. That isn't something you can turn off, so we explain it [below](#ai-agents-that-work-for-us).
+Note: We use AI features behind the scenes to detect spam and protect our services from abuse. We choose vendors that handle your data responsibly, and it's not provided with any information that isn't otherwise made public. AI agents also help us run Pinecast, and they can read our internal notes. We explain that [below](#ai-agents-that-work-for-us).
 
 ## What features use AI?
 
@@ -51,9 +51,9 @@ These checks are the only places where AI makes a decision about your account. W
 
 ### AI agents that work for us
 
-AI agents on Pion, a platform from Andon Labs, help us with reporting, engineering, and marketing. They don't contact you, they can't change your account or move money, and they make no decisions about you. A person reads what they produce before we use it.
+AI agents on Pion, a platform from Andon Labs, help us with reporting, engineering, and marketing. They don't contact you, they can't change your account, and they make no decisions about you. A person reads what they produce before we use it.
 
-The agents can read our billing records at Stripe, our internal notes in Notion, and some of our source code. That can include your name, your email address, your billing history, and the tips you leave or receive. They can't read your audio, transcripts, or listener analytics. Andon Labs chooses the model, from Anthropic, OpenAI, Google, Microsoft, xAI, Cerebras, or Fireworks AI, and it can change the model. Pion is a research preview.
+The agents can read our internal notes in Notion and some of our source code. A note holds your details only if you made a request of us and we had a specific reason to record it. The agents can't read your billing or payment records, audio, transcripts, or listener analytics. They can also make discount coupons at Stripe. A coupon changes what someone pays only if they enter its code, and the agents can't apply one to anybody's account. Andon Labs chooses the model, from Anthropic, OpenAI, Google, Microsoft, xAI, Cerebras, or Fireworks AI, and it can change the model. Pion is a research preview.
 
 ### What our vendors keep
 
@@ -84,8 +84,8 @@ These are the main risks we watch for, and what we do about each one.
 | Real people or their art can be mimicked by generated artwork | The window warns you not to ask for that, and our [terms](/terms) don't allow it. |
 | A free account is suspended by mistake | Spam checks run multiple times to avoid false positives. We review every suspension and a human reviews appeals. |
 | Someone hides instructions for the AI in podcast text or imagery | The models behind our features can't use tools or reach any data. Model output isn't used in a way that can lead to unintended actions. |
-| Someone tries to give instructions to one of our AI agents | The agents can use tools like email and a browser, but they can only read our billing records and code. They can't change your account, move money, or reach our production systems. |
-| Personal information reaches a model | Each feature sends only the data it needs. Email addresses are partially redacted. The agents that work for us are the exception: they read our records as they are. |
+| Someone tries to give instructions to one of our AI agents | The agents can use tools like email and a browser, but they can't reach your billing records, change your account, or reach our production systems. The most an agent could do at Stripe is make or remove a coupon. |
+| Personal information reaches a model | Each feature sends only the data it needs. Email addresses are partially redacted. The agents that work for us are the exception: they read our notes as they are. |
 | A model or its behavior changes without warning | We pin the model behind each feature to an exact version, and change it the way we change any of our code. Andon Labs chooses the models for its agents, and tells us when they change. |
 
 </Table>
