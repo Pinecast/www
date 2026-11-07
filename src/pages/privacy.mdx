@@ -37,6 +37,8 @@ Your computer's IP address may be processed to determine your rough location.
 ### How you use Pinecast
 Pinecast records the actions that you take in the dashboard, such as creating an episode or changing a setting, in an audit log. The log keeps the action, your email address, and your browser's user agent. It also keeps your IP address, which is removed after 90 days. This information is used to improve Pinecast and to investigate problems and abuse.
 
+When you sign in, sign up, or reset your password, Cloudflare checks whether the email address and password that you typed have appeared in a known data breach. Cloudflare compares them in a hashed form and does not keep your password. If they have appeared, Pinecast notes it in the audit log entry for that sign-in, and may email you to suggest a new password or ask you to choose a different one. Pinecast also uses these notes, with the IP address, to refuse sign-ins from a network that is trying breached passwords on many accounts.
+
 When something goes wrong, Pinecast's error monitoring service receives a report. The report can include the page you were on, the steps that led to the error, details about your browser, and your user ID and email address if you are signed in. These reports can come from the dashboard and from pages that are shown to listeners.
 
 Pinecast sends your email address and events about your account, like creating a podcast or an episode or changing your subscription, to a service that Pinecast uses to manage communication with customers.
