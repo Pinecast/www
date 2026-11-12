@@ -38,46 +38,62 @@ async function showGlobe(page: Page) {
   await page.evaluate(() => document.fonts.ready);
 }
 
-// The size of the link text in CSS pixels, and for each link the largest
-// square of CSS pixels where a pointer hits it.
-async function measureLinks(page: Page) {
-  return page.evaluate(slugs => {
+// The size of the link text in CSS pixels.
+async function linkTextSize(page: Page) {
+  return page.evaluate(() => {
     const svg = [...document.querySelectorAll('svg')].find(el =>
       el.querySelector('text a[href$="#analytics"]'),
     )!;
     const {a, d} = svg.getScreenCTM()!;
-    const textSize =
+    return (
       parseFloat(getComputedStyle(svg.querySelector('text')!).fontSize) *
-      Math.min(a, d);
+      Math.min(a, d)
+    );
+  });
+}
+
+// For each link, the largest square of CSS pixels where a pointer hits it.
+// This asks the page what is at each pixel of the menu, which takes seconds in
+// a large window. A test that needs only the size of the text does not call
+// it.
+async function linkSquares(page: Page) {
+  return page.evaluate(slugs => {
+    const svg = [...document.querySelectorAll('svg')].find(el =>
+      el.querySelector('text a[href$="#analytics"]'),
+    )!;
     // Map what a pointer hits, pixel by pixel, over the menu.
     const r = svg.getBoundingClientRect();
     const x0 = Math.max(0, Math.floor(r.left));
     const y0 = Math.max(0, Math.floor(r.top));
     const width = Math.min(innerWidth, Math.ceil(r.right)) - x0;
     const height = Math.min(innerHeight, Math.ceil(r.bottom)) - y0;
-    const squares: Record<string, number> = {};
-    for (const slug of slugs) {
-      const run = new Uint16Array(width * height);
-      let largest = 0;
-      for (let y = 0; y < height; y++) {
-        for (let x = 0; x < width; x++) {
-          const hit = document
-            .elementFromPoint(x0 + x + 0.5, y0 + y + 0.5)
-            ?.closest('a');
-          if (!hit?.getAttribute('href')?.endsWith(`#${slug}`)) {
-            continue;
-          }
-          const i = y * width + x;
-          run[i] =
-            x && y
-              ? 1 + Math.min(run[i - 1], run[i - width], run[i - width - 1])
-              : 1;
-          largest = Math.max(largest, run[i]);
+    const runs = slugs.map(() => new Uint16Array(width * height));
+    const largest = slugs.map(() => 0);
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const href = document
+          .elementFromPoint(x0 + x + 0.5, y0 + y + 0.5)
+          ?.closest('a')
+          ?.getAttribute('href');
+        if (!href) {
+          continue;
         }
+        const s = slugs.findIndex(slug => href.endsWith(`#${slug}`));
+        if (s < 0) {
+          continue;
+        }
+        const run = runs[s];
+        const i = y * width + x;
+        run[i] =
+          x && y
+            ? 1 + Math.min(run[i - 1], run[i - width], run[i - width - 1])
+            : 1;
+        largest[s] = Math.max(largest[s], run[i]);
       }
-      squares[slug] = largest;
     }
-    return {textSize, squares};
+    return Object.fromEntries(
+      slugs.map((slug, s) => [slug, largest[s]]),
+    ) as Record<string, number>;
   }, SLUGS);
 }
 
@@ -90,7 +106,7 @@ for (const {viewport, deviceScaleFactor} of VIEWPORTS) {
     });
 
     test('each hit area holds a 24 by 24 square', async ({page}) => {
-      const {squares} = await measureLinks(page);
+      const squares = await linkSquares(page);
       for (const slug of SLUGS) {
         expect(squares[slug], slug).toBeGreaterThanOrEqual(24);
       }
@@ -190,7 +206,10 @@ test('the globe links are as large at 200% zoom', async ({browser}) => {
     const context = await b.newContext({viewport, deviceScaleFactor});
     const page = await context.newPage();
     await showGlobe(page);
-    const result = await measureLinks(page);
+    const result = {
+      textSize: await linkTextSize(page),
+      squares: await linkSquares(page),
+    };
     await context.close();
     return result;
   };
@@ -240,7 +259,7 @@ async function textSizeWithZoom(
       await page.route(/\.(mp3|mp4|webm)(\?|$)/, route => route.abort());
       await showGlobe(page);
       expect(await page.evaluate(() => devicePixelRatio)).toBeCloseTo(zoom);
-      return (await measureLinks(page)).textSize;
+      return await linkTextSize(page);
     } finally {
       await context.close();
     }
@@ -297,6 +316,6 @@ test.describe('at 320 by 700', () => {
 
   test('the globe links have the text of the larger menu', async ({page}) => {
     await showGlobe(page);
-    expect((await measureLinks(page)).textSize).toBeGreaterThan(12.2);
+    expect(await linkTextSize(page)).toBeGreaterThan(12.2);
   });
 });
