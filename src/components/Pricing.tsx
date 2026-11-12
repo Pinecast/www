@@ -1,6 +1,7 @@
 import {useCSS} from '@/hooks/useCSS';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import * as React from 'react';
+import {FormattedMessage} from 'react-intl';
 import {Body3, Body4, H1, H2, Link, Overline, Subhead} from './Typography';
 import {GintoNordCondensed} from '@/fonts';
 import {PrimaryButton} from './PrimaryButton';
@@ -16,8 +17,8 @@ import {
   MIN_TABLET_MEDIA_QUERY,
   MOBILE_MEDIA_QUERY,
 } from '@/constants';
-import { useAudioManager } from '@/hooks/useAudioManager';
-import { SoundEffect } from '@/hooks/useSoundEffects';
+import {useAudioManager} from '@/hooks/useAudioManager';
+import {SoundEffect} from '@/hooks/useSoundEffects';
 
 const BUTTON_STYLE = {
   fontSize: '14px',
@@ -88,29 +89,68 @@ export const Pricing = () => {
         })}
       >
         <H1 level={2} style={{textWrap: 'balance'}}>
-          Grab your ticket
+          <FormattedMessage
+            description="Big heading of the pricing section of the home page"
+            defaultMessage="Grab your ticket"
+          />
         </H1>
         <Body4 style={{maxWidth: '32rem'}}>
-          Try Pinecast for free. No credit card required, no time limits,
-          upgrade whenever. We think you&rsquo;ll love it.
+          <FormattedMessage
+            description="Text under the heading of the pricing section of the home page"
+            defaultMessage="Try Pinecast for free. No credit card required, no time limits, upgrade whenever. We think you’ll love it."
+          />
         </Body4>
       </div>
       <PricingTicket
         color="var(--color-sand)"
         col1={
           <>
-            <Subhead style={{marginBottom: '16px'}}>Free plan</Subhead>
-            <Price amount="$0" perUnit="Month" color="var(--color-sand)" />
+            <Subhead style={{marginBottom: '16px'}}>
+              <FormattedMessage
+                description="Name of the free plan, on its ticket in the pricing section"
+                defaultMessage="Free plan"
+              />
+            </Subhead>
+            <Price
+              amount={
+                <FormattedMessage
+                  description="A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+                  defaultMessage="$0"
+                />
+              }
+              perUnit="month"
+              color="var(--color-sand)"
+            />
           </>
         }
         col2={
           <FeatureList
             features={[
-              'No time limit',
-              'Up to two shows',
-              'Ten episodes limit',
-              '48MB file sizes',
-              'Basic analytics',
+              <FormattedMessage
+                key="No time limit"
+                description="A feature of the free plan, in the list on its ticket in the pricing section"
+                defaultMessage="No time limit"
+              />,
+              <FormattedMessage
+                key="Up to two shows"
+                description="A feature of the free plan, in the list on its ticket in the pricing section"
+                defaultMessage="Up to two shows"
+              />,
+              <FormattedMessage
+                key="Ten episodes limit"
+                description="A feature of the free plan, in the list on its ticket in the pricing section"
+                defaultMessage="Ten episodes limit"
+              />,
+              <FormattedMessage
+                key="48MB file sizes"
+                description="A feature of the free plan, in the list on its ticket in the pricing section"
+                defaultMessage="48MB file sizes"
+              />,
+              <FormattedMessage
+                key="Basic analytics"
+                description="A feature of the free plan, in the list on its ticket in the pricing section"
+                defaultMessage="Basic analytics"
+              />,
             ]}
           />
         }
@@ -120,13 +160,19 @@ export const Pricing = () => {
               style={BUTTON_STYLE}
               href="https://pinecast.com/signup"
             >
-              Sign up
+              <FormattedMessage
+                description="Button on the ticket of a plan in the pricing section, to the sign-up form"
+                defaultMessage="Sign up"
+              />
             </PrimaryButton>
             <SecondaryButton
               style={BUTTON_STYLE}
               href="https://help.pinecast.com/article/135-whats-included-with-the-free-plan"
             >
-              See what&rsquo;s included
+              <FormattedMessage
+                description="Button on the ticket of a plan in the pricing section, to the help center article about what the plan includes"
+                defaultMessage="See what’s included"
+              />
             </SecondaryButton>
           </>
         }
@@ -135,7 +181,12 @@ export const Pricing = () => {
         color="var(--color-orchid)"
         col1={
           <>
-            <Subhead style={{marginBottom: '16px'}}>Starter plan</Subhead>
+            <Subhead style={{marginBottom: '16px'}}>
+              <FormattedMessage
+                description="Name of the Starter plan, on its ticket in the pricing section"
+                defaultMessage="Starter plan"
+              />
+            </Subhead>
             <div
               className={css({
                 [MOBILE_MEDIA_QUERY]: {
@@ -145,22 +196,73 @@ export const Pricing = () => {
                 },
               })}
             >
-              <Price amount="$10" perUnit="Month" color="var(--color-white)" />
-              <Overline style={{margin: '8px 0 4px'}}>or</Overline>
-              <Price amount="$110" perUnit="Year" color="var(--color-white)" />
+              <Price
+                amount={
+                  <FormattedMessage
+                    description="A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+                    defaultMessage="$10"
+                  />
+                }
+                perUnit="month"
+                color="var(--color-white)"
+              />
+              <Overline style={{margin: '8px 0 4px'}}>
+                <FormattedMessage
+                  description="Between the monthly price and the yearly price of a plan or an add-on in the pricing section"
+                  defaultMessage="or"
+                />
+              </Overline>
+              <Price
+                amount={
+                  <FormattedMessage
+                    description="A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+                    defaultMessage="$110"
+                  />
+                }
+                perUnit="year"
+                color="var(--color-white)"
+              />
             </div>
           </>
         }
         col2={
           <FeatureList
             features={[
-              'Unlimited shows',
-              'No episode limit',
-              '80MB file sizes + bonus',
-              'Premium analytics',
-              'Free transcripts',
-              'Podcast website',
-              'Tip jar',
+              <FormattedMessage
+                key="Unlimited shows"
+                description="A feature of the Starter plan, in the list on its ticket in the pricing section"
+                defaultMessage="Unlimited shows"
+              />,
+              <FormattedMessage
+                key="No episode limit"
+                description="A feature of the Starter plan, in the list on its ticket in the pricing section"
+                defaultMessage="No episode limit"
+              />,
+              <FormattedMessage
+                key="80MB file sizes + bonus"
+                description="A feature of the Starter plan, in the list on its ticket in the pricing section"
+                defaultMessage="80MB file sizes + bonus"
+              />,
+              <FormattedMessage
+                key="Premium analytics"
+                description="A feature of the Starter plan, in the list on its ticket in the pricing section"
+                defaultMessage="Premium analytics"
+              />,
+              <FormattedMessage
+                key="Free transcripts"
+                description="A feature of the Starter plan, in the list on its ticket in the pricing section"
+                defaultMessage="Free transcripts"
+              />,
+              <FormattedMessage
+                key="Podcast website"
+                description="A feature of the Starter plan, in the list on its ticket in the pricing section"
+                defaultMessage="Podcast website"
+              />,
+              <FormattedMessage
+                key="Tip jar"
+                description="A feature of the Starter plan, in the list on its ticket in the pricing section"
+                defaultMessage="Tip jar"
+              />,
             ]}
           />
         }
@@ -170,13 +272,19 @@ export const Pricing = () => {
               style={BUTTON_STYLE}
               href="https://pinecast.com/signup"
             >
-              Sign up
+              <FormattedMessage
+                description="Button on the ticket of a plan in the pricing section, to the sign-up form"
+                defaultMessage="Sign up"
+              />
             </PrimaryButton>
             <SecondaryButton
               style={BUTTON_STYLE}
               href="https://help.pinecast.com/article/130-whats-included-in-the-starter-plan"
             >
-              See what&rsquo;s included
+              <FormattedMessage
+                description="Button on the ticket of a plan in the pricing section, to the help center article about what the plan includes"
+                defaultMessage="See what’s included"
+              />
             </SecondaryButton>
           </>
         }
@@ -201,43 +309,126 @@ export const Pricing = () => {
         })}
       >
         <H2>
-          Get more
-          <br />
-          with add-ons
+          <FormattedMessage
+            description="Big heading above the add-ons in the pricing section. {br} is a line break"
+            defaultMessage="Get more{br}with add-ons"
+            values={{br: <br />}}
+          />
         </H2>
         <Body4 style={{maxWidth: '32rem'}}>
-          Add features when you need them and remove them when you don&rsquo;t.
-          There are no confusing tiers or lock-in pricing. You pay for what you
-          use.
+          <FormattedMessage
+            description="Text under the heading of the add-ons in the pricing section"
+            defaultMessage="Add features when you need them and remove them when you don’t. There are no confusing tiers or lock-in pricing. You pay for what you use."
+          />
         </Body4>
       </div>
       <AddonAccordion>
         <AddonAccordionItem
-          name="Pro Analytics add-on"
-          monthlyPrice="$10"
-          yearlyPrice="$110"
-          description="Gain additional insights about your listeners with geographic data, listen growth analytics, sparklines, and more."
+          name={
+            <FormattedMessage
+              description="Name of an add-on, the button that opens its row in the add-ons list of the pricing section"
+              defaultMessage="Pro Analytics add-on"
+            />
+          }
+          monthlyPrice={
+            <FormattedMessage
+              description="A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+              defaultMessage="$10"
+            />
+          }
+          yearlyPrice={
+            <FormattedMessage
+              description="A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+              defaultMessage="$110"
+            />
+          }
+          description={
+            <FormattedMessage
+              description="What the Pro Analytics add-on does, in its open row in the add-ons list of the pricing section"
+              defaultMessage="Gain additional insights about your listeners with geographic data, listen growth analytics, sparklines, and more."
+            />
+          }
           link="https://help.pinecast.com/article/71-add-on-packages#pro-analytics-add-on"
         />
         <AddonAccordionItem
-          name="Crew add-on"
-          monthlyPrice="$10"
-          yearlyPrice="$110"
-          description="Create a network for all of your shows, with a combined analytics dashboard. Share access to collaborators with configurable options."
+          name={
+            <FormattedMessage
+              description="Name of an add-on, the button that opens its row in the add-ons list of the pricing section"
+              defaultMessage="Crew add-on"
+            />
+          }
+          monthlyPrice={
+            <FormattedMessage
+              description="A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+              defaultMessage="$10"
+            />
+          }
+          yearlyPrice={
+            <FormattedMessage
+              description="A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+              defaultMessage="$110"
+            />
+          }
+          description={
+            <FormattedMessage
+              description="What the Crew add-on does, in its open row in the add-ons list of the pricing section"
+              defaultMessage="Create a network for all of your shows, with a combined analytics dashboard. Share access to collaborators with configurable options."
+            />
+          }
           link="https://help.pinecast.com/article/71-add-on-packages#crew-add-on"
         />
         <AddonAccordionItem
-          name="Growth add-on"
-          monthlyPrice="$10"
-          yearlyPrice="$110"
-          description="Grow your podcast with more options and features. Customize your tip jar, gather reviews from directories, solicit feedback from listeners, and more."
+          name={
+            <FormattedMessage
+              description="Name of an add-on, the button that opens its row in the add-ons list of the pricing section"
+              defaultMessage="Growth add-on"
+            />
+          }
+          monthlyPrice={
+            <FormattedMessage
+              description="A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+              defaultMessage="$10"
+            />
+          }
+          yearlyPrice={
+            <FormattedMessage
+              description="A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+              defaultMessage="$110"
+            />
+          }
+          description={
+            <FormattedMessage
+              description="What the Growth add-on does, in its open row in the add-ons list of the pricing section"
+              defaultMessage="Grow your podcast with more options and features. Customize your tip jar, gather reviews from directories, solicit feedback from listeners, and more."
+            />
+          }
           link="https://help.pinecast.com/article/71-add-on-packages#growth-add-on"
         />
         <AddonAccordionItem
-          name="Hi-Fi add-on"
-          monthlyPrice="$15"
-          yearlyPrice="$165"
-          description="Upload audio files up to 256MB, with an extra 256MB buffer every thirty days. RSS feeds update 66% faster."
+          name={
+            <FormattedMessage
+              description="Name of an add-on, the button that opens its row in the add-ons list of the pricing section"
+              defaultMessage="Hi-Fi add-on"
+            />
+          }
+          monthlyPrice={
+            <FormattedMessage
+              description="A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+              defaultMessage="$15"
+            />
+          }
+          yearlyPrice={
+            <FormattedMessage
+              description="A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+              defaultMessage="$165"
+            />
+          }
+          description={
+            <FormattedMessage
+              description="What the Hi-Fi add-on does, in its open row in the add-ons list of the pricing section"
+              defaultMessage="Upload audio files up to 256MB, with an extra 256MB buffer every thirty days. RSS feeds update 66% faster."
+            />
+          }
           link="https://help.pinecast.com/article/71-add-on-packages#hi-fi-add-on"
         />
       </AddonAccordion>
@@ -380,7 +571,7 @@ const Price = ({
   amount: React.ReactNode;
   color: string;
   strokeColor?: string;
-  perUnit: React.ReactNode;
+  perUnit: 'month' | 'year';
 }) => {
   const css = useCSS();
   return (
@@ -411,7 +602,17 @@ const Price = ({
           verticalAlign: 'baseline',
         }}
       >
-        / {perUnit}
+        {perUnit === 'month' ? (
+          <FormattedMessage
+            description="After a price in the pricing section: the price is for one month"
+            defaultMessage="/ Month"
+          />
+        ) : (
+          <FormattedMessage
+            description="After a price in the pricing section: the price is for one year"
+            defaultMessage="/ Year"
+          />
+        )}
       </Body3>
     </div>
   );
@@ -479,9 +680,9 @@ const AddonAccordionItem = ({
   description,
   link,
 }: {
-  name: string;
-  monthlyPrice: string;
-  yearlyPrice: string;
+  name: React.ReactNode;
+  monthlyPrice: React.ReactNode;
+  yearlyPrice: React.ReactNode;
   description: React.ReactNode;
   link: string;
 }) => {
@@ -588,16 +789,19 @@ const AddonAccordionItem = ({
         >
           <Price
             amount={monthlyPrice}
-            perUnit="Month"
+            perUnit="month"
             color="var(--color-space)"
             strokeColor="var(--color-white)"
           />
           <Overline style={{display: 'inline-block', margin: '0 12px 0 9px'}}>
-            or
+            <FormattedMessage
+              description="Between the monthly price and the yearly price of a plan or an add-on in the pricing section"
+              defaultMessage="or"
+            />
           </Overline>
           <Price
             amount={yearlyPrice}
-            perUnit="Year"
+            perUnit="year"
             color="var(--color-space)"
             strokeColor="var(--color-white)"
           />
@@ -614,7 +818,10 @@ const AddonAccordionItem = ({
         >
           <Body3 style={{maxWidth: '310px'}}>{description}</Body3>
           <Link href={link} target="_blank">
-            Learn more
+            <FormattedMessage
+              description="Link in the open row of an add-on in the pricing section, to the help center article about the add-on. Opens in a new tab"
+              defaultMessage="Learn more"
+            />
           </Link>
         </div>
       </Expandable>

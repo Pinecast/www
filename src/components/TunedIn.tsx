@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {defineMessage, FormattedMessage, MessageDescriptor} from 'react-intl';
 import {
   Body4,
   Caption,
@@ -45,7 +46,7 @@ type ResponsiveSizes = [[number, number], [number, number]];
 
 type Panel = {
   position: PanelPosition;
-  heading: React.ReactNode;
+  heading: MessageDescriptor;
   color: string;
   url: string;
   // A blurred copy of the art, as a data URI (see posterPlaceholders.ts).
@@ -61,7 +62,11 @@ type PanelItems = {
 const PANELS: PanelItems = {
   left: {
     position: PanelPosition.LEFT,
-    heading: <>You are just getting started</>,
+    heading: defineMessage({
+      description:
+        'Heading of the panel for beginners in the "Tuned-in" section of the home page and on the Learn page. The panel is a link to the page for them. The heading wraps at about 16 characters a line',
+      defaultMessage: 'You are just getting started',
+    }),
     color: PERSONAS.beginner.color,
     url: PERSONAS.beginner.url,
     poster: POSTER_PLACEHOLDERS.beginner,
@@ -96,7 +101,11 @@ const PANELS: PanelItems = {
   },
   middle: {
     position: PanelPosition.MIDDLE,
-    heading: <>You need advanced tools</>,
+    heading: defineMessage({
+      description:
+        'Heading of the panel for podcasters who need advanced tools in the "Tuned-in" section of the home page and on the Learn page. The panel is a link to the page for them. The heading wraps at about 16 characters a line',
+      defaultMessage: 'You need advanced tools',
+    }),
     color: PERSONAS.advanced.color,
     url: PERSONAS.advanced.url,
     poster: POSTER_PLACEHOLDERS.advanced,
@@ -129,7 +138,11 @@ const PANELS: PanelItems = {
   },
   right: {
     position: PanelPosition.RIGHT,
-    heading: <>You are an organization</>,
+    heading: defineMessage({
+      description:
+        'Heading of the panel for organizations in the "Tuned-in" section of the home page and on the Learn page. The panel is a link to the page for them. The heading wraps at about 16 characters a line',
+      defaultMessage: 'You are an organization',
+    }),
     color: PERSONAS.organizations.color,
     url: PERSONAS.organizations.url,
     poster: POSTER_PLACEHOLDERS.organizations,
@@ -605,7 +618,7 @@ const Panel = ({
               level={headingLevel}
               style={{marginBottom: '16px', maxWidth: '16ch'}}
             >
-              {heading}
+              <FormattedMessage {...heading} />
             </Subhead>
             <ProseLink
               style={{
@@ -616,7 +629,10 @@ const Panel = ({
                 paddingBottom: '8px',
               }}
             >
-              Learn more
+              <FormattedMessage
+                description="Text under the heading of a panel in the Tuned-in section, styled as a link; the whole panel links to the page for that kind of podcaster"
+                defaultMessage="Learn more"
+              />
             </ProseLink>
           </header>
         </div>
@@ -695,7 +711,10 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
                   marginBottom: '30px',
                 }}
               >
-                Tuned-in to your needs
+                <FormattedMessage
+                  description="Heading of the Tuned-in section of the home page, before panels for beginners, advanced podcasters and organizations"
+                  defaultMessage="Tuned-in to your needs"
+                />
               </H2>
               <Body4
                 style={{
@@ -709,8 +728,10 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
                   },
                 }}
               >
-                Whether you&rsquo;re starting out or you are more established we
-                have a solution for you.
+                <FormattedMessage
+                  description="Introduction under the heading of the Tuned-in section of the home page"
+                  defaultMessage="Whether you’re starting out or you are more established we have a solution for you."
+                />
               </Body4>
             </div>
           </div>
@@ -740,7 +761,10 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
                 zIndex,
               }}
             >
-              Start for free
+              <FormattedMessage
+                description="Button in the Tuned-in section of the home page, to the sign-up form"
+                defaultMessage="Start for free"
+              />
             </PrimaryButton>
             <SecondaryButton
               href="/features"
@@ -756,7 +780,10 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
                 zIndex,
               }}
             >
-              Discover Features
+              <FormattedMessage
+                description="Button in the Tuned-in section of the home page, to the page of all features"
+                defaultMessage="Discover Features"
+              />
             </SecondaryButton>
           </div>
           <Caption
@@ -768,7 +795,10 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
               zIndex,
             }}
           >
-            No credit card required
+            <FormattedMessage
+              description="Note under the sign-up button in the Tuned-in section of the home page"
+              defaultMessage="No credit card required"
+            />
           </Caption>
         </div>
       </div>

@@ -1,3 +1,5 @@
+import {FormattedMessage} from 'react-intl';
+
 import {useCSS} from '@/hooks/useCSS';
 import {Body4, Caption, H2} from './Typography';
 import {PrimaryButton} from './PrimaryButton';
@@ -20,9 +22,11 @@ export const FeaturesUpsell = () => {
       })}
     >
       <H2>
-        Discover more
-        <br />
-        features
+        <FormattedMessage
+          description="Big heading at the end of a feature page, above the button to all the features. {br} is a line break"
+          defaultMessage="Discover more{br}features"
+          values={{br: <br />}}
+        />
       </H2>
 
       <SecondaryButton
@@ -34,7 +38,10 @@ export const FeaturesUpsell = () => {
           ':focus-visible': {zIndex: 3},
         }}
       >
-        See all features
+        <FormattedMessage
+          description="Button at the end of a feature page, to the Features page with all the features"
+          defaultMessage="See all features"
+        />
       </SecondaryButton>
     </div>
   );

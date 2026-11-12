@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {defineMessage, FormattedMessage, MessageDescriptor} from 'react-intl';
 
 import {useCSS} from '@/hooks/useCSS';
 import {MonumentGroteskSemiMono} from '@/fonts';
@@ -259,6 +260,8 @@ const MarqueeDividerBullet = ({children}: {children: React.ReactNode}) => {
   const css = useCSS();
   return (
     <>
+      {/* The bullet between items is a symbol, not copy. */}
+      {/* eslint-disable-next-line formatjs/no-literal-string-in-jsx */}
       <tspan dx="100" className={css({fontSize: '30px'})} dy="4">
         &bull;
       </tspan>
@@ -269,20 +272,70 @@ const MarqueeDividerBullet = ({children}: {children: React.ReactNode}) => {
   );
 };
 
-const STANDARD_ITEMS = [
-  'Kick-ass customer support',
-  'Fair, no-nonsense pricing',
-  'Everything you need to be successful',
-  'Built by podcasters, for podcasters',
-  'Billions of listens served since 2015',
-  'Get paid for your content',
-  <>You&rsquo;re the customer, not the product</>,
-  'Worry about your next episode, not your host',
-  '$0 advertising budget, 100% focus on great software',
-  'Your batteries-included podcast host',
-  'Crafted with care in Raleigh, NC',
+// The selling points in the standard marquee.
+const STANDARD_ITEMS: Array<MessageDescriptor> = [
+  defineMessage({
+    description:
+      'One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.',
+    defaultMessage: 'Kick-ass customer support',
+  }),
+  defineMessage({
+    description:
+      'One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.',
+    defaultMessage: 'Fair, no-nonsense pricing',
+  }),
+  defineMessage({
+    description:
+      'One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.',
+    defaultMessage: 'Everything you need to be successful',
+  }),
+  defineMessage({
+    description:
+      'One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.',
+    defaultMessage: 'Built by podcasters, for podcasters',
+  }),
+  defineMessage({
+    description:
+      'One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.',
+    defaultMessage: 'Billions of listens served since 2015',
+  }),
+  defineMessage({
+    description:
+      'One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.',
+    defaultMessage: 'Get paid for your content',
+  }),
+  defineMessage({
+    description:
+      'One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.',
+    defaultMessage: 'You’re the customer, not the product',
+  }),
+  defineMessage({
+    description:
+      'One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.',
+    defaultMessage: 'Worry about your next episode, not your host',
+  }),
+  defineMessage({
+    description:
+      'One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.',
+    defaultMessage: '$0 advertising budget, 100% focus on great software',
+  }),
+  defineMessage({
+    description:
+      'One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.',
+    defaultMessage: 'Your batteries-included podcast host',
+  }),
+  defineMessage({
+    description:
+      'One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.',
+    defaultMessage: 'Crafted with care in Raleigh, NC',
+  }),
 ];
 
 export const StandardMarqueeDivider = (props: Omit<Props, 'items'>) => (
-  <MarqueeDivider {...props} items={STANDARD_ITEMS} />
+  <MarqueeDivider
+    {...props}
+    items={STANDARD_ITEMS.map((item, i) => (
+      <FormattedMessage key={i} {...item} />
+    ))}
+  />
 );

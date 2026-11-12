@@ -9,7 +9,7 @@ export const FooterNavLinks = ({
   links,
 }: {
   title: ReactNode;
-  links: Array<[href: string, title: string]>;
+  links: Array<[href: string, title: ReactNode]>;
 }) => {
   const css = useCSS();
   return (

@@ -11,6 +11,7 @@ import {
 import {drawsStill, HERO_STILLS, HeroStill, Layout} from '@/heroStills';
 import {SecondaryButton} from './SecondaryButton';
 import * as React from 'react';
+import {FormattedMessage} from 'react-intl';
 import {useCalculateResizableValue} from '@/hooks/useCalculateResizableValue';
 import {
   AV1_MIME,
@@ -1091,14 +1092,18 @@ export const HeroV2 = () => {
               })}
             >
               <H2 level={1}>
-                Hi! I&rsquo;m
-                <br />
-                your host
+                <FormattedMessage
+                  description="Main heading of the home page, at the top. {br} is a line break: the heading is big, and the lines are short"
+                  defaultMessage="Hi! I’m{br}your host"
+                  values={{br: <br />}}
+                />
               </H2>
               <Body4>
-                Welcome to Pinecast, a batteries-included
-                <br />
-                podcast hosting platform
+                <FormattedMessage
+                  description="Introduction under the main heading of the home page. {br} is a line break"
+                  defaultMessage="Welcome to Pinecast, a batteries-included{br}podcast hosting platform"
+                  values={{br: <br />}}
+                />
               </Body4>
               <SecondaryButton
                 href="https://pinecast.com/signup"
@@ -1111,10 +1116,16 @@ export const HeroV2 = () => {
                   },
                 }}
               >
-                Start for free
+                <FormattedMessage
+                  description="Button under the main heading of the home page, to the sign-up form"
+                  defaultMessage="Start for free"
+                />
               </SecondaryButton>
               <Caption style={{color: 'var(--color-core-accent-text)'}}>
-                No credit card required
+                <FormattedMessage
+                  description="Note under the sign-up button at the top of the home page"
+                  defaultMessage="No credit card required"
+                />
               </Caption>
               <div
                 ref={innerCircle}

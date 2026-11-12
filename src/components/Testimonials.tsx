@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
+import {FormattedMessage} from 'react-intl';
 import {StyleObject} from 'styletron-react';
 import {Body3, Body4, Caption, H1, H2} from './Typography';
 import {useCSS} from '@/hooks/useCSS';
@@ -441,9 +442,16 @@ const AudioPlayer = React.memo(
                     opacity: reducedMotion ? 1 : 0,
                     transition: '0.2s linear',
                   })}
-                >{`${formatTime(Math.trunc(currentTimeSec))} / ${formatTime(
-                  testimonial.audioDuration,
-                )}`}</span>
+                >
+                  <FormattedMessage
+                    description="Time label on the audio player of a customer testimonial, in a small pill. {elapsed} is the time played so far and {duration} the length of the recording, both as minutes:seconds, such as 00:12 / 00:49"
+                    defaultMessage="{elapsed} / {duration}"
+                    values={{
+                      elapsed: formatTime(Math.trunc(currentTimeSec)),
+                      duration: formatTime(testimonial.audioDuration),
+                    }}
+                  />
+                </span>
               </Caption>
             </div>
           </div>
@@ -518,7 +526,11 @@ const AudioPlayer = React.memo(
                   marginBottom: '-0.275em',
                 }}
               >
-                {`Customer since ${testimonial.joinYear}`}
+                <FormattedMessage
+                  description="Under the quotation of a customer, in the testimonials section of the home page: the year the customer joined Pinecast. {year} is a year, such as 2020"
+                  defaultMessage="Customer since {year}"
+                  values={{year: testimonial.joinYear}}
+                />
               </Caption>
               {/* For the mouse. The keyboard and screen readers use the
                   button of the customer block. */}
@@ -563,7 +575,17 @@ const AudioPlayer = React.memo(
                     },
                   }}
                 >
-                  {playing ? 'Pause' : 'Play'}
+                  {playing ? (
+                    <FormattedMessage
+                      description="Button on the audio player of a customer testimonial, under the quotation: pauses the recording"
+                      defaultMessage="Pause"
+                    />
+                  ) : (
+                    <FormattedMessage
+                      description="Button on the audio player of a customer testimonial, under the quotation: plays the recording"
+                      defaultMessage="Play"
+                    />
+                  )}
                 </Caption>
               </button>
             </footer>
@@ -922,7 +944,11 @@ const Customers = ({}) => {
                 {item.quotation.replace(/'/g, '’')}
               </ScreenReaderText>
               <ScreenReaderText as="p">
-                {`Customer since ${item.joinYear}`}
+                <FormattedMessage
+                  description="Under the quotation of a customer, in the testimonials section of the home page: the year the customer joined Pinecast. {year} is a year, such as 2020"
+                  defaultMessage="Customer since {year}"
+                  values={{year: item.joinYear}}
+                />
               </ScreenReaderText>
               <button
                 type="button"
@@ -930,8 +956,29 @@ const Customers = ({}) => {
                 onClick={() => togglePlaying(idx)}
                 onFocus={evt => scrollAbovePlayer(evt.currentTarget)}
               >
-                {idx === shownIndex && playing ? 'Pause' : 'Play'}
-                <ScreenReaderText>{` ${item.customer} testimonial`}</ScreenReaderText>
+                {idx === shownIndex && playing ? (
+                  <FormattedMessage
+                    description="Button under the name of a customer, in the testimonials section of the home page: pauses the recording of the customer. Only the word Pause shows; the text in <sr></sr> is read by screen readers only. {customer} is the name of the customer's podcast"
+                    defaultMessage="Pause<sr> {customer} testimonial</sr>"
+                    values={{
+                      customer: item.customer,
+                      sr: chunks => (
+                        <ScreenReaderText>{chunks}</ScreenReaderText>
+                      ),
+                    }}
+                  />
+                ) : (
+                  <FormattedMessage
+                    description="Button under the name of a customer, in the testimonials section of the home page: plays the recording of the customer. Only the word Play shows; the text in <sr></sr> is read by screen readers only. {customer} is the name of the customer's podcast"
+                    defaultMessage="Play<sr> {customer} testimonial</sr>"
+                    values={{
+                      customer: item.customer,
+                      sr: chunks => (
+                        <ScreenReaderText>{chunks}</ScreenReaderText>
+                      ),
+                    }}
+                  />
+                )}
               </button>
             </div>
           ))}
@@ -1024,7 +1071,10 @@ export const Testimonials = ({
                   marginBottom: '30px',
                 }}
               >
-                Don&rsquo;t just take our word for it
+                <FormattedMessage
+                  description="Heading of the testimonials section of the home page"
+                  defaultMessage="Don’t just take our word for it"
+                />
               </H2>
               <Body4
                 style={{
@@ -1038,8 +1088,10 @@ export const Testimonials = ({
                   },
                 }}
               >
-                We take pride in running a top-notch service. People really like
-                us. So much so, they left nice messages for you.
+                <FormattedMessage
+                  description="Text under the heading of the testimonials section of the home page. The messages are recorded audio testimonials from customers, below"
+                  defaultMessage="We take pride in running a top-notch service. People really like us. So much so, they left nice messages for you."
+                />
               </Body4>
               <Body4 style={{marginTop: '-20px', marginBottom: '26px'}}>
                 <Link
@@ -1052,7 +1104,10 @@ export const Testimonials = ({
                     textUnderlineOffset: '0.2em',
                   })}
                 >
-                  Transcripts
+                  <FormattedMessage
+                    description="Link in the testimonials section of the home page, to a page with the transcripts of the audio testimonials"
+                    defaultMessage="Transcripts"
+                  />
                 </Link>
               </Body4>
             </div>
@@ -1082,10 +1137,16 @@ export const Testimonials = ({
                   whiteSpace: 'nowrap',
                 }}
               >
-                Start for free
+                <FormattedMessage
+                  description="Button in the testimonials section of the home page, to the sign-up form. The button does not wrap its text"
+                  defaultMessage="Start for free"
+                />
               </SecondaryButton>
               <Caption style={{color: 'var(--color-core-accent-text)'}}>
-                No credit card required
+                <FormattedMessage
+                  description="Small text under the Start for free button in the testimonials section of the home page"
+                  defaultMessage="No credit card required"
+                />
               </Caption>
             </div>
           </div>

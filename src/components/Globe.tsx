@@ -3,6 +3,7 @@ import {Body1, Body4, H1, Link as ProseLink} from './Typography';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
 import * as React from 'react';
+import {defineMessage, FormattedMessage, MessageDescriptor} from 'react-intl';
 import * as ReactDOM from 'react-dom/client';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {MonumentGroteskBold} from '@/fonts';
@@ -141,8 +142,8 @@ const orbPositionsMobile = [
 
 type Feature = 'distribution' | 'analytics' | 'monetization';
 type FeatureShape = {
-  title: React.ReactNode | string;
-  description: React.ReactNode | string;
+  title: MessageDescriptor;
+  description: MessageDescriptor;
   href: string;
 };
 
@@ -186,33 +187,45 @@ const LINK_FOCUS_STYLE = {
 
 const FEATURES: Record<Feature, FeatureShape> = {
   distribution: {
-    title: <>Distribution</>,
-    description: (
-      <>
-        Publish or import your podcast, get listed in apps, and grow your
-        audience with our SEO-optimized tools.
-      </>
-    ),
+    title: defineMessage({
+      description:
+        'Name of the Distribution feature, read by screen readers before its description in the globe section of the home page',
+      defaultMessage: 'Distribution',
+    }),
+    description: defineMessage({
+      description:
+        'Description of the Distribution feature, shown over the globe on the home page when the globe turns to it',
+      defaultMessage:
+        'Publish or import your podcast, get listed in apps, and grow your audience with our SEO-optimized tools.',
+    }),
     href: '/features/distribution',
   },
   analytics: {
-    title: <>Analytics</>,
-    description: (
-      <>
-        The most powerful analytics in podcasting, with premium features, simple
-        charts, and clean controls.
-      </>
-    ),
+    title: defineMessage({
+      description:
+        'Name of the Analytics feature, read by screen readers before its description in the globe section of the home page',
+      defaultMessage: 'Analytics',
+    }),
+    description: defineMessage({
+      description:
+        'Description of the Analytics feature, shown over the globe on the home page when the globe turns to it',
+      defaultMessage:
+        'The most powerful analytics in podcasting, with premium features, simple charts, and clean controls.',
+    }),
     href: '/features/analytics',
   },
   monetization: {
-    title: <>Monetization</>,
-    description: (
-      <>
-        Publish premium content to paid subscribers and receive payouts directly
-        to your bank account.
-      </>
-    ),
+    title: defineMessage({
+      description:
+        'Name of the Monetization feature, read by screen readers before its description in the globe section of the home page',
+      defaultMessage: 'Monetization',
+    }),
+    description: defineMessage({
+      description:
+        'Description of the Monetization feature, shown over the globe on the home page when the globe turns to it',
+      defaultMessage:
+        'Publish premium content to paid subscribers and receive payouts directly to your bank account.',
+    }),
     href: '/features/monetization',
   },
 };
@@ -287,7 +300,10 @@ const IntroSection = React.memo(function IntroSection() {
           maxWidth: '58rem',
         }}
       >
-        Check, Check 1, 2, 3
+        <FormattedMessage
+          description="Heading of the globe section of the home page, a play on a microphone check"
+          defaultMessage="Check, Check 1, 2, 3"
+        />
       </H1>
       <Body4
         style={{
@@ -299,8 +315,10 @@ const IntroSection = React.memo(function IntroSection() {
           textAlign: 'center',
         }}
       >
-        Whether you&rsquo;re sharing to a handful of friends, your company, or
-        the world, Pinecast has a solution that&rsquo;s right for you.
+        <FormattedMessage
+          description="Introduction under the heading of the globe section of the home page"
+          defaultMessage="Whether you’re sharing to a handful of friends, your company, or the world, Pinecast has a solution that’s right for you."
+        />
       </Body4>
       <div
         className={css({
@@ -316,9 +334,17 @@ const IntroSection = React.memo(function IntroSection() {
             color: 'var(--color-space)',
           }}
         >
-          Start for free
+          <FormattedMessage
+            description="Button in the globe section of the home page, to the sign-up form"
+            defaultMessage="Start for free"
+          />
         </PrimaryButton>
-        <SecondaryButton href="/features">Discover features</SecondaryButton>
+        <SecondaryButton href="/features">
+          <FormattedMessage
+            description="Button in the globe section of the home page, to the page of all features"
+            defaultMessage="Discover features"
+          />
+        </SecondaryButton>
       </div>
       <div ref={exitingSoundSentinelRef} />
     </div>
@@ -455,8 +481,22 @@ const FeatureText = React.memo(function FeatureText({
                       transition: '0.2s opacity ease',
                     }}
                   >
-                    <ScreenReaderText>{feature.title}: </ScreenReaderText>
-                    {feature.description}
+                    <ScreenReaderText>
+                      <FormattedMessage
+                        description="Read by screen readers before the description of a feature in the globe section of the home page. {title} is the name of the feature, for example Analytics. The description follows after a space"
+                        defaultMessage="{title}:"
+                        values={{
+                          title: <FormattedMessage {...feature.title} />,
+                        }}
+                      />
+                      {
+                        // The build trims the ends of a message, so the space
+                        // after the colon is here. It is not copy.
+                        // eslint-disable-next-line formatjs/no-literal-string-in-jsx
+                        ' '
+                      }
+                    </ScreenReaderText>
+                    <FormattedMessage {...feature.description} />
                   </Body1>
                   {/* Each link can take focus at every scroll position. Its
                       feature shows while it has focus. On a narrow screen
@@ -478,7 +518,10 @@ const FeatureText = React.memo(function FeatureText({
                       paddingTop: '8px',
                     }}
                   >
-                    Learn more
+                    <FormattedMessage
+                      description="Link under the description of a feature in the globe section of the home page, to the page of that feature"
+                      defaultMessage="Learn more"
+                    />
                   </ProseLink>
                 </li>
               );
@@ -674,7 +717,10 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
               href="#distribution"
               tabIndex={-1}
             >
-              Distribution
+              <FormattedMessage
+                description="Link on the curved line of text over the globe on the home page, to the Distribution feature. Short: the three links share one curve, and the line cannot wrap"
+                defaultMessage="Distribution"
+              />
             </Link>
             <tspan dx={10}>
               <Link
@@ -698,7 +744,10 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
                 href="#analytics"
                 tabIndex={-1}
               >
-                Analytics
+                <FormattedMessage
+                  description="Link on the curved line of text over the globe on the home page, to the Analytics feature. Short: the three links share one curve, and the line cannot wrap"
+                  defaultMessage="Analytics"
+                />
               </Link>
             </tspan>
             <tspan dx={10}>
@@ -723,7 +772,10 @@ const FeatureMenu = React.forwardRef(function FeatureMenu(
                 href="#monetization"
                 tabIndex={-1}
               >
-                Monetization
+                <FormattedMessage
+                  description="Link on the curved line of text over the globe on the home page, to the Monetization feature. Short: the three links share one curve, and the line cannot wrap"
+                  defaultMessage="Monetization"
+                />
               </Link>
             </tspan>
           </textPath>

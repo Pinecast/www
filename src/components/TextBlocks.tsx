@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {useCSS} from '@/hooks/useCSS';
 import {
   GintoNordCondensed,
@@ -136,6 +137,9 @@ export const TaggedTitle = ({
           })}
         >
           {tag}
+          {/* Punctuation between the tag and the title, for screen readers:
+              not copy. */}
+          {/* eslint-disable-next-line formatjs/no-literal-string-in-jsx */}
           {' - '}
         </span>
         {children}
@@ -555,6 +559,7 @@ export const ProductFeature = ({
   accessories?: Array<Product>;
 }) => {
   const css = useCSS();
+  const intl = useIntl();
   return (
     <div
       className={css({
@@ -627,11 +632,21 @@ export const ProductFeature = ({
       >
         {/* Each product has this link, so its name says which product. */}
         <Link
-          aria-label={`See it on Amazon: ${name}`}
+          aria-label={intl.formatMessage(
+            {
+              description:
+                'Screen reader label of the link under a product in a list of recommended podcasting gear, to the product on Amazon. {name} is the name of the product. The visible text of the link is "See it on Amazon"',
+              defaultMessage: 'See it on Amazon: {name}',
+            },
+            {name},
+          )}
           target="_blank"
           href={url}
         >
-          See it on Amazon
+          <FormattedMessage
+            description="Link under a product in a list of recommended podcasting gear, to the product on Amazon"
+            defaultMessage="See it on Amazon"
+          />
         </Link>
       </div>
       {accessories && (
