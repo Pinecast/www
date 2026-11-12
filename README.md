@@ -26,6 +26,9 @@ npm test            # Playwright: keyboard, landmark, axe, reflow, text spacing
 `npm test` serves `out/`, so build first. It needs Playwright's Chromium once:
 `npx playwright install chromium`.
 
+GitHub Actions (`.github/workflows/main.yml`) runs all of these on each pull
+request and each push to `netlify`, on Node 24 as `netlify.toml` has it.
+
 
 ## Sitemap, robots.txt and languages
 
