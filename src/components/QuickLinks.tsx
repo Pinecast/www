@@ -5,16 +5,63 @@ import {
 } from '@/constants';
 import React from 'react';
 import Link from 'next/link';
+import {
+  defineMessage,
+  FormattedMessage,
+  type MessageDescriptor,
+} from 'react-intl';
 import {Body1, Caption, PillButton} from './Typography';
 import {useCSS} from '@/hooks/useCSS';
 
-const QUICK_LINKS = [
-  ['/learn/create-a-podcast', 'Create a podcast'],
-  ['/learn/promoting-your-podcast', 'Promoting your show'],
-  ['/learn/import-a-podcast', 'Import a podcast'],
-  ['/learn/understand-your-growth', 'Understanding your growth'],
-  ['/learn/monetize-your-podcast', 'Monetize your show'],
-  ['/learn/podcasting-glossary', 'Podcasting glossary'],
+const QUICK_LINKS: Array<[string, MessageDescriptor]> = [
+  [
+    '/learn/create-a-podcast',
+    defineMessage({
+      description:
+        'A link in the Quick tips list of the menu, to a Learn article. Shown as a pill that does not wrap',
+      defaultMessage: 'Create a podcast',
+    }),
+  ],
+  [
+    '/learn/promoting-your-podcast',
+    defineMessage({
+      description:
+        'A link in the Quick tips list of the menu, to a Learn article. Shown as a pill that does not wrap',
+      defaultMessage: 'Promoting your show',
+    }),
+  ],
+  [
+    '/learn/import-a-podcast',
+    defineMessage({
+      description:
+        'A link in the Quick tips list of the menu, to a Learn article. Shown as a pill that does not wrap',
+      defaultMessage: 'Import a podcast',
+    }),
+  ],
+  [
+    '/learn/understand-your-growth',
+    defineMessage({
+      description:
+        'A link in the Quick tips list of the menu, to a Learn article. Shown as a pill that does not wrap',
+      defaultMessage: 'Understanding your growth',
+    }),
+  ],
+  [
+    '/learn/monetize-your-podcast',
+    defineMessage({
+      description:
+        'A link in the Quick tips list of the menu, to a Learn article. Shown as a pill that does not wrap',
+      defaultMessage: 'Monetize your show',
+    }),
+  ],
+  [
+    '/learn/podcasting-glossary',
+    defineMessage({
+      description:
+        'A link in the Quick tips list of the menu, to a Learn article. Shown as a pill that does not wrap',
+      defaultMessage: 'Podcasting glossary',
+    }),
+  ],
 ];
 
 export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
@@ -52,7 +99,10 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
           },
         }}
       >
-        Quick tips for getting started
+        <FormattedMessage
+          description="Heading of the Quick tips list in the menu, on a tablet or a computer. The heading is narrow (8em) and wraps onto several lines"
+          defaultMessage="Quick tips for getting started"
+        />
       </Body1>
       <Caption
         as="h2"
@@ -67,7 +117,10 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
           [MIN_TABLET_MEDIA_QUERY]: {display: 'none'},
         }}
       >
-        Quick Tips
+        <FormattedMessage
+          description="Short heading of the Quick tips list in the menu, on a phone. Shown in capital letters"
+          defaultMessage="Quick Tips"
+        />
       </Caption>
       <ul
         className={css({
@@ -119,7 +172,7 @@ export const QuickTipsBlock = ({isOpen}: {isOpen: boolean}) => {
                   },
                 }}
               >
-                {title}
+                <FormattedMessage {...title} />
               </PillButton>
             </Link>
           </li>

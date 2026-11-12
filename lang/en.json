@@ -1,0 +1,850 @@
+{
+  "+2Lq0r": {
+    "defaultMessage": "JSON Feed",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "+dsVvY": {
+    "defaultMessage": "Pinecast has tools for podcasters of all experience levels. Whether you are just getting started or running a podcast for a business, we have your back.",
+    "description": "Introduction under the heading of the Learn page"
+  },
+  "+zYy4i": {
+    "defaultMessage": "Sign up",
+    "description": "Button on the ticket of a plan in the pricing section, to the sign-up form"
+  },
+  "/77+vM": {
+    "defaultMessage": "Get feedback from your listeners collected to a single dashboard with a simple, customizable form. Moderation features protect against spam and abuse.",
+    "description": "What the Feedback feature does, shown when its row on the Features page is open"
+  },
+  "/aMaNV": {
+    "defaultMessage": "Whether you’re sharing to a handful of friends, your company, or the world, Pinecast has a solution that’s right for you.",
+    "description": "Introduction under the heading of the globe section of the home page"
+  },
+  "/dhlck": {
+    "defaultMessage": "$110",
+    "description": "A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+  },
+  "0LGL5T": {
+    "defaultMessage": "Try Pinecast{br}for free",
+    "description": "Big heading of the sign-up section at the bottom of the content pages, above the footer. {br} is a line break"
+  },
+  "0TfzjJ": {
+    "defaultMessage": "Up to two shows",
+    "description": "A feature of the free plan, in the list on its ticket in the pricing section"
+  },
+  "1BquxH": {
+    "defaultMessage": "Monetization",
+    "description": "Name of the Monetization feature, read by screen readers before its description in the globe section of the home page"
+  },
+  "1FKfN0": {
+    "defaultMessage": "If your episode’s MP3 doesn’t include all of the metadata tags that podcast apps expect, we’ll fill in the blanks for you with a single click—without overwriting custom metadata.",
+    "description": "What the Episode Metadata feature does, shown when its row on the Features page is open"
+  },
+  "1OUYIJ": {
+    "defaultMessage": "Pause animations",
+    "description": "Name of the toggle button in the site header that pauses and plays the animations of the page. Screen readers read it, and its tooltip shows it. The button says whether it is pressed, so the name stays the same while the animations are paused."
+  },
+  "1tHL/G": {
+    "defaultMessage": "We don’t just provide RSS, we offer an easy-to-parse JSON Feed-compliant feed for every podcast as well.",
+    "description": "What the JSON Feed feature does, shown when its row on the Features page is open"
+  },
+  "21Sqq0": {
+    "defaultMessage": "See all features",
+    "description": "Button at the end of a feature page, to the Features page with all the features"
+  },
+  "2V7LxR": {
+    "defaultMessage": "No time limit",
+    "description": "A feature of the free plan, in the list on its ticket in the pricing section"
+  },
+  "3bxEDj": {
+    "defaultMessage": "Level 3",
+    "description": "Small label above the heading of a tile in the site menu, shown in capitals. Tiles go from level 1 to 3; this one is a link to the guide for companies and organizations."
+  },
+  "4fxkcu": {
+    "defaultMessage": "/ Month",
+    "description": "After a price in the pricing section: the price is for one month"
+  },
+  "4zg7Gp": {
+    "defaultMessage": "No credit card required",
+    "description": "Note under the sign-up button in the Tuned-in section of the home page"
+  },
+  "51tjZe": {
+    "defaultMessage": "Transcripts",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "5kLnqs": {
+    "defaultMessage": "See what’s included",
+    "description": "Button on the ticket of a plan in the pricing section, to the help center article about what the plan includes"
+  },
+  "5ng2oD": {
+    "defaultMessage": "Unlimited shows",
+    "description": "A feature of the Starter plan, in the list on its ticket in the pricing section"
+  },
+  "5y6j6+": {
+    "defaultMessage": "Set up a website for your show with a single click—no coding required. Customize the layout and appearance of your site and know that it will work great on any device. SEO included.",
+    "description": "What the Podcast Websites feature does, shown when its row on the Features page is open"
+  },
+  "6KyWzM": {
+    "defaultMessage": "Analytics",
+    "description": "Link to the page about analytics: the statistics of a podcast. In the Features column in the footer of every page"
+  },
+  "6Ofxq6": {
+    "defaultMessage": "Terms<long> & conditions</long>",
+    "description": "Link to the terms and conditions, in the bottom row of every page. Up to 900px wide, the text in <long> tags is hidden, so the text before it is the whole label there: keep a short form of the label before the tag, and the rest inside it."
+  },
+  "6mB0v5": {
+    "defaultMessage": "Built by podcasters, for podcasters",
+    "description": "One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line."
+  },
+  "6xTlDe": {
+    "defaultMessage": "Support",
+    "description": "Link to the help center. In the Resources column in the footer of every page"
+  },
+  "7tQYJr": {
+    "defaultMessage": "Customer since {year}",
+    "description": "Under the quotation of a customer, in the testimonials section of the home page: the year the customer joined Pinecast. {year} is a year, such as 2020"
+  },
+  "8+dym2": {
+    "defaultMessage": "Start for free",
+    "description": "Button in the globe section of the home page, to the sign-up form"
+  },
+  "82WDcm": {
+    "defaultMessage": "Basic analytics",
+    "description": "A feature of the free plan, in the list on its ticket in the pricing section"
+  },
+  "8nOIHo": {
+    "defaultMessage": "Review Monitoring",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "99bFDB": {
+    "defaultMessage": "We treat accessibility like a feature, not an afterthought. We are obsessive over making Pinecast the most accessible hosting platform in the world for users who need many different kinds of affordances.",
+    "description": "What the Accessibility feature does, shown when its row on the Features page is open"
+  },
+  "AF7vSx": {
+    "defaultMessage": "Menu",
+    "description": "Screen reader name of the list of links inside the site menu"
+  },
+  "AIISv1": {
+    "defaultMessage": "Embed a player on your website that lets your visitors listen to individual episodes or your whole podcast.",
+    "description": "What the Embeddable Players feature does, shown when its row on the Features page is open"
+  },
+  "ANkfZ+": {
+    "defaultMessage": "Publish or import your podcast, get listed in apps, and grow your audience with our SEO-optimized tools.",
+    "description": "Description of the Distribution feature, shown over the globe on the home page when the globe turns to it"
+  },
+  "APS4kv": {
+    "defaultMessage": "Upload audio files up to 256MB, with an extra 256MB buffer every thirty days. RSS feeds update 66% faster.",
+    "description": "What the Hi-Fi add-on does, in its open row in the add-ons list of the pricing section"
+  },
+  "AQnpYh": {
+    "defaultMessage": "Keep your personal email private.",
+    "description": "What the Email Privacy feature does, shown when its row on the Features page is open"
+  },
+  "B9OChd": {
+    "defaultMessage": "Podcast Chapters",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "BM5aSI": {
+    "defaultMessage": "Feedback",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "Bmfz3h": {
+    "defaultMessage": "Mute",
+    "description": "Screen reader name of the button that turns the sound of the site off, while it is on"
+  },
+  "Btc2Pu": {
+    "defaultMessage": "Episode Metadata",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "BzMale": {
+    "defaultMessage": "$0 advertising budget, 100% focus on great software",
+    "description": "One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line."
+  },
+  "CHAMHu": {
+    "defaultMessage": "Premium analytics",
+    "description": "A feature of the Starter plan, in the list on its ticket in the pricing section"
+  },
+  "CkDn5T": {
+    "defaultMessage": "Monetization",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "D0Zhrw": {
+    "defaultMessage": "You are just getting started",
+    "description": "Heading of the panel for beginners in the \"Tuned-in\" section of the home page and on the Learn page. The panel is a link to the page for them. The heading wraps at about 16 characters a line"
+  },
+  "D5ckvo": {
+    "defaultMessage": "Pinecast",
+    "description": "Title of the home page, in the browser tab"
+  },
+  "DfWVos": {
+    "defaultMessage": "You need advanced tools",
+    "description": "Heading of the panel for podcasters who need advanced tools in the \"Tuned-in\" section of the home page and on the Learn page. The panel is a link to the page for them. The heading wraps at about 16 characters a line"
+  },
+  "EMPZkj": {
+    "defaultMessage": "Features",
+    "description": "Heading of the column of links to the feature pages, in the footer of every page"
+  },
+  "EPo6h6": {
+    "defaultMessage": "See it on Amazon",
+    "description": "Link under a product in a list of recommended podcasting gear, to the product on Amazon"
+  },
+  "ESsMXt": {
+    "defaultMessage": "See where your listeners are coming from and how they’re listening.",
+    "description": "What the Analytics feature does, shown when its row on the Features page is open"
+  },
+  "EUVluX": {
+    "defaultMessage": "80MB file sizes + bonus",
+    "description": "A feature of the Starter plan, in the list on its ticket in the pricing section"
+  },
+  "F0uib6": {
+    "defaultMessage": "Corporate podcasters",
+    "description": "Heading of a tile in the site menu, a link to the guide for companies and organizations"
+  },
+  "F9dzAf": {
+    "defaultMessage": "Tuned-in to your needs",
+    "description": "Heading of the Tuned-in section of the home page, before panels for beginners, advanced podcasters and organizations"
+  },
+  "FgdSGw": {
+    "defaultMessage": "The most powerful analytics in podcasting, with premium features, simple charts, and clean controls.",
+    "description": "Description of the Analytics feature, shown over the globe on the home page when the globe turns to it"
+  },
+  "Fpfm0t": {
+    "defaultMessage": "Start for free",
+    "description": "Button in the sign-up section at the bottom of the content pages, to the sign-up form"
+  },
+  "GLJoOr": {
+    "defaultMessage": "Try Pinecast for free. No credit card required, no time limits, upgrade whenever. We think you’ll love it.",
+    "description": "Text under the heading of the pricing section of the home page"
+  },
+  "GSQ0xO": {
+    "defaultMessage": "Menu",
+    "description": "Screen reader name of the menu button (an icon of three lines) in the site header on narrow screens. It opens the site menu."
+  },
+  "GrhQfC": {
+    "defaultMessage": "AI Use",
+    "description": "Link to the page about how Pinecast uses AI. In the Resources column in the footer of every page"
+  },
+  "H4Jh1Z": {
+    "defaultMessage": "Learn",
+    "description": "Link to the Learn page: guides to starting and growing a podcast. In the Resources column in the footer of every page"
+  },
+  "HCnTzJ": {
+    "defaultMessage": "Import a podcast",
+    "description": "A link in the Quick tips list of the menu, to a Learn article. Shown as a pill that does not wrap"
+  },
+  "Ha5pE0": {
+    "defaultMessage": "Short Links",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "IJnetw": {
+    "defaultMessage": "No credit card required",
+    "description": "Note under the sign-up button at the top of the home page"
+  },
+  "IiGjF/": {
+    "defaultMessage": "$0",
+    "description": "A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+  },
+  "IvUg4C": {
+    "defaultMessage": "Podcasting for beginners",
+    "description": "Heading of a tile in the site menu, a link to the guide for people who are new to podcasting"
+  },
+  "KCylH7": {
+    "defaultMessage": "Level 2",
+    "description": "Small label above the heading of a tile in the site menu, shown in capitals. Tiles go from level 1 to 3; this one is a link to the guide for experienced podcasters."
+  },
+  "KGkwzj": {
+    "defaultMessage": "Publish premium content to paid subscribers and receive payouts directly to your bank account.",
+    "description": "Description of the Monetization feature, shown over the globe on the home page when the globe turns to it"
+  },
+  "KUNp6y": {
+    "defaultMessage": "Create a network for all of your shows, with a combined analytics dashboard. Share access to collaborators with configurable options.",
+    "description": "What the Crew add-on does, in its open row in the add-ons list of the pricing section"
+  },
+  "KVVGEY": {
+    "defaultMessage": "All features",
+    "description": "Link to the page that lists all the features of Pinecast. In the Features column in the footer of every page"
+  },
+  "Klb4PR": {
+    "defaultMessage": "Welcome to Pinecast, a batteries-included{br}podcast hosting platform",
+    "description": "Introduction under the main heading of the home page. {br} is a line break"
+  },
+  "L8U4Ih": {
+    "defaultMessage": "Distribution",
+    "description": "Name of the Distribution feature, read by screen readers before its description in the globe section of the home page"
+  },
+  "M3zxrK": {
+    "defaultMessage": "/ Year",
+    "description": "After a price in the pricing section: the price is for one year"
+  },
+  "MF4Oza": {
+    "defaultMessage": "Crew add-on",
+    "description": "Name of an add-on, the button that opens its row in the add-ons list of the pricing section"
+  },
+  "MNIKRr": {
+    "defaultMessage": "In Their Own Words",
+    "description": "Main heading of the page with the transcripts of the audio testimonials from customers. Use short words only: the heading is large, and on a phone screen it cannot wrap a longer word. The heading does not say what the page holds; the title in the browser tab does"
+  },
+  "MOtGXF": {
+    "defaultMessage": "No credit card required",
+    "description": "Small note under the sign-up buttons at the bottom of the content pages"
+  },
+  "Mgtljh": {
+    "defaultMessage": "Features Index",
+    "description": "Label above the heading of the Features page, in a pill. Shown in capital letters"
+  },
+  "NGLCBM": {
+    "defaultMessage": "Create a podcast",
+    "description": "A link in the Quick tips list of the menu, to a Learn article. Shown as a pill that does not wrap"
+  },
+  "NZemcL": {
+    "defaultMessage": "Learn more",
+    "description": "Link under the description of a feature in the globe section of the home page, to the page of that feature"
+  },
+  "NbXqUi": {
+    "defaultMessage": "Promoting your show",
+    "description": "A link in the Quick tips list of the menu, to a Learn article. Shown as a pill that does not wrap"
+  },
+  "NqG+t8": {
+    "defaultMessage": "Menu",
+    "description": "Screen reader name of the site menu, a dialog that opens under the site header"
+  },
+  "NxIr7f": {
+    "defaultMessage": "{elapsed} / {duration}",
+    "description": "Time label on the audio player of a customer testimonial, in a small pill. {elapsed} is the time played so far and {duration} the length of the recording, both as minutes:seconds, such as 00:12 / 00:49"
+  },
+  "OAuboj": {
+    "defaultMessage": "Pause<sr> {customer} testimonial</sr>",
+    "description": "Button under the name of a customer, in the testimonials section of the home page: pauses the recording of the customer. Only the word Pause shows; the text in <sr></sr> is read by screen readers only. {customer} is the name of the customer's podcast"
+  },
+  "OE3vUS": {
+    "defaultMessage": "Learn more",
+    "description": "Link in the open row of a feature on the Features page, to the page about the feature"
+  },
+  "OUcYfC": {
+    "defaultMessage": "Create a group for all the podcasters and shows in your network. We’ll provide a single dashboard for managing your network’s shows and analytics.",
+    "description": "What the Networks feature does, shown when its row on the Features page is open"
+  },
+  "OcbMaU": {
+    "defaultMessage": "Keep your back catalog fresh with clip insertion. Automatically insert audio clips into your episodes, no matter how recently the episodes were published.",
+    "description": "What the Clip Insertion feature does, shown when its row on the Features page is open"
+  },
+  "OdXhTK": {
+    "defaultMessage": "Tuned-in to{br}your needs",
+    "description": "Big heading of the Features page. {br} is a line break: the words are big, and the lines are short"
+  },
+  "OvESM7": {
+    "defaultMessage": "48MB file sizes",
+    "description": "A feature of the free plan, in the list on its ticket in the pricing section"
+  },
+  "P/u37W": {
+    "defaultMessage": "Gain additional insights about your listeners with geographic data, listen growth analytics, sparklines, and more.",
+    "description": "What the Pro Analytics add-on does, in its open row in the add-ons list of the pricing section"
+  },
+  "P2e8mH": {
+    "defaultMessage": "Check, Check 1, 2, 3",
+    "description": "Heading of the globe section of the home page, a play on a microphone check"
+  },
+  "PQNb/g": {
+    "defaultMessage": "Starter plan",
+    "description": "Name of the Starter plan, on its ticket in the pricing section"
+  },
+  "PY3HGQ": {
+    "defaultMessage": "Discover more{br}features",
+    "description": "Big heading at the end of a feature page, above the button to all the features. {br} is a line break"
+  },
+  "PYKDf6": {
+    "defaultMessage": "Growth add-on",
+    "description": "Name of an add-on, the button that opens its row in the add-ons list of the pricing section"
+  },
+  "PqcCZx": {
+    "defaultMessage": "Whether you’re starting out or you are more established we have a solution for you.",
+    "description": "Introduction under the heading of the Tuned-in section of the home page"
+  },
+  "Pqmr0J": {
+    "defaultMessage": "Distribution",
+    "description": "Link on the curved line of text over the globe on the home page, to the Distribution feature. Short: the three links share one curve, and the line cannot wrap"
+  },
+  "RJ3ysL": {
+    "defaultMessage": "Resources",
+    "description": "Heading of the column of links to help and information, in the footer of every page"
+  },
+  "RdWani": {
+    "defaultMessage": "See it on Amazon: {name}",
+    "description": "Screen reader label of the link under a product in a list of recommended podcasting gear, to the product on Amazon. {name} is the name of the product. The visible text of the link is \"See it on Amazon\""
+  },
+  "RlBhkU": {
+    "defaultMessage": "Embed HTML code for your podcast that lets your website visitors open your show in their favorite podcast app.",
+    "description": "What the Embeddable App Links feature does, shown when its row on the Features page is open"
+  },
+  "SHaenT": {
+    "defaultMessage": "Add features when you need them and remove them when you don’t. There are no confusing tiers or lock-in pricing. You pay for what you use.",
+    "description": "Text under the heading of the add-ons in the pricing section"
+  },
+  "SVBBJE": {
+    "defaultMessage": "Analytics",
+    "description": "Link on the curved line of text over the globe on the home page, to the Analytics feature. Short: the three links share one curve, and the line cannot wrap"
+  },
+  "SbCcyr": {
+    "defaultMessage": "Icebox",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "T3rRE3": {
+    "defaultMessage": "Analytics",
+    "description": "Name of the Analytics feature, read by screen readers before its description in the globe section of the home page"
+  },
+  "TSuPJK": {
+    "defaultMessage": "$15",
+    "description": "A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+  },
+  "Tydwy2": {
+    "defaultMessage": "Get your show on all the major podcast platforms with a single click.",
+    "description": "What the Distribution feature does, shown when its row on the Features page is open"
+  },
+  "UAb6nT": {
+    "defaultMessage": "Sign in",
+    "description": "Button in the site header, to the sign-in page of the Pinecast dashboard"
+  },
+  "UWkmF8": {
+    "defaultMessage": "Discover features",
+    "description": "Button in the globe section of the home page, to the page of all features"
+  },
+  "UdNBV5": {
+    "defaultMessage": "Notifications",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "UkVdfg": {
+    "defaultMessage": "Podcasting glossary",
+    "description": "A link in the Quick tips list of the menu, to a Learn article. Shown as a pill that does not wrap"
+  },
+  "UtdMVN": {
+    "defaultMessage": "Skip to main content",
+    "description": "Skip link: the first thing on every page, hidden until it has keyboard focus. It moves focus past the header to the main content of the page. It stays on one line."
+  },
+  "V9dT23": {
+    "defaultMessage": "What’s included?",
+    "description": "Button in the sign-up section at the bottom of the content pages, to the Features page"
+  },
+  "VTf0AZ": {
+    "defaultMessage": "All the features you could want from a podcast hosting service",
+    "description": "Description of the Features page, for search engines and link previews"
+  },
+  "VeITU6": {
+    "defaultMessage": "Discover Features",
+    "description": "Button in the Tuned-in section of the home page, to the page of all features"
+  },
+  "VpY43f": {
+    "defaultMessage": "Clip Insertion",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "WUCNFc": {
+    "defaultMessage": "Referrals",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "WxzJng": {
+    "defaultMessage": "Invite your co-hosts and producers to help you manage your show.",
+    "description": "What the Collaborators feature does, shown when its row on the Features page is open"
+  },
+  "X1SK5k": {
+    "defaultMessage": "Embeddable Players",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "XYOwCI": {
+    "defaultMessage": "Start for free",
+    "description": "Button under the main heading of the home page, to the sign-up form"
+  },
+  "Xe86fJ": {
+    "defaultMessage": "Get notifications via email, Slack, Discord, or webhooks when episodes are published, hit analytics milestones, when your podcast receives tips, and more.",
+    "description": "What the Notifications feature does, shown when its row on the Features page is open"
+  },
+  "XqScaw": {
+    "defaultMessage": "Get started on your podcast journey",
+    "description": "Description of the Learn page, for search engines and link previews"
+  },
+  "Y179Ys": {
+    "defaultMessage": "Password Protection",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "Y964/e": {
+    "defaultMessage": "© Pinecast {year}",
+    "description": "Copyright line at the bottom of every page. {year} is the year, such as 2026."
+  },
+  "YWiRkL": {
+    "defaultMessage": "Billions of listens served since 2015",
+    "description": "One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line."
+  },
+  "YXbau8": {
+    "defaultMessage": "Sign up",
+    "description": "Button in the box at the bottom of every page, to the sign-up form"
+  },
+  "ZEsems": {
+    "defaultMessage": "Protect your podcast feed and website with a password that you can share with your listeners.",
+    "description": "What the Password Protection feature does, shown when its row on the Features page is open"
+  },
+  "ZWVE3m": {
+    "defaultMessage": "Sometimes you need to take a break from podcasting for a while. If your account has been inactive for a while, you can switch to our Icebox plan and keep your show online for a low monthly rate.",
+    "description": "What the Icebox feature does, shown when its row on the Features page is open"
+  },
+  "Ze6Jzp": {
+    "defaultMessage": "Learn more",
+    "description": "Text under the heading of a panel in the Tuned-in section, styled as a link; the whole panel links to the page for that kind of podcaster"
+  },
+  "ZgbCc5": {
+    "defaultMessage": "Podcast Websites",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "ZnTTuK": {
+    "defaultMessage": "Pinecast Features",
+    "description": "Label above the title of a feature page, in a pill. Shown in capital letters"
+  },
+  "aSuLzV": {
+    "defaultMessage": "Seasons & Episodes",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "aYp38H": {
+    "defaultMessage": "Features",
+    "description": "Heading in the menu on a phone, a link to the Features page. Shown in capital letters"
+  },
+  "b8fgAE": {
+    "defaultMessage": "Hit the{br}ground{br}running",
+    "description": "Heading of the Learn page. Each {br} is a line break: the words are big, and the lines are short"
+  },
+  "bCXzFY": {
+    "defaultMessage": "Earn account credit for referring other podcasters to Pinecast. For every referral that stays a customer, we’ll give you two months of our Starter plan.",
+    "description": "What the Referrals feature does, shown when its row on the Features page is open"
+  },
+  "bpsUul": {
+    "defaultMessage": "Pinecast is your batteries-included podcast hosting platform.",
+    "description": "Sentence in the box at the bottom of every page, above the sign-up button"
+  },
+  "cCCgdb": {
+    "defaultMessage": "Blog",
+    "description": "Link to the Pinecast blog. In the Follow along column in the footer of every page"
+  },
+  "cuJdX+": {
+    "defaultMessage": "Grab your ticket",
+    "description": "Big heading of the pricing section of the home page"
+  },
+  "d/Jvty": {
+    "defaultMessage": "Learn with Pinecast",
+    "description": "Label above the title of a Learn article, in a pill. Shown in capital letters"
+  },
+  "dC4DVL": {
+    "defaultMessage": "Sign in",
+    "description": "Screen reader name of the sign-in icon in the site header on narrow screens, a link to the sign-in page of the Pinecast dashboard"
+  },
+  "daQcvg": {
+    "defaultMessage": "Let us take care of keeping track of your reviews. We’ll crawl reviews left on Podchaser and Apple Podcasts in every region and send you an email when a new one is found.",
+    "description": "What the Review Monitoring feature does, shown when its row on the Features page is open"
+  },
+  "dqs5l3": {
+    "defaultMessage": "Pinecast will transcribe up to four hours of audio per month at no extra cost. We’ll recognize and remember your speakers, and you can edit the transcript right in your browser.",
+    "description": "What the Transcripts feature does, shown when its row on the Features page is open"
+  },
+  "e1vP1v": {
+    "defaultMessage": "$165",
+    "description": "A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+  },
+  "e26/v9": {
+    "defaultMessage": "Pro Analytics add-on",
+    "description": "Name of an add-on, the button that opens its row in the add-ons list of the pricing section"
+  },
+  "flYdus": {
+    "defaultMessage": "Privacy",
+    "description": "Link to the privacy policy, in the bottom row of every page"
+  },
+  "fvvs5+": {
+    "defaultMessage": "Play",
+    "description": "Button on the audio player of a customer testimonial, under the quotation: plays the recording"
+  },
+  "g/HuMJ": {
+    "defaultMessage": "Monetize your show",
+    "description": "A link in the Quick tips list of the menu, to a Learn article. Shown as a pill that does not wrap"
+  },
+  "g0+/lM": {
+    "defaultMessage": "$10",
+    "description": "A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+  },
+  "g6bKYV": {
+    "defaultMessage": "No credit card required",
+    "description": "Small note next to the sign-up button at the bottom of every page"
+  },
+  "gD4BZX": {
+    "defaultMessage": "These are transcripts of the audio testimonials on our home page.",
+    "description": "First paragraph of the page with the transcripts of the audio testimonials from customers. Below it, each customer name is a heading, followed by the transcript"
+  },
+  "gO4BS0": {
+    "defaultMessage": "Get paid for your content",
+    "description": "One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line."
+  },
+  "gRGpmU": {
+    "defaultMessage": "Monetization",
+    "description": "Link on the curved line of text over the globe on the home page, to the Monetization feature. Short: the three links share one curve, and the line cannot wrap"
+  },
+  "gWUnS9": {
+    "defaultMessage": "Follow along",
+    "description": "Heading of the column of links to the Pinecast blog and social media, in the footer of every page"
+  },
+  "gWzMYC": {
+    "defaultMessage": "You’re the customer, not the product",
+    "description": "One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line."
+  },
+  "gxbq+Y": {
+    "defaultMessage": "Pause",
+    "description": "Button on the audio player of a customer testimonial, under the quotation: pauses the recording"
+  },
+  "hDzw07": {
+    "defaultMessage": "Get more{br}with add-ons",
+    "description": "Big heading above the add-ons in the pricing section. {br} is a line break"
+  },
+  "hYiwJp": {
+    "defaultMessage": "Accessibility",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "iSVSDg": {
+    "defaultMessage": "Whether you’re just starting out or you’re more established, we have a solution for you.",
+    "description": "Text under the heading of the sign-up section at the bottom of the content pages"
+  },
+  "iWx2t1": {
+    "defaultMessage": "Link your listeners to specific timecodes within your episode. This helps folks find the exact segment they're looking for within a larger episode.",
+    "description": "What the Podcast Chapters feature does, shown when its row on the Features page is open"
+  },
+  "ibbkiP": {
+    "defaultMessage": "Hi! I’m{br}your host",
+    "description": "Main heading of the home page, at the top. {br} is a line break: the heading is big, and the lines are short"
+  },
+  "iwm8d+": {
+    "defaultMessage": "Everything you need to be successful",
+    "description": "One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line."
+  },
+  "j1qPEz": {
+    "defaultMessage": "Networks",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "j6KuVD": {
+    "defaultMessage": "Art Optimization",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "jTlkQq": {
+    "defaultMessage": "Free transcripts",
+    "description": "A feature of the Starter plan, in the list on its ticket in the pricing section"
+  },
+  "joqai5": {
+    "defaultMessage": "Changelog",
+    "description": "Link to the list of changes made to Pinecast. In the Resources column in the footer of every page"
+  },
+  "kCJjKk": {
+    "defaultMessage": "Your batteries-included podcast host",
+    "description": "One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line."
+  },
+  "kgzHT0": {
+    "defaultMessage": "Don’t just take our word for it",
+    "description": "Heading of the testimonials section of the home page"
+  },
+  "lG059q": {
+    "defaultMessage": "Quick Tips",
+    "description": "Short heading of the Quick tips list in the menu, on a phone. Shown in capital letters"
+  },
+  "lkooJg": {
+    "defaultMessage": "or",
+    "description": "Between the monthly price and the yearly price of a plan or an add-on in the pricing section"
+  },
+  "lt2DeU": {
+    "defaultMessage": "Level 1",
+    "description": "Small label above the heading of a tile in the site menu, shown in capitals. Tiles go from level 1 to 3; this one is a link to the guide for people who are new to podcasting."
+  },
+  "lwhUWz": {
+    "defaultMessage": "Distribution",
+    "description": "Link to the page about distribution: getting a podcast into Apple Podcasts, Spotify and other apps. In the Features column in the footer of every page"
+  },
+  "lyZJMC": {
+    "defaultMessage": "No credit card required",
+    "description": "Small text under the Start for free button in the testimonials section of the home page"
+  },
+  "m6JLSv": {
+    "defaultMessage": "We take pride in running a top-notch service. People really like us. So much so, they left nice messages for you.",
+    "description": "Text under the heading of the testimonials section of the home page. The messages are recorded audio testimonials from customers, below"
+  },
+  "mGvYQ4": {
+    "defaultMessage": "If you upload an image that doesn’t meet the requirements for podcast or episode artwork, we’ll fix it for you with a single click.",
+    "description": "What the Art Optimization feature does, shown when its row on the Features page is open"
+  },
+  "mazp+u": {
+    "defaultMessage": "Hi-Fi add-on",
+    "description": "Name of an add-on, the button that opens its row in the add-ons list of the pricing section"
+  },
+  "mpxDta": {
+    "defaultMessage": "Accessibility",
+    "description": "Link to the accessibility statement, in the bottom row of every page"
+  },
+  "mvHHeI": {
+    "defaultMessage": "Crafted with care in Raleigh, NC",
+    "description": "One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line."
+  },
+  "mvkgb/": {
+    "defaultMessage": "Podcasting for power users",
+    "description": "Heading of a tile in the site menu, a link to the guide for experienced podcasters"
+  },
+  "n9Tled": {
+    "defaultMessage": "You are an organization",
+    "description": "Heading of the panel for organizations in the \"Tuned-in\" section of the home page and on the Learn page. The panel is a link to the page for them. The heading wraps at about 16 characters a line"
+  },
+  "nN1LCl": {
+    "defaultMessage": "Start for free",
+    "description": "Button in the Tuned-in section of the home page, to the sign-up form"
+  },
+  "nZuvBk": {
+    "defaultMessage": "Tip jar",
+    "description": "A feature of the Starter plan, in the list on its ticket in the pricing section"
+  },
+  "nltFQ9": {
+    "defaultMessage": "Play<sr> {customer} testimonial</sr>",
+    "description": "Button under the name of a customer, in the testimonials section of the home page: plays the recording of the customer. Only the word Play shows; the text in <sr></sr> is read by screen readers only. {customer} is the name of the customer's podcast"
+  },
+  "oErC9K": {
+    "defaultMessage": "Collaborators",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "oID/pJ": {
+    "defaultMessage": "Distribution",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "oJQK40": {
+    "defaultMessage": "Podcast website",
+    "description": "A feature of the Starter plan, in the list on its ticket in the pricing section"
+  },
+  "ocSbJt": {
+    "defaultMessage": "Learn more",
+    "description": "Link in the open row of an add-on in the pricing section, to the help center article about the add-on. Opens in a new tab"
+  },
+  "pInWKb": {
+    "defaultMessage": "No episode limit",
+    "description": "A feature of the Starter plan, in the list on its ticket in the pricing section"
+  },
+  "pk99nG": {
+    "defaultMessage": "Footer",
+    "description": "Screen reader name of the list of links at the bottom of every page (the footer navigation)"
+  },
+  "prHdHT": {
+    "defaultMessage": "Transcripts of the audio testimonials from Pinecast customers",
+    "description": "Description of the page with the transcripts of the audio testimonials from customers, for search engines and link previews"
+  },
+  "py8omo": {
+    "defaultMessage": "Learn",
+    "description": "Button in the site header on wide screens that opens the site menu, which has guides for podcasters"
+  },
+  "pyCgeO": {
+    "defaultMessage": "Start for free",
+    "description": "Button in the testimonials section of the home page, to the sign-up form. The button does not wrap its text"
+  },
+  "q0e0Xi": {
+    "defaultMessage": "Create short links for your podcast and episodes that are perfectly optimized for social media. Track clicks and see where your listeners are coming from.",
+    "description": "What the Short Links feature does, shown when its row on the Features page is open"
+  },
+  "q5EB6n": {
+    "defaultMessage": "Email Privacy",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "q5M2S3": {
+    "defaultMessage": "Earn money from your podcast with listener support. Mark episodes as paid-only and we’ll handle subscriptions and payments processing.",
+    "description": "What the Monetization feature does, shown when its row on the Features page is open"
+  },
+  "qZxFhI": {
+    "defaultMessage": "Free plan",
+    "description": "Name of the free plan, on its ticket in the pricing section"
+  },
+  "qmahv6": {
+    "defaultMessage": "Features – Pinecast",
+    "description": "Title of the Features page, in the browser tab"
+  },
+  "rFDc+R": {
+    "defaultMessage": "Embeddable App Links",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "sGdkJB": {
+    "defaultMessage": "Understanding your growth",
+    "description": "A link in the Quick tips list of the menu, to a Learn article. Shown as a pill that does not wrap"
+  },
+  "scmR8+": {
+    "defaultMessage": "Analytics",
+    "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "sheyjF": {
+    "defaultMessage": "Learn – Pinecast",
+    "description": "Title of the Learn page, in the browser tab"
+  },
+  "swVRSX": {
+    "defaultMessage": "Testimonial transcripts",
+    "description": "Title of the page with the transcripts of the audio testimonials from customers, in the browser tab"
+  },
+  "sx2O9S": {
+    "defaultMessage": "Worry about your next episode, not your host",
+    "description": "One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line."
+  },
+  "sxa79I": {
+    "defaultMessage": "Unmute",
+    "description": "Screen reader name of the button that turns the sound of the site on, while it is off"
+  },
+  "tVLEqA": {
+    "defaultMessage": "Primary",
+    "description": "Screen reader name of the main links in the site header"
+  },
+  "txw1P6": {
+    "defaultMessage": "Monetization",
+    "description": "Link to the page about making money from a podcast. In the Features column in the footer of every page"
+  },
+  "ty3ept": {
+    "defaultMessage": "Add season and episode numbers to your episode automatically. For apps that don’t use Apple’s official numbering tags, we’ll tastefully add the numbers to episode titles.",
+    "description": "What the Seasons & Episodes feature does, shown when its row on the Features page is open"
+  },
+  "u39ype": {
+    "defaultMessage": "Kick-ass customer support",
+    "description": "One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line."
+  },
+  "ucAZQa": {
+    "defaultMessage": "Ten episodes limit",
+    "description": "A feature of the free plan, in the list on its ticket in the pricing section"
+  },
+  "uorzqU": {
+    "defaultMessage": "Kick-ass podcast hosting for the 21st century",
+    "description": "Description of the home page, for search engines and link previews"
+  },
+  "v4bjl5": {
+    "defaultMessage": "Quick tips for getting started",
+    "description": "Heading of the Quick tips list in the menu, on a tablet or a computer. The heading is narrow (8em) and wraps onto several lines"
+  },
+  "vVnmbu": {
+    "defaultMessage": "Sign up",
+    "description": "Button in the site header, to the sign-up form"
+  },
+  "veAwil": {
+    "defaultMessage": "Grow your podcast with more options and features. Customize your tip jar, gather reviews from directories, solicit feedback from listeners, and more.",
+    "description": "What the Growth add-on does, in its open row in the add-ons list of the pricing section"
+  },
+  "wRldcc": {
+    "defaultMessage": "Transcripts",
+    "description": "Link in the testimonials section of the home page, to a page with the transcripts of the audio testimonials"
+  },
+  "xISYcS": {
+    "defaultMessage": "This site is better with sound!",
+    "description": "Tooltip of the button that turns the sound of the site on and off, while the sound is off"
+  },
+  "xKwBGd": {
+    "defaultMessage": "Fair, no-nonsense pricing",
+    "description": "One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line."
+  },
+  "yVNqmn": {
+    "defaultMessage": "Close menu",
+    "description": "Button that closes the site menu. It shows only while it has keyboard focus. It stays on one line."
+  },
+  "z+BhDj": {
+    "defaultMessage": "Features",
+    "description": "Link in the site header to the page about the features of Pinecast"
+  },
+  "zJnmsJ": {
+    "defaultMessage": "{title}:",
+    "description": "Read by screen readers before the description of a feature in the globe section of the home page. {title} is the name of the feature, for example Analytics. The description follows after a space"
+  },
+  "ze4XAD": {
+    "defaultMessage": "Return home",
+    "description": "Screen reader name of the Pinecast logo at the top of every page, a link to the home page"
+  }
+}

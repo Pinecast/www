@@ -50,6 +50,9 @@ export const TestimonialQuotation = ({
                   : 'var(--color-core-accent)',
             })}
           >
+            {/* The customer's own recorded words, synced to the audio by word
+                index: not translated. */}
+            {/* eslint-disable-next-line formatjs/no-literal-string-in-jsx */}
             {word.text.replace(/'/g, '’') + ' '}
           </span>
         );

@@ -1,6 +1,7 @@
 import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
 import nextTypescript from 'eslint-config-next/typescript';
 import prettier from 'eslint-config-prettier';
+import formatjs from 'eslint-plugin-formatjs';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 
 const config = [
@@ -14,6 +15,40 @@ const config = [
   {
     files: ['**/*.{js,jsx,mjs,ts,tsx,mts,cts}'],
     rules: jsxA11y.flatConfigs.recommended.rules,
+  },
+  // Messages (react-intl). See "Translations" in README.md.
+  formatjs.configs.recommended,
+  {
+    rules: {
+      // The id is a hash of the message and its description, made by the
+      // build (formatjs.options.js). An id written by hand would not change
+      // with the text.
+      'formatjs/no-id': 'error',
+      // As in pinecast-ts. It also reports a placeholder for a line break
+      // ("Hit the{br}ground"), which is how a big heading keeps its lines.
+      'formatjs/prefer-full-sentence': 0,
+    },
+  },
+  {
+    // Copy in TSX goes in a message, so that it can be translated. A string
+    // that is not copy (a brand name, a symbol) can stay, with a comment
+    // that says why: `// eslint-disable-next-line formatjs/no-literal-string-in-jsx`.
+    files: ['src/**/*.tsx'],
+    rules: {
+      'formatjs/no-literal-string-in-jsx': [
+        'error',
+        {
+          props: {
+            include: [
+              [
+                '*',
+                '{alt,aria-label,aria-description,aria-roledescription,aria-valuetext,label,placeholder,title}',
+              ],
+            ],
+          },
+        },
+      ],
+    },
   },
   {
     rules: {

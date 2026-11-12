@@ -1,5 +1,6 @@
 import * as React from 'react';
 import dynamic from 'next/dynamic';
+import {useIntl} from 'react-intl';
 
 import {ADAPTIVE_SURFACE, TABLET_MEDIA_QUERY} from '@/constants';
 import {Logo} from '@/icons/Logo';
@@ -52,6 +53,7 @@ export const MainLogo = ({
   startDark?: boolean;
 }) => {
   const css = useCSS();
+  const intl = useIntl();
   const [animated, setAnimated] = React.useState(false);
   const {
     soundEffects: {play: playSoundEffect},
@@ -67,7 +69,11 @@ export const MainLogo = ({
   return (
     <Link
       href="/"
-      aria-label="Return home"
+      aria-label={intl.formatMessage({
+        description:
+          'Screen reader name of the Pinecast logo at the top of every page, a link to the home page',
+        defaultMessage: 'Return home',
+      })}
       // The logo shows above the dim overlay of the open header menu.
       {...aboveOverlayProps}
       className={css({

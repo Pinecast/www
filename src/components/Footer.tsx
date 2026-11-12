@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import * as React from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 import {MonumentGroteskSemiMono} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
@@ -50,6 +51,7 @@ const CARD_MAX_MIN_HEIGHT = 690;
 
 export const Footer = () => {
   const css = useCSS();
+  const intl = useIntl();
 
   const ref = React.useRef<HTMLDivElement>(null);
   useDarkSection(ref);
@@ -171,7 +173,11 @@ export const Footer = () => {
           })}
         >
           <nav
-            aria-label="Footer"
+            aria-label={intl.formatMessage({
+              description:
+                'Screen reader name of the list of links at the bottom of every page (the footer navigation)',
+              defaultMessage: 'Footer',
+            })}
             className={css({
               display: 'grid',
               gap: '100px',
@@ -208,7 +214,10 @@ export const Footer = () => {
               })}
             >
               <Body4 style={{marginBottom: '60px'}}>
-                Pinecast is your batteries-included podcast hosting platform.
+                <FormattedMessage
+                  description="Sentence in the box at the bottom of every page, above the sign-up button"
+                  defaultMessage="Pinecast is your batteries-included podcast hosting platform."
+                />
               </Body4>
               <div
                 className={css({
@@ -218,36 +227,122 @@ export const Footer = () => {
                 })}
               >
                 <PrimaryButton href="https://pinecast.com/signup">
-                  Sign up
+                  <FormattedMessage
+                    description="Button in the box at the bottom of every page, to the sign-up form"
+                    defaultMessage="Sign up"
+                  />
                 </PrimaryButton>
                 <Caption style={{color: 'var(--color-core-accent)'}}>
-                  No credit card required
+                  <FormattedMessage
+                    description="Small note next to the sign-up button at the bottom of every page"
+                    defaultMessage="No credit card required"
+                  />
                 </Caption>
               </div>
             </div>
             <FooterNavLinks
-              title="Features"
+              title={
+                <FormattedMessage
+                  description="Heading of the column of links to the feature pages, in the footer of every page"
+                  defaultMessage="Features"
+                />
+              }
               links={[
-                ['/features/distribution', 'Distribution'],
-                ['/features/analytics', 'Analytics'],
-                ['/features/monetization', 'Monetization'],
-                ['/features', 'All features'],
+                [
+                  '/features/distribution',
+                  <FormattedMessage
+                    key="/features/distribution"
+                    description="Link to the page about distribution: getting a podcast into Apple Podcasts, Spotify and other apps. In the Features column in the footer of every page"
+                    defaultMessage="Distribution"
+                  />,
+                ],
+                [
+                  '/features/analytics',
+                  <FormattedMessage
+                    key="/features/analytics"
+                    description="Link to the page about analytics: the statistics of a podcast. In the Features column in the footer of every page"
+                    defaultMessage="Analytics"
+                  />,
+                ],
+                [
+                  '/features/monetization',
+                  <FormattedMessage
+                    key="/features/monetization"
+                    description="Link to the page about making money from a podcast. In the Features column in the footer of every page"
+                    defaultMessage="Monetization"
+                  />,
+                ],
+                [
+                  '/features',
+                  <FormattedMessage
+                    key="/features"
+                    description="Link to the page that lists all the features of Pinecast. In the Features column in the footer of every page"
+                    defaultMessage="All features"
+                  />,
+                ],
               ]}
             />
             <FooterNavLinks
-              title="Resources"
+              title={
+                <FormattedMessage
+                  description="Heading of the column of links to help and information, in the footer of every page"
+                  defaultMessage="Resources"
+                />
+              }
               links={[
-                ['/learn', 'Learn'],
-                ['https://help.pinecast.com', 'Support'],
-                ['https://changelog.pinecast.com', 'Changelog'],
-                ['/ai-use', 'AI Use'],
+                [
+                  '/learn',
+                  <FormattedMessage
+                    key="/learn"
+                    description="Link to the Learn page: guides to starting and growing a podcast. In the Resources column in the footer of every page"
+                    defaultMessage="Learn"
+                  />,
+                ],
+                [
+                  'https://help.pinecast.com',
+                  <FormattedMessage
+                    key="https://help.pinecast.com"
+                    description="Link to the help center. In the Resources column in the footer of every page"
+                    defaultMessage="Support"
+                  />,
+                ],
+                [
+                  'https://changelog.pinecast.com',
+                  <FormattedMessage
+                    key="https://changelog.pinecast.com"
+                    description="Link to the list of changes made to Pinecast. In the Resources column in the footer of every page"
+                    defaultMessage="Changelog"
+                  />,
+                ],
+                [
+                  '/ai-use',
+                  <FormattedMessage
+                    key="/ai-use"
+                    description="Link to the page about how Pinecast uses AI. In the Resources column in the footer of every page"
+                    defaultMessage="AI Use"
+                  />,
+                ],
               ]}
             />
             <FooterNavLinks
-              title="Follow along"
+              title={
+                <FormattedMessage
+                  description="Heading of the column of links to the Pinecast blog and social media, in the footer of every page"
+                  defaultMessage="Follow along"
+                />
+              }
               links={[
-                ['https://blog.pinecast.com', 'Blog'],
+                [
+                  'https://blog.pinecast.com',
+                  <FormattedMessage
+                    key="https://blog.pinecast.com"
+                    description="Link to the Pinecast blog. In the Follow along column in the footer of every page"
+                    defaultMessage="Blog"
+                  />,
+                ],
+                // A proper name, not translated.
                 ['https://bsky.app/profile/pinecast.bsky.social', 'Bluesky'],
+                // A proper name, not translated.
                 ['https://reddit.com/r/pinecast', 'Reddit'],
               ]}
             />
@@ -312,7 +407,13 @@ export const Footer = () => {
                 the row is clear of the logotype. Add, remove or rename links
                 as you need. Keep the © line and the links in the same
                 element. */}
-            <span>&copy; Pinecast 2026</span>
+            <span>
+              <FormattedMessage
+                description="Copyright line at the bottom of every page. {year} is the year, such as 2026."
+                defaultMessage="© Pinecast {year}"
+                values={{year: 2026}}
+              />
+            </span>
             <Link className={legalLinkClass} href="/terms">
               {/* Up to 900px the link says only "Terms". Then the row fits on
                   one line from about 500px, also with the text spacing of WCAG
@@ -321,23 +422,36 @@ export const Footer = () => {
                   the name of the link is the text that it shows (WCAG 2.5.3).
                   If you change the label, keep its first word as the short
                   form, or shorten it in another way. */}
-              Terms
-              <span
-                className={css({
-                  '@media (max-width: 900px)': {display: 'none'},
-                })}
-              >
-                {' & conditions'}
-              </span>
+              <FormattedMessage
+                description="Link to the terms and conditions, in the bottom row of every page. Up to 900px wide, the text in <long> tags is hidden, so the text before it is the whole label there: keep a short form of the label before the tag, and the rest inside it."
+                defaultMessage="Terms<long> & conditions</long>"
+                values={{
+                  long: chunks => (
+                    <span
+                      className={css({
+                        '@media (max-width: 900px)': {display: 'none'},
+                      })}
+                    >
+                      {chunks}
+                    </span>
+                  ),
+                }}
+              />
             </Link>
             <Link className={legalLinkClass} href="/privacy">
-              Privacy
+              <FormattedMessage
+                description="Link to the privacy policy, in the bottom row of every page"
+                defaultMessage="Privacy"
+              />
             </Link>
             {/* The link to the accessibility statement is part of the
                 documentation that Revised 508 (602.2) and EN 301 549 (12.1.1)
                 need. Keep it in the footer of every page. */}
             <Link className={legalLinkClass} href="/features/accessibility">
-              Accessibility
+              <FormattedMessage
+                description="Link to the accessibility statement, in the bottom row of every page"
+                defaultMessage="Accessibility"
+              />
             </Link>
           </div>
         </footer>

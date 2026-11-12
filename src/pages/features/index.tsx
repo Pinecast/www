@@ -1,5 +1,11 @@
 import Head from 'next/head';
 import * as React from 'react';
+import {
+  defineMessage,
+  FormattedMessage,
+  type MessageDescriptor,
+  useIntl,
+} from 'react-intl';
 
 import {Footer} from '@/components/Footer';
 import {MainHeader} from '@/components/MainHeader';
@@ -26,13 +32,24 @@ import {Expandable} from '@/components/Expandable';
 import {MAIN_CONTENT_ID, SkipLink} from '@/components/SkipLink';
 
 export default function Features() {
+  const intl = useIntl();
   return (
     <>
       <Head>
-        <title>Features – Pinecast</title>
+        <title>
+          {intl.formatMessage({
+            description: 'Title of the Features page, in the browser tab',
+            defaultMessage: 'Features – Pinecast',
+          })}
+        </title>
         <meta
           name="description"
-          content="All the features you could want from a podcast hosting service"
+          content={intl.formatMessage({
+            description:
+              'Description of the Features page, for search engines and link previews',
+            defaultMessage:
+              'All the features you could want from a podcast hosting service',
+          })}
         />
       </Head>
       <SkipLink />
@@ -78,7 +95,10 @@ const Header = () => {
       })}
     >
       <PillButton style={{textTransform: 'uppercase', marginBottom: '30px'}}>
-        Features Index
+        <FormattedMessage
+          description="Label above the heading of the Features page, in a pill. Shown in capital letters"
+          defaultMessage="Features Index"
+        />
       </PillButton>
       <H1
         style={{
@@ -86,262 +106,392 @@ const Header = () => {
           [MIN_TABLET_MEDIA_QUERY]: {marginBottom: '50px'},
         }}
       >
-        Tuned-in to
-        <br />
-        your needs
+        <FormattedMessage
+          description="Big heading of the Features page. {br} is a line break: the words are big, and the lines are short"
+          defaultMessage="Tuned-in to{br}your needs"
+          values={{br: <br />}}
+        />
       </H1>
     </div>
   );
 };
 
 type Feature = {
-  name: string;
+  // Stable, not shown: the React key, and which row is open.
+  key: string;
+  name: MessageDescriptor;
   url?: string;
-  description: string | React.ReactNode;
+  description: MessageDescriptor;
 };
 
+// FeatureAccordion sorts the list by the names, as they are shown.
 export const FEATURES: Array<Feature> = [
   {
-    name: 'Accessibility',
+    key: 'accessibility',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Accessibility',
+    }),
     url: '/features/accessibility',
-    description: (
-      <>
-        We treat accessibility like a feature, not an afterthought. We are
-        obsessive over making Pinecast the most accessible hosting platform
-        in the world for users who need many different kinds of affordances.
-      </>
-    ),
+    description: defineMessage({
+      description:
+        'What the Accessibility feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'We treat accessibility like a feature, not an afterthought. We are obsessive over making Pinecast the most accessible hosting platform in the world for users who need many different kinds of affordances.',
+    }),
   },
   {
-    name: 'Analytics',
+    key: 'analytics',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Analytics',
+    }),
     url: '/features/analytics',
-    description: (
-      <>
-        See where your listeners are coming from and how they&rsquo;re
-        listening.
-      </>
-    ),
+    description: defineMessage({
+      description:
+        'What the Analytics feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'See where your listeners are coming from and how they’re listening.',
+    }),
   },
   {
-    name: 'Art Optimization',
-    description: (
-      <>
-        If you upload an image that doesn&rsquo;t meet the requirements for
-        podcast or episode artwork, we&rsquo;ll fix it for you with a single
-        click.
-      </>
-    ),
+    key: 'art-optimization',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Art Optimization',
+    }),
+    description: defineMessage({
+      description:
+        'What the Art Optimization feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'If you upload an image that doesn’t meet the requirements for podcast or episode artwork, we’ll fix it for you with a single click.',
+    }),
   },
   {
-    name: 'Clip Insertion',
+    key: 'clip-insertion',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Clip Insertion',
+    }),
     url: '/features/clip-insertion',
-    description: (
-      <>
-        Keep your back catalog fresh with clip insertion. Automatically insert
-        audio clips into your episodes, no matter how recently the episodes were
-        published.
-      </>
-    ),
+    description: defineMessage({
+      description:
+        'What the Clip Insertion feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Keep your back catalog fresh with clip insertion. Automatically insert audio clips into your episodes, no matter how recently the episodes were published.',
+    }),
   },
   {
-    name: 'Collaborators',
+    key: 'collaborators',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Collaborators',
+    }),
     url: '/features/collaborators',
-    description: (
-      <>Invite your co-hosts and producers to help you manage your show.</>
-    ),
+    description: defineMessage({
+      description:
+        'What the Collaborators feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Invite your co-hosts and producers to help you manage your show.',
+    }),
   },
   {
-    name: 'Distribution',
+    key: 'distribution',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Distribution',
+    }),
     url: '/features/distribution',
-    description: (
-      <>Get your show on all the major podcast platforms with a single click.</>
-    ),
+    description: defineMessage({
+      description:
+        'What the Distribution feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Get your show on all the major podcast platforms with a single click.',
+    }),
   },
   {
-    name: 'Email Privacy',
+    key: 'email-privacy',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Email Privacy',
+    }),
     url: '/features/email-privacy',
-    description: (
-      <>Keep your personal email private.</>
-    ),
+    description: defineMessage({
+      description:
+        'What the Email Privacy feature does, shown when its row on the Features page is open',
+      defaultMessage: 'Keep your personal email private.',
+    }),
   },
   {
-    name: 'Embeddable App Links',
-    description: (
-      <>
-        Embed HTML code for your podcast that lets your website visitors open
-        your show in their favorite podcast app.
-      </>
-    ),
+    key: 'embeddable-app-links',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Embeddable App Links',
+    }),
+    description: defineMessage({
+      description:
+        'What the Embeddable App Links feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Embed HTML code for your podcast that lets your website visitors open your show in their favorite podcast app.',
+    }),
   },
   {
-    name: 'Embeddable Players',
+    key: 'embeddable-players',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Embeddable Players',
+    }),
     url: '/features/embeddable-players',
-    description: (
-      <>
-        Embed a player on your website that lets your visitors listen to
-        individual episodes or your whole podcast.
-      </>
-    ),
+    description: defineMessage({
+      description:
+        'What the Embeddable Players feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Embed a player on your website that lets your visitors listen to individual episodes or your whole podcast.',
+    }),
   },
   {
-    name: 'Episode Metadata',
-    description: (
-      <>
-        If your episode&rsquo;s MP3 doesn&rsquo;t include all of the metadata
-        tags that podcast apps expect, we&rsquo;ll fill in the blanks for you
-        with a single click—without overwriting custom metadata.
-      </>
-    ),
+    key: 'episode-metadata',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Episode Metadata',
+    }),
+    description: defineMessage({
+      description:
+        'What the Episode Metadata feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'If your episode’s MP3 doesn’t include all of the metadata tags that podcast apps expect, we’ll fill in the blanks for you with a single click—without overwriting custom metadata.',
+    }),
   },
   {
-    name: 'Feedback',
+    key: 'feedback',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Feedback',
+    }),
     url: '/features/feedback',
-    description: (
-      <>
-        Get feedback from your listeners collected to a single dashboard with a
-        simple, customizable form. Moderation features protect against spam and
-        abuse.
-      </>
-    ),
+    description: defineMessage({
+      description:
+        'What the Feedback feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Get feedback from your listeners collected to a single dashboard with a simple, customizable form. Moderation features protect against spam and abuse.',
+    }),
   },
   {
-    name: 'Icebox',
+    key: 'icebox',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Icebox',
+    }),
     url: '/features/icebox',
-    description: (
-      <>
-        Sometimes you need to take a break from podcasting for a while. If your
-        account has been inactive for a while, you can switch to our Icebox plan
-        and keep your show online for a low monthly rate.
-      </>
-    ),
+    description: defineMessage({
+      description:
+        'What the Icebox feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Sometimes you need to take a break from podcasting for a while. If your account has been inactive for a while, you can switch to our Icebox plan and keep your show online for a low monthly rate.',
+    }),
   },
   {
-    name: 'JSON Feed',
-    description: (
-      <>
-        We don&rsquo;t just provide RSS, we offer an easy-to-parse JSON
-        Feed-compliant feed for every podcast as well.
-      </>
-    ),
+    key: 'json-feed',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'JSON Feed',
+    }),
+    description: defineMessage({
+      description:
+        'What the JSON Feed feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'We don’t just provide RSS, we offer an easy-to-parse JSON Feed-compliant feed for every podcast as well.',
+    }),
   },
   {
-    name: 'Monetization',
+    key: 'monetization',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Monetization',
+    }),
     url: '/features/monetization',
-    description: (
-      <>
-        Earn money from your podcast with listener support. Mark episodes as
-        paid-only and we&rsquo;ll handle subscriptions and payments processing.
-      </>
-    ),
+    description: defineMessage({
+      description:
+        'What the Monetization feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Earn money from your podcast with listener support. Mark episodes as paid-only and we’ll handle subscriptions and payments processing.',
+    }),
   },
   {
-    name: 'Networks',
-    description: (
-      <>
-        Create a group for all the podcasters and shows in your network.
-        We&rsquo;ll provide a single dashboard for managing your network&rsquo;s
-        shows and analytics.
-      </>
-    ),
+    key: 'networks',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Networks',
+    }),
+    description: defineMessage({
+      description:
+        'What the Networks feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Create a group for all the podcasters and shows in your network. We’ll provide a single dashboard for managing your network’s shows and analytics.',
+    }),
   },
   {
-    name: 'Notifications',
-    description: (
-      <>
-        Get notifications via email, Slack, Discord, or webhooks when episodes
-        are published, hit analytics milestones, when your podcast receives
-        tips, and more.
-      </>
-    ),
+    key: 'notifications',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Notifications',
+    }),
+    description: defineMessage({
+      description:
+        'What the Notifications feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Get notifications via email, Slack, Discord, or webhooks when episodes are published, hit analytics milestones, when your podcast receives tips, and more.',
+    }),
   },
   {
-    name: 'Password Protection',
-    description: (
-      <>
-        Protect your podcast feed and website with a password that you can share
-        with your listeners.
-      </>
-    ),
+    key: 'password-protection',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Password Protection',
+    }),
+    description: defineMessage({
+      description:
+        'What the Password Protection feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Protect your podcast feed and website with a password that you can share with your listeners.',
+    }),
   },
   {
-    name: 'Podcast Chapters',
+    key: 'podcast-chapters',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Podcast Chapters',
+    }),
     url: '/features/podcast-chapters',
-    description: (
-      <>
-        Link your listeners to specific timecodes within your episode. This helps
-        folks find the exact segment they&apos;re looking for within a larger episode.
-      </>
-    ),
+    description: defineMessage({
+      description:
+        'What the Podcast Chapters feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        "Link your listeners to specific timecodes within your episode. This helps folks find the exact segment they're looking for within a larger episode.",
+    }),
   },
   {
-    name: 'Referrals',
-    description: (
-      <>
-        Earn account credit for referring other podcasters to Pinecast. For
-        every referral that stays a customer, we&rsquo;ll give you two months of
-        our Starter plan.
-      </>
-    ),
+    key: 'referrals',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Referrals',
+    }),
+    description: defineMessage({
+      description:
+        'What the Referrals feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Earn account credit for referring other podcasters to Pinecast. For every referral that stays a customer, we’ll give you two months of our Starter plan.',
+    }),
   },
   {
-    name: 'Podcast Websites',
-    description: (
-      <>
-        Set up a website for your show with a single click—no coding required.
-        Customize the layout and appearance of your site and know that it will
-        work great on any device. SEO included.
-      </>
-    ),
+    key: 'podcast-websites',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Podcast Websites',
+    }),
+    description: defineMessage({
+      description:
+        'What the Podcast Websites feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Set up a website for your show with a single click—no coding required. Customize the layout and appearance of your site and know that it will work great on any device. SEO included.',
+    }),
   },
   {
-    name: 'Review Monitoring',
+    key: 'review-monitoring',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Review Monitoring',
+    }),
     url: '/features/review-monitoring',
-    description: (
-      <>
-        Let us take care of keeping track of your reviews. We&rsquo;ll crawl
-        reviews left on Podchaser and Apple Podcasts in every region and send
-        you an email when a new one is found.
-      </>
-    ),
+    description: defineMessage({
+      description:
+        'What the Review Monitoring feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Let us take care of keeping track of your reviews. We’ll crawl reviews left on Podchaser and Apple Podcasts in every region and send you an email when a new one is found.',
+    }),
   },
   {
-    name: 'Seasons & Episodes',
-    description: (
-      <>
-        Add season and episode numbers to your episode automatically. For apps
-        that don&rsquo;t use Apple&rsquo;s official numbering tags, we&rsquo;ll
-        tastefully add the numbers to episode titles.
-      </>
-    ),
+    key: 'seasons-and-episodes',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Seasons & Episodes',
+    }),
+    description: defineMessage({
+      description:
+        'What the Seasons & Episodes feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Add season and episode numbers to your episode automatically. For apps that don’t use Apple’s official numbering tags, we’ll tastefully add the numbers to episode titles.',
+    }),
   },
   {
-    name: 'Short Links',
+    key: 'short-links',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Short Links',
+    }),
     url: '/features/short-links',
-    description: (
-      <>
-        Create short links for your podcast and episodes that are perfectly
-        optimized for social media. Track clicks and see where your listeners
-        are coming from.
-      </>
-    ),
+    description: defineMessage({
+      description:
+        'What the Short Links feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Create short links for your podcast and episodes that are perfectly optimized for social media. Track clicks and see where your listeners are coming from.',
+    }),
   },
   {
-    name: 'Transcripts',
+    key: 'transcripts',
+    name: defineMessage({
+      description:
+        'Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line',
+      defaultMessage: 'Transcripts',
+    }),
     url: '/features/transcripts',
-    description: (
-      <>
-        Pinecast will transcribe up to four hours of audio per month at no extra
-        cost. We&rsquo;ll recognize and remember your speakers, and you can edit
-        the transcript right in your browser.
-      </>
-    ),
+    description: defineMessage({
+      description:
+        'What the Transcripts feature does, shown when its row on the Features page is open',
+      defaultMessage:
+        'Pinecast will transcribe up to four hours of audio per month at no extra cost. We’ll recognize and remember your speakers, and you can edit the transcript right in your browser.',
+    }),
   },
-].sort((a, b) => a.name.localeCompare(b.name));
+];
 
 const FeatureAccordion = React.memo(function FeatureAccordion() {
   const css = useCSS();
+  const intl = useIntl();
 
-  const [selectedName, setSelectedName] = React.useState<string | null>(null);
+  const [selectedKey, setSelectedKey] = React.useState<string | null>(null);
+
+  // In the alphabetical order of the names in the language of the page.
+  const features = React.useMemo(
+    () =>
+      FEATURES.map(feature => ({
+        feature,
+        name: intl.formatMessage(feature.name),
+      })).sort((a, b) => a.name.localeCompare(b.name, intl.locale)),
+    [intl],
+  );
 
   return (
     <ul
@@ -352,13 +502,14 @@ const FeatureAccordion = React.memo(function FeatureAccordion() {
         padding: '80px 0 120px',
       })}
     >
-      {FEATURES.map(feature => {
+      {features.map(({feature, name}) => {
         return (
           <FeatureAccordionItem
-            key={feature.name}
+            key={feature.key}
             feature={feature}
-            onSelectName={setSelectedName}
-            selected={selectedName === feature.name}
+            name={name}
+            onSelectName={setSelectedKey}
+            selected={selectedKey === feature.key}
           />
         );
       })}
@@ -393,11 +544,15 @@ const TABLET_ROW = {
 
 const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
   feature,
+  name,
   onSelectName,
   selected,
 }: {
   feature: Feature;
-  onSelectName: (name: string | null) => void;
+  // The name of the feature, formatted.
+  name: string;
+  // Takes the key of the feature, not its name.
+  onSelectName: (key: string | null) => void;
   selected: boolean;
 }) {
   const css = useCSS();
@@ -416,7 +571,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
       })}
     >
       <button
-        onClick={() => onSelectName(selected ? null : feature.name)}
+        onClick={() => onSelectName(selected ? null : feature.key)}
         type="button"
         aria-expanded={selected}
         aria-controls={panelId}
@@ -528,7 +683,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
             },
           })}
         >
-          {feature.name.charAt(0)}
+          {name.charAt(0)}
         </span>
         <span
           className={css({
@@ -562,7 +717,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
             },
           })}
         >
-          {feature.name}
+          {name}
         </span>
         <span
           aria-hidden="true"
@@ -609,7 +764,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
         }}
       >
         <p className={css({...MonumentGroteskRegular})}>
-          {feature.description}
+          <FormattedMessage {...feature.description} />
         </p>
         {feature.url && (
           // The link is the dark pill, so that its focus ring goes around
@@ -623,7 +778,10 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
               padding: '4px 12px',
             }}
           >
-            Learn more
+            <FormattedMessage
+              description="Link in the open row of a feature on the Features page, to the page about the feature"
+              defaultMessage="Learn more"
+            />
           </Link>
         )}
       </Expandable>

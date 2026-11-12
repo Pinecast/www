@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import * as React from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 import {Footer} from '@/components/Footer';
 import {MainHeader} from '@/components/MainHeader';
@@ -14,13 +15,23 @@ import {StickyLine} from '@/components/StickyLine';
 import {MAIN_CONTENT_ID, SkipLink} from '@/components/SkipLink';
 
 export default function Features() {
+  const intl = useIntl();
   return (
     <>
       <Head>
-        <title>Learn – Pinecast</title>
+        <title>
+          {intl.formatMessage({
+            description: 'Title of the Learn page, in the browser tab',
+            defaultMessage: 'Learn – Pinecast',
+          })}
+        </title>
         <meta
           name="description"
-          content="Get started on your podcast journey"
+          content={intl.formatMessage({
+            description:
+              'Description of the Learn page, for search engines and link previews',
+            defaultMessage: 'Get started on your podcast journey',
+          })}
         />
       </Head>
       <SkipLink />
@@ -67,18 +78,19 @@ const Header = () => {
           [MIN_TABLET_MEDIA_QUERY]: {marginBottom: '50px'},
         }}
       >
-        Hit the
-        <br />
-        ground
-        <br />
-        running
+        <FormattedMessage
+          description="Heading of the Learn page. Each {br} is a line break: the words are big, and the lines are short"
+          defaultMessage="Hit the{br}ground{br}running"
+          values={{br: <br />}}
+        />
       </H1>
       <Body4
         style={{maxWidth: '32rem', marginLeft: 'auto', marginRight: 'auto'}}
       >
-        Pinecast has tools for podcasters of all experience levels. Whether you
-        are just getting started or running a podcast for a business, we have
-        your back.
+        <FormattedMessage
+          description="Introduction under the heading of the Learn page"
+          defaultMessage="Pinecast has tools for podcasters of all experience levels. Whether you are just getting started or running a podcast for a business, we have your back."
+        />
       </Body4>
     </div>
   );

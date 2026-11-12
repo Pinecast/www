@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {StyleObject} from 'styletron-react';
 import {useCSS} from '@/hooks/useCSS';
 import {PrimaryButton} from './PrimaryButton';
@@ -219,6 +220,7 @@ const CLOSE_BUTTON_STYLE: StyleObject = {
 
 export const MainHeader = () => {
   const css = useCSS();
+  const intl = useIntl();
   const router = useRouter();
 
   const navRef = React.useRef<HTMLDivElement>(null);
@@ -444,7 +446,11 @@ export const MainHeader = () => {
         <button
           ref={menuButtonRef}
           type="button"
-          aria-label="Menu"
+          aria-label={intl.formatMessage({
+            description:
+              'Screen reader name of the menu button (an icon of three lines) in the site header on narrow screens. It opens the site menu.',
+            defaultMessage: 'Menu',
+          })}
           aria-expanded={navOpen}
           aria-controls={MENU_ID}
           className={css({
@@ -483,12 +489,26 @@ export const MainHeader = () => {
           <Tooltip
             isActive={!audioMangerLoading && muted}
             position={TooltipPosition.BOTTOM}
-            text="This site is better with sound!"
+            text={intl.formatMessage({
+              description:
+                'Tooltip of the button that turns the sound of the site on and off, while the sound is off',
+              defaultMessage: 'This site is better with sound!',
+            })}
           >
             {describedBy => (
               <label>
                 <ScreenReaderText>
-                  {audioMangerLoading || muted ? 'Unmute' : 'Mute'}
+                  {audioMangerLoading || muted ? (
+                    <FormattedMessage
+                      description="Screen reader name of the button that turns the sound of the site on, while it is off"
+                      defaultMessage="Unmute"
+                    />
+                  ) : (
+                    <FormattedMessage
+                      description="Screen reader name of the button that turns the sound of the site off, while it is on"
+                      defaultMessage="Mute"
+                    />
+                  )}
                 </ScreenReaderText>
                 <button
                   type="button"
@@ -529,7 +549,11 @@ export const MainHeader = () => {
             }}
           />
           <nav
-            aria-label="Primary"
+            aria-label={intl.formatMessage({
+              description:
+                'Screen reader name of the main links in the site header',
+              defaultMessage: 'Primary',
+            })}
             className={css({
               alignItems: 'center',
               display: 'flex',
@@ -542,7 +566,10 @@ export const MainHeader = () => {
                 playSoundEffect(SoundEffect.GLOBE_TRANSITION_STATES)
               }
             >
-              Features
+              <FormattedMessage
+                description="Link in the site header to the page about the features of Pinecast"
+                defaultMessage="Features"
+              />
             </MainHeaderLink>
             {/* "Learn" opens the menu. The footer links to the /learn page. */}
             <MainHeaderButton
@@ -555,7 +582,10 @@ export const MainHeader = () => {
                 toggleNav();
               }}
             >
-              Learn
+              <FormattedMessage
+                description="Button in the site header on wide screens that opens the site menu, which has guides for podcasters"
+                defaultMessage="Learn"
+              />
             </MainHeaderButton>
           </nav>
         </div>
@@ -567,13 +597,19 @@ export const MainHeader = () => {
           })}
         >
           <SecondaryButton href="https://pinecast.com/login">
-            Sign in
+            <FormattedMessage
+              description="Button in the site header, to the sign-in page of the Pinecast dashboard"
+              defaultMessage="Sign in"
+            />
           </SecondaryButton>
           <PrimaryButton
             href="https://pinecast.com/signup"
             onPointerDown={() => playSoundEffect(SoundEffect.CTA_CLICK_3)}
           >
-            Sign up
+            <FormattedMessage
+              description="Button in the site header, to the sign-up form"
+              defaultMessage="Sign up"
+            />
           </PrimaryButton>
         </div>
         <div
@@ -594,7 +630,11 @@ export const MainHeader = () => {
           />
           <Link
             href="https://pinecast.com/login"
-            aria-label="Sign in"
+            aria-label={intl.formatMessage({
+              description:
+                'Screen reader name of the sign-in icon in the site header on narrow screens, a link to the sign-in page of the Pinecast dashboard',
+              defaultMessage: 'Sign in',
+            })}
             className={css({
               ...HEADER_FOCUS_STYLE,
               // Flex, not block: an inline icon sits on the text baseline,
@@ -618,7 +658,11 @@ export const MainHeader = () => {
         id={MENU_ID}
         role="dialog"
         aria-modal="true"
-        aria-label="Menu"
+        aria-label={intl.formatMessage({
+          description:
+            'Screen reader name of the site menu, a dialog that opens under the site header',
+          defaultMessage: 'Menu',
+        })}
         className={css({
           ...ADAPTIVE_SURFACE,
           borderRadius: '0 0 20px 20px',
@@ -662,11 +706,18 @@ export const MainHeader = () => {
             closeNav();
           }}
         >
-          Close menu
+          <FormattedMessage
+            description="Button that closes the site menu. It shows only while it has keyboard focus. It stays on one line."
+            defaultMessage="Close menu"
+          />
         </button>
         <nav
           ref={navScrollRef}
-          aria-label="Menu"
+          aria-label={intl.formatMessage({
+            description:
+              'Screen reader name of the list of links inside the site menu',
+            defaultMessage: 'Menu',
+          })}
           className={css({
             background: 'var(--color-primary-light)',
             color: 'var(--color-primary-dark)',
@@ -726,20 +777,50 @@ export const MainHeader = () => {
             <PersonaBlock
               slug={PersonaSlug.BEGINNER}
               isActive={navOpen}
-              heading="Podcasting for beginners"
-              caption="Level 1"
+              heading={
+                <FormattedMessage
+                  description="Heading of a tile in the site menu, a link to the guide for people who are new to podcasting"
+                  defaultMessage="Podcasting for beginners"
+                />
+              }
+              caption={
+                <FormattedMessage
+                  description="Small label above the heading of a tile in the site menu, shown in capitals. Tiles go from level 1 to 3; this one is a link to the guide for people who are new to podcasting."
+                  defaultMessage="Level 1"
+                />
+              }
             />
             <PersonaBlock
               slug={PersonaSlug.ADVANCED}
               isActive={navOpen}
-              heading="Podcasting for power users"
-              caption="Level 2"
+              heading={
+                <FormattedMessage
+                  description="Heading of a tile in the site menu, a link to the guide for experienced podcasters"
+                  defaultMessage="Podcasting for power users"
+                />
+              }
+              caption={
+                <FormattedMessage
+                  description="Small label above the heading of a tile in the site menu, shown in capitals. Tiles go from level 1 to 3; this one is a link to the guide for experienced podcasters."
+                  defaultMessage="Level 2"
+                />
+              }
             />
             <PersonaBlock
               slug={PersonaSlug.ORGANIZATIONS}
               isActive={navOpen}
-              heading="Corporate podcasters"
-              caption="Level 3"
+              heading={
+                <FormattedMessage
+                  description="Heading of a tile in the site menu, a link to the guide for companies and organizations"
+                  defaultMessage="Corporate podcasters"
+                />
+              }
+              caption={
+                <FormattedMessage
+                  description="Small label above the heading of a tile in the site menu, shown in capitals. Tiles go from level 1 to 3; this one is a link to the guide for companies and organizations."
+                  defaultMessage="Level 3"
+                />
+              }
             />
             <QuickTipsBlock isOpen={navOpen} />
           </div>
@@ -769,12 +850,26 @@ export const MainHeader = () => {
         <Tooltip
           isActive={!audioMangerLoading && muted && !hasScrolled}
           position={TooltipPosition.RIGHT}
-          text="This site is better with sound!"
+          text={intl.formatMessage({
+            description:
+              'Tooltip of the button that turns the sound of the site on and off, while the sound is off',
+            defaultMessage: 'This site is better with sound!',
+          })}
         >
           {describedBy => (
             <label>
               <ScreenReaderText>
-                {audioMangerLoading || muted ? 'Unmute' : 'Mute'}
+                {audioMangerLoading || muted ? (
+                  <FormattedMessage
+                    description="Screen reader name of the button that turns the sound of the site on, while it is off"
+                    defaultMessage="Unmute"
+                  />
+                ) : (
+                  <FormattedMessage
+                    description="Screen reader name of the button that turns the sound of the site off, while it is on"
+                    defaultMessage="Mute"
+                  />
+                )}
               </ScreenReaderText>
               <button
                 type="button"

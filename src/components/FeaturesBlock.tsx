@@ -1,6 +1,7 @@
 import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
 import React from 'react';
 import Link from 'next/link';
+import {FormattedMessage} from 'react-intl';
 import {Body1, Caption} from './Typography';
 import {useCSS} from '@/hooks/useCSS';
 
@@ -45,7 +46,10 @@ export const FeaturesBlock = () => {
             textTransform: 'uppercase',
           }}
         >
-          Features
+          <FormattedMessage
+            description="Heading in the menu on a phone, a link to the Features page. Shown in capital letters"
+            defaultMessage="Features"
+          />
         </Caption>
       </Link>
     </div>

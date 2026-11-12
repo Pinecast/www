@@ -1,3 +1,5 @@
+import {FormattedMessage} from 'react-intl';
+
 import {useCSS} from '@/hooks/useCSS';
 import {Body4, Caption, H2} from './Typography';
 import {PrimaryButton} from './PrimaryButton';
@@ -34,13 +36,17 @@ export const InfoPageFooterUpsell = () => {
         })}
       >
         <H2>
-          Try Pinecast
-          <br />
-          for free
+          <FormattedMessage
+            description="Big heading of the sign-up section at the bottom of the content pages, above the footer. {br} is a line break"
+            defaultMessage="Try Pinecast{br}for free"
+            values={{br: <br />}}
+          />
         </H2>
         <Body4 style={{maxWidth: '32rem'}}>
-          Whether you&rsquo;re just starting out or you&rsquo;re more
-          established, we have a solution for you.
+          <FormattedMessage
+            description="Text under the heading of the sign-up section at the bottom of the content pages"
+            defaultMessage="Whether you’re just starting out or you’re more established, we have a solution for you."
+          />
         </Body4>
 
         <div
@@ -51,14 +57,23 @@ export const InfoPageFooterUpsell = () => {
           })}
         >
           <PrimaryButton href="https://pinecast.com/signup">
-            Start for free
+            <FormattedMessage
+              description="Button in the sign-up section at the bottom of the content pages, to the sign-up form"
+              defaultMessage="Start for free"
+            />
           </PrimaryButton>
           <SecondaryButton href="/features">
-            What&rsquo;s included?
+            <FormattedMessage
+              description="Button in the sign-up section at the bottom of the content pages, to the Features page"
+              defaultMessage="What’s included?"
+            />
           </SecondaryButton>
         </div>
         <Caption style={{color: 'var(--color-core-accent)'}}>
-          No credit card required
+          <FormattedMessage
+            description="Small note under the sign-up buttons at the bottom of the content pages"
+            defaultMessage="No credit card required"
+          />
         </Caption>
       </div>
     </section>

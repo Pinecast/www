@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import * as React from 'react';
+import {useIntl} from 'react-intl';
 
 import {Footer} from '@/components/Footer';
 import {Globe} from '@/components/Globe';
@@ -25,6 +26,7 @@ const SPLASH_ENABLED = false;
 const STICKY_LINE_SIZE = 1.5;
 
 export default function Home() {
+  const intl = useIntl();
   const css = useCSS();
   const [splashEnded, setSplashEnded] = React.useState(false);
   const heroStillsIn = useAfterCritical();
@@ -51,10 +53,19 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Pinecast</title>
+        <title>
+          {intl.formatMessage({
+            description: 'Title of the home page, in the browser tab',
+            defaultMessage: 'Pinecast',
+          })}
+        </title>
         <meta
           name="description"
-          content="Kick-ass podcast hosting for the 21st century"
+          content={intl.formatMessage({
+            description:
+              'Description of the home page, for search engines and link previews',
+            defaultMessage: 'Kick-ass podcast hosting for the 21st century',
+          })}
         />
         {/* The only prefetch: the big video of the footer, the end of the page.
             It waits for the stills of the hero (see useLoadOrder), as the

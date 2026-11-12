@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useIntl} from 'react-intl';
 import {StyleObject} from 'styletron-react';
 import {useCSS} from '@/hooks/useCSS';
 import {useMotion} from '@/hooks/useMotion';
@@ -34,12 +35,19 @@ export const MotionToggle = ({
   wrapperStyle?: StyleObject;
 }) => {
   const css = useCSS();
+  const intl = useIntl();
   const {paused, togglePaused} = useMotion();
+  // The name of the button, which its tooltip shows too.
+  const label = intl.formatMessage({
+    description:
+      'Name of the toggle button in the site header that pauses and plays the animations of the page. Screen readers read it, and its tooltip shows it. The button says whether it is pressed, so the name stays the same while the animations are paused.',
+    defaultMessage: 'Pause animations',
+  });
   return (
     <Tooltip
       position={TooltipPosition.BOTTOM}
       style={{display: 'flex', ...wrapperStyle}}
-      text="Pause animations"
+      text={label}
     >
       {/* The tooltip says what the name of the button says. So, the button
           does not point to it with `aria-describedby`: a screen reader would
@@ -70,7 +78,7 @@ export const MotionToggle = ({
             togglePaused();
           }}
         >
-          <ScreenReaderText>Pause animations</ScreenReaderText>
+          <ScreenReaderText>{label}</ScreenReaderText>
           <span
             data-focus-ring
             className={css({

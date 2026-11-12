@@ -1,3 +1,5 @@
+import {FormattedMessage} from 'react-intl';
+
 import {NO_MOTION_PREFERENCE_QUERY} from '@/constants';
 import {MonumentGroteskBold} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
@@ -59,7 +61,10 @@ export const SkipLink = () => {
         },
       })}
     >
-      Skip to main content
+      <FormattedMessage
+        description="Skip link: the first thing on every page, hidden until it has keyboard focus. It moves focus past the header to the main content of the page. It stays on one line."
+        defaultMessage="Skip to main content"
+      />
     </a>
   );
 };
