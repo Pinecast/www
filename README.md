@@ -17,7 +17,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ```sh
 npm run lint        # ESLint, with the jsx-a11y recommended rules
 npx tsc --noEmit
-npm run build       # static export to out/
+npm run build       # static export to out/, with sitemap.xml and robots.txt
 npm run check:structure  # headings, lists and alt text in out/
 npm test            # Playwright: keyboard, landmark, axe, reflow, text spacing
                     # and target size checks on out/
@@ -25,6 +25,36 @@ npm test            # Playwright: keyboard, landmark, axe, reflow, text spacing
 
 `npm test` serves `out/`, so build first. It needs Playwright's Chromium once:
 `npx playwright install chromium`.
+
+
+## Sitemap, robots.txt and languages
+
+`npm run build` ends with `scripts/generate-sitemap.mjs`, which writes
+`out/sitemap.xml` and `out/robots.txt` next to the pages. The sitemap lists the
+pages that the export holds (not `404`, and not a page with a `noindex` robots
+meta tag), as absolute `https://www.pinecast.com` addresses in the style of the
+export: no trailing slash, except `/`. Each address lists the alternate
+versions of its page (`xhtml:link`, `hreflang`), with `x-default` for the
+English one. `robots.txt` lets every crawler in and points at the sitemap.
+`tests/sitemap.spec.ts` checks both, also for a site with two languages.
+
+The languages are in `src/locales.mjs`, one list for the build and for the
+pages. English has no prefix (`/features`); another language is under its own
+folder (`/es/features`, `out/es/features.html`), with a short code (`es`, `pt`)
+that is also the `hreflang` value. Nothing redirects between languages. To add
+one:
+
+1. Add its code to `LOCALES` in `src/locales.mjs`.
+2. Build its pages into `out/<code>/`, with the names of the English ones (the
+   home page is `out/<code>.html`). A page with no copy there (the legal pages)
+   stays English only, and the sitemap lists it as such: it lists what the
+   export holds.
+3. `npm run build && npm test`. The sitemap has the new addresses, and each
+   page lists all of its languages.
+
+`localePath`, `pageUrl` and `alternates` in the same file are for the `<link
+rel="alternate">` and canonical tags of the pages, so that they and the sitemap
+agree on every address.
 
 
 ## Design
