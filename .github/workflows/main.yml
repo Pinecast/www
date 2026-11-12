@@ -23,7 +23,10 @@ env:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Not ubuntu-latest: that is Ubuntu 26.04 now, and Playwright 1.56 (pinned in
+    # package.json) cannot install Chromium on it. Move this when Playwright
+    # moves.
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
