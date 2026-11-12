@@ -1,0 +1,71 @@
+name: Test
+
+# The checks of README.md ("Checks"), on every pull request and on each push to
+# netlify, the branch that Netlify deploys from.
+on:
+  push:
+    branches: [netlify]
+  pull_request:
+    branches: [netlify]
+  workflow_dispatch:
+
+# Supersede in-flight PR runs, but never cancel a run on netlify.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  # The version of NODE_VERSION in netlify.toml: test what Netlify builds with.
+  NODE_VERSION: '24'
+
+jobs:
+  test:
+    # Not ubuntu-latest: that is Ubuntu 26.04 now, and Playwright 1.56 (pinned in
+    # package.json) cannot install Chromium on it. Move this when Playwright
+    # moves.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      # The static export in out/, as Netlify builds it. It also writes
+      # out/sitemap.xml and out/robots.txt, and the tests serve out/.
+      - name: Build
+        run: npm run build
+
+      - name: Check the structure of the export
+        run: npm run check:structure
+
+      # The Playwright version is pinned in package.json, and so is the browser
+      # that it installs.
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Test
+        run: npm test
+
+      - name: Upload the results of the failed tests
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results
+          path: test-results/
+          retention-days: 7
+          if-no-files-found: ignore

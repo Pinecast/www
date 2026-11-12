@@ -17,7 +17,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ```sh
 npm run lint        # ESLint, with the jsx-a11y recommended rules
 npx tsc --noEmit
-npm run build       # static export to out/
+npm run build       # static export to out/, with sitemap.xml and robots.txt
 npm run check:structure  # headings, lists and alt text in out/
 npm run check:messages  # lang/en.json has the messages of the source
 npm test            # Playwright: keyboard, landmark, axe, reflow, text spacing
@@ -26,6 +26,49 @@ npm test            # Playwright: keyboard, landmark, axe, reflow, text spacing
 
 `npm test` serves `out/`, so build first. It needs Playwright's Chromium once:
 `npx playwright install chromium`.
+
+GitHub Actions (`.github/workflows/main.yml`) runs all of these on each pull
+request and each push to `netlify`, on Node 24 as `netlify.toml` has it.
+
+
+## Sitemap, robots.txt and languages
+
+`npm run build` ends with `scripts/generate-sitemap.mjs`, which writes
+`out/sitemap.xml` and `out/robots.txt` next to the pages. The sitemap lists the
+pages that the export holds (not `404`, and not a page with a `noindex` robots
+meta tag), as absolute `https://www.pinecast.com` addresses in the style of the
+export: no trailing slash, except `/`. Each address lists the alternate
+versions of its page (`xhtml:link`, `hreflang`), with `x-default` for the
+English one. `robots.txt` lets every crawler in and points at the sitemap.
+`tests/sitemap.spec.ts` checks both, also for a site with two languages.
+
+The languages are in `src/locales.mjs`, one list for the build and for the
+pages. English has no prefix (`/features`); another language has all of its
+pages in one folder of the export, under its short code (`es`, `pt`), which is
+also the `hreflang` value: `out/es/features.html` is `/es/features`, and its
+home page is `out/es/index.html`, served at `/es/` (as `/` is the English one;
+the server sends `/es` to `/es/`). Nothing redirects between languages. To add
+one:
+
+1. Add its code to `LOCALES` in `src/locales.mjs`.
+2. Build its pages into `out/<code>/`, with the names of the English ones. Next.js
+   exports `pages/<code>/index.tsx` as `out/<code>.html`, so move it to
+   `out/<code>/index.html` after `next build` and before the sitemap step. A
+   page with no copy there (the legal pages) stays English only, and the
+   sitemap lists it as such: it lists what the export holds. The sitemap step
+   fails if a page is served at another address than the one `localePath` gives
+   it (for example `out/<code>.html`).
+3. `npm run build && npm test`. The sitemap has the new addresses, and each
+   page lists all of its languages.
+
+`localePath`, `pageUrl` and `alternates` in the same file are for the `<link
+rel="alternate">` and canonical tags of the pages, so that they and the sitemap
+agree on every address.
+
+Next.js's `trailingSlash` is off, so its client-side router drops the slash of
+`/es/` when a `<Link>` goes to the Spanish home page: the address bar shows
+`/es` until a reload, which the server sends back to `/es/`. The canonical tag
+and the sitemap say `/es/`.
 
 
 ## Translations
