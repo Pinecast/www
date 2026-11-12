@@ -53,6 +53,11 @@ jobs:
       - name: Check the structure of the export
         run: npm run check:structure
 
+      # lang/en.json is what an extraction writes. The translations are made
+      # from it, so a changed message has to change it.
+      - name: Check the message catalog
+        run: npm run check:messages
+
       # The Playwright version is pinned in package.json, and so is the browser
       # that it installs.
       - name: Install Chromium
@@ -69,3 +74,152 @@ jobs:
           path: test-results/
           retention-days: 7
           if-no-files-found: ignore
+
+  # The same job as in pinecast-ts (`.github/workflows/main.yml` there), with
+  # the same pinned CLI and the same Lingo.dev engine, so the site and the
+  # dashboard share a glossary and a voice. README.md ("Translations") has the
+  # detail. It runs after the tests on each push to netlify, and by hand. A
+  # push that leaves lang/en.json as `.lingo/lock.json` recorded it translates
+  # nothing and writes nothing.
+  push-translations:
+    if: >-
+      github.ref == 'refs/heads/netlify' &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    needs: test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    # The last step pushes a branch and opens a PR against netlify.
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Rewrites lang/en.json in place, so the refreshed source catalog rides
+      # along with the translations made from it.
+      - name: Extract messages
+        run: npm run i18n:extract
+
+      # Without `.lingo/lock.json` the CLI does not translate: it stores the
+      # source as the new baseline and writes a lockfile. That baseline would
+      # silently skip every message added before it, so a missing lockfile is
+      # a setup error here, not a run. README.md says how to make one.
+      - name: Check the Lingo.dev project and lockfile
+        run: |
+          node -e '
+            const c = require("./.lingo/config.json");
+            if (!c.orgId || !c.engineId) {
+              console.log("::error::.lingo/config.json has no orgId or engineId. Run `lingo link` (README.md).");
+              process.exit(1);
+            }
+          '
+          if [ ! -f .lingo/lock.json ]; then
+            echo "::error::.lingo/lock.json is missing, so the CLI would rebaseline instead of translating (README.md)."
+            exit 1
+          fi
+
+      # A plain push diffs lang/en.json against the version that
+      # `.lingo/lock.json` records, translates the new and changed messages,
+      # keeps every other translation as it is on disk, and writes the targets
+      # and the lockfile. `--wait` stays until the job is done.
+      #
+      # A language just added to `targetLocales` has no catalog, and a plain
+      # push would at best translate the changed messages into it. So such a
+      # language sits out the plain push (a copy of the config without it),
+      # and `--backfill-missing` then translates its whole catalog. The
+      # backfill goes second because it moves the baseline to the current
+      # source: run first, it would hide this run's changes from the other
+      # languages.
+      - name: Translate
+        env:
+          LINGO_API_KEY: ${{ secrets.LINGO_API_KEY }}
+          LINGO_DISABLE_UPDATE_CHECK: '1'
+          LINGO_TELEMETRY_DISABLED: '1'
+          LINGO: npx --yes @lingo.dev/cli@1.19.0
+        run: |
+          new=$(node -e '
+            const fs = require("fs");
+            const config = require("./.lingo/config.json");
+            const isNew = locale =>
+              config.files.some(({targetPath}) => {
+                if (!targetPath) throw new Error("Each files[] entry of .lingo/config.json needs a targetPath.");
+                return !fs.existsSync(targetPath.replace("[locale]", locale));
+              });
+            const added = config.targetLocales.filter(isNew);
+            if (added.length) {
+              config.targetLocales = config.targetLocales.filter(l => !isNew(l));
+              fs.writeFileSync(".lingo/config.json", JSON.stringify(config, null, 2) + "\n");
+            }
+            console.log(added.join(" "));
+          ')
+          # Unlike pinecast-ts, every language here can be new at once (the
+          # first run has no catalog at all): then there is no plain push.
+          remaining=$(node -p 'require("./.lingo/config.json").targetLocales.length')
+          if [ "$remaining" -gt 0 ]; then
+            $LINGO push --wait
+          fi
+          if [ -n "$new" ]; then
+            echo "No catalog yet for: $new"
+            git checkout -- .lingo/config.json
+            $LINGO push --backfill-missing --wait
+          fi
+
+      # The engine writes JSON in its own style. Formatting it as the repo does
+      # keeps a translation PR's diff to the strings that changed. `--parser
+      # json`, because .prettierrc sets the TypeScript parser for every file.
+      - name: Format the catalogs
+        run: npx prettier --parser json --write 'lang/*.json' '.lingo/*.json'
+
+      # One branch, force-pushed from netlify on each run, and one open PR for
+      # it. The run translated against netlify's lockfile, so its output covers
+      # everything an unmerged earlier run did. A commit that a person added to
+      # the branch (other than a merge) is not the job's to throw away: the run
+      # then leaves the branch alone, and netlify's lockfile still has this
+      # run's changes for the run after that PR merges. Opened with the default
+      # `GITHUB_TOKEN`, so the PR deliberately does not start this workflow;
+      # Netlify still builds its deploy preview.
+      - name: Open or update the pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: lingo/netlify
+          TITLE: Update translations via Lingo.dev
+          BOT_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+        run: |
+          git add -A lang .lingo
+          if git diff --cached --quiet; then
+            echo "No translation changes."
+            exit 0
+          fi
+          others=
+          if git ls-remote --exit-code --heads origin "$BRANCH" > /dev/null; then
+            authors=$(gh api "repos/$GITHUB_REPOSITORY/compare/netlify...$BRANCH" \
+              --jq '.commits[] | select(.parents | length == 1) | .commit.author.email')
+            others=$(printf '%s\n' "$authors" | grep -v -x -F "$BOT_EMAIL" || true)
+          fi
+          if [ -n "$others" ]; then
+            echo "::warning::$BRANCH has commits from people. Merge its PR, and the next run translates this run's changes too."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email "$BOT_EMAIL"
+          git switch -C "$BRANCH"
+          git commit -q -m "$TITLE"
+          git push --force origin "HEAD:refs/heads/$BRANCH"
+          pr=$(gh pr list --base netlify --head "$BRANCH" --state open \
+            --json number --jq '.[0].number // empty')
+          if [ -n "$pr" ]; then
+            echo "Updated #$pr."
+          else
+            gh pr create --base netlify --head "$BRANCH" --title "$TITLE" \
+              --body "Opened by the \`push-translations\` job with Lingo.dev's CLI: the target catalogs it wrote, \`.lingo/lock.json\`, and \`lang/en.json\` as extracted. Each run on netlify replaces this branch."
+          fi
