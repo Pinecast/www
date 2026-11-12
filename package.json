@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint .",
     "test": "playwright test",
-    "check:structure": "node scripts/check-structure.mjs"
+    "check:structure": "node scripts/check-structure.mjs",
+    "i18n:extract": "formatjs extract 'src/**/*.{ts,tsx}' --ignore '**/*.d.ts' --id-interpolation-pattern '[sha512:contenthash:base64:6]' --additional-component-names FormattedMessage --additional-function-names formatMessage --preserve-whitespace --throws --out-file lang/en.json",
+    "check:messages": "node scripts/check-messages.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -20,6 +22,7 @@
     "next": "16.3.4",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "react-intl": "^12.1.7",
     "remark-unwrap-images": "^4.0.1",
     "styletron-engine-atomic": "^1.6.2",
     "styletron-react": "^6.1.1",
@@ -29,6 +32,8 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "4.11.0",
+    "@formatjs/cli": "^6.19.0",
+    "@formatjs/ts-transformer": "^4.5.3",
     "@playwright/test": "1.56.1",
     "@svgr/webpack": "^8.1.0",
     "@types/mdx": "^2.0.14",
@@ -38,6 +43,7 @@
     "eslint": "9.39.5",
     "eslint-config-next": "16.3.4",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-formatjs": "^8.1.4",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "playwright-core": "1.56.1",
     "prettier": "^3.9.6",

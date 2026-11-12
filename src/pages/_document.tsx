@@ -6,6 +6,7 @@ import {
   Main,
   NextScript,
   DocumentContext,
+  DocumentProps,
 } from 'next/document';
 import {Provider as StyletronProvider} from 'styletron-react';
 
@@ -25,6 +26,7 @@ import {Provider as UserAgentContextProvider} from '../components/UserAgentConte
 import {MOTION_ATTRIBUTE, MOTION_INIT_SCRIPT} from '../hooks/useMotion';
 import {FONT_URLS} from '../fonts';
 import {HERO_STILLS, stillMedia} from '../heroStills';
+import {localeOf} from '../i18n';
 
 Document.getInitialProps = async (context: DocumentContext) => {
   const renderPage = () =>
@@ -85,15 +87,19 @@ Document.getInitialProps = async (context: DocumentContext) => {
 };
 
 export default function Document({
+  __NEXT_DATA__,
   preloadFonts,
   stylesheets,
-}: typeof Document.getInitialProps extends (
-  context: DocumentContext,
-) => Promise<infer T>
-  ? T
-  : never) {
+}: Pick<DocumentProps, '__NEXT_DATA__'> &
+  (typeof Document.getInitialProps extends (
+    context: DocumentContext,
+  ) => Promise<infer T>
+    ? T
+    : never)) {
   return (
-    <Html lang="en">
+    // The language of the page, from the same page prop as the IntlProvider
+    // in _app.tsx.
+    <Html lang={localeOf(__NEXT_DATA__.props?.pageProps)}>
       <Head>
         <link rel="icon" href="/favicon.png" />
         {preloadFonts &&

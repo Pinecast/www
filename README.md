@@ -19,12 +19,58 @@ npm run lint        # ESLint, with the jsx-a11y recommended rules
 npx tsc --noEmit
 npm run build       # static export to out/
 npm run check:structure  # headings, lists and alt text in out/
+npm run check:messages  # lang/en.json has the messages of the source
 npm test            # Playwright: keyboard, landmark, axe, reflow, text spacing
                     # and target size checks on out/
 ```
 
 `npm test` serves `out/`, so build first. It needs Playwright's Chromium once:
 `npx playwright install chromium`.
+
+
+## Translations
+
+The copy in TSX is in react-intl messages, as in pinecast-ts. The MDX pages
+are not, yet. Write a message where it is used, with a `description` that
+tells a translator where the text is and what it does:
+
+```tsx
+<FormattedMessage
+  description="Button under the free plan, to the sign-up form"
+  defaultMessage="Sign up"
+/>
+```
+
+For an attribute, or a string that code needs (a `<title>`, an `aria-label`,
+`alt`), use `useIntl().formatMessage({description, defaultMessage})`. For copy
+in a list or a table outside a component, use `defineMessage` from
+react-intl, and format it where it is shown. A bare object with a
+`defaultMessage` gets no id and is not extracted.
+
+- Do not write an `id`. The build makes it from `defaultMessage` and
+  `description` (`formatjs.options.js`, run by `vendor/formatjs-loader.js`).
+  So the same text with the same description is one message. Text that must
+  translate in two ways needs two descriptions.
+- A link or other markup in a sentence is a tag in the message
+  (`"Read the <link>guide</link>"`, with `values={{link: chunks => ...}}`),
+  so a translator can move it. A line break in a heading is a `{br}`.
+- After you add, change or remove a message, run `npm run i18n:extract`, and
+  commit `lang/en.json`. `npm run check:messages` fails when it is out of
+  date. Do not run `eslint --fix` on messages: some formatjs rules change the
+  text, and then the id.
+- `formatjs/no-literal-string-in-jsx` reports text in JSX that is not in a
+  message. A proper name that is not translated can stay, with a comment.
+- White space in a message is kept as it is written (`preserveWhitespace`),
+  so a no-break space stays one. Write a message on one line, with one space
+  where the JSX text had a line break.
+- The bundle has no ICU parser: each `defaultMessage` goes in parsed. A
+  catalog of another language must be compiled with
+  `formatjs compile --ast`.
+
+`_app.tsx` gives the page props `locale` and `messages` (`src/i18n.ts`) to
+the `IntlProvider`, and `_document.tsx` sets `<html lang>` from `locale`. A
+page in English passes neither. A page in another language passes its locale
+and the catalog of that locale only.
 
 
 ## Design

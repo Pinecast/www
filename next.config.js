@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = async () => {
   const withMDX = require('@next/mdx')({
     extension: /\.mdx?$/,
@@ -35,6 +37,19 @@ module.exports = async () => {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       });
+
+      // The formatjs transform runs before SWC (`enforce: 'pre'`). See
+      // vendor/formatjs-loader.js.
+      config.module.rules.push({
+        test: /\.tsx?$/,
+        include: path.join(__dirname, 'src'),
+        enforce: 'pre',
+        use: [path.join(__dirname, 'vendor/formatjs-loader.js')],
+      });
+      // Every message reaches the bundle parsed (`ast` in
+      // formatjs.options.js), so the parser is not needed in it.
+      config.resolve.alias['@formatjs/icu-messageformat-parser$'] =
+        require.resolve('@formatjs/icu-messageformat-parser/no-parser.js');
 
       return config;
     },
