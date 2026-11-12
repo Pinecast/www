@@ -7,6 +7,8 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
+  // EXPERIMENT: one worker for each core of the runner (the default is half).
+  workers: process.env.CI ? '100%' : undefined,
   reporter: 'list',
   use: {
     ...devices['Desktop Chrome'],
