@@ -117,8 +117,8 @@ and the catalog of that locale only.
 
 ### Lingo.dev
 
-Lingo.dev makes the catalogs of the other languages, `lang/<code>.json`, from
-`lang/en.json`. Do not edit them by hand: to fix a translation, change the
+Lingo.dev makes the catalogs of the other languages, `lang/<code>.json`
+(`lang/es-419.json`), from `lang/en.json`. Do not edit them by hand: to fix a translation, change the
 English, or the engine's glossary. The `push-translations` job of
 `.github/workflows/main.yml` runs after the tests on each push to `netlify`
 (and by hand, from the Actions tab). It runs the v1 CLI (`@lingo.dev/cli`,
@@ -135,9 +135,16 @@ secret.
   engine, so the site and the dashboard share a glossary and a voice.
   `src/locales.mjs` lists the languages that the site publishes. A language
   can be in the first before the second, while its translations are checked.
-- **Add a language** by adding its short code to `targetLocales`. The job
-  sees that it has no catalog, leaves it out of the plain push, and translates
-  the whole catalog with `push --backfill-missing`.
+- **The engine's code is not always the site's.** Spanish is translated as
+  `es-419`, the code that pinecast-ts translates into, so that the engine's
+  rules for that language apply to both; the CLI names the catalog after it,
+  `lang/es-419.json`. The site still publishes it under the short code, `es`
+  (`src/locales.mjs`), and loads that catalog for it. The CLI has no way to
+  rename a locale in a path, so the mapping is the site's.
+- **Add a language** by adding its code to `targetLocales`, the one that
+  pinecast-ts uses if it has the language. The job sees that it has no
+  catalog, leaves it out of the plain push, and translates the whole catalog
+  with `push --backfill-missing`.
 - **`.lingo/lock.json` is the baseline**: the hash of `lang/en.json` as
   Lingo.dev last stored it. A push translates only the messages that changed
   since then. Without a lockfile the CLI translates nothing (its first push
@@ -145,7 +152,7 @@ secret.
   make one, with the target catalogs in step with `lang/en.json`:
 
   ```sh
-  export LINGO_API_KEY=…   # the value of the LINGO_API_KEY secret
+  export LINGO_API_KEY=…   # or sign in once with `npx @lingo.dev/cli@1.19.0 login`
   npx --yes @lingo.dev/cli@1.19.0 push   # no lockfile: stores, translates nothing
   npx prettier --parser json --write '.lingo/*.json'
   ```
