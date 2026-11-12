@@ -115,6 +115,53 @@ the `IntlProvider`, and `_document.tsx` sets `<html lang>` from `locale`. A
 page in English passes neither. A page in another language passes its locale
 and the catalog of that locale only.
 
+### Lingo.dev
+
+Lingo.dev makes the catalogs of the other languages, `lang/<code>.json`
+(`lang/es-419.json`), from `lang/en.json`. Do not edit them by hand: to fix a translation, change the
+English, or the engine's glossary. The `push-translations` job of
+`.github/workflows/main.yml` runs after the tests on each push to `netlify`
+(and by hand, from the Actions tab). It runs the v1 CLI (`@lingo.dev/cli`,
+pinned in the job), then pushes the branch `lingo/netlify` and opens a PR, or
+updates the open one, with the target catalogs, `.lingo/lock.json` and a
+freshly extracted `lang/en.json`. Each run replaces the branch, unless a
+person pushed a commit to it: then it waits until that PR merges. It is the
+job of pinecast-ts, and pinecast-ts's `docs/i18n.md` ("Lingo.dev") has more
+on how the CLI behaves. The job needs a **`LINGO_API_KEY`** repository
+secret.
+
+- **`.lingo/config.json` lists the languages** that Lingo.dev translates
+  into. Its `orgId` and `engineId` are those of pinecast-ts, on purpose: one
+  engine, so the site and the dashboard share a glossary and a voice.
+  `src/locales.mjs` lists the languages that the site publishes. A language
+  can be in the first before the second, while its translations are checked.
+- **The engine's code is not always the site's.** Spanish is translated as
+  `es-419`, the code that pinecast-ts translates into, so that the engine's
+  rules for that language apply to both; the CLI names the catalog after it,
+  `lang/es-419.json`. The site still publishes it under the short code, `es`
+  (`src/locales.mjs`), and loads that catalog for it. The CLI has no way to
+  rename a locale in a path, so the mapping is the site's.
+- **Add a language** by adding its code to `targetLocales`, the one that
+  pinecast-ts uses if it has the language. The job sees that it has no
+  catalog, leaves it out of the plain push, and translates the whole catalog
+  with `push --backfill-missing`.
+- **`.lingo/lock.json` is the baseline**: the hash of `lang/en.json` as
+  Lingo.dev last stored it. A push translates only the messages that changed
+  since then. Without a lockfile the CLI translates nothing (its first push
+  stores the source and writes one), so the job stops when it is missing. To
+  make one, with the target catalogs in step with `lang/en.json`:
+
+  ```sh
+  export LINGO_API_KEY=…   # or sign in once with `npx @lingo.dev/cli@1.19.0 login`
+  npx --yes @lingo.dev/cli@1.19.0 push   # no lockfile: stores, translates nothing
+  npx prettier --parser json --write '.lingo/*.json'
+  ```
+
+  and commit `.lingo/`. Do not add `--force` or `--backfill-missing` to it.
+- **`description` is not translated** (`"ignoredKeys": ["*.description"]`).
+  Whether the engine reads it as context is not documented, so the English
+  text has to make sense on its own.
+
 
 ## Design
 

@@ -1,0 +1,13 @@
+{
+  "orgId": "org_SSBfB1jB8lyb7HLyTqNe",
+  "engineId": "eng_t2fSETWb5BRCDeZ1IouR",
+  "sourceLocale": "en",
+  "targetLocales": ["es-419"],
+  "files": [
+    {
+      "pattern": "lang/en.json",
+      "targetPath": "lang/[locale].json",
+      "ignoredKeys": ["*.description"]
+    }
+  ]
+}
