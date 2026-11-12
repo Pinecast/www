@@ -39,22 +39,32 @@ English one. `robots.txt` lets every crawler in and points at the sitemap.
 `tests/sitemap.spec.ts` checks both, also for a site with two languages.
 
 The languages are in `src/locales.mjs`, one list for the build and for the
-pages. English has no prefix (`/features`); another language is under its own
-folder (`/es/features`, `out/es/features.html`), with a short code (`es`, `pt`)
-that is also the `hreflang` value. Nothing redirects between languages. To add
+pages. English has no prefix (`/features`); another language has all of its
+pages in one folder of the export, under its short code (`es`, `pt`), which is
+also the `hreflang` value: `out/es/features.html` is `/es/features`, and its
+home page is `out/es/index.html`, served at `/es/` (as `/` is the English one;
+the server sends `/es` to `/es/`). Nothing redirects between languages. To add
 one:
 
 1. Add its code to `LOCALES` in `src/locales.mjs`.
-2. Build its pages into `out/<code>/`, with the names of the English ones (the
-   home page is `out/<code>.html`). A page with no copy there (the legal pages)
-   stays English only, and the sitemap lists it as such: it lists what the
-   export holds.
+2. Build its pages into `out/<code>/`, with the names of the English ones. Next.js
+   exports `pages/<code>/index.tsx` as `out/<code>.html`, so move it to
+   `out/<code>/index.html` after `next build` and before the sitemap step. A
+   page with no copy there (the legal pages) stays English only, and the
+   sitemap lists it as such: it lists what the export holds. The sitemap step
+   fails if a page is served at another address than the one `localePath` gives
+   it (for example `out/<code>.html`).
 3. `npm run build && npm test`. The sitemap has the new addresses, and each
    page lists all of its languages.
 
 `localePath`, `pageUrl` and `alternates` in the same file are for the `<link
 rel="alternate">` and canonical tags of the pages, so that they and the sitemap
 agree on every address.
+
+Next.js's `trailingSlash` is off, so its client-side router drops the slash of
+`/es/` when a `<Link>` goes to the Spanish home page: the address bar shows
+`/es` until a reload, which the server sends back to `/es/`. The canonical tag
+and the sitemap say `/es/`.
 
 
 ## Design

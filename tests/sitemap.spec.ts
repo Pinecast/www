@@ -81,8 +81,10 @@ function expectAlternatesToAgree(
   for (const loc of locs) {
     expect(loc.startsWith(`${SITE_ORIGIN}/`), loc).toBe(true);
     expect(loc, 'no query or fragment').not.toMatch(/[?#\s]/);
-    // The home page, `/` or `/es`, is the only address that may end in a slash.
-    expect(loc === `${SITE_ORIGIN}/` || !loc.endsWith('/'), loc).toBe(true);
+    // The home page of each language, `/` or `/es/`, is the only address that
+    // may end in a slash.
+    const homes = locales.map(locale => pageUrl('/', locale));
+    expect(homes.includes(loc) || !loc.endsWith('/'), loc).toBe(true);
   }
   for (const entry of entries) {
     const path = entry.loc.slice(SITE_ORIGIN.length);
@@ -220,7 +222,7 @@ test.describe('sitemap of a site with two languages', () => {
       `<!DOCTYPE html><html><head><title>t</title>${head}</head><body><h1>t</h1></body></html>`;
     const files: Record<string, string> = {
       'index.html': html(),
-      'es.html': html(),
+      'es/index.html': html(),
       'features.html': html(),
       'es/features.html': html(),
       'features/one.html': html(),
@@ -263,7 +265,7 @@ test.describe('sitemap of a site with two languages', () => {
     const entries = await parseSitemap(page, renderSitemap(pages, locales));
     expect(entries.map(entry => entry.loc)).toEqual([
       `${SITE_ORIGIN}/`,
-      `${SITE_ORIGIN}/es`,
+      `${SITE_ORIGIN}/es/`,
       `${SITE_ORIGIN}/features`,
       `${SITE_ORIGIN}/es/features`,
       `${SITE_ORIGIN}/features/one`,
@@ -281,10 +283,11 @@ test.describe('sitemap of a site with two languages', () => {
       {hreflang: 'es', href: `${SITE_ORIGIN}/es/features`},
       {hreflang: 'x-default', href: `${SITE_ORIGIN}/features`},
     ]);
-    // The Spanish home page is /es, with no slash.
-    expect(byLoc.get(`${SITE_ORIGIN}/es`)).toContainEqual({
+    // The Spanish home page is the index of its folder, /es/, as / is the
+    // English one, and the two list each other.
+    expect(byLoc.get(`${SITE_ORIGIN}/es/`)).toContainEqual({
       hreflang: 'es',
-      href: `${SITE_ORIGIN}/es`,
+      href: `${SITE_ORIGIN}/es/`,
     });
     // A page in one language lists that one, and no other.
     expect(byLoc.get(`${SITE_ORIGIN}/legal`)).toEqual([
@@ -296,4 +299,31 @@ test.describe('sitemap of a site with two languages', () => {
       {hreflang: 'es', href: `${SITE_ORIGIN}/es/only-here`},
     ]);
   });
+
+  // Next.js exports `pages/es/index.tsx` as `out/es.html`, which the server
+  // puts at /es, not at /es/. The sitemap must not list a different address
+  // from the one that serves the page, so it stops the build, and the message
+  // says where the file goes.
+  for (const [name, files] of Object.entries({
+    'the home page of a language beside its folder': ['index.html', 'es.html'],
+    'a page of a language in a folder of its own': [
+      'index.html',
+      'es/index.html',
+      'es/one/index.html',
+    ],
+    'a language that LOCALES does not have': ['index.html', 'fr/index.html'],
+  })) {
+    test(`refuses ${name}`, async () => {
+      const bad = mkdtempSync(join(tmpdir(), 'sitemap-bad-'));
+      try {
+        for (const file of files) {
+          mkdirSync(dirname(join(bad, file)), {recursive: true});
+          writeFileSync(join(bad, file), '<!DOCTYPE html><title>t</title>');
+        }
+        expect(() => findPages(bad, locales)).toThrow(/is served at/);
+      } finally {
+        rmSync(bad, {recursive: true, force: true});
+      }
+    });
+  }
 });

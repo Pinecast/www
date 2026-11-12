@@ -32,13 +32,16 @@ function* htmlFiles(dir) {
 }
 
 // The address that a file of the export is served at: Netlify drops the
-// extension (`out/features.html` is `/features`), and next.config.js has no
-// `trailingSlash`, so only the home page ends in a slash.
+// extension (`out/features.html` is `/features`) and serves the index of a
+// folder at the folder with a slash (`out/es/index.html` is `/es/`).
 function pathOfFile(outDir, file) {
   const parts = relative(outDir, file).split(sep);
-  parts[parts.length - 1] = parts[parts.length - 1].slice(0, -'.html'.length);
-  if (parts[parts.length - 1] === 'index') parts.pop();
-  return '/' + parts.join('/');
+  const name = parts.pop().slice(0, -'.html'.length);
+  return (
+    '/' +
+    parts.map(part => `${part}/`).join('') +
+    (name === 'index' ? '' : name)
+  );
 }
 
 // A page that asks to stay out of search results. The sitemap leaves it out;
@@ -63,9 +66,26 @@ export function findPages(outDir, locales = LOCALES) {
   /** @type {Map<string, Set<string>>} */
   const found = new Map();
   for (const file of htmlFiles(outDir)) {
-    const {locale, route} = splitLocale(pathOfFile(outDir, file), locales);
+    const served = pathOfFile(outDir, file);
+    const {locale, route} = splitLocale(served, locales);
     if (NOT_PAGES.has(route) || isNoindex(readFileSync(file, 'utf8'))) {
       continue;
+    }
+    // The sitemap lists a page at the address that locales.mjs gives it, so a
+    // file that the server puts anywhere else must stop the build: `out/es.html`
+    // is served at `/es`, and `/es/` (the address of the Spanish home page)
+    // would send a reader away from it. Only the home page of a language is
+    // the index of a folder.
+    if (
+      localePath(route, locale) !== served ||
+      (route !== '/' && route.endsWith('/'))
+    ) {
+      throw new Error(
+        `${relative(outDir, file)} is served at ${served}, which is not an ` +
+          'address of the site. A page is a file (out/features.html), except ' +
+          'the home page of a language, which is out/<code>/index.html, with ' +
+          'the code in LOCALES (src/locales.mjs).',
+      );
     }
     if (!found.has(route)) found.set(route, new Set());
     found.get(route).add(locale);

@@ -6,15 +6,22 @@
 //
 // The site is a static export, so Next.js's own `i18n` routing is not used.
 // The default language is not prefixed (`/features`, never `/en/features`). Any
-// other language is under its code (`/es/features`), so the export must hold
-// its pages in `out/es/`, and its home page as `out/es.html`. Nothing redirects
-// between languages: the address says the language, and the reader picks it.
+// other language is under its code, and all of it is in one folder of the
+// export: `out/es/features.html` is `/es/features`, and its home page is
+// `out/es/index.html`, served at `/es/` (the home page of the default language
+// is `/`, so the two have the same shape). Next.js exports `pages/es/index.tsx`
+// as `out/es.html`, as it does `features/index.tsx` as `out/features.html`, so
+// the build that adds a language moves that file after `next build`.
+// Nothing redirects between languages: the address says the language, and the
+// reader picks it.
 //
 // To add a language, the sitemap needs two things:
 // 1. Add its code to LOCALES. Use the short code, `es`, not `es-419`: it is
 //    the folder in the address and the `hreflang` value.
 // 2. Build the pages of that language into `out/<code>/`, with the same names
-//    as the English ones. A page with no copy there, such as a legal page,
+//    as the English ones, and the home page as `out/<code>/index.html`. The
+//    sitemap stops the build if a page is somewhere else. A page with no copy
+//    there, such as a legal page,
 //    stays English only: the sitemap lists what the export holds and nothing
 //    else, and lists a page's alternates only for the languages that have it.
 // `out/sitemap.xml` then has the new pages, and each page lists all of its
@@ -35,16 +42,16 @@ export const DEFAULT_LOCALE = LOCALES[0];
 
 /**
  * The path of a page in a language. A page is named by its route, the path of
- * its default-language version: `/` and `/features/analytics`. The route `/`
- * of another language is `/es`, as the export has it (`out/es.html`): the site
- * has no trailing slashes, except the one of the home page.
+ * its default-language version: `/` and `/features/analytics`. The site has no
+ * trailing slashes, except the home page of each language: `/` and `/es/`.
+ * (The server sends `/features/` to `/features`, and `/es` to `/es/`.)
  *
  * @param {string} route
  * @param {string} locale
  */
 export function localePath(route, locale) {
   if (locale === DEFAULT_LOCALE) return route;
-  return route === '/' ? `/${locale}` : `/${locale}${route}`;
+  return route === '/' ? `/${locale}/` : `/${locale}${route}`;
 }
 
 /**
@@ -68,7 +75,11 @@ export function pageUrl(route, locale) {
 export function splitLocale(path, locales = LOCALES) {
   for (const locale of locales) {
     if (locale === DEFAULT_LOCALE) continue;
-    if (path === `/${locale}`) return {locale, route: '/'};
+    // `/es` is not an address of the site (the server sends it to `/es/`), but
+    // is the way to say the home page of a language.
+    if (path === `/${locale}` || path === `/${locale}/`) {
+      return {locale, route: '/'};
+    }
     if (path.startsWith(`/${locale}/`)) {
       return {locale, route: path.slice(locale.length + 1)};
     }
