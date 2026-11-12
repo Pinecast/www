@@ -3,6 +3,9 @@
   "files": {
     "lang/en.json": {
       "sha256": "069357a0584dbfef9b9cbfe793993fabb73612336674561eda8892a537f77a6b"
+    },
+    "lang/es-419.json": {
+      "sha256": "f48a0a04ea1e2445c458c89cfa204de1e12769c6e3876b19295a520e526fbf6c"
     }
   }
 }
