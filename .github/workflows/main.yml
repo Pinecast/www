@@ -53,8 +53,9 @@ jobs:
       - name: Check the structure of the export
         run: npm run check:structure
 
-      # lang/en.json is what an extraction writes. The translations are made
-      # from it, so a changed message has to change it.
+      # lang/en.json is what an extraction writes, and lang/en.jsonc is its
+      # copy with the descriptions as comments. The translations are made from
+      # them, so a changed message has to change both.
       - name: Check the message catalog
         run: npm run check:messages
 
@@ -79,7 +80,7 @@ jobs:
   # the same pinned CLI and the same Lingo.dev engine, so the site and the
   # dashboard share a glossary and a voice. README.md ("Translations") has the
   # detail. It runs after the tests on each push to netlify, and by hand. A
-  # push that leaves lang/en.json as `.lingo/lock.json` recorded it translates
+  # push that leaves lang/en.jsonc as `.lingo/lock.json` recorded it translates
   # nothing and writes nothing.
   push-translations:
     if: >-
@@ -105,15 +106,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Rewrites lang/en.json in place, so the refreshed source catalog rides
-      # along with the translations made from it.
+      # Rewrites lang/en.json and lang/en.jsonc (the copy that Lingo.dev
+      # translates, with each description as a comment) in place, so the
+      # refreshed source catalog rides along with the translations made from
+      # it.
       - name: Extract messages
         run: npm run i18n:extract
 
       # Without `.lingo/lock.json` the CLI does not translate: it stores the
       # source as the new baseline and writes a lockfile. That baseline would
       # silently skip every message added before it, so a missing lockfile is
-      # a setup error here, not a run. README.md says how to make one.
+      # a setup error here, not a run. So is a lockfile with no entry for a
+      # source file (lang/en.jsonc before its first push): the CLI would store
+      # that file the same way. README.md says how to make both.
       - name: Check the Lingo.dev project and lockfile
         run: |
           node -e '
@@ -127,8 +132,17 @@ jobs:
             echo "::error::.lingo/lock.json is missing, so the CLI would rebaseline instead of translating (README.md)."
             exit 1
           fi
+          node -e '
+            const {files} = require("./.lingo/config.json");
+            const lock = require("./.lingo/lock.json");
+            const missing = files.map(f => f.pattern).filter(p => !lock.files[p]);
+            if (missing.length) {
+              console.log(`::error::.lingo/lock.json has no entry for ${missing.join(", ")}, so the CLI would store it instead of translating (README.md).`);
+              process.exit(1);
+            }
+          '
 
-      # A plain push diffs lang/en.json against the version that
+      # A plain push diffs lang/en.jsonc against the version that
       # `.lingo/lock.json` records, translates the new and changed messages,
       # keeps every other translation as it is on disk, and writes the targets
       # and the lockfile. `--wait` stays until the job is done.
@@ -173,6 +187,12 @@ jobs:
             git checkout -- .lingo/config.json
             $LINGO push --backfill-missing --wait
           fi
+
+      # The source is JSONC, and Lingo.dev says that its comments do not reach
+      # the output. The build reads the targets as JSON, so a comment in one
+      # would break it: stop before the PR, rather than after.
+      - name: Check that the catalogs are JSON
+        run: node -e 'for (const f of process.argv.slice(1)) JSON.parse(require("fs").readFileSync(f, "utf8"))' lang/*.json
 
       # The engine writes JSON in its own style. Formatting it as the repo does
       # keeps a translation PR's diff to the strings that changed. `--parser
@@ -221,5 +241,5 @@ jobs:
             echo "Updated #$pr."
           else
             gh pr create --base netlify --head "$BRANCH" --title "$TITLE" \
-              --body "Opened by the \`push-translations\` job with Lingo.dev's CLI: the target catalogs it wrote, \`.lingo/lock.json\`, and \`lang/en.json\` as extracted. Each run on netlify replaces this branch."
+              --body "Opened by the \`push-translations\` job with Lingo.dev's CLI: the target catalogs it wrote, \`.lingo/lock.json\`, and \`lang/en.json\` and \`lang/en.jsonc\` as extracted. Each run on netlify replaces this branch."
           fi

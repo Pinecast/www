@@ -98,9 +98,9 @@ react-intl, and format it where it is shown. A bare object with a
   (`"Read the <link>guide</link>"`, with `values={{link: chunks => ...}}`),
   so a translator can move it. A line break in a heading is a `{br}`.
 - After you add, change or remove a message, run `npm run i18n:extract`, and
-  commit `lang/en.json`. `npm run check:messages` fails when it is out of
-  date. Do not run `eslint --fix` on messages: some formatjs rules change the
-  text, and then the id.
+  commit `lang/en.json` and `lang/en.jsonc`. `npm run check:messages` fails
+  when either is out of date. Do not run `eslint --fix` on messages: some
+  formatjs rules change the text, and then the id.
 - `formatjs/no-literal-string-in-jsx` reports text in JSX that is not in a
   message. A proper name that is not translated can stay, with a comment.
 - White space in a message is kept as it is written (`preserveWhitespace`),
@@ -118,14 +118,18 @@ and the catalog of that locale only.
 ### Lingo.dev
 
 Lingo.dev makes the catalogs of the other languages, `lang/<code>.json`
-(`lang/es-419.json`), from `lang/en.json`. Do not edit them by hand: to fix a translation, change the
-English, or the engine's glossary. The `push-translations` job of
+(`lang/es-419.json`), from `lang/en.jsonc`: the copy of `lang/en.json` that
+`npm run i18n:extract` writes (`scripts/lingo-source.mjs`), with each
+`description` as a `//` comment above its `defaultMessage`. Do not edit the
+catalogs by hand: to fix a translation, change the English, or the engine's
+glossary. The `push-translations` job of
 `.github/workflows/main.yml` runs after the tests on each push to `netlify`
 (and by hand, from the Actions tab). It runs the v1 CLI (`@lingo.dev/cli`,
 pinned in the job), then pushes the branch `lingo/netlify` and opens a PR, or
 updates the open one, with the target catalogs, `.lingo/lock.json` and a
-freshly extracted `lang/en.json`. Each run replaces the branch, unless a
-person pushed a commit to it: then it waits until that PR merges. It is the
+freshly extracted `lang/en.json` and `lang/en.jsonc`. Each run replaces the
+branch, unless a person pushed a commit to it: then it waits until that PR
+merges. It is the
 job of pinecast-ts, and pinecast-ts's `docs/i18n.md` ("Lingo.dev") has more
 on how the CLI behaves. The job needs a **`LINGO_API_KEY`** repository
 secret.
@@ -145,7 +149,7 @@ secret.
   pinecast-ts uses if it has the language. The job sees that it has no
   catalog, leaves it out of the plain push, and translates the whole catalog
   with `push --backfill-missing`.
-- **`.lingo/lock.json` is the baseline**: the hash of `lang/en.json` as
+- **`.lingo/lock.json` is the baseline**: the hash of `lang/en.jsonc` as
   Lingo.dev last stored it. A push translates only the messages that changed
   since then. Without a lockfile the CLI translates nothing (its first push
   stores the source and writes one), so the job stops when it is missing. To
@@ -158,9 +162,33 @@ secret.
   ```
 
   and commit `.lingo/`. Do not add `--force` or `--backfill-missing` to it.
-- **`description` is not translated** (`"ignoredKeys": ["*.description"]`).
-  Whether the engine reads it as context is not documented, so the English
-  text has to make sense on its own.
+- **The `description` goes to the engine as a comment.** Lingo.dev
+  documents one way to give the engine the context of a string: a comment
+  above its key in a `.jsonc` source
+  ([translator notes](https://lingo.dev/en/docs/cli/translator-notes)). In
+  `lang/en.json` the `description` is a plain field, which the push marked
+  `ignoredKeys`: not translated, and not documented to reach the engine. So
+  the source is `lang/en.jsonc`. Lingo.dev says that the comment does not
+  reach the output, and the job stops if a target is not plain JSON. Write
+  the English so that it makes sense on its own all the same.
+- **The CLI stores a source file that the lockfile does not name**, and
+  translates nothing, as on a first push. A message missing from a target
+  can then stay missing. So the job stops when the lockfile has no entry for a
+  source in `.lingo/config.json`, and a person makes it, when the targets
+  have every message. For `lang/en.jsonc`, that is when the entry of
+  `lang/en.json` in `.lingo/lock.json` is the hash of the `lang/en.json` on
+  disk (`shasum -a 256 lang/en.json`): the last translation PR is merged.
+  Then:
+
+  ```sh
+  npm run i18n:extract
+  npx --yes @lingo.dev/cli@1.19.0 push --estimate   # "Nothing to estimate"
+  npx --yes @lingo.dev/cli@1.19.0 push              # stores, translates nothing
+  npx prettier --parser json --write '.lingo/*.json'
+  ```
+
+  and commit `.lingo/`. The old entry of `lang/en.json` can stay: the CLI
+  reads the entry of a source only while the config names it.
 
 
 ## Design

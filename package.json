@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "test": "playwright test",
     "check:structure": "node scripts/check-structure.mjs",
-    "i18n:extract": "formatjs extract 'src/**/*.{ts,tsx}' --ignore '**/*.d.ts' --id-interpolation-pattern '[sha512:contenthash:base64:6]' --additional-component-names FormattedMessage --additional-function-names formatMessage --preserve-whitespace --throws --out-file lang/en.json",
+    "i18n:extract": "npm run i18n:extract:messages && node scripts/lingo-source.mjs",
+    "i18n:extract:messages": "formatjs extract 'src/**/*.{ts,tsx}' --ignore '**/*.d.ts' --id-interpolation-pattern '[sha512:contenthash:base64:6]' --additional-component-names FormattedMessage --additional-function-names formatMessage --preserve-whitespace --throws --out-file lang/en.json",
     "check:messages": "node scripts/check-messages.mjs"
   },
   "dependencies": {

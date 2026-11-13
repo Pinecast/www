@@ -5,9 +5,8 @@
   "targetLocales": ["es-419"],
   "files": [
     {
-      "pattern": "lang/en.json",
-      "targetPath": "lang/[locale].json",
-      "ignoredKeys": ["*.description"]
+      "pattern": "lang/en.jsonc",
+      "targetPath": "lang/[locale].json"
     }
   ]
 }
