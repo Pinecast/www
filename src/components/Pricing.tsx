@@ -108,7 +108,7 @@ export const Pricing = () => {
             <Subhead style={{marginBottom: '16px'}}>
               <FormattedMessage
                 description="Name of the free plan, on its ticket in the pricing section"
-                defaultMessage="Free plan"
+                defaultMessage="Free demo plan"
               />
             </Subhead>
             <Price

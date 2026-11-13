@@ -611,6 +611,10 @@
     "defaultMessage": "Hi! I’m{br}your host",
     "description": "Main heading of the home page, at the top. {br} is a line break: the heading is big, and the lines are short"
   },
+  "igzE1u": {
+    "defaultMessage": "Free demo plan",
+    "description": "Name of the free plan, on its ticket in the pricing section"
+  },
   "iwm8d+": {
     "defaultMessage": "Everything you need to be successful",
     "description": "One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line."
@@ -746,10 +750,6 @@
   "q5M2S3": {
     "defaultMessage": "Earn money from your podcast with listener support. Mark episodes as paid-only and we’ll handle subscriptions and payments processing.",
     "description": "What the Monetization feature does, shown when its row on the Features page is open"
-  },
-  "qZxFhI": {
-    "defaultMessage": "Free plan",
-    "description": "Name of the free plan, on its ticket in the pricing section"
   },
   "qmahv6": {
     "defaultMessage": "Features – Pinecast",
