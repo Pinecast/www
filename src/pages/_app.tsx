@@ -4,13 +4,13 @@ import {IntlProvider} from 'react-intl';
 
 import {styletron} from '../styletron';
 import {AudioManagerProvider} from '@/components/AudioManagerContext';
-import {DEFAULT_LOCALE, localeOf, type LocaleProps} from '@/i18n';
+import {DEFAULT_LOCALE, languageTagOf, type LocaleProps} from '@/i18n';
 import Head from 'next/head';
 
 export default function App({Component, pageProps}: AppProps<LocaleProps>) {
   return (
     <IntlProvider
-      locale={localeOf(pageProps)}
+      locale={languageTagOf(pageProps)}
       defaultLocale={DEFAULT_LOCALE}
       messages={pageProps.messages}
     >

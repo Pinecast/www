@@ -12,6 +12,8 @@ import {useAudioManager} from '@/hooks/useAudioManager';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 import {aboveOverlayProps} from '@/hooks/useInertOutside';
 import {useMotion} from '@/hooks/useMotion';
+import {usePageLocale} from '@/i18n';
+import {localePath} from '@/locales.mjs';
 
 const Lottie = dynamic(() => import('lottie-react'), {ssr: false});
 
@@ -54,6 +56,7 @@ export const MainLogo = ({
 }) => {
   const css = useCSS();
   const intl = useIntl();
+  const locale = usePageLocale();
   const [animated, setAnimated] = React.useState(false);
   const {
     soundEffects: {play: playSoundEffect},
@@ -68,7 +71,8 @@ export const MainLogo = ({
   const showLogo = animated || (autoplayAnimation && !playAnimation);
   return (
     <Link
-      href="/"
+      // The home page in the language of this page.
+      href={localePath('/', locale)}
       aria-label={intl.formatMessage({
         description:
           'Screen reader name of the Pinecast logo at the top of every page, a link to the home page',

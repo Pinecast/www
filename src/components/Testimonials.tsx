@@ -940,8 +940,10 @@ const Customers = ({}) => {
               </H1>
               {/* The player shows the quote only while its customer is at
                   the middle of the viewport, so keep every quote here. */}
+              {/* The customer's own words, in English on every page
+                  (TestimonialQuotation). */}
               <ScreenReaderText as="blockquote">
-                {item.quotation.replace(/'/g, '’')}
+                <span lang="en">{item.quotation.replace(/'/g, '’')}</span>
               </ScreenReaderText>
               <ScreenReaderText as="p">
                 <FormattedMessage

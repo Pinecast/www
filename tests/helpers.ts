@@ -14,7 +14,9 @@ export const TEXT_SPACING = `
   }
 `;
 
-// The path of every page in the static export (`npm run build`).
+// The path of every page in the static export (`npm run build`), as the site
+// serves it: the index of a folder, the home page of a language, has a slash
+// (`/es/`, src/locales.mjs).
 export function exportedPages(dir = 'out', prefix = ''): Array<string> {
   const pages: Array<string> = [];
   for (const entry of readdirSync(dir, {withFileTypes: true})) {
@@ -26,7 +28,7 @@ export function exportedPages(dir = 'out', prefix = ''): Array<string> {
       }
     } else if (entry.name.endsWith('.html') && entry.name !== '404.html') {
       const name = entry.name.slice(0, -'.html'.length);
-      pages.push(name === 'index' ? prefix || '/' : `${prefix}/${name}`);
+      pages.push(name === 'index' ? `${prefix}/` : `${prefix}/${name}`);
     }
   }
   return pages.sort();

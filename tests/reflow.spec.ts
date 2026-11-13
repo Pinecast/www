@@ -60,7 +60,7 @@ test.describe('headings at all widths', () => {
   for (const path of exportedPages()) {
     test(`${path} keeps the words of its headings whole`, async ({page}) => {
       // The animations of the home page make each resize slow.
-      test.slow(path === '/');
+      test.slow(path === '/' || path === '/es/');
       await load(page, path);
       // Visible headings only: a hidden one has no lines.
       const headings = page

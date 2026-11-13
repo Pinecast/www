@@ -23,6 +23,8 @@ dist/
 
 .next
 out/
+# scripts/compile-messages.mjs
+.compiled-lang/
 
 # Playwright
 test-results/

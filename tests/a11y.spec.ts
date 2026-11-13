@@ -19,6 +19,9 @@ const PAGES = [
   '/subprocessors', // the legal layout again, for its <Table>
   '/testimonial-transcripts',
 ];
+// The structure tests above find elements by their English names, so a page
+// in another language only gets the axe checks.
+const AXE_PAGES = [...PAGES, '/es/'];
 
 // Media is not needed here, and it keeps the pages busy.
 test.beforeEach(async ({page}) => {
@@ -133,7 +136,7 @@ test.describe('page structure', () => {
       test('axe finds no landmark, name or hidden-focus errors', async ({
         page,
       }) => {
-        for (const path of PAGES) {
+        for (const path of AXE_PAGES) {
           await page.goto(path);
           const {violations} = await new AxeBuilder({page})
             .withRules([
@@ -144,6 +147,8 @@ test.describe('page structure', () => {
               'aria-valid-attr-value',
               'bypass',
               'button-name',
+              'html-has-lang',
+              'html-lang-valid',
               'landmark-main-is-top-level',
               'landmark-no-duplicate-main',
               'landmark-one-main',
@@ -151,6 +156,7 @@ test.describe('page structure', () => {
               'link-name',
               'nested-interactive',
               'svg-img-alt',
+              'valid-lang',
             ])
             .analyze();
           expect(

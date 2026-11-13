@@ -26,7 +26,8 @@ import {Provider as UserAgentContextProvider} from '../components/UserAgentConte
 import {MOTION_ATTRIBUTE, MOTION_INIT_SCRIPT} from '../hooks/useMotion';
 import {FONT_URLS} from '../fonts';
 import {HERO_STILLS, stillMedia} from '../heroStills';
-import {localeOf} from '../i18n';
+import {languageTagOf} from '../i18n';
+import {splitLocale} from '../locales.mjs';
 
 Document.getInitialProps = async (context: DocumentContext) => {
   const renderPage = () =>
@@ -51,7 +52,8 @@ Document.getInitialProps = async (context: DocumentContext) => {
   const preloadFonts = !['/404', '/_error'].includes(context.pathname);
   // Next.js renders `styles` at the end of the <head>, after its scripts.
   const styles = [...React.Children.toArray(initialProps.styles)];
-  if (context.pathname === '/') {
+  // The home page of each language (`/`, `/es`).
+  if (splitLocale(context.pathname).route === '/') {
     // The stills of the home hero are the first files to load after the page
     // itself: the tiles of the hero show a flat color until they are in. Each
     // one has the `media` of the layouts that draw it, so a phone loads one
@@ -99,7 +101,7 @@ export default function Document({
   return (
     // The language of the page, from the same page prop as the IntlProvider
     // in _app.tsx.
-    <Html lang={localeOf(__NEXT_DATA__.props?.pageProps)}>
+    <Html lang={languageTagOf(__NEXT_DATA__.props?.pageProps)}>
       <Head>
         <link rel="icon" href="/favicon.png" />
         {preloadFonts &&
