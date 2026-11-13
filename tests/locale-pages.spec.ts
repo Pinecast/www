@@ -77,6 +77,19 @@ test.describe('the home page in Spanish', () => {
   });
 });
 
+test('a client-side visit from /es/ to an English page says English', async ({
+  page,
+}) => {
+  await load(page, '/es/');
+  // A <Link> in the footer to an English page: Next.js swaps the page in place.
+  await page
+    .getByRole('contentinfo')
+    .getByRole('link', {name: inSpanish('Privacy')})
+    .click();
+  await expect(page).toHaveURL(/\/privacy$/);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+});
+
 test('the English home page stays English', async ({page}) => {
   await load(page, '/');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
