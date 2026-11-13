@@ -282,19 +282,35 @@ const analyzeRing = async (
     },
   );
 
-// Wait until the page and the focused element stop moving (`scroll-behavior:
-// smooth` animates the scroll to the element), and the transitions end.
+// Wait until the page and the focused element stop moving, and the
+// transitions and animations that run have ended: nothing moves and none runs
+// for 5 frames. An animation that never ends does not count.
+//
+// This file emulates `prefers-reduced-motion: reduce`, and with it the site
+// scrolls in one step and gives its transitions no duration (_document.tsx),
+// so the wait is about 100 ms. Do not add a fixed wait here: a walk calls this
+// three times for each Tab stop, and 250 ms after each call was two thirds of
+// the time of the whole file.
 const settle = async (page: Page) => {
   await page.evaluate(
     () =>
       new Promise<void>(resolve => {
+        const animating = () =>
+          document.getAnimations().some(animation => {
+            const end = animation.effect?.getComputedTiming().endTime;
+            return (
+              animation.playState === 'running' &&
+              typeof end === 'number' &&
+              Number.isFinite(end)
+            );
+          });
         let last = '';
         let still = 0;
         let frames = 0;
         const check = () => {
           const r = document.activeElement?.getBoundingClientRect();
           const now = [scrollX, scrollY, r?.x, r?.y].join();
-          still = now === last ? still + 1 : 0;
+          still = now === last && !animating() ? still + 1 : 0;
           last = now;
           if (still >= 5 || ++frames > 300) {
             resolve();
@@ -305,7 +321,6 @@ const settle = async (page: Page) => {
         requestAnimationFrame(check);
       }),
   );
-  await page.waitForTimeout(250);
 };
 
 // Marks the focused element, so that the test can find it again. Returns
