@@ -2,10 +2,10 @@
   "version": 1,
   "files": {
     "lang/en.json": {
-      "sha256": "069357a0584dbfef9b9cbfe793993fabb73612336674561eda8892a537f77a6b"
+      "sha256": "d0f8863babd1501f293fc8ca7b461a08cb6ad57b565fa6985233d37461093f97"
     },
     "lang/es-419.json": {
-      "sha256": "f48a0a04ea1e2445c458c89cfa204de1e12769c6e3876b19295a520e526fbf6c"
+      "sha256": "26eda88bb4659839505141c90cee90305fd8a8aba0e78c3b364ef42ceb32f419"
     }
   }
 }
