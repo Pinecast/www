@@ -4,6 +4,9 @@
     "lang/en.json": {
       "sha256": "d0f8863babd1501f293fc8ca7b461a08cb6ad57b565fa6985233d37461093f97"
     },
+    "lang/en.jsonc": {
+      "sha256": "6c9953d35ae28ed04fc3c2833c12661a47277ef10e49fa1edabf4f1fa717eb4a"
+    },
     "lang/es-419.json": {
       "sha256": "26eda88bb4659839505141c90cee90305fd8a8aba0e78c3b364ef42ceb32f419"
     }

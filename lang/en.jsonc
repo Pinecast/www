@@ -611,6 +611,10 @@
     // Main heading of the home page, at the top. {br} is a line break: the heading is big, and the lines are short
     "defaultMessage": "Hi! I’m{br}your host"
   },
+  "igzE1u": {
+    // Name of the free plan, on its ticket in the pricing section
+    "defaultMessage": "Free demo plan"
+  },
   "iwm8d+": {
     // One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.
     "defaultMessage": "Everything you need to be successful"
@@ -746,10 +750,6 @@
   "q5M2S3": {
     // What the Monetization feature does, shown when its row on the Features page is open
     "defaultMessage": "Earn money from your podcast with listener support. Mark episodes as paid-only and we’ll handle subscriptions and payments processing."
-  },
-  "qZxFhI": {
-    // Name of the free plan, on its ticket in the pricing section
-    "defaultMessage": "Free plan"
   },
   "qmahv6": {
     // Title of the Features page, in the browser tab
