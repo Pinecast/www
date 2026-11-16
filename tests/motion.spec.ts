@@ -103,13 +103,17 @@ const videoTimes = (page: Page) =>
     })),
   );
 
-// The state of the looping CSS animations.
+// The state of the looping CSS animations. `pending` is true while the browser
+// has not yet applied a play or a pause. A change of animation-play-state is
+// applied at the next frame, and until then playState already says "paused"
+// while currentTime still moves for one more frame.
 const cssLoops = (page: Page) =>
   page.locator('[data-looping]').evaluateAll(elements =>
     elements
       .flatMap(element => element.getAnimations())
       .map(animation => ({
         state: animation.playState,
+        pending: animation.pending,
         time: Number(animation.currentTime),
       })),
   );
@@ -352,6 +356,13 @@ test.describe('the pause animations toggle', () => {
       .toContain('running');
 
     await toggle(page).click();
+    // The pause is applied at the next frame, and the animations count one
+    // more frame until then. Wait for that frame, not for a fixed time. (If
+    // the pause is never applied, this times out, and if the animations do not
+    // stop, the check below fails.)
+    await expect
+      .poll(async () => (await cssLoops(page)).some(a => a.pending))
+      .toBe(false);
     const loops = await cssLoops(page);
     expect(loops.length).toBeGreaterThan(0);
     expect(loops.every(a => a.state === 'paused')).toBe(true);
