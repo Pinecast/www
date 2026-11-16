@@ -12,6 +12,7 @@ import {
   MonumentGroteskSemiMono,
 } from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
+import {useFitWords} from '@/hooks/useFitWords';
 import {FocusEventHandler, ReactNode} from 'react';
 import {StyleObject} from 'styletron-react';
 import NextLink, {LinkProps} from 'next/link';
@@ -26,72 +27,94 @@ type HeadingProps = {
   children: ReactNode;
   level?: HeadingLevel;
   style?: StyleObject;
+  // Make the heading smaller where its widest word is wider than the heading
+  // (see useFitWords). For a heading whose words can be long, such as a
+  // translation of a short English heading. A heading whose words fit keeps
+  // its size.
+  fit?: boolean;
 };
 
-export const H1 = ({children, level = 1, style}: HeadingProps) => {
+// The sizes of a display heading, in pixels: [fontSize, lineHeight].
+type HeadingSizes = {
+  base: [number, number];
+  tablet?: [number, number];
+  desktop: [number, number];
+};
+
+// With `fit`, each size is a multiple of `--fit`, which useFitWords sets. A
+// word that fits needs no hyphen, and a browser that hyphenates a word with a
+// capital (in Spanish, not in English) would break one that fits: thus
+// `hyphens: manual`. `overflow-wrap` keeps a long word on the page until the
+// script has measured.
+function useHeading(
+  {children, level, style, fit = false}: HeadingProps & {level: HeadingLevel},
+  look: StyleObject,
+  {base, tablet, desktop}: HeadingSizes,
+) {
   const css = useCSS();
+  const ref = useFitWords<HTMLHeadingElement>(fit);
   const Tag = `h${level}` as const;
+  const media = style as Record<string, any> | undefined;
+  const size = ([fontSize, lineHeight]: [number, number]) =>
+    fit
+      ? {
+          fontSize: `calc(${fontSize}px * var(--fit, 1))`,
+          lineHeight: `calc(${lineHeight}px * var(--fit, 1))`,
+        }
+      : {fontSize: `${fontSize}px`, lineHeight: `${lineHeight}px`};
   return (
     <Tag
+      ref={ref}
+      data-fit={fit ? 'pending' : undefined}
       className={css({
-        ...GintoNordCondensed,
-        fontWeight: '400',
-        hyphens: 'auto',
+        ...look,
         letterSpacing: '-0.04em',
-        // overflowWrap: 'break-word',
-        marginTop: '0',
-        marginBottom: '0',
-        textTransform: 'uppercase',
-
-        fontSize: '54px',
-        lineHeight: '56px',
-
+        ...size(base),
+        ...(fit && {hyphens: 'manual', overflowWrap: 'break-word'}),
         ...style,
-        [MIN_TABLET_MEDIA_QUERY]: {
-          fontSize: '112px',
-          lineHeight: '100px',
-          ...(style as Record<string, any>)?.[MIN_TABLET_MEDIA_QUERY],
-        },
+        ...(tablet && {
+          [MIN_TABLET_MEDIA_QUERY]: {
+            ...size(tablet),
+            ...media?.[MIN_TABLET_MEDIA_QUERY],
+          },
+        }),
         [MIN_DESKTOP_MEDIA_QUERY]: {
-          fontSize: '160px',
-          lineHeight: '144px',
-          ...(style as Record<string, any>)?.[MIN_DESKTOP_MEDIA_QUERY],
+          ...size(desktop),
+          ...media?.[MIN_DESKTOP_MEDIA_QUERY],
         },
       })}
     >
       {children}
     </Tag>
   );
-};
+}
 
-export const H2 = ({children, level = 2, style}: HeadingProps) => {
-  const css = useCSS();
-  const Tag = `h${level}` as const;
-  return (
-    <Tag
-      className={css({
-        ...GintoNordCondensed,
-        fontWeight: '400',
-        letterSpacing: '-0.04em',
-        textTransform: 'uppercase',
-        marginTop: '0',
-        marginBottom: '0',
-
-        fontSize: '48px',
-        lineHeight: '43px',
-
-        ...style,
-        [MIN_DESKTOP_MEDIA_QUERY]: {
-          fontSize: '80px',
-          lineHeight: '72px',
-          ...(style as Record<string, any>)?.[MIN_DESKTOP_MEDIA_QUERY],
-        },
-      })}
-    >
-      {children}
-    </Tag>
+export const H1 = ({level = 1, ...props}: HeadingProps) =>
+  useHeading(
+    {...props, level},
+    {
+      ...GintoNordCondensed,
+      fontWeight: '400',
+      hyphens: 'auto',
+      marginTop: '0',
+      marginBottom: '0',
+      textTransform: 'uppercase',
+    },
+    {base: [54, 56], tablet: [112, 100], desktop: [160, 144]},
   );
-};
+
+export const H2 = ({level = 2, ...props}: HeadingProps) =>
+  useHeading(
+    {...props, level},
+    {
+      ...GintoNordCondensed,
+      fontWeight: '400',
+      textTransform: 'uppercase',
+      marginTop: '0',
+      marginBottom: '0',
+    },
+    {base: [48, 43], desktop: [80, 72]},
+  );
 
 export const H3 = ({children, level = 3, style}: HeadingProps) => {
   const css = useCSS();

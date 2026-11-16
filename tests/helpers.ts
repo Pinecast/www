@@ -41,6 +41,23 @@ export async function load(page: Page, path: string, {spacing = false} = {}) {
     await page.addStyleTag({content: TEXT_SPACING});
   }
   await page.evaluate(() => document.fonts.ready);
+  await headingsFitted(page);
+}
+
+// Wait until each heading that fits its words to its width has measured them
+// (src/hooks/useFitWords.ts): after a load, a resize or new text spacing. Two
+// frames let a resize reach its ResizeObserver, which marks the heading
+// "pending" until the next frame measures it.
+export async function headingsFitted(page: Page) {
+  await page.evaluate(
+    () =>
+      new Promise<void>(resolve =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+      ),
+  );
+  await page.waitForFunction(
+    () => !document.querySelector('[data-fit="pending"]'),
+  );
 }
 
 // The panel of the header menu: the part that scrolls.

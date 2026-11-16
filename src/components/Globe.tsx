@@ -292,6 +292,7 @@ const IntroSection = React.memo(function IntroSection() {
       <div ref={enteringSoundSentinelRef} />
       <H1
         level={2}
+        fit
         style={{
           marginBottom: 0,
           marginLeft: 'auto',

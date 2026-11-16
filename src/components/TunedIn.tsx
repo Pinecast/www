@@ -706,6 +706,7 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
               })}
             >
               <H2
+                fit
                 style={{
                   textWrap: 'balance',
                   marginBottom: '30px',

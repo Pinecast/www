@@ -3,6 +3,7 @@ import {
   clippedText,
   exportedPages,
   hasSidewaysScroll,
+  headingsFitted,
   load,
   splitWords,
 } from './helpers';
@@ -50,7 +51,8 @@ test.describe('pricing at 320px', () => {
 // in the middle. Chrome and Firefox do not hyphenate English words that start
 // with a capital letter, so no hyphen shows either. The titles are smaller
 // where their widest word would not fit (src/fitText.ts). These widths include
-// common phones and each side of the breakpoints.
+// common phones and each side of the breakpoints. The headings of the home
+// page measure their words in the browser instead (src/hooks/useFitWords.ts).
 const TITLE_WIDTHS = [
   320, 340, 360, 375, 390, 412, 430, 480, 540, 600, 700, 701, 768, 1024, 1180,
   1181, 1280, 1281, 1366, 1440, 1536, 1600, 1920,
@@ -70,6 +72,7 @@ test.describe('headings at all widths', () => {
       const split: Array<string> = [];
       for (const width of TITLE_WIDTHS) {
         await page.setViewportSize({width, height: 800});
+        await headingsFitted(page);
         for (const word of await splitWords(headings)) {
           split.push(`${width}px: ${word}`);
         }

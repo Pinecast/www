@@ -625,7 +625,9 @@ const CUSTOMER_BLOCK_STYLE: StyleObject = {
 // Keep a long name (larger text spacing, a narrow screen) inside the
 // viewport, where it wraps, instead of growing its grid column past the
 // clipped edges of the section.
-const CUSTOMER_NAME_STYLE: StyleObject = {maxWidth: '100vw'};
+// A name is not hyphenated. In English a browser does not hyphenate a word
+// with a capital, but on a page in another language it may ("BLIND-FULLY").
+const CUSTOMER_NAME_STYLE: StyleObject = {maxWidth: '100vw', hyphens: 'manual'};
 
 // The lower half of the screen is not a place for the button of a customer
 // block: the façade hides the filled names there, and the player is under the
@@ -1068,6 +1070,7 @@ export const Testimonials = ({
               })}
             >
               <H2
+                fit
                 style={{
                   textWrap: 'balance',
                   marginBottom: '30px',
