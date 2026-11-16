@@ -135,6 +135,10 @@
     // What the Hi-Fi add-on does, in its open row in the add-ons list of the pricing section
     "defaultMessage": "Upload audio files up to 256MB, with an extra 256MB buffer every thirty days. RSS feeds update 66% faster."
   },
+  "AQ7TL1": {
+    // Heading of the testimonials section of the home page, above recorded messages from customers. It is set in very large capitals: in another language, use a short, casual phrase with short words, not a word-for-word translation
+    "defaultMessage": "Don’t just take our word for it"
+  },
   "AQnpYh": {
     // What the Email Privacy feature does, shown when its row on the Features page is open
     "defaultMessage": "Keep your personal email private."
@@ -198,10 +202,6 @@
   "F0uib6": {
     // Heading of a tile in the site menu, a link to the guide for companies and organizations
     "defaultMessage": "Corporate podcasters"
-  },
-  "F9dzAf": {
-    // Heading of the Tuned-in section of the home page, before panels for beginners, advanced podcasters and organizations
-    "defaultMessage": "Tuned-in to your needs"
   },
   "FgdSGw": {
     // Description of the Analytics feature, shown over the globe on the home page when the globe turns to it
@@ -322,6 +322,10 @@
   "OUcYfC": {
     // What the Networks feature does, shown when its row on the Features page is open
     "defaultMessage": "Create a group for all the podcasters and shows in your network. We’ll provide a single dashboard for managing your network’s shows and analytics."
+  },
+  "ObsGoj": {
+    // Heading of the Tuned-in section of the home page, before panels for beginners, advanced podcasters and organizations. It is set in very large capitals: in another language, use a short, casual phrase with short words, not a word-for-word translation
+    "defaultMessage": "Tuned-in to your needs"
   },
   "OcbMaU": {
     // What the Clip Insertion feature does, shown when its row on the Features page is open
@@ -638,10 +642,6 @@
   "kCJjKk": {
     // One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.
     "defaultMessage": "Your batteries-included podcast host"
-  },
-  "kgzHT0": {
-    // Heading of the testimonials section of the home page
-    "defaultMessage": "Don’t just take our word for it"
   },
   "lG059q": {
     // Short heading of the Quick tips list in the menu, on a phone. Shown in capital letters

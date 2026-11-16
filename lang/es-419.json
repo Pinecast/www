@@ -1,6 +1,6 @@
 {
   "+2Lq0r": {
-    "defaultMessage": "Feed JSON"
+    "defaultMessage": "JSON Feed"
   },
   "+dsVvY": {
     "defaultMessage": "Pinecast tiene herramientas para podcasters de todos los niveles de experiencia. Ya sea que estés comenzando o manejando un podcast para un negocio, te tenemos cubierto."
@@ -101,6 +101,9 @@
   "APS4kv": {
     "defaultMessage": "Sube archivos de audio de hasta 256 MB, con un extra de 256 MB cada treinta días. Los feeds RSS se actualizan 66% más rápido."
   },
+  "AQ7TL1": {
+    "defaultMessage": "No solo confíes en nuestra palabra"
+  },
   "AQnpYh": {
     "defaultMessage": "Mantén tu correo personal en privado."
   },
@@ -148,9 +151,6 @@
   },
   "F0uib6": {
     "defaultMessage": "Podcasters corporativos"
-  },
-  "F9dzAf": {
-    "defaultMessage": "Pensado para tus necesidades"
   },
   "FgdSGw": {
     "defaultMessage": "Las estadísticas más potentes del mundo de los podcasts, con funciones premium, gráficos simples y controles claros."
@@ -207,7 +207,7 @@
     "defaultMessage": "/ Año"
   },
   "MF4Oza": {
-    "defaultMessage": "Complemento Crew"
+    "defaultMessage": "Complemento Equipo"
   },
   "MNIKRr": {
     "defaultMessage": "En sus propias palabras"
@@ -242,6 +242,9 @@
   "OUcYfC": {
     "defaultMessage": "Crea un grupo para todos los podcasters y programas de tu red. Te daremos un solo panel para gestionar los programas y las estadísticas de tu red."
   },
+  "ObsGoj": {
+    "defaultMessage": "En sintonía contigo"
+  },
   "OcbMaU": {
     "defaultMessage": "Mantén tu catálogo anterior actualizado con la inserción de clips. Inserta clips de audio automáticamente en tus episodios, sin importar hace cuánto se publicaron."
   },
@@ -264,7 +267,7 @@
     "defaultMessage": "Descubre más{br}funciones"
   },
   "PYKDf6": {
-    "defaultMessage": "Complemento Growth"
+    "defaultMessage": "Complemento Crecimiento"
   },
   "PqcCZx": {
     "defaultMessage": "Ya sea que estés comenzando o ya estés más establecido, tenemos una solución para ti."
@@ -408,7 +411,7 @@
     "defaultMessage": "$165"
   },
   "e26/v9": {
-    "defaultMessage": "Complemento Pro Analytics"
+    "defaultMessage": "Complemento Estadísticas Pro"
   },
   "flYdus": {
     "defaultMessage": "Privacidad"
@@ -459,7 +462,7 @@
     "defaultMessage": "¡Hola! Soy{br}tu anfitrión"
   },
   "igzE1u": {
-    "defaultMessage": "Plan de demostración gratuito"
+    "defaultMessage": "Plan demo gratuito"
   },
   "iwm8d+": {
     "defaultMessage": "Todo lo que necesitas para tener éxito"
@@ -478,9 +481,6 @@
   },
   "kCJjKk": {
     "defaultMessage": "Tu hosting de podcasts con todo incluido"
-  },
-  "kgzHT0": {
-    "defaultMessage": "No solo te lo decimos nosotros"
   },
   "lG059q": {
     "defaultMessage": "Consejos rápidos"
@@ -522,7 +522,7 @@
     "defaultMessage": "Comienza gratis"
   },
   "nZuvBk": {
-    "defaultMessage": "Jarra de propinas"
+    "defaultMessage": "Bote de propinas"
   },
   "nltFQ9": {
     "defaultMessage": "Reproducir<sr> testimonio de {customer}</sr>"
@@ -612,7 +612,7 @@
     "defaultMessage": "Regístrate"
   },
   "veAwil": {
-    "defaultMessage": "Haz crecer tu podcast con más opciones y funciones. Personaliza tu jarra de propinas, reúne reseñas de directorios, solicita comentarios de tus oyentes, y más."
+    "defaultMessage": "Haz crecer tu podcast con más opciones y funciones. Personaliza tu bote de propinas, recopila reseñas de los directorios, pide comentarios a tus oyentes y mucho más."
   },
   "wRldcc": {
     "defaultMessage": "Transcripciones"

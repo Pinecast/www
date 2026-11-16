@@ -706,13 +706,14 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
               })}
             >
               <H2
+                fit
                 style={{
                   textWrap: 'balance',
                   marginBottom: '30px',
                 }}
               >
                 <FormattedMessage
-                  description="Heading of the Tuned-in section of the home page, before panels for beginners, advanced podcasters and organizations"
+                  description="Heading of the Tuned-in section of the home page, before panels for beginners, advanced podcasters and organizations. It is set in very large capitals: in another language, use a short, casual phrase with short words, not a word-for-word translation"
                   defaultMessage="Tuned-in to your needs"
                 />
               </H2>

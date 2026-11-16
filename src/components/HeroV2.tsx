@@ -1091,7 +1091,7 @@ export const HeroV2 = () => {
                 },
               })}
             >
-              <H2 level={1}>
+              <H2 level={1} fit>
                 <FormattedMessage
                   description="Main heading of the home page, at the top. {br} is a line break: the heading is big, and the lines are short"
                   defaultMessage="Hi! I’m{br}your host"

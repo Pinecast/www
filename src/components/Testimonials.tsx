@@ -625,7 +625,9 @@ const CUSTOMER_BLOCK_STYLE: StyleObject = {
 // Keep a long name (larger text spacing, a narrow screen) inside the
 // viewport, where it wraps, instead of growing its grid column past the
 // clipped edges of the section.
-const CUSTOMER_NAME_STYLE: StyleObject = {maxWidth: '100vw'};
+// A name is not hyphenated. In English a browser does not hyphenate a word
+// with a capital, but on a page in another language it may ("BLIND-FULLY").
+const CUSTOMER_NAME_STYLE: StyleObject = {maxWidth: '100vw', hyphens: 'manual'};
 
 // The lower half of the screen is not a place for the button of a customer
 // block: the façade hides the filled names there, and the player is under the
@@ -940,8 +942,10 @@ const Customers = ({}) => {
               </H1>
               {/* The player shows the quote only while its customer is at
                   the middle of the viewport, so keep every quote here. */}
+              {/* The customer's own words, in English on every page
+                  (TestimonialQuotation). */}
               <ScreenReaderText as="blockquote">
-                {item.quotation.replace(/'/g, '’')}
+                <span lang="en">{item.quotation.replace(/'/g, '’')}</span>
               </ScreenReaderText>
               <ScreenReaderText as="p">
                 <FormattedMessage
@@ -1066,13 +1070,14 @@ export const Testimonials = ({
               })}
             >
               <H2
+                fit
                 style={{
                   textWrap: 'balance',
                   marginBottom: '30px',
                 }}
               >
                 <FormattedMessage
-                  description="Heading of the testimonials section of the home page"
+                  description="Heading of the testimonials section of the home page, above recorded messages from customers. It is set in very large capitals: in another language, use a short, casual phrase with short words, not a word-for-word translation"
                   defaultMessage="Don’t just take our word for it"
                 />
               </H2>

@@ -4,13 +4,21 @@ import {IntlProvider} from 'react-intl';
 
 import {styletron} from '../styletron';
 import {AudioManagerProvider} from '@/components/AudioManagerContext';
-import {DEFAULT_LOCALE, localeOf, type LocaleProps} from '@/i18n';
+import {DEFAULT_LOCALE, languageTagOf, type LocaleProps} from '@/i18n';
 import Head from 'next/head';
+import * as React from 'react';
 
 export default function App({Component, pageProps}: AppProps<LocaleProps>) {
+  // _document sets `<html lang>` in the exported HTML. A client-side visit to
+  // a page in another language (a <Link> from /es/ to /features) keeps that
+  // document, so the language has to follow the page here too (WCAG 3.1.1).
+  const lang = languageTagOf(pageProps);
+  React.useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
   return (
     <IntlProvider
-      locale={localeOf(pageProps)}
+      locale={lang}
       defaultLocale={DEFAULT_LOCALE}
       messages={pageProps.messages}
     >

@@ -15,15 +15,17 @@
 // Nothing redirects between languages: the address says the language, and the
 // reader picks it.
 //
-// To add a language, the sitemap needs two things:
+// To add a language:
 // 1. Add its code to LOCALES. Use the short code, `es`, not `es-419`: it is
-//    the folder in the address and the `hreflang` value.
-// 2. Build the pages of that language into `out/<code>/`, with the same names
-//    as the English ones, and the home page as `out/<code>/index.html`. The
-//    sitemap stops the build if a page is somewhere else. A page with no copy
-//    there, such as a legal page,
-//    stays English only: the sitemap lists what the export holds and nothing
-//    else, and lists a page's alternates only for the languages that have it.
+//    the folder in the address and the `hreflang` value. If Lingo.dev
+//    translates it under another code, add that to LANGUAGE_TAGS.
+// 2. Add its pages under `src/pages/<code>/`, with the same names as the
+//    English ones (`src/pages/es/index.tsx` is the pattern). The build
+//    (scripts/finish-export.mjs) moves the home page to
+//    `out/<code>/index.html`, and the sitemap stops the build if a page is
+//    somewhere else. A page with no copy there, such as a legal page, stays
+//    English only: the sitemap lists what the export holds and nothing else,
+//    and lists a page's alternates only for the languages that have it.
 // `out/sitemap.xml` then has the new pages, and each page lists all of its
 // languages. `npm test` checks the result.
 
@@ -36,9 +38,30 @@ export const SITE_ORIGIN = 'https://www.pinecast.com';
  *
  * @type {ReadonlyArray<string>}
  */
-export const LOCALES = ['en'];
+export const LOCALES = ['en', 'es'];
 
 export const DEFAULT_LOCALE = LOCALES[0];
+
+/**
+ * The language of the text of a language's pages, where it is not the code in
+ * the address. Lingo.dev translates Spanish as `es-419`, as it does for
+ * pinecast-ts, so that the engine's rules for it apply to both. That code
+ * names the catalog (`lang/es-419.json`), and it is the `lang` of the page and
+ * the locale of react-intl (plurals, numbers). The address and `hreflang` keep
+ * the short code: the site has one Spanish, for every reader of Spanish.
+ *
+ * @type {Readonly<Record<string, string>>}
+ */
+export const LANGUAGE_TAGS = {es: 'es-419'};
+
+/**
+ * The language tag of the text of a language's pages (see LANGUAGE_TAGS).
+ *
+ * @param {string} locale
+ */
+export function languageTag(locale) {
+  return LANGUAGE_TAGS[locale] ?? locale;
+}
 
 /**
  * The path of a page in a language. A page is named by its route, the path of

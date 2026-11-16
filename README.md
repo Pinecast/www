@@ -47,28 +47,33 @@ pages. English has no prefix (`/features`); another language has all of its
 pages in one folder of the export, under its short code (`es`, `pt`), which is
 also the `hreflang` value: `out/es/features.html` is `/es/features`, and its
 home page is `out/es/index.html`, served at `/es/` (as `/` is the English one;
-the server sends `/es` to `/es/`). Nothing redirects between languages. To add
-one:
+the server sends `/es` to `/es/`). Nothing redirects between languages. The
+site has the Spanish home page, `/es/`. To add a language or a page:
 
-1. Add its code to `LOCALES` in `src/locales.mjs`.
-2. Build its pages into `out/<code>/`, with the names of the English ones. Next.js
-   exports `pages/<code>/index.tsx` as `out/<code>.html`, so move it to
-   `out/<code>/index.html` after `next build` and before the sitemap step. A
-   page with no copy there (the legal pages) stays English only, and the
-   sitemap lists it as such: it lists what the export holds. The sitemap step
-   fails if a page is served at another address than the one `localePath` gives
-   it (for example `out/<code>.html`).
+1. A new language needs its catalog first (Lingo.dev, below). Then add its code
+   to `LOCALES` in `src/locales.mjs`, and to `LANGUAGE_TAGS` if Lingo.dev
+   translates it under another code (Spanish is `es-419`).
+2. Add the page under `src/pages/<code>/`, with the name of the English one.
+   `src/pages/es/index.tsx` is the pattern: it exports the English page, and
+   `localeStaticProps` gives it the catalog. `scripts/finish-export.mjs`, after
+   `next build`, moves the home page of a language from `out/<code>.html`
+   (where Next.js exports it) to `out/<code>/index.html`. A page with no copy
+   (the legal pages) stays English only, and the sitemap lists it as such: it
+   lists what the export holds. The sitemap step fails if a page is served at
+   another address than the one `localePath` gives it.
 3. `npm run build && npm test`. The sitemap has the new addresses, and each
-   page lists all of its languages.
+   page lists all of its languages. `tests/locale-pages.spec.ts` checks the
+   Spanish home page.
 
-`localePath`, `pageUrl` and `alternates` in the same file are for the `<link
-rel="alternate">` and canonical tags of the pages, so that they and the sitemap
-agree on every address.
+The sitemap is where the pages list their alternates (`hreflang`); the pages
+have no `<link rel="alternate">` tags. `localePath`, `pageUrl` and
+`alternates` are in `src/locales.mjs` so that the pages can use the same
+addresses when they link to another language.
 
-Next.js's `trailingSlash` is off, so its client-side router drops the slash of
-`/es/` when a `<Link>` goes to the Spanish home page: the address bar shows
-`/es` until a reload, which the server sends back to `/es/`. The canonical tag
-and the sitemap say `/es/`.
+Next.js's `trailingSlash` is off, so a `<Link>` drops the slash of `/es/`: the
+Spanish logo links to `/es`, and the address bar shows `/es` after a
+client-side visit, until a reload, which the server sends back to `/es/`. The
+sitemap says `/es/`.
 
 
 ## Translations
@@ -106,14 +111,21 @@ react-intl, and format it where it is shown. A bare object with a
 - White space in a message is kept as it is written (`preserveWhitespace`),
   so a no-break space stays one. Write a message on one line, with one space
   where the JSX text had a line break.
-- The bundle has no ICU parser: each `defaultMessage` goes in parsed. A
-  catalog of another language must be compiled with
-  `formatjs compile --ast`.
+- The bundle has no ICU parser: each `defaultMessage` goes in parsed. So
+  `npm run i18n:compile` (`scripts/compile-messages.mjs`, the first step of
+  `npm run build` and `npm run dev`) compiles the catalog of each language in
+  `LOCALES` with `formatjs compile --ast`, into `.compiled-lang/`, which is
+  not committed.
+- Text that stays in English on a page in another language says so with
+  `lang="en"`: the customers' quotes, which are what their recordings say.
+  A proper name (a show, a product) does not need it.
 
 `_app.tsx` gives the page props `locale` and `messages` (`src/i18n.ts`) to
-the `IntlProvider`, and `_document.tsx` sets `<html lang>` from `locale`. A
-page in English passes neither. A page in another language passes its locale
-and the catalog of that locale only.
+the `IntlProvider`, and `_document.tsx` sets `<html lang>` from `locale`, as
+its language tag (`es-419` for `es`). A page in English passes neither. A
+page in another language passes its locale and the catalog of that locale
+only, from `localeStaticProps` (`src/i18n-static.ts`). `usePageLocale()`
+says the language of the page from its route, for links.
 
 ### Lingo.dev
 

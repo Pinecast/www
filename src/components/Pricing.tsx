@@ -88,7 +88,7 @@ export const Pricing = () => {
           color: 'var(--color-primary-dark)',
         })}
       >
-        <H1 level={2} style={{textWrap: 'balance'}}>
+        <H1 level={2} fit style={{textWrap: 'balance'}}>
           <FormattedMessage
             description="Big heading of the pricing section of the home page"
             defaultMessage="Grab your ticket"
@@ -308,7 +308,7 @@ export const Pricing = () => {
           color: 'var(--color-primary-dark)',
         })}
       >
-        <H2>
+        <H2 fit>
           <FormattedMessage
             description="Big heading above the add-ons in the pricing section. {br} is a line break"
             defaultMessage="Get more{br}with add-ons"

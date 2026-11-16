@@ -35,8 +35,10 @@ export const TestimonialQuotation = ({
       clearInterval(interval);
     };
   }, [audio, script]);
+  // The words are in English on every page, so a page in another language
+  // says so (WCAG 3.1.2): a screen reader reads them with English rules.
   return (
-    <>
+    <span lang="en">
       {script.words.map((word, i) => {
         if (i < quotationStartIdx || i >= length + quotationStartIdx)
           return null;
@@ -57,6 +59,6 @@ export const TestimonialQuotation = ({
           </span>
         );
       })}
-    </>
+    </span>
   );
 };

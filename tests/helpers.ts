@@ -14,7 +14,9 @@ export const TEXT_SPACING = `
   }
 `;
 
-// The path of every page in the static export (`npm run build`).
+// The path of every page in the static export (`npm run build`), as the site
+// serves it: the index of a folder, the home page of a language, has a slash
+// (`/es/`, src/locales.mjs).
 export function exportedPages(dir = 'out', prefix = ''): Array<string> {
   const pages: Array<string> = [];
   for (const entry of readdirSync(dir, {withFileTypes: true})) {
@@ -26,7 +28,7 @@ export function exportedPages(dir = 'out', prefix = ''): Array<string> {
       }
     } else if (entry.name.endsWith('.html') && entry.name !== '404.html') {
       const name = entry.name.slice(0, -'.html'.length);
-      pages.push(name === 'index' ? prefix || '/' : `${prefix}/${name}`);
+      pages.push(name === 'index' ? `${prefix}/` : `${prefix}/${name}`);
     }
   }
   return pages.sort();
@@ -39,6 +41,23 @@ export async function load(page: Page, path: string, {spacing = false} = {}) {
     await page.addStyleTag({content: TEXT_SPACING});
   }
   await page.evaluate(() => document.fonts.ready);
+  await headingsFitted(page);
+}
+
+// Wait until each heading that fits its words to its width has measured them
+// (src/hooks/useFitWords.ts): after a load, a resize or new text spacing. Two
+// frames let a resize reach its ResizeObserver, which marks the heading
+// "pending" until the next frame measures it.
+export async function headingsFitted(page: Page) {
+  await page.evaluate(
+    () =>
+      new Promise<void>(resolve =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+      ),
+  );
+  await page.waitForFunction(
+    () => !document.querySelector('[data-fit="pending"]'),
+  );
 }
 
 // The panel of the header menu: the part that scrolls.

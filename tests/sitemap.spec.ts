@@ -154,7 +154,9 @@ test.describe('sitemap.xml', () => {
     const exported = exportedPages();
     expect(exported.length).toBeGreaterThan(0);
     for (const path of exported) {
-      const file = path === '/' ? 'index.html' : `${path.slice(1)}.html`;
+      const file = path.endsWith('/')
+        ? `${path.slice(1)}index.html`
+        : `${path.slice(1)}.html`;
       const noindex = /<meta[^>]+name=["']?robots["']?[^>]*noindex/i.test(
         readFileSync(join('out', file), 'utf8'),
       );
