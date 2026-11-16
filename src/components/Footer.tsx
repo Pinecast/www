@@ -193,8 +193,15 @@ export const Footer = () => {
               gridTemplateColumns:
                 '1fr fit-content(145px) fit-content(145px) fit-content(145px) fit-content(145px)',
 
+              // A column of links that does not fit on the row wraps to a
+              // second one, as on a window from 901px that is zoomed or that
+              // has the text spacing of WCAG 1.4.12. Without the wrap, the
+              // last column ran past the card. The sign-up box grows from the
+              // width of its content to fill the row (below), so that it does
+              // not push a column off a row that has room for it.
               '@media (max-width: 1400px)': {
                 display: 'flex',
+                flexWrap: 'wrap',
                 justifyContent: 'space-between',
                 gap: '30px',
               },
@@ -202,7 +209,6 @@ export const Footer = () => {
               // they do not fit on one line.
               '@media (max-width: 900px)': {
                 justifyContent: 'flex-start',
-                flexWrap: 'wrap',
                 gap: '30px 100px',
               },
               [MOBILE_MEDIA_QUERY]: {
@@ -220,6 +226,9 @@ export const Footer = () => {
                 padding: '23px 31px',
                 maxWidth: '476px',
                 width: '100%',
+                '@media (max-width: 1400px)': {
+                  flex: '1 1 0',
+                },
                 '@media (max-width: 900px)': {
                   display: 'none',
                 },

@@ -369,3 +369,41 @@ function expectTargetSpacing(boxes: Array<Box>) {
     });
   });
 }
+
+// The columns of links above the logotype stay inside the card's content box.
+// With the text spacing of WCAG 1.4.12, the last column ran past the card from
+// 901px (the footer's sign-up box shows from there), onto the coral background,
+// where its grey links could not be read. These widths are each side of the
+// 900px and 1400px layouts of the row, and a laptop at 150% zoom (910px).
+test.describe('footer: the columns of links', () => {
+  for (const width of [901, 910, 960, 1012, 1100, 1280, 1400, 1401]) {
+    for (const spacing of [false, true]) {
+      test(`stay in the card at ${width}px${
+        spacing ? ' with larger text spacing' : ''
+      }`, async ({page}) => {
+        await page.setViewportSize({width, height: 800});
+        await load(page, '/', {spacing});
+        const outside = await page
+          .getByRole('contentinfo')
+          .getByRole('navigation')
+          .evaluate(nav => {
+            const card = nav.closest('footer')!;
+            const box = card.getBoundingClientRect();
+            const style = getComputedStyle(card);
+            const left = box.left + parseFloat(style.paddingLeft);
+            const right = box.right - parseFloat(style.paddingRight);
+            return [...nav.querySelectorAll('a')]
+              .map(link => ({link, rect: link.getBoundingClientRect()}))
+              .filter(
+                ({rect}) => rect.left < left - 0.5 || rect.right > right + 0.5,
+              )
+              .map(
+                ({link, rect}) =>
+                  `${link.textContent} ${Math.round(rect.left)}–${Math.round(rect.right)} (card ${Math.round(left)}–${Math.round(right)})`,
+              );
+          });
+        expect(outside).toEqual([]);
+      });
+    }
+  }
+});
