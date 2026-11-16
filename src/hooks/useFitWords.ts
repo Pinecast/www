@@ -12,8 +12,15 @@ import * as React from 'react';
 // The heading sets its sizes as `calc(<size> * var(--fit, 1))`, and this sets
 // `--fit`. It measures each word with a Range, at full size and with no break
 // inside a word, against the room that the heading has (availableWidth). It
-// measures again when the heading or its parent changes size: the page width,
-// a font that loads, text spacing that changes the line height.
+// measures again when the heading or its parent changes size (the page width,
+// a font that loads, text spacing that changes the line height), and when its
+// text changes, as in a visit from one language to the other that keeps the
+// element.
+//
+// The room is in CSS pixels, and zoom makes the page narrower in CSS pixels.
+// Thus, at 200% zoom a heading with a long word grows less than 200%, as a
+// title of fitText does (see the note there: finding www-title-fit-zoom, a
+// known gap). Below 320 CSS pixels this reaches English headings too.
 //
 // The heading renders with `data-fit="pending"`, and this sets it to "done"
 // after each measure, so that a test can wait for it (tests/helpers.ts).
@@ -59,10 +66,19 @@ export function useFitWords<T extends HTMLElement>(enabled: boolean) {
     if (element.parentElement) {
       observer.observe(element.parentElement);
     }
+    // New words can keep the size of the box. This one watches the text only:
+    // the measure itself changes the heading's attributes.
+    const textObserver = new MutationObserver(measure);
+    textObserver.observe(element, {
+      characterData: true,
+      childList: true,
+      subtree: true,
+    });
     document.fonts?.addEventListener('loadingdone', measure);
     measure();
     return () => {
       observer.disconnect();
+      textObserver.disconnect();
       document.fonts?.removeEventListener('loadingdone', measure);
       cancelAnimationFrame(frame);
       element.style.overflowWrap = '';
