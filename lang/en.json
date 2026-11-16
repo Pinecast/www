@@ -135,6 +135,10 @@
     "defaultMessage": "Upload audio files up to 256MB, with an extra 256MB buffer every thirty days. RSS feeds update 66% faster.",
     "description": "What the Hi-Fi add-on does, in its open row in the add-ons list of the pricing section"
   },
+  "AQ7TL1": {
+    "defaultMessage": "Don’t just take our word for it",
+    "description": "Heading of the testimonials section of the home page, above recorded messages from customers. It is set in very large capitals: in another language, use a short, casual phrase with short words, not a word-for-word translation"
+  },
   "AQnpYh": {
     "defaultMessage": "Keep your personal email private.",
     "description": "What the Email Privacy feature does, shown when its row on the Features page is open"
@@ -198,10 +202,6 @@
   "F0uib6": {
     "defaultMessage": "Corporate podcasters",
     "description": "Heading of a tile in the site menu, a link to the guide for companies and organizations"
-  },
-  "F9dzAf": {
-    "defaultMessage": "Tuned-in to your needs",
-    "description": "Heading of the Tuned-in section of the home page, before panels for beginners, advanced podcasters and organizations"
   },
   "FgdSGw": {
     "defaultMessage": "The most powerful analytics in podcasting, with premium features, simple charts, and clean controls.",
@@ -322,6 +322,10 @@
   "OUcYfC": {
     "defaultMessage": "Create a group for all the podcasters and shows in your network. We’ll provide a single dashboard for managing your network’s shows and analytics.",
     "description": "What the Networks feature does, shown when its row on the Features page is open"
+  },
+  "ObsGoj": {
+    "defaultMessage": "Tuned-in to your needs",
+    "description": "Heading of the Tuned-in section of the home page, before panels for beginners, advanced podcasters and organizations. It is set in very large capitals: in another language, use a short, casual phrase with short words, not a word-for-word translation"
   },
   "OcbMaU": {
     "defaultMessage": "Keep your back catalog fresh with clip insertion. Automatically insert audio clips into your episodes, no matter how recently the episodes were published.",
@@ -638,10 +642,6 @@
   "kCJjKk": {
     "defaultMessage": "Your batteries-included podcast host",
     "description": "One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line."
-  },
-  "kgzHT0": {
-    "defaultMessage": "Don’t just take our word for it",
-    "description": "Heading of the testimonials section of the home page"
   },
   "lG059q": {
     "defaultMessage": "Quick Tips",

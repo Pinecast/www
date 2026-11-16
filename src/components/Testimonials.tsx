@@ -1077,7 +1077,7 @@ export const Testimonials = ({
                 }}
               >
                 <FormattedMessage
-                  description="Heading of the testimonials section of the home page"
+                  description="Heading of the testimonials section of the home page, above recorded messages from customers. It is set in very large capitals: in another language, use a short, casual phrase with short words, not a word-for-word translation"
                   defaultMessage="Don’t just take our word for it"
                 />
               </H2>
