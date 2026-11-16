@@ -4,6 +4,14 @@ import {FormattedMessage, useIntl} from 'react-intl';
 
 import {MonumentGroteskSemiMono} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
+import {usePageRoute} from '@/i18n';
+import {
+  LANGUAGE_NAMES,
+  LOCALES,
+  hasPage,
+  languageTag,
+  localePath,
+} from '@/locales.mjs';
 import {Body4, Caption} from './Typography';
 import {PrimaryButton} from './PrimaryButton';
 import {FooterNavLinks} from './FooterNavLinks';
@@ -52,6 +60,7 @@ const CARD_MAX_MIN_HEIGHT = 690;
 export const Footer = () => {
   const css = useCSS();
   const intl = useIntl();
+  const {locale, route} = usePageRoute();
 
   const ref = React.useRef<HTMLDivElement>(null);
   useDarkSection(ref);
@@ -182,16 +191,19 @@ export const Footer = () => {
               display: 'grid',
               gap: '100px',
               gridTemplateColumns:
-                '1fr fit-content(145px) fit-content(145px) fit-content(145px)',
+                '1fr fit-content(145px) fit-content(145px) fit-content(145px) fit-content(145px)',
 
               '@media (max-width: 1400px)': {
                 display: 'flex',
                 justifyContent: 'space-between',
                 gap: '30px',
               },
+              // Without the sign-up box, the four columns of links wrap where
+              // they do not fit on one line.
               '@media (max-width: 900px)': {
                 justifyContent: 'flex-start',
-                gap: '100px',
+                flexWrap: 'wrap',
+                gap: '30px 100px',
               },
               [MOBILE_MEDIA_QUERY]: {
                 flexDirection: 'column',
@@ -345,6 +357,30 @@ export const Footer = () => {
                 // A proper name, not translated.
                 ['https://reddit.com/r/pinecast', 'Reddit'],
               ]}
+            />
+            {/* Each language by its own name, marked as that language. A link
+                opens this page in that language, or that language's home page
+                where this page is not in it (TRANSLATED_ROUTES). Nothing
+                redirects: the reader picks. */}
+            <FooterNavLinks
+              title={
+                <FormattedMessage
+                  description="Heading of the column of links to the site in each language, in the footer of every page. Each link under it is the name of a language, in that language"
+                  defaultMessage="Language"
+                />
+              }
+              links={LOCALES.map(language => [
+                localePath(
+                  language === locale || hasPage(route, language) ? route : '/',
+                  language,
+                ),
+                LANGUAGE_NAMES[language],
+                {
+                  lang: languageTag(language),
+                  hrefLang: language,
+                  'aria-current': language === locale ? 'page' : undefined,
+                },
+              ])}
             />
           </nav>
           {/* The logotype. It is a band in the flow of the card, so the card

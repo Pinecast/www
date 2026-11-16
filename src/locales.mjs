@@ -26,6 +26,10 @@
 //    somewhere else. A page with no copy there, such as a legal page, stays
 //    English only: the sitemap lists what the export holds and nothing else,
 //    and lists a page's alternates only for the languages that have it.
+// 3. Add its name, in itself, to LANGUAGE_NAMES, and its pages to
+//    TRANSLATED_ROUTES, for the language links in the footer.
+//    tests/locale-pages.spec.ts fails if TRANSLATED_ROUTES is not what the
+//    export holds.
 // `out/sitemap.xml` then has the new pages, and each page lists all of its
 // languages. `npm test` checks the result.
 
@@ -53,6 +57,38 @@ export const DEFAULT_LOCALE = LOCALES[0];
  * @type {Readonly<Record<string, string>>}
  */
 export const LANGUAGE_TAGS = {es: 'es-419'};
+
+/**
+ * The name of each language in that language, for the language links in the
+ * footer. It is not translated: a reader looks for the name of their own
+ * language.
+ *
+ * @type {Readonly<Record<string, string>>}
+ */
+export const LANGUAGE_NAMES = {en: 'English', es: 'Español'};
+
+/**
+ * The routes of the pages that each language other than the default has. Every
+ * page is in the default language. A language link goes to the same page in
+ * that language where there is one, and to that language's home page where
+ * there is not.
+ *
+ * @type {Readonly<Record<string, ReadonlyArray<string>>>}
+ */
+export const TRANSLATED_ROUTES = {es: ['/']};
+
+/**
+ * Whether a page is in a language.
+ *
+ * @param {string} route
+ * @param {string} locale
+ */
+export function hasPage(route, locale) {
+  return (
+    locale === DEFAULT_LOCALE ||
+    (TRANSLATED_ROUTES[locale] ?? []).includes(route)
+  );
+}
 
 /**
  * The language tag of the text of a language's pages (see LANGUAGE_TAGS).

@@ -33,5 +33,12 @@ export function languageTagOf(pageProps: LocaleProps | undefined): string {
 // in src/pages/es/. For a link to the same page in that language
 // (`localePath` in src/locales.mjs).
 export function usePageLocale(): string {
-  return splitLocale(useRouter().pathname).locale;
+  return usePageRoute().locale;
+}
+
+// The current page's language and its route, the name of the page in every
+// language (`splitLocale` in src/locales.mjs): `{locale: 'es', route: '/'}` on
+// the Spanish home page.
+export function usePageRoute(): {locale: string; route: string} {
+  return splitLocale(useRouter().pathname);
 }
