@@ -18,7 +18,8 @@ test.describe('subprocessors', () => {
       'Agreements',
     ]);
     const rows = table.locator('tbody').getByRole('row');
-    await expect(rows).toHaveCount(13);
+    // One for each company on the list. A new subprocessor changes this number.
+    await expect(rows).toHaveCount(15);
     // Each company links its data processing terms.
     for (const row of await rows.all()) {
       await expect(row.getByRole('link', {name: /DPA/})).toHaveCount(1);
