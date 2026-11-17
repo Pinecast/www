@@ -3,6 +3,10 @@
     // Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line
     "defaultMessage": "JSON Feed"
   },
+  "+4Sy4j": {
+    // Sentence in a small box at the bottom of a page, shown to a reader whose browser prefers this language, on a version of the page in another language. "English" is the language this sentence is written in: a translation names its own language instead (in Spanish, "español"), because the reader sees it in their language
+    "defaultMessage": "This page is in English too."
+  },
   "+dsVvY": {
     // Introduction under the heading of the Learn page
     "defaultMessage": "Pinecast has tools for podcasters of all experience levels. Whether you are just getting started or running a podcast for a business, we have your back."
@@ -162,6 +166,10 @@
   "BzMale": {
     // One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.
     "defaultMessage": "$0 advertising budget, 100% focus on great software"
+  },
+  "CFw0Q8": {
+    // Screen reader name of a small box at the bottom of a page. It is shown to a reader whose browser prefers this language, on a version of the page in another language, and offers the page in this language. It is written in this language, whatever the language of the page
+    "defaultMessage": "Language"
   },
   "CHAMHu": {
     // A feature of the Starter plan, in the list on its ticket in the pricing section
@@ -551,6 +559,10 @@
     // Name of an add-on, the button that opens its row in the add-ons list of the pricing section
     "defaultMessage": "Pro Analytics add-on"
   },
+  "f8xDz/": {
+    // Screen reader name of the button with an × that closes the small box that offers this page in this language. The box does not come back after it is closed
+    "defaultMessage": "Close"
+  },
   "flYdus": {
     // Link to the privacy policy, in the bottom row of every page
     "defaultMessage": "Privacy"
@@ -610,6 +622,10 @@
   "iWx2t1": {
     // What the Podcast Chapters feature does, shown when its row on the Features page is open
     "defaultMessage": "Link your listeners to specific timecodes within your episode. This helps folks find the exact segment they're looking for within a larger episode."
+  },
+  "iZOWVX": {
+    // Link under the sentence "This page is in English too.", in the same small box. It opens this page in the language of the link. "English" is the language this link is written in: a translation names its own language instead (in Spanish, "español")
+    "defaultMessage": "Read it in English"
   },
   "ibbkiP": {
     // Main heading of the home page, at the top. {br} is a line break: the heading is big, and the lines are short

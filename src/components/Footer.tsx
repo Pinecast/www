@@ -12,6 +12,7 @@ import {
   languageTag,
   localePath,
 } from '@/locales.mjs';
+import {saveLanguageChoice} from '@/languageChoice';
 import {Body4, Caption} from './Typography';
 import {PrimaryButton} from './PrimaryButton';
 import {FooterNavLinks} from './FooterNavLinks';
@@ -388,6 +389,8 @@ export const Footer = () => {
                   lang: languageTag(language),
                   hrefLang: language,
                   'aria-current': language === locale ? 'page' : undefined,
+                  // A choice: the site suggests no language after it.
+                  onClick: () => saveLanguageChoice(language),
                 },
               ])}
             />

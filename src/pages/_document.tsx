@@ -27,6 +27,7 @@ import {MOTION_ATTRIBUTE, MOTION_INIT_SCRIPT} from '../hooks/useMotion';
 import {FONT_URLS} from '../fonts';
 import {HERO_STILLS, stillMedia} from '../heroStills';
 import {languageTagOf} from '../i18n';
+import {SUGGESTION_ROOM_PROPERTY} from '@/components/LanguageSuggestion';
 import {splitLocale} from '../locales.mjs';
 
 Document.getInitialProps = async (context: DocumentContext) => {
@@ -208,7 +209,13 @@ export default function Document({
                bottom. The browser scrolls the element into view, but not
                its ring, which is outside it: leave room for that too. */
             scroll-padding-top: ${SCROLL_PADDING_TOP}px;
-            scroll-padding-bottom: ${SCROLL_PADDING_BOTTOM}px;
+            /* The language suggestion (LanguageSuggestion) sets
+               ${SUGGESTION_ROOM_PROPERTY} to the room it covers while it
+               shows. */
+            scroll-padding-bottom: max(
+              ${SCROLL_PADDING_BOTTOM}px,
+              var(${SUGGESTION_ROOM_PROPERTY}, 0px)
+            );
           }
           /* Wherever the mute button shows: MainHeader hides it with
              MIN_TABLET_MEDIA_QUERY. (max-width: ${TABLET_BREAKPOINT}px) did not
@@ -216,7 +223,10 @@ export default function Document({
              ${TABLET_BREAKPOINT + 1}px. */
           ${NOT_MIN_TABLET_MEDIA_QUERY} {
             html {
-              scroll-padding-bottom: ${MUTE_BUTTON_SCROLL_PADDING_BOTTOM}px;
+              scroll-padding-bottom: max(
+                ${MUTE_BUTTON_SCROLL_PADDING_BOTTOM}px,
+                var(${SUGGESTION_ROOM_PROPERTY}, 0px)
+              );
             }
           }
           /* A sticky part of the page cannot scroll clear of the mute

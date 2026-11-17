@@ -13,6 +13,7 @@ import {InfoPageFooterUpsell} from '@/components/InfoPageFooterUpsell';
 import {TunedInPanels} from '@/components/TunedIn';
 import {StickyLine} from '@/components/StickyLine';
 import {MAIN_CONTENT_ID, SkipLink} from '@/components/SkipLink';
+import {LanguageSuggestion} from '@/components/LanguageSuggestion';
 
 export default function Features() {
   const intl = useIntl();
@@ -35,6 +36,7 @@ export default function Features() {
         />
       </Head>
       <SkipLink />
+      <LanguageSuggestion />
       <MainLogo startDark />
       <MainHeader />
       <main id={MAIN_CONTENT_ID}>
