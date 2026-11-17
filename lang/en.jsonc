@@ -255,6 +255,10 @@
     // Heading of a tile in the site menu, a link to the guide for people who are new to podcasting
     "defaultMessage": "Podcasting for beginners"
   },
+  "JcLd1D": {
+    // In a box at the top of a legal document of the website (the privacy policy, the terms of use, the list of subprocessors, the use of AI). It is shown only to a reader of this language, in this language, on the English page, which is not translated: it says that the document is in English only. "English" is the language of the document
+    "defaultMessage": "This document is only in English."
+  },
   "KCylH7": {
     // Small label above the heading of a tile in the site menu, shown in capitals. Tiles go from level 1 to 3; this one is a link to the guide for experienced podcasters.
     "defaultMessage": "Level 2"
@@ -406,6 +410,10 @@
   "TSuPJK": {
     // A price in US dollars, in big numbers before “/ Month” or “/ Year”
     "defaultMessage": "$15"
+  },
+  "TgVvqo": {
+    // Second sentence of the box that says a legal document is only in English. {email} is the support email address of Pinecast, which <link> makes a link. It promises nothing about the language of the reply
+    "defaultMessage": "Questions? Write to <link>{email}<\/link>."
   },
   "Tydwy2": {
     // What the Distribution feature does, shown when its row on the Features page is open

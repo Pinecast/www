@@ -6,6 +6,7 @@ import {styletron} from '../styletron';
 import {AudioManagerProvider} from '@/components/AudioManagerContext';
 import {
   DEFAULT_LOCALE,
+  EnglishOnlyCatalogsContext,
   SuggestionCatalogsContext,
   languageTagOf,
   type LocaleProps,
@@ -29,15 +30,17 @@ export default function App({Component, pageProps}: AppProps<LocaleProps>) {
     >
       <StyletronProvider value={styletron}>
         <SuggestionCatalogsContext.Provider value={pageProps.suggestions}>
-          <AudioManagerProvider>
-            <Head>
-              <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1"
-              />
-            </Head>
-            <Component {...pageProps} />
-          </AudioManagerProvider>
+          <EnglishOnlyCatalogsContext.Provider value={pageProps.englishOnly}>
+            <AudioManagerProvider>
+              <Head>
+                <meta
+                  name="viewport"
+                  content="width=device-width, initial-scale=1"
+                />
+              </Head>
+              <Component {...pageProps} />
+            </AudioManagerProvider>
+          </EnglishOnlyCatalogsContext.Provider>
         </SuggestionCatalogsContext.Provider>
       </StyletronProvider>
     </IntlProvider>

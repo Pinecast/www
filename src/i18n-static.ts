@@ -3,11 +3,8 @@ import {join} from 'node:path';
 
 import type {GetStaticProps} from 'next';
 
-import {
-  DEFAULT_LOCALE,
-  type LocaleProps,
-  type SuggestionCatalogs,
-} from './i18n';
+import {DEFAULT_LOCALE, type LocaleProps, type MessageCatalogs} from './i18n';
+import {ENGLISH_ONLY_MESSAGES} from './englishOnlyMessages';
 import {SUGGESTION_MESSAGES} from './languageSuggestionMessages';
 import {LOCALES, hasPage, languageTag} from './locales.mjs';
 
@@ -22,7 +19,9 @@ import {LOCALES, hasPage, languageTag} from './locales.mjs';
 export function localeStaticProps(
   locale: string,
   route: string,
-): GetStaticProps<Required<LocaleProps>> {
+): GetStaticProps<
+  Required<Pick<LocaleProps, 'locale' | 'messages' | 'suggestions'>>
+> {
   return async () => ({
     props: {
       locale,
@@ -43,32 +42,55 @@ export function defaultLocaleStaticProps(
   });
 }
 
+// The `getStaticProps` of a policy page, which stays in English (privacy,
+// terms, subprocessors, AI use): the messages of the English-only notice in
+// each other language of the site.
+export const englishOnlyStaticProps: GetStaticProps<
+  Pick<LocaleProps, 'englishOnly'>
+> = async () => ({
+  props: {
+    englishOnly: catalogsOf(
+      LOCALES.filter(locale => locale !== DEFAULT_LOCALE),
+      ENGLISH_ONLY_MESSAGES,
+    ),
+  },
+});
+
 // For each language of the page but its own and English, the messages of the
-// language suggestion, from that language's catalog.
+// language suggestion.
 function suggestionCatalogs(
   route: string,
   pageLocale: string,
-): SuggestionCatalogs {
-  const ids = Object.values(SUGGESTION_MESSAGES).map(({id}) => {
+): MessageCatalogs {
+  return catalogsOf(
+    LOCALES.filter(
+      locale =>
+        locale !== pageLocale &&
+        locale !== DEFAULT_LOCALE &&
+        hasPage(route, locale),
+    ),
+    SUGGESTION_MESSAGES,
+  );
+}
+
+// The `messages` in each of `locales`, from the compiled catalogs. A language
+// whose catalog does not have every one of them yet is left out: English words
+// in a box marked as another language would be worse than no box.
+function catalogsOf(
+  locales: ReadonlyArray<string>,
+  messages: Record<string, {id?: string}>,
+): MessageCatalogs {
+  const ids = Object.values(messages).map(({id}) => {
     if (!id) {
       throw new Error(
-        'A message of the language suggestion has no id: the formatjs transform (vendor/formatjs-loader.js) did not run on it.',
+        'A message has no id: the formatjs transform (vendor/formatjs-loader.js) did not run on it.',
       );
     }
     return id;
   });
-  const catalogs: SuggestionCatalogs = {};
-  for (const locale of LOCALES) {
-    if (
-      locale === pageLocale ||
-      locale === DEFAULT_LOCALE ||
-      !hasPage(route, locale)
-    ) {
-      continue;
-    }
+  const catalogs: MessageCatalogs = {};
+  for (const locale of locales) {
     const catalog = compiledCatalog(locale);
-    // A language whose catalog does not have every message yet gets no card:
-    // English words in a card marked as another language would be worse.
     if (ids.every(id => id in catalog)) {
       catalogs[locale] = Object.fromEntries(ids.map(id => [id, catalog[id]]));
     }
