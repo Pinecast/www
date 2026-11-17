@@ -103,7 +103,10 @@ const Header = () => {
           defaultMessage="Features Index"
         />
       </PillButton>
+      {/* `fit`: smaller where a word of the heading is wider than its line,
+          as a translation can be (src/hooks/useFitWords.ts). */}
       <H1
+        fit
         style={{
           padding: '0 5%',
           [MIN_TABLET_MEDIA_QUERY]: {marginBottom: '50px'},
