@@ -5,6 +5,7 @@ import {IntlProvider} from 'react-intl';
 import {styletron} from '../styletron';
 import {AudioManagerProvider} from '@/components/AudioManagerContext';
 import {DEFAULT_LOCALE, languageTagOf, type LocaleProps} from '@/i18n';
+import {useSmoothScroll} from '@/hooks/useSmoothScroll';
 import Head from 'next/head';
 import * as React from 'react';
 
@@ -16,6 +17,7 @@ export default function App({Component, pageProps}: AppProps<LocaleProps>) {
   React.useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
+  useSmoothScroll();
   return (
     <IntlProvider
       locale={lang}
