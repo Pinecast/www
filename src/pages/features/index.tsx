@@ -31,6 +31,7 @@ import {Expand} from '@/icons/Expand';
 import {Expandable} from '@/components/Expandable';
 import {MAIN_CONTENT_ID, SkipLink} from '@/components/SkipLink';
 import {LanguageSuggestion} from '@/components/LanguageSuggestion';
+import {defaultLocaleStaticProps} from '@/i18n-static';
 
 export default function Features() {
   const intl = useIntl();
@@ -790,3 +791,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
     </li>
   );
 });
+
+// The Features page is in Spanish too: the language suggestion needs its
+// messages in Spanish (src/i18n-static.ts).
+export const getStaticProps = defaultLocaleStaticProps('/features');

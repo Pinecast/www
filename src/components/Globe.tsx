@@ -7,7 +7,7 @@ import {defineMessage, FormattedMessage, MessageDescriptor} from 'react-intl';
 import * as ReactDOM from 'react-dom/client';
 import {useDarkSection} from '@/hooks/useDarkSection';
 import {MonumentGroteskBold} from '@/fonts';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import {
   getScrollForProgress,
   useScrollProgressEffect,

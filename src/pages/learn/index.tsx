@@ -14,6 +14,7 @@ import {TunedInPanels} from '@/components/TunedIn';
 import {StickyLine} from '@/components/StickyLine';
 import {MAIN_CONTENT_ID, SkipLink} from '@/components/SkipLink';
 import {LanguageSuggestion} from '@/components/LanguageSuggestion';
+import {defaultLocaleStaticProps} from '@/i18n-static';
 
 export default function Features() {
   const intl = useIntl();
@@ -97,3 +98,7 @@ const Header = () => {
     </div>
   );
 };
+
+// The Learn page is in Spanish too: the language suggestion needs its
+// messages in Spanish (src/i18n-static.ts).
+export const getStaticProps = defaultLocaleStaticProps('/learn');

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import * as React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 

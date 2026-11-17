@@ -4,7 +4,7 @@ import {MIN_TABLET_MEDIA_QUERY} from '@/constants';
 import {useCSS} from '@/hooks/useCSS';
 import type {MDXComponents} from 'mdx/types';
 import Image from 'next/image';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import {MonumentGroteskSemiMono, MonumentGroteskBold} from '@/fonts';
 
 // This file allows you to provide custom React components
@@ -91,10 +91,13 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <MarkdownHeading {...props} depth={6} />
     ),
 
-    p: ({children}) => {
+    // `lang` marks a paragraph that stays in English on a page in another
+    // language (the transcripts in src/pages/testimonial-transcripts.tsx).
+    p: ({children, lang}) => {
       const css = useCSS(); // eslint-disable-line react-hooks/rules-of-hooks
       return (
         <p
+          lang={lang}
           className={css({
             marginTop: 0,
             marginRight: 'var(--text-gutter)',

@@ -13,7 +13,7 @@ import {AspectRatioBox} from './AspectRatioBox';
 import {HorizontalCarousel} from './HorizontalCarousel';
 import {SecondaryButton} from './SecondaryButton';
 import {PrimaryButton} from './PrimaryButton';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import {
   Codec,
   NoncriticalVideo,

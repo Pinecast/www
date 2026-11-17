@@ -1,7 +1,7 @@
 import {MIN_TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY} from '@/constants';
 import {MonumentGroteskBold} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import {ReactNode} from 'react';
 import {StyleObject} from 'styletron-react';
 

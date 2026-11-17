@@ -27,7 +27,8 @@
 //    English only: the sitemap lists what the export holds and nothing else,
 //    and lists a page's alternates only for the languages that have it.
 // 3. Add its name, in itself, to LANGUAGE_NAMES, and its pages to
-//    TRANSLATED_ROUTES, for the language links in the footer.
+//    TRANSLATED_ROUTES, for the language links in the footer and for the
+//    links of its pages (src/components/SiteLink.tsx).
 //    tests/locale-pages.spec.ts fails if TRANSLATED_ROUTES is not what the
 //    export holds.
 // `out/sitemap.xml` then has the new pages, and each page lists all of its
@@ -71,11 +72,14 @@ export const LANGUAGE_NAMES = {en: 'English', es: 'Español'};
  * The routes of the pages that each language other than the default has. Every
  * page is in the default language. A language link goes to the same page in
  * that language where there is one, and to that language's home page where
- * there is not.
+ * there is not. Any other link of a page goes to the version in the page's
+ * language where there is one (`linkTarget`).
  *
  * @type {Readonly<Record<string, ReadonlyArray<string>>>}
  */
-export const TRANSLATED_ROUTES = {es: ['/']};
+export const TRANSLATED_ROUTES = {
+  es: ['/', '/features', '/learn', '/testimonial-transcripts'],
+};
 
 /**
  * Whether a page is in a language.
@@ -111,6 +115,39 @@ export function languageTag(locale) {
 export function localePath(route, locale) {
   if (locale === DEFAULT_LOCALE) return route;
   return route === '/' ? `/${locale}/` : `/${locale}${route}`;
+}
+
+/**
+ * Where a link of the site goes from a page in `pageLocale`, and the language
+ * of the page it reaches. A link names a page by its route, maybe with a query
+ * or a fragment (`/features`, `/#pricing`). From a page in a language other
+ * than the default, it goes to that language's version of the page where there
+ * is one (`/es/features`), and otherwise to the default-language page, which
+ * `hrefLang` then names. An address that is already in a language (`/es/`), or
+ * that is not a path of the site, stays as it is.
+ *
+ * @param {string} href
+ * @param {string} pageLocale
+ * @returns {{href: string, hrefLang?: string}}
+ */
+export function linkTarget(href, pageLocale) {
+  if (
+    pageLocale === DEFAULT_LOCALE ||
+    !href.startsWith('/') ||
+    href.startsWith('//')
+  ) {
+    return {href};
+  }
+  const end = href.search(/[?#]/);
+  const route = end === -1 ? href : href.slice(0, end);
+  const rest = end === -1 ? '' : href.slice(end);
+  if (splitLocale(route).locale !== DEFAULT_LOCALE) {
+    return {href};
+  }
+  if (hasPage(route, pageLocale)) {
+    return {href: localePath(route, pageLocale) + rest};
+  }
+  return {href, hrefLang: DEFAULT_LOCALE};
 }
 
 /**

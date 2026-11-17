@@ -5,6 +5,7 @@ import {TESTIMONIALS} from '@/components/Testimonials';
 import {Title} from '@/components/TextBlocks';
 import {LegalLayout} from '@/layouts/LegalLayout';
 import {useMDXComponents} from '../../mdx-components';
+import {defaultLocaleStaticProps} from '@/i18n-static';
 
 export default function TestimonialTranscripts() {
   const intl = useIntl();
@@ -42,10 +43,17 @@ export default function TestimonialTranscripts() {
       {TESTIMONIALS.map(({customer, script}) => (
         <React.Fragment key={customer}>
           <Title>{customer}</Title>
-          {/* The customer's own recorded words: not translated. */}
-          <Paragraph>{script.text.replace(/'/g, '’')}</Paragraph>
+          {/* The customer's own recorded words: not translated. They say
+              that they are English, for the pages in other languages. */}
+          <Paragraph lang="en">{script.text.replace(/'/g, '’')}</Paragraph>
         </React.Fragment>
       ))}
     </LegalLayout>
   );
 }
+
+// The page of the testimonial transcripts is in Spanish too: the language
+// suggestion needs its messages in Spanish (src/i18n-static.ts).
+export const getStaticProps = defaultLocaleStaticProps(
+  '/testimonial-transcripts',
+);

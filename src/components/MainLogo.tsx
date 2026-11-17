@@ -6,7 +6,7 @@ import {ADAPTIVE_SURFACE, TABLET_MEDIA_QUERY} from '@/constants';
 import {Logo} from '@/icons/Logo';
 import * as logoLoad from '@/animations/logo-load.json';
 import * as logoLoadDark from '@/animations/logo-load-dark.json';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import {useCSS} from '@/hooks/useCSS';
 import {useAudioManager} from '@/hooks/useAudioManager';
 import {SoundEffect} from '@/hooks/useSoundEffects';

@@ -4,7 +4,7 @@ import {
   MIN_TABLET_MEDIA_QUERY,
 } from '@/constants';
 import React from 'react';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import {
   defineMessage,
   FormattedMessage,
