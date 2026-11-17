@@ -759,6 +759,10 @@
     "defaultMessage": "Embeddable App Links",
     "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
   },
+  "rw89n6": {
+    "defaultMessage": "Language",
+    "description": "Heading of the column of links to the site in each language, in the footer of every page. Each link under it is the name of a language, in that language"
+  },
   "sGdkJB": {
     "defaultMessage": "Understanding your growth",
     "description": "A link in the Quick tips list of the menu, to a Learn article. Shown as a pill that does not wrap"

@@ -1,7 +1,13 @@
 import {existsSync, readFileSync} from 'node:fs';
-import {expect, test} from '@playwright/test';
+import {expect, test, type Page} from '@playwright/test';
 
-import {load} from './helpers';
+import {
+  DEFAULT_LOCALE,
+  LOCALES,
+  TRANSLATED_ROUTES,
+  splitLocale,
+} from '../src/locales.mjs';
+import {exportedPages, load} from './helpers';
 
 // The pages of a language other than English (src/locales.mjs). Run
 // `npm run build` first. The sitemap of these pages is in sitemap.spec.ts.
@@ -97,4 +103,61 @@ test('the English home page stays English', async ({page}) => {
     'href',
     '/',
   );
+});
+
+// The Language column of the footer (Footer.tsx): each language by its own
+// name, marked as that language, to this page in it or to its home page.
+test.describe('the language links in the footer', () => {
+  // The list that has a link named "English": the name is not translated.
+  const languageLinks = (page: Page) =>
+    page
+      .getByRole('contentinfo')
+      .getByRole('list')
+      .filter({has: page.getByRole('link', {name: 'English', exact: true})})
+      .getByRole('link');
+
+  test('on the English home page', async ({page}) => {
+    await load(page, '/');
+    const links = languageLinks(page);
+    await expect(links).toHaveText(['English', 'Español']);
+    await expect(links.nth(0)).toHaveAttribute('aria-current', 'page');
+    await expect(links.nth(0)).toHaveAttribute('href', '/');
+    await expect(links.nth(1)).toHaveAttribute('href', '/es');
+    await expect(links.nth(1)).toHaveAttribute('lang', 'es-419');
+    await expect(links.nth(1)).toHaveAttribute('hreflang', 'es');
+    await expect(links.nth(1)).not.toHaveAttribute('aria-current');
+  });
+
+  test('on the Spanish home page', async ({page}) => {
+    await load(page, '/es/');
+    const links = languageLinks(page);
+    await expect(links).toHaveText(['English', 'Español']);
+    await expect(links.nth(0)).toHaveAttribute('href', '/');
+    await expect(links.nth(0)).toHaveAttribute('lang', 'en');
+    await expect(links.nth(1)).toHaveAttribute('aria-current', 'page');
+  });
+
+  test('on a page that is only in English, Español opens the Spanish home page', async ({
+    page,
+  }) => {
+    await load(page, '/features/analytics');
+    const links = languageLinks(page);
+    await expect(links.nth(0)).toHaveAttribute('href', '/features/analytics');
+    await expect(links.nth(0)).toHaveAttribute('aria-current', 'page');
+    await expect(links.nth(1)).toHaveAttribute('href', '/es');
+  });
+});
+
+test('TRANSLATED_ROUTES lists the pages that the export has in each language', () => {
+  const inExport: Record<string, Array<string>> = {};
+  for (const path of exportedPages()) {
+    const {locale, route} = splitLocale(path);
+    if (locale !== DEFAULT_LOCALE) (inExport[locale] ??= []).push(route);
+  }
+  for (const locale of LOCALES) {
+    if (locale === DEFAULT_LOCALE) continue;
+    expect([...(TRANSLATED_ROUTES[locale] ?? [])].sort()).toEqual(
+      (inExport[locale] ?? []).sort(),
+    );
+  }
 });
