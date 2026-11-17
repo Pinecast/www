@@ -3,6 +3,7 @@ import {InfoPageFooterUpsell} from '@/components/InfoPageFooterUpsell';
 import {MainHeader} from '@/components/MainHeader';
 import {MainLogo} from '@/components/MainLogo';
 import {MAIN_CONTENT_ID, SkipLink} from '@/components/SkipLink';
+import {LanguageSuggestion} from '@/components/LanguageSuggestion';
 import {
   MarqueeDivider,
   StandardMarqueeDivider,
@@ -162,6 +163,7 @@ export function BaseLayout(
           <meta name="description" content={description} />
         </Head>
         <SkipLink />
+        <LanguageSuggestion />
         {/* The logo and the header are fixed, so they take no space here. */}
         <MainLogo />
         <MainHeader />

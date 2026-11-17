@@ -4,7 +4,13 @@ import {IntlProvider} from 'react-intl';
 
 import {styletron} from '../styletron';
 import {AudioManagerProvider} from '@/components/AudioManagerContext';
-import {DEFAULT_LOCALE, languageTagOf, type LocaleProps} from '@/i18n';
+import {
+  DEFAULT_LOCALE,
+  EnglishOnlyCatalogsContext,
+  SuggestionCatalogsContext,
+  languageTagOf,
+  type LocaleProps,
+} from '@/i18n';
 import {useSmoothScroll} from '@/hooks/useSmoothScroll';
 import Head from 'next/head';
 import * as React from 'react';
@@ -25,15 +31,19 @@ export default function App({Component, pageProps}: AppProps<LocaleProps>) {
       messages={pageProps.messages}
     >
       <StyletronProvider value={styletron}>
-        <AudioManagerProvider>
-          <Head>
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1"
-            />
-          </Head>
-          <Component {...pageProps} />
-        </AudioManagerProvider>
+        <SuggestionCatalogsContext.Provider value={pageProps.suggestions}>
+          <EnglishOnlyCatalogsContext.Provider value={pageProps.englishOnly}>
+            <AudioManagerProvider>
+              <Head>
+                <meta
+                  name="viewport"
+                  content="width=device-width, initial-scale=1"
+                />
+              </Head>
+              <Component {...pageProps} />
+            </AudioManagerProvider>
+          </EnglishOnlyCatalogsContext.Provider>
+        </SuggestionCatalogsContext.Provider>
       </StyletronProvider>
     </IntlProvider>
   );

@@ -1,4 +1,5 @@
 import {useRouter} from 'next/router';
+import * as React from 'react';
 import type {IntlConfig} from 'react-intl';
 
 import {languageTag, splitLocale} from './locales.mjs';
@@ -13,10 +14,28 @@ export const DEFAULT_LOCALE = 'en';
 // the bundle. A page in another language passes its `locale`, the code in its
 // address (`es`), and the catalog of that locale only, from `getStaticProps`
 // (`localeStaticProps` in src/i18n-static.ts).
+//
+// A page that is in more than one language also passes `suggestions`: for each
+// of its other languages but English, the messages of the language suggestion
+// in that language (src/components/LanguageSuggestion.tsx). A policy page,
+// which stays in English, passes `englishOnly`: for each language of the site
+// but English, the messages of the English-only notice
+// (src/components/EnglishOnlyNotice.tsx). English needs none of them: its
+// messages are the `defaultMessage`s.
 export type LocaleProps = {
   locale?: string;
   messages?: IntlConfig['messages'];
+  suggestions?: MessageCatalogs;
+  englishOnly?: MessageCatalogs;
 };
+
+// Messages in languages other than the page's, by language code.
+export type MessageCatalogs = Record<string, IntlConfig['messages']>;
+
+// The `suggestions` of the page's props, which `_app.tsx` provides.
+export const SuggestionCatalogsContext = React.createContext<
+  MessageCatalogs | undefined
+>(undefined);
 
 // The code of the page's language in its address: `en`, `es`.
 export function localeOf(pageProps: LocaleProps | undefined): string {
@@ -42,3 +61,8 @@ export function usePageLocale(): string {
 export function usePageRoute(): {locale: string; route: string} {
   return splitLocale(useRouter().pathname);
 }
+
+// The `englishOnly` of the page's props, which `_app.tsx` provides.
+export const EnglishOnlyCatalogsContext = React.createContext<
+  MessageCatalogs | undefined
+>(undefined);

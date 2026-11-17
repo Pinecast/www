@@ -5,4 +5,4 @@ import {localeStaticProps} from '@/i18n-static';
 // out/es.html to out/es/index.html.
 export {default} from '../index';
 
-export const getStaticProps = localeStaticProps('es');
+export const getStaticProps = localeStaticProps('es', '/');

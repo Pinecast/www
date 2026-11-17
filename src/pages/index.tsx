@@ -21,6 +21,8 @@ import {useAudioManager} from '@/hooks/useAudioManager';
 import {useAfterCritical} from '@/hooks/useLoadOrder';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 import {MAIN_CONTENT_ID, SkipLink} from '@/components/SkipLink';
+import {LanguageSuggestion} from '@/components/LanguageSuggestion';
+import {defaultLocaleStaticProps} from '@/i18n-static';
 
 const SPLASH_ENABLED = false;
 const STICKY_LINE_SIZE = 1.5;
@@ -74,6 +76,7 @@ export default function Home() {
         {heroStillsIn && <link rel="prefetch" href="/videos/Footer2x.mp4" />}
       </Head>
       <SkipLink />
+      <LanguageSuggestion />
       {SPLASH_ENABLED ? (
         <>
           {!splashEnded && (
@@ -132,3 +135,7 @@ export default function Home() {
     </>
   );
 }
+
+// The home page is in Spanish too: the language suggestion needs its messages
+// in Spanish (src/i18n-static.ts).
+export const getStaticProps = defaultLocaleStaticProps('/');
