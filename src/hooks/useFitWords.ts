@@ -51,9 +51,11 @@ export function useFitWords<T extends HTMLElement>(
     const fit = () => {
       frame = 0;
       element.style.removeProperty('--fit');
-      element.style.overflowWrap = 'normal';
       // A pixel to spare, for the rounding of the line breaker.
       const width = options.current.room(element) - 1;
+      // Where nothing is fitted (a room with no end), a word that is too
+      // wide can still break, rather than be cut off.
+      element.style.overflowWrap = Number.isFinite(width) ? 'normal' : '';
       // Glyphs are rounded to pixels at each size, so a word made smaller in
       // proportion can still be a little too wide: measure again.
       let scale = 1;

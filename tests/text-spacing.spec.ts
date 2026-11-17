@@ -158,6 +158,57 @@ test.describe('with larger text spacing', () => {
     }
   }
 
+  // Below 1181px a row grows with its name, and a word that is too wide for
+  // the row breaks rather than being cut off ("Transcripciones" at 320px).
+  for (const path of inEveryLanguage(['/features'])) {
+    test(`the feature names of ${path} show all their text at 320px`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({width: 320, height: 800});
+      await load(page, path, {spacing: true});
+      const rows = page.getByRole('main').locator('ul li button');
+      expect(await rows.count()).toBeGreaterThan(0);
+      for (const row of await rows.all()) {
+        expect(await clippedText(row)).toEqual([]);
+      }
+    });
+  }
+
+  // A link drawn as a button (PrimaryButton, SecondaryButton) has a fixed
+  // height, unless the place that uses it lets it grow: a label that wraps
+  // spills across its border and its focus ring.
+  for (const path of inEveryLanguage(['/'])) {
+    test(`the button links of ${path} hold their labels at 320px`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({width: 320, height: 800});
+      await load(page, path, {spacing: true});
+      const spills = await page
+        .getByRole('main')
+        .locator('a')
+        .evaluateAll(links =>
+          links.flatMap(link => {
+            const style = getComputedStyle(link);
+            const drawn =
+              parseFloat(style.borderTopWidth) > 0 ||
+              style.backgroundColor !== 'rgba(0, 0, 0, 0)';
+            const box = link.getBoundingClientRect();
+            if (!drawn || !box.width || !link.checkVisibility()) return [];
+            const range = document.createRange();
+            range.selectNodeContents(link);
+            const text = range.getBoundingClientRect();
+            return text.height &&
+              (text.top < box.top - 1 || text.bottom > box.bottom + 1)
+              ? [
+                  `${link.textContent?.trim()}: ${Math.round(text.height)}px of text in ${Math.round(box.height)}px`,
+                ]
+              : [];
+          }),
+        );
+      expect(spills).toEqual([]);
+    });
+  }
+
   test('the customer names stay on the screen', async ({page}) => {
     await page.setViewportSize({width: 320, height: 800});
     await load(page, '/', {spacing: true});

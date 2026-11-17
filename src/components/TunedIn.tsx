@@ -760,6 +760,9 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
                 display: 'grid',
                 lineHeight: '1.2',
                 maxWidth: '230px',
+                // The button's own height is 40px: a label that wraps (in
+                // Spanish, with larger text spacing) makes it taller.
+                height: 'auto',
                 minHeight: '48px',
                 placeContent: 'center',
                 position: 'relative',
@@ -779,6 +782,9 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
                 display: 'grid',
                 lineHeight: '1.2',
                 maxWidth: '230px',
+                // The button's own height is 40px: a label that wraps (in
+                // Spanish, with larger text spacing) makes it taller.
+                height: 'auto',
                 minHeight: '48px',
                 placeContent: 'center',
                 position: 'relative',
