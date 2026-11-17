@@ -191,6 +191,9 @@
   "IvUg4C": {
     "defaultMessage": "Podcasting para principiantes"
   },
+  "JcLd1D": {
+    "defaultMessage": "Este documento solo está disponible en inglés."
+  },
   "KCylH7": {
     "defaultMessage": "Nivel 2"
   },
@@ -304,6 +307,9 @@
   },
   "TSuPJK": {
     "defaultMessage": "$15"
+  },
+  "TgVvqo": {
+    "defaultMessage": "¿Tienes preguntas? Escríbenos a <link>{email}</link>."
   },
   "Tydwy2": {
     "defaultMessage": "Publica tu programa en todas las principales plataformas de podcasts con un solo clic."
