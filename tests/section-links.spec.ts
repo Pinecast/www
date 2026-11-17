@@ -87,6 +87,46 @@ test.describe('links to a section of a page', () => {
     }
   }
 
+  // A <Link> to the section of another page: Next.js scrolls as the new page
+  // renders, and the page grows after that.
+  for (const viewport of VIEWPORTS) {
+    test(`a visit in the browser lands in view at ${viewport.width}×${viewport.height}`, async ({
+      page,
+    }) => {
+      const [from, to] = pagesWithSections;
+      const id = headingsWithId(to).at(-1)!;
+      await page.setViewportSize(viewport);
+
+      const landing = async (reducedMotion: 'reduce' | 'no-preference') => {
+        await page.emulateMedia({reducedMotion});
+        await page.goto(from);
+        await settled(page);
+        await page.evaluate(
+          ([path, id]) =>
+            (
+              window as unknown as {
+                next: {router: {push: (url: string) => Promise<boolean>}};
+              }
+            ).next.router.push(`${path}#${id}`),
+          [to, id],
+        );
+        await page.waitForFunction(id => !!document.getElementById(id), id);
+        await settled(page);
+        return page.evaluate(id => {
+          const {top} = document.getElementById(id)!.getBoundingClientRect();
+          return {top, scrollY: window.scrollY};
+        }, id);
+      };
+
+      const instant = await landing('reduce');
+      const smooth = await landing('no-preference');
+      expect(smooth.scrollY).toBeGreaterThan(0);
+      expect(smooth.top).toBeGreaterThanOrEqual(SCROLL_PADDING_TOP - 1);
+      expect(smooth.top).toBeLessThan(viewport.height);
+      expect(smooth.top).toBeCloseTo(instant.top, -1);
+    });
+  }
+
   test('a jump in the page after the load scrolls smoothly', async ({page}) => {
     await page.emulateMedia({reducedMotion: 'no-preference'});
     await page.goto(pagesWithSections[0]);
