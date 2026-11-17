@@ -1,4 +1,11 @@
 import {Intro} from '@/components/TextBlocks';
+import {EnglishOnlyNotice} from '@/components/EnglishOnlyNotice';
+import {englishOnlyStaticProps} from '@/i18n-static';
+
+{/* The policies stay in English: the note says so, in the reader's language. */}
+export const getStaticProps = englishOnlyStaticProps;
+
+<EnglishOnlyNotice />
 
 <Intro>
   Welcome to Pinecast. Before you use our service, you should understand these Terms of Use ("Terms") and our Privacy Policy. Anyone who uses Pinecast—to produce or consume content or for any other reason—agrees to these Terms.

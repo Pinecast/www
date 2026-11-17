@@ -255,6 +255,10 @@
     "defaultMessage": "Podcasting for beginners",
     "description": "Heading of a tile in the site menu, a link to the guide for people who are new to podcasting"
   },
+  "JcLd1D": {
+    "defaultMessage": "This document is only in English.",
+    "description": "In a box at the top of a legal document of the website (the privacy policy, the terms of use, the list of subprocessors, the use of AI). It is shown only to a reader of this language, in this language, on the English page, which is not translated: it says that the document is in English only. \"English\" is the language of the document"
+  },
   "KCylH7": {
     "defaultMessage": "Level 2",
     "description": "Small label above the heading of a tile in the site menu, shown in capitals. Tiles go from level 1 to 3; this one is a link to the guide for experienced podcasters."
@@ -406,6 +410,10 @@
   "TSuPJK": {
     "defaultMessage": "$15",
     "description": "A price in US dollars, in big numbers before “/ Month” or “/ Year”"
+  },
+  "TgVvqo": {
+    "defaultMessage": "Questions? Write to <link>{email}</link>.",
+    "description": "Second sentence of the box that says a legal document is only in English. {email} is the support email address of Pinecast, which <link> makes a link. It promises nothing about the language of the reply"
   },
   "Tydwy2": {
     "defaultMessage": "Get your show on all the major podcast platforms with a single click.",

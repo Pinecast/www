@@ -1,4 +1,11 @@
 import {Intro, Table} from '@/components/TextBlocks';
+import {EnglishOnlyNotice} from '@/components/EnglishOnlyNotice';
+import {englishOnlyStaticProps} from '@/i18n-static';
+
+{/* The policies stay in English: the note says so, in the reader's language. */}
+export const getStaticProps = englishOnlyStaticProps;
+
+<EnglishOnlyNotice />
 
 <Intro>
   Podcasting is a medium for humans. Pinecast respects that.
