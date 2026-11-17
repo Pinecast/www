@@ -1,4 +1,5 @@
 import {useRouter} from 'next/router';
+import * as React from 'react';
 import type {IntlConfig} from 'react-intl';
 
 import {languageTag, splitLocale} from './locales.mjs';
@@ -13,10 +14,23 @@ export const DEFAULT_LOCALE = 'en';
 // the bundle. A page in another language passes its `locale`, the code in its
 // address (`es`), and the catalog of that locale only, from `getStaticProps`
 // (`localeStaticProps` in src/i18n-static.ts).
+//
+// A page that is in more than one language also passes `suggestions`: for each
+// of its other languages but English, the messages of the language suggestion
+// in that language (src/components/LanguageSuggestion.tsx). English needs none:
+// its messages are the `defaultMessage`s.
 export type LocaleProps = {
   locale?: string;
   messages?: IntlConfig['messages'];
+  suggestions?: SuggestionCatalogs;
 };
+
+export type SuggestionCatalogs = Record<string, IntlConfig['messages']>;
+
+// The `suggestions` of the page's props, which `_app.tsx` provides.
+export const SuggestionCatalogsContext = React.createContext<
+  SuggestionCatalogs | undefined
+>(undefined);
 
 // The code of the page's language in its address: `en`, `es`.
 export function localeOf(pageProps: LocaleProps | undefined): string {

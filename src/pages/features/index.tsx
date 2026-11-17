@@ -30,6 +30,7 @@ import {Collapse} from '@/icons/Collapse';
 import {Expand} from '@/icons/Expand';
 import {Expandable} from '@/components/Expandable';
 import {MAIN_CONTENT_ID, SkipLink} from '@/components/SkipLink';
+import {LanguageSuggestion} from '@/components/LanguageSuggestion';
 
 export default function Features() {
   const intl = useIntl();
@@ -53,6 +54,7 @@ export default function Features() {
         />
       </Head>
       <SkipLink />
+      <LanguageSuggestion />
       <MainLogo startDark />
       <MainHeader />
       <main id={MAIN_CONTENT_ID}>

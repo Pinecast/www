@@ -12,6 +12,8 @@ import {
   languageTag,
   localePath,
 } from '@/locales.mjs';
+import {saveLanguageChoice} from '@/languageChoice';
+import {SUGGESTION_ROOM_PROPERTY} from './LanguageSuggestion';
 import {Body4, Caption} from './Typography';
 import {PrimaryButton} from './PrimaryButton';
 import {FooterNavLinks} from './FooterNavLinks';
@@ -134,7 +136,10 @@ export const Footer = () => {
           paddingRight: '20px',
           paddingLeft: '20px',
           '--footer-room': `${CONTAINER_PADDING_BOTTOM}px`,
-          paddingBottom: 'var(--footer-room)',
+          // Room for the language suggestion too, while it shows
+          // (LanguageSuggestion): at the end of the page, the legal row
+          // scrolls clear of it.
+          paddingBottom: `max(var(--footer-room), var(${SUGGESTION_ROOM_PROPERTY}, 0px))`,
           position: 'relative',
 
           // The floating mute button (MainHeader) covers the bottom left of
@@ -388,6 +393,8 @@ export const Footer = () => {
                   lang: languageTag(language),
                   hrefLang: language,
                   'aria-current': language === locale ? 'page' : undefined,
+                  // A choice: the site suggests no language after it.
+                  onClick: () => saveLanguageChoice(language),
                 },
               ])}
             />

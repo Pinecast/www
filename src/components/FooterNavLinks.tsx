@@ -8,7 +8,7 @@ import {AnchorHTMLAttributes, ReactNode} from 'react';
 // language of their name and of the page they open, and which is the page's.
 type LinkAttributes = Pick<
   AnchorHTMLAttributes<HTMLAnchorElement>,
-  'lang' | 'hrefLang' | 'aria-current'
+  'lang' | 'hrefLang' | 'aria-current' | 'onClick'
 >;
 
 export const FooterNavLinks = ({

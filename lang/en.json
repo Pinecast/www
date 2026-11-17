@@ -3,6 +3,10 @@
     "defaultMessage": "JSON Feed",
     "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
   },
+  "+4Sy4j": {
+    "defaultMessage": "This page is in English too.",
+    "description": "Sentence in a small box at the bottom of a page, shown to a reader whose browser prefers this language, on a version of the page in another language. \"English\" is the language this sentence is written in: a translation names its own language instead (in Spanish, \"español\"), because the reader sees it in their language"
+  },
   "+dsVvY": {
     "defaultMessage": "Pinecast has tools for podcasters of all experience levels. Whether you are just getting started or running a podcast for a business, we have your back.",
     "description": "Introduction under the heading of the Learn page"
@@ -162,6 +166,10 @@
   "BzMale": {
     "defaultMessage": "$0 advertising budget, 100% focus on great software",
     "description": "One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line."
+  },
+  "CFw0Q8": {
+    "defaultMessage": "Language",
+    "description": "Screen reader name of a small box at the bottom of a page. It is shown to a reader whose browser prefers this language, on a version of the page in another language, and offers the page in this language. It is written in this language, whatever the language of the page"
   },
   "CHAMHu": {
     "defaultMessage": "Premium analytics",
@@ -551,6 +559,10 @@
     "defaultMessage": "Pro Analytics add-on",
     "description": "Name of an add-on, the button that opens its row in the add-ons list of the pricing section"
   },
+  "f8xDz/": {
+    "defaultMessage": "Close",
+    "description": "Screen reader name of the button with an × that closes the small box that offers this page in this language. The box does not come back after it is closed"
+  },
   "flYdus": {
     "defaultMessage": "Privacy",
     "description": "Link to the privacy policy, in the bottom row of every page"
@@ -610,6 +622,10 @@
   "iWx2t1": {
     "defaultMessage": "Link your listeners to specific timecodes within your episode. This helps folks find the exact segment they're looking for within a larger episode.",
     "description": "What the Podcast Chapters feature does, shown when its row on the Features page is open"
+  },
+  "iZOWVX": {
+    "defaultMessage": "Read it in English",
+    "description": "Link under the sentence \"This page is in English too.\", in the same small box. It opens this page in the language of the link. \"English\" is the language this link is written in: a translation names its own language instead (in Spanish, \"español\")"
   },
   "ibbkiP": {
     "defaultMessage": "Hi! I’m{br}your host",
