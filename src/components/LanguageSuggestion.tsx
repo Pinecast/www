@@ -44,9 +44,32 @@ const MIN_CLEAR_HEIGHT = 200;
 const NARROW_MEDIA_QUERY = '@media (max-width: 503px)';
 const ABOVE_MUTE_BUTTON = 24 + 96 + 12;
 
-// Elements that take keyboard focus, for the focus after the card closes.
+// Elements that take keyboard focus, for the focus after the card goes.
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+// How long the page must not scroll before the card checks the focused
+// element, where the browser does not send `scrollend`.
+const SCROLL_SETTLE_MS = 120;
+
+// When the card goes, or hides, with focus in it, focus goes on to what
+// follows it, as if the reader had tabbed past the card, not to the page.
+function focusAfter(card: HTMLElement) {
+  if (!card.contains(document.activeElement)) {
+    return;
+  }
+  for (const element of document.querySelectorAll<HTMLElement>(FOCUSABLE)) {
+    if (
+      card.compareDocumentPosition(element) &
+        Node.DOCUMENT_POSITION_FOLLOWING &&
+      !card.contains(element) &&
+      element.getClientRects().length > 0
+    ) {
+      element.focus();
+      return;
+    }
+  }
+}
 
 // Offers the reader this page in their language: a small card at the bottom of
 // the window, written in that language (Matt, 2026-11-16). It shows when the
@@ -139,6 +162,10 @@ const SuggestionCard = ({
       );
       const roomFits =
         window.innerHeight - SCROLL_PADDING_TOP - room >= MIN_CLEAR_HEIGHT;
+      if (!roomFits) {
+        // A phone turned sideways, zoom or text spacing, with focus in it.
+        focusAfter(card);
+      }
       setFits(roomFits);
       if (roomFits) {
         root.style.setProperty(SUGGESTION_ROOM_PROPERTY, `${room}px`);
@@ -161,61 +188,56 @@ const SuggestionCard = ({
   // page can scroll it. Some parts of the page stay in place while it scrolls
   // (the hero at the top, the testimonials), so a focused element there can
   // still be under the card: then the card gets out of the way until focus
-  // moves on. It checks after the page has scrolled to the element, and again
-  // as a smooth scroll goes on.
+  // moves on. It checks once the page has stopped scrolling (`scrollend`, or
+  // SCROLL_SETTLE_MS without a scroll): a check during a smooth scroll hid the
+  // card for a moment as the focused element passed under it. While a check
+  // waits, the card's SUGGESTION_ATTRIBUTE is "pending", for the tests.
   const [yielding, setYielding] = React.useState(false);
   React.useEffect(() => {
     const card = ref.current;
     if (!card) {
       return;
     }
-    let frame = 0;
+    let timer = 0;
     const check = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        const element = document.activeElement;
-        if (!element || element === document.body || card.contains(element)) {
-          setYielding(false);
-          return;
-        }
-        const focused = element.getBoundingClientRect();
-        const box = card.getBoundingClientRect();
-        setYielding(
-          focused.left < box.right &&
-            focused.right > box.left &&
-            focused.top < box.bottom &&
-            focused.bottom > box.top,
-        );
-      });
+      window.clearTimeout(timer);
+      card.setAttribute(SUGGESTION_ATTRIBUTE, 'true');
+      const element = document.activeElement;
+      if (!element || element === document.body || card.contains(element)) {
+        setYielding(false);
+        return;
+      }
+      const focused = element.getBoundingClientRect();
+      const box = card.getBoundingClientRect();
+      setYielding(
+        focused.left < box.right &&
+          focused.right > box.left &&
+          focused.top < box.bottom &&
+          focused.bottom > box.top,
+      );
     };
-    document.addEventListener('focusin', check);
-    document.addEventListener('focusout', check);
-    window.addEventListener('scroll', check, {passive: true});
+    const checkLater = () => {
+      window.clearTimeout(timer);
+      card.setAttribute(SUGGESTION_ATTRIBUTE, 'pending');
+      timer = window.setTimeout(check, SCROLL_SETTLE_MS);
+    };
+    document.addEventListener('focusin', checkLater);
+    document.addEventListener('focusout', checkLater);
+    window.addEventListener('scroll', checkLater, {passive: true});
+    window.addEventListener('scrollend', check);
     return () => {
-      cancelAnimationFrame(frame);
-      document.removeEventListener('focusin', check);
-      document.removeEventListener('focusout', check);
-      window.removeEventListener('scroll', check);
+      window.clearTimeout(timer);
+      document.removeEventListener('focusin', checkLater);
+      document.removeEventListener('focusout', checkLater);
+      window.removeEventListener('scroll', checkLater);
+      window.removeEventListener('scrollend', check);
     };
   }, []);
 
   const close = () => {
     saveLanguageChoice(DISMISSED);
-    // The button goes away with the card. Focus goes on to what follows it,
-    // as if the reader had tabbed past the card.
-    const card = ref.current;
-    if (card?.contains(document.activeElement)) {
-      for (const element of document.querySelectorAll<HTMLElement>(FOCUSABLE)) {
-        if (
-          card.compareDocumentPosition(element) &
-            Node.DOCUMENT_POSITION_FOLLOWING &&
-          !card.contains(element) &&
-          element.getClientRects().length > 0
-        ) {
-          element.focus();
-          break;
-        }
-      }
+    if (ref.current) {
+      focusAfter(ref.current);
     }
     onDone();
   };

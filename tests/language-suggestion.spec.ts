@@ -174,22 +174,17 @@ test.describe('the card covers nothing that the reader can reach', () => {
 
       test(`for each Tab stop, at ${name}`, async ({page}) => {
         test.slow();
-        // Without smooth scrolling, the page is where it scrolls to at the
-        // next frame, and the card has checked the focused element by the one
-        // after (it checks again while a smooth scroll goes on).
+        // The card checks the focused element once the page has stopped
+        // scrolling; it marks itself "pending" until then.
         await page.emulateMedia({reducedMotion: 'reduce'});
         await page.setViewportSize(viewport);
         await load(page, '/es/', {spacing});
         const covered: Array<string> = [];
         for (let stop = 0; stop < 150; stop++) {
           await page.keyboard.press('Tab');
-          await page.evaluate(
+          await page.waitForFunction(
             () =>
-              new Promise<void>(resolve =>
-                requestAnimationFrame(() =>
-                  requestAnimationFrame(() => resolve()),
-                ),
-              ),
+              !document.querySelector('[data-language-suggestion="pending"]'),
           );
           const result = await page.evaluate(onCard => {
             const element = document.activeElement as HTMLElement | null;
@@ -284,3 +279,21 @@ for (const locale of LOCALES) {
     });
   }
 }
+
+test.describe('when the card stops fitting with focus in it', () => {
+  test.use({locale: 'en-US'});
+
+  test('focus goes on to what follows it, not to the page', async ({page}) => {
+    await page.setViewportSize({width: 375, height: 667});
+    await load(page, '/es/');
+    await card(page).getByRole('link').focus();
+    // A phone turned sideways: too short for the card.
+    await page.setViewportSize({width: 667, height: 375});
+    await expect(card(page)).toBeHidden();
+    const focused = await page.evaluate(
+      () => document.activeElement?.tagName ?? null,
+    );
+    expect(focused).not.toBe('BODY');
+    expect(focused).not.toBeNull();
+  });
+});
