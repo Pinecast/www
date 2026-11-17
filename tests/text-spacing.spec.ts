@@ -1,5 +1,11 @@
 import {expect, test, type Locator} from '@playwright/test';
-import {clippedText, load, openMenu, TEXT_SPACING} from './helpers';
+import {
+  clippedText,
+  inEveryLanguage,
+  load,
+  openMenu,
+  TEXT_SPACING,
+} from './helpers';
 
 // WCAG 1.4.12: with more line height, letter spacing, word spacing and
 // paragraph spacing, no text is cut off or covered. Boxes of fixed height
@@ -40,7 +46,7 @@ test.describe('with larger text spacing', () => {
   // the add-ons need up to 470px, so the end of their text was cut off.
   for (const {path, buttons} of [
     {path: '/', buttons: / add-on$/},
-    {path: '/features', buttons: /./},
+    ...inEveryLanguage(['/features']).map(path => ({path, buttons: /./})),
   ]) {
     test(`each open panel of ${path} shows all its text`, async ({page}) => {
       await page.setViewportSize({width: 320, height: 800});
@@ -117,22 +123,39 @@ test.describe('with larger text spacing', () => {
   }
 
   // The letter and the icon of a row, 60px wide and 43px from the sides, are
-  // painted over by a title that is wider than the space between them.
-  for (const width of [1181, 1280]) {
-    test(`the feature titles stay between the letter and the icon at ${width}px`, async ({
-      page,
-    }) => {
-      await page.setViewportSize({width, height: 900});
-      await load(page, '/features', {spacing: true});
-      const titles = page.locator('ul li button > span:not([aria-hidden])');
-      expect(await titles.count()).toBeGreaterThan(0);
-      for (const title of await titles.all()) {
-        const name = (await title.textContent()) ?? '';
-        const box = await textBox(title);
-        expect(box.left, name).toBeGreaterThanOrEqual(103);
-        expect(box.right, name).toBeLessThanOrEqual(width - 103);
+  // painted over by a title that is wider than the space between them, and
+  // the row crops a second line. A translated name can be long ("Enlaces de
+  // apps incrustables"): it is smaller instead (nameRoom in
+  // src/pages/features/index.tsx).
+  for (const path of inEveryLanguage(['/features'])) {
+    // From 1181px, where the rows have a fixed height. Below, a row grows
+    // with its name.
+    for (const width of [1181, 1280, 1281, 1440, 1536]) {
+      for (const spacing of [false, true]) {
+        test(`the feature titles of ${path} stay on one line between the letter and the icon at ${width}px${
+          spacing ? ' with larger text spacing' : ''
+        }`, async ({page}) => {
+          await page.setViewportSize({width, height: 900});
+          await load(page, path, {spacing});
+          const titles = page.locator('ul li button > span:not([aria-hidden])');
+          expect(await titles.count()).toBeGreaterThan(0);
+          for (const title of await titles.all()) {
+            const name = (await title.textContent()) ?? '';
+            const box = await textBox(title);
+            expect(box.left, name).toBeGreaterThanOrEqual(103);
+            expect(box.right, name).toBeLessThanOrEqual(width - 103);
+            const lines = await title.evaluate(el => {
+              const range = document.createRange();
+              range.selectNodeContents(el);
+              return new Set(
+                [...range.getClientRects()].map(rect => Math.round(rect.top)),
+              ).size;
+            });
+            expect(lines, name).toBe(1);
+          }
+        });
       }
-    });
+    }
   }
 
   test('the customer names stay on the screen', async ({page}) => {

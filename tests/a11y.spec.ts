@@ -1,6 +1,8 @@
 import AxeBuilder from '@axe-core/playwright';
 import {expect, test, type Locator, type Page} from '@playwright/test';
 
+import {inEveryLanguage} from './helpers';
+
 // Keyboard, screen reader and landmark checks for the header menu, the page
 // structure and the expandable widgets. Run `npm run build` first.
 
@@ -21,7 +23,7 @@ const PAGES = [
 ];
 // The structure tests above find elements by their English names, so a page
 // in another language only gets the axe checks.
-const AXE_PAGES = [...PAGES, '/es/'];
+const AXE_PAGES = inEveryLanguage(PAGES);
 
 // Media is not needed here, and it keeps the pages busy.
 test.beforeEach(async ({page}) => {
