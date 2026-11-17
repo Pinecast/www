@@ -1,31 +1,48 @@
-import {readFileSync} from 'node:fs';
+import {readFileSync, readdirSync} from 'node:fs';
+import {join, relative} from 'node:path';
 import {expect, test, type Page} from '@playwright/test';
 
-import {load} from './helpers';
+import {DEFAULT_LOCALE, splitLocale} from '../src/locales.mjs';
+import {
+  exportedPages,
+  hasSidewaysScroll,
+  isTranslatedMessage,
+  load,
+} from './helpers';
 
-// The English-only notice (src/components/EnglishOnlyNotice.tsx): on the four
+// The English-only notice (src/components/EnglishOnlyNotice.tsx): on the
 // policies, which stay in English, a note in the reader's language says that
 // the document is in English only, and where to write.
+//
+// These tests know no copy (CLAUDE.md, "Tests do not check copy"): the
+// policies are the pages that export `englishOnlyStaticProps`, and the note's
+// words must be translated messages, whatever they say.
 
-const POLICIES = ['/privacy', '/terms', '/subprocessors', '/ai-use'];
-
-type Catalog = Record<string, {defaultMessage: string}>;
-const english: Catalog = JSON.parse(readFileSync('lang/en.json', 'utf8'));
-const spanish: Catalog = JSON.parse(readFileSync('lang/es-419.json', 'utf8'));
-
-// The Spanish of an English message, from Lingo.dev's catalog, with the
-// address in place of its argument and without the tags.
-function inSpanish(defaultMessage: string): string {
-  const id = Object.keys(english).find(
-    key => english[key].defaultMessage === defaultMessage,
-  );
-  if (!id) throw new Error(`lang/en.json has no "${defaultMessage}"`);
-  return spanish[id].defaultMessage
-    .replace('{email}', 'support@pinecast.com')
-    .replace(/<\/?link>/g, '');
+// The routes of the MDX pages that export `englishOnlyStaticProps`.
+function policyRoutes(dir = 'src/pages'): Array<string> {
+  const routes: Array<string> = [];
+  for (const entry of readdirSync(dir, {withFileTypes: true})) {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      routes.push(...policyRoutes(path));
+    } else if (
+      entry.name.endsWith('.mdx') &&
+      readFileSync(path, 'utf8').includes('englishOnlyStaticProps')
+    ) {
+      routes.push(
+        '/' + relative('src/pages', path).replace(/(\/index)?\.mdx$/, ''),
+      );
+    }
+  }
+  return routes.sort();
 }
 
+const POLICIES = policyRoutes();
 const note = (page: Page) => page.getByRole('note');
+
+test('there are policies with the note', () => {
+  expect(POLICIES.length).toBeGreaterThan(0);
+});
 
 test.describe('for a reader whose browser prefers Spanish', () => {
   test.use({locale: 'es-MX'});
@@ -36,23 +53,40 @@ test.describe('for a reader whose browser prefers Spanish', () => {
     }) => {
       await load(page, path);
       await expect(note(page)).toHaveAttribute('lang', 'es-419');
-      await expect(note(page)).toContainText(
-        inSpanish('This document is only in English.'),
-      );
-      await expect(note(page)).toContainText(
-        inSpanish('Questions? Write to <link>{email}</link>.'),
-      );
-      await expect(
-        note(page).getByRole('link', {name: 'support@pinecast.com'}),
-      ).toHaveAttribute('href', 'mailto:support@pinecast.com');
+      const sentences = await note(page).getByRole('paragraph').allInnerTexts();
+      expect(sentences.length).toBeGreaterThan(0);
+      for (const sentence of sentences) {
+        expect(
+          isTranslatedMessage(sentence, 'es-419'),
+          `"${sentence}" is a translated message`,
+        ).toBe(true);
+      }
+      // The address is a link that writes to it.
+      const link = note(page).getByRole('link');
+      const address = (await link.innerText()).trim();
+      await expect(link).toHaveAttribute('href', `mailto:${address}`);
+    });
+  }
+
+  // The reflow tests run with an English browser, which gets no note.
+  for (const spacing of [false, true]) {
+    test(`at 320px${
+      spacing ? ' with larger text spacing' : ''
+    }, no policy scrolls sideways`, async ({page}) => {
+      await page.setViewportSize({width: 320, height: 640});
+      for (const path of POLICIES) {
+        await load(page, path, {spacing});
+        await expect(note(page)).toBeVisible();
+        expect(await hasSidewaysScroll(page), path).toBe(false);
+      }
     });
   }
 
   test('it is above the text of the policy', async ({page}) => {
-    await load(page, '/privacy');
+    await load(page, POLICIES[0]);
     const before = await note(page).evaluate(element => {
-      const text = [...document.querySelectorAll('main p')].find(p =>
-        p.textContent?.startsWith('This privacy policy explains'),
+      const text = [...document.querySelectorAll('main p')].find(
+        paragraph => !element.contains(paragraph),
       );
       return (
         text !== undefined &&
@@ -64,14 +98,21 @@ test.describe('for a reader whose browser prefers Spanish', () => {
     expect(before).toBe(true);
   });
 
-  test('the accessibility statement has no note', async ({page}) => {
-    await load(page, '/features/accessibility');
-    await expect(note(page)).toHaveCount(0);
+  test('no other page has the note', async ({page}) => {
+    test.slow();
+    const others = exportedPages().filter(
+      path =>
+        splitLocale(path).locale === DEFAULT_LOCALE && !POLICIES.includes(path),
+    );
+    for (const path of others) {
+      await load(page, path);
+      await expect(note(page), path).toHaveCount(0);
+    }
   });
 
   test('a choice of English on the site means no note', async ({page}) => {
     await page.addInitScript(() => localStorage.setItem('language', 'en'));
-    await load(page, '/privacy');
+    await load(page, POLICIES[0]);
     await expect(note(page)).toHaveCount(0);
   });
 });
@@ -80,13 +121,13 @@ test.describe('for a reader whose browser prefers English', () => {
   test.use({locale: 'en-US'});
 
   test('there is no note', async ({page}) => {
-    await load(page, '/privacy');
+    await load(page, POLICIES[0]);
     await expect(note(page)).toHaveCount(0);
   });
 
   test('a choice of Spanish on the site brings the note', async ({page}) => {
     await page.addInitScript(() => localStorage.setItem('language', 'es'));
-    await load(page, '/terms');
+    await load(page, POLICIES[0]);
     await expect(note(page)).toHaveAttribute('lang', 'es-419');
   });
 
@@ -96,7 +137,7 @@ test.describe('for a reader whose browser prefers English', () => {
     await page.addInitScript(() =>
       localStorage.setItem('language', 'dismissed'),
     );
-    await load(page, '/terms');
+    await load(page, POLICIES[0]);
     await expect(note(page)).toHaveCount(0);
   });
 });

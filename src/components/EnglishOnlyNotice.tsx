@@ -17,7 +17,7 @@ import {LOCALES, languageTag} from '@/locales.mjs';
 // The policies stay in English (Matt, 2026-11-12). On each of them, a reader
 // of another language that the site has gets a note above the text, in their
 // language: the document is in English only, and where to write with a
-// question (Matt, 2026-11-17). Their language is the one that they chose on
+// question (Matt, 2026-11-16). Their language is the one that they chose on
 // the site (src/languageChoice.ts), or else their browser's first one that
 // the site has. A choice of English means no note.
 //
