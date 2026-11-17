@@ -1,29 +1,66 @@
-import {readFileSync} from 'node:fs';
-import {expect, test, type Page} from '@playwright/test';
+import {expect, test, type Locator, type Page} from '@playwright/test';
 
-import {LOCALES, TRANSLATED_ROUTES, localePath} from '../src/locales.mjs';
-import {load} from './helpers';
+import {
+  DEFAULT_LOCALE,
+  LOCALES,
+  TRANSLATED_ROUTES,
+  hasPage,
+  languageTag,
+  localePath,
+  splitLocale,
+} from '../src/locales.mjs';
+import {
+  exportedPages,
+  isEnglishMessage,
+  isTranslatedMessage,
+  load,
+} from './helpers';
 
 // The language suggestion (src/components/LanguageSuggestion.tsx): a card at
 // the bottom of a page that offers it in the reader's language, written in
 // that language. It shows only where the page is in that language, and not
 // again once the reader has made a choice.
-
-type Catalog = Record<string, {defaultMessage: string}>;
-const english: Catalog = JSON.parse(readFileSync('lang/en.json', 'utf8'));
+//
+// These tests know no copy (CLAUDE.md, "Tests do not check copy"): they find
+// the card by its attributes, and check that its words are messages of the
+// right catalog, whatever they say.
 
 // The card is the region that says the language of its text.
 const card = (page: Page) => page.locator('section[lang][aria-label]');
 
-// The text of an English message in a language, from Lingo.dev's catalog.
-function translated(defaultMessage: string, tag: string): string {
-  const id = Object.keys(english).find(
-    key => english[key].defaultMessage === defaultMessage,
-  );
-  if (!id) throw new Error(`lang/en.json has no "${defaultMessage}"`);
-  const catalog: Catalog = JSON.parse(readFileSync(`lang/${tag}.json`, 'utf8'));
-  return catalog[id].defaultMessage;
+// The address that a <Link> writes for a page: it drops the slash of `/es/`.
+const linkHref = (route: string, locale: string) =>
+  localePath(route, locale).replace(/(.)\/$/, '$1');
+
+// Whether the card's name, sentence and link are messages in `tag`.
+async function expectCardIn(locator: Locator, tag: string) {
+  const isIn = (text: string) =>
+    tag === languageTag(DEFAULT_LOCALE)
+      ? isEnglishMessage(text)
+      : isTranslatedMessage(text, tag);
+  const name = (await locator.getAttribute('aria-label')) ?? '';
+  const sentence = (await locator.getByRole('paragraph').innerText()) ?? '';
+  const link = await locator.getByRole('link').innerText();
+  const button =
+    (await locator.getByRole('button').getAttribute('aria-label')) ?? '';
+  expect(
+    [name, sentence, link, button].filter(text => !isIn(text)),
+    `text of the card that is not a message in ${tag}`,
+  ).toEqual([]);
 }
+
+// A page that is only in English.
+const englishOnlyPage = () => {
+  const found = exportedPages().find(
+    path =>
+      splitLocale(path).locale === DEFAULT_LOCALE &&
+      LOCALES.every(
+        locale => locale === DEFAULT_LOCALE || !hasPage(path, locale),
+      ),
+  );
+  if (!found) throw new Error('The export has no page that is only in English');
+  return found;
+};
 
 test.beforeEach(async ({page}) => {
   await page.route(/\.(mp3|mp4|webm)(\?|$)/, route => route.abort());
@@ -37,10 +74,9 @@ test.describe('for a reader whose browser prefers English', () => {
   }) => {
     await load(page, '/es/');
     await expect(card(page)).toHaveAttribute('lang', 'en');
-    await expect(card(page)).toHaveAccessibleName('Language');
-    await expect(card(page)).toContainText('This page is in English too.');
-    const link = card(page).getByRole('link', {name: 'Read it in English'});
-    await expect(link).toHaveAttribute('href', '/');
+    await expectCardIn(card(page), 'en');
+    const link = card(page).getByRole('link');
+    await expect(link).toHaveAttribute('href', linkHref('/', 'en'));
     await expect(link).toHaveAttribute('hreflang', 'en');
   });
 
@@ -51,7 +87,7 @@ test.describe('for a reader whose browser prefers English', () => {
 
   test('closing it is for good', async ({page}) => {
     await load(page, '/es/');
-    await card(page).getByRole('button', {name: 'Close'}).click();
+    await card(page).getByRole('button').click();
     await expect(card(page)).toHaveCount(0);
     await load(page, '/es/');
     await expect(card(page)).toHaveCount(0);
@@ -60,10 +96,7 @@ test.describe('for a reader whose browser prefers English', () => {
   test('a language picked in the footer is a choice too', async ({page}) => {
     await load(page, '/es/');
     await expect(card(page)).toHaveCount(1);
-    await page
-      .getByRole('contentinfo')
-      .getByRole('link', {name: 'Español', exact: true})
-      .click();
+    await page.getByRole('contentinfo').locator('a[hreflang="es"]').click();
     await load(page, '/es/');
     await expect(card(page)).toHaveCount(0);
   });
@@ -72,7 +105,7 @@ test.describe('for a reader whose browser prefers English', () => {
     page,
   }) => {
     await load(page, '/es/');
-    const close = card(page).getByRole('button', {name: 'Close'});
+    const close = card(page).getByRole('button');
     await close.focus();
     await page.keyboard.press('Enter');
     await expect(card(page)).toHaveCount(0);
@@ -213,7 +246,7 @@ test.describe('the card covers nothing that the reader can reach', () => {
       await page.setViewportSize(viewport);
       await load(page, '/es/');
       await expect(card(page)).toBeHidden();
-      await expect(page.getByRole('region', {name: 'Language'})).toHaveCount(0);
+      await expect(page.getByRole('region')).toHaveCount(0);
     });
   }
 });
@@ -236,18 +269,14 @@ test.describe('for a reader whose browser prefers Spanish', () => {
   }) => {
     await load(page, '/');
     await expect(card(page)).toHaveAttribute('lang', 'es-419');
-    await expect(card(page)).toContainText(
-      translated('This page is in English too.', 'es-419'),
-    );
-    const link = card(page).getByRole('link', {
-      name: translated('Read it in English', 'es-419'),
-    });
-    await expect(link).toHaveAttribute('href', '/es');
+    await expectCardIn(card(page), 'es-419');
+    const link = card(page).getByRole('link');
+    await expect(link).toHaveAttribute('href', linkHref('/', 'es'));
     await expect(link).toHaveAttribute('hreflang', 'es');
   });
 
   test('a page that is only in English offers nothing', async ({page}) => {
-    await load(page, '/features/analytics');
+    await load(page, englishOnlyPage());
     await expect(card(page)).toHaveCount(0);
   });
 

@@ -1,4 +1,4 @@
-import {readdirSync} from 'node:fs';
+import {readFileSync, readdirSync} from 'node:fs';
 import {join} from 'node:path';
 import {expect, type Locator, type Page} from '@playwright/test';
 
@@ -230,4 +230,40 @@ export async function pixelDifference(
     },
     [a.toString('base64'), b.toString('base64')],
   );
+}
+
+// Whether `text` is a message of a language's catalog (lang/<tag>.json) that
+// is translated: not the same as its English. A test can check that text is in
+// a language without knowing its words (CLAUDE.md, "Tests do not check copy").
+// An argument (`{email}`) stands for any text, and a tag (`<link>`) for none,
+// as the page shows them.
+export function isTranslatedMessage(text: string, tag: string): boolean {
+  const english = readCatalog('en');
+  const catalog = readCatalog(tag);
+  return Object.entries(catalog).some(
+    ([id, {defaultMessage}]) =>
+      defaultMessage !== english[id]?.defaultMessage &&
+      messagePattern(defaultMessage).test(text.trim()),
+  );
+}
+
+// Whether `text` is a message of the English catalog, as above.
+export function isEnglishMessage(text: string): boolean {
+  return Object.values(readCatalog('en')).some(({defaultMessage}) =>
+    messagePattern(defaultMessage).test(text.trim()),
+  );
+}
+
+type Catalog = Record<string, {defaultMessage: string}>;
+
+function readCatalog(tag: string): Catalog {
+  return JSON.parse(readFileSync(`lang/${tag}.json`, 'utf8'));
+}
+
+function messagePattern(message: string): RegExp {
+  const parts = message
+    .replace(/<\/?\w+>/g, '')
+    .split(/\{\w+\}/)
+    .map(part => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  return new RegExp(`^${parts.join('.+')}$`, 's');
 }
