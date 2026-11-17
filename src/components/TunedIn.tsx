@@ -739,7 +739,11 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
           <div
             className={css({
               display: 'inline-grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
+              // Two equal columns, as wide as the longer label, but not wider
+              // than the screen with room for the focus rings: a longer label
+              // wraps in its button (as in Spanish at 375px).
+              gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+              maxWidth: 'calc(100% - 20px)',
               gap: `${PANEL_GAP_MOBILE}px`,
               flexDirection: 'column',
               marginBottom: '16px',

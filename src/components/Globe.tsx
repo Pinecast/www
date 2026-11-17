@@ -321,11 +321,16 @@ const IntroSection = React.memo(function IntroSection() {
           defaultMessage="Whether you’re sharing to a handful of friends, your company, or the world, Pinecast has a solution that’s right for you."
         />
       </Body4>
+      {/* The buttons go one above the other where they do not fit side by
+          side, as in Spanish at 375px, with room at the sides for their
+          focus rings. */}
       <div
         className={css({
           display: 'flex',
+          flexWrap: 'wrap',
           justifyContent: 'center',
           gap: '20px',
+          padding: '0 10px',
         })}
       >
         <PrimaryButton

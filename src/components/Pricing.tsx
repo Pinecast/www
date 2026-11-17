@@ -730,8 +730,9 @@ const AddonAccordionItem = ({
           // The 70px minimum height of the row includes its 1px border, so
           // the name overlaps the bottom edge by 1px.
           marginBottom: '-1px',
-          // Keep a wrapped name clear of the expand icon.
-          paddingRight: '24px',
+          // Keep a wrapped name clear of the expand icon (24px), and its
+          // focus ring too (8px outside the name).
+          paddingRight: '32px',
           [MIN_TABLET_MEDIA_QUERY]: {lineHeight: '70px'},
         }}
       >
