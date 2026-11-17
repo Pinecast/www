@@ -24,6 +24,7 @@ import {
 import StyletronServer from 'styletron-engine-atomic/lib/server/server';
 import {Provider as UserAgentContextProvider} from '../components/UserAgentContext';
 import {MOTION_ATTRIBUTE, MOTION_INIT_SCRIPT} from '../hooks/useMotion';
+import {SMOOTH_SCROLL_ATTRIBUTE} from '../hooks/useSmoothScroll';
 import {FONT_URLS} from '../fonts';
 import {HERO_STILLS, stillMedia} from '../heroStills';
 import {languageTagOf} from '../i18n';
@@ -168,8 +169,11 @@ export default function Document({
           *, *:before, *:after {
             box-sizing: border-box;
           }
+          /* Only after the first load (useSmoothScroll). A smooth scroll to
+             a #section while the page loads ends in the wrong place when
+             the height above it changes. */
           @media (prefers-reduced-motion: no-preference) {
-            html {
+            html[${SMOOTH_SCROLL_ATTRIBUTE}] {
               scroll-behavior: smooth;
             }
           }
