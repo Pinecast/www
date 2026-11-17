@@ -27,7 +27,10 @@ import {MOTION_ATTRIBUTE, MOTION_INIT_SCRIPT} from '../hooks/useMotion';
 import {FONT_URLS} from '../fonts';
 import {HERO_STILLS, stillMedia} from '../heroStills';
 import {languageTagOf} from '../i18n';
-import {SUGGESTION_ROOM_PROPERTY} from '@/components/LanguageSuggestion';
+import {
+  SUGGESTION_ATTRIBUTE,
+  SUGGESTION_ROOM_PROPERTY,
+} from '@/components/LanguageSuggestion';
 import {splitLocale} from '../locales.mjs';
 
 Document.getInitialProps = async (context: DocumentContext) => {
@@ -233,7 +236,9 @@ export default function Document({
              button. While an element there has keyboard focus, the button
              hides, and the page needs no room for it. */
           body:has(${UNDER_MUTE_BUTTON_SELECTOR}:focus-visible)
-            [${MUTE_BUTTON_ATTRIBUTE}] {
+            [${MUTE_BUTTON_ATTRIBUTE}],
+          body:has(${UNDER_MUTE_BUTTON_SELECTOR}:focus-visible)
+            [${SUGGESTION_ATTRIBUTE}] {
             opacity: 0;
             visibility: hidden;
           }
