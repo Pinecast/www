@@ -63,10 +63,6 @@
     "defaultMessage": "No time limit",
     "description": "A feature of the free plan, in the list on its ticket in the pricing section"
   },
-  "3bxEDj": {
-    "defaultMessage": "Level 3",
-    "description": "Small label above the heading of a tile in the site menu, shown in capitals. Tiles go from level 1 to 3; this one is a link to the guide for companies and organizations."
-  },
   "4fxkcu": {
     "defaultMessage": "/ Month",
     "description": "After a price in the pricing section: the price is for one month"
@@ -211,10 +207,6 @@
     "defaultMessage": "80MB file sizes + bonus",
     "description": "A feature of the Starter plan, in the list on its ticket in the pricing section"
   },
-  "F0uib6": {
-    "defaultMessage": "Corporate podcasters",
-    "description": "Heading of a tile in the site menu, a link to the guide for companies and organizations"
-  },
   "FgdSGw": {
     "defaultMessage": "The most powerful analytics in podcasting, with premium features, simple charts, and clean controls.",
     "description": "Description of the Analytics feature, shown over the globe on the home page when the globe turns to it"
@@ -250,6 +242,10 @@
   "IJnetw": {
     "defaultMessage": "No credit card required",
     "description": "Note under the sign-up button at the top of the home page"
+  },
+  "IR3n6s": {
+    "defaultMessage": "Podcasting for education",
+    "description": "Heading of a tile in the site menu, a link to the page for colleges and universities"
   },
   "IiGjF/": {
     "defaultMessage": "$0",
@@ -394,6 +390,10 @@
   "RlBhkU": {
     "defaultMessage": "Embed HTML code for your podcast that lets your website visitors open your show in their favorite podcast app.",
     "description": "What the Embeddable App Links feature does, shown when its row on the Features page is open"
+  },
+  "RwnN53": {
+    "defaultMessage": "Level 3",
+    "description": "Small label above the heading of a tile in the site menu, shown in capitals. Tiles go from level 1 to 3; this one is a link to the page for colleges and universities."
   },
   "SHaenT": {
     "defaultMessage": "Add features when you need them and remove them when you don’t. There are no confusing tiers or lock-in pricing. You pay for what you use.",
@@ -715,10 +715,6 @@
     "defaultMessage": "Podcasting for power users",
     "description": "Heading of a tile in the site menu, a link to the guide for experienced podcasters"
   },
-  "n9Tled": {
-    "defaultMessage": "You are an organization",
-    "description": "Heading of the panel for organizations in the \"Tuned-in\" section of the home page and on the Learn page. The panel is a link to the page for them. The heading wraps at about 16 characters a line"
-  },
   "nN1LCl": {
     "defaultMessage": "Start for free",
     "description": "Button in the Tuned-in section of the home page, to the sign-up form"
@@ -818,6 +814,10 @@
   "tVLEqA": {
     "defaultMessage": "Primary",
     "description": "Screen reader name of the main links in the site header"
+  },
+  "tancxZ": {
+    "defaultMessage": "You are on campus",
+    "description": "Heading of the panel for colleges and universities in the \"Tuned-in\" section of the home page and on the Learn page. The panel is a link to the page for them, and speaks to their students, teachers and staff. The heading wraps at about 16 characters a line"
   },
   "txw1P6": {
     "defaultMessage": "Monetization",

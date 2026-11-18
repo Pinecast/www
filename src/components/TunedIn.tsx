@@ -140,8 +140,8 @@ const PANELS: PanelItems = {
     position: PanelPosition.RIGHT,
     heading: defineMessage({
       description:
-        'Heading of the panel for organizations in the "Tuned-in" section of the home page and on the Learn page. The panel is a link to the page for them. The heading wraps at about 16 characters a line',
-      defaultMessage: 'You are an organization',
+        'Heading of the panel for colleges and universities in the "Tuned-in" section of the home page and on the Learn page. The panel is a link to the page for them, and speaks to their students, teachers and staff. The heading wraps at about 16 characters a line',
+      defaultMessage: 'You are on campus',
     }),
     color: PERSONAS.organizations.color,
     url: PERSONAS.organizations.url,
