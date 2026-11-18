@@ -1,6 +1,12 @@
 {
   "version": 1,
   "files": {
+    "content/en/features/collaborators.mdx": {
+      "sha256": "7a1e0ba3f4fdda7c8344e0f757b8fe42a093b91bb2edf6c8d34340bbe6e1daab"
+    },
+    "content/es-419/features/collaborators.mdx": {
+      "sha256": "a1f73484ef6c8aec85a4a57cd50dfeba128c3983694bd4eb415ca57988c50a26"
+    },
     "lang/en.json": {
       "sha256": "d0f8863babd1501f293fc8ca7b461a08cb6ad57b565fa6985233d37461093f97"
     },

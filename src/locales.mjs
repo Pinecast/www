@@ -78,7 +78,13 @@ export const LANGUAGE_NAMES = {en: 'English', es: 'Español'};
  * @type {Readonly<Record<string, ReadonlyArray<string>>>}
  */
 export const TRANSLATED_ROUTES = {
-  es: ['/', '/features', '/learn', '/testimonial-transcripts'],
+  es: [
+    '/',
+    '/features',
+    '/features/collaborators',
+    '/learn',
+    '/testimonial-transcripts',
+  ],
 };
 
 /**
