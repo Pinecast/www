@@ -20,8 +20,10 @@
 //    the folder in the address and the `hreflang` value. If Lingo.dev
 //    translates it under another code, add that to LANGUAGE_TAGS.
 // 2. Add its pages under `src/pages/<code>/`, with the same names as the
-//    English ones (`src/pages/es/index.tsx` is the pattern). The build
-//    (scripts/finish-export.mjs) moves the home page to
+//    English ones (`src/pages/es/index.tsx` is the pattern). The page of a
+//    text in `content/<tag>/` is written by the build
+//    (scripts/content-pages.mjs). The build (scripts/finish-export.mjs) moves
+//    the home page to
 //    `out/<code>/index.html`, and the sitemap stops the build if a page is
 //    somewhere else. A page with no copy there, such as a legal page, stays
 //    English only: the sitemap lists what the export holds and nothing else,
@@ -78,7 +80,13 @@ export const LANGUAGE_NAMES = {en: 'English', es: 'Español'};
  * @type {Readonly<Record<string, ReadonlyArray<string>>>}
  */
 export const TRANSLATED_ROUTES = {
-  es: ['/', '/features', '/learn', '/testimonial-transcripts'],
+  es: [
+    '/',
+    '/features',
+    '/features/collaborators',
+    '/learn',
+    '/testimonial-transcripts',
+  ],
 };
 
 /**

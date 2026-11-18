@@ -116,18 +116,24 @@ test('there are pages in other languages than English', () => {
 
 for (const path of translatedPages()) {
   test.describe(`${path}, a page in another language`, () => {
-    const {locale} = splitLocale(path);
+    const {locale, route} = splitLocale(path);
     const tag = languageTag(locale);
 
     test('says its language, and describes itself in it', async ({page}) => {
+      const description = () =>
+        page.locator('meta[name="description"]').getAttribute('content');
+      await load(page, localePath(route, DEFAULT_LOCALE));
+      const english = await description();
       await load(page, path);
       await expect(page.locator('html')).toHaveAttribute('lang', tag);
-      const description = await page
-        .locator('meta[name="description"]')
-        .getAttribute('content');
+      const translated = (await description()) ?? '';
+      expect(translated).not.toBe('');
+      // A description from the catalog is one of its translated messages.
+      // One from a text that Lingo.dev translates as a file (content/) is
+      // not, but it is not the English one either.
       expect(
-        isTranslatedMessage(description ?? '', tag),
-        `the description "${description}" is a translated message`,
+        isTranslatedMessage(translated, tag) || translated !== english,
+        `the description "${translated}" is translated`,
       ).toBe(true);
     });
 

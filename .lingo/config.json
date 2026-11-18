@@ -7,6 +7,11 @@
     {
       "pattern": "lang/en.jsonc",
       "targetPath": "lang/[locale].json"
+    },
+    {
+      "pattern": "content/en/features/collaborators.mdx",
+      "targetPath": "content/[locale]/features/collaborators.mdx",
+      "translateFrontmatterFields": ["title", "description"]
     }
   ]
 }

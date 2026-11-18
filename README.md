@@ -55,7 +55,9 @@ language or a page:
 1. A new language needs its catalog first (Lingo.dev, below). Then add its code
    to `LOCALES` in `src/locales.mjs`, and to `LANGUAGE_TAGS` if Lingo.dev
    translates it under another code (Spanish is `es-419`).
-2. Add the page under `src/pages/<code>/`, with the name of the English one.
+2. An MDX page whose text is in `content/` needs no page file: the build
+   writes it from the translation (Translated MDX pages, below). Add any other
+   page under `src/pages/<code>/`, with the name of the English one.
    `src/pages/es/index.tsx` is the pattern: it exports the English page, and
    `localeStaticProps` gives it the catalog. Add its route to
    `TRANSLATED_ROUTES`, and give the English page
@@ -91,9 +93,10 @@ sitemap says `/es/`.
 
 ## Translations
 
-The copy in TSX is in react-intl messages, as in pinecast-ts. The MDX pages
-are not, yet. Write a message where it is used, with a `description` that
-tells a translator where the text is and what it does:
+The copy in TSX is in react-intl messages, as in pinecast-ts. The text of an
+MDX page that is translated is a file of its own, which Lingo.dev translates
+whole ("Translated MDX pages", below). Write a message where it is used, with a
+`description` that tells a translator where the text is and what it does:
 
 ```tsx
 <FormattedMessage
@@ -140,6 +143,48 @@ page in another language passes its locale and the catalog of that locale
 only, from `localeStaticProps` (`src/i18n-static.ts`). `usePageLocale()`
 says the language of the page from its route, for links.
 
+### Translated MDX pages
+
+The text of a translated MDX page is in `content/en/`, in the folders of its
+route (`content/en/features/collaborators.mdx` is `/features/collaborators`).
+Lingo.dev writes each translation next to it, in `content/<code>/`
+(`content/es-419/`).
+
+The pages in `src/pages/` for these texts are not in git:
+`scripts/content-pages.mjs` (`npm run content:pages`, which `npm run build`
+and `npm run dev` run first) writes one for each text in `content/`, in the
+language of its folder, and lists them in `src/pages/.gitignore`. A page only
+imports its text and adds its props, `defaultLocaleStaticProps` in English and
+`localeStaticProps` in another language. The text holds no props: a page's
+`getStaticProps` reaches for Node, and a copy in a translation would bring it
+into the browser. The script stops the build when a translation has no English
+text, when a file in `src/pages/` that it did not write has the address of one
+of its pages, or when a translated route is not in `TRANSLATED_ROUTES`. It
+deletes a page whose text is gone.
+
+- The title and description of the page are YAML frontmatter at the top of
+  the text, which `vendor/remark-frontmatter-export.mjs` exports as
+  `frontmatter`, and which Lingo.dev translates (`translateFrontmatterFields`
+  in `.lingo/config.json`). An export is code, and Lingo.dev leaves it as it
+  is. The text ends with `export default layoutWrapper(FeatureLayout,
+  frontmatter);`.
+- Do not edit a translation: change the English, and the
+  `push-translations` job translates it again.
+- To translate a page: move its text from `src/pages/` to `content/en/`, give
+  it frontmatter, add the file to `.lingo/config.json` with a `targetPath`
+  that names the file (the job's check for a new language cannot read
+  `[path]`), and translate it once by hand, which also writes its lockfile
+  entry:
+
+  ```sh
+  npx --yes @lingo.dev/cli@1.19.0 push content/en/<path>.mdx --estimate
+  npx --yes @lingo.dev/cli@1.19.0 push content/en/<path>.mdx --wait
+  npx prettier --parser json --write '.lingo/*.json'
+  ```
+
+  Then add its route to `TRANSLATED_ROUTES`. The Collaborators page was the
+  first.
+
 ### Lingo.dev
 
 Lingo.dev makes the catalogs of the other languages, `lang/<code>.json`
@@ -151,7 +196,8 @@ glossary. The `push-translations` job of
 `.github/workflows/main.yml` runs after the tests on each push to `netlify`
 (and by hand, from the Actions tab). It runs the v1 CLI (`@lingo.dev/cli`,
 pinned in the job), then pushes the branch `lingo/netlify` and opens a PR, or
-updates the open one, with the target catalogs, `.lingo/lock.json` and a
+updates the open one, with the target catalogs, the translated texts in `content/`,
+`.lingo/lock.json` and a
 freshly extracted `lang/en.json` and `lang/en.jsonc`. Each run replaces the
 branch, unless a person pushed a commit to it: then it waits until that PR
 merges. It is the
