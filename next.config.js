@@ -5,6 +5,9 @@ module.exports = async () => {
     extension: /\.mdx?$/,
     options: {
       remarkPlugins: [
+        // `frontmatter`: a page's title and description, which Lingo.dev
+        // translates with its text.
+        (await import('./vendor/remark-frontmatter-export.mjs')).default,
         (await import('remark-unwrap-images')).default,
         (await import('./vendor/remark-gfm-table.mjs')).default,
       ],

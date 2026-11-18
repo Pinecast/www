@@ -167,6 +167,9 @@ jobs:
             const isNew = locale =>
               config.files.some(({targetPath}) => {
                 if (!targetPath) throw new Error("Each files[] entry of .lingo/config.json needs a targetPath.");
+                // A template with [path] names no one file, so this check
+                // could not see a language that is not new.
+                if (targetPath.includes("[path]")) throw new Error(`${targetPath}: name each file, or teach this check to expand [path].`);
                 return !fs.existsSync(targetPath.replace("[locale]", locale));
               });
             const added = config.targetLocales.filter(isNew);
@@ -215,7 +218,7 @@ jobs:
           TITLE: Update translations via Lingo.dev
           BOT_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
         run: |
-          git add -A lang .lingo
+          git add -A lang .lingo content
           if git diff --cached --quiet; then
             echo "No translation changes."
             exit 0

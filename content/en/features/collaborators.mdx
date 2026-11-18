@@ -1,4 +1,12 @@
+---
+title: Collaborators
+description: Allow your fellow producers to work on your podcast with you—no password sharing needed.
+heroImage: /images/hero/t-r.png
+---
+
 import {Intro} from '@/components/TextBlocks';
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
 
 <Intro>
   Nobody likes sharing passwords. Pinecast makes it easy to work on your podcast with friends, coworkers, or whoever you produce with.
@@ -16,12 +24,4 @@ Your collaborators don't need a paid subscription to Pinecast to work on your sh
 
 Rest assured that your show is safe. Collaborators don't have [tip jar](/features/monetization) access, the ability to delete or redirect your podcast, or perform other administrative functions.
 
-
-import {layoutWrapper} from '@/layouts/layoutWrapper';
-import {FeatureLayout} from '@/layouts/FeatureLayout';
-
-export default layoutWrapper(FeatureLayout, {
-  title: 'Collaborators',
-  description: 'Allow your fellow producers to work on your podcast with you—no password sharing needed.',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(FeatureLayout, frontmatter);
