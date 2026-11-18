@@ -8,6 +8,7 @@ import {
   TRANSLATED_ROUTES,
   hasPage,
   languageTag,
+  linkTarget,
   localePath,
   splitLocale,
 } from '../src/locales.mjs';
@@ -105,6 +106,108 @@ test.describe('the home page in Spanish', () => {
   });
 });
 
+// The pages of the export in a language other than English.
+const translatedPages = () =>
+  exportedPages().filter(path => splitLocale(path).locale !== DEFAULT_LOCALE);
+
+test('there are pages in other languages than English', () => {
+  expect(translatedPages().length).toBeGreaterThan(1);
+});
+
+for (const path of translatedPages()) {
+  test.describe(`${path}, a page in another language`, () => {
+    const {locale} = splitLocale(path);
+    const tag = languageTag(locale);
+
+    test('says its language, and describes itself in it', async ({page}) => {
+      await load(page, path);
+      await expect(page.locator('html')).toHaveAttribute('lang', tag);
+      const description = await page
+        .locator('meta[name="description"]')
+        .getAttribute('content');
+      expect(
+        isTranslatedMessage(description ?? '', tag),
+        `the description "${description}" is a translated message`,
+      ).toBe(true);
+    });
+
+    // src/components/SiteLink.tsx. A link in another language than the page's
+    // (the language links of the footer, the language suggestion) goes to
+    // the language that it is in.
+    test('its links stay in its language where the page they reach is in it', async ({
+      page,
+    }) => {
+      await load(page, path);
+      const links = await page.locator('a[href^="/"]').evaluateAll(anchors =>
+        anchors
+          .filter(
+            anchor =>
+              anchor.closest('[lang]')?.getAttribute('lang') ===
+              document.documentElement.lang,
+          )
+          .map(anchor => ({
+            href: anchor.getAttribute('href') ?? '',
+            hreflang: anchor.getAttribute('hreflang'),
+          })),
+      );
+      expect(links.length).toBeGreaterThan(0);
+      for (const {href, hreflang} of links) {
+        const target = splitLocale(href.replace(/[?#].*$/, '') || '/');
+        if (target.locale === locale) continue;
+        expect(target.locale, href).toBe(DEFAULT_LOCALE);
+        expect(
+          hasPage(target.route, locale),
+          `${href} goes to English, but the page is in this language`,
+        ).toBe(false);
+        expect(hreflang, `${href} says that it goes to English`).toBe(
+          DEFAULT_LOCALE,
+        );
+      }
+    });
+  });
+}
+
+test('a link keeps its query and fragment in another language', () => {
+  const [translated] = TRANSLATED_ROUTES.es;
+  expect(linkTarget(`${translated}?a=1#b`, 'es')).toEqual({
+    href: `${localePath(translated, 'es')}?a=1#b`,
+  });
+  const englishOnly = englishOnlyPage();
+  expect(linkTarget(`${englishOnly}#b`, 'es')).toEqual({
+    href: `${englishOnly}#b`,
+    hrefLang: DEFAULT_LOCALE,
+  });
+  // On an English page, and for an address in a language, nothing changes.
+  expect(linkTarget(translated, DEFAULT_LOCALE)).toEqual({href: translated});
+  const spanish = localePath(translated, 'es');
+  expect(linkTarget(spanish, 'es')).toEqual({href: spanish});
+});
+
+test('the testimonial transcripts in Spanish are marked as English', async ({
+  page,
+}) => {
+  // The page's own copy is in messages. The transcripts are what the
+  // customers say in their recordings, in English.
+  await load(page, localePath('/testimonial-transcripts', 'es'));
+  const paragraphs = await page
+    .getByRole('main')
+    .locator('p')
+    .evaluateAll(elements =>
+      elements.map(element => ({
+        text: (element as HTMLElement).innerText,
+        lang: element.closest('[lang]')?.getAttribute('lang'),
+      })),
+    );
+  expect(paragraphs.some(({lang}) => lang === DEFAULT_LOCALE)).toBe(true);
+  for (const {text, lang} of paragraphs) {
+    if (lang === DEFAULT_LOCALE) continue;
+    expect(
+      isTranslatedMessage(text, languageTag('es')),
+      `"${text.slice(0, 60)}" is a translated message, or marked as English`,
+    ).toBe(true);
+  }
+});
+
 test('a client-side visit from /es/ to an English page says English', async ({
   page,
 }) => {
@@ -147,7 +250,7 @@ test('the English home page stays English', async ({page}) => {
 test.describe('the language links in the footer', () => {
   // The links that say the language of their page.
   const languageLinks = (page: Page) =>
-    page.getByRole('contentinfo').locator('a[hreflang]');
+    page.getByRole('contentinfo').locator('a[hreflang][lang]');
 
   async function checkLinks(page: Page, path: string) {
     const {locale, route} = splitLocale(path);

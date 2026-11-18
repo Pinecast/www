@@ -1,5 +1,5 @@
 import {expect, test, type Locator, type Page} from '@playwright/test';
-import {load, menuPanel} from './helpers';
+import {inEveryLanguage, load, menuPanel} from './helpers';
 
 // Keyboard focus checks (WCAG 2.4.7, 2.4.11, 1.4.11 and 1.4.13). Run
 // `npm run build` first.
@@ -14,7 +14,8 @@ import {load, menuPanel} from './helpers';
 const WIDE = {width: 1280, height: 900};
 const NARROW = {width: 375, height: 812};
 
-const PAGES = [
+// Each in every language that has it: the walk knows no copy.
+const PAGES = inEveryLanguage([
   '/',
   '/features',
   '/learn',
@@ -26,7 +27,7 @@ const PAGES = [
   '/learn/corporate-podcasting',
   '/privacy',
   '/testimonial-transcripts',
-];
+]);
 
 // The most Tab stops that a walk of one page takes.
 const MAX_STOPS = 150;

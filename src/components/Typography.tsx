@@ -15,7 +15,8 @@ import {useCSS} from '@/hooks/useCSS';
 import {useFitWords} from '@/hooks/useFitWords';
 import {FocusEventHandler, ReactNode} from 'react';
 import {StyleObject} from 'styletron-react';
-import NextLink, {LinkProps} from 'next/link';
+import type {LinkProps} from 'next/link';
+import NextLink from '@/components/SiteLink';
 import {RightArrow} from '@/icons/RightArrow';
 
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;

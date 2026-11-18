@@ -2,6 +2,8 @@ import {readFileSync, readdirSync} from 'node:fs';
 import {join} from 'node:path';
 import {expect, type Locator, type Page} from '@playwright/test';
 
+import {LOCALES, hasPage, localePath} from '../src/locales.mjs';
+
 // The text spacing of WCAG 1.4.12, as a user style sheet would apply it.
 export const TEXT_SPACING = `
   * {
@@ -13,6 +15,17 @@ export const TEXT_SPACING = `
     margin-bottom: 2em !important;
   }
 `;
+
+// The path of each page in every language that has it, from the routes of
+// the pages (src/locales.mjs): a list of English pages, for a test that knows
+// no copy, so that the other languages get the same checks.
+export function inEveryLanguage(routes: ReadonlyArray<string>): Array<string> {
+  return routes.flatMap(route =>
+    LOCALES.filter(locale => hasPage(route, locale)).map(locale =>
+      localePath(route, locale),
+    ),
+  );
+}
 
 // The path of every page in the static export (`npm run build`), as the site
 // serves it: the index of a folder, the home page of a language, has a slash

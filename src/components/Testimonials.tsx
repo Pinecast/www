@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import {FormattedMessage} from 'react-intl';
 import {StyleObject} from 'styletron-react';
 import {Body3, Body4, Caption, H1, H2} from './Typography';

@@ -1,7 +1,7 @@
 import {CAN_HOVER_MEDIA_QUERY} from '@/constants';
 import {MonumentGroteskBold} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import {AnchorHTMLAttributes, ReactNode} from 'react';
 
 // What a link may say besides its address: the language links say the

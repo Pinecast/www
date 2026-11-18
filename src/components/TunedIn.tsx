@@ -13,7 +13,7 @@ import {AspectRatioBox} from './AspectRatioBox';
 import {HorizontalCarousel} from './HorizontalCarousel';
 import {SecondaryButton} from './SecondaryButton';
 import {PrimaryButton} from './PrimaryButton';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import {
   Codec,
   NoncriticalVideo,
@@ -739,7 +739,11 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
           <div
             className={css({
               display: 'inline-grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
+              // Two equal columns, as wide as the longer label, but not wider
+              // than the screen with room for the focus rings: a longer label
+              // wraps in its button (as in Spanish at 375px).
+              gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+              maxWidth: 'calc(100% - 20px)',
               gap: `${PANEL_GAP_MOBILE}px`,
               flexDirection: 'column',
               marginBottom: '16px',
@@ -756,6 +760,9 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
                 display: 'grid',
                 lineHeight: '1.2',
                 maxWidth: '230px',
+                // The button's own height is 40px: a label that wraps (in
+                // Spanish, with larger text spacing) makes it taller.
+                height: 'auto',
                 minHeight: '48px',
                 placeContent: 'center',
                 position: 'relative',
@@ -775,6 +782,9 @@ export const TunedInHeader = ({zIndex = 0}: {zIndex?: number}) => {
                 display: 'grid',
                 lineHeight: '1.2',
                 maxWidth: '230px',
+                // The button's own height is 40px: a label that wraps (in
+                // Spanish, with larger text spacing) makes it taller.
+                height: 'auto',
                 minHeight: '48px',
                 placeContent: 'center',
                 position: 'relative',

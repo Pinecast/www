@@ -31,6 +31,8 @@ import {Expand} from '@/icons/Expand';
 import {Expandable} from '@/components/Expandable';
 import {MAIN_CONTENT_ID, SkipLink} from '@/components/SkipLink';
 import {LanguageSuggestion} from '@/components/LanguageSuggestion';
+import {defaultLocaleStaticProps} from '@/i18n-static';
+import {useFitWords} from '@/hooks/useFitWords';
 
 export default function Features() {
   const intl = useIntl();
@@ -102,7 +104,10 @@ const Header = () => {
           defaultMessage="Features Index"
         />
       </PillButton>
+      {/* `fit`: smaller where a word of the heading is wider than its line,
+          as a translation can be (src/hooks/useFitWords.ts). */}
       <H1
+        fit
         style={{
           padding: '0 5%',
           [MIN_TABLET_MEDIA_QUERY]: {marginBottom: '50px'},
@@ -527,6 +532,26 @@ const BACKGROUND_TICK =
 
 const TITLE_LINE_HEIGHT = '44px';
 
+// The room for the name of a feature in its row, from 1181px: the row shows the
+// letter and the icon on each side of it, and centers the name between them.
+// Below that, they are hidden, and the name wraps in a row that grows with it.
+function nameRoom(name: HTMLElement): number {
+  const letter = name.previousElementSibling;
+  const icon = name.nextElementSibling;
+  if (!letter || !icon || getComputedStyle(letter).display === 'none') {
+    return Infinity;
+  }
+  const row = name.parentElement!.getBoundingClientRect();
+  const center = row.left + row.width / 2;
+  return (
+    2 *
+    Math.min(
+      center - letter.getBoundingClientRect().right,
+      icon.getBoundingClientRect().left - center,
+    )
+  );
+}
+
 // The sizes of a feature row from 1181px wide. See FeatureAccordionItem.
 // `titleTop` moves the title from where the row centers it. Set it so that the
 // bottom of the capital letters is 1px below the bottom of the row. A different
@@ -559,6 +584,12 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
 }) {
   const css = useCSS();
   const panelId = React.useId();
+  // A name that is wider than the room between the letter and the icon is
+  // smaller, on one line, as a translation can be. An English one fits.
+  const nameRef = useFitWords<HTMLSpanElement>(true, {
+    line: true,
+    room: nameRoom,
+  });
   return (
     <li
       className={css({
@@ -688,6 +719,8 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
           {name.charAt(0)}
         </span>
         <span
+          ref={nameRef}
+          data-fit="pending"
           className={css({
             ...GintoNordCondensed,
             backgroundColor: selected
@@ -707,8 +740,10 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
             textDecoration: 'none',
             zIndex: 3,
             [MIN_TABLET_MEDIA_QUERY]: {
-              fontSize: 'var(--title-size)',
+              fontSize: 'calc(var(--title-size) * var(--fit, 1))',
               top: 'var(--title-top)',
+              // The row crops a second line (nameRoom).
+              whiteSpace: 'nowrap',
               // The row has a fixed height and crops the title. When the
               // line height grows (larger text spacing), move the title up by
               // the extra half-leading, so the same part of it shows. At the
@@ -790,3 +825,7 @@ const FeatureAccordionItem = React.memo(function FeatureAccordionItem({
     </li>
   );
 });
+
+// The Features page is in Spanish too: the language suggestion needs its
+// messages in Spanish (src/i18n-static.ts).
+export const getStaticProps = defaultLocaleStaticProps('/features');

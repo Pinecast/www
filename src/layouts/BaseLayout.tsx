@@ -31,11 +31,14 @@ import * as React from 'react';
 import {StyleObject} from 'styletron-react';
 
 // The page title of the content layouts. It is smaller where its widest word
-// would not fit on its line (see fitText).
+// would not fit on its line (see fitText). So no word needs a hyphen: in
+// Spanish, `hyphens: auto` (the H1's) breaks a capitalized word that fits on
+// the next line ("PRO-PIAS"), where an English one moves down whole.
 export function pageTitleStyle(title: string): StyleObject {
   // The side padding is 10% of the page on each side.
   const lineWidth = `(${PAGE_WIDTH}) * 0.8`;
   return {
+    hyphens: 'manual',
     padding: '0 10%',
     marginBottom: '50px',
     ...fitText(title, 54, 56, lineWidth),

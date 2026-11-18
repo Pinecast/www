@@ -97,6 +97,28 @@ const config = [
       'react-hooks/set-state-in-effect': 0,
     },
   },
+  {
+    // A link of the site keeps the reader in the language of the page, where
+    // the page it reaches is in that language. src/components/SiteLink.tsx
+    // does that, and wraps next/link for it.
+    files: ['**/*.{ts,tsx}'],
+    ignores: ['src/components/SiteLink.tsx'],
+    rules: {
+      '@typescript-eslint/no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'next/link',
+              message:
+                "Import Link from '@/components/SiteLink', which keeps a link in the language of the page.",
+              allowTypeImports: true,
+            },
+          ],
+        },
+      ],
+    },
+  },
 ];
 
 export default config;

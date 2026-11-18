@@ -47,28 +47,41 @@ pages. English has no prefix (`/features`); another language has all of its
 pages in one folder of the export, under its short code (`es`, `pt`), which is
 also the `hreflang` value: `out/es/features.html` is `/es/features`, and its
 home page is `out/es/index.html`, served at `/es/` (as `/` is the English one;
-the server sends `/es` to `/es/`). Nothing redirects between languages. The
-site has the Spanish home page, `/es/`. To add a language or a page:
+the server sends `/es` to `/es/`). Nothing redirects between languages. In
+Spanish, the site has the home page, the Features and Learn pages and the
+testimonial transcripts (`TRANSLATED_ROUTES` in `src/locales.mjs`). To add a
+language or a page:
 
 1. A new language needs its catalog first (Lingo.dev, below). Then add its code
    to `LOCALES` in `src/locales.mjs`, and to `LANGUAGE_TAGS` if Lingo.dev
    translates it under another code (Spanish is `es-419`).
 2. Add the page under `src/pages/<code>/`, with the name of the English one.
    `src/pages/es/index.tsx` is the pattern: it exports the English page, and
-   `localeStaticProps` gives it the catalog. `scripts/finish-export.mjs`, after
+   `localeStaticProps` gives it the catalog. Add its route to
+   `TRANSLATED_ROUTES`, and give the English page
+   `getStaticProps = defaultLocaleStaticProps(route)`, which brings the
+   messages of the language suggestion. `scripts/finish-export.mjs`, after
    `next build`, moves the home page of a language from `out/<code>.html`
    (where Next.js exports it) to `out/<code>/index.html`. A page with no copy
    (the legal pages) stays English only, and the sitemap lists it as such: it
    lists what the export holds. The sitemap step fails if a page is served at
    another address than the one `localePath` gives it.
 3. `npm run build && npm test`. The sitemap has the new addresses, and each
-   page lists all of its languages. `tests/locale-pages.spec.ts` checks the
-   Spanish home page.
+   page lists all of its languages. `tests/locale-pages.spec.ts` checks each
+   page in another language: its `lang`, its description and its links.
 
 The sitemap is where the pages list their alternates (`hreflang`); the pages
 have no `<link rel="alternate">` tags. `localePath`, `pageUrl` and
 `alternates` are in `src/locales.mjs` so that the pages can use the same
 addresses when they link to another language.
+
+A link names a page by its English route (`href="/features"`). Import `Link`
+from `src/components/SiteLink.tsx`, not from `next/link` (the lint stops it):
+on a page in another language, it goes to that language's version of the page
+where `TRANSLATED_ROUTES` has one (`/es/features`), and to the English page
+otherwise, with `hreflang="en"`. So a page that is added to a language gets its
+links with no change to them. A link that sets `hrefLang` itself, such as a
+language link, goes where it says.
 
 Next.js's `trailingSlash` is off, so a `<Link>` drops the slash of `/es/`: the
 Spanish logo links to `/es`, and the address bar shows `/es` after a

@@ -12,7 +12,7 @@ import {
   PREFERS_REDUCED_MOTION_QUERY,
   TABLET_MEDIA_QUERY,
 } from '@/constants';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import {useRouter} from 'next/router';
 import {SignIn} from '@/icons/SignIn';
 import {AudioWaveformIcon} from './AudioWaveformIcon';
