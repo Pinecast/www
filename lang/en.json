@@ -55,6 +55,10 @@
     "defaultMessage": "See all features",
     "description": "Button at the end of a feature page, to the Features page with all the features"
   },
+  "2EOcY/": {
+    "defaultMessage": "For colleges and universities",
+    "description": "Label above the title of the page for colleges and universities, in a pill. Shown in capital letters"
+  },
   "2V7LxR": {
     "defaultMessage": "No time limit",
     "description": "A feature of the free plan, in the list on its ticket in the pricing section"

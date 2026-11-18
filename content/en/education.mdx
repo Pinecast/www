@@ -1,0 +1,244 @@
+---
+title: Pinecast for Education
+description: Podcast hosting for colleges and universities, with invoice billing, seats for students, HECVAT and ACR on request, and AI that you control.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {EducationLayout} from '@/layouts/EducationLayout';
+
+{/*
+  DRAFT OUTLINE. Each section has a heading, a first sentence where there is
+  one, and the points to make. The comments say where a point comes from and
+  what is still open. Delete them as the copy is written.
+
+  The five features to lead with: invoice billing; HECVAT and ACR on request;
+  flexible billing and volume discounts for student seats; who owns and runs
+  the shows; responsible AI and its controls. The other sections come from the
+  topic outline of the Notion task "Replace the corporate podcasting page on
+  www with an education page".
+
+  This repo is public. Do not name a school, a price or a discount here until
+  it is ready to publish.
+
+  Search terms to aim for: "podcast hosting for universities", "podcast
+  hosting for schools", "student podcast hosting", "accessible podcast
+  hosting".
+
+  The page is in English only. Once its copy is final, add it to
+  .lingo/config.json to translate it (README.md, "Translated MDX pages").
+*/}
+
+<Intro>
+  Podcast hosting built for colleges and universities: accessible to every listener, ready for your procurement office, and set up the way your school runs its shows.
+
+  [Request a quote](mailto:support@pinecast.com), or ask us for our HECVAT and ACR.
+</Intro>
+
+# Who it's for
+
+{/* One line each, or a row of tiles. */}
+
+- Journalism, media and communications programs
+- Student media and campus radio
+- Faculty who teach with podcasts, or publish research podcasts
+- Campus communications, libraries and alumni offices
+
+# Billing that works with procurement
+
+Pay the way your school pays its other vendors: from a quote, against a purchase order, by invoice.
+
+{/*
+  Feature 1: invoice billing. How it works today: Pinecast sends a quote, the
+  school's procurement office makes a PO from it, and the invoice names the PO
+  and the year of service. Payment terms (net 30?) are yours to state.
+*/}
+
+- A quote that your procurement office can turn into a PO
+- An invoice with your PO number on it
+- A year of service that starts on the date you choose
+- Pay by bank transfer, ACH debit, check or card
+- A grace period when a payment runs late, with your shows online all along
+
+# Seats for every student, priced for a whole program
+
+{/*
+  Feature 2: flexible billing and volume discounts for student seats. The
+  prices and the discount tiers are yours to fill in.
+*/}
+
+- A seat for each student or faculty member who runs a show
+- A volume discount that grows with the number of seats
+- Add a student by email address: the seat applies once they confirm it
+- Move seats from one student to another during the year, up to the number on your PO
+- Each seat has the features of the Starter plan
+
+{/*
+  A seat leaves out the tip jar, because it makes a Stripe account in the
+  student's name, with tax forms. Staff add it when somebody asks. Say so
+  here, or in the FAQ?
+*/}
+
+# You decide who owns the shows
+
+{/*
+  Feature 3: flexible configuration for podcast ownership and administration.
+  These are the two plans a school can have today ("School account" and
+  "Seats"). Can a school have one of each? Confirm before saying so.
+*/}
+
+## The school owns the shows
+
+- One school account holds the shows of a department or a station
+- Students and staff work on them as collaborators, with the Crew add-on
+- Collaborators publish and edit, but can't delete or redirect a show
+- Networks group a department's shows, also with Crew
+- The Hi-Fi add-on, for bigger audio files
+
+## Each student owns their show
+
+- Each seat holder runs their own shows, in their own account
+- A student keeps their show after they graduate, by moving it to a plan of their own
+
+{/* Confirm what a student's account becomes when their seat ends. */}
+
+## Either way
+
+- One account manages the seats and sees the invoices
+- Private episodes, for work that stays within a class
+
+# Paperwork, ready when you ask
+
+We have the documents that IT, accessibility and procurement offices ask for, and we fill in the forms they send.
+
+{/*
+  Feature 4: HECVAT and ACR, available on request. They are not linked here.
+  If they are ever published, link them from this section and from the intro.
+*/}
+
+- The HECVAT, filled in
+- An Accessibility Conformance Report (ACR), on the VPAT template
+- A W-9
+- Registration as a New York State vendor
+- Our [privacy policy](/privacy), [subprocessors](/subprocessors) and [use of AI](/ai-use), public for anyone to read
+
+# AI that you can trust, and turn off
+
+{/*
+  Feature 5: responsible AI use and controls. Sources: the AI use page
+  (/ai-use), and the AI risk management policy behind it.
+
+  "Turn off": today, staff remove a feature from a school's seats one seat at
+  a time (cover art generation, for example). A school has no switch for it in
+  the dashboard. Feedback insights are a Growth feature, which a school plan
+  does not have.
+
+  The spam check and the AI-generated audio detector can suspend only free
+  accounts. Confirm that both treat a seat as paid before saying the third
+  point.
+*/}
+
+- Our AI vendors never train on your content
+- AI runs only when someone asks for it, such as for a transcript or cover art
+- No automated check suspends a school's account, and AI never deletes anything
+- Ask us to turn AI features off for your school
+- See every AI feature, its vendor and what it sends on our [AI use page](/ai-use)
+
+# Accessible to every listener
+
+{/*
+  The claims are on the Accessibility feature page. Link to it rather than
+  repeat them, so that the two pages cannot disagree.
+*/}
+
+- [Transcripts](/features/transcripts) and [chapters](/features/podcast-chapters) for your episodes
+- An accessible dashboard, podcast websites and players
+- How we test it, on our [accessibility page](/features/accessibility)
+
+# Student privacy
+
+- Pinecast never puts ads in your shows
+- The seat list shows each email address and whether its seat is in use, not what students do
+- We collect only what a feature needs, and list every [subprocessor](/subprocessors) that sees it
+
+{/* A sentence on FERPA? Only if it is true and you want to make the claim. */}
+
+# Everything else a show needs
+
+- [Distribution](/features/distribution) to Apple Podcasts, Spotify and more
+- [Analytics](/features/analytics) for each show
+- A website for each show, on your own domain
+- [Embeddable players](/features/embeddable-players) for course pages and the campus site
+- A dashboard in several languages
+- YouTube
+
+{/* What to say about YouTube: the link from the dashboard, or more? */}
+
+# Schools on Pinecast
+
+{/*
+  Short stories from schools, each with its permission. The Notion outline
+  names them; add the names here only once each school agrees.
+*/}
+
+- A college that runs its student shows on Pinecast
+- A university program that teaches with Pinecast
+
+# How Pinecast compares
+
+{/*
+  From the topic outline: a short, fair comparison on accessibility,
+  transcripts, paperwork and limits, not on price. Check each claim about
+  another host against its current pages before publishing. Or drop this
+  section.
+*/}
+
+- Accessibility, with an ACR to show for it
+- Transcripts
+- Paperwork, ready for procurement
+- What each plan allows
+
+# Questions schools ask
+
+## Can we pay by PO and invoice?
+
+Yes. We send a quote, you send a PO, and we invoice against it.
+
+## Can the service start on a set date?
+
+Yes. Your year of service starts on the date you choose.
+
+## What happens when a student graduates?
+
+{/* Draft. Confirm before publishing. */}
+
+Their account and their shows stay theirs. When their seat ends, they can move to a plan of their own.
+
+## What if a payment runs late?
+
+{/* Say how long the grace period is. */}
+
+Your shows stay online, and everybody keeps working, during a grace period.
+
+## Do you sign our data agreement?
+
+{/* Your answer. */}
+
+## Do you support single sign-on (SSO)?
+
+{/* Your answer. Every account can turn on two-factor sign-in today. */}
+
+## Can we move our shows from another host?
+
+Yes. Pinecast [imports a show](/learn/import-a-podcast) from its feed.
+
+# Get a quote
+
+Tell us how many shows and students you have, and when your year starts. We'll send a quote, and our HECVAT and ACR if you need them.
+
+{/* A form, or this address? An address for schools would be easier to route. */}
+
+[Email support@pinecast.com](mailto:support@pinecast.com)
+
+export default layoutWrapper(EducationLayout, frontmatter);
