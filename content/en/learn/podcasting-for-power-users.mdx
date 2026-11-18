@@ -1,4 +1,10 @@
-import {Intro, ProductFeature} from '@/components/TextBlocks';
+---
+title: Podcasting for Power Users
+description: Leveling up your podcasting skills
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro, ProductFeature, ProductFeatureAccessory} from '@/components/TextBlocks';
 
 <Intro>
   If you've created content online before, podcasting won't be unfamiliar. You'll want to make sure that your hardware setup is appropriate for your needs, and that you've found a hosting service that offers the features that you need to grow your show.
@@ -40,23 +46,22 @@ You'll first want to make sure that you have a microphone that's doing your cont
   price="$249"
   description="The MV7 is one of the highest-acclaimed microphones in the podcasting space."
   url="https://www.amazon.com/Shure-Microphone-Podcasting-Voice-Isolating-Technology/dp/B08G7RG9ML?tag=pinecast-20"
-  accessories={[
-    {
-      name: 'InnoGear Microphone Arm Stand',
-      imageUrl: '/images/content/products/scissor-arm-stand.jpg',
-      price: '$46.99',
-      description: 'This boom stand will mount an MV7 with its 5/8" threaded connector.',
-      url: 'https://www.amazon.com/InnoGear-Sturdier-Microphone-Suspension-Adjustable/dp/B07DHLSTLV?tag=pinecast-20',
-    },
-    {
-      name: 'Gator Frameworks Tripod Stand',
-      imageUrl: '/images/content/products/gator-tripod-stand.jpg',
-      price: '$57.95',
-      description: 'Consider a floor-mounted stand to avoid transferring noise from your desk into the microphone.',
-      url: 'https://www.amazon.com/Knox-Microphone-Audio-Technica-ATR2100-USB-Samson/dp/B07KBWHJB5',
-    },
-  ]}
-/>
+>
+  <ProductFeatureAccessory
+    name="InnoGear Microphone Arm Stand"
+    imageUrl="/images/content/products/scissor-arm-stand.jpg"
+    price="$46.99"
+    description='This boom stand will mount an MV7 with its 5/8" threaded connector.'
+    url="https://www.amazon.com/InnoGear-Sturdier-Microphone-Suspension-Adjustable/dp/B07DHLSTLV?tag=pinecast-20"
+  />
+  <ProductFeatureAccessory
+    name="Gator Frameworks Tripod Stand"
+    imageUrl="/images/content/products/gator-tripod-stand.jpg"
+    price="$57.95"
+    description="Consider a floor-mounted stand to avoid transferring noise from your desk into the microphone."
+    url="https://www.amazon.com/Knox-Microphone-Audio-Technica-ATR2100-USB-Samson/dp/B07KBWHJB5"
+  />
+</ProductFeature>
 
 If you already have a microphone stand, be sure to check whether the Shure MV7 will work with it. We recommend a boom stand, but a tripod stand will eliminate noise caused by vibrations from your desk (e.g., those caused by typing or moving your hands). Any stand with a 5/8" threaded connector should work with the MV7.
 
@@ -68,23 +73,22 @@ If you are trying to be mindful of cost, you can consider a slightly less expens
   price="$49"
   description="The ATR2100-x provides excellent sound quality without breaking the bank. It comes with a small desk stand."
   url="https://www.amazon.com/Audio-Technica-ATR2100x-USB-Cardioid-Microphone-ATR/dp/B07ZPBFVKK?tag=pinecast-20"
-  accessories={[
-    {
-      name: 'Scissor Mic Boom',
-      imageUrl: '/images/content/products/scissor-arm-stand.jpg',
-      price: '$17.63',
-      description: 'A boom stand that keeps the mic near your mouth.',
-      url: 'https://www.amazon.com/Adjustable-Microphone-Suspension-Broadcasting-Voice-Over/dp/B00DY1F2CS',
-    },
-    {
-      name: 'Knox Shock Mount',
-      imageUrl: '/images/content/products/shock-mount.jpg',
-      price: '$12.90',
-      description: 'A shock mount reduces vibrations from your desk.',
-      url: 'https://www.amazon.com/Knox-Microphone-Audio-Technica-ATR2100-USB-Samson/dp/B07KBWHJB5',
-    },
-  ]}
-/>
+>
+  <ProductFeatureAccessory
+    name="Scissor Mic Boom"
+    imageUrl="/images/content/products/scissor-arm-stand.jpg"
+    price="$17.63"
+    description="A boom stand that keeps the mic near your mouth."
+    url="https://www.amazon.com/Adjustable-Microphone-Suspension-Broadcasting-Voice-Over/dp/B00DY1F2CS"
+  />
+  <ProductFeatureAccessory
+    name="Knox Shock Mount"
+    imageUrl="/images/content/products/shock-mount.jpg"
+    price="$12.90"
+    description="A shock mount reduces vibrations from your desk."
+    url="https://www.amazon.com/Knox-Microphone-Audio-Technica-ATR2100-USB-Samson/dp/B07KBWHJB5"
+  />
+</ProductFeature>
 
 # Monetizing your show
 
@@ -145,8 +149,4 @@ Documentation is available [on our support website](https://help.pinecast.com/ar
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {LearnLayout} from '@/layouts/LearnLayout';
 
-export default layoutWrapper(LearnLayout, {
-  title: 'Podcasting for Power Users',
-  description: 'Leveling up your podcasting skills',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(LearnLayout, frontmatter);

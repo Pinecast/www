@@ -1,4 +1,10 @@
-import {Intro, ProductFeature} from '@/components/TextBlocks';
+---
+title: Podcasting for Beginners
+description: Starting your first podcast
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro, ProductFeature, ProductFeatureAccessory} from '@/components/TextBlocks';
 
 <Intro>
   The podcast industry is filled with terms and concepts that can be intimidating, but starting your first podcast doesn't have to be hard. This is a quick introduction to get you up and running with your first show in no time.
@@ -45,23 +51,22 @@ While a built-in microphone is sufficient to get started, you'll want to look at
   price="$59.99"
   description="An inexpensive microphone that plugs in with USB. It's a good value for good quality sound."
   url="https://www.amazon.com/Samson-Handheld-Microphone-Recording-Podcasting/dp/B001R747SG?th=1"
-  accessories={[
-    {
-      name: 'Scissor Mic Boom',
-      imageUrl: '/images/content/products/scissor-arm-stand.jpg',
-      price: '$17.63',
-      description: 'A boom stand that keeps the mic near your mouth.',
-      url: 'https://www.amazon.com/Adjustable-Microphone-Suspension-Broadcasting-Voice-Over/dp/B00DY1F2CS',
-    },
-    {
-      name: 'Knox Shock Mount',
-      imageUrl: '/images/content/products/shock-mount.jpg',
-      price: '$12.90',
-      description: 'A shock mount reduces vibrations from your desk.',
-      url: 'https://www.amazon.com/Knox-Microphone-Audio-Technica-ATR2100-USB-Samson/dp/B07KBWHJB5',
-    },
-  ]}
-/>
+>
+  <ProductFeatureAccessory
+    name="Scissor Mic Boom"
+    imageUrl="/images/content/products/scissor-arm-stand.jpg"
+    price="$17.63"
+    description="A boom stand that keeps the mic near your mouth."
+    url="https://www.amazon.com/Adjustable-Microphone-Suspension-Broadcasting-Voice-Over/dp/B00DY1F2CS"
+  />
+  <ProductFeatureAccessory
+    name="Knox Shock Mount"
+    imageUrl="/images/content/products/shock-mount.jpg"
+    price="$12.90"
+    description="A shock mount reduces vibrations from your desk."
+    url="https://www.amazon.com/Knox-Microphone-Audio-Technica-ATR2100-USB-Samson/dp/B07KBWHJB5"
+  />
+</ProductFeature>
 
 # Preparing your space
 
@@ -138,8 +143,4 @@ When you're ready to level up your podcasting acumen, check out [our guide for p
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {LearnLayout} from '@/layouts/LearnLayout';
 
-export default layoutWrapper(LearnLayout, {
-  title: 'Podcasting for Beginners',
-  description: 'Starting your first podcast',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(LearnLayout, frontmatter);

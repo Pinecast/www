@@ -1,3 +1,9 @@
+---
+title: Promoting Your Podcast
+description: Market your podcast to new listeners
+heroImage: /images/hero/t-r.png
+---
+
 import {Intro} from '@/components/TextBlocks';
 
 <Intro>
@@ -44,8 +50,4 @@ Subscriber growth is built around your podcast community: marketing your show is
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {LearnLayout} from '@/layouts/LearnLayout';
 
-export default layoutWrapper(LearnLayout, {
-  title: 'Promoting Your Podcast',
-  description: 'Market your podcast to new listeners',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(LearnLayout, frontmatter);

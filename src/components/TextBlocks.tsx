@@ -554,9 +554,12 @@ export const ProductFeature = ({
   price,
   description,
   url,
-  accessories,
+  children,
 }: Product & {
-  accessories?: Array<Product>;
+  // The accessories, each a `ProductFeatureAccessory`. They are elements, not
+  // an array, so that Lingo.dev can translate their text: it translates the
+  // props of an element, and nothing in an expression (README.md).
+  children?: React.ReactNode;
 }) => {
   const css = useCSS();
   const intl = useIntl();
@@ -649,7 +652,7 @@ export const ProductFeature = ({
           />
         </Link>
       </div>
-      {accessories && (
+      {children && (
         <div
           className={css({
             gridArea: 'accessories',
@@ -685,9 +688,7 @@ export const ProductFeature = ({
               scrollPadding: `0 ${ACCESSORY_FADE_WIDTH + RING_ROOM}px 0 ${RING_ROOM}px`,
             })}
           >
-            {accessories.map(accessory => (
-              <ProductFeatureAccessory key={accessory.url} {...accessory} />
-            ))}
+            {children}
           </div>
         </div>
       )}
@@ -699,7 +700,7 @@ export const ProductFeature = ({
 // that a card and its focus ring always fit clear of the fade.
 const ACCESSORY_WIDTH = 'min(300px, 100%)';
 
-const ProductFeatureAccessory = ({
+export const ProductFeatureAccessory = ({
   name,
   imageUrl,
   price,

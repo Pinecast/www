@@ -1,4 +1,10 @@
-import {Intro, ProductFeature} from '@/components/TextBlocks';
+---
+title: Podcasting for Companies
+description: Use podcasting for your business, internally or externally
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro, ProductFeature, ProductFeatureAccessory} from '@/components/TextBlocks';
 
 <Intro>
   Applied correctly, podcasts can build your brand, keep your employees informed, or promote your work in a digestible format.
@@ -78,23 +84,22 @@ The Audio-Technica ATR2100x-USB is a good choice for doing your own recording. I
   price="$49"
   description="The ATR2100-x provides excellent sound quality without breaking the bank. It comes with a small desk stand."
   url="https://www.amazon.com/Audio-Technica-ATR2100x-USB-Cardioid-Microphone-ATR/dp/B07ZPBFVKK?tag=pinecast-20"
-  accessories={[
-    {
-      name: 'Scissor Mic Boom',
-      imageUrl: '/images/content/products/scissor-arm-stand.jpg',
-      price: '$17.63',
-      description: 'A boom stand that keeps the mic near your mouth.',
-      url: 'https://www.amazon.com/Adjustable-Microphone-Suspension-Broadcasting-Voice-Over/dp/B00DY1F2CS',
-    },
-    {
-      name: 'Knox Shock Mount',
-      imageUrl: '/images/content/products/shock-mount.jpg',
-      price: '$12.90',
-      description: 'A shock mount reduces vibrations from your desk.',
-      url: 'https://www.amazon.com/Knox-Microphone-Audio-Technica-ATR2100-USB-Samson/dp/B07KBWHJB5',
-    },
-  ]}
-/>
+>
+  <ProductFeatureAccessory
+    name="Scissor Mic Boom"
+    imageUrl="/images/content/products/scissor-arm-stand.jpg"
+    price="$17.63"
+    description="A boom stand that keeps the mic near your mouth."
+    url="https://www.amazon.com/Adjustable-Microphone-Suspension-Broadcasting-Voice-Over/dp/B00DY1F2CS"
+  />
+  <ProductFeatureAccessory
+    name="Knox Shock Mount"
+    imageUrl="/images/content/products/shock-mount.jpg"
+    price="$12.90"
+    description="A shock mount reduces vibrations from your desk."
+    url="https://www.amazon.com/Knox-Microphone-Audio-Technica-ATR2100-USB-Samson/dp/B07KBWHJB5"
+  />
+</ProductFeature>
 
 If you want to maximize your audio quality, look for local recording studios. If you don't know where to look, you can often contact your local radio stations. Libraries may also offer recording services or have resources to find them.
 
@@ -148,8 +153,4 @@ Pinecast supports TOTP-based MFA (e.g., Google Authenticator) and uses industry 
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {LearnLayout} from '@/layouts/LearnLayout';
 
-export default layoutWrapper(LearnLayout, {
-  title: 'Podcasting for Companies',
-  description: 'Use podcasting for your business, internally or externally',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(LearnLayout, frontmatter);

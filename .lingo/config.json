@@ -91,6 +91,114 @@
       "targetPath": "content/[locale]/features/transcripts.mdx",
       "translateFrontmatterFields": ["title", "description"],
       "translateComponentProps": ["title"]
+    },
+    {
+      "pattern": "content/en/learn/corporate-podcasting.mdx",
+      "targetPath": "content/[locale]/learn/corporate-podcasting.mdx",
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": [
+        "title",
+        {
+          "component": ["ProductFeature", "ProductFeatureAccessory"],
+          "props": ["name", "price", "description"]
+        }
+      ]
+    },
+    {
+      "pattern": "content/en/learn/create-a-podcast.mdx",
+      "targetPath": "content/[locale]/learn/create-a-podcast.mdx",
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": [
+        "title",
+        {
+          "component": ["ProductFeature", "ProductFeatureAccessory"],
+          "props": ["name", "price", "description"]
+        }
+      ]
+    },
+    {
+      "pattern": "content/en/learn/import-a-podcast.mdx",
+      "targetPath": "content/[locale]/learn/import-a-podcast.mdx",
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": [
+        "title",
+        {
+          "component": ["ProductFeature", "ProductFeatureAccessory"],
+          "props": ["name", "price", "description"]
+        }
+      ]
+    },
+    {
+      "pattern": "content/en/learn/monetize-your-podcast.mdx",
+      "targetPath": "content/[locale]/learn/monetize-your-podcast.mdx",
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": [
+        "title",
+        {
+          "component": ["ProductFeature", "ProductFeatureAccessory"],
+          "props": ["name", "price", "description"]
+        }
+      ]
+    },
+    {
+      "pattern": "content/en/learn/podcasting-for-beginners.mdx",
+      "targetPath": "content/[locale]/learn/podcasting-for-beginners.mdx",
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": [
+        "title",
+        {
+          "component": ["ProductFeature", "ProductFeatureAccessory"],
+          "props": ["name", "price", "description"]
+        }
+      ]
+    },
+    {
+      "pattern": "content/en/learn/podcasting-for-power-users.mdx",
+      "targetPath": "content/[locale]/learn/podcasting-for-power-users.mdx",
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": [
+        "title",
+        {
+          "component": ["ProductFeature", "ProductFeatureAccessory"],
+          "props": ["name", "price", "description"]
+        }
+      ]
+    },
+    {
+      "pattern": "content/en/learn/podcasting-glossary.mdx",
+      "targetPath": "content/[locale]/learn/podcasting-glossary.mdx",
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": [
+        "title",
+        {
+          "component": ["ProductFeature", "ProductFeatureAccessory"],
+          "props": ["name", "price", "description"]
+        }
+      ]
+    },
+    {
+      "pattern": "content/en/learn/promoting-your-podcast.mdx",
+      "targetPath": "content/[locale]/learn/promoting-your-podcast.mdx",
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": [
+        "title",
+        {
+          "component": ["ProductFeature", "ProductFeatureAccessory"],
+          "props": ["name", "price", "description"]
+        }
+      ]
+    },
+    {
+      "pattern": "content/en/learn/understand-your-growth.mdx",
+      "targetPath": "content/[locale]/learn/understand-your-growth.mdx",
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": [
+        "title",
+        {
+          "component": ["ProductFeature", "ProductFeatureAccessory"],
+          "props": ["name", "price", "description"]
+        }
+      ]
     }
   ]
 }
