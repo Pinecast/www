@@ -158,10 +158,18 @@ export const Step = ({
   title: string;
 }) => {
   const css = useCSS();
+  const intl = useIntl();
   return (
     <section className={css({':not(:last-child)': {marginBottom: '150px'}})}>
       <TaggedTitle
-        tag={`Step ${stepNumber.toString().padStart(2, '0')}`}
+        tag={intl.formatMessage(
+          {
+            description:
+              'Label of a step of a Learn article, in a pill above its title, and read before the title. Shown in capital letters. {number} is the number of the step, with two digits ("01")',
+            defaultMessage: 'Step {number}',
+          },
+          {number: stepNumber.toString().padStart(2, '0')},
+        )}
         style={{marginTop: '0px'}}
       >
         {title}

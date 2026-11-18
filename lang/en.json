@@ -59,6 +59,10 @@
     "defaultMessage": "No time limit",
     "description": "A feature of the free plan, in the list on its ticket in the pricing section"
   },
+  "3NQkii": {
+    "defaultMessage": "Step {number}",
+    "description": "Label of a step of a Learn article, in a pill above its title, and read before the title. Shown in capital letters. {number} is the number of the step, with two digits (\"01\")"
+  },
   "3bxEDj": {
     "defaultMessage": "Level 3",
     "description": "Small label above the heading of a tile in the site menu, shown in capitals. Tiles go from level 1 to 3; this one is a link to the guide for companies and organizations."
