@@ -1,3 +1,9 @@
+---
+title: Feedback
+description: Let your listeners send their messages about your podcast or its episodes to a shared inbox.
+heroImage: /images/hero/t-r.png
+---
+
 import {ChecksList, Intro} from '@/components/TextBlocks';
 
 <Intro>
@@ -38,8 +44,4 @@ We send you an email whenever you receive feedback. If you have a team or want n
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {FeatureLayout} from '@/layouts/FeatureLayout';
 
-export default layoutWrapper(FeatureLayout, {
-  title: 'Feedback',
-  description: 'Let your listeners send their messages about your podcast or its episodes to a shared inbox.',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(FeatureLayout, frontmatter);

@@ -1,3 +1,9 @@
+---
+title: Analytics
+description: Track listens and visitors to your podcast
+heroImage: /images/hero/t-r.png
+---
+
 import {ChecksList, Intro} from '@/components/TextBlocks';
 
 <Intro>
@@ -94,8 +100,4 @@ Views for networks show details for multiple podcasts at once. Networks are avai
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {FeatureLayout} from '@/layouts/FeatureLayout';
 
-export default layoutWrapper(FeatureLayout, {
-  title: 'Analytics',
-  description: 'Track listens and visitors to your podcast',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(FeatureLayout, frontmatter);

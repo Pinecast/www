@@ -1,3 +1,9 @@
+---
+title: Podcast Chapters
+description: Link to each segment in your episodes
+heroImage: /images/hero/b-r.png
+---
+
 import {ChecksList, Intro} from '@/components/TextBlocks';
 
 <Intro>
@@ -33,8 +39,4 @@ That's it: when you save your episode, we'll take care of the rest.
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {FeatureLayout} from '@/layouts/FeatureLayout';
 
-export default layoutWrapper(FeatureLayout, {
-  title: 'Podcast Chapters',
-  description: 'Link to each segment in your episodes',
-  heroImage: '/images/hero/b-r.png',
-});
+export default layoutWrapper(FeatureLayout, frontmatter);

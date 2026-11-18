@@ -1,3 +1,9 @@
+---
+title: Email Privacy
+description: Keep your personal email address private with Pinecast email privacy.
+heroImage: /images/hero/t-l.png
+---
+
 import {Intro, DefinitionList} from '@/components/TextBlocks';
 
 <Intro>
@@ -26,8 +32,4 @@ When someone emails the address, we'll automatically forward it to the email we 
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {FeatureLayout} from '@/layouts/FeatureLayout';
 
-export default layoutWrapper(FeatureLayout, {
-  title: 'Email Privacy',
-  description: 'Keep your personal email address private with Pinecast email privacy.',
-  heroImage: '/images/hero/t-l.png',
-});
+export default layoutWrapper(FeatureLayout, frontmatter);

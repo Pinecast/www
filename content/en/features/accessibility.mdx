@@ -1,3 +1,9 @@
+---
+title: Accessibility
+description: Pinecast is built for everyone
+heroImage: /images/hero/t-l.png
+---
+
 import {ChecksList, Intro} from '@/components/TextBlocks';
 
 <Intro>
@@ -133,8 +139,4 @@ Pinecast isn't perfect, but we're proud to self-report our support for accessibi
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {LegalLayout} from '@/layouts/LegalLayout';
 
-export default layoutWrapper(LegalLayout, {
-  title: 'Accessibility',
-  description: 'Pinecast is built for everyone',
-  heroImage: '/images/hero/t-l.png',
-});
+export default layoutWrapper(LegalLayout, frontmatter);

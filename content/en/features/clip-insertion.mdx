@@ -1,3 +1,9 @@
+---
+title: Clip Insertion
+description: Keep your back catalog fresh with clip insertion.
+heroImage: /images/hero/t-r.png
+---
+
 import {Intro} from '@/components/TextBlocks';
 
 <Intro>
@@ -32,8 +38,4 @@ You get the same great analytics for clips as you do for episodes and podcasts. 
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {FeatureLayout} from '@/layouts/FeatureLayout';
 
-export default layoutWrapper(FeatureLayout, {
-  title: 'Clip Insertion',
-  description: 'Keep your back catalog fresh with clip insertion.',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(FeatureLayout, frontmatter);
