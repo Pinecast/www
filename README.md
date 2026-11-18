@@ -49,8 +49,8 @@ also the `hreflang` value: `out/es/features.html` is `/es/features`, and its
 home page is `out/es/index.html`, served at `/es/` (as `/` is the English one;
 the server sends `/es` to `/es/`). Nothing redirects between languages. In
 Spanish, the site has the home page, the Features page and every feature
-page, the Learn page and the testimonial transcripts (`TRANSLATED_ROUTES` in
-`src/locales.mjs`). To add a
+page, the Learn page and every Learn article, and the testimonial transcripts
+(`TRANSLATED_ROUTES` in `src/locales.mjs`). To add a
 language or a page:
 
 1. A new language needs its catalog first (Lingo.dev, below). Then add its code
@@ -171,8 +171,13 @@ deletes a page whose text is gone.
   frontmatter);`.
 - Lingo.dev translates the text inside a component or an HTML element, but a
   prop only when `translateComponentProps` names it. Each text names `title`
-  (the name of each player frame on the Embeddable Players page). Text in any
-  other prop stays English: name the prop there first.
+  (the name of each player frame on the Embeddable Players page, and of each
+  `Step`), and each Learn article also names the `name`, `price` and
+  `description` of `ProductFeature` and `ProductFeatureAccessory`. Text in any
+  other prop stays English: name the prop there first. The rules name string
+  props, and nothing says that Lingo.dev translates text in an expression
+  (`prop={...}`): put text in a string prop or in a child element, as the
+  accessories of a `ProductFeature` are.
 - Do not edit a translation: change the English, and the
   `push-translations` job translates it again.
 - To translate a page: move its text from `src/pages/` to `content/en/`, give

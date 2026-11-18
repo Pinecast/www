@@ -557,8 +557,8 @@ export const ProductFeature = ({
   children,
 }: Product & {
   // The accessories, each a `ProductFeatureAccessory`. They are elements, not
-  // an array, so that Lingo.dev can translate their text: it translates the
-  // props of an element, and nothing in an expression (README.md).
+  // an array, so that Lingo.dev translates their text: its rules name the
+  // string props of an element, not text in an expression (README.md).
   children?: React.ReactNode;
 }) => {
   const css = useCSS();
