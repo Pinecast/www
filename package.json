@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run i18n:compile && next dev --webpack",
-    "build": "npm run i18n:compile && next build --webpack && node scripts/finish-export.mjs && node scripts/generate-sitemap.mjs",
+    "dev": "npm run i18n:compile && npm run content:pages && next dev --webpack",
+    "build": "npm run i18n:compile && npm run content:pages && next build --webpack && node scripts/finish-export.mjs && node scripts/generate-sitemap.mjs",
     "start": "next start",
     "lint": "eslint .",
     "test": "playwright test",
@@ -12,7 +12,8 @@
     "i18n:extract": "npm run i18n:extract:messages && node scripts/lingo-source.mjs",
     "i18n:extract:messages": "formatjs extract 'src/**/*.{ts,tsx}' --ignore '**/*.d.ts' --id-interpolation-pattern '[sha512:contenthash:base64:6]' --additional-component-names FormattedMessage --additional-function-names formatMessage --preserve-whitespace --throws --out-file lang/en.json",
     "check:messages": "node scripts/check-messages.mjs",
-    "i18n:compile": "node scripts/compile-messages.mjs"
+    "i18n:compile": "node scripts/compile-messages.mjs",
+    "content:pages": "node scripts/content-pages.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

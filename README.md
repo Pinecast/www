@@ -55,7 +55,9 @@ language or a page:
 1. A new language needs its catalog first (Lingo.dev, below). Then add its code
    to `LOCALES` in `src/locales.mjs`, and to `LANGUAGE_TAGS` if Lingo.dev
    translates it under another code (Spanish is `es-419`).
-2. Add the page under `src/pages/<code>/`, with the name of the English one.
+2. An MDX page whose text is in `content/` needs no page file: the build
+   writes it from the translation (Translated MDX pages, below). Add any other
+   page under `src/pages/<code>/`, with the name of the English one.
    `src/pages/es/index.tsx` is the pattern: it exports the English page, and
    `localeStaticProps` gives it the catalog. Add its route to
    `TRANSLATED_ROUTES`, and give the English page
@@ -143,20 +145,22 @@ says the language of the page from its route, for links.
 
 ### Translated MDX pages
 
-The text of a translated MDX page is in `content/en/` (in the folders of its
-route), and the page in `src/pages/` imports it and adds its props:
+The text of a translated MDX page is in `content/en/`, in the folders of its
+route (`content/en/features/collaborators.mdx` is `/features/collaborators`).
+Lingo.dev writes each translation next to it, in `content/<code>/`
+(`content/es-419/`).
 
-```tsx
-// src/pages/features/collaborators.tsx
-export {default} from '../../../content/en/features/collaborators.mdx';
-export const getStaticProps = defaultLocaleStaticProps('/features/collaborators');
-```
-
-Lingo.dev writes the translation next to it, in `content/<code>/`
-(`content/es-419/`), and `src/pages/es/features/collaborators.tsx` imports
-that with `localeStaticProps`. So the text holds no props: a page's
+The pages in `src/pages/` for these texts are not in git:
+`scripts/content-pages.mjs` (`npm run content:pages`, which `npm run build`
+and `npm run dev` run first) writes one for each text in `content/`, in the
+language of its folder, and lists them in `src/pages/.gitignore`. A page only
+imports its text and adds its props, `defaultLocaleStaticProps` in English and
+`localeStaticProps` in another language. The text holds no props: a page's
 `getStaticProps` reaches for Node, and a copy in a translation would bring it
-into the browser.
+into the browser. The script stops the build when a translation has no English
+text, when a file in `src/pages/` that it did not write has the address of one
+of its pages, or when a translated route is not in `TRANSLATED_ROUTES`. It
+deletes a page whose text is gone.
 
 - The title and description of the page are YAML frontmatter at the top of
   the text, which `vendor/remark-frontmatter-export.mjs` exports as
@@ -166,11 +170,11 @@ into the browser.
   frontmatter);`.
 - Do not edit a translation: change the English, and the
   `push-translations` job translates it again.
-- To translate a page: move its text to `content/en/`, give it frontmatter,
-  make the page in `src/pages/` import it, add the file to `.lingo/config.json`
-  with a `targetPath` that names the file (the job's check for a new language
-  cannot read `[path]`), and translate it once by hand, which also writes its
-  lockfile entry:
+- To translate a page: move its text from `src/pages/` to `content/en/`, give
+  it frontmatter, add the file to `.lingo/config.json` with a `targetPath`
+  that names the file (the job's check for a new language cannot read
+  `[path]`), and translate it once by hand, which also writes its lockfile
+  entry:
 
   ```sh
   npx --yes @lingo.dev/cli@1.19.0 push content/en/<path>.mdx --estimate
@@ -178,8 +182,8 @@ into the browser.
   npx prettier --parser json --write '.lingo/*.json'
   ```
 
-  Then add the page under `src/pages/<code>/` and its route to
-  `TRANSLATED_ROUTES`. The Collaborators page was the first.
+  Then add its route to `TRANSLATED_ROUTES`. The Collaborators page was the
+  first.
 
 ### Lingo.dev
 

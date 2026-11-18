@@ -25,6 +25,8 @@ dist/
 out/
 # scripts/compile-messages.mjs
 .compiled-lang/
+# scripts/content-pages.mjs ignores the pages that it writes in
+# src/pages/.gitignore, which it writes too.
 
 # Playwright
 test-results/
