@@ -11,72 +11,86 @@
     {
       "pattern": "content/en/features/accessibility.mdx",
       "targetPath": "content/[locale]/features/accessibility.mdx",
-      "translateFrontmatterFields": ["title", "description"]
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": ["title"]
     },
     {
       "pattern": "content/en/features/analytics.mdx",
       "targetPath": "content/[locale]/features/analytics.mdx",
-      "translateFrontmatterFields": ["title", "description"]
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": ["title"]
     },
     {
       "pattern": "content/en/features/clip-insertion.mdx",
       "targetPath": "content/[locale]/features/clip-insertion.mdx",
-      "translateFrontmatterFields": ["title", "description"]
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": ["title"]
     },
     {
       "pattern": "content/en/features/collaborators.mdx",
       "targetPath": "content/[locale]/features/collaborators.mdx",
-      "translateFrontmatterFields": ["title", "description"]
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": ["title"]
     },
     {
       "pattern": "content/en/features/distribution.mdx",
       "targetPath": "content/[locale]/features/distribution.mdx",
-      "translateFrontmatterFields": ["title", "description"]
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": ["title"]
     },
     {
       "pattern": "content/en/features/email-privacy.mdx",
       "targetPath": "content/[locale]/features/email-privacy.mdx",
-      "translateFrontmatterFields": ["title", "description"]
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": ["title"]
     },
     {
       "pattern": "content/en/features/embeddable-players.mdx",
       "targetPath": "content/[locale]/features/embeddable-players.mdx",
-      "translateFrontmatterFields": ["title", "description"]
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": ["title"]
     },
     {
       "pattern": "content/en/features/feedback.mdx",
       "targetPath": "content/[locale]/features/feedback.mdx",
-      "translateFrontmatterFields": ["title", "description"]
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": ["title"]
     },
     {
       "pattern": "content/en/features/icebox.mdx",
       "targetPath": "content/[locale]/features/icebox.mdx",
-      "translateFrontmatterFields": ["title", "description"]
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": ["title"]
     },
     {
       "pattern": "content/en/features/monetization.mdx",
       "targetPath": "content/[locale]/features/monetization.mdx",
-      "translateFrontmatterFields": ["title", "description"]
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": ["title"]
     },
     {
       "pattern": "content/en/features/podcast-chapters.mdx",
       "targetPath": "content/[locale]/features/podcast-chapters.mdx",
-      "translateFrontmatterFields": ["title", "description"]
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": ["title"]
     },
     {
       "pattern": "content/en/features/review-monitoring.mdx",
       "targetPath": "content/[locale]/features/review-monitoring.mdx",
-      "translateFrontmatterFields": ["title", "description"]
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": ["title"]
     },
     {
       "pattern": "content/en/features/short-links.mdx",
       "targetPath": "content/[locale]/features/short-links.mdx",
-      "translateFrontmatterFields": ["title", "description"]
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": ["title"]
     },
     {
       "pattern": "content/en/features/transcripts.mdx",
       "targetPath": "content/[locale]/features/transcripts.mdx",
-      "translateFrontmatterFields": ["title", "description"]
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": ["title"]
     }
   ]
 }

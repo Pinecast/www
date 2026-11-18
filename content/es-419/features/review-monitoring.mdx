@@ -1,0 +1,38 @@
+---
+title: Monitoreo de reseñas
+description: Mantén un registro de las reseñas que los oyentes dejan en tu podcast.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  ¿Tus oyentes están dejando reseñas de tu podcast? ¿Con qué frecuencia las revisas? Deja que Pinecast haga el trabajo pesado de buscar reseñas por ti.
+</Intro>
+
+# Ve todas las reseñas
+
+"Déjanos una reseña" es una frase que muchos podcasters repiten seguido, pero la mayoría de los productores no ve todas las reseñas que les dejan. El complemento Crecimiento de Pinecast ($10/mes o $110/año) hace el trabajo pesado por ti y te envía un correo cada vez que alguien deja una nueva reseña en Apple Podcasts o Podchaser.
+
+![Una captura de pantalla del panel del podcast que muestra las reseñas que se han dejado](/images/content/features/review-monitoring-dashboard.png)
+
+No solo capturamos las reseñas que se dejan, también desglosamos las calificaciones recibidas y llevamos un registro de tu calificación promedio. Puedes filtrar las reseñas por calificación o por el país de quien las dejó (si está disponible).
+
+## Alivio total a las reseñas por región
+
+¿Sabías que Apple Podcasts tiene listados regionales distintos para cada podcast? Si cambias tu país en Apple Podcasts, verás reseñas diferentes de tu podcast. Ver todas tus reseñas puede significar revisar decenas de versiones de tus listados.
+
+¡No te preocupes! Pinecast revisa las reseñas en cada país y las muestra todas juntas en tu panel.
+
+# Notificaciones
+
+De forma predeterminada, el propietario del podcast recibe una notificación por correo electrónico cada vez que llega una reseña. Las reseñas también aparecen en el panel del podcast.
+
+![Una captura de pantalla del formulario para crear una notificación, configurada para enviar un correo electrónico cuando se encuentra una reseña del podcast](/images/content/features/review-monitoring-notification.png)
+
+Si además tienes el complemento Equipo de Pinecast, también puedes configurar notificaciones hacia otras direcciones de correo electrónico, Slack, Discord o webhooks HTTP.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

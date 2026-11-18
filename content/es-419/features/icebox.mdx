@@ -1,0 +1,38 @@
+---
+title: Icebox
+description: Mantén tu programa en línea mientras te tomas un descanso del podcasting
+heroImage: /images/hero/t-l.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  La vida pasa. A veces necesitas alejarte del podcasting por un tiempo, y está bien. Con Pinecast, no pagas el precio completo mientras estás en pausa.
+</Intro>
+
+# El plan Icebox
+
+Después de sesenta días de inactividad, puedes cambiar al plan Icebox para mantener tu cuenta en modo de solo lectura. Pagarás una tarifa mensual baja de $2 al mes, facturada anualmente.
+
+Con el icebox, todos tus episodios permanecen en línea, junto con todas las funciones que obtienes con el plan Starter:
+
+<ChecksList>
+  <li>Bote de propinas</li>
+  <li>Sitio web</li>
+  <li>Reproductores integrables</li>
+  <li>Estadísticas</li>
+  <li>Comentarios</li>
+  <li>Clips insertados</li>
+  <li>Alojamiento de transcripciones</li>
+  <li>…y más</li>
+</ChecksList>
+
+Durante tu tiempo en el icebox, no podrás publicar episodios nuevos ni editar los episodios existentes. Aun así, tendrás acceso completo de solo lectura a tu cuenta.
+
+Lo mejor de todo es que el icebox se calcula de forma totalmente prorrateada: si ya pagaste tu tarifa mensual, solo pagarás la diferencia entre el tiempo no usado del plan Starter y el costo anual del Icebox. Y cuando estés listo para volver, el cambio también se prorratea y entra en vigor de inmediato.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

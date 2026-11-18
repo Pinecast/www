@@ -1,0 +1,35 @@
+---
+title: Privacidad del correo electrónico
+description: Mantén tu dirección de correo electrónico personal privada con la privacidad de correo electrónico de Pinecast.
+heroImage: /images/hero/t-l.png
+---
+
+import {Intro, DefinitionList} from '@/components/TextBlocks';
+
+<Intro>
+  Mantén tu correo electrónico personal oculto del público.
+</Intro>
+
+# Tu privacidad es importante
+
+Empezar un podcast significa poner una dirección de correo electrónico activa a la vista de todo el mundo. Pinecast te permite hacerlo sin revelar tu correo personal a los oyentes, y sin obligarte a administrar una bandeja de entrada separada.
+
+Configurar la privacidad de correo electrónico es fácil: solo activa una opción al configurar tu programa, o en los ajustes de tu podcast. Al activar la privacidad de correo electrónico, se reemplaza la dirección de correo electrónico publicada en tu feed por una dirección de reenvío administrada por Pinecast.
+
+<DefinitionList>
+    <dt>Sin privacidad de correo electrónico</dt>
+    <dd>your-email@gmail.com</dd>
+    <dt>Con privacidad de correo electrónico</dt>
+    <dd>your-show@listener.email</dd>
+</DefinitionList>
+
+## ¿Cómo funciona?
+
+Una vez que activas la opción, Pinecast configura una dirección de correo electrónico en <code>listener.email</code> solo para tu programa. No hay un segundo paso. Usaremos esa dirección de reenvío en cualquier lugar donde se publique un correo electrónico.
+
+Cuando alguien le escribe a esa dirección, la reenviaremos automáticamente al correo electrónico que tenemos registrado en tu cuenta. Al responder los mensajes, la respuesta se envía desde tu dirección de correo electrónico personal.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);
