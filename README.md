@@ -91,9 +91,10 @@ sitemap says `/es/`.
 
 ## Translations
 
-The copy in TSX is in react-intl messages, as in pinecast-ts. The MDX pages
-are not, yet. Write a message where it is used, with a `description` that
-tells a translator where the text is and what it does:
+The copy in TSX is in react-intl messages, as in pinecast-ts. The text of an
+MDX page that is translated is a file of its own, which Lingo.dev translates
+whole ("Translated MDX pages", below). Write a message where it is used, with a
+`description` that tells a translator where the text is and what it does:
 
 ```tsx
 <FormattedMessage
@@ -140,6 +141,46 @@ page in another language passes its locale and the catalog of that locale
 only, from `localeStaticProps` (`src/i18n-static.ts`). `usePageLocale()`
 says the language of the page from its route, for links.
 
+### Translated MDX pages
+
+The text of a translated MDX page is in `content/en/` (in the folders of its
+route), and the page in `src/pages/` imports it and adds its props:
+
+```tsx
+// src/pages/features/collaborators.tsx
+export {default} from '../../../content/en/features/collaborators.mdx';
+export const getStaticProps = defaultLocaleStaticProps('/features/collaborators');
+```
+
+Lingo.dev writes the translation next to it, in `content/<code>/`
+(`content/es-419/`), and `src/pages/es/features/collaborators.tsx` imports
+that with `localeStaticProps`. So the text holds no props: a page's
+`getStaticProps` reaches for Node, and a copy in a translation would bring it
+into the browser.
+
+- The title and description of the page are YAML frontmatter at the top of
+  the text, which `vendor/remark-frontmatter-export.mjs` exports as
+  `frontmatter`, and which Lingo.dev translates (`translateFrontmatterFields`
+  in `.lingo/config.json`). An export is code, and Lingo.dev leaves it as it
+  is. The text ends with `export default layoutWrapper(FeatureLayout,
+  frontmatter);`.
+- Do not edit a translation: change the English, and the
+  `push-translations` job translates it again.
+- To translate a page: move its text to `content/en/`, give it frontmatter,
+  make the page in `src/pages/` import it, add the file to `.lingo/config.json`
+  with a `targetPath` that names the file (the job's check for a new language
+  cannot read `[path]`), and translate it once by hand, which also writes its
+  lockfile entry:
+
+  ```sh
+  npx --yes @lingo.dev/cli@1.19.0 push content/en/<path>.mdx --estimate
+  npx --yes @lingo.dev/cli@1.19.0 push content/en/<path>.mdx --wait
+  npx prettier --parser json --write '.lingo/*.json'
+  ```
+
+  Then add the page under `src/pages/<code>/` and its route to
+  `TRANSLATED_ROUTES`. The Collaborators page was the first.
+
 ### Lingo.dev
 
 Lingo.dev makes the catalogs of the other languages, `lang/<code>.json`
@@ -151,7 +192,8 @@ glossary. The `push-translations` job of
 `.github/workflows/main.yml` runs after the tests on each push to `netlify`
 (and by hand, from the Actions tab). It runs the v1 CLI (`@lingo.dev/cli`,
 pinned in the job), then pushes the branch `lingo/netlify` and opens a PR, or
-updates the open one, with the target catalogs, `.lingo/lock.json` and a
+updates the open one, with the target catalogs, the translated texts in `content/`,
+`.lingo/lock.json` and a
 freshly extracted `lang/en.json` and `lang/en.jsonc`. Each run replaces the
 branch, unless a person pushed a commit to it: then it waits until that PR
 merges. It is the
