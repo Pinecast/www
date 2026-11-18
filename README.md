@@ -172,8 +172,11 @@ deletes a page whose text is gone.
 - Lingo.dev translates the text inside a component or an HTML element, but a
   prop only when `translateComponentProps` names it. Each text names `title`
   (the name of each player frame on the Embeddable Players page, and of each
-  `Step`), and each Learn article also names the `name`, `price` and
-  `description` of `ProductFeature` and `ProductFeatureAccessory`. Text in any
+  `Step`), and each Learn article also names the `genericName`, `price` and
+  `description` of `ProductFeature` and `ProductFeatureAccessory`. A product's
+  `name` is its name as Amazon lists it (brand and model), which stays as it is
+  in every language; a product without one has a `genericName` that says what
+  it is ("Acoustic Panels"), which is translated. Text in any
   other prop stays English: name the prop there first. The rules name string
   props, and nothing says that Lingo.dev translates text in an expression
   (`prop={...}`): put text in a string prop or in a child element, as the

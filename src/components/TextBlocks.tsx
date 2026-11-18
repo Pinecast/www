@@ -524,8 +524,14 @@ export const Table = ({
   );
 };
 
-type Product = {
-  name: string;
+// A product has its own name, or a name that says what kind of product it is.
+// `name` is the product's name as Amazon lists it, brand and model ("Shure
+// MV7"), and stays as it is in every language. `genericName` says what it is
+// ("Acoustic Panels"), and Lingo.dev translates it (.lingo/config.json).
+type Product = (
+  | {name: string; genericName?: never}
+  | {genericName: string; name?: never}
+) & {
   imageUrl: string;
   price: string;
   description: string;
@@ -557,7 +563,8 @@ const scrollFocusedAccessoryIntoView = (evt: React.FocusEvent<HTMLElement>) => {
 };
 
 export const ProductFeature = ({
-  name,
+  name: productName,
+  genericName,
   imageUrl,
   price,
   description,
@@ -569,6 +576,7 @@ export const ProductFeature = ({
   // string props of an element, not text in an expression (README.md).
   children?: React.ReactNode;
 }) => {
+  const name = productName ?? genericName;
   const css = useCSS();
   const intl = useIntl();
   return (
@@ -709,12 +717,14 @@ export const ProductFeature = ({
 const ACCESSORY_WIDTH = 'min(300px, 100%)';
 
 export const ProductFeatureAccessory = ({
-  name,
+  name: productName,
+  genericName,
   imageUrl,
   price,
   description,
   url,
 }: Product) => {
+  const name = productName ?? genericName;
   const css = useCSS();
   return (
     <a

@@ -100,7 +100,7 @@
         "title",
         {
           "component": ["ProductFeature", "ProductFeatureAccessory"],
-          "props": ["name", "price", "description"]
+          "props": ["genericName", "price", "description"]
         }
       ]
     },
@@ -112,7 +112,7 @@
         "title",
         {
           "component": ["ProductFeature", "ProductFeatureAccessory"],
-          "props": ["name", "price", "description"]
+          "props": ["genericName", "price", "description"]
         }
       ]
     },
@@ -124,7 +124,7 @@
         "title",
         {
           "component": ["ProductFeature", "ProductFeatureAccessory"],
-          "props": ["name", "price", "description"]
+          "props": ["genericName", "price", "description"]
         }
       ]
     },
@@ -136,7 +136,7 @@
         "title",
         {
           "component": ["ProductFeature", "ProductFeatureAccessory"],
-          "props": ["name", "price", "description"]
+          "props": ["genericName", "price", "description"]
         }
       ]
     },
@@ -148,7 +148,7 @@
         "title",
         {
           "component": ["ProductFeature", "ProductFeatureAccessory"],
-          "props": ["name", "price", "description"]
+          "props": ["genericName", "price", "description"]
         }
       ]
     },
@@ -160,7 +160,7 @@
         "title",
         {
           "component": ["ProductFeature", "ProductFeatureAccessory"],
-          "props": ["name", "price", "description"]
+          "props": ["genericName", "price", "description"]
         }
       ]
     },
@@ -172,7 +172,7 @@
         "title",
         {
           "component": ["ProductFeature", "ProductFeatureAccessory"],
-          "props": ["name", "price", "description"]
+          "props": ["genericName", "price", "description"]
         }
       ]
     },
@@ -184,7 +184,7 @@
         "title",
         {
           "component": ["ProductFeature", "ProductFeatureAccessory"],
-          "props": ["name", "price", "description"]
+          "props": ["genericName", "price", "description"]
         }
       ]
     },
@@ -196,7 +196,7 @@
         "title",
         {
           "component": ["ProductFeature", "ProductFeatureAccessory"],
-          "props": ["name", "price", "description"]
+          "props": ["genericName", "price", "description"]
         }
       ]
     }
