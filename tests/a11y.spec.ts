@@ -22,8 +22,9 @@ const PAGES = [
   '/testimonial-transcripts',
 ];
 // The structure tests above find elements by their English names, so a page
-// in another language only gets the axe checks.
-const AXE_PAGES = inEveryLanguage(PAGES);
+// in another language only gets the axe checks. The Collaborators page is the
+// first whose text Lingo.dev translates as a file (content/).
+const AXE_PAGES = inEveryLanguage([...PAGES, '/features/collaborators']);
 
 // Media is not needed here, and it keeps the pages busy.
 test.beforeEach(async ({page}) => {
