@@ -136,10 +136,11 @@ test.describe('page structure', () => {
     test.describe(`at ${viewport.width}px`, () => {
       test.use({viewport});
 
-      test('axe finds no landmark, name or hidden-focus errors', async ({
-        page,
-      }) => {
-        for (const path of AXE_PAGES) {
+      // A test for each page: one test for all of them ran out of time on CI.
+      for (const path of AXE_PAGES) {
+        test(`axe finds no landmark, name or hidden-focus errors on ${path}`, async ({
+          page,
+        }) => {
           await page.goto(path);
           const {violations} = await new AxeBuilder({page})
             .withRules([
@@ -163,11 +164,11 @@ test.describe('page structure', () => {
             ])
             .analyze();
           expect(
-            violations.map(v => `${path}: ${v.id}`),
+            violations.map(v => v.id),
             JSON.stringify(violations.map(v => v.nodes.map(n => n.target))),
           ).toEqual([]);
-        }
-      });
+        });
+      }
     });
   }
 });
