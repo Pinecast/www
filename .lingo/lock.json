@@ -2,7 +2,7 @@
   "version": 1,
   "files": {
     "content/en/features/accessibility.mdx": {
-      "sha256": "8488c14c86c710cc28feb22ecf71fb5dc708a256e2e65b6ea607f44dd1e4ec27"
+      "sha256": "f46e068c8af978203cde0e5ba6f4016053e23bfb3e82953dd0d9515442fddfc1"
     },
     "content/en/features/analytics.mdx": {
       "sha256": "77fd42282feb22dfe70c78ef3f71588dd72c4ef7cd0ea3e2a1f216390e584ac4"
@@ -44,7 +44,7 @@
       "sha256": "f86b1556d9abf5f776b9466a672ad0660bb3998b5aa35b16eba97437578a46f8"
     },
     "content/es-419/features/accessibility.mdx": {
-      "sha256": "9025072ca9008bc31bcbd42c69fc0ba5785f3ea77cd1ccabbf33d1a8c071d445"
+      "sha256": "baa4b292ad5570e7bf78d5724be0db643ca9b17873904904316a47672dad05dd"
     },
     "content/es-419/features/analytics.mdx": {
       "sha256": "0eb948bb2595241ac0e25cedda9f9ac7f53d1c4bc561ed8b0302300c3d3cae6b"
