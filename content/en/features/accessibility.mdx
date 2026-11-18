@@ -1,3 +1,9 @@
+---
+title: Accessibility
+description: Pinecast is built for everyone
+heroImage: /images/hero/t-l.png
+---
+
 import {ChecksList, Intro} from '@/components/TextBlocks';
 
 <Intro>
@@ -60,7 +66,7 @@ We use a combination of techniques to ensure we're doing the best we can:
 4. Manual testing with assistive technology
 5. Automated testing with artificial intelligence
 
-A full audit is to be performed annually, but smaller audits may be performed more frequently.
+We aim to perform a full audit each year, and may perform smaller audits more often.
 
 ## Known limitations
 
@@ -68,7 +74,7 @@ The following are issues that are known limitations:
 
 1. The forgot password form expires after thirty minutes. A new link can be requested as a workaround.
 2. Some articles in our help center lack alt text.
-3. Web players cut off long titles and captions.
+3. Web players cut off long titles, and long lines of the captions made from a transcript.
 
 This list will be kept up to date.
 
@@ -133,8 +139,4 @@ Pinecast isn't perfect, but we're proud to self-report our support for accessibi
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {LegalLayout} from '@/layouts/LegalLayout';
 
-export default layoutWrapper(LegalLayout, {
-  title: 'Accessibility',
-  description: 'Pinecast is built for everyone',
-  heroImage: '/images/hero/t-l.png',
-});
+export default layoutWrapper(LegalLayout, frontmatter);

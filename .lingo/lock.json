@@ -1,11 +1,89 @@
 {
   "version": 1,
   "files": {
+    "content/en/features/accessibility.mdx": {
+      "sha256": "f46e068c8af978203cde0e5ba6f4016053e23bfb3e82953dd0d9515442fddfc1"
+    },
+    "content/en/features/analytics.mdx": {
+      "sha256": "77fd42282feb22dfe70c78ef3f71588dd72c4ef7cd0ea3e2a1f216390e584ac4"
+    },
+    "content/en/features/clip-insertion.mdx": {
+      "sha256": "15e6cb9d6fa631512620ef5083c82322cad77df78c1a93d01bb6da944e0cd04d"
+    },
     "content/en/features/collaborators.mdx": {
       "sha256": "7a1e0ba3f4fdda7c8344e0f757b8fe42a093b91bb2edf6c8d34340bbe6e1daab"
     },
+    "content/en/features/distribution.mdx": {
+      "sha256": "fb893d799ba639ed41ec293321378d8f34244711e56dcb4e33e28b36b2c8514b"
+    },
+    "content/en/features/email-privacy.mdx": {
+      "sha256": "db96664aa1e1c5b2d22410f495f6e8f5c8a1c3286ac3b6215788ba6cc2849b7e"
+    },
+    "content/en/features/embeddable-players.mdx": {
+      "sha256": "7f93e648c298c0bd4f633675f92c1079f1a776132b9a75987a9bed77150c565e"
+    },
+    "content/en/features/feedback.mdx": {
+      "sha256": "35e08eb99a1554fa2675adf5408d010f7d55e2b1d6dd7ca5c1fd8d1d3dde12d8"
+    },
+    "content/en/features/icebox.mdx": {
+      "sha256": "e1c4d4e10c04a82d17a05858e360137bb8733ccb271f3ad131c45ed0ec8eb302"
+    },
+    "content/en/features/monetization.mdx": {
+      "sha256": "7a8a3cc469676c35144182a59df5871a1e5b655a8b42d2462949f38cee8959d7"
+    },
+    "content/en/features/podcast-chapters.mdx": {
+      "sha256": "33a53d46f99436032d4b70877de00b03a66c79c92ef17f6525ee1f64dd2bc7d0"
+    },
+    "content/en/features/review-monitoring.mdx": {
+      "sha256": "8d700a3260d4b5b27855c7a9d469140407fb1d5c0ebbb11acc5acd1e6ed1a03d"
+    },
+    "content/en/features/short-links.mdx": {
+      "sha256": "f25cda47cee2ed370853f84bcaa0684c44d5efadaeafe400b9c7de0ad5acea4a"
+    },
+    "content/en/features/transcripts.mdx": {
+      "sha256": "f86b1556d9abf5f776b9466a672ad0660bb3998b5aa35b16eba97437578a46f8"
+    },
+    "content/es-419/features/accessibility.mdx": {
+      "sha256": "baa4b292ad5570e7bf78d5724be0db643ca9b17873904904316a47672dad05dd"
+    },
+    "content/es-419/features/analytics.mdx": {
+      "sha256": "0eb948bb2595241ac0e25cedda9f9ac7f53d1c4bc561ed8b0302300c3d3cae6b"
+    },
+    "content/es-419/features/clip-insertion.mdx": {
+      "sha256": "2c9af5f0e95fa74c1fde2f3f6da3c47290fea18462411d61f8af0c9aeacfc69d"
+    },
     "content/es-419/features/collaborators.mdx": {
       "sha256": "a1f73484ef6c8aec85a4a57cd50dfeba128c3983694bd4eb415ca57988c50a26"
+    },
+    "content/es-419/features/distribution.mdx": {
+      "sha256": "d10673c8da03e2cc5fc269870520eacd68b6cc204615c742dfe7429ac4be084b"
+    },
+    "content/es-419/features/email-privacy.mdx": {
+      "sha256": "752c48a8518769b46996aedc777f169599c0f2b77e622b9152b099a60bd2e93b"
+    },
+    "content/es-419/features/embeddable-players.mdx": {
+      "sha256": "a61d28deca82de0eca744d02d7d6bf2383601115db0a7e7985faf3db34903d9a"
+    },
+    "content/es-419/features/feedback.mdx": {
+      "sha256": "e8a4ac739b963b32106c5ac50b8e2bca323f8024471a4d87d3ab31476daf65d0"
+    },
+    "content/es-419/features/icebox.mdx": {
+      "sha256": "7362e7a7cda7ab51b49bcdecc54bed1cddddb362b94c039c85004b10b82966a8"
+    },
+    "content/es-419/features/monetization.mdx": {
+      "sha256": "c77918f188f64d76ef0e42ee320b928b2bccb7f4f1f8d14fb35e26e5c8574d1d"
+    },
+    "content/es-419/features/podcast-chapters.mdx": {
+      "sha256": "1bc694ef661c5673e88a782e9506e1b00274f091815dd98062a0375b6b63cd41"
+    },
+    "content/es-419/features/review-monitoring.mdx": {
+      "sha256": "2a838682009fa2bdd89e45289a576a3c64092c38fafdce9d3931043f18cfad21"
+    },
+    "content/es-419/features/short-links.mdx": {
+      "sha256": "2b87004e8d2c4d9b4256868b1177f2205aef248b0fddf14762ff8f43731876fc"
+    },
+    "content/es-419/features/transcripts.mdx": {
+      "sha256": "395e895e5d288e029086c778d7e484a4cda899aacb9e35a2f92c09f0d050e748"
     },
     "lang/en.json": {
       "sha256": "d0f8863babd1501f293fc8ca7b461a08cb6ad57b565fa6985233d37461093f97"

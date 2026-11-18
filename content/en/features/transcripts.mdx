@@ -1,3 +1,9 @@
+---
+title: Transcripts
+description: Automatically transcribe your episodes, recognize your speakers, and edit right in your browser.
+heroImage: /images/hero/t-r.png
+---
+
 import {Intro, ChecksList} from '@/components/TextBlocks';
 
 <Intro>
@@ -56,8 +62,4 @@ We use a vendor who transcribes your episodes using AI. Your episodes aren't use
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {FeatureLayout} from '@/layouts/FeatureLayout';
 
-export default layoutWrapper(FeatureLayout, {
-  title: 'Transcripts',
-  description: 'Automatically transcribe your episodes, recognize your speakers, and edit right in your browser.',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(FeatureLayout, frontmatter);

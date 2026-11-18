@@ -48,8 +48,9 @@ pages in one folder of the export, under its short code (`es`, `pt`), which is
 also the `hreflang` value: `out/es/features.html` is `/es/features`, and its
 home page is `out/es/index.html`, served at `/es/` (as `/` is the English one;
 the server sends `/es` to `/es/`). Nothing redirects between languages. In
-Spanish, the site has the home page, the Features and Learn pages and the
-testimonial transcripts (`TRANSLATED_ROUTES` in `src/locales.mjs`). To add a
+Spanish, the site has the home page, the Features page and every feature
+page, the Learn page and the testimonial transcripts (`TRANSLATED_ROUTES` in
+`src/locales.mjs`). To add a
 language or a page:
 
 1. A new language needs its catalog first (Lingo.dev, below). Then add its code
@@ -168,13 +169,17 @@ deletes a page whose text is gone.
   in `.lingo/config.json`). An export is code, and Lingo.dev leaves it as it
   is. The text ends with `export default layoutWrapper(FeatureLayout,
   frontmatter);`.
+- Lingo.dev translates the text inside a component or an HTML element, but a
+  prop only when `translateComponentProps` names it. Each text names `title`
+  (the name of each player frame on the Embeddable Players page). Text in any
+  other prop stays English: name the prop there first.
 - Do not edit a translation: change the English, and the
   `push-translations` job translates it again.
 - To translate a page: move its text from `src/pages/` to `content/en/`, give
   it frontmatter, add the file to `.lingo/config.json` with a `targetPath`
   that names the file (the job's check for a new language cannot read
-  `[path]`), and translate it once by hand, which also writes its lockfile
-  entry:
+  `[path]`) and the options of the other texts, and translate it once by
+  hand, which also writes its lockfile entry:
 
   ```sh
   npx --yes @lingo.dev/cli@1.19.0 push content/en/<path>.mdx --estimate

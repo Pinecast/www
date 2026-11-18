@@ -1,3 +1,9 @@
+---
+title: Short Links
+description: Share your podcast and episodes on social the right way
+heroImage: /images/hero/t-r.png
+---
+
 import {ChecksList, Intro} from '@/components/TextBlocks';
 
 <Intro>
@@ -43,8 +49,4 @@ With our Pro Analytics package, you can even see the countries and cities that t
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {FeatureLayout} from '@/layouts/FeatureLayout';
 
-export default layoutWrapper(FeatureLayout, {
-  title: 'Short Links',
-  description: 'Share your podcast and episodes on social the right way',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(FeatureLayout, frontmatter);

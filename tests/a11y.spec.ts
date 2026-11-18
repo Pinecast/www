@@ -23,8 +23,14 @@ const PAGES = [
 ];
 // The structure tests above find elements by their English names, so a page
 // in another language only gets the axe checks. The Collaborators page is the
-// first whose text Lingo.dev translates as a file (content/).
-const AXE_PAGES = inEveryLanguage([...PAGES, '/features/collaborators']);
+// first whose text Lingo.dev translates as a file (content/). The
+// Accessibility page is the only page in Spanish with the legal layout: the
+// policies stay English.
+const AXE_PAGES = inEveryLanguage([
+  ...PAGES,
+  '/features/collaborators',
+  '/features/accessibility',
+]);
 
 // Media is not needed here, and it keeps the pages busy.
 test.beforeEach(async ({page}) => {

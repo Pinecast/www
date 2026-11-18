@@ -1,3 +1,9 @@
+---
+title: Distribution
+description: We take care of distributing your podcast for you.
+heroImage: /images/hero/t-r.png
+---
+
 import {ChecksList, Intro} from '@/components/TextBlocks';
 
 <Intro>
@@ -67,8 +73,4 @@ For many apps, we'll even include the terms of service excerpt relevant to your 
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {FeatureLayout} from '@/layouts/FeatureLayout';
 
-export default layoutWrapper(FeatureLayout, {
-  title: 'Distribution',
-  description: 'We take care of distributing your podcast for you.',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(FeatureLayout, frontmatter);

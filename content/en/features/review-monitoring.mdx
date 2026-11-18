@@ -1,3 +1,9 @@
+---
+title: Review Monitoring
+description: Keep track of reviews of your podcast from listeners.
+heroImage: /images/hero/t-r.png
+---
+
 import {Intro} from '@/components/TextBlocks';
 
 <Intro>
@@ -29,8 +35,4 @@ If you also subscribe to Pinecast's Crew add-on, you can also configure notifica
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {FeatureLayout} from '@/layouts/FeatureLayout';
 
-export default layoutWrapper(FeatureLayout, {
-  title: 'Review Monitoring',
-  description: 'Keep track of reviews of your podcast from listeners.',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(FeatureLayout, frontmatter);

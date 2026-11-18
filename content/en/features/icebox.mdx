@@ -1,3 +1,9 @@
+---
+title: Icebox
+description: Keep your show online while you take a break from podcasting
+heroImage: /images/hero/t-l.png
+---
+
 import {ChecksList, Intro} from '@/components/TextBlocks';
 
 <Intro>
@@ -29,8 +35,4 @@ Best of all, the icebox is fully prorated: if you've already paid your monthly r
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {FeatureLayout} from '@/layouts/FeatureLayout';
 
-export default layoutWrapper(FeatureLayout, {
-  title: 'Icebox',
-  description: 'Keep your show online while you take a break from podcasting',
-  heroImage: '/images/hero/t-l.png',
-});
+export default layoutWrapper(FeatureLayout, frontmatter);

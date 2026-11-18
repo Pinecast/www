@@ -1,0 +1,103 @@
+---
+title: Estadísticas
+description: Haz seguimiento de las escuchas y visitas a tu podcast
+heroImage: /images/hero/t-r.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Las estadísticas de podcasts de Pinecast funcionan con un motor potente que te da datos casi en tiempo real con un nivel de detalle inigualable.
+
+  Sabemos que el crecimiento de tu programa es importante para ti. Mira cómo creamos algunas de las mejores herramientas de estadísticas para podcasters que existen.
+</Intro>
+
+# Los datos que necesitas
+
+Te ofrecemos una gran variedad de vistas para tus datos de estadísticas. Puedes elegir rangos de tiempo para la mayoría de las vistas. Para los datos de series temporales, puedes elegir la granularidad con la que ver los resultados (día, semana, mes). La mayoría de las vistas se ajustan a la zona horaria del reloj de tu computadora.
+
+![Una captura de pantalla de la vista Escuchas por episodio de un podcast](/images/content/features/analytics-listens-by-episode.png)
+
+Cada vista de estadísticas incluye una explicación de lo que estás viendo y cómo interpretar los datos, así nunca te quedas sin contexto. Incluso anotamos tus gráficos para mostrar cuándo se publicó cada episodio. Y, por supuesto, puedes descargar cualquier vista como CSV.
+
+## Vistas únicas
+
+Descubre cuándo tus oyentes descargan episodios, la velocidad de crecimiento relativa de cada episodio, las ubicaciones de tus oyentes y mucho más. Estamos convencidos de que tenemos una de las selecciones más amplias —si no la más amplia— de vistas de estadísticas entre todos los hosts de podcasts. Además, los gráficos que ofrecemos están pensados para responder preguntas reales sobre tu podcast; no son solo bonitos de ver.
+
+![Una captura de pantalla de la vista Crecimiento de escuchas por episodio de un podcast, disponible con el complemento Estadísticas Pro](/images/content/features/analytics-listen-growth-by-episode.png)
+
+Con tanto detalle viene cierta complejidad, pero no te preocupes: debajo de cada gráfico hay una explicación de los datos, incluyendo qué se incluye y qué no, y si los datos están ajustados a la zona horaria.
+
+Pinecast ofrece 17 vistas de estadísticas para podcasts, 13 vistas para episodios y 13 vistas para redes de podcasts (disponibles con nuestro complemento Equipo). Te va a costar encontrar otro host que ofrezca tantos datos con la misma calidad que Pinecast.
+
+Puedes ver todos los detalles de todas nuestras vistas de estadísticas [en nuestro sitio de soporte](https://help.pinecast.com/article/158-analytics).
+
+### Vistas de podcast
+
+Estas son las vistas disponibles cuando ves un podcast.
+
+<ChecksList>
+  <li>Escuchas totales</li>
+  <li>Escuchas totales en Spotify</li>
+  <li>Escuchas por episodio</li>
+  <li>Escuchas por hora del día</li>
+  <li>Episodios más escuchados</li>
+  <li>Crecimiento de escuchas</li>
+  <li>Crecimiento de escuchas por episodio</li>
+  <li>Escuchas por origen</li>
+  <li>Escuchas por agente</li>
+  <li>Escuchas por agente y hora</li>
+  <li>Escuchas por sistema operativo</li>
+  <li>Totales de escuchas por episodio</li>
+  <li>Ubicaciones de oyentes</li>
+  <li>Visitas a enlaces cortos</li>
+  <li>Visitas a enlaces cortos por navegador</li>
+  <li>Ubicaciones de visitantes de enlaces cortos</li>
+  <li>Desglose de clics de enlaces cortos</li>
+</ChecksList>
+
+### Vistas de episodio
+
+Verás estas vistas cuando abras un episodio individual en tu panel.
+
+<ChecksList>
+  <li>Escuchas totales</li>
+  <li>Escuchas totales en Spotify</li>
+  <li>Escuchas por hora del día</li>
+  <li>Crecimiento de escuchas</li>
+  <li>Escuchas por origen</li>
+  <li>Escuchas por agente</li>
+  <li>Escuchas por agente y hora</li>
+  <li>Escuchas por sistema operativo</li>
+  <li>Ubicaciones de oyentes</li>
+  <li>Visitas a enlaces cortos</li>
+  <li>Visitas a enlaces cortos por navegador</li>
+  <li>Ubicaciones de visitantes de enlaces cortos</li>
+  <li>Desglose de clics de enlaces cortos</li>
+</ChecksList>
+
+### Vistas de red
+
+Las vistas para redes muestran detalles de varios podcasts a la vez. Las redes están disponibles con el complemento Equipo.
+
+<ChecksList>
+  <li>Escuchas totales</li>
+  <li>Escuchas totales en Spotify</li>
+  <li>Escuchas por hora del día</li>
+  <li>Episodios más escuchados</li>
+  <li>Crecimiento de escuchas</li>
+  <li>Escuchas por origen</li>
+  <li>Escuchas por agente</li>
+  <li>Escuchas por agente y hora</li>
+  <li>Escuchas por sistema operativo</li>
+  <li>Ubicaciones de oyentes</li>
+  <li>Visitas a enlaces cortos</li>
+  <li>Visitas a enlaces cortos por navegador</li>
+  <li>Desglose de clics de enlaces cortos</li>
+</ChecksList>
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

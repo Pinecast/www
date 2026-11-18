@@ -1,3 +1,9 @@
+---
+title: Embeddable Players
+description: Add your podcast or its episodes anywhere that you can add HTML iframes.
+heroImage: /images/hero/t-r.png
+---
+
 import {Intro} from '@/components/TextBlocks';
 
 <Intro>
@@ -34,8 +40,4 @@ Unlike plain HTML embeds, these players meet IAB guidelines to keep analytics ac
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {FeatureLayout} from '@/layouts/FeatureLayout';
 
-export default layoutWrapper(FeatureLayout, {
-  title: 'Embeddable Players',
-  description: 'Add your podcast or its episodes anywhere that you can add HTML iframes.',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(FeatureLayout, frontmatter);

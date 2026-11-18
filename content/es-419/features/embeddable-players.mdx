@@ -1,0 +1,43 @@
+---
+title: Reproductores incrustables
+description: Agrega tu podcast o sus episodios en cualquier lugar donde puedas agregar iframes de HTML.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  A veces, escribir sobre tu podcast en línea no es suficiente. Publica el audio en otras páginas web con nuestros reproductores incrustables, fáciles de usar.
+</Intro>
+
+# Incrusta tu podcast
+
+Ya sea que quieras compartir un solo episodio o todos, tenemos lo que necesitas. Todos nuestros reproductores tienen opciones de personalización y funciones de accesibilidad integradas.
+
+## Reproductor de podcast
+
+Si quieres compartir todos tus episodios, la pestaña Reproductor en el panel de tu podcast te permite elegir colores para un reproductor completo.
+
+![Una captura de pantalla del panel del podcast que muestra cómo personalizar un reproductor de podcast](/images/content/features/players-podcast-dashboard.png)
+
+Los episodios se reproducen uno tras otro, con controles de velocidad y volumen. Al pasar el cursor sobre la portada, aparece un botón para que tus oyentes se suscriban a tu programa.
+
+<iframe title="Demostración del reproductor de podcast" src="https://pinecast.com/embed/player_playlist/testcast?color.primary=%23ffffff&amp;color.secondary=%23cbd3da&amp;color.accent=%23009dff" border="0" style={{width: '100%', border: 0}} height="400"></iframe>
+
+## Reproductor de episodio
+
+Si quieres compartir un solo episodio, ve al panel del episodio y elige la pestaña Reproductor. Los reproductores de episodio tienen opciones de temas para distintos casos de uso. Algunos temas muestran subtítulos en los episodios que ya se transcribieron.
+
+![Una captura de pantalla del panel del episodio que muestra las opciones de temas](/images/content/features/players-episode-dashboard.png)
+
+A diferencia de los elementos incrustados en HTML simple, estos reproductores cumplen con las normas del IAB para mantener la precisión de las estadísticas. El código y la infraestructura están optimizados para un mejor rendimiento, reduciendo la cantidad de archivos que se deben cargar.
+
+<iframe title="Demostración del reproductor de episodio, tema minimalista" src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=minimal" seamless height="60" style={{width: '100%', border: 0, marginTop: '40px'}} class="pinecast-embed" width="100%"></iframe>
+<iframe title="Demostración del reproductor de episodio, tema plano" src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=flat" seamless height="200" style={{width: '100%', border: 0}} class="pinecast-embed" width="100%"></iframe>
+<iframe title="Demostración del reproductor de episodio, tema plástico blanco" src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=whitePlastic" seamless height="120" style={{width: '100%', border: 0}} class="pinecast-embed" width="100%"></iframe>
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

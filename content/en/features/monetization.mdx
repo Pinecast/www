@@ -1,3 +1,9 @@
+---
+title: Monetization
+description: Make money from your podcast through listener subscriptions.
+heroImage: /images/hero/t-r.png
+---
+
 import {ChecksList, Intro} from '@/components/TextBlocks';
 
 <Intro>
@@ -68,8 +74,4 @@ Many platforms, like the Apple Podcasters Program, take a cut of each payment. T
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {FeatureLayout} from '@/layouts/FeatureLayout';
 
-export default layoutWrapper(FeatureLayout, {
-  title: 'Monetization',
-  description: 'Make money from your podcast through listener subscriptions.',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(FeatureLayout, frontmatter);

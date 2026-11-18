@@ -1,0 +1,47 @@
+---
+title: Comentarios
+description: Permite que tus oyentes envíen sus mensajes sobre tu podcast o sus episodios a una bandeja de entrada compartida.
+heroImage: /images/hero/t-r.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Hacer podcasting no se trata solo de publicar contenido, sino de interactuar con tu audiencia.
+
+  Recibe y solicita mensajes de tus oyentes con nuestras herramientas integradas.
+</Intro>
+
+# Todos los comentarios en un solo lugar
+
+Muchos podcasters crean un correo exclusivo para que sus oyentes les escriban, así no tienen que compartir su dirección personal. Pero mantenerse al día con otra bandeja de entrada más suele ser complicado.
+
+El [bote de propinas](/features/monetization) de Pinecast permite que tus suscriptores de pago te escriban directamente como un beneficio exclusivo. O, con nuestro complemento Crecimiento ($10/mes o $110/año), todos tus oyentes —con suscripción de pago o no— pueden escribirte.
+
+![Una captura de pantalla del panel del podcast que muestra los comentarios enviados](/images/content/features/feedback.png)
+
+# Diseñado con atención al detalle
+
+Nosotros también somos podcasters, así que sabemos que no basta con tener una bandeja de entrada en tu panel. A lo largo de los años, hemos resuelto nuestras propias necesidades y atendido docenas de solicitudes de nuestros clientes para asegurarnos de que nuestra herramienta de comentarios sea la mejor posible.
+
+## Indicaciones por episodio
+
+Tener un solo formulario para enviar comentarios puede resultar demasiado simple, así que te permitimos definir una indicación para cada episodio. Cada episodio tendrá una URL exclusiva para enviar comentarios, con su propia indicación. Tu bandeja de comentarios mostrará a qué episodio corresponde cada mensaje, si aplica.
+
+![Una captura de pantalla del panel del podcast que muestra cómo puedes definir una indicación para los comentarios al crear o editar un episodio](/images/content/features/feedback-prompt.png)
+
+## Moderación y seguridad
+
+Los comentarios pueden ser geniales, pero a veces también pueden ser desagradables. Nuestra bandeja de comentarios te permite bloquear de forma silenciosa a quienes los envían por dirección IP o correo electrónico. También puedes eliminar comentarios fácilmente cuando lo necesites.
+
+Además, evitamos el spam usando reCAPTCHA invisible: la mayoría de tus oyentes no notará ningún retraso, pero los bots y remitentes sospechosos deberán resolver un desafío para demostrar que son humanos.
+
+## Notificaciones
+
+Te enviamos un correo cada vez que recibes un comentario. Si tienes un equipo o quieres recibir notificaciones en un lugar compartido como Slack, el complemento Equipo también te permite configurar notificaciones para los comentarios. Las notificaciones pueden enviarse por correo, publicarse en Slack o Discord, o enviarse mediante un webhook HTTP.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

@@ -1,0 +1,41 @@
+---
+title: Inserción de clips
+description: Mantén fresco tu catálogo con la inserción de clips.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  No dejes que tu catálogo se vuelva viejo. Mantén actualizadas las promociones cruzadas, los anuncios y otros contenidos con la inserción de clips.
+</Intro>
+
+# Cómo agregar clips
+
+La inserción de clips te permite agregar marcadores de posición para clips de audio en tus episodios. Luego puedes subir los clips de audio, y se insertarán en el audio de tu episodio donde coincidan con esos marcadores. Puedes usar la inserción de clips para cualquier tipo de contenido de audio, ya sea anuncios, intros o créditos.
+
+Los clips son a nivel de cuenta, así que si administras varios podcasts, puedes actualizar los clips en todos ellos con una sola operación.
+
+## Cómo hacer coincidir marcadores de posición con clips
+
+Los clips se emparejan e insertan en los marcadores de posición mediante un sistema de etiquetas robusto. Agrega etiquetas a tus marcadores de posición, y los clips que tengan esas etiquetas se emparejarán e insertarán. Te damos controles para asegurarte de que los clips correctos se inserten en los lugares correctos, con funciones como:
+
+1. **Prioridad**: Define la prioridad de un clip para asegurarte de que se inserte en el lugar correcto. Los clips más importantes tienen prioridad sobre los menos importantes.
+2. **Reproducir como máximo una vez por episodio**: Evita que un clip se inserte más de una vez en un episodio. Si pasas anuncios, esto ayuda a evitar que el mismo anuncio se reproduzca varias veces en el mismo episodio.
+5. **Elegir podcasts**: Elige en qué podcasts se debe insertar el clip. Esto puede usarse para insertar un clip en un podcast específico o en todos tus podcasts.
+3. **Descontinuar después de N escuchas**: Si vendes anuncios por escucha, puedes poner un límite a la cantidad de veces que se escucha un clip. Cuando se alcanza ese límite, el clip se elimina automáticamente o te avisamos con un enlace para confirmar nuevas colocaciones del clip.
+
+## Gestión de clips
+
+Puedes gestionar todos tus clips desde un único panel central. Cuando hagas cambios en tus clips, te mostraremos un plan de cómo se volverán a emparejar los marcadores de posición de tus episodios con los nuevos clips. Publicar esos cambios es rápido y evita que los oyentes escuchen episodios sin clips.
+
+También incluimos funciones que te facilitan la vida, como la posibilidad de incluir códigos de afiliado directamente en el clip: así no tienes que escuchar cada uno para encontrar el que buscas. Puedes descontinuar clips sin borrarlos, y ver fácilmente cuáles siguen disponibles para insertarse en tus episodios.
+
+## Estadísticas
+
+Obtienes las mismas excelentes estadísticas para los clips que para los episodios y podcasts. Además de las vistas de estadísticas que esperas, como escuchas por fuente y por app, puedes contar cuántas veces se escuchó cada clip y ver en qué episodios y podcasts se escuchó. Consulta nuestra [documentación de estadísticas](https://help.pinecast.com/article/158-analytics) para más detalles.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

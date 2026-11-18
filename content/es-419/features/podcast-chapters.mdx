@@ -1,0 +1,42 @@
+---
+title: Capítulos del podcast
+description: Enlaza cada segmento de tus episodios
+heroImage: /images/hero/b-r.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Ayuda a tus oyentes a saltar directo al segmento que quieren escuchar.
+</Intro>
+
+# Deja que tus oyentes entren directo en acción
+
+Los capítulos del podcast funcionan como un índice para tu podcast. Puedes marcar los códigos de tiempo donde empieza cada capítulo de los episodios de tu podcast. Tus oyentes verán los capítulos en su app de podcasts y podrán saltar directo a cada código de tiempo.
+
+# Funcionan en todas partes
+
+Nuestros capítulos funcionan en todas partes:
+
+1. Incluimos los datos de los capítulos en tus feeds, compatible con todas las apps que implementan la etiqueta de capítulos de Podcasting 2.0
+2. También puedes incluir, si quieres, los capítulos en las notas de tu programa
+3. Incorporamos tus capítulos en los metadatos ID3 o M4A de tus archivos de audio, para que estén disponibles para quienes descargan tu audio
+4. Nuestros sitios web de podcast, enlaces cortos y el plugin de WordPress permiten mostrarles los capítulos a tus visitantes
+
+Ah, y si usas [la inserción de clips](/features/clip-insertion), tus capítulos se actualizarán automáticamente: aparecerán en los códigos de tiempo ajustados correctos.
+
+# Configurar los capítulos es fácil
+
+Hacemos que sea fácil configurar los capítulos de tu episodio. Si tu archivo de audio ya tiene capítulos incorporados, los leeremos y los agregaremos a tu episodio. Si no, puedes agregar capítulos en el editor, justo debajo del campo de audio.
+
+![Una captura de pantalla del editor de capítulos y espacios para clips del podcast al crear o editar un episodio](/images/content/features/chapters-and-placeholders.png)
+
+Puedes agregar capítulos y espacios para clips desplazándote hasta un código de tiempo en el reproductor de audio y luego eligiendo el botón para agregar un capítulo o un espacio para clip. Puedes editar los detalles de lo que agregaste más abajo. Los capítulos te permiten especificar un nombre y una URL junto con el código de tiempo.
+
+Eso es todo: cuando guardes tu episodio, nosotros nos encargamos del resto.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);
