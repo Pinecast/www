@@ -92,6 +92,7 @@ export const LANGUAGE_NAMES = {
  */
 const ROUTES_IN_EVERY_LANGUAGE = [
   '/',
+  '/education',
   '/features',
   '/features/accessibility',
   '/features/analytics',
@@ -108,7 +109,6 @@ const ROUTES_IN_EVERY_LANGUAGE = [
   '/features/short-links',
   '/features/transcripts',
   '/learn',
-  '/learn/corporate-podcasting',
   '/learn/create-a-podcast',
   '/learn/import-a-podcast',
   '/learn/monetize-your-podcast',

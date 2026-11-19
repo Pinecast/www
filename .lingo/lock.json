@@ -43,9 +43,6 @@
     "content/da-DK/features/transcripts.mdx": {
       "sha256": "8eb5505c6d68f0f9086e995a0cbe18805e94834205d640753941bf637873b0e7"
     },
-    "content/da-DK/learn/corporate-podcasting.mdx": {
-      "sha256": "c2280ee0fa63b4009a587b318dfd7d5d9aac44e30256854bbdf0d040d863d533"
-    },
     "content/da-DK/learn/create-a-podcast.mdx": {
       "sha256": "fff9521201aa54de79baec845c66f4726446ad381e7f583dc56a20995982d813"
     },
@@ -112,9 +109,6 @@
     "content/de-DE/features/transcripts.mdx": {
       "sha256": "767f3edb981812853baca33038f7691129f6c03953d64ff6e9db7e164a89dbb2"
     },
-    "content/de-DE/learn/corporate-podcasting.mdx": {
-      "sha256": "57a9b8fe48acdff26d4f378deee0ce87f9d6bfafa7d0c8aa8bcb9ed5ec0d8bc7"
-    },
     "content/de-DE/learn/create-a-podcast.mdx": {
       "sha256": "2579afeb57438c6ebab8f8125b8b0621849448a6971ed5178529f87195105db3"
     },
@@ -138,6 +132,9 @@
     },
     "content/de-DE/learn/understand-your-growth.mdx": {
       "sha256": "89c5266582c43b9ceff0b3647299b2f7d9c79908d932bfb82904d23dc12ead7a"
+    },
+    "content/en/education.mdx": {
+      "sha256": "5037f12645d118b21a88d46a9223ce73c0394a10d9d555b16bf394ab1dce7338"
     },
     "content/en/features/accessibility.mdx": {
       "sha256": "f46e068c8af978203cde0e5ba6f4016053e23bfb3e82953dd0d9515442fddfc1"
@@ -207,6 +204,9 @@
     },
     "content/en/learn/understand-your-growth.mdx": {
       "sha256": "2a35639a9c94ec99df53cfb1714763574d41726e8c51427f3b4ac2a09097a846"
+    },
+    "content/es-419/education.mdx": {
+      "sha256": "f25679d7ee11f5f6d211219cbf3853c2aaf7d944ee73ff71bbab197f47de1551"
     },
     "content/es-419/features/accessibility.mdx": {
       "sha256": "baa4b292ad5570e7bf78d5724be0db643ca9b17873904904316a47672dad05dd"
@@ -319,9 +319,6 @@
     "content/fr/features/transcripts.mdx": {
       "sha256": "e9d686393b3a0687abffbc368520fb658d82ad011c7a6e699534a9c2c7151cef"
     },
-    "content/fr/learn/corporate-podcasting.mdx": {
-      "sha256": "d5c185f08a943532969c1b5f8b8c5c433182e3c2eadc8ac86713c2f12d229b78"
-    },
     "content/fr/learn/create-a-podcast.mdx": {
       "sha256": "22f1cc9589b2e6c102968b4b892a21ae118469ee32a13ac4e15a4bb4ebc5180f"
     },
@@ -388,9 +385,6 @@
     "content/pt-BR/features/transcripts.mdx": {
       "sha256": "d2e1a1223ebb19e501ebc67561a2bec5956e4267cb2accff383d3a6364198922"
     },
-    "content/pt-BR/learn/corporate-podcasting.mdx": {
-      "sha256": "21218f240d869f9029c10314a2bbd1edea01b1a0752539f3dcdf83edd3731f4e"
-    },
     "content/pt-BR/learn/create-a-podcast.mdx": {
       "sha256": "869316d9c611fc5a4c9e7cb339895b8e1b5d81746937d6797cd2a6d36edfd773"
     },
@@ -425,10 +419,10 @@
       "sha256": "d0f8863babd1501f293fc8ca7b461a08cb6ad57b565fa6985233d37461093f97"
     },
     "lang/en.jsonc": {
-      "sha256": "236e5a79599c71178ce94733521461eb663c7554ed7d0b1cdef35e57f4e5a855"
+      "sha256": "fe8987b225e7a6f43842781044f2046fae8d363d9e91b136d0993395beb6851f"
     },
     "lang/es-419.json": {
-      "sha256": "7ca309cefe3f81709cbcc4f4a312954cc23677d014b2c8de515bb37c502a8709"
+      "sha256": "9b7173009f5fa887ddf9bc4eefe563f457a1330dd236e967636b74ff788a1f1b"
     },
     "lang/fr.json": {
       "sha256": "bda38607686df59f4778020952e84568c4c3821219d3f5547676ccb52113f692"

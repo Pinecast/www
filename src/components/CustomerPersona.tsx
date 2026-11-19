@@ -95,9 +95,9 @@ export const PERSONAS: PersonaItems = {
   },
   organizations: {
     slug: PersonaSlug.ORGANIZATIONS,
-    name: 'Corporate',
+    name: 'Education',
     color: VIDEO_COLORS.sky,
-    url: '/learn/corporate-podcasting',
+    url: '/education',
     images: [
       {
         src: '/images/art/user-organizations.small.png',

@@ -811,13 +811,13 @@ export const MainHeader = () => {
               isActive={navOpen}
               heading={
                 <FormattedMessage
-                  description="Heading of a tile in the site menu, a link to the guide for companies and organizations"
-                  defaultMessage="Corporate podcasters"
+                  description="Heading of a tile in the site menu, a link to the page for colleges and universities"
+                  defaultMessage="Podcasting for education"
                 />
               }
               caption={
                 <FormattedMessage
-                  description="Small label above the heading of a tile in the site menu, shown in capitals. Tiles go from level 1 to 3; this one is a link to the guide for companies and organizations."
+                  description="Small label above the heading of a tile in the site menu, shown in capitals. Tiles go from level 1 to 3; this one is a link to the page for colleges and universities."
                   defaultMessage="Level 3"
                 />
               }
