@@ -82,6 +82,7 @@ export const LANGUAGE_NAMES = {en: 'English', es: 'Español'};
 export const TRANSLATED_ROUTES = {
   es: [
     '/',
+    '/education',
     '/features',
     '/features/accessibility',
     '/features/analytics',
@@ -98,7 +99,6 @@ export const TRANSLATED_ROUTES = {
     '/features/short-links',
     '/features/transcripts',
     '/learn',
-    '/learn/corporate-podcasting',
     '/learn/create-a-podcast',
     '/learn/import-a-podcast',
     '/learn/monetize-your-podcast',

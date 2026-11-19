@@ -20,6 +20,7 @@ const PAGES = [
   '/privacy',
   '/subprocessors', // the legal layout again, for its <Table>
   '/testimonial-transcripts',
+  '/education',
 ];
 // The structure tests above find elements by their English names, so a page
 // in another language only gets the axe checks. The Collaborators page is the

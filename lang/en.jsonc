@@ -55,6 +55,10 @@
     // Button at the end of a feature page, to the Features page with all the features
     "defaultMessage": "See all features"
   },
+  "2EOcY/": {
+    // Label above the title of the page for colleges and universities, in a pill. Shown in capital letters
+    "defaultMessage": "For colleges and universities"
+  },
   "2V7LxR": {
     // A feature of the free plan, in the list on its ticket in the pricing section
     "defaultMessage": "No time limit"
@@ -62,10 +66,6 @@
   "3NQkii": {
     // Label of a step of a Learn article, in a pill above its title, and read before the title. Shown in capital letters. {number} is the number of the step, with two digits ("01")
     "defaultMessage": "Step {number}"
-  },
-  "3bxEDj": {
-    // Small label above the heading of a tile in the site menu, shown in capitals. Tiles go from level 1 to 3; this one is a link to the guide for companies and organizations.
-    "defaultMessage": "Level 3"
   },
   "4fxkcu": {
     // After a price in the pricing section: the price is for one month
@@ -211,10 +211,6 @@
     // A feature of the Starter plan, in the list on its ticket in the pricing section
     "defaultMessage": "80MB file sizes + bonus"
   },
-  "F0uib6": {
-    // Heading of a tile in the site menu, a link to the guide for companies and organizations
-    "defaultMessage": "Corporate podcasters"
-  },
   "FgdSGw": {
     // Description of the Analytics feature, shown over the globe on the home page when the globe turns to it
     "defaultMessage": "The most powerful analytics in podcasting, with premium features, simple charts, and clean controls."
@@ -250,6 +246,10 @@
   "IJnetw": {
     // Note under the sign-up button at the top of the home page
     "defaultMessage": "No credit card required"
+  },
+  "IR3n6s": {
+    // Heading of a tile in the site menu, a link to the page for colleges and universities
+    "defaultMessage": "Podcasting for education"
   },
   "IiGjF/": {
     // A price in US dollars, in big numbers before “/ Month” or “/ Year”
@@ -394,6 +394,10 @@
   "RlBhkU": {
     // What the Embeddable App Links feature does, shown when its row on the Features page is open
     "defaultMessage": "Embed HTML code for your podcast that lets your website visitors open your show in their favorite podcast app."
+  },
+  "RwnN53": {
+    // Small label above the heading of a tile in the site menu, shown in capitals. Tiles go from level 1 to 3; this one is a link to the page for colleges and universities.
+    "defaultMessage": "Level 3"
   },
   "SHaenT": {
     // Text under the heading of the add-ons in the pricing section
@@ -715,10 +719,6 @@
     // Heading of a tile in the site menu, a link to the guide for experienced podcasters
     "defaultMessage": "Podcasting for power users"
   },
-  "n9Tled": {
-    // Heading of the panel for organizations in the "Tuned-in" section of the home page and on the Learn page. The panel is a link to the page for them. The heading wraps at about 16 characters a line
-    "defaultMessage": "You are an organization"
-  },
   "nN1LCl": {
     // Button in the Tuned-in section of the home page, to the sign-up form
     "defaultMessage": "Start for free"
@@ -818,6 +818,10 @@
   "tVLEqA": {
     // Screen reader name of the main links in the site header
     "defaultMessage": "Primary"
+  },
+  "tancxZ": {
+    // Heading of the panel for colleges and universities in the "Tuned-in" section of the home page and on the Learn page. The panel is a link to the page for them, and speaks to their students, teachers and staff. The heading wraps at about 16 characters a line
+    "defaultMessage": "You are on campus"
   },
   "txw1P6": {
     // Link to the page about making money from a podcast. In the Features column in the footer of every page

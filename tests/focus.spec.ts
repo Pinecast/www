@@ -24,9 +24,9 @@ const PAGES = inEveryLanguage([
   // The persona pages have product boxes, and scrolling cards in them.
   '/learn/podcasting-for-beginners',
   '/learn/podcasting-for-power-users',
-  '/learn/corporate-podcasting',
   '/privacy',
   '/testimonial-transcripts',
+  '/education',
 ]);
 
 // The most Tab stops that a walk of one page takes.

@@ -1,0 +1,21 @@
+import {H1, PillButton} from '@/components/Typography';
+import * as React from 'react';
+import {FormattedMessage} from 'react-intl';
+import {BaseLayout, pageTitleStyle} from './BaseLayout';
+
+// The layout of the page for colleges and universities (/education). Sky is
+// the color of the persona that links to it (PERSONAS.organizations).
+export const EducationLayout = BaseLayout(
+  ({title}) => (
+    <>
+      <PillButton style={{textTransform: 'uppercase', marginBottom: '30px'}}>
+        <FormattedMessage
+          description="Label above the title of the page for colleges and universities, in a pill. Shown in capital letters"
+          defaultMessage="For colleges and universities"
+        />
+      </PillButton>
+      <H1 style={pageTitleStyle(title)}>{title}</H1>
+    </>
+  ),
+  {defaultColor: 'var(--color-sky)'},
+);
