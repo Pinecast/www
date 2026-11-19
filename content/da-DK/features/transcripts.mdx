@@ -1,0 +1,65 @@
+---
+title: Transskriptioner
+description: Transskriber automatisk dine episoder, genkend dine talere, og rediger direkte i din browser.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro, ChecksList} from '@/components/TextBlocks';
+
+<Intro>
+  Nem synlighed og tilgængelighed. Du vælger, hvilke episoder og klip der skal transskriberes - uden ekstra omkostninger inden for generøse grænser.
+</Intro>
+
+# Din podcast, uden at skulle lytte
+
+Podcasts gemmer dit indhold som lyd. Det er ikke en fejl, det er en funktion. Men det betyder, at mennesker og maskiner, der ikke kan høre, ikke kan være med.
+
+Når du tilføjer transskriptioner, når dine episoder ud til flere mennesker - og du bestemmer, hvilke episoder der får dem.
+
+## Lad os transskribere, eller brug dine egne
+
+Du kan få nye episoder transskriberet, så snart de udgives (feltet er allerede markeret på formularen for nye episoder, og du kan altid fjerne markeringen for en given episode), vælge selv hvilke episoder der skal transskriberes, eller uploade dine egne transskriptionsfiler (VTT, SRT eller SBV). Transskriptioner er tilgængelige som VTT- eller TXT-filer for dig og dine lyttere.
+
+## Alle de rigtige steder.
+
+Transskriptioner kan tilføjes alle de steder, dine lyttere kunne ønske at finde dem.
+
+<ChecksList>
+  <li>I dine feeds</li>
+  <li>På din Pinecast-hjemmeside</li>
+  <li>På din WordPress med vores plugin</li>
+  <li>Som undertekster i vores indlejrede afspillere</li>
+  <li>I Tip Jar</li>
+  <li>Via [korte links](/features/short-links)</li>
+</ChecksList>
+
+## Vi har tænkt på det hele
+
+Vi registrerer forskellige stemmer i dine episoder, så du kan give dem navne. Vi husker endda navnene fra episode til episode.
+
+Skal du ændre noget? Alle transskriptioner - også de du selv uploader - kan redigeres direkte i dit dashboard. Intet at installere, intet at lære.
+
+De fleste af vores afspillere understøtter undertekster: dine transskriptioner vises direkte i afspilleren og fremhæver ordene, mens dine lyttere afspiller episoden.
+
+## Grænser, der passer til dig
+
+{/* These numbers mirror STARTER_ALLOWANCES in the Pinecast app and help center article 184. If they change there, change them here. */}
+
+Hver måned (et glidende vindue på 30 dage) inkluderer vores Starter-plan transskriptioner uden ekstra omkostninger:
+
+1. Fem episoder på op til 90 minutter hver
+2. Én episode på op til to timer
+
+Derudover giver vi dig fem episoder på op til tre minutters længde hver anden uge (et glidende vindue på 14 dage).
+
+Har du brug for mere? Vores Growth-tilkøb fordobler antallet af episoder, du får af hver længde. Eller du kan [købe krediter](https://help.pinecast.com/article/184-transcripts): krediter kan bruges til enkeltstående transskriptioner eller til at transskribere dit ældre katalog.
+
+## Hvorfor vælger du selv for hver episode?
+
+Vi bruger en leverandør, der transskriberer dine episoder med AI. Dine episoder bruges ikke til træning, men det er *helt op til dig*, om du vil bruge disse tjenester. Se vores politik om [brug af AI](/ai-use) for vores filosofi om AI-værktøjer.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

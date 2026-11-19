@@ -1,0 +1,43 @@
+---
+title: Lecteurs intégrables
+description: Ajoute ton podcast ou ses épisodes partout où tu peux insérer des iframes HTML.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Écrire sur ton podcast en ligne ne suffit souvent pas. Diffuse l'audio sur d'autres pages du web grâce à nos lecteurs intégrables, simples à utiliser.
+</Intro>
+
+# Intègre ton podcast
+
+Que tu veuilles partager un seul épisode ou tous tes épisodes, on a ce qu'il te faut. Tous nos lecteurs proposent des options de personnalisation et intègrent des fonctionnalités d'accessibilité.
+
+## Lecteur de podcast
+
+Si tu veux partager tous tes épisodes, l'onglet Lecteur du tableau de bord de ton podcast te permet de choisir les couleurs d'un lecteur complet.
+
+![Une capture d'écran du tableau de bord du podcast montrant comment personnaliser un lecteur de podcast](/images/content/features/players-podcast-dashboard.png)
+
+Les épisodes sont lus les uns après les autres, avec des contrôles de vitesse et de volume. En survolant la pochette, un bouton apparaît pour permettre à tes auditeurs de s'abonner à ton émission.
+
+<iframe title="Démo du lecteur de podcast" src="https://pinecast.com/embed/player_playlist/testcast?color.primary=%23ffffff&amp;color.secondary=%23cbd3da&amp;color.accent=%23009dff" border="0" style={{width: '100%', border: 0}} height="400"></iframe>
+
+## Lecteur d'épisode
+
+Si tu souhaites partager un seul épisode, va sur le tableau de bord de l'épisode et choisis l'onglet Lecteur. Les lecteurs d'épisode proposent des options de thème adaptées à différents besoins. Certains thèmes affichent les sous-titres pour les épisodes qui ont été transcrits.
+
+![Une capture d'écran du tableau de bord de l'épisode montrant les options de thème](/images/content/features/players-episode-dashboard.png)
+
+Contrairement aux simples intégrations HTML, ces lecteurs respectent les directives de l'IAB pour garantir la fiabilité des statistiques. Le code et l'infrastructure sont optimisés pour la performance en réduisant le nombre de fichiers à charger.
+
+<iframe title="Démo du lecteur d'épisode, thème minimal" src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=minimal" seamless height="60" style={{width: '100%', border: 0, marginTop: '40px'}} class="pinecast-embed" width="100%"></iframe>
+<iframe title="Démo du lecteur d'épisode, thème plat" src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=flat" seamless height="200" style={{width: '100%', border: 0}} class="pinecast-embed" width="100%"></iframe>
+<iframe title="Démo du lecteur d'épisode, thème plastique blanc" src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=whitePlastic" seamless height="120" style={{width: '100%', border: 0}} class="pinecast-embed" width="100%"></iframe>
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

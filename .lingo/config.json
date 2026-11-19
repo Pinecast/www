@@ -2,7 +2,7 @@
   "orgId": "org_SSBfB1jB8lyb7HLyTqNe",
   "engineId": "eng_t2fSETWb5BRCDeZ1IouR",
   "sourceLocale": "en",
-  "targetLocales": ["es-419"],
+  "targetLocales": ["es-419", "pt-BR", "fr", "de-DE", "da-DK"],
   "files": [
     {
       "pattern": "lang/en.jsonc",

@@ -1,0 +1,42 @@
+---
+title: Podcast-Kapitel
+description: Verlinke jeden Abschnitt deiner Episoden
+heroImage: /images/hero/b-r.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Hilf deinen Hörer:innen, genau zu dem Abschnitt zu springen, den sie hören wollen.
+</Intro>
+
+# Lass deine Hörer:innen direkt einsteigen
+
+Podcast-Kapitel funktionieren wie ein Inhaltsverzeichnis für deinen Podcast. Du kannst die Zeitstempel markieren, an denen jedes Kapitel deiner Podcast-Episoden beginnt. Deine Hörer:innen sehen die Kapitel in ihrer Podcast-App und können direkt zu jedem Zeitstempel springen.
+
+# Sie funktionieren überall
+
+Unsere Kapitel funktionieren überall:
+
+1. Wir fügen Kapiteldaten in deine Feeds ein – das unterstützt alle Apps, die den Podcasting-2.0-Kapitel-Tag umsetzen
+2. Du kannst Kapitel optional auch in deine Shownotes aufnehmen
+3. Wir betten deine Kapitel in die ID3- oder M4A-Metadaten deiner Audiodateien ein, damit sie auch beim Download verfügbar sind
+4. Unsere Podcast-Websites, Kurzlinks und das WordPress-Plugin zeigen deinen Besucher:innen die Kapitel ebenfalls an
+
+Übrigens: Wenn du [Clip-Einfügung](/features/clip-insertion) nutzt, werden deine Kapitel automatisch aktualisiert – sie erscheinen dann an den korrekt angepassten Zeitstempeln.
+
+# Kapitel einrichten? Ganz einfach
+
+Wir machen es dir leicht, Kapitel für deine Episode einzurichten. Wenn deine Audiodatei bereits Kapitel enthält, lesen wir sie aus und übernehmen sie für deine Episode. Falls nicht, kannst du Kapitel direkt im Editor unterhalb des Audio-Felds hinzufügen.
+
+![Ein Screenshot des Editors für Podcast-Kapitel und Clip-Platzhalter beim Erstellen oder Bearbeiten einer Episode](/images/content/features/chapters-and-placeholders.png)
+
+Du kannst Kapitel und Clip-Platzhalter hinzufügen, indem du im Audioplayer zu einem Zeitstempel springst und dann auf die Schaltfläche zum Hinzufügen eines Kapitels oder Platzhalters klickst. Die Details zu dem, was du hinzugefügt hast, kannst du weiter unten bearbeiten. Bei Kapiteln kannst du zusätzlich zum Zeitstempel auch einen Namen und eine URL angeben.
+
+Das war's schon: Wenn du deine Episode speicherst, erledigen wir den Rest.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

@@ -1,0 +1,56 @@
+---
+title: Monétise ton podcast
+description: Il est temps de gagner un peu d'argent
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Gagner un peu d'argent avec ton podcast, c'est toujours sympa. Mais si tu pouvais en gagner plus ?
+
+  Pinecast propose des fonctionnalités intégrées pour t'aider à construire une source de revenus durable pour ton émission.
+</Intro>
+
+# Qu'est-ce que la cagnotte ?
+
+La meilleure fonctionnalité de Pinecast pour la monétisation, c'est la cagnotte. Avec la cagnotte, tu peux accepter des abonnements payants de tes auditeurs. En échange, tu peux proposer du contenu privé réservé aux abonnés, leur donner un accès anticipé à certains contenus, et recevoir des messages directement de la part de tes abonnés.
+
+![Une capture d'écran de la cagnotte d'un podcast](/images/content/learn/screenshot-tip-jar.png)
+
+Les revenus des abonnements sont versés chaque vendredi (après une période de rétention de sept jours) directement sur ton compte bancaire. La configuration est rapide et facile, sans délai d'attente.
+
+# Configuration
+
+Depuis ton tableau de bord principal, choisis l'onglet Paramètres &gt; Cagnotte dans le tableau de bord de ton compte principal, ou l'onglet Cagnotte dans le tableau de bord de n'importe quel podcast, puis suis les instructions.
+
+![Une capture d'écran du tableau de bord de la cagnotte d'un podcast](/images/content/learn/screenshot-tip-jar-dashboard.png)
+
+Pour commencer, nous allons te demander certaines informations personnelles :
+
+1. Nous avons besoin de tes coordonnées bancaires ou de ta carte de débit pour t'envoyer tes revenus.
+2. Nous te demanderons des informations d'identité sur toi et/ou ton organisation afin de répondre aux exigences légales de ton pays en matière de vérification d'identité.
+
+Toutes ces informations sont collectées via Stripe, notre prestataire de paiement, et sont stockées en toute sécurité sur leurs serveurs. Une fois que tu as fourni les informations demandées, tu peux commencer à accepter des paiements immédiatement : tu trouveras un lien vers ta cagnotte dans l'onglet Cagnotte de chaque tableau de bord de podcast.
+
+# Recevoir des dons
+
+Par défaut, nous acceptons en ton nom les dons ponctuels et récurrents. Pour les comptes basés aux États-Unis, les dons peuvent aller de 1 $ à 150 $ (les montants varient selon la devise). Tu peux personnaliser les messages affichés avant et après un don, et ajouter un message de remerciement à l'e-mail envoyé après chaque don.
+
+Attirer des utilisateurs vers ta cagnotte, c'est facile. Nos [liens courts](/features/short-links) renvoient automatiquement vers ta cagnotte quand tu les partages. Tu trouveras une case à cocher sur tes épisodes pour que le lien vers la cagnotte soit ajouté automatiquement dans les notes de chaque épisode (et on se souviendra de ton choix la prochaine fois que tu mettras en ligne un épisode).
+
+Quand un auditeur t'envoie un don, tu reçois un e-mail et tu peux voir les détails du don sur le tableau de bord de ton podcast. Les dons sont conservés en réserve pendant sept jours, puis versés le vendredi suivant.
+
+## Abonnés
+
+Quand tu crées un épisode, tu peux le marquer comme privé (ou, avec notre option Croissance, privé jusqu'à une certaine date). Les abonnés payants bénéficient d'un tableau de bord spécial où ils peuvent accéder aux épisodes privés de ton émission, que ce soit dans leur navigateur ou dans une appli de podcast. S'ils écoutent dans le navigateur, on les aide même à garder la trace des épisodes qu'ils ont déjà écoutés.
+
+![Une capture d'écran de ce que voient les abonnés à la cagnotte d'un podcast](/images/content/learn/screenshot-tip-jar-tipper-dashboard.png)
+
+Les abonnements sont gérés entièrement automatiquement. Chaque abonné reçoit un flux unique qu'il peut ajouter à son appli de podcast. Si son abonnement expire, le flux se désactive automatiquement.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, frontmatter);

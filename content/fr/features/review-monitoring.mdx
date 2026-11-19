@@ -1,0 +1,38 @@
+---
+title: Suivi des avis
+description: Garde une trace des avis laissés par tes auditeurs sur ton podcast.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Tes auditeurs laissent-ils des avis sur ton podcast ? À quelle fréquence vérifies-tu ? Laisse Pinecast faire le gros du travail et surveiller les avis à ta place.
+</Intro>
+
+# Vois tous les avis
+
+« Laissez-nous un avis » est une phrase que beaucoup de podcasteurs répètent, mais la plupart des créateurs ne voient pas tous les avis laissés. L'option Croissance de Pinecast (10 $/mois ou 110 $/an) se charge du travail pour toi et t'envoie un e-mail dès qu'un nouvel avis est laissé sur Apple Podcasts ou Podchaser.
+
+![Capture d'écran du tableau de bord du podcast montrant les avis laissés](/images/content/features/review-monitoring-dashboard.png)
+
+On ne se contente pas de récupérer les avis laissés : on détaille aussi les notes attribuées et on suit ta note moyenne. Tu peux filtrer les avis par note ou par pays de l'auteur (si l'information est disponible).
+
+## Fini la pagaille des avis régionaux
+
+Savais-tu qu'Apple Podcasts affiche une fiche différente selon la région pour chaque podcast ? En changeant de pays sur Apple Podcasts, tu verras d'autres avis. Pour voir tous tes avis, tu devrais parfois vérifier des dizaines de versions de ta fiche.
+
+Pas de panique ! Pinecast vérifie les avis pour chaque pays et les regroupe dans ton tableau de bord.
+
+# Notifications
+
+Par défaut, le propriétaire du podcast reçoit une notification par e-mail chaque fois qu'un avis est reçu. Les avis apparaissent dans le tableau de bord du podcast.
+
+![Capture d'écran du formulaire de création d'une notification, configurée pour envoyer un e-mail lorsqu'un avis sur le podcast est détecté](/images/content/features/review-monitoring-notification.png)
+
+Si tu as aussi souscrit à l'option Équipe de Pinecast, tu peux configurer des notifications vers d'autres adresses e-mail, Slack, Discord ou des webhooks HTTP.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

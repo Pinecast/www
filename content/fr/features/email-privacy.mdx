@@ -1,0 +1,35 @@
+---
+title: Confidentialité des e-mails
+description: Garde ton adresse e-mail personnelle privée grâce à la confidentialité des e-mails Pinecast.
+heroImage: /images/hero/t-l.png
+---
+
+import {Intro, DefinitionList} from '@/components/TextBlocks';
+
+<Intro>
+  Garde ton adresse e-mail personnelle à l'abri du public.
+</Intro>
+
+# Ta vie privée est importante
+
+Lancer un podcast, c'est mettre une adresse e-mail active à la vue de tous. Avec Pinecast, tu peux le faire sans révéler ton e-mail personnel à tes auditeurs, et sans avoir à gérer une boîte de réception séparée.
+
+Activer la confidentialité des e-mails est simple : il suffit d'activer une option lors de la création de ton émission, ou dans les paramètres de ton podcast. Activer la confidentialité des e-mails remplace l'adresse e-mail publiée dans ton flux par une adresse de redirection gérée par Pinecast.
+
+<DefinitionList>
+    <dt>Sans confidentialité des e-mails</dt>
+    <dd>your-email@gmail.com</dd>
+    <dt>Avec la confidentialité des e-mails</dt>
+    <dd>your-show@listener.email</dd>
+</DefinitionList>
+
+## Comment ça marche ?
+
+Une fois que tu actives l'option, Pinecast crée une adresse e-mail sur <code>listener.email</code> juste pour ton émission. Il n'y a pas de deuxième étape. Nous utiliserons cette adresse de redirection partout où une adresse e-mail est publiée.
+
+Quand quelqu'un envoie un e-mail à cette adresse, nous le transférons automatiquement à l'adresse e-mail enregistrée pour ton compte. Répondre aux messages envoie ta réponse depuis ton adresse e-mail personnelle.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

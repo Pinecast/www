@@ -1,0 +1,38 @@
+---
+title: Icebox
+description: Garde ton émission en ligne pendant que tu fais une pause de podcasting
+heroImage: /images/hero/t-l.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  La vie, c'est la vie. Parfois, tu as besoin de faire une pause dans le podcasting, et c'est normal. Avec Pinecast, tu ne paies pas le plein tarif pendant ta pause.
+</Intro>
+
+# L'offre Icebox
+
+Après soixante jours d'inactivité, tu peux passer à l'offre Icebox pour garder ton compte en lecture seule. Tu paieras un tarif mensuel réduit de 2 $/mois, facturé annuellement.
+
+Avec l'Icebox, tous tes épisodes restent en ligne, ainsi que toutes les fonctionnalités incluses dans l'offre Starter :
+
+<ChecksList>
+  <li>Cagnotte</li>
+  <li>Site</li>
+  <li>Lecteurs intégrables</li>
+  <li>Statistiques</li>
+  <li>Retours</li>
+  <li>Extraits insérés</li>
+  <li>Hébergement des transcriptions</li>
+  <li>…et plus encore</li>
+</ChecksList>
+
+Pendant que tu es sur l'Icebox, tu ne pourras pas publier de nouveaux épisodes ni modifier les épisodes existants. Tu garderas quand même un accès complet en lecture seule à ton compte.
+
+Et le meilleur dans tout ça : l'Icebox est entièrement calculée au prorata. Si tu as déjà payé ton tarif mensuel, tu ne paieras que la différence entre le temps non utilisé sur l'offre Starter et le coût annuel de l'Icebox. Et quand tu seras prêt à revenir, le changement est lui aussi calculé au prorata et prend effet immédiatement.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

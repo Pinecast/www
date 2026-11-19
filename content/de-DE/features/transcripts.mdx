@@ -1,0 +1,65 @@
+---
+title: Transkripte
+description: Transkribiere deine Episoden automatisch, erkenne deine Sprecher:innen und bearbeite alles direkt im Browser.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro, ChecksList} from '@/components/TextBlocks';
+
+<Intro>
+  Mühelos auffindbar und barrierefrei. Du entscheidest, welche Episoden und Clips transkribiert werden – innerhalb großzügiger Limits ganz ohne Zusatzkosten.
+</Intro>
+
+# Deine Show – auch ohne Zuhören
+
+Podcasts verpacken deine Inhalte als Audio. Das ist kein Fehler, sondern Absicht. Aber es bedeutet auch: Menschen und Maschinen, die nicht hören können, bleiben außen vor.
+
+Mit Transkripten erreichst du mehr Menschen – und du entscheidest, welche Episoden sie bekommen.
+
+## Lass uns transkribieren – oder bring deine eigenen mit
+
+Du kannst neue Episoden direkt bei der Veröffentlichung transkribieren lassen (die Option ist im Formular für neue Episoden standardmäßig aktiviert und lässt sich für jede Episode einzeln abwählen), selbst auswählen, welche Episoden transkribiert werden sollen, oder eigene Transkriptionsdateien hochladen (VTT, SRT oder SBV). Transkripte stehen dir und deinen Hörer:innen als VTT- oder TXT-Dateien zur Verfügung.
+
+## Genau da, wo sie hingehören.
+
+Transkripte lassen sich überall einbinden, wo deine Hörer:innen sie erwarten könnten.
+
+<ChecksList>
+  <li>In deinen Feeds</li>
+  <li>Auf deiner Pinecast-Podcast-Website</li>
+  <li>Auf deinem WordPress mit unserem Plugin</li>
+  <li>Als Untertitel in unseren Embed-Playern</li>
+  <li>In der Trinkgeldkasse</li>
+  <li>Über [Kurzlinks](/features/short-links)</li>
+</ChecksList>
+
+## Wir haben an alles gedacht
+
+Wir erkennen unterschiedliche Stimmen in deinen Episoden und du kannst ihnen Namen zuweisen. Diese Namen merken wir uns sogar über mehrere Episoden hinweg.
+
+Musst du etwas ändern? Jedes Transkript – auch selbst hochgeladene – kannst du direkt in deinem Dashboard bearbeiten. Nichts zu installieren, nichts zu lernen.
+
+Die meisten unserer Player unterstützen Untertitel: Deine Transkripte werden direkt eingeblendet, wobei Wörter hervorgehoben werden, während deine Hörer:innen die Episode abspielen.
+
+## Limits, die zu dir passen
+
+{/* These numbers mirror STARTER_ALLOWANCES in the Pinecast app and help center article 184. If they change there, change them here. */}
+
+Jeden Monat (ein gleitendes 30-Tage-Fenster) sind Transkriptionen im Starter-Plan ohne Zusatzkosten enthalten:
+
+1. Fünf Episoden mit jeweils bis zu 90 Minuten
+2. Eine Episode mit bis zu zwei Stunden
+
+Zusätzlich bekommst du alle zwei Wochen (ein gleitendes 14-Tage-Fenster) fünf Episoden mit einer Länge von bis zu drei Minuten.
+
+Brauchst du mehr? Unser Growth-Add-on verdoppelt die Anzahl der Episoden für jede Länge. Oder du kannst [Credits kaufen](https://help.pinecast.com/article/184-transcripts): Diese Credits kannst du für einzelne Transkriptionen nutzen oder um deinen Backkatalog zu transkribieren.
+
+## Warum entscheidest du das für jede Episode?
+
+Wir arbeiten mit einem Dienstleister, der deine Episoden mithilfe von KI transkribiert. Deine Episoden werden nicht zum Training verwendet, aber ob du diese Dienste nutzt, liegt *ganz bei dir*. Unsere Philosophie zu KI-Tools findest du in unseren Richtlinien zur [KI-Nutzung](/ai-use).
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

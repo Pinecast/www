@@ -1,0 +1,47 @@
+---
+title: Retours
+description: Permets à tes auditeurs d'envoyer leurs messages à propos de ton podcast ou de ses épisodes vers une boîte de réception partagée.
+heroImage: /images/hero/t-r.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Faire du podcasting, ce n'est pas seulement publier du contenu, c'est aussi échanger avec ton audience.
+
+  Accepte et sollicite les messages de tes auditeurs grâce à nos outils intégrés.
+</Intro>
+
+# Tous les retours au même endroit
+
+De nombreux podcasteurs créent une adresse e-mail dédiée pour que leurs auditeurs puissent les contacter, afin de ne pas avoir à partager leur adresse personnelle. Mais gérer encore une boîte de réception en plus, c'est souvent difficile à suivre.
+
+La [cagnotte](/features/monetization) de Pinecast permet à tes abonnés payants d'écrire directement, comme avantage réservé aux abonnés. Ou, avec notre option Croissance (10 $/mois ou 110 $/an), tous tes auditeurs—abonnés payants ou non—peuvent t'écrire.
+
+![Une capture d'écran du tableau de bord du podcast montrant les retours soumis](/images/content/features/feedback.png)
+
+# Conçu avec soin
+
+Nous sommes nous-mêmes podcasteurs, donc nous savons qu'il ne suffit pas d'avoir une simple boîte de réception dans ton tableau de bord. Nous avons répondu à nos propres besoins et pris en compte des dizaines de demandes de fonctionnalités de nos clients au fil des années, pour que notre outil de retours soit le meilleur possible.
+
+## Invites par épisode
+
+Avoir un seul formulaire pour soumettre des retours peut être trop simpliste, c'est pourquoi tu peux définir une invite pour chaque épisode. Chaque épisode aura sa propre URL dédiée pour soumettre des retours, affichant son invite. Ta boîte de réception des retours indiquera l'épisode concerné par chaque message, le cas échéant.
+
+![Une capture d'écran du tableau de bord du podcast montrant qu'on peut définir une invite pour les retours lors de la création ou de la modification d'un épisode](/images/content/features/feedback-prompt.png)
+
+## Modération et sécurité
+
+Les retours, c'est génial, mais ça peut aussi être désagréable parfois. Notre boîte de réception des retours te permet de bannir discrètement des expéditeurs par adresse IP ou e-mail. Les retours peuvent être supprimés facilement si besoin.
+
+De plus, nous empêchons le spam grâce à Invisible reCAPTCHA : la plupart des auditeurs ne rencontreront aucun délai, mais les bots et les expéditeurs suspects devront résoudre une épreuve pour prouver qu'ils sont humains.
+
+## Notifications
+
+Nous t'envoyons un e-mail chaque fois que tu reçois un retour. Si tu as une équipe ou que tu souhaites recevoir des notifications dans un espace partagé comme Slack, l'option Équipe te permet aussi de configurer des notifications pour les retours. Les notifications peuvent envoyer une alerte par e-mail, publier sur Slack ou Discord, ou envoyer un webhook HTTP.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

@@ -1,0 +1,41 @@
+---
+title: Clip-Einfügung
+description: Mit Clip-Einfügung bleibt dein Backkatalog immer frisch.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Lass deinen Backkatalog nicht verstauben. Halte Cross-Promotions, Werbung und andere Inhalte mit Clip-Einfügung aktuell.
+</Intro>
+
+# Clips hinzufügen
+
+Mit der Clip-Einfügung kannst du Platzhalter für Audio-Clips in deinen Episoden einfügen. Danach lädst du Audio-Clips hoch, die dann an den passenden Platzhaltern in dein Episoden-Audio eingefügt werden. Du kannst die Clip-Einfügung für jede Art von Audioinhalt nutzen – egal ob Werbung, Intros oder Credits.
+
+Clips gelten accountweit. Wenn du mehrere Podcasts verwaltest, kannst du Clips also in einem Schritt für alle gleichzeitig aktualisieren.
+
+## Platzhalter Clips zuordnen
+
+Clips werden mithilfe eines robusten Tagging-Systems abgeglichen und in Platzhalter eingefügt. Versieh deine Platzhalter mit Tags, und Clips mit passenden Tags werden automatisch zugeordnet und eingefügt. Damit wirklich die richtigen Clips an den richtigen Stellen landen, stehen dir Funktionen wie diese zur Verfügung:
+
+1. **Priorität**: Lege die Priorität eines Clips fest, damit er an der richtigen Stelle landet. Wichtigere Clips werden gegenüber weniger wichtigen bevorzugt.
+2. **Höchstens einmal pro Episode abspielen**: Verhindere, dass ein Clip mehrmals in dieselbe Episode eingefügt wird. Wenn du Werbung schaltest, verhinderst du so, dass dieselbe Anzeige mehrfach in derselben Episode läuft.
+5. **Podcasts auswählen**: Lege fest, in welche Podcasts der Clip eingefügt werden soll. So kannst du einen Clip in einen bestimmten Podcast oder in alle Podcasts einfügen.
+3. **Nach N Wiedergaben beenden**: Wenn du Werbung nach Anzahl der Wiedergaben verkaufst, kannst du festlegen, wie oft ein Clip maximal angehört werden darf. Sobald das Limit erreicht ist, wird der Clip automatisch entfernt, oder du erhältst eine Benachrichtigung mit einem Link, um neue Clip-Platzierungen zu bestätigen.
+
+## Clip-Verwaltung
+
+Clips lassen sich zentral in einem einzigen Dashboard verwalten. Wenn du Änderungen an deinen Clips vornimmst, zeigen wir dir, wie die Platzhalter in deinen Episoden neu mit Clips abgeglichen werden. Diese Änderungen werden schnell veröffentlicht, damit deine Hörer:innen nie eine Episode ohne Clips zu hören bekommen.
+
+Außerdem gibt's praktische Komfortfunktionen, wie zum Beispiel Affiliate-Codes direkt am Clip zu hinterlegen – so musst du nicht jeden Clip einzeln anhören, um den richtigen zu finden. Clips lassen sich beenden, ohne sie zu löschen, und du siehst auf einen Blick, welche Clips noch für deine Episoden verfügbar sind.
+
+## Analysen
+
+Für Clips bekommst du die gleichen großartigen Analysen wie für Episoden und Podcasts. Neben den gewohnten Analyseansichten, wie Wiedergaben nach Quelle und App, kannst du auch zählen, wie oft jeder Clip angehört wurde, und sehen, in welchen Episoden und Podcasts er vorkam. Weitere Details findest du in unserer [Analyse-Dokumentation](https://help.pinecast.com/article/158-analytics).
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

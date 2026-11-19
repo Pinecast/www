@@ -1,6 +1,144 @@
 {
   "version": 1,
   "files": {
+    "content/da-DK/features/accessibility.mdx": {
+      "sha256": "7db32769073bb3e3aa08f8ef518418caa11019a9cb4f50d6175119291e30db08"
+    },
+    "content/da-DK/features/analytics.mdx": {
+      "sha256": "9e355fc2bc1e8d0ffe7732ecc35db529ed8427c0b160d77e507b148f5267a92e"
+    },
+    "content/da-DK/features/clip-insertion.mdx": {
+      "sha256": "febbcbafe7fc15d49cc7abff0f3b4fce368bff205b7ae06edb87018a3386d761"
+    },
+    "content/da-DK/features/collaborators.mdx": {
+      "sha256": "f746e260d4b53c1b98c22f8b7d36f457943f6015c0e6eeac26f2752cb79ee824"
+    },
+    "content/da-DK/features/distribution.mdx": {
+      "sha256": "6e658a236b8e41897f8451fa07918ec684f101b61a55d064b47510e29ae45f98"
+    },
+    "content/da-DK/features/email-privacy.mdx": {
+      "sha256": "7fa52c70a90006d49aae65d0b0b4baa69ad5286dabd45590ac79666aacea7cfd"
+    },
+    "content/da-DK/features/embeddable-players.mdx": {
+      "sha256": "0f516ed750e3d8ac14bbca8db5dffe83df0576fefc472e18cecf146e37504925"
+    },
+    "content/da-DK/features/feedback.mdx": {
+      "sha256": "266262b647ad7e2ae740491205fdb9fc079e4ec223f1521adaaf9110fd6e62ed"
+    },
+    "content/da-DK/features/icebox.mdx": {
+      "sha256": "c917d82acff160131ebac8cb09c20bb1d29e7f2c027342f8c4e33b5ace51ccc2"
+    },
+    "content/da-DK/features/monetization.mdx": {
+      "sha256": "5f0e5c9047ca60ca8cb47d9624412b73fcfd3b57289dc49ee7ab558dd3987b9b"
+    },
+    "content/da-DK/features/podcast-chapters.mdx": {
+      "sha256": "33bd20bf1833ebcd87d4dd8d8e0f9bfbfdd62b1a7b8afac406d135fafb28d571"
+    },
+    "content/da-DK/features/review-monitoring.mdx": {
+      "sha256": "46c7c3feafecf9251d398890b4aabc6e646200865cc459812630c64e397161a3"
+    },
+    "content/da-DK/features/short-links.mdx": {
+      "sha256": "7a331ee345686f9dee63be153044f003bf342350dc815ebfc38584402bc9417a"
+    },
+    "content/da-DK/features/transcripts.mdx": {
+      "sha256": "8eb5505c6d68f0f9086e995a0cbe18805e94834205d640753941bf637873b0e7"
+    },
+    "content/da-DK/learn/corporate-podcasting.mdx": {
+      "sha256": "c2280ee0fa63b4009a587b318dfd7d5d9aac44e30256854bbdf0d040d863d533"
+    },
+    "content/da-DK/learn/create-a-podcast.mdx": {
+      "sha256": "fff9521201aa54de79baec845c66f4726446ad381e7f583dc56a20995982d813"
+    },
+    "content/da-DK/learn/import-a-podcast.mdx": {
+      "sha256": "3b87d6afa80321e5d221c23c1e5215e9d1e08f999f85495946d4bebb863957ef"
+    },
+    "content/da-DK/learn/monetize-your-podcast.mdx": {
+      "sha256": "1e1b79e2293729ed92d584102696bf83e77901629324a3c6cc5e5a92e7b93bb4"
+    },
+    "content/da-DK/learn/podcasting-for-beginners.mdx": {
+      "sha256": "7a6d5fea1f668483ad9f5b7765ee165579be08bd197a8a00d3254baed6db52ac"
+    },
+    "content/da-DK/learn/podcasting-for-power-users.mdx": {
+      "sha256": "5d9eea6f76e98bbd5eb714ee7aebc13aabe73aa72e83372e930dc79cb9ac4e83"
+    },
+    "content/da-DK/learn/podcasting-glossary.mdx": {
+      "sha256": "bebaef7cd7d9f4185281b072654866ae2638daa9b11a35f1fe756eddf75d4498"
+    },
+    "content/da-DK/learn/promoting-your-podcast.mdx": {
+      "sha256": "4c81333b4fbf153e9e544735db8a3515b3a5d40556e2c9c10caebc68b9058692"
+    },
+    "content/da-DK/learn/understand-your-growth.mdx": {
+      "sha256": "02aea3fc2a4e66cab0fc75a88eb150e8102307ae777524c01d660e1b73d320ab"
+    },
+    "content/de-DE/features/accessibility.mdx": {
+      "sha256": "671c17838ffb9c28699a1aad8e092e1aa19818a34dd399ea8021167a0ccf7265"
+    },
+    "content/de-DE/features/analytics.mdx": {
+      "sha256": "78378b141e7d3151b6e21d0a976e6407e85fcc32a677c751a9886b708ae31b8c"
+    },
+    "content/de-DE/features/clip-insertion.mdx": {
+      "sha256": "df2399339110809a55e10465adc29c8bf2bcf65d0eb0cd2758e0a41a8dcc0254"
+    },
+    "content/de-DE/features/collaborators.mdx": {
+      "sha256": "6195c489eae744a4b4d78a5f90907ca5468a5b526e0635938a0e8ef07ac34f55"
+    },
+    "content/de-DE/features/distribution.mdx": {
+      "sha256": "3248d7009a19a5db62502d65f280ea5ae2dc3624cc4e62e1b16667f6a57a3447"
+    },
+    "content/de-DE/features/email-privacy.mdx": {
+      "sha256": "64cb7a69886b50df0b47c8d929c3e9ce88a83b81b3cd0b2f29315ace6288bea1"
+    },
+    "content/de-DE/features/embeddable-players.mdx": {
+      "sha256": "cdaa0e8ee33326c3bad2dec15b0f0f4fa77a05fcf4a5c189e9a6ae9d5734b329"
+    },
+    "content/de-DE/features/feedback.mdx": {
+      "sha256": "f0b951ec41574b4ebc2d99e5ddb28cf5b7beb332473bd0270a0365bef50a17f9"
+    },
+    "content/de-DE/features/icebox.mdx": {
+      "sha256": "4f7dacb488acc5409e316203233cbd087eb5e4c88d55fc41979961939eadab8e"
+    },
+    "content/de-DE/features/monetization.mdx": {
+      "sha256": "1751c125906d36d3d2c1a9a8085cf8587939398e0e54b59f1b1e6d726787a272"
+    },
+    "content/de-DE/features/podcast-chapters.mdx": {
+      "sha256": "cf43227e586bcd815dd87db9d4d0c2717bf3be62c66b52fb474ca3075c9a0b1d"
+    },
+    "content/de-DE/features/review-monitoring.mdx": {
+      "sha256": "e4d690c743fae1bcf3dcd310d65ac06d68661dadde1451c71d7f3af796bf2a3d"
+    },
+    "content/de-DE/features/short-links.mdx": {
+      "sha256": "11d9ed06bea4d4a2b243b0c2b46afe55d83c751ffcb0c355f53f606311de4a7a"
+    },
+    "content/de-DE/features/transcripts.mdx": {
+      "sha256": "767f3edb981812853baca33038f7691129f6c03953d64ff6e9db7e164a89dbb2"
+    },
+    "content/de-DE/learn/corporate-podcasting.mdx": {
+      "sha256": "57a9b8fe48acdff26d4f378deee0ce87f9d6bfafa7d0c8aa8bcb9ed5ec0d8bc7"
+    },
+    "content/de-DE/learn/create-a-podcast.mdx": {
+      "sha256": "2579afeb57438c6ebab8f8125b8b0621849448a6971ed5178529f87195105db3"
+    },
+    "content/de-DE/learn/import-a-podcast.mdx": {
+      "sha256": "b4b3d0cbb0175305ed4488452e1330df65732f5964dc2cc43f936d1cb433a84c"
+    },
+    "content/de-DE/learn/monetize-your-podcast.mdx": {
+      "sha256": "8a2acc7ab099abd6f5cec2d1021fc911bd129220fda56087896e007338d7e410"
+    },
+    "content/de-DE/learn/podcasting-for-beginners.mdx": {
+      "sha256": "1f8e59a86bc4743fe0487ea589bccaebe8b16c3c50b96a77362dad045250101d"
+    },
+    "content/de-DE/learn/podcasting-for-power-users.mdx": {
+      "sha256": "e6030eea0123015171192e066bdb4861c472d972bcfe6773400b476909c4fd93"
+    },
+    "content/de-DE/learn/podcasting-glossary.mdx": {
+      "sha256": "425babde3ce0eb3908753356fbe767c9d3bb790e23bbc54d2728e76d661f738c"
+    },
+    "content/de-DE/learn/promoting-your-podcast.mdx": {
+      "sha256": "be3dc7c2631ce841ece9a3a2d434ebe3c4856c33d4cb7f6b7a6cf1d34f994efd"
+    },
+    "content/de-DE/learn/understand-your-growth.mdx": {
+      "sha256": "89c5266582c43b9ceff0b3647299b2f7d9c79908d932bfb82904d23dc12ead7a"
+    },
     "content/en/features/accessibility.mdx": {
       "sha256": "f46e068c8af978203cde0e5ba6f4016053e23bfb3e82953dd0d9515442fddfc1"
     },
@@ -139,6 +277,150 @@
     "content/es-419/learn/understand-your-growth.mdx": {
       "sha256": "771ea50f50b4cd304c2a0a360d759d82b33456d2055cf3e09b0fbd9aba984b0e"
     },
+    "content/fr/features/accessibility.mdx": {
+      "sha256": "cc9b5073c7630282efac02709df1dafe0e6adb33b785eb1d14b8c5f0e843cca7"
+    },
+    "content/fr/features/analytics.mdx": {
+      "sha256": "c4444f826188a6d472a50c89a2748334032fad8b3db7ebfa44acb20f6213e835"
+    },
+    "content/fr/features/clip-insertion.mdx": {
+      "sha256": "444e182a3cd2542d077f41a9ee5fe86aef0328306ce7b1e2d8dedcb033ecc12a"
+    },
+    "content/fr/features/collaborators.mdx": {
+      "sha256": "e6bda3ad0ceccdd2c08c64ee67fa28ce689455bdbf815d06047737c6402127e4"
+    },
+    "content/fr/features/distribution.mdx": {
+      "sha256": "06868e6d28c0b102a3be1ad12d80e387efb548c3a192c387f65bfdb6e3ee4d65"
+    },
+    "content/fr/features/email-privacy.mdx": {
+      "sha256": "2dc210325890d32b8e630768dabbe8dde901128a35d47234cb9d5cde5fde58a1"
+    },
+    "content/fr/features/embeddable-players.mdx": {
+      "sha256": "ce947d61b8ac4bfb30ddf2c3fc9cf9801c82430e2a8e3fde300519a3142a6a75"
+    },
+    "content/fr/features/feedback.mdx": {
+      "sha256": "b48dfc1c7c91fa9b2c864eed97ce1920c4f450da9800b9d51b1d8a236855b23c"
+    },
+    "content/fr/features/icebox.mdx": {
+      "sha256": "3d8360e7179834e7cb7ec0ee12efc2284c1106af8baeb36aeab8208559913615"
+    },
+    "content/fr/features/monetization.mdx": {
+      "sha256": "631816de7a64b52a72d09162fc8ad361ebd0880800ac00066ebd2b1cff3427c3"
+    },
+    "content/fr/features/podcast-chapters.mdx": {
+      "sha256": "87be4476f3fce2f2442b867a8dada4a62c719fced53ea47a72e9a432eebad78c"
+    },
+    "content/fr/features/review-monitoring.mdx": {
+      "sha256": "52fe20a217648b540f33054cfaa869c03e0e7267412b2aa431b40c46fd0afcbd"
+    },
+    "content/fr/features/short-links.mdx": {
+      "sha256": "d4946a8e3bb684937eb3a7b834523883bbbbb09bd0f73ac31050f1df6397dba0"
+    },
+    "content/fr/features/transcripts.mdx": {
+      "sha256": "e9d686393b3a0687abffbc368520fb658d82ad011c7a6e699534a9c2c7151cef"
+    },
+    "content/fr/learn/corporate-podcasting.mdx": {
+      "sha256": "d5c185f08a943532969c1b5f8b8c5c433182e3c2eadc8ac86713c2f12d229b78"
+    },
+    "content/fr/learn/create-a-podcast.mdx": {
+      "sha256": "22f1cc9589b2e6c102968b4b892a21ae118469ee32a13ac4e15a4bb4ebc5180f"
+    },
+    "content/fr/learn/import-a-podcast.mdx": {
+      "sha256": "ffb83c2b40a5957391c4293c81a821e7b8f311230e7f5accb4ca655178ae5513"
+    },
+    "content/fr/learn/monetize-your-podcast.mdx": {
+      "sha256": "ca5e25960afe01857e7ae89f491d7f8ad1978ad88d8d13904d7b3c0cbee4930f"
+    },
+    "content/fr/learn/podcasting-for-beginners.mdx": {
+      "sha256": "610b1bb7d65dca1a3d00a1026299798fc06f4a87e392c5bd74c600648f3f9b20"
+    },
+    "content/fr/learn/podcasting-for-power-users.mdx": {
+      "sha256": "8c553ec0cbe08b59f0a3fb6ecf59041631b1b388f8367de2cd05d8875e738b42"
+    },
+    "content/fr/learn/podcasting-glossary.mdx": {
+      "sha256": "41f296eb8338c05183452ce55abed60cd8f6801f1ad448b187d8d16923a2ce56"
+    },
+    "content/fr/learn/promoting-your-podcast.mdx": {
+      "sha256": "26a88621b1bc92a99d5d08ecdbd7bc3751e5afcecd259fded78de6cf841d150b"
+    },
+    "content/fr/learn/understand-your-growth.mdx": {
+      "sha256": "a375a801ac4f02e063ea89a5b92f2b3fe438e7a87366311e12b6dacab50bc5a1"
+    },
+    "content/pt-BR/features/accessibility.mdx": {
+      "sha256": "c41c8097842dc937288ec1ce77d2375081276b015eb8687c913bb0d8d0e74f3b"
+    },
+    "content/pt-BR/features/analytics.mdx": {
+      "sha256": "2c6f1b7440905cf04dbd888524b8c8c944ab2feb2168c9125a2a922c297b179f"
+    },
+    "content/pt-BR/features/clip-insertion.mdx": {
+      "sha256": "2aa337558dbf6b6aebb8ce1480444bbc16b77d619816f73a0c8685d2c4593b6c"
+    },
+    "content/pt-BR/features/collaborators.mdx": {
+      "sha256": "d4915d9463a41bcb1256004645f183d841ccb0d879520988946aebf76ec9f263"
+    },
+    "content/pt-BR/features/distribution.mdx": {
+      "sha256": "0410811a55b7f374a5b9bedde58e84819bfb332b0a0f1fb5549f924859957756"
+    },
+    "content/pt-BR/features/email-privacy.mdx": {
+      "sha256": "f1ea5fdc580b397f97251f952bab9969171ad975b374ab2531d1361da7c9b4e0"
+    },
+    "content/pt-BR/features/embeddable-players.mdx": {
+      "sha256": "dbbd376050e05d6cca0dd26944febe8c7ec61759824c844cd33cc81de410473c"
+    },
+    "content/pt-BR/features/feedback.mdx": {
+      "sha256": "f191efb1662518e49022718bbc77025e439017df986126409eeddc6f1e959dfd"
+    },
+    "content/pt-BR/features/icebox.mdx": {
+      "sha256": "bdac5d0855f6fd206ce4c2e2ca45221f4f78c6eeaad529a06150c9036def2c0f"
+    },
+    "content/pt-BR/features/monetization.mdx": {
+      "sha256": "a4d1c313604081d935ea1fafb49f1b88d39fbbff527fee327c109780268f52f3"
+    },
+    "content/pt-BR/features/podcast-chapters.mdx": {
+      "sha256": "f8ab1a3d02af8d8160c4df1dfdc10a678ab4b47f727129a3168e86b7e1439374"
+    },
+    "content/pt-BR/features/review-monitoring.mdx": {
+      "sha256": "88ac4cef2caac3dd89eed30b62547f9b9cd97a1b1b07c614fc577a75d3c108aa"
+    },
+    "content/pt-BR/features/short-links.mdx": {
+      "sha256": "4d102d2311447bb17d13185336732551fd8b3ea0f64f669e63691094022aa714"
+    },
+    "content/pt-BR/features/transcripts.mdx": {
+      "sha256": "d2e1a1223ebb19e501ebc67561a2bec5956e4267cb2accff383d3a6364198922"
+    },
+    "content/pt-BR/learn/corporate-podcasting.mdx": {
+      "sha256": "21218f240d869f9029c10314a2bbd1edea01b1a0752539f3dcdf83edd3731f4e"
+    },
+    "content/pt-BR/learn/create-a-podcast.mdx": {
+      "sha256": "869316d9c611fc5a4c9e7cb339895b8e1b5d81746937d6797cd2a6d36edfd773"
+    },
+    "content/pt-BR/learn/import-a-podcast.mdx": {
+      "sha256": "3747ac7ce141d2c7d9ceba31566bcbc28fcd0f2e0db3b7873b4d7783fc4f28ed"
+    },
+    "content/pt-BR/learn/monetize-your-podcast.mdx": {
+      "sha256": "0ac010f5d9484e77f8cbf7dac3c8f13bcfaa95426348a87e735907eff4f65f49"
+    },
+    "content/pt-BR/learn/podcasting-for-beginners.mdx": {
+      "sha256": "34253830c5780d221714e6110a48e8459b135bb3e4f50a84f634a6fa1578c4c7"
+    },
+    "content/pt-BR/learn/podcasting-for-power-users.mdx": {
+      "sha256": "a57f02c301f05eef0f7f7cc839aa022b1f9eee88655e9231dcbaf342f91b559c"
+    },
+    "content/pt-BR/learn/podcasting-glossary.mdx": {
+      "sha256": "4e8a17bda9ca7857ca2d4f52851c1c04c68a2c10a82680cdb66f3e001a9886a2"
+    },
+    "content/pt-BR/learn/promoting-your-podcast.mdx": {
+      "sha256": "56f6b892a911acf15d80155411e5c11d1c9b1e006a8b1bf562aa5d5a829021f6"
+    },
+    "content/pt-BR/learn/understand-your-growth.mdx": {
+      "sha256": "d41f63ac7beffa9a7f2e728b010641872dda56460bc53200871eebd05f356af6"
+    },
+    "lang/da-DK.json": {
+      "sha256": "7936fd55f34b9d98364d8f9e77a9adc0b4023d5a4a011436752ca783bd424db6"
+    },
+    "lang/de-DE.json": {
+      "sha256": "7c493fd0a411f165bfdc06405040dfe52e37ea6b9a12e44321947e7cd43d6e3e"
+    },
     "lang/en.json": {
       "sha256": "d0f8863babd1501f293fc8ca7b461a08cb6ad57b565fa6985233d37461093f97"
     },
@@ -147,6 +429,12 @@
     },
     "lang/es-419.json": {
       "sha256": "7ca309cefe3f81709cbcc4f4a312954cc23677d014b2c8de515bb37c502a8709"
+    },
+    "lang/fr.json": {
+      "sha256": "7da3328320fdeeb16d6e23e91710d567c2a4cd35bc406ab6316d73fdef163d5c"
+    },
+    "lang/pt-BR.json": {
+      "sha256": "bc82b69c715ea5e0e87fe82b757c6ee9d6ec590f17fd75d164177a0b7ad7e583"
     }
   }
 }

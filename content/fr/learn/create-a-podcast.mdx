@@ -1,0 +1,110 @@
+---
+title: Crée ton podcast
+description: Découvre comment créer ton premier podcast sur Pinecast.
+heroImage: /images/hero/t-r.png
+---
+
+import {DefinitionList, Intro, Step} from '@/components/TextBlocks';
+
+<Intro>
+  On est nous-mêmes podcasteurs, et on veut t'aider à faire de ton émission un succès. Se lancer avec ton premier podcast est facile, et tu peux le faire gratuitement sans t'engager sur un abonnement payant Pinecast.
+
+  Cette section est pleine d'astuces utiles et constitue la première étape pour mettre en place ton podcast.
+</Intro>
+
+<Step stepNumber={1} title="Crée ton émission">
+  Après ton inscription, clique sur le bouton de ton tableau de bord principal pour configurer un podcast. On te demande comment tu veux commencer : choisis « Partir de zéro » pour créer une nouvelle émission.
+
+  ![Capture d'écran de la page de création de podcast](/images/content/learn/screenshot-create-podcast.png)
+
+  ### On va te demander quelques informations
+
+  <DefinitionList>
+    <dt>Nom du podcast</dt>
+    <dd>
+      C'est le nom de ton émission. Tu pourras le modifier plus tard.
+    </dd>
+    <dt>Slug</dt>
+    <dd>
+      On l'utilise pour les URLs, comme `https://your-slug-here.pinecast.co`.
+    </dd>
+    <dt>Description</dt>
+    <dd>
+      Une courte description de ton podcast, en 2 ou 3 phrases.
+    </dd>
+    <dt>Page d'accueil</dt>
+    <dd>
+      L'endroit vers lequel les auditeurs sont redirigés depuis ton podcast dans une appli. Avec une offre payante, tu peux utiliser une page web créée par Pinecast, ou notre fonctionnalité de liens courts.
+    </dd>
+    <dt>Nom de l'auteur</dt>
+    <dd>
+      Ton nom, ou celui de la personne ou de l'organisation qui produit l'émission.
+    </dd>
+    <dt>Visuel de couverture</dt>
+    <dd>
+      Les applis de podcast ont besoin d'une image à utiliser comme visuel pour ton émission. Fournis-nous un PNG ou un JPG, et on l'adaptera à la taille et aux dimensions requises.
+    </dd>
+    <dt>Catégories</dt>
+    <dd>
+      Ce sont les catégories sous lesquelles ton émission apparaîtra dans des annuaires comme Apple Podcasts.
+    </dd>
+  </DefinitionList>
+
+  Une fois que c'est fait, clique sur « Enregistrer et continuer ». Cela créera ton émission.
+</Step>
+
+<Step stepNumber={2} title="Mets en ligne ton premier épisode">
+  Une fois ton émission créée, tu dois y ajouter du contenu : c'est ton premier épisode. Au moins un épisode est nécessaire pour soumettre ton émission à la distribution : sans épisode, ton flux est invalide et sera rejeté. Clique sur le bouton « Nouvel épisode » dans le tableau de bord de ton émission.
+
+  ![Capture d'écran de la page de création d'épisode](/images/content/learn/screenshot-create-episode.png)
+
+  Pour ton premier épisode, tu peux choisir de mettre en ligne une courte bande-annonce plutôt qu'un épisode complet. Ça te laissera le temps de préparer un épisode complet pendant que tu lances la distribution.
+
+  Tu vas devoir fournir quelques informations pour créer l'épisode :
+
+  <DefinitionList>
+    <dt>Titre de l'épisode</dt>
+    <dd>
+      Le titre de ton épisode tel qu'il apparaîtra dans les applis de podcast.
+    </dd>
+    <dt>Type d'épisode</dt>
+    <dd>
+      Indique si l'épisode est un épisode complet, un bonus, ou une bande-annonce.
+    </dd>
+    <dt>Audio</dt>
+    <dd>
+      {/* The switch's label and its default (off today, soon on for audio with no metadata) come from pinecast-ts, MetadataSwitch.tsx. Keep this copy free of the default and of file types, which are changing. */}
+      Un fichier MP3 ou M4A de l'audio de ton épisode. S'il n'a pas de titre, d'artiste ou d'album propre, tu peux activer l'option « Ajouter des balises de métadonnées à l'audio de l'épisode », et Pinecast les écrira dans le fichier après l'enregistrement.
+    </dd>
+    <dt>Visuel de l'épisode</dt>
+    <dd>
+      Une image facultative pour l'épisode. Tu peux passer cette étape. On fera notre possible pour que le visuel soit disponible dans toutes les applis de podcast qui le prennent en charge.
+    </dd>
+    <dt>Date de publication</dt>
+    <dd>
+      La date à laquelle l'épisode doit être mis en ligne. Si cette date est déjà passée, on antidatera l'épisode.
+    </dd>
+    <dt>Notes de l'épisode</dt>
+    <dd>
+      C'est un champ de texte libre où tu peux décrire ton épisode. Il apparaîtra sur ton site et dans les applis de podcast.
+    </dd>
+  </DefinitionList>
+
+  Une fois que c'est fait, clique sur « Enregistrer l'épisode ». Cela créera ton épisode.
+
+</Step>
+
+<Step stepNumber={3} title="Configure la distribution">
+  Une fois que ton premier épisode est en ligne dans ton flux, consulte l'onglet Distribution. C'est depuis cet onglet que tu pourras mettre ton émission sur les applis de podcast. Si ton flux n'est pas prêt, cet onglet t'indiquera pourquoi.
+
+  Tu peux en savoir plus sur cet onglet sur notre [page Distribution](/features/distribution).
+
+  Certaines applis et annuaires de podcast proposent une soumission en un clic : il suffit d'activer l'interrupteur sous le nom de l'annuaire. D'autres demandent un peu plus d'effort : déplie la section « instructions de soumission » de chaque annuaire et suis les étapes indiquées.
+
+  Après avoir suivi les instructions, il est parfois possible de relier Pinecast à ta fiche. Cela permet à Pinecast de connaître ta fiche sur l'annuaire, et débloque des fonctionnalités comme le suivi des avis de podcast et leur apparition dans nos liens courts.
+</Step>
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, frontmatter);

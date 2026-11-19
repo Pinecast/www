@@ -1,0 +1,42 @@
+---
+title: Podcast-kapitler
+description: Link til hvert segment i dine episoder
+heroImage: /images/hero/b-r.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Hjælp dine lyttere med at hoppe direkte til det segment, de vil høre.
+</Intro>
+
+# Lad dine lyttere springe direkte ind
+
+Podcast-kapitler fungerer som en indholdsfortegnelse for din podcast. Du kan markere de tidskoder, hvor hvert kapitel i dine podcast-episoder starter. Dine lyttere kan se kapitlerne i deres podcast-app og hoppe direkte til hvert tidspunkt.
+
+# De fungerer overalt
+
+Vores kapitler fungerer overalt:
+
+1. Vi inkluderer kapiteldata i dine feeds, hvilket understøtter alle apps, der implementerer Podcasting 2.0-kapiteltagget
+2. Du kan også vælge at inkludere kapitler i dine podcastnoter
+3. Vi indlejrer dine kapitler i dine lydfilers ID3- eller M4A-metadata, så de er tilgængelige for dem, der downloader din lyd
+4. Vores hjemmesider, korte links og WordPress-plugin understøtter visning af kapitler til dine besøgende
+
+Og hvis du bruger [klipindsættelse](/features/clip-insertion), opdateres dine kapitler automatisk: kapitlerne vises ved de korrekt justerede tidskoder.
+
+# Det er nemt at opsætte kapitler
+
+Vi gør det nemt at sætte kapitler op til din episode. Hvis din lydfil allerede har indbyggede kapitler, læser vi dem og tilføjer dem til din episode. Hvis ikke, kan du tilføje kapitler i editoren lige under lydfeltet.
+
+![Et skærmbillede af editoren til podcast-kapitler og klip-pladsholdere, når du opretter eller redigerer en episode](/images/content/features/chapters-and-placeholders.png)
+
+Kapitler og klip-pladsholdere kan tilføjes ved at spole til et tidspunkt i lydafspilleren og derefter vælge knappen for at tilføje et kapitel eller en pladsholder. Du kan redigere detaljerne for det, du har tilføjet, nedenfor. Kapitler giver dig mulighed for at angive et navn og en URL sammen med tidskoden.
+
+Det er det: når du gemmer din episode, tager vi os af resten.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

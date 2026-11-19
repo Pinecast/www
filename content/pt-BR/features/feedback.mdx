@@ -1,0 +1,47 @@
+---
+title: Feedback
+description: Deixe seus ouvintes enviarem mensagens sobre seu podcast ou seus episódios para uma caixa de entrada compartilhada.
+heroImage: /images/hero/t-r.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Fazer podcast não é só sobre publicar conteúdo, é sobre se conectar com seu público.
+
+  Receba e incentive mensagens dos seus ouvintes com nossas ferramentas integradas.
+</Intro>
+
+# Feedback em um só lugar
+
+Muitos podcasters criam um e-mail dedicado para que os ouvintes possam escrever, assim eles não precisam compartilhar seus endereços de e-mail pessoais. Só que gerenciar mais uma caixa de entrada costuma ser difícil de acompanhar.
+
+A [caixinha](/features/monetization) do Pinecast permite que seus assinantes pagantes escrevam diretamente, como um benefício exclusivo. Ou, com o complemento Crescimento ($10/mês ou $110/ano), todos os seus ouvintes—assinantes pagantes ou não—podem enviar mensagens.
+
+![Uma captura de tela do painel do podcast mostrando o feedback enviado](/images/content/features/feedback.png)
+
+# Projetado com cuidado
+
+Nós mesmos somos podcasters, então sabemos que não basta ter só uma caixa de entrada no seu painel. Ao longo dos anos, atendemos às nossas próprias necessidades e aceitamos dezenas de pedidos de recursos dos clientes para garantir que nossa ferramenta de feedback seja a melhor possível.
+
+## Perguntas por episódio
+
+Ter um único formulário para enviar feedback pode ser simples demais, então deixamos você definir uma pergunta para o feedback de cada episódio. Cada episódio terá uma URL dedicada para o envio de feedback, exibindo sua pergunta. Sua caixa de entrada de feedback mostrará o episódio ao qual cada mensagem se refere—quando houver um.
+
+![Uma captura de tela do painel do podcast mostrando que você pode definir uma pergunta para o feedback ao criar ou editar um episódio](/images/content/features/feedback-prompt.png)
+
+## Moderação e segurança
+
+O feedback pode ser ótimo, mas às vezes também pode ser desagradável. Nossa caixa de entrada de feedback permite banir silenciosamente quem envia mensagens, por endereço IP ou e-mail. O feedback pode ser facilmente excluído quando necessário.
+
+Além disso, evitamos spam usando o Invisible reCAPTCHA: a maioria dos ouvintes não vai notar nenhuma demora, mas bots e remetentes suspeitos vão precisar resolver um desafio para provar que são humanos.
+
+## Notificações
+
+Enviamos um e-mail para você sempre que receber feedback. Se você tem uma equipe ou quer notificações em um local compartilhado como o Slack, o complemento Equipe também permite configurar notificações para feedback. As notificações podem enviar um alerta por e-mail, publicar no Slack ou Discord, ou enviar um webhook HTTP.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);
