@@ -2,7 +2,7 @@ import {readFileSync, readdirSync} from 'node:fs';
 import {join} from 'node:path';
 import {expect, type Locator, type Page} from '@playwright/test';
 
-import {LOCALES, hasPage, localePath} from '../src/locales.mjs';
+import {LOCALES, hasPage, languageTag, localePath} from '../src/locales.mjs';
 
 // The text spacing of WCAG 1.4.12, as a user style sheet would apply it.
 export const TEXT_SPACING = `
@@ -25,6 +25,20 @@ export function inEveryLanguage(routes: ReadonlyArray<string>): Array<string> {
       localePath(route, locale),
     ),
   );
+}
+
+// A browser language for a language of the site: one of another region than
+// the site's tag (src/locales.mjs) where there is one, so that a test sees the
+// site match a reader by the language and not by the region.
+const BROWSER_LOCALES: Readonly<Record<string, string>> = {
+  de: 'de-AT',
+  es: 'es-MX',
+  fr: 'fr-CA',
+  pt: 'pt-PT',
+};
+
+export function browserLocale(locale: string): string {
+  return BROWSER_LOCALES[locale] ?? languageTag(locale);
 }
 
 // The path of every page in the static export (`npm run build`), as the site
@@ -257,6 +271,14 @@ export function isTranslatedMessage(text: string, tag: string): boolean {
     ([id, {defaultMessage}]) =>
       defaultMessage !== english[id]?.defaultMessage &&
       messagePattern(defaultMessage).test(text.trim()),
+  );
+}
+
+// Whether `text` is a message of a language's catalog, as above, also where
+// the language keeps the English word (German says "Footer").
+export function isMessageOf(text: string, tag: string): boolean {
+  return Object.values(readCatalog(tag)).some(({defaultMessage}) =>
+    messagePattern(defaultMessage).test(text.trim()),
   );
 }
 

@@ -12,7 +12,7 @@ import {
   localePath,
   splitLocale,
 } from '../src/locales.mjs';
-import {exportedPages, isTranslatedMessage, load} from './helpers';
+import {exportedPages, isMessageOf, isTranslatedMessage, load} from './helpers';
 
 // The pages of a language other than English (src/locales.mjs). Run
 // `npm run build` first. The sitemap of these pages is in sitemap.spec.ts.
@@ -26,6 +26,9 @@ import {exportedPages, isTranslatedMessage, load} from './helpers';
 // and languages").
 const linkHref = (route: string, locale: string) =>
   localePath(route, locale).replace(/(.)\/$/, '$1');
+
+// The languages of the site other than English.
+const OTHER_LOCALES = LOCALES.filter(locale => locale !== DEFAULT_LOCALE);
 
 // An English page that is in no other language.
 const englishOnlyPage = () => {
@@ -44,67 +47,79 @@ test.beforeEach(async ({page}) => {
   await page.route(/\.(mp3|mp4|webm)(\?|$)/, route => route.abort());
 });
 
-test('the Spanish home page is the index of its folder', () => {
-  // scripts/finish-export.mjs moves it: at out/es.html it would be /es.
-  expect(existsSync('out/es/index.html')).toBe(true);
-  expect(existsSync('out/es.html')).toBe(false);
-});
+for (const locale of OTHER_LOCALES) {
+  const home = localePath('/', locale);
+  const tag = languageTag(locale);
 
-test.describe('the home page in Spanish', () => {
-  test('says its language, and shows the Spanish catalog', async ({page}) => {
-    await load(page, '/es/');
-    await expect(page.locator('html')).toHaveAttribute('lang', 'es-419');
-    const description = await page
-      .locator('meta[name="description"]')
-      .getAttribute('content');
-    expect(isTranslatedMessage(description ?? '', 'es-419')).toBe(true);
-    const footer = await page
-      .getByRole('contentinfo')
-      .getByRole('navigation')
-      .getAttribute('aria-label');
-    expect(isTranslatedMessage(footer ?? '', 'es-419')).toBe(true);
+  test(`the home page of "${locale}" is the index of its folder`, () => {
+    // scripts/finish-export.mjs moves it: at out/es.html it would be /es.
+    expect(existsSync(`out/${locale}/index.html`)).toBe(true);
+    expect(existsSync(`out/${locale}.html`)).toBe(false);
   });
 
-  test('its links to the home page go to the Spanish one', async ({page}) => {
-    await load(page, '/es/');
-    // The logo among them. Only the footer's English link goes to `/`.
-    const toHome = await page
-      .locator('a[href="/"], a[href="/es"]')
-      .evaluateAll(links =>
-        links.map(link => ({
-          href: link.getAttribute('href'),
-          hreflang: link.getAttribute('hreflang'),
-        })),
-      );
-    expect(toHome.some(({href}) => href === linkHref('/', 'es'))).toBe(true);
-    for (const {href, hreflang} of toHome) {
-      if (href === '/') expect(hreflang).toBe(DEFAULT_LOCALE);
-    }
-  });
+  test.describe(`the home page in "${locale}"`, () => {
+    test('says its language, and shows its catalog', async ({page}) => {
+      await load(page, home);
+      await expect(page.locator('html')).toHaveAttribute('lang', tag);
+      const description = await page
+        .locator('meta[name="description"]')
+        .getAttribute('content');
+      expect(isTranslatedMessage(description ?? '', tag)).toBe(true);
+      // The name of the footer's links comes from the page's catalog too.
+      // It can be the English word (German says "Footer"), so the
+      // description above is what shows that the page is translated.
+      const footer = await page
+        .getByRole('contentinfo')
+        .getByRole('navigation')
+        .getAttribute('aria-label');
+      expect(isMessageOf(footer ?? '', tag)).toBe(true);
+    });
 
-  test('marks the English quotes of customers as English', async ({page}) => {
-    await load(page, '/es/');
-    // The visible quote of each player and the one for screen readers.
-    const quotes = page.locator('blockquote [lang="en"], p [lang="en"]');
-    expect(await quotes.count()).toBeGreaterThanOrEqual(2);
-  });
-
-  test('preloads the stills of the hero, as the English one does', async ({
-    page,
-  }) => {
-    const preloads = (path: string) =>
-      page
-        .goto(path)
-        .then(() =>
-          page
-            .locator('link[rel="preload"][as="image"]')
-            .evaluateAll(links => links.map(link => link.getAttribute('href'))),
+    test('its links to the home page go to its own', async ({page}) => {
+      await load(page, home);
+      // The logo among them. Only the footer's English link goes to `/`.
+      const toHome = await page
+        .locator(`a[href="/"], a[href="${linkHref('/', locale)}"]`)
+        .evaluateAll(links =>
+          links.map(link => ({
+            href: link.getAttribute('href'),
+            hreflang: link.getAttribute('hreflang'),
+          })),
         );
-    const english = await preloads('/');
-    expect(english.length).toBeGreaterThan(0);
-    expect(await preloads('/es/')).toEqual(english);
+      expect(toHome.some(({href}) => href === linkHref('/', locale))).toBe(
+        true,
+      );
+      for (const {href, hreflang} of toHome) {
+        if (href === '/') expect(hreflang).toBe(DEFAULT_LOCALE);
+      }
+    });
+
+    test('marks the English quotes of customers as English', async ({page}) => {
+      await load(page, home);
+      // The visible quote of each player and the one for screen readers.
+      const quotes = page.locator('blockquote [lang="en"], p [lang="en"]');
+      expect(await quotes.count()).toBeGreaterThanOrEqual(2);
+    });
+
+    test('preloads the stills of the hero, as the English one does', async ({
+      page,
+    }) => {
+      const preloads = (path: string) =>
+        page
+          .goto(path)
+          .then(() =>
+            page
+              .locator('link[rel="preload"][as="image"]')
+              .evaluateAll(links =>
+                links.map(link => link.getAttribute('href')),
+              ),
+          );
+      const english = await preloads('/');
+      expect(english.length).toBeGreaterThan(0);
+      expect(await preloads(home)).toEqual(english);
+    });
   });
-});
+}
 
 // The pages of the export in a language other than English.
 const translatedPages = () =>
@@ -189,30 +204,32 @@ test('a link keeps its query and fragment in another language', () => {
   expect(linkTarget(spanish, 'es')).toEqual({href: spanish});
 });
 
-test('the testimonial transcripts in Spanish are marked as English', async ({
-  page,
-}) => {
-  // The page's own copy is in messages. The transcripts are what the
-  // customers say in their recordings, in English.
-  await load(page, localePath('/testimonial-transcripts', 'es'));
-  const paragraphs = await page
-    .getByRole('main')
-    .locator('p')
-    .evaluateAll(elements =>
-      elements.map(element => ({
-        text: (element as HTMLElement).innerText,
-        lang: element.closest('[lang]')?.getAttribute('lang'),
-      })),
-    );
-  expect(paragraphs.some(({lang}) => lang === DEFAULT_LOCALE)).toBe(true);
-  for (const {text, lang} of paragraphs) {
-    if (lang === DEFAULT_LOCALE) continue;
-    expect(
-      isTranslatedMessage(text, languageTag('es')),
-      `"${text.slice(0, 60)}" is a translated message, or marked as English`,
-    ).toBe(true);
-  }
-});
+for (const locale of OTHER_LOCALES) {
+  test(`the testimonial transcripts in "${locale}" are marked as English`, async ({
+    page,
+  }) => {
+    // The page's own copy is in messages. The transcripts are what the
+    // customers say in their recordings, in English.
+    await load(page, localePath('/testimonial-transcripts', locale));
+    const paragraphs = await page
+      .getByRole('main')
+      .locator('p')
+      .evaluateAll(elements =>
+        elements.map(element => ({
+          text: (element as HTMLElement).innerText,
+          lang: element.closest('[lang]')?.getAttribute('lang'),
+        })),
+      );
+    expect(paragraphs.some(({lang}) => lang === DEFAULT_LOCALE)).toBe(true);
+    for (const {text, lang} of paragraphs) {
+      if (lang === DEFAULT_LOCALE) continue;
+      expect(
+        isTranslatedMessage(text, languageTag(locale)),
+        `"${text.slice(0, 60)}" is a translated message, or marked as English`,
+      ).toBe(true);
+    }
+  });
+}
 
 test('a client-side visit from /es/ to an English page says English', async ({
   page,
@@ -245,10 +262,12 @@ test('the English home page stays English', async ({page}) => {
   await load(page, '/');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   // Only the language links go to another language's home page.
-  const toSpanish = await page
-    .locator(`a[href="${linkHref('/', 'es')}"]`)
-    .evaluateAll(links => links.map(link => link.getAttribute('hreflang')));
-  for (const hreflang of toSpanish) expect(hreflang).toBe('es');
+  for (const locale of OTHER_LOCALES) {
+    const toHome = await page
+      .locator(`a[href="${linkHref('/', locale)}"]`)
+      .evaluateAll(links => links.map(link => link.getAttribute('hreflang')));
+    for (const hreflang of toHome) expect(hreflang).toBe(locale);
+  }
 });
 
 // The Language column of the footer (Footer.tsx): each language by its own
@@ -285,7 +304,10 @@ test.describe('the language links in the footer', () => {
 
   test('on the English home page', ({page}) => checkLinks(page, '/'));
 
-  test('on the Spanish home page', ({page}) => checkLinks(page, '/es/'));
+  for (const locale of OTHER_LOCALES) {
+    test(`on the home page in "${locale}"`, ({page}) =>
+      checkLinks(page, localePath('/', locale)));
+  }
 
   test('on a page that is only in English, they open the home pages', ({
     page,

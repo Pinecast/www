@@ -47,10 +47,11 @@ pages. English has no prefix (`/features`); another language has all of its
 pages in one folder of the export, under its short code (`es`, `pt`), which is
 also the `hreflang` value: `out/es/features.html` is `/es/features`, and its
 home page is `out/es/index.html`, served at `/es/` (as `/` is the English one;
-the server sends `/es` to `/es/`). Nothing redirects between languages. In
-Spanish, the site has the home page, the Features page and every feature
-page, the Learn page and every Learn article, and the testimonial transcripts
-(`TRANSLATED_ROUTES` in `src/locales.mjs`). To add a
+the server sends `/es` to `/es/`). Nothing redirects between languages. The
+site is in Danish (`da`), German (`de`), Spanish (`es`), French (`fr`) and
+Portuguese (`pt`), the languages of the dashboard. In each of them, it has
+every page but the four policies (privacy, terms, subprocessors, AI use),
+which stay in English (`TRANSLATED_ROUTES` in `src/locales.mjs`). To add a
 language or a page:
 
 1. A new language needs its catalog first (Lingo.dev, below). Then add its code

@@ -41,25 +41,33 @@ export const SITE_ORIGIN = 'https://www.pinecast.com';
 
 /**
  * The default language comes first. It has no prefix in an address, and it is
- * the `x-default` of every page.
+ * the `x-default` of every page. The others follow in the order of their codes,
+ * which is also the order of their names (LANGUAGE_NAMES): the order of the
+ * language links in the footer.
  *
  * @type {ReadonlyArray<string>}
  */
-export const LOCALES = ['en', 'es'];
+export const LOCALES = ['en', 'da', 'de', 'es', 'fr', 'pt'];
 
 export const DEFAULT_LOCALE = LOCALES[0];
 
 /**
  * The language of the text of a language's pages, where it is not the code in
- * the address. Lingo.dev translates Spanish as `es-419`, as it does for
- * pinecast-ts, so that the engine's rules for it apply to both. That code
- * names the catalog (`lang/es-419.json`), and it is the `lang` of the page and
- * the locale of react-intl (plurals, numbers). The address and `hreflang` keep
- * the short code: the site has one Spanish, for every reader of Spanish.
+ * the address. Lingo.dev translates each language under the code that
+ * pinecast-ts uses (Spanish as `es-419`, Portuguese as `pt-BR`), so that the
+ * engine's rules for it apply to both. That code names the catalog
+ * (`lang/es-419.json`), and it is the `lang` of the page and the locale of
+ * react-intl (plurals, numbers). The address and `hreflang` keep the short
+ * code: the site has one Spanish, for every reader of Spanish, and so on.
  *
  * @type {Readonly<Record<string, string>>}
  */
-export const LANGUAGE_TAGS = {es: 'es-419'};
+export const LANGUAGE_TAGS = {
+  da: 'da-DK',
+  de: 'de-DE',
+  es: 'es-419',
+  pt: 'pt-BR',
+};
 
 /**
  * The name of each language in that language, for the language links in the
@@ -68,7 +76,49 @@ export const LANGUAGE_TAGS = {es: 'es-419'};
  *
  * @type {Readonly<Record<string, string>>}
  */
-export const LANGUAGE_NAMES = {en: 'English', es: 'Español'};
+export const LANGUAGE_NAMES = {
+  en: 'English',
+  da: 'Dansk',
+  de: 'Deutsch',
+  es: 'Español',
+  fr: 'Français',
+  pt: 'Português',
+};
+
+/**
+ * The routes of the pages that are in every language of the site: all of them
+ * but the four policies (privacy, terms, subprocessors, AI use), which stay in
+ * English.
+ */
+const ROUTES_IN_EVERY_LANGUAGE = [
+  '/',
+  '/features',
+  '/features/accessibility',
+  '/features/analytics',
+  '/features/clip-insertion',
+  '/features/collaborators',
+  '/features/distribution',
+  '/features/email-privacy',
+  '/features/embeddable-players',
+  '/features/feedback',
+  '/features/icebox',
+  '/features/monetization',
+  '/features/podcast-chapters',
+  '/features/review-monitoring',
+  '/features/short-links',
+  '/features/transcripts',
+  '/learn',
+  '/learn/corporate-podcasting',
+  '/learn/create-a-podcast',
+  '/learn/import-a-podcast',
+  '/learn/monetize-your-podcast',
+  '/learn/podcasting-for-beginners',
+  '/learn/podcasting-for-power-users',
+  '/learn/podcasting-glossary',
+  '/learn/promoting-your-podcast',
+  '/learn/understand-your-growth',
+  '/testimonial-transcripts',
+];
 
 /**
  * The routes of the pages that each language other than the default has. Every
@@ -79,37 +129,9 @@ export const LANGUAGE_NAMES = {en: 'English', es: 'Español'};
  *
  * @type {Readonly<Record<string, ReadonlyArray<string>>>}
  */
-export const TRANSLATED_ROUTES = {
-  es: [
-    '/',
-    '/features',
-    '/features/accessibility',
-    '/features/analytics',
-    '/features/clip-insertion',
-    '/features/collaborators',
-    '/features/distribution',
-    '/features/email-privacy',
-    '/features/embeddable-players',
-    '/features/feedback',
-    '/features/icebox',
-    '/features/monetization',
-    '/features/podcast-chapters',
-    '/features/review-monitoring',
-    '/features/short-links',
-    '/features/transcripts',
-    '/learn',
-    '/learn/corporate-podcasting',
-    '/learn/create-a-podcast',
-    '/learn/import-a-podcast',
-    '/learn/monetize-your-podcast',
-    '/learn/podcasting-for-beginners',
-    '/learn/podcasting-for-power-users',
-    '/learn/podcasting-glossary',
-    '/learn/promoting-your-podcast',
-    '/learn/understand-your-growth',
-    '/testimonial-transcripts',
-  ],
-};
+export const TRANSLATED_ROUTES = Object.fromEntries(
+  LOCALES.slice(1).map(locale => [locale, ROUTES_IN_EVERY_LANGUAGE]),
+);
 
 /**
  * Whether a page is in a language.
