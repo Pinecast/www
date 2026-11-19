@@ -197,37 +197,45 @@ test.describe('with larger text spacing', () => {
 
   // A link drawn as a button (PrimaryButton, SecondaryButton) has a fixed
   // height, unless the place that uses it lets it grow: a label that wraps
-  // spills across its border and its focus ring.
+  // spills across its border and its focus ring. A label that does not wrap
+  // spills out of the sides of a button that its column makes narrow: the
+  // testimonials button is two of twelve columns, at its narrowest at 320px
+  // and at 1181px.
   for (const path of inEveryLanguage(['/'])) {
-    test(`the button links of ${path} hold their labels at 320px`, async ({
-      page,
-    }) => {
-      await page.setViewportSize({width: 320, height: 800});
-      await load(page, path, {spacing: true});
-      const spills = await page
-        .getByRole('main')
-        .locator('a')
-        .evaluateAll(links =>
-          links.flatMap(link => {
-            const style = getComputedStyle(link);
-            const drawn =
-              parseFloat(style.borderTopWidth) > 0 ||
-              style.backgroundColor !== 'rgba(0, 0, 0, 0)';
-            const box = link.getBoundingClientRect();
-            if (!drawn || !box.width || !link.checkVisibility()) return [];
-            const range = document.createRange();
-            range.selectNodeContents(link);
-            const text = range.getBoundingClientRect();
-            return text.height &&
-              (text.top < box.top - 1 || text.bottom > box.bottom + 1)
-              ? [
-                  `${link.textContent?.trim()}: ${Math.round(text.height)}px of text in ${Math.round(box.height)}px`,
-                ]
-              : [];
-          }),
-        );
-      expect(spills).toEqual([]);
-    });
+    for (const width of [320, 768, 1181]) {
+      test(`the button links of ${path} hold their labels at ${width}px`, async ({
+        page,
+      }) => {
+        await page.setViewportSize({width, height: 800});
+        await load(page, path, {spacing: true});
+        const spills = await page
+          .getByRole('main')
+          .locator('a')
+          .evaluateAll(links =>
+            links.flatMap(link => {
+              const style = getComputedStyle(link);
+              const drawn =
+                parseFloat(style.borderTopWidth) > 0 ||
+                style.backgroundColor !== 'rgba(0, 0, 0, 0)';
+              const box = link.getBoundingClientRect();
+              if (!drawn || !box.width || !link.checkVisibility()) return [];
+              const range = document.createRange();
+              range.selectNodeContents(link);
+              const text = range.getBoundingClientRect();
+              return text.height &&
+                (text.top < box.top - 1 ||
+                  text.bottom > box.bottom + 1 ||
+                  text.left < box.left - 1 ||
+                  text.right > box.right + 1)
+                ? [
+                    `${link.textContent?.trim()}: ${Math.round(text.width)}x${Math.round(text.height)}px of text in ${Math.round(box.width)}x${Math.round(box.height)}px`,
+                  ]
+                : [];
+            }),
+          );
+        expect(spills).toEqual([]);
+      });
+    }
   }
 
   test('the customer names stay on the screen', async ({page}) => {

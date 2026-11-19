@@ -1118,6 +1118,8 @@ export const Testimonials = ({
             </div>
             <div
               className={css({
+                display: 'flex',
+                flexDirection: 'column',
                 gridColumnStart: '6',
                 gridColumnEnd: '-6',
                 margin: '0 -40px',
@@ -1131,6 +1133,11 @@ export const Testimonials = ({
               <SecondaryButton
                 href="https://pinecast.com/signup"
                 style={{
+                  // The column is two of twelve: a label that does not fit
+                  // (in German, French, Portuguese or Spanish, or with
+                  // larger text spacing) makes the button wider, out of the
+                  // column on both sides.
+                  alignSelf: 'center',
                   backgroundColor: 'var(--page-bg, var(--color-sand))',
                   color: 'var(--color-space)',
                   display: 'grid',
@@ -1138,8 +1145,11 @@ export const Testimonials = ({
                   placeContent: 'center',
                   marginBottom: '30px',
                   minHeight: '48px',
+                  minWidth: 'max-content',
                   transition: 'background-color 0.2s ease-in-out',
                   whiteSpace: 'nowrap',
+                  // `minWidth` replaces the button's own 120px minimum.
+                  width: 'max(100%, 120px)',
                 }}
               >
                 <FormattedMessage
