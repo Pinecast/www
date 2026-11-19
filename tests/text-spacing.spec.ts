@@ -1,11 +1,5 @@
 import {expect, test, type Locator} from '@playwright/test';
-import {
-  clippedText,
-  inEveryLanguage,
-  load,
-  openMenu,
-  TEXT_SPACING,
-} from './helpers';
+import {clippedText, inEveryLanguage, load, TEXT_SPACING} from './helpers';
 
 // WCAG 1.4.12: with more line height, letter spacing, word spacing and
 // paragraph spacing, no text is cut off or covered. Boxes of fixed height
@@ -22,12 +16,32 @@ async function textBox(element: Locator) {
 }
 
 test.describe('with larger text spacing', () => {
-  test('the header menu shows all its text', async ({page}) => {
-    await page.setViewportSize({width: 320, height: 640});
-    await load(page, '/learn', {spacing: true});
-    const menu = await openMenu(page);
-    expect(await clippedText(menu)).toEqual([]);
-  });
+  // Below 1181px each tile of the menu was 100px high, which cut off a German
+  // or French heading of three lines.
+  for (const path of inEveryLanguage(['/learn'])) {
+    for (const {width, height} of [
+      {width: 320, height: 640},
+      {width: 414, height: 800},
+      {width: 700, height: 800},
+    ]) {
+      test(`the header menu of ${path} shows all its text at ${width}px`, async ({
+        page,
+      }) => {
+        await page.setViewportSize({width, height});
+        await load(page, path, {spacing: true});
+        // The button and the menu's links, found by the menu's id rather
+        // than by their names, which are in the page's language.
+        await page
+          .getByRole('banner')
+          .locator('button[aria-controls="site-menu"]')
+          .filter({visible: true})
+          .click();
+        const menu = page.locator('#site-menu').getByRole('navigation');
+        await expect(menu).toHaveCSS('overflow-y', 'auto');
+        expect(await clippedText(menu)).toEqual([]);
+      });
+    }
+  }
 
   // From 701 to 800px, the ticket cut off the German and French labels of its
   // buttons: its columns could not be narrower than their content.
