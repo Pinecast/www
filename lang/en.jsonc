@@ -63,6 +63,10 @@
     // A feature of the free plan, in the list on its ticket in the pricing section
     "defaultMessage": "No time limit"
   },
+  "3NQkii": {
+    // Label of a step of a Learn article, in a pill above its title, and read before the title. Shown in capital letters. {number} is the number of the step, with two digits ("01")
+    "defaultMessage": "Step {number}"
+  },
   "4fxkcu": {
     // After a price in the pricing section: the price is for one month
     "defaultMessage": "\/ Month"

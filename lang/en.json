@@ -63,6 +63,10 @@
     "defaultMessage": "No time limit",
     "description": "A feature of the free plan, in the list on its ticket in the pricing section"
   },
+  "3NQkii": {
+    "defaultMessage": "Step {number}",
+    "description": "Label of a step of a Learn article, in a pill above its title, and read before the title. Shown in capital letters. {number} is the number of the step, with two digits (\"01\")"
+  },
   "4fxkcu": {
     "defaultMessage": "/ Month",
     "description": "After a price in the pricing section: the price is for one month"

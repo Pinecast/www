@@ -1,0 +1,234 @@
+---
+title: Glosario de podcasting
+description: La jerga que necesitas conocer para empezar
+heroImage: /images/hero/t-r.png
+---
+
+# Un poco de contexto
+
+¿Por qué hay tantos términos? El podcasting está en la intersección entre la industria del audio y la industria de la radiodifusión, y ambas vienen cargadas de su propia jerga. Además, el podcasting como pasatiempo o profesión puede volverse muy complejo: tener un vocabulario para expresar conceptos con matices es importante.
+
+Te prometemos que nada es demasiado difícil de aprender, y no necesitas conocer la mayoría de los términos hasta que te topes con ellos.
+
+# Los términos
+
+import {DefinitionList} from '@/components/TextBlocks';
+
+<DefinitionList>
+  <dt>AAC (Códec de Audio Avanzado)</dt>
+  <dd>
+  AAC es un códec, es decir, un formato para almacenar audio en formato digital. Es el sucesor de MP3 (ver más abajo). Por lo general, tiene mejores propiedades de compresión (ver más abajo) que MP3, pero está sujeto a patentes y puede no estar tan bien compatibilizado con todos los dispositivos.
+  </dd>
+
+  <dt>Cama musical</dt>
+  <dd>
+  Una cama musical es el audio (generalmente música) que se reproduce mientras alguien está hablando.
+  </dd>
+
+  <dt>Profundidad de bits</dt>
+  <dd>
+  La profundidad de bits de un archivo de audio es la cantidad de bits por muestra (ver más abajo). Un archivo con una profundidad de bits más alta usa más espacio para números con mayor precisión al describir una muestra. Cuanto más precisas son las muestras, con mayor fidelidad se puede reproducir el sonido. 16 bits es una profundidad de bits común.
+
+  En general, no necesitas preocuparte por la profundidad de bits: al distribuir un archivo, la tasa de bits (ver más abajo) es mucho más importante, ya que afecta la compresión del audio.
+  </dd>
+
+  <dt>Tasa de bits</dt>
+  <dd>
+  La tasa de bits de un archivo de audio es la cantidad de bits de datos que ocupa el audio por cada segundo de audio. Por ejemplo, 128 kbps significa que hay 128.000 bits (o 15,6 kilobytes) de datos por cada segundo de audio almacenado en ese archivo.
+
+  La tasa de bits es la unidad de medida de la compresión (ver más abajo). Una tasa de bits más alta significa que el audio ocupa más espacio en tu disco por segundo de audio: cuanto más espacio ocupa el audio, con mayor fidelidad se reproduce. Las tasas de bits más bajas ocupan menos espacio al reducir la calidad.
+  </dd>
+
+  <dt>Recorte</dt>
+  <dd>
+  Reducir la duración de un segmento de audio (truncando el principio o el final) se conoce como "recortar" el audio.
+  </dd>
+
+  <dt>Compresión</dt>
+  <dd>
+  Los códecs de audio comprimen su audio para minimizar el tamaño del archivo. La compresión funciona usando menos datos para almacenar los sonidos que el oído humano no percibe tan fácilmente como los sonidos que sí se escuchan con claridad. Entre otras técnicas, los tonos muy agudos o muy graves reducen su calidad, lo que permite reducir el espacio de almacenamiento necesario para esa información de audio.
+
+  AAC (ver más arriba) es el mejor códec de audio en términos de compresión para episodios de podcast. MP3 (ver más abajo) es el más popular.
+
+  WAV (ver más abajo) es un códec de audio sin compresión, pero no debería usarse para distribuir audio de podcasts.
+  </dd>
+
+  <dt>Compresor</dt>
+  <dd>
+  Los filtros de compresor hacen que los sonidos suaves se escuchen más fuerte y que los sonidos fuertes se escuchen más suaves, haciendo que tu audio sea más fácil de escuchar.
+  </dd>
+
+  <dt>Creative Commons</dt>
+  <dd>
+  [Creative Commons](https://creativecommons.org/) es una organización que publica un conjunto de licencias (ver más abajo) para contenido que no está destinado a ser propietario. Ofrecen pautas para etiquetar tu contenido de manera que pueda compartirse y reutilizarse con las limitaciones que tú elijas.
+  </dd>
+
+  <dt>Corte</dt>
+  <dd>
+  Otra forma de decir "edición".
+  </dd>
+
+  <dt>DAW (estación de trabajo de audio digital)</dt>
+  <dd>
+  Esta es otra forma de decir "software de edición", aunque a menudo también te permite grabar audio.
+  </dd>
+
+  <dt>Directorio</dt>
+  <dd>
+  Un directorio es un listado en línea (o dentro de una app) de podcasts. Entre los directorios más comunes están Apple Podcasts, Spotify y YouTube Music.
+  </dd>
+
+  <dt>Feed</dt>
+  <dd>
+  Un feed es un archivo legible por computadora que codifica toda la información sobre tu podcast y sus episodios. Las apps de podcasts revisan los feeds para detectar episodios nuevos y cambios en un podcast. RSS (ver más abajo) es el formato más común para distribuir podcasts.
+  </dd>
+
+  <dt>Ganancia</dt>
+  <dd>
+  En pocas palabras, es la sensibilidad de tu micrófono. Ajústala antes de empezar a grabar, si tienes esa opción, para asegurarte de que tu audio se grabe lo suficientemente fuerte, pero sin que llegue a saturar (ver más abajo).
+  </dd>
+
+  <dt>Hosting</dt>
+  <dd>
+  El hosting de podcasts es un servicio (¡como Pinecast!) que se usa para poner tus archivos de audio a disposición de las apps de podcasts y los directorios. Un servicio de hosting ofrece un feed (ver más arriba), que los directorios y las apps de podcasts usan para obtener los episodios nuevos. Un buen servicio de hosting también incluye funciones como estadísticas, un sitio web y herramientas para gestionar y monitorear tu programa.
+  </dd>
+
+  <dt>ID3</dt>
+  <dd>
+  Un tipo de metadatos (ver más abajo) almacenados dentro de los archivos de audio MP3 (ver más abajo).
+  </dd>
+
+  <dt>Intro</dt>
+  <dd>
+  Un fragmento de audio que se agrega al principio de un episodio para presentar el programa. Puede ser una canción tema u otra introducción estandarizada del podcast.
+  </dd>
+
+  <dt>Joint stereo</dt>
+  <dd>
+  Al codificar un MP3, el joint stereo es un método de codificación que permite codificar audio estéreo (ver más abajo) usando menos espacio que el audio estéreo tradicional.
+
+  Con el audio estéreo tradicional, se codifican por separado los canales izquierdo y derecho, lo que suele duplicar el tamaño del archivo. El joint stereo almacena un canal y la diferencia numérica entre ambos canales. Como los canales izquierdo y derecho, incluso en audio completamente estéreo, no suelen ser muy distintos entre sí, la información necesaria para codificar esa diferencia ocupa menos espacio que codificar una segunda pista de audio. Esto reduce el tamaño del archivo sin reducir la calidad.
+
+  El joint stereo es una buena opción para audio con algo de sonido estéreo, ya que reduce el costo de la codificación estéreo únicamente a los segmentos que contienen audio estéreo. Cuando un segmento de audio tiene pistas izquierda y derecha idénticas (como ocurre con el audio "mono"), la diferencia es cero y ocupa una cantidad insignificante de espacio adicional.
+  </dd>
+
+  <dt>Licencia</dt>
+  <dd>
+  Una licencia son los derechos que les otorgas a tus oyentes para usar, compartir y crear obras derivadas a partir de tu contenido.
+  </dd>
+
+  <dt>Metadatos</dt>
+  <dd>
+  Los metadatos son la información adicional asociada a un episodio o a un archivo de audio. Pueden estar presentes en un feed (ver más arriba) o incrustados dentro de un archivo de audio, como las etiquetas ID3 (ver más arriba).
+
+  Los metadatos suelen incluir el título del episodio, el autor del podcast y el nombre del podcast.
+  </dd>
+
+  <dt>Mid-roll</dt>
+  <dd>
+  Un anuncio que se reproduce a la mitad de un episodio.
+  </dd>
+
+  <dt>Mezclador</dt>
+  <dd>
+  Un dispositivo (aunque a veces es software) que se usa para combinar varias fuentes de audio.
+  </dd>
+
+  <dt>Mezcla</dt>
+  <dd>
+  El proceso de editar varios archivos de audio juntos.
+  </dd>
+
+  <dt>Mezcla final</dt>
+  <dd>
+  Al final del proceso de edición de audio, hacer la "mezcla final" de tus pistas se refiere a combinar las distintas pistas en un único archivo de audio final.
+  </dd>
+
+  <dt>Mono</dt>
+  <dd>
+  El audio "mono" tiene una sola pista. No hay diferencia entre los parlantes izquierdo y derecho cuando lo escuchas con auriculares.
+
+  Los podcasts suelen codificarse en "mono", ya que por lo general no se graban con varios micrófonos organizados para captar canales izquierdo y derecho.
+  </dd>
+
+  <dt>MP3</dt>
+  <dd>
+  MP3 es un códec, es decir, un formato para almacenar audio en formato digital. Es el formato más común para distribuir audio de podcasts. MP3 no tiene la mejor compresión (ver más arriba), pero por lo general es suficientemente bueno para la mayoría de los casos.
+  </dd>
+
+  <dt>Multipista</dt>
+  <dd>
+  Al editar, se pueden combinar varias pistas de audio en capas dentro de un solo resultado. Esto se conoce como edición "multipista" y permite combinar la entrada de varios micrófonos.
+  </dd>
+
+  <dt>Normalización</dt>
+  <dd>
+  Este es el proceso de lograr que tu audio tenga un volumen perceptiblemente uniforme a lo largo de un episodio.
+  </dd>
+
+  <dt>Outro</dt>
+  <dd>
+  Un clip de audio que "cierra" un episodio. Por lo general, es un jingle que se reproduce durante los créditos.
+  </dd>
+
+  <dt>Saturación</dt>
+  <dd>
+  Cuando alguien se acerca demasiado al micrófono o provoca un ruido fuerte (por ejemplo, golpear el micrófono, toser o generar de alguna otra forma un pico en el volumen del audio), esto se conoce como "saturar" el audio. En la mayoría de los programas de grabación, los niveles de audio se muestran con barras de colores. Cuando el audio se satura, las barras se extienden hasta la zona roja.
+  </dd>
+
+  <dt>Postroll</dt>
+  <dd>
+  Un anuncio o clip de audio que se reproduce después de un episodio.
+  </dd>
+
+  <dt>Preroll</dt>
+  <dd>
+  Un anuncio o clip de audio que se reproduce antes de un episodio.
+  </dd>
+
+  <dt>Ruido ambiente</dt>
+  <dd>
+  Incluso en habitaciones muy silenciosas, el ruido de fondo (ruido de computadora, de la calle, del aire acondicionado o del refrigerador, etc.) se capta como un zumbido o siseo leve. Nuestro cerebro lo ignora, pero los micrófonos pueden captarlo, y tus oyentes también suelen escucharlo. Aunque no es fácil percibirlo, cortarlo (ver más arriba) de forma abrupta sí resulta evidente.
+
+  Es una práctica común grabar algo de ruido ambiente (por ejemplo, diez segundos) para hacer fundidos sobre los cortes, lo que ayuda a disimular las ediciones.
+  </dd>
+
+  <dt>RSS (Really Simple Syndication)</dt>
+  <dd>
+  RSS es un formato estándar para feeds (ver más arriba). Se basa en XML (eXtensible Markup Language), que es un formato legible por computadora para codificar información estructurada.
+  </dd>
+
+  <dt>Muestras</dt>
+  <dd>
+  El audio se almacena digitalmente en "muestras". El sonido viaja como vibraciones a través del aire. Cuando estas vibraciones se miden con un micrófono, se representan como una forma de onda (ver más abajo). Una muestra es un número que describe la forma de la onda. Cuando se toman muestras a intervalos regulares (la "tasa de muestreo"; ver más abajo), pueden usarse para reproducir el sonido digitalmente.
+  </dd>
+
+  <dt>Tasa de muestreo</dt>
+  <dd>
+  La tasa de muestreo de un archivo de audio es la cantidad de muestras (ver más arriba) por segundo (es decir, una frecuencia) con la que se codifica el archivo de audio. Por ejemplo, 44.1 kHz es una tasa de muestreo común. Esto significa que se almacenan 44.100 muestras (números) por cada segundo de audio.
+  </dd>
+
+  <dt>Estéreo</dt>
+  <dd>
+  El audio "estéreo" tiene dos canales: uno pensado para un parlante izquierdo y otro para un parlante derecho. Esto genera la percepción de espacio tridimensional en un archivo de audio.
+
+  El audio estéreo, en general, no es muy útil para el podcasting, ya que la mayoría de los micrófonos no graban canales de audio izquierdo y derecho dedicados. El audio estéreo aporta poco beneficio para el oyente, y por lo general no se recomienda.
+  </dd>
+
+  <dt>Forma de onda</dt>
+  <dd>
+  Una forma de onda es una representación visual de la onda sonora de un fragmento de audio. Se representa digitalmente mediante muestras (ver más arriba).
+  </dd>
+
+  <dt>WAV</dt>
+  <dd>
+  WAV es un códec, es decir, un formato para almacenar audio en formato digital. WAV almacena sin pérdidas todos los detalles mínimos del audio original: un archivo WAV es tan bueno como el audio con el que se creó. Sin embargo, WAV no ofrece compresión (ver más arriba), lo que hace que los archivos sean excepcionalmente grandes. Pocas apps de podcasts admiten WAV porque sus archivos son demasiado grandes para distribuirse fácilmente (especialmente con datos móviles).
+
+  WAV es útil para almacenar el audio original (por ejemplo, audio que ya se grabó pero aún no se editó).
+  </dd>
+</DefinitionList>
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, frontmatter);

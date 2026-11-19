@@ -1,0 +1,56 @@
+---
+title: Monetiza tu podcast
+description: Es hora de ganar dinero
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Ganar algo de dinero con tu podcast siempre es agradable. Pero ¿qué tal si pudieras ganar más?
+
+  Pinecast tiene funciones integradas para ayudarte a crear una fuente de ingresos sostenible con tu programa.
+</Intro>
+
+# ¿Qué es el bote de propinas?
+
+La mejor función de Pinecast para monetizar es el bote de propinas. Con el bote de propinas, puedes aceptar suscripciones pagadas de tus oyentes. A cambio, puedes ofrecer contenido privado exclusivo para suscriptores, lanzar contenido antes para suscriptores y recibir mensajes directamente de tus suscriptores.
+
+![Una captura de pantalla del bote de propinas de un podcast](/images/content/learn/screenshot-tip-jar.png)
+
+Los ingresos por suscripciones se depositan cada viernes (tras un período de retención de siete días) directamente en tu cuenta bancaria. La configuración es rápida y sencilla, sin períodos de espera.
+
+# Configuración inicial
+
+Desde tu panel principal, elige la pestaña Configuración &gt; Bote de propinas en el panel de tu cuenta principal, o la pestaña Bote de propinas en el panel de cualquier podcast, y sigue las instrucciones.
+
+![Una captura de pantalla del panel del bote de propinas de un podcast](/images/content/learn/screenshot-tip-jar-dashboard.png)
+
+Para empezar, te pediremos algo de información personal:
+
+1. Necesitamos los datos de tu cuenta bancaria o tarjeta de débito para enviarte tus ganancias.
+2. Te pediremos información de identidad sobre ti o tu organización para cumplir con los requisitos legales de verificación de identidad de tu país.
+
+Toda esta información se recopila a través de Stripe, nuestro procesador de pagos, y se almacena de forma segura en sus servidores. Una vez que hayas proporcionado la información solicitada, podrás empezar a aceptar pagos de inmediato: verás un enlace a tu bote de propinas en la pestaña Bote de propinas de cada panel de podcast.
+
+# Cómo recibir propinas
+
+De forma predeterminada, aceptaremos propinas únicas y recurrentes en tu nombre. Para cuentas en EE. UU., las propinas pueden ir de $1 a $150 (los montos varían según la moneda). Puedes personalizar los mensajes antes y después de que se haga una donación, y agregar un mensaje de agradecimiento al correo que se envía después de recibir una propina.
+
+Llevar usuarios a tu bote de propinas es fácil. Nuestros [enlaces cortos](/features/short-links) enlazan automáticamente tu bote de propinas cuando los compartes. Encontrarás una casilla en tus episodios para que el bote de propinas se enlace automáticamente en las notas del programa de cada episodio (y recordaremos tu elección cuando subas tu próximo episodio).
+
+Cuando un oyente te envía una propina, recibirás un correo electrónico y verás los detalles de la propina en el panel de tu podcast. Las propinas se mantienen en reserva durante siete días y se pagan el viernes siguiente.
+
+## Suscriptores
+
+Cuando creas un episodio, puedes marcarlo como privado (o, con el complemento Crecimiento, privado hasta una fecha determinada). Los suscriptores de pago tendrán acceso a un panel especial donde podrán escuchar los episodios privados de tu programa, ya sea desde el navegador o en una app de podcasts. Si escuchan desde el navegador, incluso te ayudamos a llevar un registro de qué episodios ya escucharon.
+
+![Una captura de pantalla de lo que verán los suscriptores del bote de propinas de un podcast](/images/content/learn/screenshot-tip-jar-tipper-dashboard.png)
+
+Las suscripciones se gestionan de forma completamente automática. Cada suscriptor obtiene un feed único que puede agregar a su app de podcasts. Si la suscripción vence, el feed se desactiva automáticamente.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, frontmatter);

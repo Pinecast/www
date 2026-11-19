@@ -1,3 +1,9 @@
+---
+title: Import Your Podcast
+description: Bring your show to Pinecast from another host.
+heroImage: /images/hero/t-r.png
+---
+
 import {Intro, Step} from '@/components/TextBlocks';
 
 <Intro>
@@ -48,8 +54,4 @@ import {Intro, Step} from '@/components/TextBlocks';
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {LearnLayout} from '@/layouts/LearnLayout';
 
-export default layoutWrapper(LearnLayout, {
-  title: 'Import Your Podcast',
-  description: 'Bring your show to Pinecast from another host.',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(LearnLayout, frontmatter);

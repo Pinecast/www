@@ -1,3 +1,9 @@
+---
+title: Create Your Podcast
+description: Learn how to create your first podcast on Pinecast.
+heroImage: /images/hero/t-r.png
+---
+
 import {DefinitionList, Intro, Step} from '@/components/TextBlocks';
 
 <Intro>
@@ -101,8 +107,4 @@ import {DefinitionList, Intro, Step} from '@/components/TextBlocks';
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {LearnLayout} from '@/layouts/LearnLayout';
 
-export default layoutWrapper(LearnLayout, {
-  title: 'Create Your Podcast',
-  description: 'Learn how to create your first podcast on Pinecast.',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(LearnLayout, frontmatter);
