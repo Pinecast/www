@@ -1,10 +1,12 @@
+import {QuoteFooterUpsell} from '@/components/QuoteFooterUpsell';
 import {H1, PillButton} from '@/components/Typography';
 import * as React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {BaseLayout, pageTitleStyle} from './BaseLayout';
 
 // The layout of the page for colleges and universities (/education). Sky is
-// the color of the persona that links to it (PERSONAS.organizations).
+// the color of the persona that links to it (PERSONAS.organizations). It ends
+// with a quote section instead of the sign-up one: a school buys from a quote.
 export const EducationLayout = BaseLayout(
   ({title}) => (
     <>
@@ -17,5 +19,8 @@ export const EducationLayout = BaseLayout(
       <H1 style={pageTitleStyle(title)}>{title}</H1>
     </>
   ),
-  {defaultColor: 'var(--color-sky)'},
+  {
+    defaultColor: 'var(--color-sky)',
+    footerUpsell: () => <QuoteFooterUpsell />,
+  },
 );

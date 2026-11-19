@@ -43,9 +43,17 @@
     "defaultMessage": "If your episode’s MP3 doesn’t include all of the metadata tags that podcast apps expect, we’ll fill in the blanks for you with a single click—without overwriting custom metadata.",
     "description": "What the Episode Metadata feature does, shown when its row on the Features page is open"
   },
+  "1G24Is": {
+    "defaultMessage": "Request a quote",
+    "description": "Button in the quote section at the bottom of the page for colleges and universities. It opens an email to Pinecast support"
+  },
   "1OUYIJ": {
     "defaultMessage": "Pause animations",
     "description": "Name of the toggle button in the site header that pauses and plays the animations of the page. Screen readers read it, and its tooltip shows it. The button says whether it is pressed, so the name stays the same while the animations are paused."
+  },
+  "1jF4sA": {
+    "defaultMessage": "Tell us how many shows and students you have, and when your year of service starts. We usually send a quote within 36 hours.",
+    "description": "Text under the heading of the quote section at the bottom of the page for colleges and universities"
   },
   "1tHL/G": {
     "defaultMessage": "We don’t just provide RSS, we offer an easy-to-parse JSON Feed-compliant feed for every podcast as well.",
@@ -306,6 +314,10 @@
   "Mgtljh": {
     "defaultMessage": "Features Index",
     "description": "Label above the heading of the Features page, in a pill. Shown in capital letters"
+  },
+  "Mj1O6l": {
+    "defaultMessage": "Or write to {email}",
+    "description": "Small note under the buttons of the quote section at the bottom of the page for colleges and universities. {email} is the address of Pinecast support"
   },
   "NGLCBM": {
     "defaultMessage": "Create a podcast",
@@ -779,6 +791,10 @@
     "defaultMessage": "Earn money from your podcast with listener support. Mark episodes as paid-only and we’ll handle subscriptions and payments processing.",
     "description": "What the Monetization feature does, shown when its row on the Features page is open"
   },
+  "qQo9Oo": {
+    "defaultMessage": "What’s included?",
+    "description": "Button in the quote section at the bottom of the page for colleges and universities, to the Features page"
+  },
   "qmahv6": {
     "defaultMessage": "Features – Pinecast",
     "description": "Title of the Features page, in the browser tab"
@@ -786,6 +802,10 @@
   "rFDc+R": {
     "defaultMessage": "Embeddable App Links",
     "description": "Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line"
+  },
+  "rMi7fu": {
+    "defaultMessage": "Get a quote{br}for your school",
+    "description": "Big heading of the quote section at the bottom of the page for colleges and universities, above the footer. {br} is a line break"
   },
   "rw89n6": {
     "defaultMessage": "Language",
