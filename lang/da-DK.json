@@ -182,6 +182,9 @@
   "IJnetw": {
     "defaultMessage": "Intet kreditkort påkrævet"
   },
+  "IR3n6s": {
+    "defaultMessage": "Podcasting til undervisning"
+  },
   "IiGjF/": {
     "defaultMessage": "$0"
   },
@@ -289,6 +292,9 @@
   },
   "RlBhkU": {
     "defaultMessage": "Indlejr HTML-kode til din podcast, så de besøgende på din hjemmeside kan åbne den i deres foretrukne podcast-app."
+  },
+  "RwnN53": {
+    "defaultMessage": "Niveau 3"
   },
   "SHaenT": {
     "defaultMessage": "Tilføj funktioner, når du har brug for dem, og fjern dem, når du ikke har. Ingen forvirrende niveauer og ingen binding. Du betaler for det, du bruger."
@@ -605,6 +611,9 @@
   "tVLEqA": {
     "defaultMessage": "Primær"
   },
+  "tancxZ": {
+    "defaultMessage": "Du går på campus"
+  },
   "txw1P6": {
     "defaultMessage": "Monetarisering"
   },
@@ -632,6 +641,9 @@
   "wRldcc": {
     "defaultMessage": "Transskriptioner"
   },
+  "wYNYLV": {
+    "defaultMessage": "Til universiteter og videregående uddannelser"
+  },
   "xISYcS": {
     "defaultMessage": "Siden er bedre med lyd!"
   },
@@ -649,17 +661,5 @@
   },
   "ze4XAD": {
     "defaultMessage": "Tilbage til forsiden"
-  },
-  "2EOcY/": {
-    "defaultMessage": "Til gymnasier og universiteter"
-  },
-  "IR3n6s": {
-    "defaultMessage": "Podcasting til undervisning"
-  },
-  "RwnN53": {
-    "defaultMessage": "Niveau 3"
-  },
-  "tancxZ": {
-    "defaultMessage": "Du går på campus"
   }
 }

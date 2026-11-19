@@ -182,6 +182,9 @@
   "IJnetw": {
     "defaultMessage": "Keine Kreditkarte nötig"
   },
+  "IR3n6s": {
+    "defaultMessage": "Podcasting für die Bildung"
+  },
   "IiGjF/": {
     "defaultMessage": "0 $"
   },
@@ -192,7 +195,7 @@
     "defaultMessage": "Dieses Dokument gibt es nur auf Englisch."
   },
   "KCylH7": {
-    "defaultMessage": "Level 2"
+    "defaultMessage": "Stufe 2"
   },
   "KGkwzj": {
     "defaultMessage": "Veröffentliche Premium-Inhalte für zahlende Abonnent:innen und erhalte Auszahlungen direkt auf dein Bankkonto."
@@ -289,6 +292,9 @@
   },
   "RlBhkU": {
     "defaultMessage": "Bette HTML-Code für deinen Podcast ein, damit Besucher:innen deiner Website deine Show in ihrer liebsten Podcast-App öffnen können."
+  },
+  "RwnN53": {
+    "defaultMessage": "Stufe 3"
   },
   "SHaenT": {
     "defaultMessage": "Füge Features hinzu, wenn du sie brauchst, und entferne sie, wenn nicht. Keine verwirrenden Stufen, keine Preisbindung. Du bezahlst nur, was du nutzt."
@@ -504,7 +510,7 @@
     "defaultMessage": "oder"
   },
   "lt2DeU": {
-    "defaultMessage": "Level 1"
+    "defaultMessage": "Stufe 1"
   },
   "lwhUWz": {
     "defaultMessage": "Distribution"
@@ -605,6 +611,9 @@
   "tVLEqA": {
     "defaultMessage": "Hauptnavigation"
   },
+  "tancxZ": {
+    "defaultMessage": "Du bist auf dem Campus"
+  },
   "txw1P6": {
     "defaultMessage": "Monetarisierung"
   },
@@ -632,6 +641,9 @@
   "wRldcc": {
     "defaultMessage": "Transkripte"
   },
+  "wYNYLV": {
+    "defaultMessage": "Für Hochschulen und Universitäten"
+  },
   "xISYcS": {
     "defaultMessage": "Diese Seite ist mit Ton noch besser!"
   },
@@ -649,17 +661,5 @@
   },
   "ze4XAD": {
     "defaultMessage": "Zurück zur Startseite"
-  },
-  "2EOcY/": {
-    "defaultMessage": "Für Hochschulen und Universitäten"
-  },
-  "IR3n6s": {
-    "defaultMessage": "Podcasting für die Bildung"
-  },
-  "RwnN53": {
-    "defaultMessage": "Stufe 3"
-  },
-  "tancxZ": {
-    "defaultMessage": "Du bist auf dem Campus"
   }
 }

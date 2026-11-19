@@ -422,25 +422,25 @@
       "sha256": "d41f63ac7beffa9a7f2e728b010641872dda56460bc53200871eebd05f356af6"
     },
     "lang/da-DK.json": {
-      "sha256": "226085aa593b72a762b6597bb7cab51351ac27b4a55c38b66f7ecbdc0b2bd61f"
+      "sha256": "d2a7dd269192d49dd66b5770f0d96a3ffc55f7d184ba6276179ddefdc3fa7810"
     },
     "lang/de-DE.json": {
-      "sha256": "40962f9725e9efb3a287290453f71364d4f92f334efddcd0f132c65a03a8523b"
+      "sha256": "bc62b0e8d8804341647cfd982deda3d0f8955498d4cba1f9195f88b71d62aea9"
     },
     "lang/en.json": {
       "sha256": "d0f8863babd1501f293fc8ca7b461a08cb6ad57b565fa6985233d37461093f97"
     },
     "lang/en.jsonc": {
-      "sha256": "fe8987b225e7a6f43842781044f2046fae8d363d9e91b136d0993395beb6851f"
+      "sha256": "862cccdb1b5f7363fd0ee852786e27b712ee41774dabbab71978283f2ebd01e5"
     },
     "lang/es-419.json": {
-      "sha256": "9b7173009f5fa887ddf9bc4eefe563f457a1330dd236e967636b74ff788a1f1b"
+      "sha256": "6e53b94f052405d970ddf22c830def55c8c57c1063c7e169ac1b73ba985a6387"
     },
     "lang/fr.json": {
-      "sha256": "f9a51c9a1b43488f2e8678cf69778c84e824f50f99ae3c7a42414eed030128d4"
+      "sha256": "8ec6a9aa6dd64281dd41fde62bc31adeff03427ce72aea7bbb132513968594d2"
     },
     "lang/pt-BR.json": {
-      "sha256": "fb02310274b4bd6107a2116013e67f1d4173e01ac3b30cd9ae82106eca8705df"
+      "sha256": "ee4c223ead70b4b39e4ed444bb2dc236f7be9231250efead055e0c82e7f73e38"
     }
   }
 }

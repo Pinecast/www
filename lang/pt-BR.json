@@ -182,6 +182,9 @@
   "IJnetw": {
     "defaultMessage": "Não precisa de cartão de crédito"
   },
+  "IR3n6s": {
+    "defaultMessage": "Podcasting para a educação"
+  },
   "IiGjF/": {
     "defaultMessage": "$0"
   },
@@ -289,6 +292,9 @@
   },
   "RlBhkU": {
     "defaultMessage": "Incorpore um código HTML do seu podcast que permite aos visitantes do seu site abrir o programa no app de podcast favorito."
+  },
+  "RwnN53": {
+    "defaultMessage": "Nível 3"
   },
   "SHaenT": {
     "defaultMessage": "Adicione recursos quando precisar e remova quando não precisar mais. Sem planos confusos nem preços que te prendem. Você paga só pelo que usa."
@@ -605,6 +611,9 @@
   "tVLEqA": {
     "defaultMessage": "Principal"
   },
+  "tancxZ": {
+    "defaultMessage": "Você está no campus"
+  },
   "txw1P6": {
     "defaultMessage": "Monetização"
   },
@@ -632,6 +641,9 @@
   "wRldcc": {
     "defaultMessage": "Transcrições"
   },
+  "wYNYLV": {
+    "defaultMessage": "Para faculdades e universidades"
+  },
   "xISYcS": {
     "defaultMessage": "Este site fica melhor com som!"
   },
@@ -649,17 +661,5 @@
   },
   "ze4XAD": {
     "defaultMessage": "Voltar para o início"
-  },
-  "2EOcY/": {
-    "defaultMessage": "Para faculdades e universidades"
-  },
-  "IR3n6s": {
-    "defaultMessage": "Podcasting para a educação"
-  },
-  "RwnN53": {
-    "defaultMessage": "Nível 3"
-  },
-  "tancxZ": {
-    "defaultMessage": "Você está no campus"
   }
 }
