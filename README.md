@@ -329,7 +329,10 @@ When you add an animation:
   `useAsyncVideo`. They follow the toggle. Read `isMotionPaused()`, not the
   `paused` value of `useMotion`, in code that starts or stops media: in the
   first render in the browser, `paused` is still the value of the static
-  export.
+  export. A video that feeds a canvas also stops while the canvas does not
+  show it (`onScreen` of `useAsyncVideo` and of `useDualVideoManager`): at the
+  end of the home page, hidden videos once took a third or more of the CPU of
+  the page.
 - A `<video>` on the page: use `NoncriticalVideo`. Do not give it `autoPlay`.
 - An effect that follows the scroll: with reduced motion, show it in one fixed
   state (`reducedMotion` of `useMotion`), as the page heroes, the home hero and

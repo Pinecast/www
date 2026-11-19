@@ -277,6 +277,13 @@ test.describe('footer: links at the end of the page', () => {
       test(`are not under the mute button at ${viewport.width}x${
         viewport.height
       }${spacing ? ' with larger text spacing' : ''}`, async ({page}) => {
+        // No videos. They do not change this layout: the footer keeps the
+        // room of its video from its aspect ratio, and the hero and the globe
+        // show their stills. But the other workers run these tests at the same
+        // time, so each core of a CI runner had a page at the end of the home
+        // page, decoding the footer video (3340 by 2090) in software. A page
+        // then took more than 5 seconds to answer, and the poll below failed.
+        await page.route('**/videos/**', route => route.abort());
         await page.setViewportSize(viewport);
         await load(page, '/', {spacing});
         await page.evaluate(() =>

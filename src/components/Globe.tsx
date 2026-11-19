@@ -1192,7 +1192,18 @@ export const Globe = () => {
   const [segmentStart, segmentEnd] = getVideoSegmentBounds(
     isStatic ? 'distribution' : (currentFeatureSlug ?? 'distribution'),
   );
-  const gv = useDualVideoManager(gv1, gv2, segmentStart, segmentEnd, 0.6);
+  // The video plays only while the globe is on screen. Off screen, it would
+  // decode frames that nobody sees, which slowed the rest of the page down.
+  const [onScreen, setOnScreen] = React.useState(false);
+  useIntersectionVisibility(canvas, setOnScreen);
+  const gv = useDualVideoManager(
+    gv1,
+    gv2,
+    segmentStart,
+    segmentEnd,
+    0.6,
+    onScreen,
+  );
 
   const imageState = React.useRef({
     xPerc: 0,

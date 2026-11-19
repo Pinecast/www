@@ -9,10 +9,16 @@ export const useDualVideoManager = (
   segmentStart: number,
   segmentEnd: number,
   firstSegmentStart: number,
+  // Whether the canvas that draws the videos shows them.
+  onScreen: boolean,
 ): React.RefObject<[HTMLVideoElement, boolean]> => {
   // While the "Pause animations" toggle is on, the active video stops on the
-  // frame it shows, and a change of segment only seeks to its start.
+  // frame it shows, and a change of segment only seeks to its start. It does
+  // the same off screen, where nobody sees it.
   const {paused} = useMotion();
+  // For the event handlers and the timer, which outlive the render.
+  const onScreenRef = React.useRef(onScreen);
+  onScreenRef.current = onScreen;
   const activeVideoIndex = React.useRef(0);
   const activeVideo = React.useRef<[HTMLVideoElement, boolean]>(drawable1);
   const state = React.useRef({
@@ -32,7 +38,7 @@ export const useDualVideoManager = (
   }, [drawable1, drawable2]);
 
   const onTimeUpdate = React.useCallback(() => {
-    if (isMotionPaused()) {
+    if (isMotionPaused() || !onScreenRef.current) {
       return;
     }
     const [activeDrawableVideo] =
@@ -93,7 +99,7 @@ export const useDualVideoManager = (
     const oldStart = state.current.currentStart;
     state.current.currentStart = segmentStart;
     state.current.currentEnd = segmentEnd;
-    if (isMotionPaused()) {
+    if (isMotionPaused() || !onScreenRef.current) {
       if (activeVideo.current[0] && oldStart !== segmentStart) {
         activeVideo.current[0].currentTime = segmentStart;
       }
@@ -152,8 +158,9 @@ export const useDualVideoManager = (
           drawable2[0].currentTime = currentStart;
         }
         state.current.running = true;
-        if (isMotionPaused()) {
-          // The effect below plays it when the toggle turns off.
+        if (isMotionPaused() || !onScreenRef.current) {
+          // The effect below plays it when the toggle turns off, or when
+          // the globe comes on screen.
           return;
         }
         const playPromise = drawable1[0].play();
@@ -220,7 +227,7 @@ export const useDualVideoManager = (
 
   React.useEffect(() => {
     const [video] = activeVideo.current;
-    if (isMotionPaused()) {
+    if (isMotionPaused() || !onScreen) {
       clearTimeout(timeUpdateTimer.current!);
       // Both, in case a swap has just started the other one.
       drawable1[0]?.pause();
@@ -233,7 +240,7 @@ export const useDualVideoManager = (
         }
       });
     }
-  }, [paused, drawable1, drawable2]);
+  }, [paused, onScreen, drawable1, drawable2]);
 
   return activeVideo;
 };
