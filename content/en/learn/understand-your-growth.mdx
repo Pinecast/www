@@ -1,3 +1,9 @@
+---
+title: Understand Your Growth
+description: Is your show growing or plateauing?
+heroImage: /images/hero/t-r.png
+---
+
 import {Intro} from '@/components/TextBlocks';
 
 <Intro>
@@ -71,8 +77,4 @@ Our feedback feature is also available with our [Tip Jar](/features/monetization
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {LearnLayout} from '@/layouts/LearnLayout';
 
-export default layoutWrapper(LearnLayout, {
-  title: 'Understand Your Growth',
-  description: 'Is your show growing or plateauing?',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(LearnLayout, frontmatter);

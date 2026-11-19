@@ -1,3 +1,9 @@
+---
+title: Monetize Your Podcast
+description: Time to make some money
+heroImage: /images/hero/t-r.png
+---
+
 import {Intro} from '@/components/TextBlocks';
 
 <Intro>
@@ -47,8 +53,4 @@ Subscriptions are managed completely automatically. Each subscriber gets a uniqu
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {LearnLayout} from '@/layouts/LearnLayout';
 
-export default layoutWrapper(LearnLayout, {
-  title: 'Monetize Your Podcast',
-  description: 'Time to make some money',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(LearnLayout, frontmatter);

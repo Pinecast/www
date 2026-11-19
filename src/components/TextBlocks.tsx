@@ -158,10 +158,18 @@ export const Step = ({
   title: string;
 }) => {
   const css = useCSS();
+  const intl = useIntl();
   return (
     <section className={css({':not(:last-child)': {marginBottom: '150px'}})}>
       <TaggedTitle
-        tag={`Step ${stepNumber.toString().padStart(2, '0')}`}
+        tag={intl.formatMessage(
+          {
+            description:
+              'Label of a step of a Learn article, in a pill above its title, and read before the title. Shown in capital letters. {number} is the number of the step, with two digits ("01")',
+            defaultMessage: 'Step {number}',
+          },
+          {number: stepNumber.toString().padStart(2, '0')},
+        )}
         style={{marginTop: '0px'}}
       >
         {title}
@@ -516,8 +524,14 @@ export const Table = ({
   );
 };
 
-type Product = {
-  name: string;
+// A product has its own name, or a name that says what kind of product it is.
+// `name` is the product's name as Amazon lists it, brand and model ("Shure
+// MV7"), and stays as it is in every language. `genericName` says what it is
+// ("Acoustic Panels"), and Lingo.dev translates it (.lingo/config.json).
+type Product = (
+  | {name: string; genericName?: never}
+  | {genericName: string; name?: never}
+) & {
   imageUrl: string;
   price: string;
   description: string;
@@ -549,15 +563,20 @@ const scrollFocusedAccessoryIntoView = (evt: React.FocusEvent<HTMLElement>) => {
 };
 
 export const ProductFeature = ({
-  name,
+  name: productName,
+  genericName,
   imageUrl,
   price,
   description,
   url,
-  accessories,
+  children,
 }: Product & {
-  accessories?: Array<Product>;
+  // The accessories, each a `ProductFeatureAccessory`. They are elements, not
+  // an array, so that Lingo.dev translates their text: its rules name the
+  // string props of an element, not text in an expression (README.md).
+  children?: React.ReactNode;
 }) => {
+  const name = productName ?? genericName;
   const css = useCSS();
   const intl = useIntl();
   return (
@@ -649,7 +668,7 @@ export const ProductFeature = ({
           />
         </Link>
       </div>
-      {accessories && (
+      {children && (
         <div
           className={css({
             gridArea: 'accessories',
@@ -685,9 +704,7 @@ export const ProductFeature = ({
               scrollPadding: `0 ${ACCESSORY_FADE_WIDTH + RING_ROOM}px 0 ${RING_ROOM}px`,
             })}
           >
-            {accessories.map(accessory => (
-              <ProductFeatureAccessory key={accessory.url} {...accessory} />
-            ))}
+            {children}
           </div>
         </div>
       )}
@@ -699,13 +716,15 @@ export const ProductFeature = ({
 // that a card and its focus ring always fit clear of the fade.
 const ACCESSORY_WIDTH = 'min(300px, 100%)';
 
-const ProductFeatureAccessory = ({
-  name,
+export const ProductFeatureAccessory = ({
+  name: productName,
+  genericName,
   imageUrl,
   price,
   description,
   url,
 }: Product) => {
+  const name = productName ?? genericName;
   const css = useCSS();
   return (
     <a

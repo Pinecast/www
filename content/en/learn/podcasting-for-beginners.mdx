@@ -1,4 +1,10 @@
-import {Intro, ProductFeature} from '@/components/TextBlocks';
+---
+title: Podcasting for Beginners
+description: Starting your first podcast
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro, ProductFeature, ProductFeatureAccessory} from '@/components/TextBlocks';
 
 <Intro>
   The podcast industry is filled with terms and concepts that can be intimidating, but starting your first podcast doesn't have to be hard. This is a quick introduction to get you up and running with your first show in no time.
@@ -40,28 +46,27 @@ The microphone built-in to your computer or phone is fine, but it can produce lo
 While a built-in microphone is sufficient to get started, you'll want to look at other options as you grow. We recommend the Samson Q2U, which offers very good sound quality at a reasonable cost. A boom stand is useful and fairly inexpensive, and pairing it with a shock mount can help avoid noise.
 
 <ProductFeature
-  name="Samsung Q2U"
+  name="Samson Q2U"
   imageUrl="/images/content/products/samsung-q2u.jpg"
   price="$59.99"
   description="An inexpensive microphone that plugs in with USB. It's a good value for good quality sound."
   url="https://www.amazon.com/Samson-Handheld-Microphone-Recording-Podcasting/dp/B001R747SG?th=1"
-  accessories={[
-    {
-      name: 'Scissor Mic Boom',
-      imageUrl: '/images/content/products/scissor-arm-stand.jpg',
-      price: '$17.63',
-      description: 'A boom stand that keeps the mic near your mouth.',
-      url: 'https://www.amazon.com/Adjustable-Microphone-Suspension-Broadcasting-Voice-Over/dp/B00DY1F2CS',
-    },
-    {
-      name: 'Knox Shock Mount',
-      imageUrl: '/images/content/products/shock-mount.jpg',
-      price: '$12.90',
-      description: 'A shock mount reduces vibrations from your desk.',
-      url: 'https://www.amazon.com/Knox-Microphone-Audio-Technica-ATR2100-USB-Samson/dp/B07KBWHJB5',
-    },
-  ]}
-/>
+>
+  <ProductFeatureAccessory
+    genericName="Scissor Mic Boom"
+    imageUrl="/images/content/products/scissor-arm-stand.jpg"
+    price="$17.63"
+    description="A boom stand that keeps the mic near your mouth."
+    url="https://www.amazon.com/Adjustable-Microphone-Suspension-Broadcasting-Voice-Over/dp/B00DY1F2CS"
+  />
+  <ProductFeatureAccessory
+    name="Knox Shock Mount"
+    imageUrl="/images/content/products/shock-mount.jpg"
+    price="$12.90"
+    description="A shock mount reduces vibrations from your desk."
+    url="https://www.amazon.com/Knox-Microphone-Audio-Technica-ATR2100-USB-Samson/dp/B07KBWHJB5"
+  />
+</ProductFeature>
 
 # Preparing your space
 
@@ -76,7 +81,7 @@ Make a test recording and play it back with headphones on. Increase the volume u
 If you still have background noise, you can hang blankets or other soft materials around your recording space. In a pinch, you can even drape a blanket over yourself or make a pillow fort around and your microphone. For a more professional approach, consider buying sound baffling.
 
 <ProductFeature
-  name="Acoustic Panels"
+  genericName="Acoustic Panels"
   imageUrl="/images/content/products/acoustic-panels.jpg"
   price="$16.99 for 6"
   description="Egg crate-style sound proof foam can be adhered to walls and the ceiling to absorb sound vibrations and minimize room noise and echo. Consider placing it strategically behind your recording setup and on nearby walls."
@@ -138,8 +143,4 @@ When you're ready to level up your podcasting acumen, check out [our guide for p
 import {layoutWrapper} from '@/layouts/layoutWrapper';
 import {LearnLayout} from '@/layouts/LearnLayout';
 
-export default layoutWrapper(LearnLayout, {
-  title: 'Podcasting for Beginners',
-  description: 'Starting your first podcast',
-  heroImage: '/images/hero/t-r.png',
-});
+export default layoutWrapper(LearnLayout, frontmatter);
