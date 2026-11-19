@@ -29,17 +29,24 @@ test.describe('with larger text spacing', () => {
     expect(await clippedText(menu)).toEqual([]);
   });
 
-  for (const width of [320, 1280]) {
-    test(`the pricing tickets show all their text at ${width}px`, async ({
-      page,
-    }) => {
-      await page.setViewportSize({width, height: 900});
-      await load(page, '/', {spacing: true});
-      const pricing = page.locator('section', {
-        has: page.getByRole('heading', {name: 'Grab your ticket'}),
+  // From 701 to 800px, the ticket cut off the German and French labels of its
+  // buttons: its columns could not be narrower than their content.
+  for (const path of inEveryLanguage(['/'])) {
+    for (const width of [320, 701, 768, 1280]) {
+      test(`the pricing tickets of ${path} show all their text at ${width}px`, async ({
+        page,
+      }) => {
+        await page.setViewportSize({width, height: 900});
+        await load(page, path, {spacing: true});
+        // The section of the tickets, found by the help article that a
+        // ticket links to, in every language.
+        const pricing = page.locator('section', {
+          has: page.locator('a[href*="help.pinecast.com/article/"]'),
+        });
+        await expect(pricing).toHaveCount(1);
+        expect(await clippedText(pricing)).toEqual([]);
       });
-      expect(await clippedText(pricing)).toEqual([]);
-    });
+    }
   }
 
   // An open panel had `max-height: 400px` and `overflow: hidden`. At 320px
