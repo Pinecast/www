@@ -47,9 +47,6 @@
   "3NQkii": {
     "defaultMessage": "Trin {number}"
   },
-  "3bxEDj": {
-    "defaultMessage": "Niveau 3"
-  },
   "4fxkcu": {
     "defaultMessage": "/ måned"
   },
@@ -157,9 +154,6 @@
   },
   "EUVluX": {
     "defaultMessage": "Filer på op til 80 MB + bonus"
-  },
-  "F0uib6": {
-    "defaultMessage": "Virksomhedspodcastere"
   },
   "FgdSGw": {
     "defaultMessage": "Podcastingens kraftigste statistik med premium-funktioner, enkle diagrammer og overskuelige kontroller."
@@ -536,9 +530,6 @@
   "mvkgb/": {
     "defaultMessage": "Podcasting for superbrugere"
   },
-  "n9Tled": {
-    "defaultMessage": "Du er en organisation"
-  },
   "nN1LCl": {
     "defaultMessage": "Start gratis"
   },
@@ -658,5 +649,17 @@
   },
   "ze4XAD": {
     "defaultMessage": "Tilbage til forsiden"
+  },
+  "2EOcY/": {
+    "defaultMessage": "Til gymnasier og universiteter"
+  },
+  "IR3n6s": {
+    "defaultMessage": "Podcasting til undervisning"
+  },
+  "RwnN53": {
+    "defaultMessage": "Niveau 3"
+  },
+  "tancxZ": {
+    "defaultMessage": "Du går på campus"
   }
 }

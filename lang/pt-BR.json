@@ -47,9 +47,6 @@
   "3NQkii": {
     "defaultMessage": "Passo {number}"
   },
-  "3bxEDj": {
-    "defaultMessage": "Nível 3"
-  },
   "4fxkcu": {
     "defaultMessage": "/ mês"
   },
@@ -157,9 +154,6 @@
   },
   "EUVluX": {
     "defaultMessage": "Arquivos de 80 MB + bônus"
-  },
-  "F0uib6": {
-    "defaultMessage": "Podcasters corporativos"
   },
   "FgdSGw": {
     "defaultMessage": "As análises mais poderosas do podcasting, com recursos premium, gráficos simples e controles claros."
@@ -536,9 +530,6 @@
   "mvkgb/": {
     "defaultMessage": "Podcasting para usuários avançados"
   },
-  "n9Tled": {
-    "defaultMessage": "Você é uma organização"
-  },
   "nN1LCl": {
     "defaultMessage": "Comece de graça"
   },
@@ -658,5 +649,17 @@
   },
   "ze4XAD": {
     "defaultMessage": "Voltar para o início"
+  },
+  "2EOcY/": {
+    "defaultMessage": "Para faculdades e universidades"
+  },
+  "IR3n6s": {
+    "defaultMessage": "Podcasting para a educação"
+  },
+  "RwnN53": {
+    "defaultMessage": "Nível 3"
+  },
+  "tancxZ": {
+    "defaultMessage": "Você está no campus"
   }
 }

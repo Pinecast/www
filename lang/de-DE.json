@@ -47,9 +47,6 @@
   "3NQkii": {
     "defaultMessage": "Schritt {number}"
   },
-  "3bxEDj": {
-    "defaultMessage": "Level 3"
-  },
   "4fxkcu": {
     "defaultMessage": "/ Monat"
   },
@@ -157,9 +154,6 @@
   },
   "EUVluX": {
     "defaultMessage": "80-MB-Dateigröße + Bonus"
-  },
-  "F0uib6": {
-    "defaultMessage": "Podcaster:innen in Unternehmen"
   },
   "FgdSGw": {
     "defaultMessage": "Die stärksten Analytics im Podcasting – mit Premium-Features, übersichtlichen Charts und klaren Kontrollen."
@@ -536,9 +530,6 @@
   "mvkgb/": {
     "defaultMessage": "Podcasting für Profis"
   },
-  "n9Tled": {
-    "defaultMessage": "Du bist eine Organisation"
-  },
   "nN1LCl": {
     "defaultMessage": "Kostenlos starten"
   },
@@ -658,5 +649,17 @@
   },
   "ze4XAD": {
     "defaultMessage": "Zurück zur Startseite"
+  },
+  "2EOcY/": {
+    "defaultMessage": "Für Hochschulen und Universitäten"
+  },
+  "IR3n6s": {
+    "defaultMessage": "Podcasting für die Bildung"
+  },
+  "RwnN53": {
+    "defaultMessage": "Stufe 3"
+  },
+  "tancxZ": {
+    "defaultMessage": "Du bist auf dem Campus"
   }
 }

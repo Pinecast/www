@@ -1,6 +1,9 @@
 {
   "version": 1,
   "files": {
+    "content/da-DK/education.mdx": {
+      "sha256": "2d499d5a450020e3f77f0cc16c749ed3498b21ae33ee5d61175208c06c105262"
+    },
     "content/da-DK/features/accessibility.mdx": {
       "sha256": "7db32769073bb3e3aa08f8ef518418caa11019a9cb4f50d6175119291e30db08"
     },
@@ -66,6 +69,9 @@
     },
     "content/da-DK/learn/understand-your-growth.mdx": {
       "sha256": "02aea3fc2a4e66cab0fc75a88eb150e8102307ae777524c01d660e1b73d320ab"
+    },
+    "content/de-DE/education.mdx": {
+      "sha256": "82d65a5203b6ea2908dfae883a552f98f44ba96084d8231f5d21fc9c9984bc97"
     },
     "content/de-DE/features/accessibility.mdx": {
       "sha256": "671c17838ffb9c28699a1aad8e092e1aa19818a34dd399ea8021167a0ccf7265"
@@ -277,6 +283,9 @@
     "content/es-419/learn/understand-your-growth.mdx": {
       "sha256": "771ea50f50b4cd304c2a0a360d759d82b33456d2055cf3e09b0fbd9aba984b0e"
     },
+    "content/fr/education.mdx": {
+      "sha256": "f2b251ef1008a7a11e5d259f5012f845ac9e46b741e8f44eb4726b703083732b"
+    },
     "content/fr/features/accessibility.mdx": {
       "sha256": "cc9b5073c7630282efac02709df1dafe0e6adb33b785eb1d14b8c5f0e843cca7"
     },
@@ -342,6 +351,9 @@
     },
     "content/fr/learn/understand-your-growth.mdx": {
       "sha256": "a375a801ac4f02e063ea89a5b92f2b3fe438e7a87366311e12b6dacab50bc5a1"
+    },
+    "content/pt-BR/education.mdx": {
+      "sha256": "5f17156f162c04043850fdd18041d44e79a5e333e77401f6deb9e77433bf4c8e"
     },
     "content/pt-BR/features/accessibility.mdx": {
       "sha256": "c41c8097842dc937288ec1ce77d2375081276b015eb8687c913bb0d8d0e74f3b"
@@ -410,10 +422,10 @@
       "sha256": "d41f63ac7beffa9a7f2e728b010641872dda56460bc53200871eebd05f356af6"
     },
     "lang/da-DK.json": {
-      "sha256": "7936fd55f34b9d98364d8f9e77a9adc0b4023d5a4a011436752ca783bd424db6"
+      "sha256": "226085aa593b72a762b6597bb7cab51351ac27b4a55c38b66f7ecbdc0b2bd61f"
     },
     "lang/de-DE.json": {
-      "sha256": "7c493fd0a411f165bfdc06405040dfe52e37ea6b9a12e44321947e7cd43d6e3e"
+      "sha256": "40962f9725e9efb3a287290453f71364d4f92f334efddcd0f132c65a03a8523b"
     },
     "lang/en.json": {
       "sha256": "d0f8863babd1501f293fc8ca7b461a08cb6ad57b565fa6985233d37461093f97"
@@ -425,10 +437,10 @@
       "sha256": "9b7173009f5fa887ddf9bc4eefe563f457a1330dd236e967636b74ff788a1f1b"
     },
     "lang/fr.json": {
-      "sha256": "bda38607686df59f4778020952e84568c4c3821219d3f5547676ccb52113f692"
+      "sha256": "f9a51c9a1b43488f2e8678cf69778c84e824f50f99ae3c7a42414eed030128d4"
     },
     "lang/pt-BR.json": {
-      "sha256": "bc82b69c715ea5e0e87fe82b757c6ee9d6ec590f17fd75d164177a0b7ad7e583"
+      "sha256": "fb02310274b4bd6107a2116013e67f1d4173e01ac3b30cd9ae82106eca8705df"
     }
   }
 }
