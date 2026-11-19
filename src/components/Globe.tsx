@@ -56,6 +56,17 @@ import {
   underMuteButtonProps,
 } from '@/constants';
 
+// A button's own height is 40px: a label that wraps (in French at 320px, with
+// larger text spacing) makes it taller.
+const BUTTON_THAT_GROWS = {
+  alignItems: 'center',
+  height: 'auto',
+  lineHeight: '1.2',
+  minHeight: '40px',
+  paddingBottom: '8px',
+  paddingTop: '8px',
+} as const;
+
 const callWhenIdle = (callback: IdleRequestCallback) => {
   if (typeof window.requestIdleCallback === 'undefined') {
     // Basic shim for Safari
@@ -336,6 +347,7 @@ const IntroSection = React.memo(function IntroSection() {
         <PrimaryButton
           href="https://pinecast.com/signup"
           style={{
+            ...BUTTON_THAT_GROWS,
             backgroundColor: 'var(--color-white)',
             color: 'var(--color-space)',
           }}
@@ -345,7 +357,7 @@ const IntroSection = React.memo(function IntroSection() {
             defaultMessage="Start for free"
           />
         </PrimaryButton>
-        <SecondaryButton href="/features">
+        <SecondaryButton href="/features" style={BUTTON_THAT_GROWS}>
           <FormattedMessage
             description="Button in the globe section of the home page, to the page of all features"
             defaultMessage="Discover features"

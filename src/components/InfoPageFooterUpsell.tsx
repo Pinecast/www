@@ -35,7 +35,7 @@ export const InfoPageFooterUpsell = () => {
           color: 'var(--color-primary-dark)',
         })}
       >
-        <H2>
+        <H2 fit>
           <FormattedMessage
             description="Big heading of the sign-up section at the bottom of the content pages, above the footer. {br} is a line break"
             defaultMessage="Try Pinecast{br}for free"

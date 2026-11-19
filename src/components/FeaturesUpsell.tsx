@@ -21,7 +21,7 @@ export const FeaturesUpsell = () => {
         padding: '100px 30px 0',
       })}
     >
-      <H2>
+      <H2 fit>
         <FormattedMessage
           description="Big heading at the end of a feature page, above the button to all the features. {br} is a line break"
           defaultMessage="Discover more{br}features"
