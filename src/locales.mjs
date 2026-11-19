@@ -82,6 +82,7 @@ export const LANGUAGE_NAMES = {en: 'English', es: 'Español'};
 export const TRANSLATED_ROUTES = {
   es: [
     '/',
+    '/education',
     '/features',
     '/features/accessibility',
     '/features/analytics',

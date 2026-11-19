@@ -49,7 +49,8 @@ also the `hreflang` value: `out/es/features.html` is `/es/features`, and its
 home page is `out/es/index.html`, served at `/es/` (as `/` is the English one;
 the server sends `/es` to `/es/`). Nothing redirects between languages. In
 Spanish, the site has the home page, the Features page and every feature
-page, the Learn page and every Learn article, and the testimonial transcripts
+page, the Learn page and every Learn article, the page for colleges and
+universities, and the testimonial transcripts
 (`TRANSLATED_ROUTES` in `src/locales.mjs`). To add a
 language or a page:
 

@@ -9,6 +9,12 @@
       "targetPath": "lang/[locale].json"
     },
     {
+      "pattern": "content/en/education.mdx",
+      "targetPath": "content/[locale]/education.mdx",
+      "translateFrontmatterFields": ["title", "description"],
+      "translateComponentProps": ["title"]
+    },
+    {
       "pattern": "content/en/features/accessibility.mdx",
       "targetPath": "content/[locale]/features/accessibility.mdx",
       "translateFrontmatterFields": ["title", "description"],
