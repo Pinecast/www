@@ -54,6 +54,10 @@ export const useAsyncVideo = (
   },
   doLoad: boolean,
   autoplay: boolean = false,
+  // Whether the canvas that draws the video shows it. The video only feeds
+  // that canvas, so while it does not, the video stops where it is: decoding
+  // frames that nobody sees takes the CPU from the rest of the page.
+  onScreen: boolean = true,
 ): [HTMLVideoElement, boolean] => {
   const returnValue = React.useRef<[any, any]>([null, false]);
   const video = React.useRef<HTMLVideoElement | undefined>(undefined);
@@ -67,7 +71,7 @@ export const useAsyncVideo = (
     }
     // Not `paused`: in the first render in the browser, it is still the value
     // of the static export.
-    if (isMotionPaused()) {
+    if (isMotionPaused() || !onScreen) {
       // This also keeps `autoplay` from starting it later.
       vid.pause();
     } else {
@@ -77,7 +81,7 @@ export const useAsyncVideo = (
         }
       });
     }
-  }, [autoplay, doLoad, paused]);
+  }, [autoplay, doLoad, onScreen, paused]);
   React.useEffect(() => {
     console.log('Loading');
     return () => {

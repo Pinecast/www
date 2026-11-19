@@ -27,6 +27,7 @@ import {
 } from '@/canvasHelpers';
 import {useCanvasDrawing} from '@/hooks/useCanvasDrawing';
 import {useAfterCritical} from '@/hooks/useLoadOrder';
+import {useScrollListener} from '@/hooks/useScrollProgress';
 import {
   introAnimationProps,
   isMotionPaused,
@@ -292,6 +293,16 @@ export const HeroV2 = () => {
   const mri = useStill(HERO_STILLS.mr, layout);
   const ci = useStill(HERO_STILLS.central, layout);
   const stillsIn = useAfterCritical();
+  // The videos play only while the canvas draws them: past the first screen,
+  // it clears itself (see the callback below). Videos that play there decode
+  // frames that nobody sees, which slowed the rest of the page down.
+  const [onScreen, setOnScreen] = React.useState(true);
+  useScrollListener(
+    React.useCallback(
+      (scrollY, windowHeight) => setOnScreen(scrollY <= windowHeight),
+      [],
+    ),
+  );
 
   const tlv = useAsyncVideo(
     {
@@ -300,6 +311,7 @@ export const HeroV2 = () => {
     },
     !isMobile && stillsIn,
     true,
+    onScreen,
   );
   const trv = useAsyncVideo(
     {
@@ -308,6 +320,7 @@ export const HeroV2 = () => {
     },
     !isMobile && stillsIn,
     true,
+    onScreen,
   );
   const blv = useAsyncVideo(
     {
@@ -316,6 +329,7 @@ export const HeroV2 = () => {
     },
     !isMobile && stillsIn,
     true,
+    onScreen,
   );
   const brv = useAsyncVideo(
     {
@@ -324,6 +338,7 @@ export const HeroV2 = () => {
     },
     !isMobile && stillsIn,
     true,
+    onScreen,
   );
   const mlv = useAsyncVideo(
     {
@@ -332,6 +347,7 @@ export const HeroV2 = () => {
     },
     !isMobile && !isTablet && stillsIn,
     true,
+    onScreen,
   );
   const mrv = useAsyncVideo(
     {
@@ -340,6 +356,7 @@ export const HeroV2 = () => {
     },
     !isMobile && !isTablet && stillsIn,
     true,
+    onScreen,
   );
   const cv = useAsyncVideo(
     {
@@ -348,6 +365,7 @@ export const HeroV2 = () => {
     },
     stillsIn,
     true,
+    onScreen,
   );
 
   const tl = preferDrawable(tlv, tli);
