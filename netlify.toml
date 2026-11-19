@@ -12,3 +12,20 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Removed pages, sent to the page that replaced them. Netlify applies a
+# redirect without `force` only where the export has no file at `from`, so a
+# page that is added back at that address wins. `to` is an address of a page
+# in out/, as the site serves it (no `.html`).
+#
+# The corporate podcasting guide, in English and in Spanish, became the page
+# for colleges and universities, which is in English only.
+[[redirects]]
+  from = "/learn/corporate-podcasting"
+  to = "/education"
+  status = 301
+
+[[redirects]]
+  from = "/es/learn/corporate-podcasting"
+  to = "/education"
+  status = 301

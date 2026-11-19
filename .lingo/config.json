@@ -93,18 +93,6 @@
       "translateComponentProps": ["title"]
     },
     {
-      "pattern": "content/en/learn/corporate-podcasting.mdx",
-      "targetPath": "content/[locale]/learn/corporate-podcasting.mdx",
-      "translateFrontmatterFields": ["title", "description"],
-      "translateComponentProps": [
-        "title",
-        {
-          "component": ["ProductFeature", "ProductFeatureAccessory"],
-          "props": ["genericName", "price", "description"]
-        }
-      ]
-    },
-    {
       "pattern": "content/en/learn/create-a-podcast.mdx",
       "targetPath": "content/[locale]/learn/create-a-podcast.mdx",
       "translateFrontmatterFields": ["title", "description"],
