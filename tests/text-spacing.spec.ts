@@ -11,6 +11,30 @@ import {
 // paragraph spacing, no text is cut off or covered. Boxes of fixed height
 // with `overflow: hidden` cut text off.
 
+// The links drawn as buttons (a border or a background) whose label is taller
+// than the button, so that it spills out of it.
+async function spilledLabels(links: Locator): Promise<Array<string>> {
+  return links.evaluateAll(elements =>
+    elements.flatMap(link => {
+      const style = getComputedStyle(link);
+      const drawn =
+        parseFloat(style.borderTopWidth) > 0 ||
+        style.backgroundColor !== 'rgba(0, 0, 0, 0)';
+      const box = link.getBoundingClientRect();
+      if (!drawn || !box.width || !link.checkVisibility()) return [];
+      const range = document.createRange();
+      range.selectNodeContents(link);
+      const text = range.getBoundingClientRect();
+      return text.height &&
+        (text.top < box.top - 1 || text.bottom > box.bottom + 1)
+        ? [
+            `${link.textContent?.trim()}: ${Math.round(text.height)}px of text in ${Math.round(box.height)}px`,
+          ]
+        : [];
+    }),
+  );
+}
+
 // The box of the text itself, not of its element.
 async function textBox(element: Locator) {
   return element.evaluate(el => {
@@ -183,29 +207,25 @@ test.describe('with larger text spacing', () => {
     }) => {
       await page.setViewportSize({width: 320, height: 800});
       await load(page, path, {spacing: true});
-      const spills = await page
-        .getByRole('main')
-        .locator('a')
-        .evaluateAll(links =>
-          links.flatMap(link => {
-            const style = getComputedStyle(link);
-            const drawn =
-              parseFloat(style.borderTopWidth) > 0 ||
-              style.backgroundColor !== 'rgba(0, 0, 0, 0)';
-            const box = link.getBoundingClientRect();
-            if (!drawn || !box.width || !link.checkVisibility()) return [];
-            const range = document.createRange();
-            range.selectNodeContents(link);
-            const text = range.getBoundingClientRect();
-            return text.height &&
-              (text.top < box.top - 1 || text.bottom > box.bottom + 1)
-              ? [
-                  `${link.textContent?.trim()}: ${Math.round(text.height)}px of text in ${Math.round(box.height)}px`,
-                ]
-              : [];
-          }),
-        );
-      expect(spills).toEqual([]);
+      expect(await spilledLabels(page.getByRole('main').locator('a'))).toEqual(
+        [],
+      );
+    });
+  }
+
+  // The section above the footer of a content page is outside <main>: the
+  // sign-up section, or the quote section of the page for colleges and
+  // universities (FooterUpsell). Its two buttons share a row, and a label
+  // that did not fit on that row wrapped and spilled.
+  for (const path of inEveryLanguage(['/features/analytics', '/education'])) {
+    test(`the buttons above the footer of ${path} hold their labels at 320px`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({width: 320, height: 800});
+      await load(page, path, {spacing: true});
+      const links = page.locator('main ~ section a');
+      expect(await links.count()).toBeGreaterThan(0);
+      expect(await spilledLabels(links)).toEqual([]);
     });
   }
 

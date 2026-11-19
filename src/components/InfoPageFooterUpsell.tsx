@@ -57,6 +57,10 @@ export const FooterUpsell = ({
         <div
           className={css({
             display: 'flex',
+            // A button has a fixed height. Where two do not fit side by side
+            // (320px, larger text spacing), each takes its own row, so that
+            // a label does not wrap and spill out of its button.
+            flexWrap: 'wrap',
             justifyContent: 'center',
             gap: '20px',
           })}
