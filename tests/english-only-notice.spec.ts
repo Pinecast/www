@@ -2,8 +2,14 @@ import {readFileSync, readdirSync} from 'node:fs';
 import {join, relative} from 'node:path';
 import {expect, test, type Page} from '@playwright/test';
 
-import {DEFAULT_LOCALE, splitLocale} from '../src/locales.mjs';
 import {
+  DEFAULT_LOCALE,
+  LOCALES,
+  languageTag,
+  splitLocale,
+} from '../src/locales.mjs';
+import {
+  browserLocale,
   exportedPages,
   hasSidewaysScroll,
   isTranslatedMessage,
@@ -44,43 +50,54 @@ test('there are policies with the note', () => {
   expect(POLICIES.length).toBeGreaterThan(0);
 });
 
+for (const locale of LOCALES) {
+  if (locale === DEFAULT_LOCALE) continue;
+  const tag = languageTag(locale);
+
+  test.describe(`for a reader whose browser prefers "${locale}"`, () => {
+    test.use({locale: browserLocale(locale)});
+
+    for (const path of POLICIES) {
+      test(`${path} says, in that language, that it is only in English`, async ({
+        page,
+      }) => {
+        await load(page, path);
+        await expect(note(page)).toHaveAttribute('lang', tag);
+        const sentences = await note(page)
+          .getByRole('paragraph')
+          .allInnerTexts();
+        expect(sentences.length).toBeGreaterThan(0);
+        for (const sentence of sentences) {
+          expect(
+            isTranslatedMessage(sentence, tag),
+            `"${sentence}" is a translated message`,
+          ).toBe(true);
+        }
+        // The address is a link that writes to it.
+        const link = note(page).getByRole('link');
+        const address = (await link.innerText()).trim();
+        await expect(link).toHaveAttribute('href', `mailto:${address}`);
+      });
+    }
+
+    // The reflow tests run with an English browser, which gets no note.
+    for (const spacing of [false, true]) {
+      test(`at 320px${
+        spacing ? ' with larger text spacing' : ''
+      }, no policy scrolls sideways`, async ({page}) => {
+        await page.setViewportSize({width: 320, height: 640});
+        for (const path of POLICIES) {
+          await load(page, path, {spacing});
+          await expect(note(page)).toBeVisible();
+          expect(await hasSidewaysScroll(page), path).toBe(false);
+        }
+      });
+    }
+  });
+}
+
 test.describe('for a reader whose browser prefers Spanish', () => {
-  test.use({locale: 'es-MX'});
-
-  for (const path of POLICIES) {
-    test(`${path} says, in Spanish, that it is only in English`, async ({
-      page,
-    }) => {
-      await load(page, path);
-      await expect(note(page)).toHaveAttribute('lang', 'es-419');
-      const sentences = await note(page).getByRole('paragraph').allInnerTexts();
-      expect(sentences.length).toBeGreaterThan(0);
-      for (const sentence of sentences) {
-        expect(
-          isTranslatedMessage(sentence, 'es-419'),
-          `"${sentence}" is a translated message`,
-        ).toBe(true);
-      }
-      // The address is a link that writes to it.
-      const link = note(page).getByRole('link');
-      const address = (await link.innerText()).trim();
-      await expect(link).toHaveAttribute('href', `mailto:${address}`);
-    });
-  }
-
-  // The reflow tests run with an English browser, which gets no note.
-  for (const spacing of [false, true]) {
-    test(`at 320px${
-      spacing ? ' with larger text spacing' : ''
-    }, no policy scrolls sideways`, async ({page}) => {
-      await page.setViewportSize({width: 320, height: 640});
-      for (const path of POLICIES) {
-        await load(page, path, {spacing});
-        await expect(note(page)).toBeVisible();
-        expect(await hasSidewaysScroll(page), path).toBe(false);
-      }
-    });
-  }
+  test.use({locale: browserLocale('es')});
 
   test('it is above the text of the policy', async ({page}) => {
     await load(page, POLICIES[0]);

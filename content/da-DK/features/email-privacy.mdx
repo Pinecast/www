@@ -1,0 +1,35 @@
+---
+title: E-mailbeskyttelse
+description: Hold din personlige e-mailadresse privat med Pinecasts e-mailbeskyttelse.
+heroImage: /images/hero/t-l.png
+---
+
+import {Intro, DefinitionList} from '@/components/TextBlocks';
+
+<Intro>
+  Hold din personlige e-mail skjult for offentligheden.
+</Intro>
+
+# Dit privatliv er vigtigt
+
+At starte en podcast betyder, at du skal lægge en aktiv e-mailadresse ud i verden. Med Pinecast kan du gøre det uden at afsløre din personlige e-mail for dine lyttere - og uden at skulle holde styr på en ekstra indbakke.
+
+Det er nemt at sætte e-mailbeskyttelse op: Du vælger det til med en kontakt, når du opsætter din podcast, eller i dine podcast-indstillinger. Når e-mailbeskyttelse er aktiveret, bliver den e-mailadresse, der er offentliggjort i dit feed, udskiftet med en videresendelsesadresse, som Pinecast administrerer.
+
+<DefinitionList>
+    <dt>Uden e-mailbeskyttelse</dt>
+    <dd>your-email@gmail.com</dd>
+    <dt>Med e-mailbeskyttelse</dt>
+    <dd>your-show@listener.email</dd>
+</DefinitionList>
+
+## Hvordan virker det?
+
+Når du vælger det til, opsætter Pinecast en e-mailadresse på <code>listener.email</code> kun til din podcast. Der er ikke noget andet skridt. Vi bruger den videresendelsesadresse, hvor en e-mail end bliver offentliggjort.
+
+Når nogen sender en e-mail til adressen, videresender vi den automatisk til den e-mail, vi har registreret på din konto. Når du svarer på beskeder, svarer du fra din personlige e-mailadresse.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

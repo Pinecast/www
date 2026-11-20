@@ -10,6 +10,7 @@ import {
   splitLocale,
 } from '../src/locales.mjs';
 import {
+  browserLocale,
   exportedPages,
   isEnglishMessage,
   isTranslatedMessage,
@@ -261,19 +262,28 @@ test.describe('with reduced motion', () => {
   });
 });
 
-test.describe('for a reader whose browser prefers Spanish', () => {
-  test.use({locale: 'es-MX'});
+for (const locale of LOCALES) {
+  if (locale === DEFAULT_LOCALE) continue;
+  const tag = languageTag(locale);
 
-  test('the English home page offers it in Spanish, in Spanish', async ({
-    page,
-  }) => {
-    await load(page, '/');
-    await expect(card(page)).toHaveAttribute('lang', 'es-419');
-    await expectCardIn(card(page), 'es-419');
-    const link = card(page).getByRole('link');
-    await expect(link).toHaveAttribute('href', linkHref('/', 'es'));
-    await expect(link).toHaveAttribute('hreflang', 'es');
+  test.describe(`for a reader whose browser prefers "${locale}"`, () => {
+    test.use({locale: browserLocale(locale)});
+
+    test('the English home page offers it in that language, in it', async ({
+      page,
+    }) => {
+      await load(page, '/');
+      await expect(card(page)).toHaveAttribute('lang', tag);
+      await expectCardIn(card(page), tag);
+      const link = card(page).getByRole('link');
+      await expect(link).toHaveAttribute('href', linkHref('/', locale));
+      await expect(link).toHaveAttribute('hreflang', locale);
+    });
   });
+}
+
+test.describe('for a reader whose browser prefers Spanish', () => {
+  test.use({locale: browserLocale('es')});
 
   test('a page that is only in English offers nothing', async ({page}) => {
     await load(page, englishOnlyPage());

@@ -53,8 +53,8 @@ test('each text gets its page in its language, which git ignores', () => {
   addText(`en${ROUTE}.mdx`);
   addText(`es-419${ROUTE}.mdx`);
   addText(`en${ENGLISH_ONLY}.mdx`);
-  // A language that is not in LOCALES yet.
-  addText(`pt-BR${ROUTE}.mdx`);
+  // A language that is not in LOCALES (src/locales.mjs).
+  addText(`it-IT${ROUTE}.mdx`);
 
   const {written} = writeContentPages(root);
 

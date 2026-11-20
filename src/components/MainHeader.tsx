@@ -61,14 +61,18 @@ const PersonaBlock = ({
         backgroundColor: color,
         border: '1px solid var(--color-line)',
         borderRadius: '20px',
-        height: '100px',
+        // At least 100px high, and taller where the heading needs more (a
+        // German or French one with larger text spacing). The link fills
+        // the tile, with the heading at its bottom.
+        display: 'grid',
+        minHeight: '100px',
         overflow: 'hidden',
         position: 'relative',
         zIndex: 0,
         width: '100%',
         [MIN_TABLET_MEDIA_QUERY]: {
           display: 'flex',
-          height: 'auto',
+          minHeight: '0',
           alignItems: 'flex-end',
         },
       })}

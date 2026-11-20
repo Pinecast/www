@@ -1,11 +1,5 @@
 import {expect, test, type Locator} from '@playwright/test';
-import {
-  clippedText,
-  inEveryLanguage,
-  load,
-  openMenu,
-  TEXT_SPACING,
-} from './helpers';
+import {clippedText, inEveryLanguage, load, TEXT_SPACING} from './helpers';
 
 // WCAG 1.4.12: with more line height, letter spacing, word spacing and
 // paragraph spacing, no text is cut off or covered. Boxes of fixed height
@@ -22,24 +16,51 @@ async function textBox(element: Locator) {
 }
 
 test.describe('with larger text spacing', () => {
-  test('the header menu shows all its text', async ({page}) => {
-    await page.setViewportSize({width: 320, height: 640});
-    await load(page, '/learn', {spacing: true});
-    const menu = await openMenu(page);
-    expect(await clippedText(menu)).toEqual([]);
-  });
-
-  for (const width of [320, 1280]) {
-    test(`the pricing tickets show all their text at ${width}px`, async ({
-      page,
-    }) => {
-      await page.setViewportSize({width, height: 900});
-      await load(page, '/', {spacing: true});
-      const pricing = page.locator('section', {
-        has: page.getByRole('heading', {name: 'Grab your ticket'}),
+  // Below 1181px each tile of the menu was 100px high, which cut off a German
+  // or French heading of three lines.
+  for (const path of inEveryLanguage(['/learn'])) {
+    for (const {width, height} of [
+      {width: 320, height: 640},
+      {width: 414, height: 800},
+      {width: 700, height: 800},
+    ]) {
+      test(`the header menu of ${path} shows all its text at ${width}px`, async ({
+        page,
+      }) => {
+        await page.setViewportSize({width, height});
+        await load(page, path, {spacing: true});
+        // The button and the menu's links, found by the menu's id rather
+        // than by their names, which are in the page's language.
+        await page
+          .getByRole('banner')
+          .locator('button[aria-controls="site-menu"]')
+          .filter({visible: true})
+          .click();
+        const menu = page.locator('#site-menu').getByRole('navigation');
+        await expect(menu).toHaveCSS('overflow-y', 'auto');
+        expect(await clippedText(menu)).toEqual([]);
       });
-      expect(await clippedText(pricing)).toEqual([]);
-    });
+    }
+  }
+
+  // From 701 to 800px, the ticket cut off the German and French labels of its
+  // buttons: its columns could not be narrower than their content.
+  for (const path of inEveryLanguage(['/'])) {
+    for (const width of [320, 701, 768, 1280]) {
+      test(`the pricing tickets of ${path} show all their text at ${width}px`, async ({
+        page,
+      }) => {
+        await page.setViewportSize({width, height: 900});
+        await load(page, path, {spacing: true});
+        // The section of the tickets, found by the help article that a
+        // ticket links to, in every language.
+        const pricing = page.locator('section', {
+          has: page.locator('a[href*="help.pinecast.com/article/"]'),
+        });
+        await expect(pricing).toHaveCount(1);
+        expect(await clippedText(pricing)).toEqual([]);
+      });
+    }
   }
 
   // An open panel had `max-height: 400px` and `overflow: hidden`. At 320px
@@ -176,37 +197,45 @@ test.describe('with larger text spacing', () => {
 
   // A link drawn as a button (PrimaryButton, SecondaryButton) has a fixed
   // height, unless the place that uses it lets it grow: a label that wraps
-  // spills across its border and its focus ring.
+  // spills across its border and its focus ring. A label that does not wrap
+  // spills out of the sides of a button that its column makes narrow: the
+  // testimonials button is two of twelve columns, at its narrowest at 320px
+  // and at 1181px.
   for (const path of inEveryLanguage(['/'])) {
-    test(`the button links of ${path} hold their labels at 320px`, async ({
-      page,
-    }) => {
-      await page.setViewportSize({width: 320, height: 800});
-      await load(page, path, {spacing: true});
-      const spills = await page
-        .getByRole('main')
-        .locator('a')
-        .evaluateAll(links =>
-          links.flatMap(link => {
-            const style = getComputedStyle(link);
-            const drawn =
-              parseFloat(style.borderTopWidth) > 0 ||
-              style.backgroundColor !== 'rgba(0, 0, 0, 0)';
-            const box = link.getBoundingClientRect();
-            if (!drawn || !box.width || !link.checkVisibility()) return [];
-            const range = document.createRange();
-            range.selectNodeContents(link);
-            const text = range.getBoundingClientRect();
-            return text.height &&
-              (text.top < box.top - 1 || text.bottom > box.bottom + 1)
-              ? [
-                  `${link.textContent?.trim()}: ${Math.round(text.height)}px of text in ${Math.round(box.height)}px`,
-                ]
-              : [];
-          }),
-        );
-      expect(spills).toEqual([]);
-    });
+    for (const width of [320, 768, 1181]) {
+      test(`the button links of ${path} hold their labels at ${width}px`, async ({
+        page,
+      }) => {
+        await page.setViewportSize({width, height: 800});
+        await load(page, path, {spacing: true});
+        const spills = await page
+          .getByRole('main')
+          .locator('a')
+          .evaluateAll(links =>
+            links.flatMap(link => {
+              const style = getComputedStyle(link);
+              const drawn =
+                parseFloat(style.borderTopWidth) > 0 ||
+                style.backgroundColor !== 'rgba(0, 0, 0, 0)';
+              const box = link.getBoundingClientRect();
+              if (!drawn || !box.width || !link.checkVisibility()) return [];
+              const range = document.createRange();
+              range.selectNodeContents(link);
+              const text = range.getBoundingClientRect();
+              return text.height &&
+                (text.top < box.top - 1 ||
+                  text.bottom > box.bottom + 1 ||
+                  text.left < box.left - 1 ||
+                  text.right > box.right + 1)
+                ? [
+                    `${link.textContent?.trim()}: ${Math.round(text.width)}x${Math.round(text.height)}px of text in ${Math.round(box.width)}x${Math.round(box.height)}px`,
+                  ]
+                : [];
+            }),
+          );
+        expect(spills).toEqual([]);
+      });
+    }
   }
 
   test('the customer names stay on the screen', async ({page}) => {

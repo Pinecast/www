@@ -1,0 +1,43 @@
+---
+title: Einbettbare Player
+description: Füge deinen Podcast oder einzelne Episoden überall ein, wo du HTML-iFrames einbinden kannst.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Oft reicht es nicht, einfach nur über deinen Podcast zu schreiben. Mit unseren einfach zu nutzenden einbettbaren Playern bringst du den Sound auf jede beliebige Seite im Web.
+</Intro>
+
+# Deinen Podcast einbetten
+
+Ob du eine einzelne Episode oder gleich alle teilen willst – wir haben die passende Lösung. Alle unsere Player lassen sich individuell anpassen und bringen integrierte Barrierefreiheits-Funktionen mit.
+
+## Podcast-Player
+
+Wenn du alle deine Episoden teilen möchtest, kannst du im Tab „Player“ in deinem Podcast-Dashboard die Farben für einen vollständigen Podcast-Player auswählen.
+
+![Ein Screenshot des Podcast-Dashboards, der zeigt, wie man einen Podcast-Player anpasst](/images/content/features/players-podcast-dashboard.png)
+
+Die Episoden werden nacheinander abgespielt, mit Reglern für Geschwindigkeit und Lautstärke. Wenn man mit der Maus über das Cover fährt, erscheint ein Button, mit dem deine Hörer:innen deine Show abonnieren können.
+
+<iframe title="Demo des Podcast-Players" src="https://pinecast.com/embed/player_playlist/testcast?color.primary=%23ffffff&amp;color.secondary=%23cbd3da&amp;color.accent=%23009dff" border="0" style={{width: '100%', border: 0}} height="400"></iframe>
+
+## Episoden-Player
+
+Wenn du eine einzelne Episode teilen möchtest, öffne das Dashboard der Episode und wähle den Tab „Player“. Für Episoden-Player gibt es verschiedene Themes für unterschiedliche Einsatzzwecke. Manche Themes zeigen Untertitel an, wenn die Episode transkribiert wurde.
+
+![Ein Screenshot des Episoden-Dashboards mit den verfügbaren Theme-Optionen](/images/content/features/players-episode-dashboard.png)
+
+Im Gegensatz zu einfachen HTML-Embeds erfüllen diese Player die IAB-Richtlinien, damit deine Analytics-Daten stimmen. Code und Infrastruktur sind auf Performance optimiert, indem die Anzahl der zu ladenden Dateien minimiert wird.
+
+<iframe title="Demo des Episoden-Players, Theme „Minimal“" src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=minimal" seamless height="60" style={{width: '100%', border: 0, marginTop: '40px'}} class="pinecast-embed" width="100%"></iframe>
+<iframe title="Demo des Episoden-Players, Theme „Flat“" src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=flat" seamless height="200" style={{width: '100%', border: 0}} class="pinecast-embed" width="100%"></iframe>
+<iframe title="Demo des Episoden-Players, Theme „White Plastic“" src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=whitePlastic" seamless height="120" style={{width: '100%', border: 0}} class="pinecast-embed" width="100%"></iframe>
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

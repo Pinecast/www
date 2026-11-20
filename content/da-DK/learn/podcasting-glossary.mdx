@@ -1,0 +1,234 @@
+---
+title: Ordliste for podcasting
+description: Det fagsprog, du skal kende for at komme i gang
+heroImage: /images/hero/t-r.png
+---
+
+# Lidt baggrund
+
+Hvorfor er der så mange begreber? Podcasting ligger i skæringspunktet mellem lydindustrien og broadcastbranchen, og begge brancher har deres eget fagsprog. Og når podcasting som hobby eller erhverv bliver mere avanceret, bliver det også vigtigt at have et sprog til at udtrykke de mere nuancerede begreber.
+
+Vi lover, at intet er for svært at lære, og du behøver ikke kende de fleste begreber, før du rent faktisk stifter bekendtskab med dem.
+
+# Begreberne
+
+import {DefinitionList} from '@/components/TextBlocks';
+
+<DefinitionList>
+  <dt>AAC (Advanced Audio Codec)</dt>
+  <dd>
+  AAC er en codec – et format til at gemme lyd digitalt. Det er efterfølgeren til MP3 (se nedenfor). Generelt har AAC bedre komprimeringsegenskaber (se nedenfor) end MP3, men formatet er belastet af patenter og understøttes derfor ikke altid lige godt på alle enheder.
+  </dd>
+
+  <dt>Bed</dt>
+  <dd>
+  En bed er lyd (typisk musik), som du afspiller, mens nogen taler.
+  </dd>
+
+  <dt>Bitdybde</dt>
+  <dd>
+  Bitdybden for en lydfil er antallet af bits pr. sample (se nedenfor). En fil med en højere bitdybde bruger mere plads på tal med højere præcision, når den beskriver en sample. Jo mere præcise samples er, jo mere nøjagtigt kan lyden genskabes. 16 bit er en almindelig bitdybde.
+
+  Du behøver generelt ikke bekymre dig om bitdybde – når du distribuerer en fil, er bitrate (se nedenfor) langt vigtigere, da den påvirker lydens komprimering.
+  </dd>
+
+  <dt>Bitrate</dt>
+  <dd>
+  Bitraten for en lydfil er det antal bits data, lyden fylder pr. sekund. 128 kbps betyder for eksempel, at der er 128.000 bits (eller 15,6 kilobyte) data for hvert sekund lyd, der er gemt i filen.
+
+  Bitrate er måleenheden for komprimering (se nedenfor). En højere bitrate betyder, at lyden fylder mere på din disk pr. sekund lyd: jo mere plads lyden fylder, jo mere trofast genskabes den. Lavere bitrater fylder mindre, men på bekostning af kvaliteten.
+  </dd>
+
+  <dt>Beskæring</dt>
+  <dd>
+  At reducere varigheden af et lydsegment (ved at skære i begyndelsen eller slutningen) kaldes at "beskære" lyden.
+  </dd>
+
+  <dt>Komprimering</dt>
+  <dd>
+  Lydcodecs komprimerer deres lyd for at minimere filstørrelsen. Komprimering fungerer ved at bruge mindre data til at gemme lyde, som det menneskelige øre ikke opfatter så let som andre lyde. Blandt andre teknikker bliver meget høje eller lave toner reduceret i kvalitet, hvilket gør, at den plads, der bruges til at gemme den lydinformation, kan mindskes.
+
+  AAC (se ovenfor) er den bedste lydcodec, når det kommer til komprimering af podcastepisoder. MP3 (se nedenfor) er den mest populære.
+
+  WAV (se nedenfor) er en lydcodec uden komprimering, men den bør ikke bruges til at distribuere podcastlyd.
+  </dd>
+
+  <dt>Kompressor</dt>
+  <dd>
+  Kompressorfiltre gør bløde lyde højere og høje lyde lavere, så din lyd bliver nemmere at lytte til.
+  </dd>
+
+  <dt>Creative Commons</dt>
+  <dd>
+  [Creative Commons](https://creativecommons.org/) er en organisation, der udgiver en række licenser (se nedenfor) til indhold, der ikke er tiltænkt at være proprietært. De giver vejledning i, hvordan du mærker dit indhold, så det kan deles og genbruges med de begrænsninger, du selv vælger.
+  </dd>
+
+  <dt>Klipning</dt>
+  <dd>
+  En anden måde at sige "redigering" på.
+  </dd>
+
+  <dt>DAW (Digital Audio Workstation)</dt>
+  <dd>
+  Det er en anden måde at sige "redigeringssoftware" på, selvom det ofte også giver dig mulighed for at optage lyd.
+  </dd>
+
+  <dt>Katalog</dt>
+  <dd>
+  Et katalog er en online (eller app-baseret) oversigt over podcasts. Almindelige kataloger inkluderer Apple Podcasts, Spotify og YouTube Music.
+  </dd>
+
+  <dt>Feed</dt>
+  <dd>
+  Et feed er en computerlæsbar fil, der indeholder alle oplysninger om din podcast og dens episoder. Podcast-apps tjekker feeds for nye episoder og ændringer i en podcast. RSS (se nedenfor) er det mest almindelige format til at distribuere podcasts.
+  </dd>
+
+  <dt>Gain</dt>
+  <dd>
+  Kort fortalt er det mikrofonens følsomhed. Juster den, før du begynder at optage, hvis du har mulighed for det, så din lyd optages højt nok – men ikke så højt, at den peaker (se nedenfor).
+  </dd>
+
+  <dt>Hosting</dt>
+  <dd>
+  Podcasthosting er en service (som Pinecast!), der bruges til at gøre lydfiler tilgængelige for podcast-apps og kataloger. En hostingservice leverer et feed (se ovenfor), som kataloger og podcast-apps bruger til at hente nye episoder. En god hostingservice indeholder også funktioner som statistik, en hjemmeside og værktøjer til at administrere og følge med i din podcast.
+  </dd>
+
+  <dt>ID3</dt>
+  <dd>
+  En slags metadata (se nedenfor), der er gemt inde i MP3-lydfiler (se nedenfor).
+  </dd>
+
+  <dt>Intro</dt>
+  <dd>
+  Et stykke lyd, der tilføjes i starten af en episode for at introducere podcasten. Det kan være et temasang eller en anden fast introduktion til podcasten.
+  </dd>
+
+  <dt>Joint stereo</dt>
+  <dd>
+  Når man koder en MP3, er joint stereo en kodningsmetode, der gør det muligt at kode stereolyd (se nedenfor) med mindre plads end traditionel stereolyd.
+
+  Med traditionel stereolyd kodes venstre og højre kanal hver for sig, hvilket normalt fordobler filens størrelse. Joint stereo gemmer én kanal samt den numeriske forskel mellem de to kanaler. Da venstre og højre kanal i selv fuldt stereo-lyd sjældent er markant forskellige, er den information, der er nødvendig for at kode forskellen, mindre end at kode et helt ekstra lydspor. Det reducerer filstørrelsen uden at gå ud over kvaliteten.
+
+  Joint stereo er et godt valg til lyd med lidt stereolyd, da det begrænser omkostningen ved stereo-kodning til kun de segmenter, der faktisk indeholder stereolyd. Når et lydsegment har identiske venstre og højre kanaler (som det er tilfældet med "mono"-lyd), er forskellen nul og fylder stort set ingenting ekstra.
+  </dd>
+
+  <dt>Licens</dt>
+  <dd>
+  En licens er de rettigheder, du giver dine lyttere til at bruge, dele og skabe afledte værker ud fra dit indhold.
+  </dd>
+
+  <dt>Metadata</dt>
+  <dd>
+  Metadata er de ekstra oplysninger, der er knyttet til en episode eller en lydfil. Det kan være til stede i et feed (se ovenfor) eller indlejret i selve lydfilen, som f.eks. ID3-tags (se ovenfor).
+
+  Metadata indeholder typisk en episodetitel, podcastens forfatter og podcastens navn.
+  </dd>
+
+  <dt>Mid-roll</dt>
+  <dd>
+  En reklame, der afspilles midt i en episode.
+  </dd>
+
+  <dt>Mixer</dt>
+  <dd>
+  Et stykke hardware (eller nogle gange software), der bruges til at kombinere flere lydkilder.
+  </dd>
+
+  <dt>Miksning</dt>
+  <dd>
+  Processen med at redigere flere lydfiler sammen.
+  </dd>
+
+  <dt>Nedmiksning</dt>
+  <dd>
+  I slutningen af lydredigeringsprocessen betyder "nedmiksning" af dine spor, at du samler de forskellige spor "ned" til én samlet lydfil.
+  </dd>
+
+  <dt>Mono</dt>
+  <dd>
+  Lyd, der er "mono", har ét spor. Der er ingen forskel mellem den venstre og højre højttaler, når du lytter med hovedtelefoner.
+
+  Podcasts bliver ofte kodet som "mono", da de normalt ikke optages med flere mikrofoner, der er sat op til at optage venstre og højre kanal.
+  </dd>
+
+  <dt>MP3</dt>
+  <dd>
+  MP3 er en codec – et format til at gemme lyd digitalt. Det er det mest almindelige format til at distribuere lyd til podcasts. MP3 har ikke den bedste komprimering (se ovenfor), men det er normalt godt nok til de fleste formål.
+  </dd>
+
+  <dt>Multitrack</dt>
+  <dd>
+  Når man redigerer, kan flere lydspor lægges sammen til ét samlet resultat. Det kaldes "multitrack"-redigering og gør det muligt at kombinere input fra flere mikrofoner.
+  </dd>
+
+  <dt>Normalisering</dt>
+  <dd>
+  Det er processen med at få din lyd til at have en oplevet jævn lydstyrke gennem hele episoden.
+  </dd>
+
+  <dt>Outro</dt>
+  <dd>
+  Et lydklip, der "spiller en episode ud". Normalt et jingle, der afspilles under en afslutningssekvens.
+  </dd>
+
+  <dt>Peaking</dt>
+  <dd>
+  Når nogen kommer for tæt på deres mikrofon eller forårsager en høj lyd (f.eks. ved at banke mikrofonen, hoste eller på anden måde skabe et udsving i lydstyrken), kaldes det, at lyden "peaker". I de fleste optagelsesprogrammer vises lydniveauer som farvede bjælker. Når lyden peaker, strækker bjælkerne sig ind i et rødt område.
+  </dd>
+
+  <dt>Postroll</dt>
+  <dd>
+  En reklame eller et lydklip, der afspilles efter en episode.
+  </dd>
+
+  <dt>Preroll</dt>
+  <dd>
+  En reklame eller et lydklip, der afspilles før en episode.
+  </dd>
+
+  <dt>Rumtone</dt>
+  <dd>
+  Selv i meget stille rum opfanges baggrundsstøj (computerstøj, trafikstøj, støj fra aircondition eller køleskab osv.) som en lav summen eller susen. Vores hjerner ignorerer det, men mikrofoner opfanger det, og dine lyttere kan ofte også høre det. Selvom det kan være svært at opfatte, er det tydeligt, hvis det pludseligt klippes (se ovenfor) væk.
+
+  Det er almindelig praksis at optage lidt rumtone (f.eks. ti sekunder), som kan toves ind over klip for at hjælpe med at camouflere redigeringer.
+  </dd>
+
+  <dt>RSS (Really Simple Syndication)</dt>
+  <dd>
+  RSS er et standardformat for feeds (se ovenfor). Det er baseret på XML (eXtensible Markup Language), som er et computerlæsbart format til at kode struktureret information.
+  </dd>
+
+  <dt>Samples</dt>
+  <dd>
+  Lyd gemmes digitalt i "samples". Lyd bevæger sig som vibrationer gennem luften. Når disse vibrationer måles med en mikrofon, viser de sig som en bølgeform (se nedenfor). En sample er et tal, der beskriver bølgeformens form. Når samples tages ved et regelmæssigt interval ("samplerate"; se nedenfor), kan de bruges til at genskabe lyden digitalt.
+  </dd>
+
+  <dt>Samplerate</dt>
+  <dd>
+  Sampleraten for en lydfil er antallet af samples (se ovenfor) pr. sekund (altså en frekvens), som en lydfil er kodet med. 44,1 kHz er for eksempel en almindelig samplerate. Det betyder, at der gemmes 44.100 samples (tal) for hvert sekund lyd.
+  </dd>
+
+  <dt>Stereo</dt>
+  <dd>
+  Lyd, der er "stereo", har to kanaler: én til en venstre højttaler og én til en højre højttaler. Det giver en oplevelse af rumlig lyd i en lydfil.
+
+  Stereolyd er generelt ikke særlig nyttigt til podcasting, da de fleste mikrofoner ikke optager separate venstre og højre lydkanaler. Stereolyd giver kun lidt fordel for lytteren og bliver generelt ikke anbefalet.
+  </dd>
+
+  <dt>Bølgeform</dt>
+  <dd>
+  En bølgeform er en visualisering af lydbølgen for et stykke lyd. Den repræsenteres digitalt af samples (se ovenfor).
+  </dd>
+
+  <dt>WAV</dt>
+  <dd>
+  WAV er en codec – et format til at gemme lyd digitalt. WAV gemmer alle de mindste detaljer fra den originale lyd uden tab: en WAV-fil er lige så god som det input, der skabte den. WAV har dog ingen komprimering (se ovenfor), hvilket gør filerne ekstremt store. Få podcast-apps understøtter WAV, fordi filerne er for store til at blive distribueret let (især over mobildata).
+
+  WAV er nyttig til at gemme kildelyd (f.eks. lyd, der er blevet optaget, men endnu ikke redigeret).
+  </dd>
+</DefinitionList>
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, frontmatter);

@@ -1,0 +1,57 @@
+---
+title: Importiere deinen Podcast
+description: Hol deine Show von einem anderen Hoster zu Pinecast.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro, Step} from '@/components/TextBlocks';
+
+<Intro>
+  Der Wechsel von einem Podcast-Hoster zu einem anderen kann wie eine riesige Aufgabe wirken. Mit Pinecast ist das kein Problem – es dauert nur ein paar Minuten.
+</Intro>
+
+<Step stepNumber={1} title="Account upgraden">
+  Nachdem du dich angemeldet und deine E-Mail-Adresse bestätigt hast, klicke oben auf der Seite auf den Button "Upgrade". Wir führen dich durch die Einrichtung eines Abos. Unser Import-Tool steht allen zahlenden Kunden zur Verfügung.
+
+  Sobald der Bezahlvorgang abgeschlossen ist, siehst du einen Bildschirm mit den nächsten Schritten. Klicke auf den Button "Podcast importieren", um direkt zum Import-Tool zu springen.
+
+  ![Screenshot des Bildschirms, der direkt nach dem Upgrade angezeigt wird](/images/content/learn/screenshot-upgraded.png)
+</Step>
+
+<Step stepNumber={2} title="Importiere deine Show">
+  Falls du nach dem Upgrade nicht automatisch im Import-Tool landest, klicke im Pinecast-Dashboard auf den Button "Neuer Podcast".
+
+  Wähle unbedingt die Option "Von woanders importieren", damit du deine Show importieren kannst.
+
+  ![Screenshot der Seite für neue Podcasts mit der Import-Option](/images/content/learn/screenshot-import-podcast.png)
+
+  Gib deinen RSS-Feed oder die URL deiner Show bei Apple Podcasts oder iTunes an. Wir holen uns die Infos zu deiner Show: Du kannst alle Details bestätigen und bei Bedarf noch Änderungen vornehmen, bevor es weitergeht.
+
+  Sobald der Import startet, dauert es ein paar Minuten, bis alle Assets deiner Show übertragen sind. Wir zeigen dir den Fortschritt, während alles läuft.
+
+  ![Screenshot der Seite für neue Podcasts nach dem Start des Imports mit der Meldung "Perfekt, wir haben den Import gestartet" und dem Fortschritt der einzelnen Assets](/images/content/learn/screenshot-importing.png)
+
+</Step>
+
+<Step stepNumber={3} title="Feed-Weiterleitung einrichten">
+  Sobald der Import abgeschlossen ist, verlinken wir dir einen Artikel mit Anleitung zum Einrichten einer Feed-Weiterleitung. Falls du den Link verpasst, schicken wir ihn dir per E-Mail.
+
+  Folge der Anleitung, um eine Weiterleitung von deinem alten Podcast-Hoster zu deinem neuen Pinecast-RSS-Feed einzurichten. Die Feed-URL deiner Show findest du im Overview-Tab deines Podcast-Dashboards.
+
+  Die Feed-Weiterleitung ist ein wichtiger Schritt – vergiss sie auf keinen Fall! Ohne Feed-Weiterleitung wissen Apps und Verzeichnisse nicht, dass sie ab jetzt Pinecast statt deines alten Hosters checken sollen.
+</Step>
+
+<Step stepNumber={4} title="Verknüpfe deine Einträge">
+  Nachdem die Weiterleitung 36 Stunden aktiv war, schau dir den Distribution-Tab im Dashboard deines Podcasts in Pinecast an. Aktiviere die Schalter oder klicke auf die "Verknüpfen"-Buttons, um relevante Verzeichnisse (Apple Podcasts, Spotify usw.) zu verknüpfen. Du musst deine Show nicht erneut manuell einreichen, wenn du sie schon bei deinem alten Hoster eingereicht hattest.
+
+  Durch das Verknüpfen deines Podcasts kann Pinecast dir und deinen Hörer:innen zusätzliche Funktionen bieten. Das ermöglicht uns zum Beispiel, Analysedaten für Spotify abzurufen oder deine Hörer:innen direkt zur besten App für ihr Smartphone zu leiten.
+</Step>
+
+<Step stepNumber={5} title="Das war's schon!">
+  Etwa 24 Stunden nach dem Live-Gang deiner Feed-Weiterleitung bist du komplett zu Pinecast umgezogen. Du musst nichts weiter tun – und deine Hörer:innen auch nicht.
+</Step>
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, frontmatter);

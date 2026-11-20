@@ -1,0 +1,57 @@
+---
+title: Importer din podcast
+description: Flyt din podcast til Pinecast fra en anden hostingudbyder.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro, Step} from '@/components/TextBlocks';
+
+<Intro>
+  At skifte fra en hostingudbyder til en anden kan virke som en stor opgave. Med Pinecast er det nemt – det tager kun et par minutter.
+</Intro>
+
+<Step stepNumber={1} title="Opgrader din konto">
+  Når du har tilmeldt dig og bekræftet din e-mail, skal du klikke på knappen "Opgrader" i toppen af siden. Vi guider dig gennem opsætningen af et abonnement. Vores importværktøj er tilgængeligt for alle betalende kunder.
+
+  Når du har gennemført betalingsprocessen, ser du en skærm med de næste trin. Du kan klikke på knappen "Importer en podcast" for at gå direkte til importværktøjet.
+
+  ![Et skærmbillede af skærmen, der vises umiddelbart efter opgradering](/images/content/learn/screenshot-upgraded.png)
+</Step>
+
+<Step stepNumber={2} title="Importer din podcast">
+  Hvis du ikke allerede er på importværktøjet efter opgraderingen, skal du klikke på knappen "Ny podcast" på dit Pinecast-dashboard.
+
+  Sørg for at vælge muligheden "Importer fra et andet sted", som giver dig mulighed for at importere din podcast.
+
+  ![Et skærmbillede af siden for ny podcast, der viser importmuligheden](/images/content/learn/screenshot-import-podcast.png)
+
+  Angiv dit RSS-feed eller URL'en til din podcast på Apple Podcasts eller iTunes. Vi henter oplysningerne om din podcast, så du kan bekræfte alle detaljerne og foretage de nødvendige ændringer, før du fortsætter.
+
+  Når importen starter, tager det et par minutter at kopiere din podcasts filer over. Vi viser fremskridtet, mens det kører.
+
+  ![Et skærmbillede af siden for ny podcast, efter importen er startet, der viser meddelelsen "Perfekt, vi er begyndt at importere" og fremskridtet for hver fil](/images/content/learn/screenshot-importing.png)
+
+</Step>
+
+<Step stepNumber={3} title="Opsæt en feed-omdirigering">
+  Når importen er færdig, sender vi dig et link til en artikel med instruktioner til, hvordan du opsætter en feed-omdirigering. Hvis du skulle overse linket, sender vi det også til dig i en e-mail.
+
+  Følg instruktionerne for at opsætte en omdirigering fra din gamle podcast-hostingudbyder til dit nye Pinecast RSS-feed. Du finder feed-URL'en til din podcast under fanen Overview på dit podcast-dashboard.
+
+  Feed-omdirigering er et vigtigt skridt – husk endelig ikke at springe det over! Uden en feed-omdirigering vil apps og kataloger ikke vide, at de skal begynde at tjekke Pinecast i stedet for din gamle udbyder.
+</Step>
+
+<Step stepNumber={4} title="Forbind dine kataloger">
+  Når omdirigeringen har været aktiv i 36 timer, skal du gå til fanen Distribution på dit podcast-dashboard i Pinecast. Slå kontakterne til, eller klik på knapperne "Link" for at forbinde relevante kataloger (Apple Podcasts, Spotify osv.). Du behøver ikke at indsende din podcast manuelt igen, hvis du allerede havde gjort det med din gamle udbyder.
+
+  Når du forbinder din podcast, kan Pinecast tilbyde dig og dine lyttere flere funktioner. For eksempel giver det os mulighed for at hente statistik for Spotify eller sende dine lyttere direkte til den bedste app til deres telefon.
+</Step>
+
+<Step stepNumber={5} title="Det var det!">
+  Inden for cirka 24 timer efter, at din feed-omdirigering er gået live, er du helt flyttet over til Pinecast. Du behøver ikke gøre mere, og det gælder også for dine lyttere.
+</Step>
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, frontmatter);

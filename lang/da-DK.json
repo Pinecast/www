@@ -1,0 +1,665 @@
+{
+  "+2Lq0r": {
+    "defaultMessage": "JSON Feed"
+  },
+  "+4Sy4j": {
+    "defaultMessage": "Denne side findes også på dansk."
+  },
+  "+dsVvY": {
+    "defaultMessage": "Pinecast har værktøjer til podcastere på alle erfaringsniveauer. Uanset om du lige er kommet i gang, eller du driver en podcast for en virksomhed, har vi din ryg."
+  },
+  "+zYy4i": {
+    "defaultMessage": "Opret konto"
+  },
+  "/77+vM": {
+    "defaultMessage": "Få feedback fra dine lyttere samlet i ét dashboard med en enkel formular, som du selv kan tilpasse. Moderationsfunktioner beskytter mod spam og misbrug."
+  },
+  "/aMaNV": {
+    "defaultMessage": "Uanset om du deler med en håndfuld venner, din virksomhed eller hele verden, har Pinecast en løsning, der passer til dig."
+  },
+  "/dhlck": {
+    "defaultMessage": "$110"
+  },
+  "0LGL5T": {
+    "defaultMessage": "Prøv Pinecast{br}gratis"
+  },
+  "0TfzjJ": {
+    "defaultMessage": "Op til to podcasts"
+  },
+  "1BquxH": {
+    "defaultMessage": "Monetarisering"
+  },
+  "1FKfN0": {
+    "defaultMessage": "Hvis din episodes MP3 ikke indeholder alle de metadata-tags, som podcast-apps forventer, udfylder vi hullerne for dig med ét klik – uden at overskrive dine egne metadata."
+  },
+  "1OUYIJ": {
+    "defaultMessage": "Sæt animationer på pause"
+  },
+  "1tHL/G": {
+    "defaultMessage": "Vi nøjes ikke med RSS – til hver podcast får du også et feed i JSON Feed-format, som er nemt at behandle maskinelt."
+  },
+  "21Sqq0": {
+    "defaultMessage": "Se alle funktioner"
+  },
+  "2V7LxR": {
+    "defaultMessage": "Ingen tidsbegrænsning"
+  },
+  "3NQkii": {
+    "defaultMessage": "Trin {number}"
+  },
+  "4fxkcu": {
+    "defaultMessage": "/ måned"
+  },
+  "4zg7Gp": {
+    "defaultMessage": "Intet kreditkort påkrævet"
+  },
+  "51tjZe": {
+    "defaultMessage": "Transskriptioner"
+  },
+  "5kLnqs": {
+    "defaultMessage": "Se, hvad der er med"
+  },
+  "5ng2oD": {
+    "defaultMessage": "Ubegrænset antal podcasts"
+  },
+  "5y6j6+": {
+    "defaultMessage": "Sæt en hjemmeside op til din podcast med ét klik – uden kodning. Tilpas layout og udseende, og vær sikker på, at den fungerer godt på alle enheder. SEO er med."
+  },
+  "6KyWzM": {
+    "defaultMessage": "Statistik"
+  },
+  "6Ofxq6": {
+    "defaultMessage": "Vilkår<long> og betingelser</long>"
+  },
+  "6mB0v5": {
+    "defaultMessage": "Bygget af podcastere, til podcastere"
+  },
+  "6xTlDe": {
+    "defaultMessage": "Support"
+  },
+  "7tQYJr": {
+    "defaultMessage": "Kunde siden {year}"
+  },
+  "8+dym2": {
+    "defaultMessage": "Start gratis"
+  },
+  "82WDcm": {
+    "defaultMessage": "Grundlæggende statistik"
+  },
+  "8nOIHo": {
+    "defaultMessage": "Overvågning af anmeldelser"
+  },
+  "99bFDB": {
+    "defaultMessage": "Vi behandler tilgængelighed som en funktion, ikke som en eftertanke. Vi går helt op i at gøre Pinecast til verdens mest tilgængelige hostingplatform for brugere, der har brug for mange forskellige former for tilpasninger."
+  },
+  "AF7vSx": {
+    "defaultMessage": "Menu"
+  },
+  "AIISv1": {
+    "defaultMessage": "Indlejr en afspiller på din hjemmeside, så dine besøgende kan lytte til enkelte episoder eller hele din podcast."
+  },
+  "ANkfZ+": {
+    "defaultMessage": "Udgiv eller importér din podcast, kom med i apps, og få flere lyttere med vores SEO-optimerede værktøjer."
+  },
+  "APS4kv": {
+    "defaultMessage": "Upload lydfiler på op til 256 MB, med en ekstra buffer på 256 MB hver 30. dag. RSS-feeds opdateres 66 % hurtigere."
+  },
+  "AQ7TL1": {
+    "defaultMessage": "Tro ikke bare på os"
+  },
+  "AQnpYh": {
+    "defaultMessage": "Hold din private mailadresse privat."
+  },
+  "B9OChd": {
+    "defaultMessage": "Podcast-kapitler"
+  },
+  "BM5aSI": {
+    "defaultMessage": "Feedback"
+  },
+  "Bmfz3h": {
+    "defaultMessage": "Slå lyden fra"
+  },
+  "Btc2Pu": {
+    "defaultMessage": "Episodemetadata"
+  },
+  "BzMale": {
+    "defaultMessage": "$0 i reklamebudget, 100 % fokus på god software"
+  },
+  "CFw0Q8": {
+    "defaultMessage": "Sprog"
+  },
+  "CHAMHu": {
+    "defaultMessage": "Premium-statistik"
+  },
+  "CkDn5T": {
+    "defaultMessage": "Monetarisering"
+  },
+  "D0Zhrw": {
+    "defaultMessage": "Du er lige kommet i gang"
+  },
+  "D5ckvo": {
+    "defaultMessage": "Pinecast"
+  },
+  "DfWVos": {
+    "defaultMessage": "Du har brug for avancerede værktøjer"
+  },
+  "EMPZkj": {
+    "defaultMessage": "Funktioner"
+  },
+  "EPo6h6": {
+    "defaultMessage": "Se den på Amazon"
+  },
+  "ESsMXt": {
+    "defaultMessage": "Se, hvor dine lyttere kommer fra, og hvordan de lytter."
+  },
+  "EUVluX": {
+    "defaultMessage": "Filer på op til 80 MB + bonus"
+  },
+  "FgdSGw": {
+    "defaultMessage": "Podcastingens kraftigste statistik med premium-funktioner, enkle diagrammer og overskuelige kontroller."
+  },
+  "Fpfm0t": {
+    "defaultMessage": "Start gratis"
+  },
+  "GLJoOr": {
+    "defaultMessage": "Prøv Pinecast gratis. Intet kreditkort, ingen tidsbegrænsning, og du kan opgradere, når du vil. Vi tror, du kommer til at elske det."
+  },
+  "GSQ0xO": {
+    "defaultMessage": "Menu"
+  },
+  "GrhQfC": {
+    "defaultMessage": "Brug af AI"
+  },
+  "H4Jh1Z": {
+    "defaultMessage": "Lær"
+  },
+  "HCnTzJ": {
+    "defaultMessage": "Importér en podcast"
+  },
+  "Ha5pE0": {
+    "defaultMessage": "Korte links"
+  },
+  "IJnetw": {
+    "defaultMessage": "Intet kreditkort påkrævet"
+  },
+  "IR3n6s": {
+    "defaultMessage": "Podcasting til undervisning"
+  },
+  "IiGjF/": {
+    "defaultMessage": "$0"
+  },
+  "IvUg4C": {
+    "defaultMessage": "Podcasting for begyndere"
+  },
+  "JcLd1D": {
+    "defaultMessage": "Dette dokument findes kun på engelsk."
+  },
+  "KCylH7": {
+    "defaultMessage": "Niveau 2"
+  },
+  "KGkwzj": {
+    "defaultMessage": "Udgiv premium-indhold til betalende abonnenter, og få udbetalinger direkte til din bankkonto."
+  },
+  "KUNp6y": {
+    "defaultMessage": "Opret et netværk til alle dine podcasts med et samlet statistik-dashboard. Giv samarbejdspartnere adgang med indstillinger, du selv bestemmer."
+  },
+  "KVVGEY": {
+    "defaultMessage": "Alle funktioner"
+  },
+  "Klb4PR": {
+    "defaultMessage": "Velkommen til Pinecast, podcast-hosting{br}med alt, hvad du skal bruge"
+  },
+  "L8U4Ih": {
+    "defaultMessage": "Distribution"
+  },
+  "M3zxrK": {
+    "defaultMessage": "/ år"
+  },
+  "MF4Oza": {
+    "defaultMessage": "Crew-tilkøb"
+  },
+  "MNIKRr": {
+    "defaultMessage": "Med deres egne ord"
+  },
+  "MOtGXF": {
+    "defaultMessage": "Intet kreditkort påkrævet"
+  },
+  "Mgtljh": {
+    "defaultMessage": "Funktionsoversigt"
+  },
+  "NGLCBM": {
+    "defaultMessage": "Opret en podcast"
+  },
+  "NZemcL": {
+    "defaultMessage": "Læs mere"
+  },
+  "NbXqUi": {
+    "defaultMessage": "Promovér din podcast"
+  },
+  "NqG+t8": {
+    "defaultMessage": "Menu"
+  },
+  "NxIr7f": {
+    "defaultMessage": "{elapsed} / {duration}"
+  },
+  "OAuboj": {
+    "defaultMessage": "Pause<sr> udtalelse fra {customer}</sr>"
+  },
+  "OE3vUS": {
+    "defaultMessage": "Læs mere"
+  },
+  "OUcYfC": {
+    "defaultMessage": "Opret en gruppe til alle podcastere og podcasts i dit netværk. Vi giver dig ét dashboard til at styre netværkets podcasts og statistik."
+  },
+  "ObsGoj": {
+    "defaultMessage": "Tunet ind på dine behov"
+  },
+  "OcbMaU": {
+    "defaultMessage": "Hold dit gamle katalog friskt med indsættelse af klip. Indsæt automatisk lydklip i dine episoder, uanset hvor længe siden de blev udgivet."
+  },
+  "OdXhTK": {
+    "defaultMessage": "Tunet ind på{br}dine behov"
+  },
+  "OvESM7": {
+    "defaultMessage": "Filer på op til 48 MB"
+  },
+  "P/u37W": {
+    "defaultMessage": "Få flere indsigter i dine lyttere med geografiske data, statistik over vækst i afspilninger, sparklines og meget mere."
+  },
+  "P2e8mH": {
+    "defaultMessage": "Test, test, 1, 2, 3"
+  },
+  "PQNb/g": {
+    "defaultMessage": "Starter-plan"
+  },
+  "PY3HGQ": {
+    "defaultMessage": "Opdag flere{br}funktioner"
+  },
+  "PYKDf6": {
+    "defaultMessage": "Growth-tilkøb"
+  },
+  "PqcCZx": {
+    "defaultMessage": "Uanset om du lige er startet, eller du er mere etableret, har vi en løsning til dig."
+  },
+  "Pqmr0J": {
+    "defaultMessage": "Distribution"
+  },
+  "RJ3ysL": {
+    "defaultMessage": "Ressourcer"
+  },
+  "RdWani": {
+    "defaultMessage": "Se den på Amazon: {name}"
+  },
+  "RlBhkU": {
+    "defaultMessage": "Indlejr HTML-kode til din podcast, så de besøgende på din hjemmeside kan åbne den i deres foretrukne podcast-app."
+  },
+  "RwnN53": {
+    "defaultMessage": "Niveau 3"
+  },
+  "SHaenT": {
+    "defaultMessage": "Tilføj funktioner, når du har brug for dem, og fjern dem, når du ikke har. Ingen forvirrende niveauer og ingen binding. Du betaler for det, du bruger."
+  },
+  "SVBBJE": {
+    "defaultMessage": "Statistik"
+  },
+  "SbCcyr": {
+    "defaultMessage": "Icebox"
+  },
+  "T3rRE3": {
+    "defaultMessage": "Statistik"
+  },
+  "TSuPJK": {
+    "defaultMessage": "$15"
+  },
+  "TgVvqo": {
+    "defaultMessage": "Spørgsmål? Skriv til <link>{email}</link>."
+  },
+  "Tydwy2": {
+    "defaultMessage": "Få din podcast ud på alle de store podcast-platforme med ét klik."
+  },
+  "UAb6nT": {
+    "defaultMessage": "Log ind"
+  },
+  "UWkmF8": {
+    "defaultMessage": "Opdag funktioner"
+  },
+  "UdNBV5": {
+    "defaultMessage": "Notifikationer"
+  },
+  "UkVdfg": {
+    "defaultMessage": "Podcast-ordliste"
+  },
+  "UtdMVN": {
+    "defaultMessage": "Gå til hovedindhold"
+  },
+  "V9dT23": {
+    "defaultMessage": "Hvad er med?"
+  },
+  "VTf0AZ": {
+    "defaultMessage": "Alle de funktioner, du kan ønske dig af en podcast-hostingtjeneste"
+  },
+  "VeITU6": {
+    "defaultMessage": "Opdag funktioner"
+  },
+  "VpY43f": {
+    "defaultMessage": "Indsættelse af klip"
+  },
+  "WUCNFc": {
+    "defaultMessage": "Anbefalinger"
+  },
+  "WxzJng": {
+    "defaultMessage": "Inviter dine medværter og producere til at hjælpe dig med at styre din podcast."
+  },
+  "X1SK5k": {
+    "defaultMessage": "Indlejrbare afspillere"
+  },
+  "XYOwCI": {
+    "defaultMessage": "Start gratis"
+  },
+  "Xe86fJ": {
+    "defaultMessage": "Få notifikationer via mail, Slack, Discord eller webhooks, når der udgives episoder, du når milepæle i statistikken, din podcast modtager tips og meget mere."
+  },
+  "XqScaw": {
+    "defaultMessage": "Kom i gang med din podcast-rejse"
+  },
+  "Y179Ys": {
+    "defaultMessage": "Adgangskodebeskyttelse"
+  },
+  "Y964/e": {
+    "defaultMessage": "© Pinecast {year}"
+  },
+  "YWiRkL": {
+    "defaultMessage": "Milliarder af afspilninger siden 2015"
+  },
+  "YXbau8": {
+    "defaultMessage": "Opret konto"
+  },
+  "ZEsems": {
+    "defaultMessage": "Beskyt din podcasts feed og hjemmeside med en adgangskode, som du kan dele med dine lyttere."
+  },
+  "ZWVE3m": {
+    "defaultMessage": "Nogle gange har man brug for en pause fra podcasting. Hvis din konto har været inaktiv et stykke tid, kan du skifte til vores Icebox-plan og holde din podcast online for en lav månedlig pris."
+  },
+  "Ze6Jzp": {
+    "defaultMessage": "Læs mere"
+  },
+  "ZgbCc5": {
+    "defaultMessage": "Podcast-hjemmesider"
+  },
+  "ZnTTuK": {
+    "defaultMessage": "Pinecast-funktioner"
+  },
+  "aSuLzV": {
+    "defaultMessage": "Sæsoner og episoder"
+  },
+  "aYp38H": {
+    "defaultMessage": "Funktioner"
+  },
+  "b8fgAE": {
+    "defaultMessage": "Kom godt{br}fra{br}start"
+  },
+  "bCXzFY": {
+    "defaultMessage": "Optjen kontokredit ved at anbefale Pinecast til andre podcastere. For hver anbefaling, der bliver til en kunde, giver vi dig to måneder af vores Starter-plan."
+  },
+  "bpsUul": {
+    "defaultMessage": "Pinecast er din podcast-hostingplatform med alt, hvad du skal bruge."
+  },
+  "cCCgdb": {
+    "defaultMessage": "Blog"
+  },
+  "cuJdX+": {
+    "defaultMessage": "Hent din billet"
+  },
+  "d/Jvty": {
+    "defaultMessage": "Lær med Pinecast"
+  },
+  "dC4DVL": {
+    "defaultMessage": "Log ind"
+  },
+  "daQcvg": {
+    "defaultMessage": "Lad os holde styr på dine anmeldelser. Vi gennemgår anmeldelser på Podchaser og Apple Podcasts i alle lande og sender dig en mail, når vi finder en ny."
+  },
+  "dqs5l3": {
+    "defaultMessage": "Pinecast transskriberer op til fire timers lyd om måneden uden ekstra omkostninger. Vi genkender og husker dine talere, og du kan redigere transskriptionen direkte i din browser."
+  },
+  "e1vP1v": {
+    "defaultMessage": "$165"
+  },
+  "e26/v9": {
+    "defaultMessage": "Pro Analytics-tilkøb"
+  },
+  "f8xDz/": {
+    "defaultMessage": "Luk"
+  },
+  "flYdus": {
+    "defaultMessage": "Privatliv"
+  },
+  "fvvs5+": {
+    "defaultMessage": "Afspil"
+  },
+  "g/HuMJ": {
+    "defaultMessage": "Tjen penge på din podcast"
+  },
+  "g0+/lM": {
+    "defaultMessage": "$10"
+  },
+  "g6bKYV": {
+    "defaultMessage": "Intet kreditkort påkrævet"
+  },
+  "gD4BZX": {
+    "defaultMessage": "Her er transskriptioner af lydudtalelserne på vores forside."
+  },
+  "gO4BS0": {
+    "defaultMessage": "Få betaling for dit indhold"
+  },
+  "gRGpmU": {
+    "defaultMessage": "Monetarisering"
+  },
+  "gWUnS9": {
+    "defaultMessage": "Følg med"
+  },
+  "gWzMYC": {
+    "defaultMessage": "Du er kunden, ikke produktet"
+  },
+  "gxbq+Y": {
+    "defaultMessage": "Pause"
+  },
+  "hDzw07": {
+    "defaultMessage": "Få mere{br}med tilkøb"
+  },
+  "hYiwJp": {
+    "defaultMessage": "Tilgængelighed"
+  },
+  "iSVSDg": {
+    "defaultMessage": "Uanset om du lige er startet, eller du er mere etableret, har vi en løsning til dig."
+  },
+  "iWx2t1": {
+    "defaultMessage": "Link dine lyttere til bestemte tidspunkter i din episode. Det hjælper folk med at finde præcis det afsnit, de leder efter, i en længere episode."
+  },
+  "iZOWVX": {
+    "defaultMessage": "Læs den på dansk"
+  },
+  "ibbkiP": {
+    "defaultMessage": "Hej! Jeg er{br}din vært"
+  },
+  "igzE1u": {
+    "defaultMessage": "Gratis demoplan"
+  },
+  "iwm8d+": {
+    "defaultMessage": "Alt, hvad du skal bruge for at lykkes"
+  },
+  "j1qPEz": {
+    "defaultMessage": "Netværk"
+  },
+  "j6KuVD": {
+    "defaultMessage": "Optimering af cover"
+  },
+  "jTlkQq": {
+    "defaultMessage": "Gratis transskriptioner"
+  },
+  "joqai5": {
+    "defaultMessage": "Ændringslog"
+  },
+  "kCJjKk": {
+    "defaultMessage": "Din podcast-vært med alt, hvad du skal bruge"
+  },
+  "lG059q": {
+    "defaultMessage": "Hurtige tips"
+  },
+  "lkooJg": {
+    "defaultMessage": "eller"
+  },
+  "lt2DeU": {
+    "defaultMessage": "Niveau 1"
+  },
+  "lwhUWz": {
+    "defaultMessage": "Distribution"
+  },
+  "lyZJMC": {
+    "defaultMessage": "Intet kreditkort påkrævet"
+  },
+  "m6JLSv": {
+    "defaultMessage": "Vi er stolte af at drive en førsteklasses tjeneste. Folk kan virkelig godt lide os. Så meget, at de har lagt søde beskeder til dig."
+  },
+  "mGvYQ4": {
+    "defaultMessage": "Hvis du uploader et billede, der ikke opfylder kravene til podcastens eller episodens cover, fikser vi det for dig med ét klik."
+  },
+  "mazp+u": {
+    "defaultMessage": "Hi-Fi-tilkøb"
+  },
+  "mpxDta": {
+    "defaultMessage": "Tilgængelighed"
+  },
+  "mvHHeI": {
+    "defaultMessage": "Skabt med omhu i Raleigh, NC"
+  },
+  "mvkgb/": {
+    "defaultMessage": "Podcasting for superbrugere"
+  },
+  "nN1LCl": {
+    "defaultMessage": "Start gratis"
+  },
+  "nZuvBk": {
+    "defaultMessage": "Tip Jar"
+  },
+  "nltFQ9": {
+    "defaultMessage": "Afspil<sr> udtalelse fra {customer}</sr>"
+  },
+  "oErC9K": {
+    "defaultMessage": "Samarbejdspartnere"
+  },
+  "oID/pJ": {
+    "defaultMessage": "Distribution"
+  },
+  "oJQK40": {
+    "defaultMessage": "Hjemmeside"
+  },
+  "ocSbJt": {
+    "defaultMessage": "Læs mere"
+  },
+  "pInWKb": {
+    "defaultMessage": "Ingen grænse for antal episoder"
+  },
+  "pk99nG": {
+    "defaultMessage": "Sidefod"
+  },
+  "prHdHT": {
+    "defaultMessage": "Transskriptioner af lydudtalelser fra Pinecast-kunder"
+  },
+  "py8omo": {
+    "defaultMessage": "Lær"
+  },
+  "pyCgeO": {
+    "defaultMessage": "Start gratis"
+  },
+  "q0e0Xi": {
+    "defaultMessage": "Lav korte links til din podcast og dine episoder, der er perfekt optimeret til sociale medier. Følg klikkene, og se, hvor dine lyttere kommer fra."
+  },
+  "q5EB6n": {
+    "defaultMessage": "Mailprivatliv"
+  },
+  "q5M2S3": {
+    "defaultMessage": "Tjen penge på din podcast med støtte fra dine lyttere. Markér episoder som kun for betalende, så klarer vi abonnementer og betalinger."
+  },
+  "qmahv6": {
+    "defaultMessage": "Funktioner – Pinecast"
+  },
+  "rFDc+R": {
+    "defaultMessage": "Indlejrbare app-links"
+  },
+  "rw89n6": {
+    "defaultMessage": "Sprog"
+  },
+  "sGdkJB": {
+    "defaultMessage": "Forstå din vækst"
+  },
+  "scmR8+": {
+    "defaultMessage": "Statistik"
+  },
+  "sheyjF": {
+    "defaultMessage": "Lær – Pinecast"
+  },
+  "swVRSX": {
+    "defaultMessage": "Transskriptioner af udtalelser"
+  },
+  "sx2O9S": {
+    "defaultMessage": "Tænk på din næste episode, ikke på din host"
+  },
+  "sxa79I": {
+    "defaultMessage": "Slå lyden til"
+  },
+  "tVLEqA": {
+    "defaultMessage": "Primær"
+  },
+  "tancxZ": {
+    "defaultMessage": "Du går på campus"
+  },
+  "txw1P6": {
+    "defaultMessage": "Monetarisering"
+  },
+  "ty3ept": {
+    "defaultMessage": "Tilføj sæson- og episodenumre til dine episoder automatisk. Til apps, der ikke bruger Apples officielle nummereringstags, tilføjer vi numrene smagfuldt til episodetitlerne."
+  },
+  "u39ype": {
+    "defaultMessage": "Fantastisk god kundesupport"
+  },
+  "ucAZQa": {
+    "defaultMessage": "Grænse på ti episoder"
+  },
+  "uorzqU": {
+    "defaultMessage": "Fantastisk podcast-hosting til det 21. århundrede"
+  },
+  "v4bjl5": {
+    "defaultMessage": "Hurtige tips til at komme i gang"
+  },
+  "vVnmbu": {
+    "defaultMessage": "Opret konto"
+  },
+  "veAwil": {
+    "defaultMessage": "Få din podcast til at vokse med flere muligheder og funktioner. Tilpas din Tip Jar, saml anmeldelser fra kataloger, bed dine lyttere om feedback og meget mere."
+  },
+  "wRldcc": {
+    "defaultMessage": "Transskriptioner"
+  },
+  "wYNYLV": {
+    "defaultMessage": "Til universiteter og videregående uddannelser"
+  },
+  "xISYcS": {
+    "defaultMessage": "Siden er bedre med lyd!"
+  },
+  "xKwBGd": {
+    "defaultMessage": "Fair og ligefrem prissætning"
+  },
+  "yVNqmn": {
+    "defaultMessage": "Luk menu"
+  },
+  "z+BhDj": {
+    "defaultMessage": "Funktioner"
+  },
+  "zJnmsJ": {
+    "defaultMessage": "{title}:"
+  },
+  "ze4XAD": {
+    "defaultMessage": "Tilbage til forsiden"
+  }
+}

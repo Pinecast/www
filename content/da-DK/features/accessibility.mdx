@@ -1,0 +1,142 @@
+---
+title: Tilgængelighed
+description: Pinecast er bygget til alle
+heroImage: /images/hero/t-l.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Podcasting er en af de mest tilgængelige former for kunstnerisk udtryk online. Ikke kun for lyttere, men også for skabere.
+
+  Det er sådan, Pinecast ser på det.
+</Intro>
+
+# Tilgængelighed er vores allerhøjeste prioritet hos Pinecast
+
+Vi har sat os for at gøre Pinecast til *den mest tilgængelige podcast-vært* i verden. Hvis en funktion har et tilgængelighedsproblem, er det en fejl.
+
+Men hvad betyder det egentlig? Hver funktion skal virke for folk, uanset hvilke hjælpemidler de har brug for for at bruge deres enheder.
+
+<ChecksList>
+  <li>Bruger en skærmlæser</li>
+  <li>Har brug for større tekst eller højere kontrast</li>
+  <li>Har brug for reduceret bevægelse</li>
+  <li>Er farveblind</li>
+  <li>Er hørehæmmet</li>
+  <li>Er lysoverfølsom</li>
+  <li>Bruger ikke en pegeenhed</li>
+  <li>Bruger stemmestyring</li>
+  <li>Er døv eller hørehæmmet</li>
+  <li>Er lysoverfølsom</li>
+</ChecksList>
+
+Du behøver ikke at være handicappet for at [få gavn af tilgængelighedsfunktioner](https://en.wikipedia.org/wiki/Curb_cut_effect). Mørk tilstand hjælper folk, der er lysoverfølsomme, men mange, der ikke er lysoverfølsomme, finder det også som en bedre måde at bruge deres computer på. Transskriptioner, muligheden for at zoome ind, og muligheden for at tabulere gennem grænsefladens elementer på en side, er alle tilgængelighedsfunktioner, som _alle_ kan få gavn af og nyde.
+
+{/* The help center has a section for each accessibility feature. This link
+    is the documentation that Revised 508 (602.2) and EN 301 549 (12.1.1)
+    need: it lists the features and explains how to use them. Keep a link to
+    it on this page. If the section moves, change the address. */}
+
+Hvis du vil lære, hvordan du bruger disse funktioner, kan du se [afsnittet om tilgængelighed i vores hjælpecenter](https://help.pinecast.com/category/201-accessibility).
+
+## Det er de små detaljer, der tæller
+
+At leve op til de offentliggjorte retningslinjer for tilgængelighed bør være udgangspunktet, ikke målet. Vi gør alt, hvad vi kan, for at overgå vores kunders forventninger. Her er et par eksempler:
+
+- Retningslinjerne kræver, at du kan bruge et tastatur til at bruge hver funktion. Vi går et skridt videre og lader dig bruge de taster, du forventer at kunne bruge – f.eks. at navigere i en kalender med piletasterne eller skifte mellem podcasts med en genvejstast.
+- Retningslinjerne kræver, at billeder er mærket, men siger ikke noget om at skabe dem. Vi tilbyder en valgfri funktion til generativt cover til folk med nedsat eller intet syn, så de kan tilføje cover til deres podcast.
+- Nogle funktioner, som episodeudkast, giver dig mulighed for at slette elementer. Når du sletter et element uden titel, fortæller vi ikke bare skærmlæseren, at et element er blevet fjernet – vi nævner også _hvilket_ element, der er fjernet (herunder detaljer som udgivelsesdatoen, når elementet ikke har noget navn)
+
+At gøre tilgængelighed rigtigt kræver, at man går op i det. Vi betragter tilgængeligt design som et håndværk; vi vil skabe noget, vi kan være stolte af at sende ud i verden.
+
+# Hvor vi står
+
+Vores mål som virksomhed er fuld overholdelse af WCAG 2.2 niveau AA, de reviderede Section 508-standarder og EN 301 549 V3.2.1.
+
+I dag er vi "delvist overholdende": nogle dele af vores hjemmesider lever ikke fuldt op til WCAG 2.2 niveau AA. Disse oplysninger er gældende fra den 9. oktober 2026.
+
+## Hvordan vi kontrollerer det
+
+Vi bruger en kombination af metoder for at sikre, at vi gør det bedste, vi kan:
+
+1. Kodegennemgang af al kode, der kører på Pinecast
+2. Automatiserede tests med axe-core
+3. "Lint"-kontroller af koden
+4. Manuel test med hjælpeteknologi
+5. Automatiseret test med kunstig intelligens
+
+Vi stræber efter at udføre en fuld revision hvert år og kan udføre mindre revisioner oftere.
+
+## Kendte begrænsninger
+
+Følgende er problemer, som er kendte begrænsninger:
+
+1. Formularen til at glemt adgangskode udløber efter tredive minutter. Som en løsning kan du anmode om et nyt link.
+2. Nogle artikler i vores hjælpecenter mangler alt-tekst.
+3. Webafspillere afskærer lange titler og lange linjer i undertekster, der er skabt fra en transskription.
+
+Denne liste vil blive holdt opdateret.
+
+## Vi gør vores bedste, men er afhængige af andre
+
+Vores kunder skaber deres eget indhold, og vi gør vores bedste for at give dem mulighed for at gøre deres indhold og webtilstedeværelse så tilgængeligt som muligt, med funktioner som kontrastkontrol af farver på podcast-hjemmesider og transskription af episoder. Vi kan dog ikke garantere, at dette indhold er fuldt tilgængeligt, og skabere kan udgive indhold, der ikke fuldt ud følger best practice.
+
+Vi bruger eksterne leverandører til visse funktioner. Vi gør vores bedste for kun at bruge leverandører af tilgængelig software, men deres support kan variere.
+
+1. Vi bruger Stripe til betalingsbehandling. Du kan møde brugergrænseflader fra Stripe, når du bruger Pinecast.
+2. [ReCAPTCHA](https://support.google.com/recaptcha/answer/6175971?hl=en) (v2) er en Google-tjeneste, vi bruger til at beskytte vores sider mod bots. Du kan blive bedt om at løse en CAPTCHA på visse sider.
+3. [Help Scout](https://www.helpscout.com/company/legal/accessibility-statement/) er virksomheden, vi stoler på til vores supportsoftware.
+4. Mapbox bruges til at tilføje kort til vores Pro Analytics-tilbud.
+5. Skabere kan selv vælge deres skrifttyper fra Google Fonts, og nogle skrifttyper er muligvis ikke fuldt tilgængelige for alle seende brugere.
+6. Gravatar bruges til at give profilbilleder til konti.
+
+# Har du feedback eller brug for hjælp?
+
+Hvis du har feedback om tilgængeligheden af vores produkt, kan du altid skrive til <a href="mailto:support@pinecast.com">support@pinecast.com</a>. Vi gør vores bedste for at svare inden for 24 timer, men svartiden kan variere.
+
+Vi hjælper dig gerne med at løse en opgave, hvis du bliver forhindret af et tilgængelighedsproblem, eller finder en løsning til dig.
+
+# Vi bakker det op med handling
+
+Det er ikke nok bare at sige, at vi gør et godt stykke arbejde. Hvis du finder en kvalificerende tilgængelighedsfejl, giver vi dig 10 USD i kontosaldo (eller en tilsvarende rabatkode) til dit Pinecast-abonnement. Alvorlige problemer kan give en større belønning – det afgør vi fra sag til sag.
+
+Vi tager det seriøst: belønningen stiger med 5 USD hver 1. oktober. 15 USD i oktober 2027, 20 USD i oktober 2028, og så videre.
+
+Hvis du finder et problem, kan du skrive til <a href="mailto:support@pinecast.com">support@pinecast.com</a> med alle detaljerne.
+
+## En kvalificerende rapport
+
+Du skal tydeligt forklare det problem, du fandt, hvilken software du brugte til at finde det (browser, skærmlæser osv.), og hvilken enhed du oplevede det på. Problemet skal:
+
+1. Være en overtrædelse af WCAG 2.2 niveau AA i en del af Pinecast, der hostes på `pinecast.com`, `pinecast.co`, `pnc.st` eller `pinecast.net`
+2. Ikke være opført under de kendte begrænsninger
+3. Kunne reproduceres af os
+4. Ikke allerede være blevet rapporteret af andre – den første rapport får belønningen
+5. Være testet på din egen konto, og aldrig på andres data
+
+Følgende kvalificerer ikke:
+
+- Indhold fra Pinecast-skabere
+- Andre virksomheders tjenester
+- Problemer med software, der kan downloades (som vores WordPress-plugin) og Pinecoder
+- Pinecast-funktioner, der endnu ikke er frigivet offentligt
+- Resultater fra automatiserede værktøjer, der ikke er blevet verificeret af et menneske
+
+Følgende problemer behandles fra sag til sag efter vores eget skøn:
+
+- Et problem, der kun forekommer i én browser
+- Et problem, der kun påvirker én skærmlæser, når Pinecast følger best practice
+- Flere problemer med samme grundlæggende årsag spredt over flere steder
+
+Problemer, der ikke kvalificerer, kan stadig blive rettet af Pinecast. Kontosaldo har ingen kontant værdi, og beløbet fastsættes af rapporteringsdatoen. Pinecast-medarbejdere er ikke berettigede. Reglerne i vores [servicevilkår](/terms) gælder for din fremgangsmåde ved test. Vi kan til enhver tid ændre eller afslutte programmet.
+
+# Vi deler stolt vores fremskridt
+
+Pinecast er ikke perfekt, men vi er stolte af selv at rapportere vores støtte til tilgængelighed med en ACR (Accessibility Conformance Report). Vi er ved at udarbejde dette dokument nu og lægger det op her snart.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LegalLayout} from '@/layouts/LegalLayout';
+
+export default layoutWrapper(LegalLayout, frontmatter);

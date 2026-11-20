@@ -1,0 +1,57 @@
+---
+title: Importe seu podcast
+description: Traga seu programa para o Pinecast vindo de outro serviço de hospedagem.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro, Step} from '@/components/TextBlocks';
+
+<Intro>
+  Mudar de um serviço de hospedagem de podcast para outro pode parecer uma tarefa e tanto. O Pinecast torna isso fácil — vai levar só alguns minutos.
+</Intro>
+
+<Step stepNumber={1} title="Faça upgrade da sua conta">
+  Depois de se cadastrar e verificar seu e-mail, clique no botão "Upgrade" no topo da página. Vamos te guiar pelo processo de configurar uma assinatura. Nossa ferramenta de importação está disponível para todos os clientes pagantes.
+
+  Depois de concluir o checkout, você verá uma tela com os próximos passos. Você pode clicar no botão "Importar um podcast" para ir direto para a ferramenta de importação.
+
+  ![Uma captura de tela da tela exibida imediatamente após o upgrade](/images/content/learn/screenshot-upgraded.png)
+</Step>
+
+<Step stepNumber={2} title="Importe seu programa">
+  Se você ainda não estiver na ferramenta de importação depois do upgrade, clique no botão "Novo podcast" no seu painel principal do Pinecast.
+
+  Não deixe de selecionar a opção "Importar de outro lugar", que vai permitir que você importe seu programa.
+
+  ![Uma captura de tela da página de novo podcast, mostrando a opção de importação](/images/content/learn/screenshot-import-podcast.png)
+
+  Informe seu feed RSS ou a URL do seu programa no Apple Podcasts ou iTunes. Vamos buscar as informações sobre o seu programa: você poderá confirmar todos os detalhes e fazer as alterações necessárias antes de continuar.
+
+  Depois que a importação começar, vai levar alguns minutos para copiar os arquivos do seu programa. Vamos mostrar o progresso conforme ele avança.
+
+  ![Uma captura de tela da página de novo podcast depois que a importação começa, mostrando a mensagem "Perfeito, começamos a importação" e o progresso de cada arquivo](/images/content/learn/screenshot-importing.png)
+
+</Step>
+
+<Step stepNumber={3} title="Configure um redirecionamento de feed">
+  Quando a importação terminar, vamos te enviar um link para um artigo com instruções de como configurar um redirecionamento de feed. Se você perder o link, vamos te enviar por e-mail.
+
+  Siga as instruções fornecidas para configurar um redirecionamento do seu antigo serviço de hospedagem de podcast para o seu novo feed RSS do Pinecast. Você pode encontrar a URL do feed do seu programa na aba Visão geral do painel do seu podcast.
+
+  Redirecionamentos de feed são uma etapa importante; não esqueça de configurar um! Sem um redirecionamento de feed, os apps e diretórios não vão saber que devem passar a consultar o Pinecast em vez do seu antigo serviço de hospedagem.
+</Step>
+
+<Step stepNumber={4} title="Vincule suas listagens">
+  Depois que o redirecionamento estiver ativo por 36 horas, acesse a aba Distribuição no painel do seu podcast no Pinecast. Ative os botões ou clique nos botões "Vincular" para vincular aos diretórios relevantes (Apple Podcasts, Spotify, etc.). Você não precisa reenviar seu programa manualmente se já tiver enviado com o seu antigo serviço de hospedagem.
+
+  Vincular seu podcast permite que o Pinecast ofereça recursos extras para você e seus ouvintes. Por exemplo, isso vai nos permitir buscar dados de análises do Spotify, ou direcionar seus ouvintes diretamente para o melhor app de acordo com a marca do celular deles.
+</Step>
+
+<Step stepNumber={5} title="É só isso!">
+  Dentro de cerca de 24 horas depois que o redirecionamento do seu feed entrar no ar, você estará totalmente migrado para o Pinecast. Você não precisa fazer mais nada, e seus ouvintes também não.
+</Step>
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, frontmatter);

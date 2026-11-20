@@ -1,0 +1,41 @@
+---
+title: Indsættelse af klip
+description: Hold dit bagkatalog friskt med indsættelse af klip.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Lad ikke dit bagkatalog blive forældet. Hold krydspromovering, annoncer og andet indhold opdateret med indsættelse af klip.
+</Intro>
+
+# Tilføjelse af klip
+
+Indsættelse af klip giver dig mulighed for at tilføje pladsholdere til lydklip i dine episoder. Du kan derefter uploade lydklip, og klippene bliver indsat i episodens lyd ved matchende pladsholdere. Du kan bruge indsættelse af klip til alle former for lydindhold, uanset om det er reklamer, intros eller afsluttende credits.
+
+Klip gælder for hele kontoen, så hvis du administrerer flere podcasts, kan du opdatere klip på tværs af dem alle i én handling.
+
+## Match pladsholdere med klip
+
+Klip matches og indsættes i pladsholdere ved hjælp af et robust tagging-system. Tilføj tags til dine pladsholdere, og klip med de samme tags bliver matchet og indsat. Vi giver dig kontrolmuligheder, der sikrer, at de rigtige klip indsættes de rigtige steder, med funktioner som:
+
+1. **Prioritet**: Indstil prioriteten for et klip for at sikre, at det indsættes det rigtige sted. Vigtigere klip får forrang over mindre vigtige klip.
+2. **Afspil højst én gang pr. episode**: Forhindr, at et klip bliver indsat i en episode mere end én gang. Hvis du kører annoncer, hjælper dette med at undgå, at den samme annonce afspilles flere gange i samme episode.
+5. **Vælg podcasts**: Vælg, hvilke podcasts klippet skal indsættes i. Det kan bruges til at indsætte et klip i en bestemt podcast eller til at indsætte et klip i alle podcasts.
+3. **Stop efter N afspilninger**: Hvis du sælger annonceplads pr. afspilning, kan du angive en grænse for, hvor mange gange et klip bliver afspillet. Når grænsen er nået, bliver klippet automatisk fjernet, eller du får en besked med et link, hvor du kan bekræfte nye klipplaceringer.
+
+## Administration af klip
+
+Klip kan administreres centralt i et samlet dashboard. Når du har ændret dine klip, får du vist en plan for, hvordan pladsholderne i dine episoder bliver matchet igen med nye klip. Udgivelse af disse ændringer sker hurtigt og forhindrer, at lyttere hører episoder uden klip.
+
+Vi har også taget hånd om de små praktiske detaljer, som muligheden for at tilføje affiliate-koder direkte på klippet: du behøver ikke lytte til hvert enkelt klip for at finde det, du leder efter. Klip kan stoppes uden at blive slettet, så du nemt kan se, hvilke klip der stadig er tilgængelige til at blive indsat i dine episoder.
+
+## Statistik
+
+Du får den samme fantastiske statistik for klip, som du gør for episoder og podcasts. Udover de statistikvisninger, du forventer, som afspilninger fordelt på kilde og app, kan du se, hvor mange gange hvert klip er blevet afspillet, og hvilke episoder og podcasts det er blevet hørt i. Se vores [statistikdokumentation](https://help.pinecast.com/article/158-analytics) for flere detaljer.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

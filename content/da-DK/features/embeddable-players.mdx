@@ -1,0 +1,43 @@
+---
+title: Indlejrbare afspillere
+description: Tilføj din podcast eller dens episoder, hvor du end kan tilføje HTML-iframes.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  At skrive om din podcast online er ofte ikke nok. Del lydfilen på andre sider på nettet med vores brugervenlige, indlejrbare afspillere.
+</Intro>
+
+# Indlejre din podcast
+
+Uanset om du vil dele en enkelt episode eller dem alle, har vi styr på det. Alle vores afspillere har tilpasningsmuligheder og indbyggede tilgængelighedsfunktioner.
+
+## Podcast-afspiller
+
+Hvis du vil dele alle dine episoder, kan du under fanen Afspiller på din podcasts dashboard vælge farver til en komplet podcast-afspiller.
+
+![Et skærmbillede af podcast-dashboardet, der viser, hvordan du tilpasser en podcast-afspiller](/images/content/features/players-podcast-dashboard.png)
+
+Episoder afspilles i rækkefølge, med kontrol over hastighed og lydstyrke. Når du holder musen over coveret, vises en knap, så dine lyttere kan abonnere på din podcast.
+
+<iframe title="Demo af podcast-afspiller" src="https://pinecast.com/embed/player_playlist/testcast?color.primary=%23ffffff&amp;color.secondary=%23cbd3da&amp;color.accent=%23009dff" border="0" style={{width: '100%', border: 0}} height="400"></iframe>
+
+## Episode-afspiller
+
+Hvis du vil dele en enkelt episode, skal du gå til episodens dashboard og vælge fanen Afspiller. Episode-afspillere har temaindstillinger til mange forskellige formål. Nogle temaer viser undertekster for episoder, der er transskriberet.
+
+![Et skærmbillede af episode-dashboardet, der viser temaindstillinger](/images/content/features/players-episode-dashboard.png)
+
+I modsætning til almindelige HTML-indlejre opfylder disse afspillere IAB's retningslinjer, så statistikken forbliver nøjagtig. Koden og infrastrukturen er optimeret til ydeevne ved at minimere antallet af filer, der skal indlæses.
+
+<iframe title="Demo af episode-afspiller, minimalistisk tema" src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=minimal" seamless height="60" style={{width: '100%', border: 0, marginTop: '40px'}} class="pinecast-embed" width="100%"></iframe>
+<iframe title="Demo af episode-afspiller, fladt tema" src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=flat" seamless height="200" style={{width: '100%', border: 0}} class="pinecast-embed" width="100%"></iframe>
+<iframe title="Demo af episode-afspiller, hvidt plastik-tema" src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=whitePlastic" seamless height="120" style={{width: '100%', border: 0}} class="pinecast-embed" width="100%"></iframe>
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

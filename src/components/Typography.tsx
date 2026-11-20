@@ -282,11 +282,23 @@ export const Body4 = ({
   );
 };
 
-export const Subhead = ({children, level = 3, style}: HeadingProps) => {
+// With `fit`, as a display heading (useHeading): smaller where its widest word
+// would not fit its line.
+export const Subhead = ({
+  children,
+  level = 3,
+  style,
+  fit = false,
+}: HeadingProps) => {
   const css = useCSS();
+  const ref = useFitWords<HTMLHeadingElement>(fit);
   const Tag = `h${level}` as const;
+  const size = (px: number) =>
+    fit ? `calc(${px}px * var(--fit, 1))` : `${px}px`;
   return (
     <Tag
+      ref={ref}
+      data-fit={fit ? 'pending' : undefined}
       className={css({
         ...MonumentGroteskBold,
         display: 'block',
@@ -294,12 +306,13 @@ export const Subhead = ({children, level = 3, style}: HeadingProps) => {
         letterSpacing: '-0.025em',
         marginTop: '0',
         marginBottom: '0',
-        fontSize: '28px',
-        lineHeight: '28px',
+        fontSize: size(28),
+        lineHeight: size(28),
+        ...(fit && {hyphens: 'manual', overflowWrap: 'break-word'}),
         ...style,
         [MIN_TABLET_MEDIA_QUERY]: {
-          fontSize: '42px',
-          lineHeight: '42px',
+          fontSize: size(42),
+          lineHeight: size(42),
           ...(style as Record<string, any>)?.[MIN_TABLET_MEDIA_QUERY],
         },
       })}

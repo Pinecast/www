@@ -1,0 +1,56 @@
+---
+title: Tjen penge på din podcast
+description: Tid til at tjene nogle penge
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Det er altid dejligt at tjene lidt ekstra på din podcast. Men hvad, hvis du kunne tjene mere?
+
+  Pinecast har indbyggede funktioner, der hjælper dig med at opbygge en holdbar indtægtskilde fra din podcast.
+</Intro>
+
+# Hvad er Tip Jar?
+
+Pinecasts bedste funktion til at tjene penge er Tip Jar. Med Tip Jar kan du modtage betalte abonnementer fra dine lyttere. Til gengæld kan du give adgang til privat indhold kun for abonnenter, udgive indhold til abonnenter før alle andre og modtage beskeder direkte fra abonnenter.
+
+![Et skærmbillede af Tip Jar for en podcast](/images/content/learn/screenshot-tip-jar.png)
+
+Abonnementsindtægter udbetales hver fredag (efter en tilbageholdelsesperiode på syv dage) direkte til din bankkonto. Opsætningen er hurtig og nem, uden ventetid.
+
+# Sådan kommer du i gang
+
+Fra dit hoveddashboard vælger du fanen Indstillinger &gt; Tip Jar på din kontos dashboard, eller fanen Tip Jar på en podcasts dashboard, og følger instruktionerne.
+
+![Et skærmbillede af Tip Jar-dashboardet for en podcast](/images/content/learn/screenshot-tip-jar-dashboard.png)
+
+For at komme i gang beder vi dig om nogle personlige oplysninger:
+
+1. Vi skal have dine bank- eller betalingskortoplysninger for at kunne sende dig dine indtægter.
+2. Vi beder om identitetsoplysninger om dig og/eller din organisation for at opfylde dit lands lovkrav til identitetsbekræftelse.
+
+Alle disse oplysninger indsamles via Stripe, vores betalingsudbyder, og opbevares sikkert på deres servere. Når du har angivet de ønskede oplysninger, kan du begynde at modtage betalinger med det samme: du vil se et link til din Tip Jar under fanen Tip Jar på hver podcasts dashboard.
+
+# Modtagelse af tips
+
+Som standard modtager vi både engangs- og tilbagevendende tips på dine vegne. For konti i USA kan tips variere fra $1 til $150 (beløbene varierer efter valuta). Du kan tilpasse teksten før og efter en donation og tilføje en takkebesked til den e-mail, der sendes efter et tip.
+
+Det er nemt at få lyttere ind i din Tip Jar. Vores [korte links](/features/short-links) linker automatisk til din Tip Jar, når du deler dem. Du finder en afkrydsningsboks på dine episoder, så Tip Jar automatisk linkes i episodenoterne for hver episode (og vi husker dit valg, næste gang du uploader en ny episode).
+
+Når en lytter sender dig et tip, får du en e-mail og kan se detaljerne om tippet på din podcasts dashboard. Tips holdes i reserve i syv dage og udbetales den følgende fredag.
+
+## Abonnenter
+
+Når du opretter en episode, kan du markere den som privat (eller, med vores Growth-tilkøb, privat indtil en bestemt dato). Betalende abonnenter får adgang til et særligt dashboard, hvor de kan tilgå din podcasts private episoder—enten i deres browser eller i en podcast-app. Hvis de lytter i browseren, hjælper vi endda med at holde styr på, hvilke episoder de har lyttet til.
+
+![Et skærmbillede af, hvad abonnenter på en podcasts Tip Jar vil se](/images/content/learn/screenshot-tip-jar-tipper-dashboard.png)
+
+Abonnementer administreres fuldstændig automatisk. Hver abonnent får et unikt feed, som de kan tilføje til deres podcast-app. Hvis deres abonnement udløber, deaktiveres feedet automatisk.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, frontmatter);

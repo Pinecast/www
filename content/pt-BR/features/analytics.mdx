@@ -1,0 +1,103 @@
+---
+title: Análises
+description: Acompanhe as reproduções e os visitantes do seu podcast
+heroImage: /images/hero/t-r.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  As análises de podcast do Pinecast são impulsionadas por um poderoso mecanismo de análises que fornece dados quase em tempo real com uma granularidade incomparável.
+
+  Sabemos que o crescimento do seu programa é importante para você. Veja como criamos algumas das melhores ferramentas de análises já feitas para podcasters.
+</Intro>
+
+# Os dados que você precisa
+
+Oferecemos uma grande variedade de visualizações para seus dados de análises. Você pode escolher intervalos de tempo para a maioria das visualizações. Para dados de série temporal, você pode escolher a granularidade para visualizar os resultados (dia, semana, mês). A maioria das visualizações é ajustada ao fuso horário do relógio do seu computador.
+
+![Uma captura de tela da visualização de Reproduções por Episódio de um podcast](/images/content/features/analytics-listens-by-episode.png)
+
+Cada visualização de análises inclui uma explicação do que você está vendo e como interpretar os dados, para que você nunca fique sem contexto. Vamos até anotar seus gráficos para mostrar quando os episódios foram publicados. E, claro, você pode baixar qualquer visualização como CSV.
+
+## Visualizações exclusivas
+
+Veja quando seus ouvintes baixam episódios, a taxa relativa de crescimento dos episódios, a localização dos ouvintes e muito mais. Temos confiança de que oferecemos uma das maiores seleções — se não a maior seleção — de visualizações de análises entre todos os hosts de podcast. Além disso, os gráficos que fornecemos são cuidadosamente projetados para responder perguntas reais sobre seu podcast; eles não são só bonitos de se ver.
+
+![Uma captura de tela da visualização de Crescimento de Reproduções por Episódio de um podcast, disponível com o complemento Análises Pro](/images/content/features/analytics-listen-growth-by-episode.png)
+
+Com todo esse detalhamento vem alguma complexidade, mas não se preocupe: abaixo de cada gráfico há uma explicação dos dados, incluindo detalhes sobre o que está incluído e o que não está, e se os dados são ajustados ao fuso horário.
+
+O Pinecast oferece 17 visualizações de análises para podcasts, 13 visualizações para episódios e 13 visualizações para redes de podcasts (disponíveis com nosso complemento Equipe). Você vai ter dificuldade para encontrar outro host que ofereça tantos dados com a mesma qualidade do Pinecast.
+
+Você pode ver todos os detalhes de todas as nossas visualizações de análises [em nosso site de suporte](https://help.pinecast.com/article/158-analytics).
+
+### Visualizações de podcast
+
+Estas são as visualizações disponíveis ao visualizar um podcast.
+
+<ChecksList>
+  <li>Total de reproduções</li>
+  <li>Total de reproduções no Spotify</li>
+  <li>Reproduções por episódio</li>
+  <li>Reproduções por horário do dia</li>
+  <li>Principais episódios</li>
+  <li>Crescimento de reproduções</li>
+  <li>Crescimento de reproduções por episódio</li>
+  <li>Reproduções por origem</li>
+  <li>Reproduções por agente</li>
+  <li>Reproduções por agente ao longo do tempo</li>
+  <li>Reproduções por sistema operacional</li>
+  <li>Totais de reproduções por episódio</li>
+  <li>Localização dos ouvintes</li>
+  <li>Visitas por link curto</li>
+  <li>Visitas por link curto por navegador</li>
+  <li>Localização dos visitantes por link curto</li>
+  <li>Detalhamento de cliques por link curto</li>
+</ChecksList>
+
+### Visualizações de episódio
+
+Você verá essas visualizações ao abrir um episódio individual no seu painel.
+
+<ChecksList>
+  <li>Total de reproduções</li>
+  <li>Total de reproduções no Spotify</li>
+  <li>Reproduções por horário do dia</li>
+  <li>Crescimento de reproduções</li>
+  <li>Reproduções por origem</li>
+  <li>Reproduções por agente</li>
+  <li>Reproduções por agente ao longo do tempo</li>
+  <li>Reproduções por sistema operacional</li>
+  <li>Localização dos ouvintes</li>
+  <li>Visitas por link curto</li>
+  <li>Visitas por link curto por navegador</li>
+  <li>Localização dos visitantes por link curto</li>
+  <li>Detalhamento de cliques por link curto</li>
+</ChecksList>
+
+### Visualizações de rede
+
+As visualizações de rede mostram detalhes de vários podcasts ao mesmo tempo. As redes estão disponíveis com o complemento Equipe.
+
+<ChecksList>
+  <li>Total de reproduções</li>
+  <li>Total de reproduções no Spotify</li>
+  <li>Reproduções por horário do dia</li>
+  <li>Principais episódios</li>
+  <li>Crescimento de reproduções</li>
+  <li>Reproduções por origem</li>
+  <li>Reproduções por agente</li>
+  <li>Reproduções por agente ao longo do tempo</li>
+  <li>Reproduções por sistema operacional</li>
+  <li>Localização dos ouvintes</li>
+  <li>Visitas por link curto</li>
+  <li>Visitas por link curto por navegador</li>
+  <li>Detalhamento de cliques por link curto</li>
+</ChecksList>
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

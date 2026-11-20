@@ -1,0 +1,57 @@
+---
+title: Importe ton podcast
+description: Transfère ton émission vers Pinecast depuis un autre hébergeur.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro, Step} from '@/components/TextBlocks';
+
+<Intro>
+  Changer de service d'hébergement de podcast peut sembler intimidant. Avec Pinecast, c'est simple : ça ne prendra que quelques minutes.
+</Intro>
+
+<Step stepNumber={1} title="Mets à niveau ton compte">
+  Après t'être inscrit et avoir vérifié ton adresse e-mail, clique sur le bouton "Mettre à niveau" en haut de la page. On te guidera à travers la mise en place d'un abonnement. Notre outil d'import est disponible pour tous les clients payants.
+
+  Une fois le paiement effectué, tu verras un écran avec les prochaines étapes. Tu peux cliquer sur le bouton "Importer un podcast" pour accéder directement à l'outil d'import.
+
+  ![Capture d'écran de l'écran affiché juste après la mise à niveau](/images/content/learn/screenshot-upgraded.png)
+</Step>
+
+<Step stepNumber={2} title="Importe ton émission">
+  Si tu n'es pas déjà sur l'outil d'import après la mise à niveau, clique sur le bouton "Nouveau podcast" dans ton tableau de bord Pinecast.
+
+  Assure-toi de sélectionner l'option "Importer depuis un autre service", qui te permettra d'importer ton émission.
+
+  ![Capture d'écran de la page de nouveau podcast, montrant l'option d'import](/images/content/learn/screenshot-import-podcast.png)
+
+  Indique ton flux RSS ou l'URL de ton émission sur Apple Podcasts ou iTunes. On récupérera les informations sur ton émission : tu pourras vérifier tous les détails et apporter les modifications nécessaires avant de continuer.
+
+  Une fois l'import lancé, ça prendra quelques minutes pour copier les éléments de ton émission. On affichera la progression à mesure qu'elle avance.
+
+  ![Capture d'écran de la page de nouveau podcast après le début de l'import, montrant le message "Parfait, on a lancé l'import" et la progression de chaque élément](/images/content/learn/screenshot-importing.png)
+
+</Step>
+
+<Step stepNumber={3} title="Configure une redirection de flux">
+  Une fois l'import terminé, on te redirigera vers un article expliquant comment configurer une redirection de flux. Si tu rates le lien, on te l'envoie aussi par e-mail.
+
+  Suis les instructions fournies pour mettre en place une redirection depuis ton ancien hébergeur de podcast vers ton nouveau flux RSS Pinecast. Tu trouveras l'URL du flux de ton émission dans l'onglet Aperçu de ton tableau de bord.
+
+  La redirection de flux est une étape importante ; pense bien à la mettre en place ! Sans redirection de flux, les applications et annuaires ne sauront pas qu'ils doivent désormais vérifier Pinecast au lieu de ton ancien hébergeur.
+</Step>
+
+<Step stepNumber={4} title="Associe tes plateformes de diffusion">
+  Une fois la redirection active depuis 36 heures, rends-toi dans l'onglet Distribution du tableau de bord de ton podcast sur Pinecast. Active les interrupteurs ou clique sur les boutons "Associer" pour relier les annuaires concernés (Apple Podcasts, Spotify, etc.). Tu n'as pas besoin de soumettre à nouveau ton émission manuellement si tu l'avais déjà soumise avec ton ancien hébergeur.
+
+  Associer ton podcast permet à Pinecast de t'offrir, ainsi qu'à tes auditeurs, des fonctionnalités supplémentaires. Par exemple, ça nous permet de récupérer les statistiques de Spotify, ou de rediriger tes auditeurs directement vers la meilleure application pour leur marque de téléphone.
+</Step>
+
+<Step stepNumber={5} title="Et voilà !">
+  Environ 24 heures après la mise en ligne de ta redirection de flux, tu seras entièrement transféré sur Pinecast. Tu n'as rien d'autre à faire, et tes auditeurs non plus.
+</Step>
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, frontmatter);

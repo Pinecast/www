@@ -20,17 +20,27 @@ import {
 import {useAudioManager} from '@/hooks/useAudioManager';
 import {SoundEffect} from '@/hooks/useSoundEffects';
 
+// A line of 40px, with 4px above and below from 1181px wide, as when the
+// label had `line-height: 40px`. A label that wraps makes the button taller
+// (German "Was ist enthalten?" from 701 to 800px wide, with larger text
+// spacing), with lines of 1.2em.
 const BUTTON_STYLE = {
+  alignItems: 'center',
   fontSize: '14px',
-  lineHeight: '40px',
+  height: 'auto',
+  lineHeight: '1.2',
+  minHeight: '40px',
+  paddingBottom: '4px',
   paddingLeft: '0px',
   paddingRight: '0px',
+  paddingTop: '4px',
   minWidth: '150px',
   [MIN_TABLET_MEDIA_QUERY]: {
     fontSize: '16px',
-    height: 'auto',
-    paddingTop: '4px',
-    paddingBottom: '4px',
+    // Here the border adds to the height, as it did with no `minHeight`.
+    minHeight: '0',
+    paddingBottom: 'calc((40px - 1.2em) / 2 + 4px)',
+    paddingTop: 'calc((40px - 1.2em) / 2 + 4px)',
   },
 };
 const MAX_WIDTH = 1300;
@@ -105,7 +115,7 @@ export const Pricing = () => {
         color="var(--color-sand)"
         col1={
           <>
-            <Subhead style={{marginBottom: '16px'}}>
+            <Subhead fit style={{marginBottom: '16px'}}>
               <FormattedMessage
                 description="Name of the free plan, on its ticket in the pricing section"
                 defaultMessage="Free demo plan"
@@ -181,7 +191,7 @@ export const Pricing = () => {
         color="var(--color-orchid)"
         col1={
           <>
-            <Subhead style={{marginBottom: '16px'}}>
+            <Subhead fit style={{marginBottom: '16px'}}>
               <FormattedMessage
                 description="Name of the Starter plan, on its ticket in the pricing section"
                 defaultMessage="Starter plan"
@@ -498,7 +508,13 @@ const PricingTicket = ({
         },
 
         display: 'grid',
-        gridTemplateColumns: '350fr 600fr 350fr',
+        // The first two columns can be narrower than their content, where
+        // their text wraps and the plan's name fits its words, so that the
+        // buttons keep their column and the ticket does not cut them off (in
+        // German and French, 701 to 800px wide, with larger text spacing).
+        // English text is never wider than its share, so English keeps these
+        // proportions.
+        gridTemplateColumns: 'minmax(0, 350fr) minmax(0, 600fr) 350fr',
       })}
     >
       <div
@@ -535,7 +551,9 @@ const PricingTicket = ({
           alignItems: 'center',
           display: 'grid',
           gap: '20px',
-          gridTemplateColumns: 'max-content',
+          // As wide as the longer label, but no wider than the column: a
+          // label longer than that wraps in its button.
+          gridTemplateColumns: 'minmax(min-content, max-content)',
           gridTemplateRows: 'min-content min-content',
           justifyContent: 'center',
           justifyItems: 'stretch',

@@ -75,6 +75,7 @@ const Header = () => {
       })}
     >
       <H1
+        fit
         style={{
           marginBottom: '20px',
           padding: '0 5%',

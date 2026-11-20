@@ -1,0 +1,38 @@
+---
+title: Overvågning af anmeldelser
+description: Hold styr på anmeldelser af din podcast fra dine lyttere.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Efterlader dine lyttere anmeldelser af din podcast? Hvor tit tjekker du dem? Lad Pinecast gøre det tunge arbejde med at holde øje med anmeldelser.
+</Intro>
+
+# Se alle anmeldelser
+
+"Giv os en anmeldelse" er en sætning, mange podcastere siger ofte, men de fleste producere ser ikke alle de anmeldelser, der bliver lagt op. Pinecasts Growth-tilkøb ($10/md. eller $110/år) tager sig af det hårde arbejde for dig og sender dig en e-mail, når der er lagt en ny anmeldelse op på Apple Podcasts eller Podchaser.
+
+![Et skærmbillede af podcast-dashboardet, der viser anmeldelser, der er blevet lagt op](/images/content/features/review-monitoring-dashboard.png)
+
+Vi fanger ikke kun de anmeldelser, der bliver lagt op - vi opdeler også de bedømmelser, der er givet, og følger din gennemsnitlige bedømmelse. Anmeldelser kan filtreres efter bedømmelse eller anmelderens land (hvis det er tilgængeligt).
+
+## Fuld kontrol over regionale anmeldelser
+
+Vidste du, at Apple Podcasts har forskellige regionale lister for hver podcast? Hvis du skifter land på Apple Podcasts, vil du se andre podcastanmeldelser. At se alle dine anmeldelser kan betyde, at du skal tjekke snesevis af versioner af dine lister.
+
+Ingen panik! Pinecast tjekker anmeldelserne for hvert land og viser dem samlet i dit dashboard.
+
+# Notifikationer
+
+Som standard får podcastens ejer en e-mail-notifikation, hver gang der kommer en ny anmeldelse. Anmeldelser vises i podcastens dashboard.
+
+![Et skærmbillede af formularen til at oprette en notifikation, indstillet til at sende en e-mail, når der findes en podcastanmeldelse](/images/content/features/review-monitoring-notification.png)
+
+Hvis du også abonnerer på Pinecasts Crew-tilkøb, kan du også konfigurere notifikationer til andre e-mailadresser, Slack, Discord eller HTTP-webhooks.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

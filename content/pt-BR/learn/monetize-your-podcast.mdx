@@ -1,0 +1,56 @@
+---
+title: Monetize Seu Podcast
+description: Hora de ganhar uma grana
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Ganhar um dinheiro extra com o seu podcast é sempre bom. Mas e se você pudesse ganhar mais?
+
+  O Pinecast tem recursos integrados para ajudar você a criar uma fonte de renda sustentável com o seu programa.
+</Intro>
+
+# O que é a caixinha?
+
+O melhor recurso do Pinecast para monetização é a Caixinha. Com a caixinha, você pode aceitar assinaturas pagas dos seus ouvintes. Em troca, você pode oferecer conteúdo privado exclusivo para assinantes, liberar conteúdo antecipadamente para assinantes e receber mensagens diretamente dos assinantes.
+
+![Uma captura de tela da caixinha de um podcast](/images/content/learn/screenshot-tip-jar.png)
+
+A receita das assinaturas é paga toda sexta-feira (após um período de retenção de sete dias) diretamente na sua conta bancária. A configuração é rápida e fácil, sem períodos de espera.
+
+# Configurando tudo
+
+No seu painel principal, escolha a aba Configurações &gt; Caixinha no painel da sua conta principal, ou a aba Caixinha no painel de qualquer podcast, e siga as instruções.
+
+![Uma captura de tela do painel da caixinha de um podcast](/images/content/learn/screenshot-tip-jar-dashboard.png)
+
+Para começar, vamos pedir algumas informações pessoais:
+
+1. Precisamos dos dados da sua conta bancária ou cartão de débito para enviar seus ganhos.
+2. Vamos pedir informações de identidade sobre você e/ou sua organização para atender às exigências legais do seu país em relação à verificação de identidade.
+
+Todas essas informações são coletadas pela Stripe, nossa processadora de pagamentos, e armazenadas com segurança nos servidores deles. Depois de fornecer as informações solicitadas, você poderá começar a aceitar pagamentos imediatamente: você verá um link para a sua caixinha na aba Caixinha do painel de cada podcast.
+
+# Recebendo contribuições
+
+Por padrão, vamos aceitar contribuições únicas e recorrentes em seu nome. Para contas nos EUA, as contribuições podem variar de US$ 1 a US$ 150 (os valores variam de acordo com a moeda). Você pode personalizar as mensagens exibidas antes e depois de uma doação, além de adicionar uma mensagem de agradecimento ao e-mail enviado após cada contribuição.
+
+Levar ouvintes até a sua caixinha é fácil. Nossos [links curtos](/features/short-links) já incluem automaticamente a sua caixinha quando você os compartilha. Você vai encontrar uma caixa de seleção nos seus episódios para adicionar o link da caixinha automaticamente nas notas de cada episódio (e vamos lembrar da sua escolha na próxima vez que você for enviar um episódio).
+
+Quando um ouvinte te manda uma contribuição, você recebe um e-mail e vê os detalhes dela no painel do seu podcast. As contribuições ficam retidas por sete dias e são pagas na sexta-feira seguinte.
+
+## Assinantes
+
+Quando você cria um episódio, pode marcá-lo como privado (ou, com o complemento Crescimento, privado até uma determinada data). Os assinantes pagantes terão acesso a um painel especial, onde podem ouvir os episódios privados do seu programa—seja no navegador ou em um aplicativo de podcast. Se ouvirem pelo navegador, nós ainda ajudamos a controlar quais episódios eles já ouviram.
+
+![Uma captura de tela do que os assinantes da caixinha de um podcast vão ver](/images/content/learn/screenshot-tip-jar-tipper-dashboard.png)
+
+As assinaturas são gerenciadas de forma totalmente automática. Cada assinante recebe um feed exclusivo, que pode ser adicionado ao aplicativo de podcast. Se a assinatura expirar, o feed é desativado automaticamente.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, frontmatter);

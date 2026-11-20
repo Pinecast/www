@@ -1,5 +1,5 @@
 import {expect, test, type Locator, type Page} from '@playwright/test';
-import {inEveryLanguage, load, menuPanel} from './helpers';
+import {inEnglishAndSample, load, menuPanel} from './helpers';
 
 // Keyboard focus checks (WCAG 2.4.7, 2.4.11, 1.4.11 and 1.4.13). Run
 // `npm run build` first.
@@ -14,8 +14,11 @@ import {inEveryLanguage, load, menuPanel} from './helpers';
 const WIDE = {width: 1280, height: 900};
 const NARROW = {width: 375, height: 812};
 
-// Each in every language that has it: the walk knows no copy.
-const PAGES = inEveryLanguage([
+// Each in English and in one other language (SAMPLE_LOCALE): the walk knows
+// no copy, and the words do not change where focus goes. The labels that
+// longer words push out of their buttons are a test of text-spacing.spec.ts,
+// in every language.
+const PAGES = inEnglishAndSample([
   '/',
   '/features',
   '/learn',
