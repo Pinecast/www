@@ -1,6 +1,6 @@
 import {FormattedMessage} from 'react-intl';
 
-import {FooterUpsell} from './InfoPageFooterUpsell';
+import {FOOTER_BUTTON_STYLE, FooterUpsell} from './InfoPageFooterUpsell';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
 
@@ -25,13 +25,16 @@ export const QuoteFooterUpsell = () => (
     }
     buttons={
       <>
-        <PrimaryButton href="mailto:support@pinecast.com">
+        <PrimaryButton
+          href="mailto:support@pinecast.com"
+          style={FOOTER_BUTTON_STYLE}
+        >
           <FormattedMessage
             description="Button in the quote section at the bottom of the page for colleges and universities. It opens an email to Pinecast support"
             defaultMessage="Request a quote"
           />
         </PrimaryButton>
-        <SecondaryButton href="/features">
+        <SecondaryButton href="/features" style={FOOTER_BUTTON_STYLE}>
           <FormattedMessage
             description="Button in the quote section at the bottom of the page for colleges and universities, to the Features page"
             defaultMessage="What’s included?"

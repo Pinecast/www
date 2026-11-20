@@ -6,6 +6,20 @@ import {Body4, Caption, H2} from './Typography';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
 import {DARK_SURFACE} from '@/constants';
+import {StyleObject} from 'styletron-react';
+
+// The style of each button of a FooterUpsell. A label that is too long for
+// the row ("Qu’est-ce qui est inclus ?" with larger text spacing at 320px)
+// wraps, and the button grows taller with it. A label of one line keeps the
+// button's 40px.
+export const FOOTER_BUTTON_STYLE: StyleObject = {
+  alignItems: 'center',
+  height: 'auto',
+  lineHeight: '20px',
+  minHeight: '40px',
+  paddingBottom: '8px',
+  paddingTop: '8px',
+};
 
 // The dark section at the bottom of a page, above the footer: a big heading,
 // a line of text, a row of buttons and a small note. The content pages show
@@ -57,9 +71,9 @@ export const FooterUpsell = ({
         <div
           className={css({
             display: 'flex',
-            // A button has a fixed height. Where two do not fit side by side
-            // (320px, larger text spacing), each takes its own row, so that
-            // a label does not wrap and spill out of its button.
+            // Where two buttons do not fit side by side (320px, larger text
+            // spacing), each takes its own row. A label that is still too
+            // long wraps inside its button (FOOTER_BUTTON_STYLE).
             flexWrap: 'wrap',
             justifyContent: 'center',
             gap: '20px',
@@ -90,13 +104,16 @@ export const InfoPageFooterUpsell = () => (
     }
     buttons={
       <>
-        <PrimaryButton href="https://pinecast.com/signup">
+        <PrimaryButton
+          href="https://pinecast.com/signup"
+          style={FOOTER_BUTTON_STYLE}
+        >
           <FormattedMessage
             description="Button in the sign-up section at the bottom of the content pages, to the sign-up form"
             defaultMessage="Start for free"
           />
         </PrimaryButton>
-        <SecondaryButton href="/features">
+        <SecondaryButton href="/features" style={FOOTER_BUTTON_STYLE}>
           <FormattedMessage
             description="Button in the sign-up section at the bottom of the content pages, to the Features page"
             defaultMessage="What’s included?"
