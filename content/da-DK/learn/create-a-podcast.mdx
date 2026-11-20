@@ -1,0 +1,110 @@
+---
+title: Opret din podcast
+description: Lær, hvordan du opretter din første podcast på Pinecast.
+heroImage: /images/hero/t-r.png
+---
+
+import {DefinitionList, Intro, Step} from '@/components/TextBlocks';
+
+<Intro>
+  Vi er selv podcastere og vil gerne hjælpe dig og din podcast med at lykkes. Det er nemt at komme i gang med din første podcast, og du kan gøre det gratis uden at skulle binde dig til et betalt Pinecast-abonnement.
+
+  Dette afsnit er fyldt med nyttige tips og er det første skridt til at sætte din podcast op.
+</Intro>
+
+<Step stepNumber={1} title="Opret podcasten">
+  Når du har oprettet en konto, skal du klikke på knappen på dit hoveddashboard for at sætte en podcast op. Vi spørger dig, hvordan du vil starte: vælg "start fra bunden" for at starte en ny podcast.
+
+  ![Et skærmbillede af siden til oprettelse af ny podcast](/images/content/learn/screenshot-create-podcast.png)
+
+  ### Vi spørger dig om nogle oplysninger
+
+  <DefinitionList>
+    <dt>Podcastnavn</dt>
+    <dd>
+      Dette er navnet på din podcast. Det kan ændres senere.
+    </dd>
+    <dt>Slug</dt>
+    <dd>
+      Vi bruger dette til URL'er, som fx `https://your-slug-here.pinecast.co`.
+    </dd>
+    <dt>Beskrivelse</dt>
+    <dd>
+      En kort beskrivelse af din podcast på 2-3 sætninger.
+    </dd>
+    <dt>Hjemmeside</dt>
+    <dd>
+      Der, hvor folk skal linkes til fra din podcast i en app. Med en betalt plan kan du bruge en hjemmeside bygget af Pinecast, eller vores kort link-funktion.
+    </dd>
+    <dt>Forfatternavn</dt>
+    <dd>
+      Dit navn, eller navnet på den person eller organisation, der producerer podcasten.
+    </dd>
+    <dt>Cover</dt>
+    <dd>
+      Podcast-apps kræver et billede til brug som cover for din podcast. Giv os en PNG- eller JPG-fil, og vi sørger for at tilpasse den til den krævede størrelse og de krævede dimensioner.
+    </dd>
+    <dt>Kategorier</dt>
+    <dd>
+      Dette er de kategorier, din podcast vises under i kataloger som Apple Podcasts.
+    </dd>
+  </DefinitionList>
+
+  Når du er færdig, skal du klikke på "Gem og fortsæt." Det opretter din podcast.
+</Step>
+
+<Step stepNumber={2} title="Upload din første episode">
+  Når din podcast er oprettet, skal du tilføje indhold. Det er din første episode. Der skal mindst én episode til, før du kan indsende din podcast til distribution: uden en episode er dit feed ugyldigt og bliver afvist. Klik på knappen "Ny episode" på din podcasts dashboard.
+
+  ![Et skærmbillede af siden til oprettelse af ny episode](/images/content/learn/screenshot-create-episode.png)
+
+  Til din første episode kan du vælge at uploade en kort trailer i stedet for din fulde episode. Det giver dig tid til at forberede en hel episode, mens du får distributionen i gang.
+
+  Du skal give nogle oplysninger for at oprette episoden:
+
+  <DefinitionList>
+    <dt>Episodetitel</dt>
+    <dd>
+      Titlen på din episode, som den vil blive vist i podcast-apps.
+    </dd>
+    <dt>Episodetype</dt>
+    <dd>
+      Om episoden er en hel episode, bonusindhold eller en trailer.
+    </dd>
+    <dt>Lyd</dt>
+    <dd>
+      {/* The switch's label and its default (off today, soon on for audio with no metadata) come from pinecast-ts, MetadataSwitch.tsx. Keep this copy free of the default and of file types, which are changing. */}
+      En MP3- eller M4A-fil med lyden til din episode. Hvis filen ikke har sin egen titel, kunstner eller album, kan du slå knappen "Tilføj metadata-tags til episodens lyd" til, så skriver Pinecast dem ind i filen, når du gemmer.
+    </dd>
+    <dt>Episodecover</dt>
+    <dd>
+      Et valgfrit billede til episoden. Du kan springe det over. Vi gør vores bedste for at sikre, at coveret er tilgængeligt i alle podcast-apps, der understøtter det.
+    </dd>
+    <dt>Udgivelsesdato</dt>
+    <dd>
+      Datoen, hvor episoden skal gå live. Hvis datoen ligger tilbage i tiden, bagdaterer vi episoden.
+    </dd>
+    <dt>Shownotes</dt>
+    <dd>
+      Dette er et fritekstfelt, hvor du beskriver din episode. Det vises på din podcasts hjemmeside og i podcast-apps.
+    </dd>
+  </DefinitionList>
+
+  Når du er færdig, skal du klikke på "Gem episode." Det opretter din episode.
+
+</Step>
+
+<Step stepNumber={3} title="Sæt distribution op">
+  Når din første episode er live i dit feed, skal du besøge fanen Distribution. Her kan du få din podcast ud i podcast-apps. Hvis dit feed ikke er klar, får du besked om hvorfor på denne fane.
+
+  Du kan læse mere om denne fane på vores [Distribution-side](/features/distribution).
+
+  Nogle podcast-apps og kataloger tilbyder indsendelse med et enkelt klik: du skal bare slå knappen under katalogets navn til. Andre kræver lidt mere arbejde: udvid afsnittet "indsendelsesinstruktioner" for hvert katalog, og følg vejledningen for at komme i gang.
+
+  Når du har fulgt instruktionerne, er der muligvis en mulighed for at forbinde Pinecast med din visning. Det gør Pinecast bekendt med visningen i kataloget og låser funktioner op som overvågning af podcastanmeldelser og poster på vores kort links.
+</Step>
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, frontmatter);

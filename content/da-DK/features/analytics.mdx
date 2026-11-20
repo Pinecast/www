@@ -1,0 +1,103 @@
+---
+title: Statistik
+description: Hold styr på afspilninger og besøgende på din podcast
+heroImage: /images/hero/t-r.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Pinecasts podcaststatistik drives af en effektiv statistikmotor, der leverer data i realtid med uhørt detaljegrad.
+
+  Vi ved, at din podcasts vækst er vigtig for dig. Se hvordan vi har bygget nogle af de bedste statistikværktøjer, der er skabt til podcastere.
+</Intro>
+
+# De data, du har brug for
+
+Vi giver dig et væld af visninger af din statistik. Du kan vælge tidsperioder for de fleste visninger. For tidsseriedata kan du vælge detaljegraden, resultaterne vises med (dag, uge, måned). De fleste visninger er tidszonejusteret efter din computers klokke.
+
+![Et screenshot af visningen Afspilninger pr. episode for en podcast](/images/content/features/analytics-listens-by-episode.png)
+
+Hver statistikvisning indeholder en forklaring på, hvad du kigger på, og hvordan du skal tolke dataene, så du aldrig er uden kontekst. Vi markerer også dine diagrammer, så du kan se, hvornår episoder er udgivet. Og selvfølgelig kan du downloade enhver visning som en CSV-fil.
+
+## Unikke visninger
+
+Se hvornår dine lyttere downloader episoder, episodernes relative væksthastighed, hvor dine lyttere befinder sig, og meget mere. Vi er sikre på, at vi har et af de største—hvis ikke det største—udvalg af statistikvisninger blandt alle podcast-hosts. Og vores diagrammer er desuden designet med omtanke, så de besvarer reelle spørgsmål om din podcast; de er ikke bare pæne at kigge på.
+
+![Et screenshot af visningen Afspilningsvækst pr. episode for en podcast, som er tilgængelig med tilkøbet Pro Analytics](/images/content/features/analytics-listen-growth-by-episode.png)
+
+Med alle disse detaljer kommer der også lidt kompleksitet, men bare rolig: under hvert diagram finder du en forklaring på dataene, herunder detaljer om, hvad der er inkluderet og ikke inkluderet, samt om dataene er tidszonejusteret.
+
+Pinecast tilbyder 17 statistikvisninger for podcasts, 13 visninger for episoder og 13 visninger for podcastnetværk (tilgængeligt med vores tilkøb Crew). Du vil have svært ved at finde en anden host, der leverer så mange data af samme kvalitet som Pinecast.
+
+Du kan se alle detaljerne for alle vores statistikvisninger [på vores supportwebsted](https://help.pinecast.com/article/158-analytics).
+
+### Podcastvisninger
+
+Det er de visninger, der er tilgængelige, når du kigger på en podcast.
+
+<ChecksList>
+  <li>Afspilninger i alt</li>
+  <li>Afspilninger i alt på Spotify</li>
+  <li>Afspilninger pr. episode</li>
+  <li>Afspilninger efter tidspunkt</li>
+  <li>Mest populære episoder</li>
+  <li>Afspilningsvækst</li>
+  <li>Afspilningsvækst pr. episode</li>
+  <li>Afspilninger efter kilde</li>
+  <li>Afspilninger efter agent</li>
+  <li>Afspilninger efter agent og tidspunkt</li>
+  <li>Afspilninger efter OS</li>
+  <li>Samlede afspilninger pr. episode</li>
+  <li>Lytternes placeringer</li>
+  <li>Besøg via korte links</li>
+  <li>Besøg via korte links efter browser</li>
+  <li>Besøgendes placeringer via korte links</li>
+  <li>Fordeling af klik via korte links</li>
+</ChecksList>
+
+### Episodevisninger
+
+Du ser disse, når du åbner en enkelt episode i dit dashboard.
+
+<ChecksList>
+  <li>Afspilninger i alt</li>
+  <li>Afspilninger i alt på Spotify</li>
+  <li>Afspilninger efter tidspunkt</li>
+  <li>Afspilningsvækst</li>
+  <li>Afspilninger efter kilde</li>
+  <li>Afspilninger efter agent</li>
+  <li>Afspilninger efter agent og tidspunkt</li>
+  <li>Afspilninger efter OS</li>
+  <li>Lytternes placeringer</li>
+  <li>Besøg via korte links</li>
+  <li>Besøg via korte links efter browser</li>
+  <li>Besøgendes placeringer via korte links</li>
+  <li>Fordeling af klik via korte links</li>
+</ChecksList>
+
+### Netværksvisninger
+
+Netværksvisninger viser detaljer for flere podcasts på én gang. Netværk er tilgængelige med tilkøbet Crew.
+
+<ChecksList>
+  <li>Afspilninger i alt</li>
+  <li>Afspilninger i alt på Spotify</li>
+  <li>Afspilninger efter tidspunkt</li>
+  <li>Mest populære episoder</li>
+  <li>Afspilningsvækst</li>
+  <li>Afspilninger efter kilde</li>
+  <li>Afspilninger efter agent</li>
+  <li>Afspilninger efter agent og tidspunkt</li>
+  <li>Afspilninger efter OS</li>
+  <li>Lytternes placeringer</li>
+  <li>Besøg via korte links</li>
+  <li>Besøg via korte links efter browser</li>
+  <li>Fordeling af klik via korte links</li>
+</ChecksList>
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

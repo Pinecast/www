@@ -1,0 +1,35 @@
+---
+title: E-Mail-Datenschutz
+description: Halte deine persönliche E-Mail-Adresse mit dem E-Mail-Datenschutz von Pinecast privat.
+heroImage: /images/hero/t-l.png
+---
+
+import {Intro, DefinitionList} from '@/components/TextBlocks';
+
+<Intro>
+  Halte deine persönliche E-Mail-Adresse vor der Öffentlichkeit verborgen.
+</Intro>
+
+# Deine Privatsphäre ist wichtig
+
+Einen Podcast zu starten bedeutet, eine aktive E-Mail-Adresse in die Welt hinauszuschicken. Mit Pinecast kannst du das tun, ohne deine persönliche E-Mail-Adresse gegenüber Hörer:innen offenzulegen – und ohne, dass du einen separaten Posteingang verwalten musst.
+
+Den E-Mail-Datenschutz einzurichten ist ganz einfach: Aktiviere ihn mit einem Klick beim Einrichten deiner Show oder in deinen Podcast-Einstellungen. Wenn du den E-Mail-Datenschutz aktivierst, wird die in deinem Feed veröffentlichte E-Mail-Adresse durch eine von Pinecast verwaltete Weiterleitungsadresse ersetzt.
+
+<DefinitionList>
+    <dt>Ohne E-Mail-Datenschutz</dt>
+    <dd>your-email@gmail.com</dd>
+    <dt>Mit E-Mail-Datenschutz</dt>
+    <dd>your-show@listener.email</dd>
+</DefinitionList>
+
+## Wie funktioniert das?
+
+Sobald du den E-Mail-Datenschutz aktivierst, richtet Pinecast eine E-Mail-Adresse auf <code>listener.email</code> extra für deine Show ein. Einen zweiten Schritt gibt's nicht. Diese Weiterleitungsadresse verwenden wir überall, wo eine E-Mail-Adresse veröffentlicht wird.
+
+Wenn dir jemand an diese Adresse schreibt, leiten wir die Nachricht automatisch an die E-Mail-Adresse weiter, die wir für dein Konto gespeichert haben. Antwortest du auf eine Nachricht, wird sie von deiner persönlichen E-Mail-Adresse aus verschickt.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

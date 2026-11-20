@@ -1,0 +1,38 @@
+---
+title: Icebox
+description: Hold din podcast online, mens du holder en pause fra podcasting
+heroImage: /images/hero/t-l.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Livet går sin gang. Nogle gange har du brug for at tage en pause fra podcasting, og det er helt okay. Med Pinecast betaler du ikke fuld pris, mens du holder pause.
+</Intro>
+
+# Icebox-planen
+
+Efter tres dages inaktivitet kan du skifte til Icebox-planen for at holde din konto i en skrivebeskyttet tilstand. Du betaler en lav månedlig pris på $2/måned, som faktureres årligt.
+
+Med Icebox forbliver alle dine episoder online, sammen med alle de funktioner, du får med Starter-planen:
+
+<ChecksList>
+  <li>Tip Jar</li>
+  <li>Hjemmeside</li>
+  <li>Indlejrbare afspillere</li>
+  <li>Statistik</li>
+  <li>Feedback</li>
+  <li>Indsatte klip</li>
+  <li>Transskriptionshosting</li>
+  <li>…og mere</li>
+</ChecksList>
+
+I den tid, du er på Icebox, kan du ikke udgive nye episoder eller redigere eksisterende episoder. Du har stadig fuld skrivebeskyttet adgang til din konto.
+
+Bedst af alt er Icebox fuldt forholdsmæssigt beregnet: hvis du allerede har betalt din månedlige pris, betaler du kun forskellen mellem den ubrugte tid på Starter-planen og den årlige pris for Icebox. Og når du er klar til at skifte tilbage, bliver skiftet også beregnet forholdsmæssigt og træder i kraft med det samme.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

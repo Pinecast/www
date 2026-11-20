@@ -1,0 +1,47 @@
+---
+title: Feedback
+description: Lass deine Hörer:innen Nachrichten zu deinem Podcast oder einzelnen Episoden an ein gemeinsames Postfach senden.
+heroImage: /images/hero/t-r.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Beim Podcasten geht's nicht nur darum, Content raus zu bringen, sondern auch darum, mit deinem Publikum in Kontakt zu treten.
+
+  Nimm mit unseren integrierten Tools Nachrichten von deinen Hörer:innen entgegen und hol dir aktiv Feedback ein.
+</Intro>
+
+# Feedback an einem Ort
+
+Viele Podcaster:innen legen sich eine eigene E-Mail-Adresse an, an die Hörer:innen schreiben können, damit sie ihre private Adresse nicht teilen müssen. Aber noch ein weiteres Postfach im Blick zu behalten, ist oft ganz schön mühsam.
+
+Mit Pinecasts [Trinkgeldkasse](/features/monetization) können deine zahlenden Abonnent:innen dir direkt schreiben – als exklusiver Vorteil für Abonnent:innen. Oder, mit unserem Growth-Add-on (10 $/Monat oder 110 $/Jahr), können alle deine Hörer:innen schreiben – egal ob sie zahlen oder nicht.
+
+![Ein Screenshot des Podcast-Dashboards mit eingegangenem Feedback](/images/content/features/feedback.png)
+
+# Durchdacht gestaltet
+
+Wir sind selbst Podcaster:innen und wissen daher, dass ein einfaches Postfach im Dashboard nicht reicht. Wir haben unsere eigenen Bedürfnisse berücksichtigt und über die Jahre dutzende Feature-Wünsche von Kunden umgesetzt, damit unser Feedback-Tool wirklich das Beste sein kann, was es sein kann.
+
+## Fragen pro Episode
+
+Ein einziges Formular für Feedback kann schnell zu simpel sein. Deshalb kannst du für jede Episode eine eigene Frage festlegen. Jede Episode bekommt eine eigene URL zum Feedback-Abgeben, auf der ihre Frage angezeigt wird. In deinem Feedback-Postfach siehst du dann, zu welcher Episode eine Nachricht gehört – falls vorhanden.
+
+![Ein Screenshot des Podcast-Dashboards, der zeigt, dass du beim Erstellen oder Bearbeiten einer Episode eine Frage für Feedback festlegen kannst](/images/content/features/feedback-prompt.png)
+
+## Moderation und Sicherheit
+
+Feedback kann großartig sein, aber manchmal ist es auch einfach unangenehm. In deinem Feedback-Postfach kannst du Absender:innen per IP-Adresse oder E-Mail-Adresse shadowbannen. Feedback lässt sich bei Bedarf ganz einfach löschen.
+
+Außerdem verhindern wir Spam mit Invisible reCAPTCHA: Die meisten Hörer:innen bemerken davon gar nichts, aber Bots und verdächtige Absender:innen müssen eine Aufgabe lösen, um zu beweisen, dass sie Menschen sind.
+
+## Benachrichtigungen
+
+Wir schicken dir eine E-Mail, sobald du Feedback erhältst. Wenn du im Team arbeitest oder Benachrichtigungen an einem gemeinsamen Ort wie Slack haben willst, kannst du mit dem Crew-Add-on auch dafür Benachrichtigungen einrichten. Benachrichtigungen können per E-Mail-Alarm, als Nachricht in Slack oder Discord oder per HTTP-Webhook verschickt werden.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

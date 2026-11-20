@@ -1,0 +1,35 @@
+---
+title: Privacidade de E-mail
+description: Mantenha seu endereço de e-mail pessoal privado com a privacidade de e-mail do Pinecast.
+heroImage: /images/hero/t-l.png
+---
+
+import {Intro, DefinitionList} from '@/components/TextBlocks';
+
+<Intro>
+  Mantenha seu e-mail pessoal escondido do público.
+</Intro>
+
+# Sua privacidade é importante
+
+Começar um podcast significa colocar um endereço de e-mail ativo no mundo. O Pinecast permite que você faça isso sem revelar seu e-mail pessoal para os ouvintes, e sem precisar gerenciar uma caixa de entrada separada.
+
+Configurar a privacidade de e-mail é fácil: basta ativar uma opção ao configurar seu programa, ou nas configurações do seu podcast. Ativar a privacidade de e-mail substitui o endereço de e-mail publicado no seu feed por um endereço de encaminhamento gerenciado pelo Pinecast.
+
+<DefinitionList>
+    <dt>Sem privacidade de e-mail</dt>
+    <dd>your-email@gmail.com</dd>
+    <dt>Com privacidade de e-mail</dt>
+    <dd>your-show@listener.email</dd>
+</DefinitionList>
+
+## Como funciona?
+
+Depois que você ativa essa opção, o Pinecast configura um endereço de e-mail em <code>listener.email</code> só para o seu programa. Não tem segunda etapa. Vamos usar esse endereço de encaminhamento em qualquer lugar onde um e-mail for publicado.
+
+Quando alguém envia um e-mail para esse endereço, nós encaminhamos automaticamente para o e-mail que temos registrado na sua conta. Responder às mensagens faz a resposta partir do seu endereço de e-mail pessoal.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

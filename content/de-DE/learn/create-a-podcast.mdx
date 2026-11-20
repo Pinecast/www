@@ -1,0 +1,110 @@
+---
+title: Erstelle deinen Podcast
+description: Erfahre, wie du deinen ersten Podcast auf Pinecast erstellst.
+heroImage: /images/hero/t-r.png
+---
+
+import {DefinitionList, Intro, Step} from '@/components/TextBlocks';
+
+<Intro>
+  Wir sind selbst Podcaster:innen und wollen, dass du und deine Show erfolgreich werden. Mit deinem ersten Podcast loszulegen ist ganz einfach – und das völlig kostenlos, ohne dich gleich auf ein zahlungspflichtiges Pinecast-Abo festzulegen.
+
+  Dieser Abschnitt steckt voller nützlicher Tipps und ist dein erster Schritt beim Einrichten deines Podcasts.
+</Intro>
+
+<Step stepNumber={1} title="Die Show erstellen">
+  Klicke nach der Anmeldung auf deinem Haupt-Dashboard auf die Schaltfläche, um einen Podcast einzurichten. Wir fragen dich, wie du starten möchtest: Wähle "Von Grund auf neu starten", um eine neue Show zu beginnen.
+
+  ![Ein Screenshot der Seite zum Erstellen eines neuen Podcasts](/images/content/learn/screenshot-create-podcast.png)
+
+  ### Wir fragen dich nach ein paar Infos
+
+  <DefinitionList>
+    <dt>Podcastname</dt>
+    <dd>
+      Das ist der Name deiner Show. Du kannst ihn später noch ändern.
+    </dd>
+    <dt>Slug</dt>
+    <dd>
+      Wir verwenden das für URLs wie `https://your-slug-here.pinecast.co`.
+    </dd>
+    <dt>Beschreibung</dt>
+    <dd>
+      Eine kurze Beschreibung deines Podcasts in 2–3 Sätzen.
+    </dd>
+    <dt>Homepage</dt>
+    <dd>
+      Der Ort, zu dem Hörer:innen von deinem Podcast aus in einer App verlinkt werden sollen. Mit einem zahlungspflichtigen Plan kannst du eine von Pinecast erstellte Webseite oder unsere Kurzlink-Funktion nutzen.
+    </dd>
+    <dt>Autorenname</dt>
+    <dd>
+      Dein Name oder der Name der Person bzw. Organisation, die die Show produziert.
+    </dd>
+    <dt>Cover-Art</dt>
+    <dd>
+      Podcast-Apps benötigen ein Bild, das als Artwork für deine Show verwendet wird. Schick uns eine PNG- oder JPG-Datei, und wir passen sie an die benötigte Größe und die Maße an.
+    </dd>
+    <dt>Kategorien</dt>
+    <dd>
+      Das sind die Kategorien, unter denen deine Show in Verzeichnissen wie Apple Podcasts erscheint.
+    </dd>
+  </DefinitionList>
+
+  Wenn du fertig bist, klicke auf "Speichern und weiter". Damit wird deine Show erstellt.
+</Step>
+
+<Step stepNumber={2} title="Deine erste Episode hochladen">
+  Sobald deine Show existiert, brauchst du Inhalte. Das ist deine erste Episode. Für die Einreichung deiner Show zur Verteilung wird mindestens eine Episode benötigt: Ohne Episode ist dein Feed ungültig und wird abgelehnt. Klicke im Dashboard deiner Show auf die Schaltfläche "Neue Episode".
+
+  ![Ein Screenshot der Seite zum Erstellen einer neuen Episode](/images/content/learn/screenshot-create-episode.png)
+
+  Für deine erste Episode kannst du stattdessen auch einen kurzen Trailer hochladen. So hast du etwas Zeit, deine vollständige Episode vorzubereiten, während die Verteilung schon mal ins Rollen kommt.
+
+  Um die Episode zu erstellen, brauchst du noch ein paar Infos:
+
+  <DefinitionList>
+    <dt>Episodentitel</dt>
+    <dd>
+      Der Titel deiner Episode, so wie er in Podcast-Apps angezeigt wird.
+    </dd>
+    <dt>Episodentyp</dt>
+    <dd>
+      Ob es sich um eine vollständige Episode, Bonusinhalt oder einen Trailer handelt.
+    </dd>
+    <dt>Audio</dt>
+    <dd>
+      {/* The switch's label and its default (off today, soon on for audio with no metadata) come from pinecast-ts, MetadataSwitch.tsx. Keep this copy free of the default and of file types, which are changing. */}
+      Eine MP3- oder M4A-Datei mit dem Audio deiner Episode. Falls die Datei keinen eigenen Titel, Interpreten oder Album-Eintrag hat, kannst du den Schalter "Metadaten-Tags zum Episoden-Audio hinzufügen" aktivieren – Pinecast schreibt sie dann nach dem Speichern in die Datei.
+    </dd>
+    <dt>Episoden-Artwork</dt>
+    <dd>
+      Ein optionales Bild für die Episode. Du kannst diesen Schritt überspringen. Wir tun unser Bestes, damit das Artwork in jeder Podcast-App angezeigt wird, die es unterstützt.
+    </dd>
+    <dt>Veröffentlichungsdatum</dt>
+    <dd>
+      Das Datum, an dem die Episode live gehen soll. Liegt das Datum in der Vergangenheit, wird die Episode rückwirkend datiert.
+    </dd>
+    <dt>Shownotes</dt>
+    <dd>
+      Das ist ein Freitextfeld, in dem du deine Episode beschreibst. Es erscheint auf deiner Podcast-Website und in Podcast-Apps.
+    </dd>
+  </DefinitionList>
+
+  Wenn du fertig bist, klicke auf "Episode speichern". Damit wird deine Episode erstellt.
+
+</Step>
+
+<Step stepNumber={3} title="Verteilung einrichten">
+  Sobald deine erste Episode in deinem Feed live ist, schau dir den Tab "Verteilung" an. Hier bekommst du deine Show in Podcast-Apps. Falls dein Feed noch nicht bereit ist, erfährst du hier, warum.
+
+  Mehr zu diesem Tab erfährst du auf unserer [Seite zur Verteilung](/features/distribution).
+
+  Manche Podcast-Apps und -Verzeichnisse bieten eine Einreichung mit nur einem Klick: Aktiviere einfach den Schalter unter dem Namen des Verzeichnisses. Bei anderen ist etwas mehr Aufwand nötig: Klappe den Abschnitt "Einreichungshinweise" für das jeweilige Verzeichnis auf und folge den Anweisungen zur Einrichtung.
+
+  Nachdem du die Anweisungen befolgt hast, gibt es vielleicht die Möglichkeit, Pinecast mit deinem Eintrag zu verknüpfen. So weiß Pinecast über den Eintrag im Verzeichnis Bescheid und schaltet Funktionen wie die Überwachung von Podcast-Bewertungen und Einträge in unseren Kurzlinks frei.
+</Step>
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, frontmatter);

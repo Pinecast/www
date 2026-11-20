@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useCSS} from '@/hooks/useCSS';
+import {useFitWords} from '@/hooks/useFitWords';
 import {
   GintoNordCondensed,
   MonumentGroteskBold,
@@ -17,6 +18,7 @@ import {
 } from '@/constants';
 import {fitText, PAGE_WIDTH, textOf} from '@/fitText';
 import {HeadingLevel, Link, PillButton} from './Typography';
+import {VISUALLY_HIDDEN} from './ScreenReaderText';
 import {StyleObject} from 'styletron-react';
 
 // Headings get `id`s from vendor/rehype-heading-ids.mjs so they can be linked
@@ -129,13 +131,10 @@ export const TaggedTitle = ({
           [MIN_TABLET_MEDIA_QUERY]: {marginTop: '40px'},
         }}
       >
-        <span
-          className={css({
-            position: 'absolute',
-            userSelect: 'none',
-            opacity: 0,
-          })}
-        >
+        {/* Read before the title, and hidden on screen, where the pill shows
+            the tag. Kept inside 1px: a longer tag ("Schritt 05", with larger
+            text spacing) would make the page scroll sideways at 320px. */}
+        <span className={css({...VISUALLY_HIDDEN, userSelect: 'none'})}>
           {tag}
           {/* Punctuation between the tag and the title, for screen readers:
               not copy. */}
@@ -179,6 +178,10 @@ export const Step = ({
   );
 };
 
+// A Subtitle is smaller where its widest word would not fit on its line, as a
+// fitted Typography heading is (useFitWords): a long compound word of a
+// translation ("Aufnahmeequipment") is wider than a phone's screen. One whose
+// words fit keeps its size.
 export const Subtitle = ({
   children,
   id,
@@ -189,14 +192,21 @@ export const Subtitle = ({
   level?: HeadingLevel;
 }) => {
   const css = useCSS();
+  const ref = useFitWords<HTMLHeadingElement>(true);
   const Tag = `h${level}` as const;
   return (
     <Tag
+      ref={ref}
       id={id}
+      data-fit="pending"
       className={css({
         ...MonumentGroteskBold,
-        fontSize: '28px',
-        lineHeight: '28px',
+        fontSize: 'calc(28px * var(--fit, 1))',
+        lineHeight: 'calc(28px * var(--fit, 1))',
+        // As in Typography's headings: no hyphen in a word that fits, and a
+        // long word stays on the page until the script has measured it.
+        hyphens: 'manual',
+        overflowWrap: 'break-word',
         marginBottom: '40px',
         marginTop: '60px',
         marginRight: 'var(--text-gutter)',
@@ -204,8 +214,8 @@ export const Subtitle = ({
         scrollMarginTop: ANCHOR_SCROLL_MARGIN,
 
         [MIN_TABLET_MEDIA_QUERY]: {
-          fontSize: '42px',
-          lineHeight: '42px',
+          fontSize: 'calc(42px * var(--fit, 1))',
+          lineHeight: 'calc(42px * var(--fit, 1))',
           marginBottom: '40px',
           marginTop: '130px',
           maxWidth: '805px',
@@ -529,8 +539,7 @@ export const Table = ({
 // MV7"), and stays as it is in every language. `genericName` says what it is
 // ("Acoustic Panels"), and Lingo.dev translates it (.lingo/config.json).
 type Product = (
-  | {name: string; genericName?: never}
-  | {genericName: string; name?: never}
+  {name: string; genericName?: never} | {genericName: string; name?: never}
 ) & {
   imageUrl: string;
   price: string;
@@ -595,10 +604,13 @@ export const ProductFeature = ({
         gap: '5px 20px',
         gridTemplateAreas:
           '"image name" "image price" "image description" "image url" "accessories accessories"',
-        gridTemplateColumns: '150px 1fr',
+        // `minmax(0, 1fr)`: a name that is one long word ("Akustikpaneler"
+        // at 320px, with larger text spacing) breaks, rather than making the
+        // card wider than the page.
+        gridTemplateColumns: '150px minmax(0, 1fr)',
         gridTemplateRows: 'min-content',
         [MOBILE_MEDIA_QUERY]: {
-          gridTemplateColumns: '20% 1fr',
+          gridTemplateColumns: '20% minmax(0, 1fr)',
         },
       })}
     >
@@ -622,6 +634,7 @@ export const ProductFeature = ({
           fontSize: '28px',
           fontWeight: 400,
           gridArea: 'name',
+          overflowWrap: 'break-word',
         })}
       >
         {name}

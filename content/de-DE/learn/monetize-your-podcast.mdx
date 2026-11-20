@@ -1,0 +1,56 @@
+---
+title: Geld verdienen mit deinem Podcast
+description: Zeit, etwas Geld zu verdienen
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Ein bisschen Geld mit deinem Podcast zu verdienen, ist immer schön. Aber was, wenn du mehr verdienen könntest?
+
+  Pinecast bringt Funktionen mit, die dir helfen, aus deiner Show eine nachhaltige Einnahmequelle zu machen.
+</Intro>
+
+# Was ist die Trinkgeldkasse?
+
+Pinecasts beste Funktion zur Monetarisierung ist die Trinkgeldkasse. Mit der Trinkgeldkasse kannst du bezahlte Abos von deinen Hörer:innen annehmen. Im Gegenzug kannst du privaten Content nur für Abonnent:innen anbieten, Inhalte vorab veröffentlichen und direkt Nachrichten von deinen Abonnent:innen empfangen.
+
+![Ein Screenshot der Trinkgeldkasse für einen Podcast](/images/content/learn/screenshot-tip-jar.png)
+
+Einnahmen aus Abos werden jeden Freitag (nach einer siebentägigen Haltefrist) direkt auf dein Bankkonto ausgezahlt. Die Einrichtung ist schnell und einfach, ganz ohne Wartezeiten.
+
+# So geht's los
+
+Wähle in deinem Haupt-Dashboard den Reiter Einstellungen &gt; Trinkgeldkasse in deinem Account-Dashboard oder den Reiter Trinkgeldkasse im Dashboard eines beliebigen Podcasts und folge den Anweisungen.
+
+![Ein Screenshot des Trinkgeldkassen-Dashboards für einen Podcast](/images/content/learn/screenshot-tip-jar-dashboard.png)
+
+Für den Start brauchen wir ein paar persönliche Angaben von dir:
+
+1. Wir brauchen deine Bank- oder Debitkartendaten, um dir deine Einnahmen auszuzahlen.
+2. Wir fragen nach Identitätsangaben zu dir und/oder deiner Organisation, um die gesetzlichen Vorgaben deines Landes zur Identitätsprüfung zu erfüllen.
+
+All diese Informationen werden über Stripe, unseren Zahlungsdienstleister, erfasst und sicher auf deren Servern gespeichert. Sobald du die angeforderten Angaben gemacht hast, kannst du sofort Zahlungen annehmen: Den Link zu deiner Trinkgeldkasse findest du im Reiter Trinkgeldkasse jedes Podcast-Dashboards.
+
+# Trinkgelder annehmen
+
+Standardmäßig nehmen wir einmalige und wiederkehrende Trinkgelder für dich an. Für Accounts in den USA liegen Trinkgelder zwischen 1 $ und 150 $ (die Beträge variieren je nach Währung). Du kannst die Texte vor und nach einer Spende individuell gestalten und eine Dankesnachricht zur E-Mail hinzufügen, die nach einem Trinkgeld verschickt wird.
+
+Nutzer:innen in deine Trinkgeldkasse zu bringen, ist ganz einfach. Unsere [Kurzlinks](/features/short-links) verlinken deine Trinkgeldkasse automatisch, wenn du sie teilst. Bei deinen Episoden findest du eine Checkbox, mit der die Trinkgeldkasse automatisch in den Shownotes jeder Episode verlinkt wird (und wir merken uns deine Wahl, wenn du deine nächste Episode hochlädst).
+
+Wenn dir ein:e Hörer:in ein Trinkgeld schickt, bekommst du eine E-Mail und siehst die Details dazu in deinem Podcast-Dashboard. Trinkgelder werden sieben Tage einbehalten und am darauffolgenden Freitag ausgezahlt.
+
+## Abonnent:innen
+
+Wenn du eine Episode erstellst, kannst du sie als privat markieren (oder, mit unserem Growth-Add-on, privat bis zu einem bestimmten Datum). Zahlende Abonnent:innen bekommen ein spezielles Dashboard, über das sie auf die privaten Episoden deiner Show zugreifen können – entweder im Browser oder in einer Podcast-App. Wenn sie im Browser hören, behalten wir für sie sogar den Überblick, welche Episoden sie schon gehört haben.
+
+![Ein Screenshot davon, was Abonnent:innen einer Podcast-Trinkgeldkasse sehen](/images/content/learn/screenshot-tip-jar-tipper-dashboard.png)
+
+Abos werden komplett automatisch verwaltet. Abonnent:innen erhalten jeweils einen eigenen Feed, den sie ihrer Podcast-App hinzufügen können. Läuft das Abo aus, wird der Feed automatisch deaktiviert.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LearnLayout} from '@/layouts/LearnLayout';
+
+export default layoutWrapper(LearnLayout, frontmatter);

@@ -1,0 +1,43 @@
+---
+title: Players incorporáveis
+description: Adicione seu podcast ou seus episódios em qualquer lugar que aceite iframes de HTML.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Escrever sobre o seu podcast on-line muitas vezes não é suficiente. Publique o áudio em outras páginas da web com nossos players incorporáveis e fáceis de usar.
+</Intro>
+
+# Incorpore seu podcast
+
+Quer compartilhar um episódio só ou todos eles? A gente te ajuda. Todos os nossos players têm opções de personalização e recursos de acessibilidade já embutidos.
+
+## Player do podcast
+
+Se você quiser compartilhar todos os seus episódios, a aba Player no painel do seu podcast permite escolher as cores de um player completo do podcast.
+
+![Uma captura de tela do painel do podcast mostrando como personalizar um player de podcast](/images/content/features/players-podcast-dashboard.png)
+
+Os episódios são reproduzidos em sequência, com controles de velocidade e volume. Ao passar o mouse sobre a capa, aparece um botão para que seus ouvintes se inscrevam no seu programa.
+
+<iframe title="Demonstração do player do podcast" src="https://pinecast.com/embed/player_playlist/testcast?color.primary=%23ffffff&amp;color.secondary=%23cbd3da&amp;color.accent=%23009dff" border="0" style={{width: '100%', border: 0}} height="400"></iframe>
+
+## Player do episódio
+
+Se você quiser compartilhar um episódio específico, acesse o painel do episódio e escolha a aba Player. Os players de episódio têm opções de tema disponíveis para vários casos de uso. Alguns temas exibem legendas para episódios que foram transcritos.
+
+![Uma captura de tela do painel do episódio mostrando as opções de tema](/images/content/features/players-episode-dashboard.png)
+
+Diferente das incorporações de HTML simples, esses players seguem as diretrizes do IAB para manter as análises precisas. O código e a infraestrutura são otimizados para desempenho, minimizando o número de arquivos que precisam ser carregados.
+
+<iframe title="Demonstração do player de episódio, tema minimalista" src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=minimal" seamless height="60" style={{width: '100%', border: 0, marginTop: '40px'}} class="pinecast-embed" width="100%"></iframe>
+<iframe title="Demonstração do player de episódio, tema flat" src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=flat" seamless height="200" style={{width: '100%', border: 0}} class="pinecast-embed" width="100%"></iframe>
+<iframe title="Demonstração do player de episódio, tema plástico branco" src="https://pinecast.com/player/7a2504ab-5e48-4a13-9b8c-f610b9f4b3bc?theme=whitePlastic" seamless height="120" style={{width: '100%', border: 0}} class="pinecast-embed" width="100%"></iframe>
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

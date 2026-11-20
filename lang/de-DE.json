@@ -1,0 +1,665 @@
+{
+  "+2Lq0r": {
+    "defaultMessage": "JSON Feed"
+  },
+  "+4Sy4j": {
+    "defaultMessage": "Diese Seite gibt es auch auf Deutsch."
+  },
+  "+dsVvY": {
+    "defaultMessage": "Pinecast bietet Tools für Podcaster:innen jeder Erfahrungsstufe. Egal ob du gerade erst anfängst oder einen Podcast für ein Unternehmen betreibst – wir haben deinen Rücken frei."
+  },
+  "+zYy4i": {
+    "defaultMessage": "Registrieren"
+  },
+  "/77+vM": {
+    "defaultMessage": "Sammle Feedback von deinen Hörer:innen zentral in einem Dashboard – mit einem einfachen, anpassbaren Formular. Moderationsfunktionen schützen dich vor Spam und Missbrauch."
+  },
+  "/aMaNV": {
+    "defaultMessage": "Ob du nur mit ein paar Freund:innen teilst, mit deinem Unternehmen oder mit der ganzen Welt – Pinecast hat die passende Lösung für dich."
+  },
+  "/dhlck": {
+    "defaultMessage": "110 $"
+  },
+  "0LGL5T": {
+    "defaultMessage": "Teste Pinecast{br}kostenlos"
+  },
+  "0TfzjJ": {
+    "defaultMessage": "Bis zu zwei Shows"
+  },
+  "1BquxH": {
+    "defaultMessage": "Monetarisierung"
+  },
+  "1FKfN0": {
+    "defaultMessage": "Falls die MP3-Datei deiner Episode nicht alle Metadaten-Tags enthält, die Podcast-Apps erwarten, füllen wir die Lücken mit einem Klick – ohne deine individuellen Metadaten zu überschreiben."
+  },
+  "1OUYIJ": {
+    "defaultMessage": "Animationen pausieren"
+  },
+  "1tHL/G": {
+    "defaultMessage": "Wir bieten nicht nur RSS, sondern für jeden Podcast auch einen leicht auslesbaren JSON Feed-kompatiblen Feed."
+  },
+  "21Sqq0": {
+    "defaultMessage": "Alle Features ansehen"
+  },
+  "2V7LxR": {
+    "defaultMessage": "Keine Zeitbegrenzung"
+  },
+  "3NQkii": {
+    "defaultMessage": "Schritt {number}"
+  },
+  "4fxkcu": {
+    "defaultMessage": "/ Monat"
+  },
+  "4zg7Gp": {
+    "defaultMessage": "Keine Kreditkarte nötig"
+  },
+  "51tjZe": {
+    "defaultMessage": "Transkripte"
+  },
+  "5kLnqs": {
+    "defaultMessage": "Was ist enthalten?"
+  },
+  "5ng2oD": {
+    "defaultMessage": "Unbegrenzt viele Shows"
+  },
+  "5y6j6+": {
+    "defaultMessage": "Richte mit einem Klick eine Website für deine Show ein – ganz ohne Programmieren. Passe Layout und Design deiner Seite an und verlass dich darauf, dass sie auf jedem Gerät perfekt funktioniert. SEO ist inklusive."
+  },
+  "6KyWzM": {
+    "defaultMessage": "Analytics"
+  },
+  "6Ofxq6": {
+    "defaultMessage": "Bedingungen<long> & Konditionen</long>"
+  },
+  "6mB0v5": {
+    "defaultMessage": "Gemacht von Podcaster:innen, für Podcaster:innen"
+  },
+  "6xTlDe": {
+    "defaultMessage": "Support"
+  },
+  "7tQYJr": {
+    "defaultMessage": "Kunde seit {year}"
+  },
+  "8+dym2": {
+    "defaultMessage": "Kostenlos starten"
+  },
+  "82WDcm": {
+    "defaultMessage": "Basis-Analytics"
+  },
+  "8nOIHo": {
+    "defaultMessage": "Bewertungs-Monitoring"
+  },
+  "99bFDB": {
+    "defaultMessage": "Für uns ist Barrierefreiheit kein nachträglicher Gedanke, sondern ein echtes Feature. Wir geben alles, damit Pinecast die zugänglichste Hosting-Plattform der Welt wird – für alle, die unterschiedliche Unterstützung brauchen."
+  },
+  "AF7vSx": {
+    "defaultMessage": "Menü"
+  },
+  "AIISv1": {
+    "defaultMessage": "Bette einen Player auf deiner Website ein, mit dem deine Besucher:innen einzelne Episoden oder deinen ganzen Podcast hören können."
+  },
+  "ANkfZ+": {
+    "defaultMessage": "Veröffentliche oder importiere deinen Podcast, lass dich in Apps listen und wachse mit unseren SEO-optimierten Tools."
+  },
+  "APS4kv": {
+    "defaultMessage": "Lade Audiodateien bis zu 256 MB hoch, plus einem zusätzlichen Puffer von 256 MB alle dreißig Tage. RSS-Feeds aktualisieren sich 66 % schneller."
+  },
+  "AQ7TL1": {
+    "defaultMessage": "Glaub nicht nur uns"
+  },
+  "AQnpYh": {
+    "defaultMessage": "Halte deine private E-Mail-Adresse geheim."
+  },
+  "B9OChd": {
+    "defaultMessage": "Podcast-Kapitel"
+  },
+  "BM5aSI": {
+    "defaultMessage": "Feedback"
+  },
+  "Bmfz3h": {
+    "defaultMessage": "Stummschalten"
+  },
+  "Btc2Pu": {
+    "defaultMessage": "Episoden-Metadaten"
+  },
+  "BzMale": {
+    "defaultMessage": "0 $ Werbebudget, 100 % Fokus auf großartige Software"
+  },
+  "CFw0Q8": {
+    "defaultMessage": "Sprache"
+  },
+  "CHAMHu": {
+    "defaultMessage": "Premium-Analytics"
+  },
+  "CkDn5T": {
+    "defaultMessage": "Monetarisierung"
+  },
+  "D0Zhrw": {
+    "defaultMessage": "Du legst gerade los"
+  },
+  "D5ckvo": {
+    "defaultMessage": "Pinecast"
+  },
+  "DfWVos": {
+    "defaultMessage": "Du brauchst Profi-Tools"
+  },
+  "EMPZkj": {
+    "defaultMessage": "Features"
+  },
+  "EPo6h6": {
+    "defaultMessage": "Auf Amazon ansehen"
+  },
+  "ESsMXt": {
+    "defaultMessage": "Sieh, woher deine Hörer:innen kommen und wie sie zuhören."
+  },
+  "EUVluX": {
+    "defaultMessage": "80-MB-Dateigröße + Bonus"
+  },
+  "FgdSGw": {
+    "defaultMessage": "Die stärksten Analytics im Podcasting – mit Premium-Features, übersichtlichen Charts und klaren Kontrollen."
+  },
+  "Fpfm0t": {
+    "defaultMessage": "Kostenlos starten"
+  },
+  "GLJoOr": {
+    "defaultMessage": "Teste Pinecast kostenlos. Keine Kreditkarte nötig, keine Zeitbegrenzung, upgrade wann du willst. Wir sind sicher, du wirst es lieben."
+  },
+  "GSQ0xO": {
+    "defaultMessage": "Menü"
+  },
+  "GrhQfC": {
+    "defaultMessage": "KI-Nutzung"
+  },
+  "H4Jh1Z": {
+    "defaultMessage": "Lernen"
+  },
+  "HCnTzJ": {
+    "defaultMessage": "Podcast importieren"
+  },
+  "Ha5pE0": {
+    "defaultMessage": "Short Links"
+  },
+  "IJnetw": {
+    "defaultMessage": "Keine Kreditkarte nötig"
+  },
+  "IR3n6s": {
+    "defaultMessage": "Podcasting für die Bildung"
+  },
+  "IiGjF/": {
+    "defaultMessage": "0 $"
+  },
+  "IvUg4C": {
+    "defaultMessage": "Podcasting für Einsteiger:innen"
+  },
+  "JcLd1D": {
+    "defaultMessage": "Dieses Dokument gibt es nur auf Englisch."
+  },
+  "KCylH7": {
+    "defaultMessage": "Stufe 2"
+  },
+  "KGkwzj": {
+    "defaultMessage": "Veröffentliche Premium-Inhalte für zahlende Abonnent:innen und erhalte Auszahlungen direkt auf dein Bankkonto."
+  },
+  "KUNp6y": {
+    "defaultMessage": "Erstelle ein Netzwerk für alle deine Shows mit einem gemeinsamen Analytics-Dashboard. Gib Mitarbeitenden Zugriff – mit anpassbaren Optionen."
+  },
+  "KVVGEY": {
+    "defaultMessage": "Alle Features"
+  },
+  "Klb4PR": {
+    "defaultMessage": "Willkommen bei Pinecast, der Podcast-Hosting-Plattform{br}mit allem, was du brauchst"
+  },
+  "L8U4Ih": {
+    "defaultMessage": "Distribution"
+  },
+  "M3zxrK": {
+    "defaultMessage": "/ Jahr"
+  },
+  "MF4Oza": {
+    "defaultMessage": "Crew-Add-on"
+  },
+  "MNIKRr": {
+    "defaultMessage": "In ihren eigenen Worten"
+  },
+  "MOtGXF": {
+    "defaultMessage": "Keine Kreditkarte nötig"
+  },
+  "Mgtljh": {
+    "defaultMessage": "Feature-Übersicht"
+  },
+  "NGLCBM": {
+    "defaultMessage": "Podcast erstellen"
+  },
+  "NZemcL": {
+    "defaultMessage": "Mehr erfahren"
+  },
+  "NbXqUi": {
+    "defaultMessage": "Deine Show bewerben"
+  },
+  "NqG+t8": {
+    "defaultMessage": "Menü"
+  },
+  "NxIr7f": {
+    "defaultMessage": "{elapsed} / {duration}"
+  },
+  "OAuboj": {
+    "defaultMessage": "Pause<sr> Testimonial von {customer}</sr>"
+  },
+  "OE3vUS": {
+    "defaultMessage": "Mehr erfahren"
+  },
+  "OUcYfC": {
+    "defaultMessage": "Erstelle eine Gruppe für alle Podcaster:innen und Shows in deinem Netzwerk. Wir bieten dir ein einziges Dashboard zur Verwaltung der Shows und Analytics deines Netzwerks."
+  },
+  "ObsGoj": {
+    "defaultMessage": "Ganz auf dich eingestellt"
+  },
+  "OcbMaU": {
+    "defaultMessage": "Halte dein Archiv frisch mit Clip-Einfügung. Füge Audioclips automatisch in deine Episoden ein – egal, wie alt sie schon sind."
+  },
+  "OdXhTK": {
+    "defaultMessage": "Ganz auf{br}dich eingestellt"
+  },
+  "OvESM7": {
+    "defaultMessage": "48-MB-Dateigröße"
+  },
+  "P/u37W": {
+    "defaultMessage": "Gewinne zusätzliche Einblicke in deine Hörer:innen – mit geografischen Daten, Wachstumsanalysen, Sparklines und mehr."
+  },
+  "P2e8mH": {
+    "defaultMessage": "Check, Check, eins, zwei, drei"
+  },
+  "PQNb/g": {
+    "defaultMessage": "Starter-Plan"
+  },
+  "PY3HGQ": {
+    "defaultMessage": "Entdecke weitere{br}Features"
+  },
+  "PYKDf6": {
+    "defaultMessage": "Growth-Add-on"
+  },
+  "PqcCZx": {
+    "defaultMessage": "Ob du gerade erst anfängst oder schon etabliert bist – wir haben die passende Lösung für dich."
+  },
+  "Pqmr0J": {
+    "defaultMessage": "Distribution"
+  },
+  "RJ3ysL": {
+    "defaultMessage": "Ressourcen"
+  },
+  "RdWani": {
+    "defaultMessage": "Auf Amazon ansehen: {name}"
+  },
+  "RlBhkU": {
+    "defaultMessage": "Bette HTML-Code für deinen Podcast ein, damit Besucher:innen deiner Website deine Show in ihrer liebsten Podcast-App öffnen können."
+  },
+  "RwnN53": {
+    "defaultMessage": "Stufe 3"
+  },
+  "SHaenT": {
+    "defaultMessage": "Füge Features hinzu, wenn du sie brauchst, und entferne sie, wenn nicht. Keine verwirrenden Stufen, keine Preisbindung. Du bezahlst nur, was du nutzt."
+  },
+  "SVBBJE": {
+    "defaultMessage": "Analytics"
+  },
+  "SbCcyr": {
+    "defaultMessage": "Icebox"
+  },
+  "T3rRE3": {
+    "defaultMessage": "Analytics"
+  },
+  "TSuPJK": {
+    "defaultMessage": "15 $"
+  },
+  "TgVvqo": {
+    "defaultMessage": "Fragen? Schreib uns an <link>{email}</link>."
+  },
+  "Tydwy2": {
+    "defaultMessage": "Bring deine Show mit einem Klick auf alle großen Podcast-Plattformen."
+  },
+  "UAb6nT": {
+    "defaultMessage": "Anmelden"
+  },
+  "UWkmF8": {
+    "defaultMessage": "Features entdecken"
+  },
+  "UdNBV5": {
+    "defaultMessage": "Benachrichtigungen"
+  },
+  "UkVdfg": {
+    "defaultMessage": "Podcasting-Glossar"
+  },
+  "UtdMVN": {
+    "defaultMessage": "Zum Hauptinhalt springen"
+  },
+  "V9dT23": {
+    "defaultMessage": "Was ist enthalten?"
+  },
+  "VTf0AZ": {
+    "defaultMessage": "Alle Features, die du dir von einem Podcast-Hosting wünschst"
+  },
+  "VeITU6": {
+    "defaultMessage": "Features entdecken"
+  },
+  "VpY43f": {
+    "defaultMessage": "Clip-Einfügung"
+  },
+  "WUCNFc": {
+    "defaultMessage": "Empfehlungen"
+  },
+  "WxzJng": {
+    "defaultMessage": "Lade deine Co-Hosts und Produzent:innen ein, um dir bei der Verwaltung deiner Show zu helfen."
+  },
+  "X1SK5k": {
+    "defaultMessage": "Einbettbare Player"
+  },
+  "XYOwCI": {
+    "defaultMessage": "Kostenlos starten"
+  },
+  "Xe86fJ": {
+    "defaultMessage": "Erhalte Benachrichtigungen per E-Mail, Slack, Discord oder Webhooks, wenn Episoden veröffentlicht werden, Analytics-Meilensteine erreicht sind, dein Podcast Trinkgeld bekommt und mehr."
+  },
+  "XqScaw": {
+    "defaultMessage": "Starte deine Podcast-Reise"
+  },
+  "Y179Ys": {
+    "defaultMessage": "Passwortschutz"
+  },
+  "Y964/e": {
+    "defaultMessage": "© Pinecast {year}"
+  },
+  "YWiRkL": {
+    "defaultMessage": "Milliarden Streams seit 2015"
+  },
+  "YXbau8": {
+    "defaultMessage": "Registrieren"
+  },
+  "ZEsems": {
+    "defaultMessage": "Schütze deinen Podcast-Feed und deine Website mit einem Passwort, das du mit deinen Hörer:innen teilen kannst."
+  },
+  "ZWVE3m": {
+    "defaultMessage": "Manchmal brauchst du eine Pause vom Podcasting. Ist dein Konto länger inaktiv, kannst du zum Icebox-Plan wechseln und deine Show für einen kleinen monatlichen Betrag online halten."
+  },
+  "Ze6Jzp": {
+    "defaultMessage": "Mehr erfahren"
+  },
+  "ZgbCc5": {
+    "defaultMessage": "Podcast-Websites"
+  },
+  "ZnTTuK": {
+    "defaultMessage": "Pinecast-Features"
+  },
+  "aSuLzV": {
+    "defaultMessage": "Staffeln & Episoden"
+  },
+  "aYp38H": {
+    "defaultMessage": "Features"
+  },
+  "b8fgAE": {
+    "defaultMessage": "Sofort{br}richtig{br}durchstarten"
+  },
+  "bCXzFY": {
+    "defaultMessage": "Verdiene Kontoguthaben, wenn du andere Podcaster:innen zu Pinecast holst. Für jede Empfehlung, die Kunde wird, schenken wir dir zwei Monate unseres Starter-Plans."
+  },
+  "bpsUul": {
+    "defaultMessage": "Pinecast ist deine Podcast-Hosting-Plattform mit allem, was du brauchst."
+  },
+  "cCCgdb": {
+    "defaultMessage": "Blog"
+  },
+  "cuJdX+": {
+    "defaultMessage": "Hol dir dein Ticket"
+  },
+  "d/Jvty": {
+    "defaultMessage": "Lernen mit Pinecast"
+  },
+  "dC4DVL": {
+    "defaultMessage": "Anmelden"
+  },
+  "daQcvg": {
+    "defaultMessage": "Lass uns den Überblick über deine Bewertungen behalten. Wir durchsuchen Bewertungen auf Podchaser und Apple Podcasts in allen Regionen und schicken dir eine E-Mail, wenn eine neue dazukommt."
+  },
+  "dqs5l3": {
+    "defaultMessage": "Pinecast transkribiert bis zu vier Stunden Audio pro Monat – kostenlos. Wir erkennen und merken uns deine Sprecher:innen, und du kannst das Transkript direkt im Browser bearbeiten."
+  },
+  "e1vP1v": {
+    "defaultMessage": "165 $"
+  },
+  "e26/v9": {
+    "defaultMessage": "Pro-Analytics-Add-on"
+  },
+  "f8xDz/": {
+    "defaultMessage": "Schließen"
+  },
+  "flYdus": {
+    "defaultMessage": "Datenschutz"
+  },
+  "fvvs5+": {
+    "defaultMessage": "Abspielen"
+  },
+  "g/HuMJ": {
+    "defaultMessage": "Monetarisiere deine Show"
+  },
+  "g0+/lM": {
+    "defaultMessage": "10 $"
+  },
+  "g6bKYV": {
+    "defaultMessage": "Keine Kreditkarte nötig"
+  },
+  "gD4BZX": {
+    "defaultMessage": "Das sind die Transkripte der Audio-Testimonials auf unserer Startseite."
+  },
+  "gO4BS0": {
+    "defaultMessage": "Verdiene Geld mit deinen Inhalten"
+  },
+  "gRGpmU": {
+    "defaultMessage": "Monetarisierung"
+  },
+  "gWUnS9": {
+    "defaultMessage": "Bleib dran"
+  },
+  "gWzMYC": {
+    "defaultMessage": "Du bist der Kunde, nicht das Produkt"
+  },
+  "gxbq+Y": {
+    "defaultMessage": "Pause"
+  },
+  "hDzw07": {
+    "defaultMessage": "Hol dir mehr{br}mit Add-ons"
+  },
+  "hYiwJp": {
+    "defaultMessage": "Barrierefreiheit"
+  },
+  "iSVSDg": {
+    "defaultMessage": "Ob du gerade erst anfängst oder schon etabliert bist – wir haben die passende Lösung für dich."
+  },
+  "iWx2t1": {
+    "defaultMessage": "Verlinke deine Hörer:innen zu bestimmten Zeitstempeln in deiner Episode. So finden sie genau die Stelle, die sie suchen."
+  },
+  "iZOWVX": {
+    "defaultMessage": "Auf Deutsch lesen"
+  },
+  "ibbkiP": {
+    "defaultMessage": "Hi! Ich bin{br}dein Host"
+  },
+  "igzE1u": {
+    "defaultMessage": "Kostenloser Demo-Plan"
+  },
+  "iwm8d+": {
+    "defaultMessage": "Alles, was du für deinen Erfolg brauchst"
+  },
+  "j1qPEz": {
+    "defaultMessage": "Netzwerke"
+  },
+  "j6KuVD": {
+    "defaultMessage": "Cover-Optimierung"
+  },
+  "jTlkQq": {
+    "defaultMessage": "Kostenlose Transkripte"
+  },
+  "joqai5": {
+    "defaultMessage": "Changelog"
+  },
+  "kCJjKk": {
+    "defaultMessage": "Dein Podcast-Host mit allem, was du brauchst"
+  },
+  "lG059q": {
+    "defaultMessage": "Schnelle Tipps"
+  },
+  "lkooJg": {
+    "defaultMessage": "oder"
+  },
+  "lt2DeU": {
+    "defaultMessage": "Stufe 1"
+  },
+  "lwhUWz": {
+    "defaultMessage": "Distribution"
+  },
+  "lyZJMC": {
+    "defaultMessage": "Keine Kreditkarte nötig"
+  },
+  "m6JLSv": {
+    "defaultMessage": "Wir sind stolz auf unseren erstklassigen Service. Die Leute mögen uns wirklich – so sehr, dass sie dir ein paar nette Nachrichten hinterlassen haben."
+  },
+  "mGvYQ4": {
+    "defaultMessage": "Wenn du ein Bild hochlädst, das nicht den Anforderungen für Podcast- oder Episoden-Cover entspricht, korrigieren wir es mit einem Klick für dich."
+  },
+  "mazp+u": {
+    "defaultMessage": "Hi-Fi-Add-on"
+  },
+  "mpxDta": {
+    "defaultMessage": "Barrierefreiheit"
+  },
+  "mvHHeI": {
+    "defaultMessage": "Mit Sorgfalt entwickelt in Raleigh, NC"
+  },
+  "mvkgb/": {
+    "defaultMessage": "Podcasting für Profis"
+  },
+  "nN1LCl": {
+    "defaultMessage": "Kostenlos starten"
+  },
+  "nZuvBk": {
+    "defaultMessage": "Trinkgeldkasse"
+  },
+  "nltFQ9": {
+    "defaultMessage": "Play<sr> Testimonial von {customer}</sr>"
+  },
+  "oErC9K": {
+    "defaultMessage": "Mitarbeitende"
+  },
+  "oID/pJ": {
+    "defaultMessage": "Distribution"
+  },
+  "oJQK40": {
+    "defaultMessage": "Podcast-Website"
+  },
+  "ocSbJt": {
+    "defaultMessage": "Mehr erfahren"
+  },
+  "pInWKb": {
+    "defaultMessage": "Keine Episodenbegrenzung"
+  },
+  "pk99nG": {
+    "defaultMessage": "Footer"
+  },
+  "prHdHT": {
+    "defaultMessage": "Transkripte der Audio-Testimonials von Pinecast-Kunden"
+  },
+  "py8omo": {
+    "defaultMessage": "Lernen"
+  },
+  "pyCgeO": {
+    "defaultMessage": "Kostenlos starten"
+  },
+  "q0e0Xi": {
+    "defaultMessage": "Erstelle Short Links für deinen Podcast und deine Episoden, perfekt optimiert für Social Media. Verfolge Klicks und sieh, woher deine Hörer:innen kommen."
+  },
+  "q5EB6n": {
+    "defaultMessage": "E-Mail-Datenschutz"
+  },
+  "q5M2S3": {
+    "defaultMessage": "Verdiene Geld mit deinem Podcast durch Hörer:innen-Support. Markiere Episoden als zahlungspflichtig, und wir übernehmen Abos und Zahlungsabwicklung."
+  },
+  "qmahv6": {
+    "defaultMessage": "Features – Pinecast"
+  },
+  "rFDc+R": {
+    "defaultMessage": "Einbettbare App-Links"
+  },
+  "rw89n6": {
+    "defaultMessage": "Sprache"
+  },
+  "sGdkJB": {
+    "defaultMessage": "Dein Wachstum verstehen"
+  },
+  "scmR8+": {
+    "defaultMessage": "Analytics"
+  },
+  "sheyjF": {
+    "defaultMessage": "Lernen – Pinecast"
+  },
+  "swVRSX": {
+    "defaultMessage": "Testimonial-Transkripte"
+  },
+  "sx2O9S": {
+    "defaultMessage": "Kümmere dich um deine nächste Episode, nicht um dein Hosting"
+  },
+  "sxa79I": {
+    "defaultMessage": "Ton einschalten"
+  },
+  "tVLEqA": {
+    "defaultMessage": "Hauptnavigation"
+  },
+  "tancxZ": {
+    "defaultMessage": "Du bist auf dem Campus"
+  },
+  "txw1P6": {
+    "defaultMessage": "Monetarisierung"
+  },
+  "ty3ept": {
+    "defaultMessage": "Füge Staffel- und Episodennummern automatisch zu deiner Episode hinzu. Für Apps, die Apples offizielle Nummerierungs-Tags nicht nutzen, ergänzen wir die Nummern stilvoll im Episodentitel."
+  },
+  "u39ype": {
+    "defaultMessage": "Support, der richtig abliefert"
+  },
+  "ucAZQa": {
+    "defaultMessage": "Begrenzung auf zehn Episoden"
+  },
+  "uorzqU": {
+    "defaultMessage": "Richtig gutes Podcast-Hosting fürs 21. Jahrhundert"
+  },
+  "v4bjl5": {
+    "defaultMessage": "Schnelle Tipps für den Einstieg"
+  },
+  "vVnmbu": {
+    "defaultMessage": "Registrieren"
+  },
+  "veAwil": {
+    "defaultMessage": "Lass deinen Podcast wachsen – mit mehr Optionen und Features. Passe deine Trinkgeldkasse an, sammle Bewertungen aus Verzeichnissen, hol dir Feedback von deinen Hörer:innen und mehr."
+  },
+  "wRldcc": {
+    "defaultMessage": "Transkripte"
+  },
+  "wYNYLV": {
+    "defaultMessage": "Für Hochschulen und Universitäten"
+  },
+  "xISYcS": {
+    "defaultMessage": "Diese Seite ist mit Ton noch besser!"
+  },
+  "xKwBGd": {
+    "defaultMessage": "Faire, unkomplizierte Preise"
+  },
+  "yVNqmn": {
+    "defaultMessage": "Menü schließen"
+  },
+  "z+BhDj": {
+    "defaultMessage": "Features"
+  },
+  "zJnmsJ": {
+    "defaultMessage": "{title}:"
+  },
+  "ze4XAD": {
+    "defaultMessage": "Zurück zur Startseite"
+  }
+}

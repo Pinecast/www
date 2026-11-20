@@ -1,0 +1,47 @@
+---
+title: Feedback
+description: Lad dine lyttere sende deres beskeder om din podcast eller dens episoder til en fælles indbakke.
+heroImage: /images/hero/t-r.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  At lave podcast handler ikke kun om at udgive indhold – det handler om at skabe kontakt med dit publikum.
+
+  Tag imod og efterspørg beskeder fra dine lyttere med vores indbyggede værktøjer.
+</Intro>
+
+# Feedback på ét sted
+
+Mange podcastere opretter en dedikeret mailadresse, så lyttere kan skrive ind uden at de skal dele deres private mailadresse. Men det kan være svært at holde styr på endnu en indbakke.
+
+Pinecasts [Tip Jar](/features/monetization) lader dine betalende abonnenter skrive direkte til dig som en fordel ved abonnementet. Eller med vores Growth-tilkøb (70 kr./md. eller 770 kr./år) kan alle dine lyttere – uanset om de betaler eller ikke – skrive ind.
+
+![Et skærmbillede af podcast-dashboardet, der viser indsendt feedback](/images/content/features/feedback.png)
+
+# Gennemtænkt design
+
+Vi er selv podcastere, så vi ved, at det ikke er nok bare at have en indbakke i dit dashboard. Vi har løst vores egne behov og taget imod snesevis af ønsker fra kunder gennem årene for at sikre, at vores feedback-værktøj er så godt som muligt.
+
+## Episode-prompter
+
+En enkelt formular til at indsende feedback kan være for simpelt, så vi lader dig sætte en prompt for feedback for hver enkelt episode. Hver episode får sin egen URL til at indsende feedback, med sin egen prompt. Din feedback-indbakke viser, hvilken episode hver besked blev skrevet til – hvis der er en.
+
+![Et skærmbillede af podcast-dashboardet, der viser, at du kan sætte en prompt for feedback, når du opretter eller redigerer en episode](/images/content/features/feedback-prompt.png)
+
+## Moderation og sikkerhed
+
+Feedback kan være fantastisk, men det kan også være ubehageligt en gang imellem. Vores feedback-indbakke lader dig skjult blokere afsendere efter IP-adresse eller mailadresse. Feedback kan nemt slettes, når der er brug for det.
+
+Derudover forhindrer vi spam ved at bruge Invisible reCAPTCHA: de fleste lyttere vil ikke opleve nogen forsinkelse, men bots og mistænkelige afsendere bliver bedt om at løse en udfordring for at bevise, at de er mennesker.
+
+## Notifikationer
+
+Vi sender dig en mail, hver gang du får feedback. Har du et team, eller vil du have notifikationer et fælles sted som Slack, lader Crew-tilkøbet dig også sætte notifikationer op for feedback. Notifikationer kan sende en mail-alarm, poste til Slack eller Discord, eller sende et HTTP-webhook.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

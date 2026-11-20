@@ -12,7 +12,7 @@ export const EducationLayout = BaseLayout(
     <>
       <PillButton style={{textTransform: 'uppercase', marginBottom: '30px'}}>
         <FormattedMessage
-          description="Label above the title of the page for colleges and universities, in a pill. Shown in capital letters"
+          description="Label above the title of the page for colleges and universities, in a pill. Shown in capital letters. Colleges in the American sense: schools of higher education that grant degrees, not secondary schools"
           defaultMessage="For colleges and universities"
         />
       </PillButton>

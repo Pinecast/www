@@ -1126,6 +1126,15 @@ export const HeroV2 = () => {
               <SecondaryButton
                 href="https://pinecast.com/signup"
                 style={{
+                  // The button's own height is 40px: a label that wraps (in
+                  // French at 320px, with larger text spacing) makes it
+                  // taller.
+                  alignItems: 'center',
+                  height: 'auto',
+                  lineHeight: '1.2',
+                  minHeight: '40px',
+                  paddingBottom: '8px',
+                  paddingTop: '8px',
                   paddingLeft: '40px',
                   paddingRight: '40px',
                   [MOBILE_MEDIA_QUERY]: {

@@ -51,7 +51,7 @@ export const FooterUpsell = ({
           color: 'var(--color-primary-dark)',
         })}
       >
-        <H2>{heading}</H2>
+        <H2 fit>{heading}</H2>
         <Body4 style={{maxWidth: '32rem'}}>{text}</Body4>
 
         <div

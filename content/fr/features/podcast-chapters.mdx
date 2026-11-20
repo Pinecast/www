@@ -1,0 +1,42 @@
+---
+title: Chapitres de podcast
+description: Associe un lien à chaque segment de tes épisodes
+heroImage: /images/hero/b-r.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Aide tes auditeurs à accéder directement au segment qu'ils veulent écouter.
+</Intro>
+
+# Laisse tes auditeurs accéder directement à ce qu'ils veulent écouter
+
+Les chapitres de podcast fonctionnent comme une table des matières pour ton émission. Tu peux indiquer les codes temporels où commence chaque chapitre de tes épisodes. Tes auditeurs verront les chapitres dans leur application de podcast et pourront accéder directement à chaque code temporel.
+
+# Ils fonctionnent partout
+
+Nos chapitres fonctionnent partout :
+
+1. Nous incluons les données de chapitres dans tes flux, ce qui fonctionne avec toutes les applications prenant en charge la balise de chapitres Podcasting 2.0
+2. Tu peux aussi, si tu le souhaites, inclure les chapitres dans tes notes d'épisode
+3. Nous intégrons tes chapitres dans les métadonnées ID3 ou M4A de tes fichiers audio, pour qu'ils soient disponibles aux personnes qui téléchargent ton audio
+4. Nos sites de podcast, liens courts et notre extension WordPress permettent d'afficher les chapitres à tes visiteurs
+
+Au fait, si tu utilises [l'insertion de clips](/features/clip-insertion), tes chapitres se mettront à jour automatiquement : ils apparaîtront aux codes temporels ajustés correctement.
+
+# Configurer les chapitres, c'est simple
+
+Nous te facilitons la configuration des chapitres pour ton épisode. Si ton fichier audio contient déjà des chapitres intégrés, nous les lirons et les ajouterons à ton épisode. Sinon, tu peux ajouter des chapitres dans l'éditeur, juste en dessous du champ Audio.
+
+![Une capture d'écran de l'éditeur de chapitres de podcast et d'emplacements de clips lors de la création ou de la modification d'un épisode](/images/content/features/chapters-and-placeholders.png)
+
+Tu peux ajouter des chapitres et des emplacements de clips en te déplaçant jusqu'à un code temporel dans le lecteur audio, puis en choisissant le bouton pour ajouter un chapitre ou un emplacement. Tu peux modifier les détails de ce que tu as ajouté ci-dessous. Les chapitres te permettent de préciser un nom et une URL en plus du code temporel.
+
+Et voilà : quand tu enregistres ton épisode, on s'occupe du reste.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

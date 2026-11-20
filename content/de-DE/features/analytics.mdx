@@ -1,0 +1,103 @@
+---
+title: Analytics
+description: Behalte Abrufe und Besucher deines Podcasts im Blick
+heroImage: /images/hero/t-r.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Die Podcast-Analytics von Pinecast laufen über eine leistungsstarke Analytics-Engine, die dir Daten nahezu in Echtzeit und mit beispielloser Detailtiefe liefert.
+
+  Wir wissen, wie wichtig dir das Wachstum deiner Show ist. Überzeug dich selbst von einem der besten Analytics-Tools, das es je für Podcaster:innen gab.
+</Intro>
+
+# Die Daten, die du brauchst
+
+Wir bieten dir eine große Auswahl an Ansichten für deine Analytics-Daten. Für die meisten Ansichten kannst du den Zeitraum wählen. Bei Zeitreihen-Daten kannst du außerdem die Granularität festlegen, in der die Ergebnisse angezeigt werden (Tag, Woche, Monat). Die meisten Ansichten sind an die Zeitzone deines Computers angepasst.
+
+![Ein Screenshot der Ansicht „Abrufe nach Episode“ für einen Podcast](/images/content/features/analytics-listens-by-episode.png)
+
+Jede Analytics-Ansicht enthält eine Erklärung dazu, was du siehst und wie du die Daten interpretieren kannst – damit dir der Kontext nie fehlt. Wir markieren sogar in deinen Diagrammen, wann Episoden veröffentlicht wurden. Und natürlich kannst du jede Ansicht als CSV herunterladen.
+
+## Einzigartige Ansichten
+
+Sieh, wann deine Hörer:innen Episoden herunterladen, wie schnell einzelne Episoden wachsen, wo deine Hörer:innen sich befinden und noch viel mehr. Wir sind überzeugt, dass wir eine der größten – wenn nicht die größte – Auswahl an Analytics-Ansichten unter allen Podcast-Hostern bieten. Und unsere Diagramme sind nicht nur hübsch anzusehen, sondern durchdacht gestaltet, um dir echte Antworten auf wichtige Fragen zu deinem Podcast zu liefern.
+
+![Ein Screenshot der Ansicht „Abruf-Wachstum nach Episode“ für einen Podcast, verfügbar mit dem Pro-Analytics-Add-on](/images/content/features/analytics-listen-growth-by-episode.png)
+
+Mit so vielen Details kommt natürlich auch etwas Komplexität – aber keine Sorge: Unter jedem Diagramm findest du eine Erklärung der Daten, inklusive Details dazu, was enthalten ist und was nicht, und ob die Daten an deine Zeitzone angepasst sind.
+
+Pinecast bietet 17 Analytics-Ansichten für Podcasts, 13 Ansichten für Episoden und 13 Ansichten für Podcast-Netzwerke (verfügbar mit unserem Crew-Add-on). Du wirst kaum einen anderen Hoster finden, der dir so viele Daten in dieser Qualität liefert wie Pinecast.
+
+Alle Details zu unseren Analytics-Ansichten findest du [auf unserer Support-Seite](https://help.pinecast.com/article/158-analytics).
+
+### Podcast-Ansichten
+
+Das sind die Ansichten, die dir zur Verfügung stehen, wenn du dir einen Podcast ansiehst.
+
+<ChecksList>
+  <li>Abrufe gesamt</li>
+  <li>Abrufe gesamt auf Spotify</li>
+  <li>Abrufe nach Episode</li>
+  <li>Abrufe nach Tageszeit</li>
+  <li>Top-Episoden</li>
+  <li>Abruf-Wachstum</li>
+  <li>Abruf-Wachstum nach Episode</li>
+  <li>Abrufe nach Quelle</li>
+  <li>Abrufe nach Anwendung</li>
+  <li>Abrufe nach Anwendung und Zeit</li>
+  <li>Abrufe nach Betriebssystem</li>
+  <li>Episoden-Abrufe gesamt</li>
+  <li>Standorte der Hörer:innen</li>
+  <li>Aufrufe von Kurzlinks</li>
+  <li>Aufrufe von Kurzlinks nach Browser</li>
+  <li>Standorte der Besucher:innen von Kurzlinks</li>
+  <li>Klickrate-Aufschlüsselung für Kurzlinks</li>
+</ChecksList>
+
+### Episoden-Ansichten
+
+Diese siehst du, wenn du eine einzelne Episode in deinem Dashboard öffnest.
+
+<ChecksList>
+  <li>Abrufe gesamt</li>
+  <li>Abrufe gesamt auf Spotify</li>
+  <li>Abrufe nach Tageszeit</li>
+  <li>Abruf-Wachstum</li>
+  <li>Abrufe nach Quelle</li>
+  <li>Abrufe nach Anwendung</li>
+  <li>Abrufe nach Anwendung und Zeit</li>
+  <li>Abrufe nach Betriebssystem</li>
+  <li>Standorte der Hörer:innen</li>
+  <li>Aufrufe von Kurzlinks</li>
+  <li>Aufrufe von Kurzlinks nach Browser</li>
+  <li>Standorte der Besucher:innen von Kurzlinks</li>
+  <li>Klickrate-Aufschlüsselung für Kurzlinks</li>
+</ChecksList>
+
+### Netzwerk-Ansichten
+
+Netzwerk-Ansichten zeigen dir Details für mehrere Podcasts gleichzeitig. Netzwerke sind mit dem Crew-Add-on verfügbar.
+
+<ChecksList>
+  <li>Abrufe gesamt</li>
+  <li>Abrufe gesamt auf Spotify</li>
+  <li>Abrufe nach Tageszeit</li>
+  <li>Top-Episoden</li>
+  <li>Abruf-Wachstum</li>
+  <li>Abrufe nach Quelle</li>
+  <li>Abrufe nach Anwendung</li>
+  <li>Abrufe nach Anwendung und Zeit</li>
+  <li>Abrufe nach Betriebssystem</li>
+  <li>Standorte der Hörer:innen</li>
+  <li>Aufrufe von Kurzlinks</li>
+  <li>Aufrufe von Kurzlinks nach Browser</li>
+  <li>Klickrate-Aufschlüsselung für Kurzlinks</li>
+</ChecksList>
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

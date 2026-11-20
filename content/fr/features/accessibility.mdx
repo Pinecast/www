@@ -1,0 +1,142 @@
+---
+title: Accessibilité
+description: Pinecast est conçu pour tout le monde
+heroImage: /images/hero/t-l.png
+---
+
+import {ChecksList, Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Le podcast est l'une des formes d'expression artistique en ligne les plus accessibles. Pas seulement pour les auditeurs, mais aussi pour les créateurs.
+
+  Pinecast le conçoit ainsi.
+</Intro>
+
+# L'accessibilité est la priorité absolue chez Pinecast
+
+Notre mission : faire de Pinecast *l'hébergeur de podcasts le plus accessible* au monde. Si une fonctionnalité pose un problème d'accessibilité, c'est un bug.
+
+Mais qu'est-ce que ça veut dire concrètement ? Chaque fonctionnalité doit fonctionner pour tout le monde, quels que soient les aménagements dont ils ont besoin pour utiliser leurs appareils.
+
+<ChecksList>
+  <li>Utilise un lecteur d'écran</li>
+  <li>A besoin d'un texte plus grand ou d'un contraste plus élevé</li>
+  <li>A besoin d'une réduction des animations</li>
+  <li>Est atteint de daltonisme</li>
+  <li>Est malentendant</li>
+  <li>Est sensible à la lumière</li>
+  <li>N'utilise pas de dispositif de pointage</li>
+  <li>Utilise une commande vocale</li>
+  <li>Est sourd ou malentendant</li>
+  <li>Est sensible à la lumière</li>
+</ChecksList>
+
+Pas besoin d'être en situation de handicap pour [profiter des fonctionnalités d'accessibilité](https://en.wikipedia.org/wiki/Curb_cut_effect). Le mode sombre est pensé pour les personnes sensibles à la lumière, mais beaucoup de gens qui n'y sont pas sensibles trouvent que c'est une meilleure façon d'utiliser leur ordinateur. Les transcriptions, la possibilité de zoomer, et la possibilité de naviguer entre les éléments d'une page avec la touche Tab sont autant de fonctionnalités d'accessibilité dont _tout le monde_ peut profiter.
+
+{/* The help center has a section for each accessibility feature. This link
+    is the documentation that Revised 508 (602.2) and EN 301 549 (12.1.1)
+    need: it lists the features and explains how to use them. Keep a link to
+    it on this page. If the section moves, change the address. */}
+
+Pour savoir comment utiliser ces fonctionnalités, consulte la [section Accessibilité de notre centre d'aide](https://help.pinecast.com/category/201-accessibility).
+
+## Ce sont les petits détails qui comptent
+
+Respecter les normes d'accessibilité publiées devrait être le minimum, pas l'objectif final. On met un point d'honneur à dépasser les attentes de nos clients. Par exemple :
+
+- Les normes exigent de pouvoir utiliser chaque fonctionnalité au clavier. On va plus loin en te laissant utiliser les touches que tu attends naturellement : naviguer dans un calendrier avec les flèches, ou passer d'une émission à l'autre avec un raccourci.
+- Les normes exigent que les images soient étiquetées, mais ne disent rien sur leur création. On propose une fonctionnalité optionnelle de génération de visuel pour les personnes malvoyantes ou non-voyantes, pour qu'elles puissent ajouter un visuel à leur podcast.
+- Certaines fonctionnalités, comme les brouillons d'épisodes, permettent de supprimer des éléments. Quand tu supprimes un élément sans titre, on ne se contente pas de dire au lecteur d'écran qu'un élément a été supprimé : on précise _lequel_ (avec des détails qui permettent de le distinguer, comme la date de publication, quand aucun nom n'est défini pour cet élément)
+
+Bien faire l'accessibilité, ça veut dire s'en soucier vraiment. On considère le design accessible comme un savoir-faire ; on veut créer quelque chose dont on est fiers.
+
+# Où on en est
+
+Notre objectif en tant qu'entreprise est une conformité totale aux normes WCAG 2.2 niveau AA, à la Section 508 révisée, et à la norme EN 301 549 V3.2.1.
+
+Aujourd'hui, on est « partiellement conformes » : certaines parties de nos sites ne respectent pas entièrement le niveau AA des WCAG 2.2. Ces informations sont à jour au 9 octobre 2026.
+
+## Comment on vérifie
+
+On utilise plusieurs techniques pour s'assurer de faire le maximum :
+
+1. Des revues de code sur tout le code qui tourne sur Pinecast
+2. Des tests automatisés avec axe-core
+3. Des vérifications « lint » sur le code
+4. Des tests manuels avec des technologies d'assistance
+5. Des tests automatisés avec l'intelligence artificielle
+
+On vise à réaliser un audit complet chaque année, et on peut faire des audits plus restreints plus souvent.
+
+## Limites connues
+
+Voici les problèmes qu'on considère comme des limites connues :
+
+1. Le formulaire de mot de passe oublié expire après trente minutes. En attendant, tu peux demander un nouveau lien.
+2. Certains articles de notre centre d'aide n'ont pas de texte alternatif.
+3. Les lecteurs web tronquent les titres trop longs, ainsi que les lignes trop longues des sous-titres générés à partir d'une transcription.
+
+Cette liste sera tenue à jour.
+
+## On fait de notre mieux, mais on dépend d'autres acteurs
+
+Nos clients créent leur propre contenu, et on fait de notre mieux pour les aider à rendre leur contenu et leur présence web aussi accessibles que possible, avec des fonctionnalités comme la vérification du contraste des couleurs sur les sites et la transcription d'épisodes. On ne peut toutefois pas garantir que ce contenu est entièrement accessible, et les créateurs peuvent publier du contenu qui ne respecte pas pleinement les bonnes pratiques.
+
+On utilise des prestataires externes pour certaines fonctionnalités. On fait de notre mieux pour choisir des prestataires dont les logiciels sont accessibles, mais leur niveau de prise en charge peut varier.
+
+1. On utilise Stripe pour le traitement des paiements. Tu peux rencontrer des interfaces de Stripe en utilisant Pinecast.
+2. [ReCAPTCHA](https://support.google.com/recaptcha/answer/6175971?hl=en) (v2) est un service de Google qu'on utilise pour protéger nos pages contre les robots. Un CAPTCHA peut t'être demandé sur certaines pages.
+3. [Help Scout](https://www.helpscout.com/company/legal/accessibility-statement/) est l'entreprise dont on dépend pour notre logiciel d'assistance.
+4. Mapbox est utilisé pour ajouter des cartes à notre offre Statistiques Pro.
+5. Les créateurs peuvent choisir leurs propres polices parmi Google Fonts, et certaines polices peuvent ne pas être totalement accessibles pour tous les utilisateurs voyants.
+6. Gravatar est utilisé pour fournir des photos de profil aux comptes.
+
+# Des retours ou besoin d'aide ?
+
+Si tu as des retours sur l'accessibilité de notre produit, tu peux toujours nous écrire à <a href="mailto:support@pinecast.com">support@pinecast.com</a>. On fait de notre mieux pour répondre dans les 24 heures, mais le délai peut varier.
+
+On est ravis de t'aider à terminer une tâche si un problème d'accessibilité te bloque, ou de te proposer une solution de contournement.
+
+# On joint le geste à la parole
+
+Dire qu'on fait du bon travail ne suffit pas. Si tu trouves un bug d'accessibilité qui remplit les critères, on te donne 10 $ de crédit sur ton compte (ou un code de réduction équivalent) à appliquer sur ton abonnement Pinecast. Les problèmes sérieux peuvent valoir plus, à notre discrétion.
+
+Et on est sérieux : la prime augmentera de 5 $ chaque 1er octobre. 15 $ en octobre 2027, 20 $ en octobre 2028, etc.
+
+Si tu trouves un problème, écris-nous à <a href="mailto:support@pinecast.com">support@pinecast.com</a> avec tous les détails.
+
+## Un signalement valide
+
+Explique clairement le problème que tu as trouvé, le logiciel avec lequel tu l'as détecté (navigateur, lecteur d'écran, etc.), et l'appareil sur lequel tu l'as rencontré. Le problème doit :
+
+1. Être un manquement au niveau AA des WCAG 2.2 dans une partie de Pinecast hébergée sur `pinecast.com`, `pinecast.co`, `pnc.st` ou `pinecast.net`
+2. Ne pas figurer dans les limites connues
+3. Être reproductible de notre côté
+4. Ne pas avoir déjà été signalé par quelqu'un d'autre — le premier signalement reçoit la récompense
+5. Être testé sur ton propre compte, jamais sur les données d'autres personnes
+
+Les éléments suivants ne sont pas éligibles :
+
+- Le contenu des créateurs Pinecast
+- Les services d'autres entreprises
+- Les problèmes liés aux logiciels téléchargeables (comme notre plugin WordPress) et à Pinecoder
+- Les fonctionnalités de Pinecast qui ne sont pas encore disponibles publiquement
+- Les résultats d'outils automatisés qui n'ont pas été vérifiés par un humain
+
+Les problèmes suivants sont traités au cas par cas, à notre discrétion :
+
+- Un problème qui ne survient que dans un seul navigateur
+- Un problème qui n'affecte qu'un seul lecteur d'écran, alors que Pinecast respecte les bonnes pratiques
+- Plusieurs problèmes ayant la même cause, répartis à différents endroits
+
+Les problèmes jugés non éligibles peuvent tout de même être corrigés par Pinecast. Le crédit de compte n'a aucune valeur monétaire, et son montant est fixé par la date du signalement. L'équipe Pinecast n'est pas éligible. Les règles définies dans nos [conditions d'utilisation](/terms) s'appliquent à ta façon de tester. On peut modifier ou arrêter ce programme à tout moment.
+
+# On est fiers de partager nos progrès
+
+Pinecast n'est pas parfait, mais on est fiers de faire le point nous-mêmes sur notre accessibilité avec un ACR (rapport de conformité d'accessibilité). On est en train de préparer ce document et on le publiera ici bientôt.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {LegalLayout} from '@/layouts/LegalLayout';
+
+export default layoutWrapper(LegalLayout, frontmatter);

@@ -1,0 +1,65 @@
+---
+title: Transcrições
+description: Transcreva seus episódios automaticamente, reconheça seus locutores e edite direto no navegador.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro, ChecksList} from '@/components/TextBlocks';
+
+<Intro>
+  Descoberta e acessibilidade sem esforço. Você escolhe quais episódios e clipes são transcritos, sem custo extra dentro de limites generosos.
+</Intro>
+
+# Seu programa, sem precisar ouvir
+
+Podcasts guardam seu conteúdo em áudio. Isso não é um defeito, é um recurso. Mas significa que pessoas e máquinas que não conseguem ouvir não conseguem acompanhar.
+
+Adicionar transcrições significa que seus episódios alcançam mais gente, e você decide quais episódios vão ter elas.
+
+## Deixe a gente cuidar da transcrição, ou traga a sua
+
+Você pode ter novos episódios transcritos conforme são publicados (a caixa de seleção já vem marcada no formulário de novo episódio, e você pode desmarcá-la para qualquer episódio), escolher quais episódios transcrever você mesmo, ou enviar arquivos de transcrição que você mesmo criou (VTT, SRT ou SBV). As transcrições ficarão disponíveis como arquivos VTT ou TXT para você e seus ouvintes.
+
+## Nos lugares certos.
+
+As transcrições podem aparecer em qualquer lugar onde seus ouvintes queiram encontrá-las.
+
+<ChecksList>
+  <li>No seu feed</li>
+  <li>No site do seu podcast no Pinecast</li>
+  <li>No seu WordPress, com nosso plugin</li>
+  <li>Como legendas nos nossos players incorporados</li>
+  <li>Na Caixinha</li>
+  <li>Através de [links curtos](/features/short-links)</li>
+</ChecksList>
+
+## Pensamos em tudo
+
+Vamos detectar vozes diferentes nos seus episódios e deixar você dar nomes a elas. A gente até lembra desses nomes entre episódios.
+
+Precisa fazer alterações? Qualquer transcrição — até as que você mesmo enviar — pode ser editada direto no seu painel. Nada para instalar, nada para aprender.
+
+A maioria dos nossos players tem suporte a legendas: suas transcrições aparecem junto do áudio, destacando as palavras conforme seus ouvintes tocam o episódio.
+
+## Limites que funcionam para você
+
+{/* These numbers mirror STARTER_ALLOWANCES in the Pinecast app and help center article 184. If they change there, change them here. */}
+
+Todo mês (uma janela rolante de 30 dias), nosso plano Starter inclui transcrições sem custo adicional:
+
+1. Cinco episódios de até 90 minutos cada
+2. Um episódio de até duas horas
+
+Além disso, você recebe cinco episódios de até três minutos a cada duas semanas (uma janela rolante de 14 dias).
+
+Precisa de mais? Nosso complemento Crescimento dobra o número de episódios que você recebe em cada duração. Ou você pode [comprar créditos](https://help.pinecast.com/article/184-transcripts): os créditos podem ser usados em transcrições pontuais, ou para transcrever seu catálogo antigo.
+
+## Por que você escolhe episódio por episódio?
+
+Usamos um fornecedor que transcreve seus episódios com IA. Seus episódios não são usados para treinamento, mas usar esses serviços ou não é *decisão sua*. Veja nossa política sobre [uso de IA](/ai-use) para entender nossa filosofia sobre ferramentas de IA.
+
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);

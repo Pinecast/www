@@ -63,10 +63,6 @@
     // Button at the end of a feature page, to the Features page with all the features
     "defaultMessage": "See all features"
   },
-  "2EOcY/": {
-    // Label above the title of the page for colleges and universities, in a pill. Shown in capital letters
-    "defaultMessage": "For colleges and universities"
-  },
   "2V7LxR": {
     // A feature of the free plan, in the list on its ticket in the pricing section
     "defaultMessage": "No time limit"
@@ -878,6 +874,10 @@
   "wRldcc": {
     // Link in the testimonials section of the home page, to a page with the transcripts of the audio testimonials
     "defaultMessage": "Transcripts"
+  },
+  "wYNYLV": {
+    // Label above the title of the page for colleges and universities, in a pill. Shown in capital letters. Colleges in the American sense: schools of higher education that grant degrees, not secondary schools
+    "defaultMessage": "For colleges and universities"
   },
   "xISYcS": {
     // Tooltip of the button that turns the sound of the site on and off, while the sound is off

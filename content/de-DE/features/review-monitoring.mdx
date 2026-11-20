@@ -1,0 +1,38 @@
+---
+title: Bewertungs-Monitoring
+description: Behalte Bewertungen deines Podcasts von deinen Hörer:innen im Blick.
+heroImage: /images/hero/t-r.png
+---
+
+import {Intro} from '@/components/TextBlocks';
+
+<Intro>
+  Lassen deine Hörer:innen Bewertungen für deinen Podcast? Wie oft schaust du nach? Lass Pinecast die Arbeit übernehmen und für dich nach neuen Bewertungen suchen.
+</Intro>
+
+# Jede Bewertung im Blick
+
+„Hinterlasst uns eine Bewertung" ist ein Satz, den viele Podcaster:innen gern verwenden – doch die meisten bekommen gar nicht jede Bewertung mit, die abgegeben wird. Pinecasts Growth-Add-on (10 $/Monat oder 110 $/Jahr) übernimmt diese Arbeit für dich und schickt dir eine E-Mail, sobald eine neue Bewertung bei Apple Podcasts oder Podchaser eingeht.
+
+![Ein Screenshot des Podcast-Dashboards mit abgegebenen Bewertungen](/images/content/features/review-monitoring-dashboard.png)
+
+Wir erfassen nicht nur abgegebene Bewertungen, sondern schlüsseln auch die vergebenen Sternebewertungen auf und verfolgen deine Durchschnittsbewertung. Bewertungen lassen sich nach Sternen oder Herkunftsland der bewertenden Person filtern (sofern verfügbar).
+
+## Regionale Bewertungen – alle an einem Ort
+
+Wusstest du, dass Apple Podcasts für jeden Podcast unterschiedliche regionale Einträge führt? Wechselst du bei Apple Podcasts das Land, siehst du andere Bewertungen für deinen Podcast. Um wirklich alle Bewertungen zu sehen, müsstest du dutzende Länderversionen deiner Einträge durchgehen.
+
+Keine Sorge! Pinecast prüft die Bewertungen für jedes Land und zeigt sie dir gesammelt in deinem Dashboard an.
+
+# Benachrichtigungen
+
+Standardmäßig erhält die Podcast-Inhaberin oder der Podcast-Inhaber bei jeder neuen Bewertung eine E-Mail-Benachrichtigung. Bewertungen werden außerdem im Dashboard des Podcasts angezeigt.
+
+![Ein Screenshot des Formulars zum Erstellen einer Benachrichtigung, eingestellt auf den Versand einer E-Mail, wenn eine Podcast-Bewertung gefunden wird](/images/content/features/review-monitoring-notification.png)
+
+Wenn du zusätzlich Pinecasts Crew-Add-on abonniert hast, kannst du Benachrichtigungen auch an andere E-Mail-Adressen, Slack, Discord oder HTTP-Webhooks senden lassen.
+
+import {layoutWrapper} from '@/layouts/layoutWrapper';
+import {FeatureLayout} from '@/layouts/FeatureLayout';
+
+export default layoutWrapper(FeatureLayout, frontmatter);
