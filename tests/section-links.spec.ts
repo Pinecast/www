@@ -1,7 +1,8 @@
 import {readFileSync} from 'node:fs';
 import {expect, test, type Page} from '@playwright/test';
 import {SCROLL_PADDING_TOP} from '../src/constants';
-import {exportedPages, headingsFitted} from './helpers';
+import {splitLocale, DEFAULT_LOCALE} from '../src/locales.mjs';
+import {exportedPages, headingsFitted, SAMPLE_LOCALE} from './helpers';
 
 // A link to a section of a page (`/terms#spotify`, which the dashboard links
 // to) must land with the section in view, below the fixed header, on the first
@@ -21,8 +22,12 @@ const headingsWithId = (path: string) => {
   return [...html.matchAll(/<h[1-6][^>]*\sid="([^"]+)"/g)].map(m => m[1]);
 };
 
+// In English and in one other language (SAMPLE_LOCALE): the scroll is the
+// same code in every language.
 const pagesWithSections = exportedPages().filter(
-  path => headingsWithId(path).length > 0,
+  path =>
+    [DEFAULT_LOCALE, SAMPLE_LOCALE].includes(splitLocale(path).locale) &&
+    headingsWithId(path).length > 0,
 );
 
 const VIEWPORTS = [

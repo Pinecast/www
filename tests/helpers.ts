@@ -2,7 +2,13 @@ import {readFileSync, readdirSync} from 'node:fs';
 import {join} from 'node:path';
 import {expect, type Locator, type Page} from '@playwright/test';
 
-import {LOCALES, hasPage, languageTag, localePath} from '../src/locales.mjs';
+import {
+  DEFAULT_LOCALE,
+  LOCALES,
+  hasPage,
+  languageTag,
+  localePath,
+} from '../src/locales.mjs';
 
 // The text spacing of WCAG 1.4.12, as a user style sheet would apply it.
 export const TEXT_SPACING = `
@@ -24,6 +30,25 @@ export function inEveryLanguage(routes: ReadonlyArray<string>): Array<string> {
     LOCALES.filter(locale => hasPage(route, locale)).map(locale =>
       localePath(route, locale),
     ),
+  );
+}
+
+// The language that stands in for the others in a check of behavior that
+// the words do not change, such as the focus walk or the landing of a link to
+// a section: each takes seconds a page, and a language more multiplies them.
+// French has the longest text (`lang/fr.json`, `content/fr/`), so a layout
+// that longer text breaks still shows. A check of the words themselves
+// (reflow, text spacing, the language of a page) runs in every language.
+export const SAMPLE_LOCALE = 'fr';
+
+// The path of each page in English and in SAMPLE_LOCALE, where it has one.
+export function inEnglishAndSample(
+  routes: ReadonlyArray<string>,
+): Array<string> {
+  return routes.flatMap(route =>
+    [DEFAULT_LOCALE, SAMPLE_LOCALE]
+      .filter(locale => hasPage(route, locale))
+      .map(locale => localePath(route, locale)),
   );
 }
 

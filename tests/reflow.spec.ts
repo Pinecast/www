@@ -1,4 +1,5 @@
 import {expect, test} from '@playwright/test';
+import {splitLocale} from '../src/locales.mjs';
 import {
   clippedText,
   exportedPages,
@@ -61,11 +62,12 @@ const TITLE_WIDTHS = [
 test.describe('headings at all widths', () => {
   for (const path of exportedPages()) {
     test(`${path} keeps the words of its headings whole`, async ({page}) => {
-      // The animations of the home page make each resize slow. In CI, on
-      // four busy workers, each home page took 53 to 55s of the 90s that
-      // `test.slow()` gives, and a slower runner went past 90s (run
-      // 43999053085). Locally each takes about 3s.
-      if (path === '/' || path === '/es/') test.setTimeout(180_000);
+      // The animations of the home page, in every language, make each
+      // resize slow. In CI, on four busy workers, each home page took 53 to
+      // 55s of the 90s that `test.slow()` gives, and a slower runner went
+      // past 90s (run 43999053085). With 30s, `/da/` timed out (run
+      // 44589051258). Locally each takes about 3s.
+      if (splitLocale(path).route === '/') test.setTimeout(180_000);
       await load(page, path);
       // Visible headings only: a hidden one has no lines.
       const headings = page
