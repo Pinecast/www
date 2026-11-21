@@ -32,8 +32,14 @@
   "1FKfN0": {
     "defaultMessage": "Hvis din episodes MP3 ikke indeholder alle de metadata-tags, som podcast-apps forventer, udfylder vi hullerne for dig med ét klik – uden at overskrive dine egne metadata."
   },
+  "1G24Is": {
+    "defaultMessage": "Anmod om et tilbud"
+  },
   "1OUYIJ": {
     "defaultMessage": "Sæt animationer på pause"
+  },
+  "1jF4sA": {
+    "defaultMessage": "Fortæl os, hvor mange podcasts og studerende du har, og hvornår jeres serviceår starter. Vi sender normalt et tilbud inden for 36 timer."
   },
   "1tHL/G": {
     "defaultMessage": "Vi nøjes ikke med RSS – til hver podcast får du også et feed i JSON Feed-format, som er nemt at behandle maskinelt."
@@ -226,6 +232,9 @@
   },
   "Mgtljh": {
     "defaultMessage": "Funktionsoversigt"
+  },
+  "Mj1O6l": {
+    "defaultMessage": "Eller skriv til {email}"
   },
   "NGLCBM": {
     "defaultMessage": "Opret en podcast"
@@ -581,11 +590,17 @@
   "q5M2S3": {
     "defaultMessage": "Tjen penge på din podcast med støtte fra dine lyttere. Markér episoder som kun for betalende, så klarer vi abonnementer og betalinger."
   },
+  "qQo9Oo": {
+    "defaultMessage": "Hvad er inkluderet?"
+  },
   "qmahv6": {
     "defaultMessage": "Funktioner – Pinecast"
   },
   "rFDc+R": {
     "defaultMessage": "Indlejrbare app-links"
+  },
+  "rMi7fu": {
+    "defaultMessage": "Få et tilbud{br}til din skole"
   },
   "rw89n6": {
     "defaultMessage": "Sprog"

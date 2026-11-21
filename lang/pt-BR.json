@@ -32,8 +32,14 @@
   "1FKfN0": {
     "defaultMessage": "Se o MP3 do seu episódio não tiver todas as tags de metadados que os apps de podcast esperam, a gente preenche o que falta com um clique, sem sobrescrever metadados personalizados."
   },
+  "1G24Is": {
+    "defaultMessage": "Solicitar um orçamento"
+  },
   "1OUYIJ": {
     "defaultMessage": "Pausar animações"
+  },
+  "1jF4sA": {
+    "defaultMessage": "Conte pra gente quantos programas e estudantes você tem, e quando seu ano de serviço começa. Normalmente enviamos um orçamento em até 36 horas."
   },
   "1tHL/G": {
     "defaultMessage": "Não oferecemos só RSS: cada podcast também ganha um feed compatível com JSON Feed, fácil de interpretar."
@@ -226,6 +232,9 @@
   },
   "Mgtljh": {
     "defaultMessage": "Índice de recursos"
+  },
+  "Mj1O6l": {
+    "defaultMessage": "Ou escreva para {email}"
   },
   "NGLCBM": {
     "defaultMessage": "Criar um podcast"
@@ -581,11 +590,17 @@
   "q5M2S3": {
     "defaultMessage": "Ganhe dinheiro com seu podcast com o apoio dos ouvintes. Marque episódios como exclusivos para assinantes e a gente cuida das assinaturas e do processamento dos pagamentos."
   },
+  "qQo9Oo": {
+    "defaultMessage": "O que está incluído?"
+  },
   "qmahv6": {
     "defaultMessage": "Recursos – Pinecast"
   },
   "rFDc+R": {
     "defaultMessage": "Links de apps incorporáveis"
+  },
+  "rMi7fu": {
+    "defaultMessage": "Peça um orçamento{br}para sua instituição"
   },
   "rw89n6": {
     "defaultMessage": "Idioma"
