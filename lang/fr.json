@@ -32,8 +32,14 @@
   "1FKfN0": {
     "defaultMessage": "Si le MP3 de ton épisode ne contient pas toutes les balises de métadonnées attendues par les applications de podcast, on remplit les champs manquants pour toi en un clic, sans écraser tes métadonnées personnalisées."
   },
+  "1G24Is": {
+    "defaultMessage": "Demander un devis"
+  },
   "1OUYIJ": {
     "defaultMessage": "Mettre en pause les animations"
+  },
+  "1jF4sA": {
+    "defaultMessage": "Dis-nous combien d'émissions et d'étudiants tu as, et quand commence ton année de service. On t'envoie généralement un devis dans les 36 heures."
   },
   "1tHL/G": {
     "defaultMessage": "On ne se contente pas du RSS : chaque podcast bénéficie aussi d'un flux JSON Feed facile à analyser."
@@ -226,6 +232,9 @@
   },
   "Mgtljh": {
     "defaultMessage": "Index des fonctionnalités"
+  },
+  "Mj1O6l": {
+    "defaultMessage": "Ou écris-nous à {email}"
   },
   "NGLCBM": {
     "defaultMessage": "Créer un podcast"
@@ -581,11 +590,17 @@
   "q5M2S3": {
     "defaultMessage": "Gagne de l'argent avec ton podcast grâce au soutien de tes auditeurs. Marque certains épisodes comme payants, et on gère les abonnements et le traitement des paiements."
   },
+  "qQo9Oo": {
+    "defaultMessage": "Qu'est-ce qui est inclus ?"
+  },
   "qmahv6": {
     "defaultMessage": "Fonctionnalités – Pinecast"
   },
   "rFDc+R": {
     "defaultMessage": "Liens d'application intégrables"
+  },
+  "rMi7fu": {
+    "defaultMessage": "Demande un devis{br}pour ton établissement"
   },
   "rw89n6": {
     "defaultMessage": "Langue"

@@ -32,8 +32,14 @@
   "1FKfN0": {
     "defaultMessage": "Falls die MP3-Datei deiner Episode nicht alle Metadaten-Tags enthält, die Podcast-Apps erwarten, füllen wir die Lücken mit einem Klick – ohne deine individuellen Metadaten zu überschreiben."
   },
+  "1G24Is": {
+    "defaultMessage": "Angebot anfragen"
+  },
   "1OUYIJ": {
     "defaultMessage": "Animationen pausieren"
+  },
+  "1jF4sA": {
+    "defaultMessage": "Sag uns, wie viele Shows und Studierende ihr habt und wann euer Nutzungsjahr startet. Wir schicken euch in der Regel innerhalb von 36 Stunden ein Angebot."
   },
   "1tHL/G": {
     "defaultMessage": "Wir bieten nicht nur RSS, sondern für jeden Podcast auch einen leicht auslesbaren JSON Feed-kompatiblen Feed."
@@ -226,6 +232,9 @@
   },
   "Mgtljh": {
     "defaultMessage": "Feature-Übersicht"
+  },
+  "Mj1O6l": {
+    "defaultMessage": "Oder schreib uns an {email}"
   },
   "NGLCBM": {
     "defaultMessage": "Podcast erstellen"
@@ -581,11 +590,17 @@
   "q5M2S3": {
     "defaultMessage": "Verdiene Geld mit deinem Podcast durch Hörer:innen-Support. Markiere Episoden als zahlungspflichtig, und wir übernehmen Abos und Zahlungsabwicklung."
   },
+  "qQo9Oo": {
+    "defaultMessage": "Was ist enthalten?"
+  },
   "qmahv6": {
     "defaultMessage": "Features – Pinecast"
   },
   "rFDc+R": {
     "defaultMessage": "Einbettbare App-Links"
+  },
+  "rMi7fu": {
+    "defaultMessage": "Hol dir ein Angebot{br}für deine Schule"
   },
   "rw89n6": {
     "defaultMessage": "Sprache"

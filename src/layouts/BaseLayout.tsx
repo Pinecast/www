@@ -81,7 +81,12 @@ type Props = {
   description: string;
 };
 
-type BaseLayoutOptions = {defaultColor?: string};
+type BaseLayoutOptions = {
+  defaultColor?: string;
+  // The section above the footer. By default, the sign-up section
+  // (InfoPageFooterUpsell).
+  footerUpsell?: () => React.ReactNode;
+};
 
 export function BaseLayout(
   content: (props: Omit<Props, 'children'>) => React.ReactNode,
@@ -108,7 +113,10 @@ export function BaseLayout(
     typeof optionsOrAfterContent === 'function'
       ? optionsOrAfterContent
       : undefined;
-  const {defaultColor = 'var(--color-space)'} =
+  const {
+    defaultColor = 'var(--color-space)',
+    footerUpsell = () => <InfoPageFooterUpsell />,
+  } =
     typeof optionsOrAfterContent === 'object'
       ? optionsOrAfterContent
       : (options ?? {});
@@ -225,7 +233,7 @@ export function BaseLayout(
           topBackgroundColor="var(--color-sand)"
           bottomBackgroundColor="var(--color-space)"
         />
-        <InfoPageFooterUpsell />
+        {footerUpsell()}
         <Footer />
       </>
     );

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import {useCSS} from '@/hooks/useCSS';
@@ -5,8 +6,37 @@ import {Body4, Caption, H2} from './Typography';
 import {PrimaryButton} from './PrimaryButton';
 import {SecondaryButton} from './SecondaryButton';
 import {DARK_SURFACE} from '@/constants';
+import {StyleObject} from 'styletron-react';
 
-export const InfoPageFooterUpsell = () => {
+// The style of each button of a FooterUpsell. A label that is too long for
+// the row ("Qu’est-ce qui est inclus ?" with larger text spacing at 320px)
+// wraps, and the button grows taller with it. A label of one line keeps the
+// button's 40px.
+export const FOOTER_BUTTON_STYLE: StyleObject = {
+  alignItems: 'center',
+  height: 'auto',
+  lineHeight: '20px',
+  minHeight: '40px',
+  paddingBottom: '8px',
+  paddingTop: '8px',
+};
+
+// The dark section at the bottom of a page, above the footer: a big heading,
+// a line of text, a row of buttons and a small note. The content pages show
+// the sign-up section (InfoPageFooterUpsell); a layout can give another one
+// (`footerUpsell` of BaseLayout), as the page for colleges and universities
+// does with QuoteFooterUpsell.
+export const FooterUpsell = ({
+  heading,
+  text,
+  buttons,
+  note,
+}: {
+  heading: React.ReactNode;
+  text: React.ReactNode;
+  buttons: React.ReactNode;
+  note: React.ReactNode;
+}) => {
   const css = useCSS();
 
   return (
@@ -35,47 +65,67 @@ export const InfoPageFooterUpsell = () => {
           color: 'var(--color-primary-dark)',
         })}
       >
-        <H2 fit>
-          <FormattedMessage
-            description="Big heading of the sign-up section at the bottom of the content pages, above the footer. {br} is a line break"
-            defaultMessage="Try Pinecast{br}for free"
-            values={{br: <br />}}
-          />
-        </H2>
-        <Body4 style={{maxWidth: '32rem'}}>
-          <FormattedMessage
-            description="Text under the heading of the sign-up section at the bottom of the content pages"
-            defaultMessage="Whether you’re just starting out or you’re more established, we have a solution for you."
-          />
-        </Body4>
+        <H2 fit>{heading}</H2>
+        <Body4 style={{maxWidth: '32rem'}}>{text}</Body4>
 
         <div
           className={css({
             display: 'flex',
+            // Where two buttons do not fit side by side (320px, larger text
+            // spacing), each takes its own row. A label that is still too
+            // long wraps inside its button (FOOTER_BUTTON_STYLE).
+            flexWrap: 'wrap',
             justifyContent: 'center',
             gap: '20px',
           })}
         >
-          <PrimaryButton href="https://pinecast.com/signup">
-            <FormattedMessage
-              description="Button in the sign-up section at the bottom of the content pages, to the sign-up form"
-              defaultMessage="Start for free"
-            />
-          </PrimaryButton>
-          <SecondaryButton href="/features">
-            <FormattedMessage
-              description="Button in the sign-up section at the bottom of the content pages, to the Features page"
-              defaultMessage="What’s included?"
-            />
-          </SecondaryButton>
+          {buttons}
         </div>
-        <Caption style={{color: 'var(--color-core-accent)'}}>
-          <FormattedMessage
-            description="Small note under the sign-up buttons at the bottom of the content pages"
-            defaultMessage="No credit card required"
-          />
-        </Caption>
+        <Caption style={{color: 'var(--color-core-accent)'}}>{note}</Caption>
       </div>
     </section>
   );
 };
+
+export const InfoPageFooterUpsell = () => (
+  <FooterUpsell
+    heading={
+      <FormattedMessage
+        description="Big heading of the sign-up section at the bottom of the content pages, above the footer. {br} is a line break"
+        defaultMessage="Try Pinecast{br}for free"
+        values={{br: <br />}}
+      />
+    }
+    text={
+      <FormattedMessage
+        description="Text under the heading of the sign-up section at the bottom of the content pages"
+        defaultMessage="Whether you’re just starting out or you’re more established, we have a solution for you."
+      />
+    }
+    buttons={
+      <>
+        <PrimaryButton
+          href="https://pinecast.com/signup"
+          style={FOOTER_BUTTON_STYLE}
+        >
+          <FormattedMessage
+            description="Button in the sign-up section at the bottom of the content pages, to the sign-up form"
+            defaultMessage="Start for free"
+          />
+        </PrimaryButton>
+        <SecondaryButton href="/features" style={FOOTER_BUTTON_STYLE}>
+          <FormattedMessage
+            description="Button in the sign-up section at the bottom of the content pages, to the Features page"
+            defaultMessage="What’s included?"
+          />
+        </SecondaryButton>
+      </>
+    }
+    note={
+      <FormattedMessage
+        description="Small note under the sign-up buttons at the bottom of the content pages"
+        defaultMessage="No credit card required"
+      />
+    }
+  />
+);
