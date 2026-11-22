@@ -73,7 +73,7 @@ Information about podcast listeners and subscribers is saved to provide analytic
 
 - Cloudflare delivers Pinecast's websites, feeds, and audio, and Bunny.net delivers audio. Each of them handles every request, including your IP address and user agent, and keeps its own logs. Bunny.net anonymizes the IP addresses in its logs.
 
-- Pinecast does not record a listen to episode audio in a podcast's analytics if the request includes a Do Not Track signal.
+- Pinecast does not record analytics data if a request includes a Do Not Track signal.
 
 - If you leave feedback for a podcast, Pinecast stores your message, your IP address, and your email address if you provide one. Messages sent to a podcast's listener email address are received by Amazon SES and kept for 14 days. Pinecast keeps a record of who sent each message that it forwards to the podcast owner.
 
