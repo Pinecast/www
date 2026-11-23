@@ -5,6 +5,7 @@ import type {StyleObject} from 'styletron-react';
 
 import {
   CAN_HOVER_MEDIA_QUERY,
+  FORCED_COLORS_EDGE,
   MIN_TABLET_MEDIA_QUERY,
   MOBILE_BREAKPOINT,
   MOBILE_MEDIA_QUERY,
@@ -33,7 +34,9 @@ import {type HeadingLevel, Overline, Subhead} from './Typography';
 //   <AcrCard href=… bytes=… pages=… frontPage=… backPage=…>
 //     <AcrOverline>…</AcrOverline>
 //     <AcrHeading>…</AcrHeading>
-//     <AcrText>…</AcrText>
+//     <AcrText>
+//       … (on a line of its own, so that MDX makes it a paragraph)
+//     </AcrText>
 //     <AcrResults supports=… partiallySupports=… … />
 //     <AcrFacts><dt>…</dt><dd>…</dd>…</AcrFacts>
 //     <AcrActions>
@@ -122,7 +125,10 @@ export const AcrCard = ({
         })}
       >
         {/* The cover is a picture of the PDF. The link says what the file is,
-            and the text says how long it is. */}
+            and the text says how long it is. A forced colors theme leaves it
+            as it is, as it does a picture: it would paint a plate behind each
+            line of the sticker, and the plate of the big number covered the
+            words above it. */}
         <div
           aria-hidden="true"
           className={css({
@@ -130,6 +136,7 @@ export const AcrCard = ({
             borderBottom: `1px solid ${SPACE}`,
             display: 'flex',
             flexDirection: 'column',
+            forcedColorAdjust: 'none',
             gap: '14px',
             justifyContent: 'space-between',
             padding: '28px 24px 18px',
@@ -215,30 +222,41 @@ export const AcrCard = ({
                 },
               })}
             >
-              <FormattedMessage
-                description="Sticker on the cover of the Accessibility Conformance Report, on the Accessibility page: a joke about the length of the report. The number is large, on a line of its own, between the words before it and the words after it. Shown in capital letters. {pages} is the number of pages of the report"
-                defaultMessage="Light reading <number>{pages}</number> {pages, plural, one {page} other {pages}}"
-                values={{
-                  pages,
-                  number: (chunks: React.ReactNode) => (
-                    <span
-                      className={css({
-                        ...GintoNordCondensed,
-                        display: 'block',
-                        fontSize: '46px',
-                        letterSpacing: '-0.04em',
-                        lineHeight: '42px',
-                        [MIN_TABLET_MEDIA_QUERY]: {
-                          fontSize: '64px',
-                          lineHeight: '58px',
-                        },
-                      })}
-                    >
-                      {chunks}
-                    </span>
-                  ),
-                }}
-              />
+              {/* A line of words no wider than the circle is where they are:
+                  a longer translation ("Leichte Lektüre") wraps, and its
+                  shorter lines fit nearer the edge. */}
+              <span
+                className={css({
+                  display: 'block',
+                  maxWidth: '80px',
+                  [MIN_TABLET_MEDIA_QUERY]: {maxWidth: '112px'},
+                })}
+              >
+                <FormattedMessage
+                  description="Sticker on the cover of the Accessibility Conformance Report, on the Accessibility page: a joke about the length of the report. The number is large, on a line of its own, between the words before it and the words after it. Shown in capital letters. {pages} is the number of pages of the report"
+                  defaultMessage="Light reading <number>{pages}</number> {pages, plural, one {page} other {pages}}"
+                  values={{
+                    pages,
+                    number: (chunks: React.ReactNode) => (
+                      <span
+                        className={css({
+                          ...GintoNordCondensed,
+                          display: 'block',
+                          fontSize: '46px',
+                          letterSpacing: '-0.04em',
+                          lineHeight: '42px',
+                          [MIN_TABLET_MEDIA_QUERY]: {
+                            fontSize: '64px',
+                            lineHeight: '58px',
+                          },
+                        })}
+                      >
+                        {chunks}
+                      </span>
+                    ),
+                  }}
+                />
+              </span>
             </div>
           </div>
           <p className={css({...CAPTION, margin: 0})}>
@@ -284,25 +302,31 @@ export const AcrHeading = ({
   </Subhead>
 );
 
+// The text of the card. Its words are on their own lines in the page's text,
+// so MDX makes them a paragraph (the page's `p`, mdx-components.tsx); this
+// takes the page's margins and width off it. A <div>, so that the paragraph is
+// not inside another one.
 export const AcrText = ({children}: {children: React.ReactNode}) => {
   const css = useCSS();
   return (
-    <p
+    <div
       className={css({
         ...MonumentGroteskRegular,
         fontSize: '18px',
         lineHeight: '1.2',
         margin: '-6px 0 0',
+        ':not(:empty) > p': {margin: 0, maxWidth: 'none'},
       })}
     >
       {children}
-    </p>
+    </div>
   );
 };
 
 // The results of the web column of the report for WCAG 2.2 at Level A and AA,
-// by conformance level: a bar and a list. The bar is a picture of the list,
-// so it is hidden from screen readers. The terms are the report's own.
+// by conformance level: a bar and a list, in the order of the report. The bar
+// is a picture of the list, so it is hidden from screen readers. The terms
+// are the report's own.
 export const AcrResults = ({
   doesNotSupport,
   notApplicable,
@@ -330,6 +354,8 @@ export const AcrResults = ({
     position: 'absolute',
     top: 0,
   };
+  // A key of the bar keeps its colors in a forced colors theme, which would
+  // paint each swatch the same. The words of each item say it all the same.
   const swatch = (style: StyleObject) => (
     <span
       aria-hidden="true"
@@ -337,15 +363,23 @@ export const AcrResults = ({
         border: `1px solid ${SPACE}`,
         borderRadius: '50%',
         flex: 'none',
+        forcedColorAdjust: 'none',
         height: '16px',
         width: '16px',
         ...style,
       })}
     />
   );
+  // Does Not Support is white with a dashed edge, Not Applicable is sand.
+  const doesNotSupportLook: StyleObject = {
+    backgroundColor: 'var(--color-white)',
+    border: `1px dashed ${SPACE}`,
+  };
   const item = css({alignItems: 'center', display: 'flex', gap: '10px'});
   return (
-    <div className={css({display: 'flex', flexDirection: 'column', gap: '14px'})}>
+    <div
+      className={css({display: 'flex', flexDirection: 'column', gap: '14px'})}
+    >
       <div
         className={css({
           ...CAPTION,
@@ -370,9 +404,13 @@ export const AcrResults = ({
           />
         </span>
       </div>
+      {/* In the order of the report: Supports, Partially Supports, Does Not
+          Support, then Not Applicable, the sand that is left. Each pill
+          starts at the left, and a shorter one is drawn over a longer one. */}
       <div
         aria-hidden="true"
         className={css({
+          forcedColorAdjust: 'none',
           height: '32px',
           position: 'relative',
           [MIN_TABLET_MEDIA_QUERY]: {height: '40px'},
@@ -403,6 +441,13 @@ export const AcrResults = ({
               ...pill,
               backgroundColor: 'var(--color-sand)',
               width: '100%',
+            })}
+          />
+          <div
+            className={css({
+              ...pill,
+              ...doesNotSupportLook,
+              width: share(supports + partiallySupports + doesNotSupport),
             })}
           />
           <div
@@ -471,22 +516,22 @@ export const AcrResults = ({
           </span>
         </li>
         <li className={item}>
+          {swatch(doesNotSupportLook)}
+          <span>
+            <FormattedMessage
+              description="Number of WCAG success criteria that Pinecast does not support, in the results of the Accessibility Conformance Report on the Accessibility page. “Does Not Support” is a conformance level of the report (VPAT), with “Supports”, “Partially Supports” and “Not Applicable”. The number is in bold"
+              defaultMessage="<b>{count}</b> Does Not Support"
+              values={{count: doesNotSupport, b: bold}}
+            />
+          </span>
+        </li>
+        <li className={item}>
           {swatch({backgroundColor: 'var(--color-sand)'})}
           <span>
             <FormattedMessage
               description="Number of WCAG success criteria that do not apply to Pinecast, in the results of the Accessibility Conformance Report on the Accessibility page. “Not Applicable” is a conformance level of the report (VPAT), with “Supports”, “Partially Supports” and “Does Not Support”. The number is in bold"
               defaultMessage="<b>{count}</b> Not Applicable"
               values={{count: notApplicable, b: bold}}
-            />
-          </span>
-        </li>
-        <li className={item}>
-          {swatch({borderStyle: 'dashed'})}
-          <span>
-            <FormattedMessage
-              description="Number of WCAG success criteria that Pinecast does not support, in the results of the Accessibility Conformance Report on the Accessibility page. “Does Not Support” is a conformance level of the report (VPAT), with “Supports”, “Partially Supports” and “Not Applicable”. The number is in bold"
-              defaultMessage="<b>{count}</b> Does Not Support"
-              values={{count: doesNotSupport, b: bold}}
             />
           </span>
         </li>
@@ -521,6 +566,8 @@ export const AcrFacts = ({children}: {children: React.ReactNode}) => {
           marginLeft: 0,
           paddingBottom: '12px',
         },
+        // A <dd> whose words are on their own lines holds the page's `p`.
+        ':not(:empty) > dd > p': {margin: 0, maxWidth: 'none'},
         [MIN_TABLET_MEDIA_QUERY]: {
           columnGap: '20px',
           display: 'grid',
@@ -597,6 +644,7 @@ export const AcrDownloadButton = () => {
         minHeight: '40px',
         padding: '8px 15px',
         textDecoration: 'none',
+        ...FORCED_COLORS_EDGE,
         transitionDuration: '150ms',
         transitionProperty: 'background-color, transform',
         width: '100%',

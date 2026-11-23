@@ -266,14 +266,15 @@ test.describe('with larger text spacing', () => {
     });
   }
 
-  // A link to a PDF and the text around it. The download link of the ACR card
-  // (src/components/AcrDownload.tsx) is drawn as a button and wraps a long
-  // label inside it, and the text of the card makes it taller: at 320px, and
-  // in the narrow right column of the card at 768px. The pages are found by
-  // their links to a PDF, not by their words: a translation that has no card
-  // yet has none.
+  // A link to a PDF of the site and the text around it. The download link of
+  // the ACR card (src/components/AcrDownload.tsx) is drawn as a button and
+  // wraps a long label inside it, and the text of the card makes it taller:
+  // at 320px, and in the narrow right column of the card at 768px. The pages
+  // are found by their links to a PDF in public/, not by their words: a
+  // translation that has no card yet has none. The comment above the card in
+  // content/en/features/accessibility.mdx says so.
   const pagesWithPdfLinks = exportedPages().filter(path =>
-    /<a [^>]*href="[^"]+\.pdf"/.test(
+    /<a [^>]*href="\/[^"]+\.pdf"/.test(
       readFileSync(
         `out${path.endsWith('/') ? `${path}index` : path}.html`,
         'utf8',
@@ -290,7 +291,9 @@ test.describe('with larger text spacing', () => {
       }) => {
         await page.setViewportSize({width, height: 800});
         await load(page, path, {spacing: true});
-        const links = page.getByRole('main').locator('a[href$=".pdf"]');
+        const links = page
+          .getByRole('main')
+          .locator('a[href^="/"][href$=".pdf"]');
         expect(await links.count()).toBeGreaterThan(0);
         expect(await spilledLabels(links)).toEqual([]);
         expect(await clippedText(page.getByRole('main'))).toEqual([]);

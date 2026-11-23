@@ -65,7 +65,7 @@ Doing accessibility right means caring deeply. We treat accessible design as cra
 
 Our company target is full WCAG 2.2 Level AA, Revised Section 508 standards, and EN 301 549 V3.2.1 conformance.
 
-Today, we're "partially conformant": some parts of our websites do not fully meet WCAG 2.2 Level AA. This information is current as of October 9, 2026.
+Today, we're "partially conformant": some parts of our websites do not fully meet WCAG 2.2 Level AA. This information is current as of November 23, 2026.
 
 ## How we check
 
@@ -163,7 +163,11 @@ Pinecast isn't perfect, but we're proud to self-report our support for accessibi
       the standards and the parts of Pinecast that the report covers.
     The words that go with the numbers are messages in the component.
     The $10 of the AcrBountyLink is the bounty above: it grows by $5 each
-    October 1. Change it with the bounty. */}
+    October 1. Change it with the bounty.
+    tests/text-spacing.spec.ts finds this card by its link to a PDF on the
+    site (an `href` that starts with "/" and ends in ".pdf"), and fails when
+    no page has one. If the report stops being a PDF here, change that test
+    too. */}
 
 <AcrCard
   href="/documents/pinecast-acr-2026-11-23.pdf"
@@ -174,7 +178,9 @@ Pinecast isn't perfect, but we're proud to self-report our support for accessibi
 >
   <AcrOverline>Accessibility Conformance Report</AcrOverline>
   <AcrHeading>The whole story, caveats included.</AcrHeading>
-  <AcrText>Fifty-seven pages, one criterion at a time. Where something only partly works, the report says what and where, in plain words.</AcrText>
+  <AcrText>
+    Fifty-seven pages, one criterion at a time. Where something only partly works, the report says what and where, in plain words.
+  </AcrText>
   <AcrResults supports={50} partiallySupports={2} notApplicable={4} doesNotSupport={0} />
   <AcrFacts>
     <dt>Report date</dt>

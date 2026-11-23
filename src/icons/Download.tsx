@@ -3,7 +3,9 @@ import type {StyleObject} from 'styletron-react';
 import type {IconProps} from './IconProps';
 
 // The Download icon of the Figma file: a tray and an arrow into it. The arrow
-// is a group of its own, with `arrowStyle`, so that a button can move it.
+// is a group of its own, with `arrowStyle` and the attribute
+// `data-download-arrow`, so that a button can move it on hover
+// (`':hover [data-download-arrow]'`).
 export const Download = ({
   size = 24,
   color = 'currentColor',
@@ -26,7 +28,7 @@ export const Download = ({
         fill={color}
         d="M21 19v-6h-2v6H5v-6H3v6a2 2 0 0 0 2 2h14c1.11 0 2-.9 2-2Z"
       />
-      <g className={arrowStyle && css(arrowStyle)}>
+      <g data-download-arrow="" className={arrowStyle && css(arrowStyle)}>
         <path fill={color} d="M11 3h2v12h-2z" />
         <path
           fill={color}
