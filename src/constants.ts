@@ -61,6 +61,15 @@ export const PREFERS_REDUCED_MOTION_QUERY = `@media (prefers-reduced-motion: red
 // Put optional motion under this query, so that it is off by default.
 export const NO_MOTION_PREFERENCE_QUERY = `@media (prefers-reduced-motion: no-preference)`;
 
+// A forced colors theme (Windows contrast themes) paints each background with
+// the theme's color. A link drawn as a button by its fill alone (PrimaryButton)
+// is then bare text: FORCED_COLORS_EDGE gives it a border in the text's color
+// there, and changes nothing elsewhere.
+export const FORCED_COLORS_MEDIA_QUERY = '@media (forced-colors: active)';
+export const FORCED_COLORS_EDGE: StyleObject = {
+  [FORCED_COLORS_MEDIA_QUERY]: {border: '1px solid'},
+};
+
 export const ANTIALIASED: StyleObject = {
   WebkitFontSmoothing: 'antialiased',
   MozOsxFontSmooth: 'grayscale',

@@ -23,6 +23,8 @@ const PAGES = inEnglishAndSample([
   '/features',
   '/learn',
   '/features/analytics',
+  // The ACR card: a link drawn as a button, and a link to a section.
+  '/features/accessibility',
   '/learn/create-a-podcast',
   // The persona pages have product boxes, and scrolling cards in them.
   '/learn/podcasting-for-beginners',
