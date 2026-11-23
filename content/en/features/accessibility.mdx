@@ -4,7 +4,18 @@ description: Pinecast is built for everyone
 heroImage: /images/hero/t-l.png
 ---
 
-import {ChecksList, Intro} from '@/components/TextBlocks';
+import {
+  AcrActions,
+  AcrBountyLink,
+  AcrCard,
+  AcrDownloadButton,
+  AcrFacts,
+  AcrHeading,
+  AcrOverline,
+  AcrResults,
+  AcrText,
+} from '@/components/AcrDownload';
+import {ChecksList, Intro, Title} from '@/components/TextBlocks';
 
 <Intro>
   Podcasting is one of the most accessible forms of artistic expression online. Not just for listeners, but for creators.
@@ -97,7 +108,11 @@ If you have feedback about the accessibility of our product, you can always emai
 
 We're glad to help you finish a task if you're blocked by an accessibility problem, or provide you with a workaround.
 
-# Putting our money where our mouth is
+{/* The card of the ACR at the end of the page links here by this id. Its
+    words can change; keep the id, in every language. The `#` headings of the
+    page get their ids from their words, so this one is a <Title>. */}
+
+<Title id="putting-our-money-where-our-mouth-is">Putting our money where our mouth is</Title>
 
 Just saying we're doing a great job isn't enough. If you find a qualifying accessibility bug, we'll give you $10 in account credit (or an equivalent discount code) towards your Pinecast subscription. Serious issues might earn more, at our discretion.
 
@@ -133,7 +148,47 @@ Problems considered non-qualifying may still be fixed by Pinecast. Account credi
 
 # Proudly reporting our progress
 
-Pinecast isn't perfect, but we're proud to self-report our support for accessibility with an ACR (Accessibility Conformance Report). We're preparing this document now and will post it here soon.
+Pinecast isn't perfect, but we're proud to self-report our support for accessibility. Our Accessibility Conformance Report goes through WCAG 2.2, Section 508, and EN 301 549 one criterion at a time. We don't hide where we have rough edges.
+
+{/* The ACR (src/components/AcrDownload.tsx). Each edition of the report
+    changes these facts. For a new edition, put its PDF in public/documents/
+    under a new name, and change:
+    - `href`, `bytes` (the size of the file) and `pages`;
+    - `frontPage` and `backPage`, pictures of page 1 and page 4, 680px wide,
+      next to the PDF (not in public/images/content/, which is for
+      screenshots: check:structure wants their alt text to differ);
+    - the counts of AcrResults: the web column of WCAG 2.2 at Level A and AA,
+      by conformance level, as the report says them;
+    - the page count in AcrText, and the facts in AcrFacts: the report date,
+      the standards and the parts of Pinecast that the report covers.
+    The words that go with the numbers are messages in the component.
+    The $10 of the AcrBountyLink is the bounty above: it grows by $5 each
+    October 1. Change it with the bounty. */}
+
+<AcrCard
+  href="/documents/pinecast-acr-2026-11-23.pdf"
+  bytes={1022166}
+  pages={58}
+  frontPage="/documents/pinecast-acr-2026-11-23-page-1.webp"
+  backPage="/documents/pinecast-acr-2026-11-23-page-4.webp"
+>
+  <AcrOverline>Accessibility Conformance Report</AcrOverline>
+  <AcrHeading>The whole story, caveats included.</AcrHeading>
+  <AcrText>Fifty-eight pages, one criterion at a time. Where something only partly works, the report says what and where, in plain words.</AcrText>
+  <AcrResults supports={46} partiallySupports={6} notApplicable={4} doesNotSupport={0} />
+  <AcrFacts>
+    <dt>Report date</dt>
+    <dd>November 23, 2026</dd>
+    <dt>Standards</dt>
+    <dd>WCAG 2.2 Level A and AA, Revised Section 508, EN 301 549 V3.2.1</dd>
+    <dt>Covers</dt>
+    <dd>The dashboard, podcast websites, players, short links, the tip jar, feedback forms, and our emails</dd>
+  </AcrFacts>
+  <AcrActions>
+    <AcrDownloadButton />
+    <AcrBountyLink href="#putting-our-money-where-our-mouth-is">Spot something we missed? It's worth $10</AcrBountyLink>
+  </AcrActions>
+</AcrCard>
 
 
 import {layoutWrapper} from '@/layouts/layoutWrapper';

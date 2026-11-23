@@ -107,6 +107,10 @@
     // One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.
     "defaultMessage": "Built by podcasters, for podcasters"
   },
+  "6u37Mq": {
+    // Link to the PDF of the Accessibility Conformance Report (ACR), drawn as a button, on the English Accessibility page. {size} is the size of the file, like “1 MB”
+    "defaultMessage": "Download the ACR (PDF, {size})"
+  },
   "6xTlDe": {
     // Link to the help center. In the Resources column in the footer of every page
     "defaultMessage": "Support"
@@ -170,6 +174,10 @@
   "Btc2Pu": {
     // Name of a feature, in the list on the Features page: a row in big capital letters that opens to show what the feature does. On a tablet or a computer the row is one line high and cuts off a second line
     "defaultMessage": "Episode Metadata"
+  },
+  "BwGH3R": {
+    // Sticker on the cover of the Accessibility Conformance Report, on the Accessibility page: a joke about the length of the report. The number is large, on a line of its own, between the words before it and the words after it. Shown in capital letters. {pages} is the number of pages of the report
+    "defaultMessage": "Light reading <number>{pages}<\/number> {pages, plural, one {page} other {pages}}"
   },
   "BzMale": {
     // One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.
@@ -375,6 +383,10 @@
     // Name of the Starter plan, on its ticket in the pricing section
     "defaultMessage": "Starter plan"
   },
+  "PVDJ2w": {
+    // Number of WCAG success criteria that Pinecast partially supports, in the results of the Accessibility Conformance Report on the Accessibility page. “Partially Supports” is a conformance level of the report (VPAT), with “Supports”, “Does Not Support” and “Not Applicable”. The number is in bold
+    "defaultMessage": "<b>{count}<\/b> Partially Supports"
+  },
   "PY3HGQ": {
     // Big heading at the end of a feature page, above the button to all the features. {br} is a line break
     "defaultMessage": "Discover more{br}features"
@@ -515,6 +527,10 @@
     // What the Password Protection feature does, shown when its row on the Features page is open
     "defaultMessage": "Protect your podcast feed and website with a password that you can share with your listeners."
   },
+  "ZImcHt": {
+    // Link to the PDF of the Accessibility Conformance Report (ACR), drawn as a button, on the Accessibility page. The report is in English only, so the label says so. {size} is the size of the file, like “1 MB”
+    "defaultMessage": "Download the ACR (PDF in English, {size})"
+  },
   "ZWVE3m": {
     // What the Icebox feature does, shown when its row on the Features page is open
     "defaultMessage": "Sometimes you need to take a break from podcasting for a while. If your account has been inactive for a while, you can switch to our Icebox plan and keep your show online for a low monthly rate."
@@ -586,6 +602,10 @@
   "f8xDz/": {
     // Screen reader name of the button with an × that closes the small box that offers this page in this language. The box does not come back after it is closed
     "defaultMessage": "Close"
+  },
+  "faUU9x": {
+    // Label above the results of the Accessibility Conformance Report (ACR), on the Accessibility page. The results are those of the web column of the report, for the success criteria of WCAG 2.2 at Level A and AA. Shown in capital letters
+    "defaultMessage": "WCAG 2.2 Level A and AA · Web"
   },
   "flYdus": {
     // Link to the privacy policy, in the bottom row of every page
@@ -679,6 +699,10 @@
     // Link to the list of changes made to Pinecast. In the Resources column in the footer of every page
     "defaultMessage": "Changelog"
   },
+  "jvCk6O": {
+    // Number of WCAG success criteria that Pinecast does not support, in the results of the Accessibility Conformance Report on the Accessibility page. “Does Not Support” is a conformance level of the report (VPAT), with “Supports”, “Partially Supports” and “Not Applicable”. The number is in bold
+    "defaultMessage": "<b>{count}<\/b> Does Not Support"
+  },
   "kCJjKk": {
     // One of the short selling points of Pinecast in the band of text that scrolls between sections of the page. It is on one line.
     "defaultMessage": "Your batteries-included podcast host"
@@ -755,9 +779,17 @@
     // Link in the open row of an add-on in the pricing section, to the help center article about the add-on. Opens in a new tab
     "defaultMessage": "Learn more"
   },
+  "okuA6M": {
+    // Number of WCAG success criteria that Pinecast supports, in the results of the Accessibility Conformance Report on the Accessibility page. “Supports” is a conformance level of the report (VPAT), with “Partially Supports”, “Does Not Support” and “Not Applicable”. The number is in bold
+    "defaultMessage": "<b>{count}<\/b> Supports"
+  },
   "pInWKb": {
     // A feature of the Starter plan, in the list on its ticket in the pricing section
     "defaultMessage": "No episode limit"
+  },
+  "pVC1et": {
+    // Number of WCAG success criteria in the results of the Accessibility Conformance Report, at the right end of the label above them, on the Accessibility page. Shown in capital letters
+    "defaultMessage": "{count, plural, one {# criterion} other {# criteria}}"
   },
   "pk99nG": {
     // Screen reader name of the list of links at the bottom of every page (the footer navigation)
@@ -894,6 +926,10 @@
   "z+BhDj": {
     // Link in the site header to the page about the features of Pinecast
     "defaultMessage": "Features"
+  },
+  "z7ikej": {
+    // Number of WCAG success criteria that do not apply to Pinecast, in the results of the Accessibility Conformance Report on the Accessibility page. “Not Applicable” is a conformance level of the report (VPAT), with “Supports”, “Partially Supports” and “Does Not Support”. The number is in bold
+    "defaultMessage": "<b>{count}<\/b> Not Applicable"
   },
   "zJnmsJ": {
     // Read by screen readers before the description of a feature in the globe section of the home page. {title} is the name of the feature, for example Analytics. The description follows after a space
