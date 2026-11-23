@@ -224,12 +224,18 @@ export const AcrCard = ({
             >
               {/* A line of words no wider than the circle is where they are:
                   a longer translation ("Leichte Lektüre") wraps, and its
-                  shorter lines fit nearer the edge. */}
+                  shorter lines fit nearer the edge. The words are capitals,
+                  which sit high in their lines, so the padding brings them
+                  down to the middle of the circle. */}
               <span
                 className={css({
                   display: 'block',
                   maxWidth: '80px',
-                  [MIN_TABLET_MEDIA_QUERY]: {maxWidth: '112px'},
+                  paddingTop: '1px',
+                  [MIN_TABLET_MEDIA_QUERY]: {
+                    maxWidth: '112px',
+                    paddingTop: '2px',
+                  },
                 })}
               >
                 <FormattedMessage
@@ -237,6 +243,10 @@ export const AcrCard = ({
                   defaultMessage="Light reading <number>{pages}</number> {pages, plural, one {page} other {pages}}"
                   values={{
                     pages,
+                    // The digits sit low in their line: the margins move
+                    // them up to halfway between the words. The letter
+                    // spacing also comes after the last digit, which pushed
+                    // the number right: the padding takes it back.
                     number: (chunks: React.ReactNode) => (
                       <span
                         className={css({
@@ -245,6 +255,9 @@ export const AcrCard = ({
                           fontSize: '46px',
                           letterSpacing: '-0.04em',
                           lineHeight: '42px',
+                          marginBottom: '0.05em',
+                          marginTop: '-0.05em',
+                          paddingRight: '0.04em',
                           [MIN_TABLET_MEDIA_QUERY]: {
                             fontSize: '64px',
                             lineHeight: '58px',
