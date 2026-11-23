@@ -80,6 +80,9 @@
   "6mB0v5": {
     "defaultMessage": "Bygget af podcastere, til podcastere"
   },
+  "6u37Mq": {
+    "defaultMessage": "Hent ACR-rapporten (PDF, {size})"
+  },
   "6xTlDe": {
     "defaultMessage": "Support"
   },
@@ -127,6 +130,9 @@
   },
   "Btc2Pu": {
     "defaultMessage": "Episodemetadata"
+  },
+  "BwGH3R": {
+    "defaultMessage": "Let læsning <number>{pages}</number> {pages, plural, one {side} other {sider}}"
   },
   "BzMale": {
     "defaultMessage": "$0 i reklamebudget, 100 % fokus på god software"
@@ -281,6 +287,9 @@
   "PQNb/g": {
     "defaultMessage": "Starter-plan"
   },
+  "PVDJ2w": {
+    "defaultMessage": "<b>{count}</b> Understøttes delvist"
+  },
   "PY3HGQ": {
     "defaultMessage": "Opdag flere{br}funktioner"
   },
@@ -386,6 +395,9 @@
   "ZEsems": {
     "defaultMessage": "Beskyt din podcasts feed og hjemmeside med en adgangskode, som du kan dele med dine lyttere."
   },
+  "ZImcHt": {
+    "defaultMessage": "Hent ACR-rapporten (PDF på engelsk, {size})"
+  },
   "ZWVE3m": {
     "defaultMessage": "Nogle gange har man brug for en pause fra podcasting. Hvis din konto har været inaktiv et stykke tid, kan du skifte til vores Icebox-plan og holde din podcast online for en lav månedlig pris."
   },
@@ -439,6 +451,9 @@
   },
   "f8xDz/": {
     "defaultMessage": "Luk"
+  },
+  "faUU9x": {
+    "defaultMessage": "WCAG 2.2 niveau A og AA · Web"
   },
   "flYdus": {
     "defaultMessage": "Privatliv"
@@ -509,6 +524,9 @@
   "joqai5": {
     "defaultMessage": "Ændringslog"
   },
+  "jvCk6O": {
+    "defaultMessage": "<b>{count}</b> Understøttes ikke"
+  },
   "kCJjKk": {
     "defaultMessage": "Din podcast-vært med alt, hvad du skal bruge"
   },
@@ -566,8 +584,14 @@
   "ocSbJt": {
     "defaultMessage": "Læs mere"
   },
+  "okuA6M": {
+    "defaultMessage": "<b>{count}</b> Understøttes"
+  },
   "pInWKb": {
     "defaultMessage": "Ingen grænse for antal episoder"
+  },
+  "pVC1et": {
+    "defaultMessage": "{count, plural, one {# kriterium} other {# kriterier}}"
   },
   "pk99nG": {
     "defaultMessage": "Sidefod"
@@ -670,6 +694,9 @@
   },
   "z+BhDj": {
     "defaultMessage": "Funktioner"
+  },
+  "z7ikej": {
+    "defaultMessage": "<b>{count}</b> Ikke relevant"
   },
   "zJnmsJ": {
     "defaultMessage": "{title}:"

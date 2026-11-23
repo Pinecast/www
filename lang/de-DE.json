@@ -80,6 +80,9 @@
   "6mB0v5": {
     "defaultMessage": "Gemacht von Podcaster:innen, für Podcaster:innen"
   },
+  "6u37Mq": {
+    "defaultMessage": "Lade den ACR herunter (PDF, {size})"
+  },
   "6xTlDe": {
     "defaultMessage": "Support"
   },
@@ -127,6 +130,9 @@
   },
   "Btc2Pu": {
     "defaultMessage": "Episoden-Metadaten"
+  },
+  "BwGH3R": {
+    "defaultMessage": "Leichte Lektüre <number>{pages}</number> {pages, plural, one {Seite} other {Seiten}}"
   },
   "BzMale": {
     "defaultMessage": "0 $ Werbebudget, 100 % Fokus auf großartige Software"
@@ -281,6 +287,9 @@
   "PQNb/g": {
     "defaultMessage": "Starter-Plan"
   },
+  "PVDJ2w": {
+    "defaultMessage": "<b>{count}</b> Teilweise unterstützt"
+  },
   "PY3HGQ": {
     "defaultMessage": "Entdecke weitere{br}Features"
   },
@@ -386,6 +395,9 @@
   "ZEsems": {
     "defaultMessage": "Schütze deinen Podcast-Feed und deine Website mit einem Passwort, das du mit deinen Hörer:innen teilen kannst."
   },
+  "ZImcHt": {
+    "defaultMessage": "Lade den ACR herunter (PDF auf Englisch, {size})"
+  },
   "ZWVE3m": {
     "defaultMessage": "Manchmal brauchst du eine Pause vom Podcasting. Ist dein Konto länger inaktiv, kannst du zum Icebox-Plan wechseln und deine Show für einen kleinen monatlichen Betrag online halten."
   },
@@ -439,6 +451,9 @@
   },
   "f8xDz/": {
     "defaultMessage": "Schließen"
+  },
+  "faUU9x": {
+    "defaultMessage": "WCAG 2.2 Stufe A und AA · Web"
   },
   "flYdus": {
     "defaultMessage": "Datenschutz"
@@ -509,6 +524,9 @@
   "joqai5": {
     "defaultMessage": "Changelog"
   },
+  "jvCk6O": {
+    "defaultMessage": "<b>{count}</b> Nicht unterstützt"
+  },
   "kCJjKk": {
     "defaultMessage": "Dein Podcast-Host mit allem, was du brauchst"
   },
@@ -566,8 +584,14 @@
   "ocSbJt": {
     "defaultMessage": "Mehr erfahren"
   },
+  "okuA6M": {
+    "defaultMessage": "<b>{count}</b> Unterstützt"
+  },
   "pInWKb": {
     "defaultMessage": "Keine Episodenbegrenzung"
+  },
+  "pVC1et": {
+    "defaultMessage": "{count, plural, one {# Kriterium} other {# Kriterien}}"
   },
   "pk99nG": {
     "defaultMessage": "Footer"
@@ -670,6 +694,9 @@
   },
   "z+BhDj": {
     "defaultMessage": "Features"
+  },
+  "z7ikej": {
+    "defaultMessage": "<b>{count}</b> Nicht anwendbar"
   },
   "zJnmsJ": {
     "defaultMessage": "{title}:"

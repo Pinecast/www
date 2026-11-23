@@ -80,6 +80,9 @@
   "6mB0v5": {
     "defaultMessage": "Hecho por podcasters, para podcasters"
   },
+  "6u37Mq": {
+    "defaultMessage": "Descargar el ACR (PDF, {size})"
+  },
   "6xTlDe": {
     "defaultMessage": "Soporte"
   },
@@ -127,6 +130,9 @@
   },
   "Btc2Pu": {
     "defaultMessage": "Metadatos del episodio"
+  },
+  "BwGH3R": {
+    "defaultMessage": "Lectura ligera <number>{pages}</number> {pages, plural, one {página} other {páginas}}"
   },
   "BzMale": {
     "defaultMessage": "$0 en presupuesto de publicidad, 100% de enfoque en un gran software"
@@ -281,6 +287,9 @@
   "PQNb/g": {
     "defaultMessage": "Plan Starter"
   },
+  "PVDJ2w": {
+    "defaultMessage": "<b>{count}</b> Soporte Parcial"
+  },
   "PY3HGQ": {
     "defaultMessage": "Descubre más{br}funciones"
   },
@@ -386,6 +395,9 @@
   "ZEsems": {
     "defaultMessage": "Protege el feed y el sitio web de tu podcast con una contraseña que puedes compartir con tus oyentes."
   },
+  "ZImcHt": {
+    "defaultMessage": "Descargar el ACR (PDF en inglés, {size})"
+  },
   "ZWVE3m": {
     "defaultMessage": "A veces necesitas tomarte un descanso del podcasting por un tiempo. Si tu cuenta ha estado inactiva por un tiempo, puedes cambiarte a nuestro plan Icebox y mantener tu programa en línea por una tarifa mensual baja."
   },
@@ -439,6 +451,9 @@
   },
   "f8xDz/": {
     "defaultMessage": "Cerrar"
+  },
+  "faUU9x": {
+    "defaultMessage": "WCAG 2.2 Nivel A y AA · Web"
   },
   "flYdus": {
     "defaultMessage": "Privacidad"
@@ -509,6 +524,9 @@
   "joqai5": {
     "defaultMessage": "Registro de cambios"
   },
+  "jvCk6O": {
+    "defaultMessage": "<b>{count}</b> Sin Soporte"
+  },
   "kCJjKk": {
     "defaultMessage": "Tu hosting de podcasts con todo incluido"
   },
@@ -566,8 +584,14 @@
   "ocSbJt": {
     "defaultMessage": "Aprende más"
   },
+  "okuA6M": {
+    "defaultMessage": "<b>{count}</b> Soporte"
+  },
   "pInWKb": {
     "defaultMessage": "Sin límite de episodios"
+  },
+  "pVC1et": {
+    "defaultMessage": "{count, plural, one {# criterio} other {# criterios}}"
   },
   "pk99nG": {
     "defaultMessage": "Pie de página"
@@ -670,6 +694,9 @@
   },
   "z+BhDj": {
     "defaultMessage": "Funciones"
+  },
+  "z7ikej": {
+    "defaultMessage": "<b>{count}</b> No Aplica"
   },
   "zJnmsJ": {
     "defaultMessage": "{title}:"

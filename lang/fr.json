@@ -80,6 +80,9 @@
   "6mB0v5": {
     "defaultMessage": "Conçu par des podcasteurs, pour des podcasteurs"
   },
+  "6u37Mq": {
+    "defaultMessage": "Télécharger l'ACR (PDF, {size})"
+  },
   "6xTlDe": {
     "defaultMessage": "Assistance"
   },
@@ -127,6 +130,9 @@
   },
   "Btc2Pu": {
     "defaultMessage": "Métadonnées d'épisode"
+  },
+  "BwGH3R": {
+    "defaultMessage": "Lecture légère <number>{pages}</number> {pages, plural, one {page} other {pages}}"
   },
   "BzMale": {
     "defaultMessage": "0 $ de budget publicitaire, 100 % d'attention sur un excellent logiciel"
@@ -281,6 +287,9 @@
   "PQNb/g": {
     "defaultMessage": "Offre Starter"
   },
+  "PVDJ2w": {
+    "defaultMessage": "<b>{count}</b> Prend partiellement en charge"
+  },
   "PY3HGQ": {
     "defaultMessage": "Découvre plus{br}de fonctionnalités"
   },
@@ -386,6 +395,9 @@
   "ZEsems": {
     "defaultMessage": "Protège le flux et le site de ton podcast avec un mot de passe que tu peux partager avec tes auditeurs."
   },
+  "ZImcHt": {
+    "defaultMessage": "Télécharger l'ACR (PDF en anglais, {size})"
+  },
   "ZWVE3m": {
     "defaultMessage": "Parfois, tu as besoin de faire une pause dans ton podcasting. Si ton compte est inactif depuis un moment, tu peux passer à notre offre Icebox et garder ton émission en ligne pour un petit tarif mensuel."
   },
@@ -439,6 +451,9 @@
   },
   "f8xDz/": {
     "defaultMessage": "Fermer"
+  },
+  "faUU9x": {
+    "defaultMessage": "WCAG 2.2 Niveaux A et AA · Web"
   },
   "flYdus": {
     "defaultMessage": "Confidentialité"
@@ -509,6 +524,9 @@
   "joqai5": {
     "defaultMessage": "Journal des modifications"
   },
+  "jvCk6O": {
+    "defaultMessage": "<b>{count}</b> Ne fournit pas d'assistance"
+  },
   "kCJjKk": {
     "defaultMessage": "Ton hébergeur de podcast tout-en-un"
   },
@@ -566,8 +584,14 @@
   "ocSbJt": {
     "defaultMessage": "En savoir plus"
   },
+  "okuA6M": {
+    "defaultMessage": "<b>{count}</b> Prend en charge"
+  },
   "pInWKb": {
     "defaultMessage": "Aucune limite d'épisodes"
+  },
+  "pVC1et": {
+    "defaultMessage": "{count, plural, one {# critère} other {# critères}}"
   },
   "pk99nG": {
     "defaultMessage": "Pied de page"
@@ -670,6 +694,9 @@
   },
   "z+BhDj": {
     "defaultMessage": "Fonctionnalités"
+  },
+  "z7ikej": {
+    "defaultMessage": "<b>{count}</b> Sans objet"
   },
   "zJnmsJ": {
     "defaultMessage": "{title} :"

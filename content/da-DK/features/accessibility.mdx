@@ -4,7 +4,18 @@ description: Pinecast er bygget til alle
 heroImage: /images/hero/t-l.png
 ---
 
-import {ChecksList, Intro} from '@/components/TextBlocks';
+import {
+  AcrActions,
+  AcrBountyLink,
+  AcrCard,
+  AcrDownloadButton,
+  AcrFacts,
+  AcrHeading,
+  AcrOverline,
+  AcrResults,
+  AcrText,
+} from '@/components/AcrDownload';
+import {ChecksList, Intro, Title} from '@/components/TextBlocks';
 
 <Intro>
   Podcasting er en af de mest tilgængelige former for kunstnerisk udtryk online. Ikke kun for lyttere, men også for skabere.
@@ -54,7 +65,7 @@ At gøre tilgængelighed rigtigt kræver, at man går op i det. Vi betragter til
 
 Vores mål som virksomhed er fuld overholdelse af WCAG 2.2 niveau AA, de reviderede Section 508-standarder og EN 301 549 V3.2.1.
 
-I dag er vi "delvist overholdende": nogle dele af vores hjemmesider lever ikke fuldt op til WCAG 2.2 niveau AA. Disse oplysninger er gældende fra den 9. oktober 2026.
+I dag er vi "delvist i overensstemmelse": nogle dele af vores hjemmesider lever ikke fuldt op til WCAG 2.2 niveau AA. Disse oplysninger er aktuelle pr. 23. november 2026.
 
 ## Hvordan vi kontrollerer det
 
@@ -75,6 +86,8 @@ Følgende er problemer, som er kendte begrænsninger:
 1. Formularen til at glemt adgangskode udløber efter tredive minutter. Som en løsning kan du anmode om et nyt link.
 2. Nogle artikler i vores hjælpecenter mangler alt-tekst.
 3. Webafspillere afskærer lange titler og lange linjer i undertekster, der er skabt fra en transskription.
+4. I nogle artikler i hjælpecenteret har billedtekster til figurer lav kontrast.
+5. To artikler i hjælpecenteret scroller sidelæns på smalle skærme.
 
 Denne liste vil blive holdt opdateret.
 
@@ -97,7 +110,11 @@ Hvis du har feedback om tilgængeligheden af vores produkt, kan du altid skrive 
 
 Vi hjælper dig gerne med at løse en opgave, hvis du bliver forhindret af et tilgængelighedsproblem, eller finder en løsning til dig.
 
-# Vi bakker det op med handling
+{/* The card of the ACR at the end of the page links here by this id. Its
+    words can change; keep the id, in every language. The `#` headings of the
+    page get their ids from their words, so this one is a <Title>. */}
+
+<Title id="putting-our-money-where-our-mouth-is">Vi bakker det op med handling</Title>
 
 Det er ikke nok bare at sige, at vi gør et godt stykke arbejde. Hvis du finder en kvalificerende tilgængelighedsfejl, giver vi dig 10 USD i kontosaldo (eller en tilsvarende rabatkode) til dit Pinecast-abonnement. Alvorlige problemer kan give en større belønning – det afgør vi fra sag til sag.
 
@@ -133,7 +150,53 @@ Problemer, der ikke kvalificerer, kan stadig blive rettet af Pinecast. Kontosald
 
 # Vi deler stolt vores fremskridt
 
-Pinecast er ikke perfekt, men vi er stolte af selv at rapportere vores støtte til tilgængelighed med en ACR (Accessibility Conformance Report). Vi er ved at udarbejde dette dokument nu og lægger det op her snart.
+Pinecast er ikke perfekt, men vi er stolte af selv at rapportere, hvor godt vi understøtter tilgængelighed. Vores Overholdelsesrapport for tilgængelighed går igennem WCAG 2.2, Section 508 og EN 301 549 ét kriterium ad gangen. Vi lægger ikke skjul på, hvor vi har ujævnheder.
+
+{/* The ACR (src/components/AcrDownload.tsx). Each edition of the report
+    changes these facts. For a new edition, put its PDF in public/documents/
+    under a new name, and change:
+    - `href`, `bytes` (the size of the file) and `pages`;
+    - `frontPage` and `backPage`, pictures of page 1 and page 4, 680px wide,
+      next to the PDF (not in public/images/content/, which is for
+      screenshots: check:structure wants their alt text to differ);
+    - the counts of AcrResults: the web column of WCAG 2.2 at Level A and AA,
+      by conformance level, as the report says them;
+    - the page count in AcrText, and the facts in AcrFacts: the report date,
+      the standards and the parts of Pinecast that the report covers.
+    The words that go with the numbers are messages in the component.
+    The $10 of the AcrBountyLink is the bounty above: it grows by $5 each
+    October 1. Change it with the bounty.
+    tests/text-spacing.spec.ts finds this card by its link to a PDF on the
+    site (an `href` that starts with "/" and ends in ".pdf"), and fails when
+    no page has one. If the report stops being a PDF here, change that test
+    too. */}
+
+<AcrCard
+  href="/documents/pinecast-acr-2026-11-23.pdf"
+  bytes={1016059}
+  pages={57}
+  frontPage="/documents/pinecast-acr-2026-11-23-page-1.webp"
+  backPage="/documents/pinecast-acr-2026-11-23-page-4.webp"
+>
+  <AcrOverline>Overholdelsesrapport for tilgængelighed</AcrOverline>
+  <AcrHeading>Hele historien, forbehold inkluderet.</AcrHeading>
+  <AcrText>
+    Syvoghalvtreds sider, ét kriterium ad gangen. Hvor noget kun fungerer delvist, fortæller rapporten præcis hvad og hvor - i et klart sprog.
+  </AcrText>
+  <AcrResults supports={50} partiallySupports={2} notApplicable={4} doesNotSupport={0} />
+  <AcrFacts>
+    <dt>Rapportdato</dt>
+    <dd>23. november 2026</dd>
+    <dt>Standarder</dt>
+    <dd>WCAG 2.2 niveau A og AA, reviderede Section 508, EN 301 549 V3.2.1</dd>
+    <dt>Omfatter</dt>
+    <dd>Dashboardet, podcast-hjemmesider, afspillere, korte links, Tip Jar, feedbackformularer og vores e-mails</dd>
+  </AcrFacts>
+  <AcrActions>
+    <AcrDownloadButton />
+    <AcrBountyLink href="#putting-our-money-where-our-mouth-is">Har du fundet noget, vi har overset? Det er 10 $ værd</AcrBountyLink>
+  </AcrActions>
+</AcrCard>
 
 
 import {layoutWrapper} from '@/layouts/layoutWrapper';
