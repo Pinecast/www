@@ -1,8 +1,4 @@
-import {
-  FORCED_COLORS_EDGE,
-  MIN_TABLET_MEDIA_QUERY,
-  MOBILE_MEDIA_QUERY,
-} from '@/constants';
+import {FORCED_COLORS_EDGE, MIN_TABLET_MEDIA_QUERY} from '@/constants';
 import {MonumentGroteskBold} from '@/fonts';
 import {useCSS} from '@/hooks/useCSS';
 import Link from '@/components/SiteLink';
