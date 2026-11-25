@@ -80,6 +80,9 @@
   "6mB0v5": {
     "defaultMessage": "Feito por podcasters, para podcasters"
   },
+  "6u37Mq": {
+    "defaultMessage": "Baixar o ACR (PDF, {size})"
+  },
   "6xTlDe": {
     "defaultMessage": "Suporte"
   },
@@ -127,6 +130,9 @@
   },
   "Btc2Pu": {
     "defaultMessage": "Metadados dos episódios"
+  },
+  "BwGH3R": {
+    "defaultMessage": "Leitura leve <number>{pages}</number> {pages, plural, one {página} other {páginas}}"
   },
   "BzMale": {
     "defaultMessage": "US$ 0 em publicidade, 100% de foco em um ótimo software"
@@ -281,6 +287,9 @@
   "PQNb/g": {
     "defaultMessage": "Plano Starter"
   },
+  "PVDJ2w": {
+    "defaultMessage": "<b>{count}</b> Suporte Parcial"
+  },
   "PY3HGQ": {
     "defaultMessage": "Descubra mais{br}recursos"
   },
@@ -386,6 +395,9 @@
   "ZEsems": {
     "defaultMessage": "Proteja o feed e o site do seu podcast com uma senha que você pode compartilhar com seus ouvintes."
   },
+  "ZImcHt": {
+    "defaultMessage": "Baixar o ACR (PDF em inglês, {size})"
+  },
   "ZWVE3m": {
     "defaultMessage": "Às vezes você precisa dar um tempo no podcasting. Se sua conta está inativa há um tempo, você pode mudar para o plano Icebox e manter seu programa no ar por um valor mensal baixo."
   },
@@ -439,6 +451,9 @@
   },
   "f8xDz/": {
     "defaultMessage": "Fechar"
+  },
+  "faUU9x": {
+    "defaultMessage": "WCAG 2.2 Nível A e AA · Web"
   },
   "flYdus": {
     "defaultMessage": "Privacidade"
@@ -509,6 +524,9 @@
   "joqai5": {
     "defaultMessage": "Novidades"
   },
+  "jvCk6O": {
+    "defaultMessage": "<b>{count}</b> Sem Suporte"
+  },
   "kCJjKk": {
     "defaultMessage": "Sua hospedagem de podcasts com tudo incluso"
   },
@@ -566,8 +584,14 @@
   "ocSbJt": {
     "defaultMessage": "Saiba mais"
   },
+  "okuA6M": {
+    "defaultMessage": "<b>{count}</b> Suporte"
+  },
   "pInWKb": {
     "defaultMessage": "Sem limite de episódios"
+  },
+  "pVC1et": {
+    "defaultMessage": "{count, plural, one {# critério} other {# critérios}}"
   },
   "pk99nG": {
     "defaultMessage": "Rodapé"
@@ -670,6 +694,9 @@
   },
   "z+BhDj": {
     "defaultMessage": "Recursos"
+  },
+  "z7ikej": {
+    "defaultMessage": "<b>{count}</b> Não Aplicável"
   },
   "zJnmsJ": {
     "defaultMessage": "{title}:"

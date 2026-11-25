@@ -5,7 +5,7 @@
       "sha256": "0e2c61ec2c260327af00e774977d532fae5e3eeb3e7d67adcf2eab847e6ef457"
     },
     "content/da-DK/features/accessibility.mdx": {
-      "sha256": "7db32769073bb3e3aa08f8ef518418caa11019a9cb4f50d6175119291e30db08"
+      "sha256": "8d8fb7ca571f4cdb6efe01f1224f7319e49f727766da013ebb9462f21178583c"
     },
     "content/da-DK/features/analytics.mdx": {
       "sha256": "9e355fc2bc1e8d0ffe7732ecc35db529ed8427c0b160d77e507b148f5267a92e"
@@ -74,7 +74,7 @@
       "sha256": "4c56323e9f57b615128e9ac77258bcf9a43908b7652023700c3627a8828c0d34"
     },
     "content/de-DE/features/accessibility.mdx": {
-      "sha256": "671c17838ffb9c28699a1aad8e092e1aa19818a34dd399ea8021167a0ccf7265"
+      "sha256": "830f0d7d82aefe0effc3c3a6796d749bfb24f624550ebc3f7b33d52ec83a38f0"
     },
     "content/de-DE/features/analytics.mdx": {
       "sha256": "78378b141e7d3151b6e21d0a976e6407e85fcc32a677c751a9886b708ae31b8c"
@@ -143,7 +143,7 @@
       "sha256": "20f5015d009ba82a2ad2fe9a151366aa5f0e91ffb826af2dbebe4e18a75783c4"
     },
     "content/en/features/accessibility.mdx": {
-      "sha256": "f46e068c8af978203cde0e5ba6f4016053e23bfb3e82953dd0d9515442fddfc1"
+      "sha256": "2a0d2993f5afc4951c8053d19e12b61c18f3f32d19d0d55cbc3d8e43cbad292d"
     },
     "content/en/features/analytics.mdx": {
       "sha256": "77fd42282feb22dfe70c78ef3f71588dd72c4ef7cd0ea3e2a1f216390e584ac4"
@@ -215,7 +215,7 @@
       "sha256": "7036adde284e7c253ff893e9b104a014ea8a2b073fe70a91ab0a36fa498167f3"
     },
     "content/es-419/features/accessibility.mdx": {
-      "sha256": "baa4b292ad5570e7bf78d5724be0db643ca9b17873904904316a47672dad05dd"
+      "sha256": "5a19364d47b09566d7b7609a35b5579bdb2e4058c7066632ff6d4bf699cf3130"
     },
     "content/es-419/features/analytics.mdx": {
       "sha256": "0eb948bb2595241ac0e25cedda9f9ac7f53d1c4bc561ed8b0302300c3d3cae6b"
@@ -287,7 +287,7 @@
       "sha256": "873121cadd921c6474244ebd815bdeee8381ea0ff4dcc260bf5d058f3189e096"
     },
     "content/fr/features/accessibility.mdx": {
-      "sha256": "cc9b5073c7630282efac02709df1dafe0e6adb33b785eb1d14b8c5f0e843cca7"
+      "sha256": "547a3fb5f795777289e62d6d713414a42870420e28df6ebfc072b792e68635b3"
     },
     "content/fr/features/analytics.mdx": {
       "sha256": "c4444f826188a6d472a50c89a2748334032fad8b3db7ebfa44acb20f6213e835"
@@ -356,7 +356,7 @@
       "sha256": "ba3bd2424c9606b0e353a72b7538285bd17420f1a85154a4a78745634a8fe893"
     },
     "content/pt-BR/features/accessibility.mdx": {
-      "sha256": "c41c8097842dc937288ec1ce77d2375081276b015eb8687c913bb0d8d0e74f3b"
+      "sha256": "f753344dd436b6f4e7350f6bd3f27b026b6e759bc35d55f5949b8216790fb910"
     },
     "content/pt-BR/features/analytics.mdx": {
       "sha256": "2c6f1b7440905cf04dbd888524b8c8c944ab2feb2168c9125a2a922c297b179f"
@@ -422,25 +422,25 @@
       "sha256": "d41f63ac7beffa9a7f2e728b010641872dda56460bc53200871eebd05f356af6"
     },
     "lang/da-DK.json": {
-      "sha256": "cbf29cca54e8c7e02a03f8449e34cb6d251a8c50f3e6dc2d42d17e0683cebac6"
+      "sha256": "d707c51ffbb32cd39fa46fc102a5d556eb56783d3200240fa273b32dcfe0fea8"
     },
     "lang/de-DE.json": {
-      "sha256": "c7127bb76c32189f2c6b3d56a6948d62008157d438be81d4906e5b2fd0fea0de"
+      "sha256": "e3109890d1834bffadae8b077e1762f4e4679cfe0c9d9078b7259901222c9bad"
     },
     "lang/en.json": {
       "sha256": "d0f8863babd1501f293fc8ca7b461a08cb6ad57b565fa6985233d37461093f97"
     },
     "lang/en.jsonc": {
-      "sha256": "2fc761b7c2676ef98a83c65fccfd137b01eca5eb47fda7ca8afb63b26d149eb8"
+      "sha256": "328b7e046686ece5de090d9a2b1034b02c87238ef1803475a851bc745ec597a0"
     },
     "lang/es-419.json": {
-      "sha256": "21c132dbc2048e4359b1812adcdd890b04f20917d7134de9778cbca5318008e0"
+      "sha256": "c49266a6d318242ee47424bdd6bc26d7eee7a6cb620a0f9bbe6ca90d604cff61"
     },
     "lang/fr.json": {
-      "sha256": "55c76f48ff7f4473bf0214ab58735e323f72b95bcabba0cc75f4638d3820c0c4"
+      "sha256": "991af63270c3744560d7c1e673299262174a5bda7bef0ae216bd75866b91e95d"
     },
     "lang/pt-BR.json": {
-      "sha256": "d3eaa2b6579f4bc3e87abaf6f124d56a11fae87c82d0a7a85ed8a2e2a80f18ff"
+      "sha256": "19ec060df136fd286de5cc5fd721b220a4cdc3e2a34e37317799ed54603270df"
     }
   }
 }

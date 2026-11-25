@@ -4,7 +4,18 @@ description: Pinecast ist für alle gemacht
 heroImage: /images/hero/t-l.png
 ---
 
-import {ChecksList, Intro} from '@/components/TextBlocks';
+import {
+  AcrActions,
+  AcrBountyLink,
+  AcrCard,
+  AcrDownloadButton,
+  AcrFacts,
+  AcrHeading,
+  AcrOverline,
+  AcrResults,
+  AcrText,
+} from '@/components/AcrDownload';
+import {ChecksList, Intro, Title} from '@/components/TextBlocks';
 
 <Intro>
   Podcasting ist eine der barrierefreiesten Formen künstlerischen Ausdrucks im Netz – nicht nur für Hörer:innen, sondern auch für Creators.
@@ -54,7 +65,7 @@ Barrierefreiheit richtig umzusetzen bedeutet, dass uns das Thema wirklich am Her
 
 Unser Unternehmensziel ist die vollständige Konformität mit WCAG 2.2 Level AA, den überarbeiteten Section-508-Standards und EN 301 549 V3.2.1.
 
-Aktuell sind wir „teilweise konform“: Einige Bereiche unserer Websites erfüllen WCAG 2.2 Level AA noch nicht vollständig. Diese Angabe ist aktuell zum 9. Oktober 2026.
+Aktuell sind wir „teilweise konform“: Einige Bereiche unserer Websites erfüllen WCAG 2.2 Level AA noch nicht vollständig. Diese Angaben sind auf dem Stand vom 23. November 2026.
 
 ## Wie wir das überprüfen
 
@@ -75,6 +86,8 @@ Die folgenden Punkte sind bekannte Einschränkungen:
 1. Das Formular zum Zurücksetzen des Passworts läuft nach dreißig Minuten ab. Als Workaround kannst du dir einfach einen neuen Link anfordern.
 2. Einigen Artikeln in unserem Hilfe-Center fehlt noch Alt-Text.
 3. Bei Web-Playern werden lange Titel sowie lange Zeilen der aus einem Transkript erstellten Untertitel abgeschnitten.
+4. In einigen Hilfeartikeln haben die Bildunterschriften von Abbildungen einen zu geringen Kontrast.
+5. Zwei Hilfeartikel scrollen auf schmalen Bildschirmen zur Seite.
 
 Diese Liste halten wir aktuell.
 
@@ -97,7 +110,11 @@ Wenn du Feedback zur Barrierefreiheit unseres Produkts hast, schreib uns jederze
 
 Wenn dich ein Barrierefreiheits-Problem blockiert, helfen wir dir gerne, die Aufgabe trotzdem zu erledigen, oder zeigen dir einen Workaround.
 
-# Worten Taten folgen lassen
+{/* The card of the ACR at the end of the page links here by this id. Its
+    words can change; keep the id, in every language. The `#` headings of the
+    page get their ids from their words, so this one is a <Title>. */}
+
+<Title id="putting-our-money-where-our-mouth-is">Worten Taten folgen lassen</Title>
 
 Nur zu sagen, dass wir einen tollen Job machen, reicht uns nicht. Findest du einen qualifizierenden Barrierefreiheits-Bug, erhältst du 10 $ Guthaben auf deinem Account (oder einen entsprechenden Rabattcode) für dein Pinecast-Abo. Bei schwerwiegenden Problemen kann die Prämie nach unserem Ermessen höher ausfallen.
 
@@ -133,7 +150,53 @@ Probleme, die nicht als qualifizierend gelten, können trotzdem von Pinecast beh
 
 # Unser Fortschritt – mit Stolz berichtet
 
-Pinecast ist nicht perfekt, aber wir legen stolz offen, wie es um unsere Unterstützung von Barrierefreiheit steht – mit einem ACR (Accessibility Conformance Report). Wir arbeiten gerade an diesem Dokument und veröffentlichen es hier in Kürze.
+Pinecast ist nicht perfekt, aber wir legen stolz offen, wie es um die Barrierefreiheit steht. In unserem Accessibility Conformance Report gehen wir WCAG 2.2, Section 508 und EN 301 549 Kriterium für Kriterium durch. Wir verstecken nicht, wo es noch hakt.
+
+{/* The ACR (src/components/AcrDownload.tsx). Each edition of the report
+    changes these facts. For a new edition, put its PDF in public/documents/
+    under a new name, and change:
+    - `href`, `bytes` (the size of the file) and `pages`;
+    - `frontPage` and `backPage`, pictures of page 1 and page 4, 680px wide,
+      next to the PDF (not in public/images/content/, which is for
+      screenshots: check:structure wants their alt text to differ);
+    - the counts of AcrResults: the web column of WCAG 2.2 at Level A and AA,
+      by conformance level, as the report says them;
+    - the page count in AcrText, and the facts in AcrFacts: the report date,
+      the standards and the parts of Pinecast that the report covers.
+    The words that go with the numbers are messages in the component.
+    The $10 of the AcrBountyLink is the bounty above: it grows by $5 each
+    October 1. Change it with the bounty.
+    tests/text-spacing.spec.ts finds this card by its link to a PDF on the
+    site (an `href` that starts with "/" and ends in ".pdf"), and fails when
+    no page has one. If the report stops being a PDF here, change that test
+    too. */}
+
+<AcrCard
+  href="/documents/pinecast-acr-2026-11-23.pdf"
+  bytes={1016059}
+  pages={57}
+  frontPage="/documents/pinecast-acr-2026-11-23-page-1.webp"
+  backPage="/documents/pinecast-acr-2026-11-23-page-4.webp"
+>
+  <AcrOverline>Accessibility Conformance Report</AcrOverline>
+  <AcrHeading>Die ganze Geschichte, inklusive Einschränkungen.</AcrHeading>
+  <AcrText>
+    Siebenundfünfzig Seiten, Kriterium für Kriterium. Wo etwas nur teilweise funktioniert, steht im Bericht in klaren Worten, was und wo.
+  </AcrText>
+  <AcrResults supports={50} partiallySupports={2} notApplicable={4} doesNotSupport={0} />
+  <AcrFacts>
+    <dt>Berichtsdatum</dt>
+    <dd>23. November 2026</dd>
+    <dt>Standards</dt>
+    <dd>WCAG 2.2 Level A und AA, überarbeitete Section-508-Standards, EN 301 549 V3.2.1</dd>
+    <dt>Umfang</dt>
+    <dd>Das Dashboard, Podcast-Websites, Player, Kurzlinks, die Trinkgeldkasse, Feedbackformulare und unsere E-Mails</dd>
+  </AcrFacts>
+  <AcrActions>
+    <AcrDownloadButton />
+    <AcrBountyLink href="#putting-our-money-where-our-mouth-is">Dir ist etwas aufgefallen, das wir übersehen haben? Das ist 10 $ wert</AcrBountyLink>
+  </AcrActions>
+</AcrCard>
 
 
 import {layoutWrapper} from '@/layouts/layoutWrapper';
