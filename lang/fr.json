@@ -56,6 +56,9 @@
   "4fxkcu": {
     "defaultMessage": "/ Mois"
   },
+  "4ryoyK": {
+    "defaultMessage": "Fichiers jusqu'à 100 Mo + bonus"
+  },
   "4zg7Gp": {
     "defaultMessage": "Aucune carte bancaire requise"
   },
@@ -110,9 +113,6 @@
   "ANkfZ+": {
     "defaultMessage": "Publie ou importe ton podcast, fais-le référencer dans les applications, et développe ton audience grâce à nos outils optimisés pour le SEO."
   },
-  "APS4kv": {
-    "defaultMessage": "Importe des fichiers audio jusqu'à 256 Mo, avec 256 Mo supplémentaires offerts tous les trente jours. Les flux RSS se mettent à jour 66 % plus vite."
-  },
   "AQ7TL1": {
     "defaultMessage": "Ne nous crois pas sur parole"
   },
@@ -163,9 +163,6 @@
   },
   "ESsMXt": {
     "defaultMessage": "Découvre d'où viennent tes auditeurs et comment ils écoutent."
-  },
-  "EUVluX": {
-    "defaultMessage": "Fichiers jusqu'à 80 Mo + bonus"
   },
   "FgdSGw": {
     "defaultMessage": "Les statistiques les plus puissantes du podcasting, avec des fonctionnalités premium, des graphiques simples et des contrôles clairs."
@@ -218,11 +215,17 @@
   "KVVGEY": {
     "defaultMessage": "Toutes les fonctionnalités"
   },
+  "KlRZCz": {
+    "defaultMessage": "Fichiers jusqu'à 64 Mo"
+  },
   "Klb4PR": {
     "defaultMessage": "Bienvenue sur Pinecast, la plateforme d'hébergement{br}de podcast tout-en-un"
   },
   "L8U4Ih": {
     "defaultMessage": "Distribution"
+  },
+  "Lc/Uyt": {
+    "defaultMessage": "Envoie des fichiers audio jusqu'à 340 Mo, avec 340 Mo de marge supplémentaire tous les trente jours. Tes flux RSS se mettent à jour 66 % plus vite."
   },
   "M3zxrK": {
     "defaultMessage": "/ An"
@@ -274,9 +277,6 @@
   },
   "OdXhTK": {
     "defaultMessage": "À l'écoute{br}de tes besoins"
-  },
-  "OvESM7": {
-    "defaultMessage": "Fichiers jusqu'à 48 Mo"
   },
   "P/u37W": {
     "defaultMessage": "Obtiens des informations supplémentaires sur tes auditeurs grâce aux données géographiques, aux statistiques de croissance des écoutes, aux mini-graphiques, et plus encore."

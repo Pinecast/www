@@ -56,6 +56,9 @@
   "4fxkcu": {
     "defaultMessage": "/ Mes"
   },
+  "4ryoyK": {
+    "defaultMessage": "Archivos de hasta 100 MB + extra"
+  },
   "4zg7Gp": {
     "defaultMessage": "No se necesita tarjeta de crédito"
   },
@@ -110,9 +113,6 @@
   "ANkfZ+": {
     "defaultMessage": "Publica o importa tu podcast, aparece en las apps y haz crecer tu audiencia con nuestras herramientas optimizadas para SEO."
   },
-  "APS4kv": {
-    "defaultMessage": "Sube archivos de audio de hasta 256 MB, con un extra de 256 MB cada treinta días. Los feeds RSS se actualizan 66% más rápido."
-  },
   "AQ7TL1": {
     "defaultMessage": "No solo confíes en nuestra palabra"
   },
@@ -163,9 +163,6 @@
   },
   "ESsMXt": {
     "defaultMessage": "Descubre de dónde vienen tus oyentes y cómo están escuchando."
-  },
-  "EUVluX": {
-    "defaultMessage": "Archivos de 80 MB + extra"
   },
   "FgdSGw": {
     "defaultMessage": "Las estadísticas más potentes del mundo de los podcasts, con funciones premium, gráficos simples y controles claros."
@@ -218,11 +215,17 @@
   "KVVGEY": {
     "defaultMessage": "Todas las funciones"
   },
+  "KlRZCz": {
+    "defaultMessage": "Archivos de hasta 64 MB"
+  },
   "Klb4PR": {
     "defaultMessage": "Bienvenido a Pinecast, una plataforma de hosting{br}de podcasts con todo incluido"
   },
   "L8U4Ih": {
     "defaultMessage": "Distribución"
+  },
+  "Lc/Uyt": {
+    "defaultMessage": "Sube archivos de audio de hasta 340 MB, con un espacio adicional de 340 MB cada treinta días. Los feeds RSS se actualizan un 66 % más rápido."
   },
   "M3zxrK": {
     "defaultMessage": "/ Año"
@@ -274,9 +277,6 @@
   },
   "OdXhTK": {
     "defaultMessage": "Pensado para{br}tus necesidades"
-  },
-  "OvESM7": {
-    "defaultMessage": "Archivos de 48 MB"
   },
   "P/u37W": {
     "defaultMessage": "Obtén información adicional sobre tus oyentes con datos geográficos, estadísticas de crecimiento de escuchas, gráficos de tendencia y más."
