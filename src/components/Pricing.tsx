@@ -152,9 +152,9 @@ export const Pricing = () => {
                 defaultMessage="Ten episodes limit"
               />,
               <FormattedMessage
-                key="48MB file sizes"
+                key="64MB file sizes"
                 description="A feature of the free plan, in the list on its ticket in the pricing section"
-                defaultMessage="48MB file sizes"
+                defaultMessage="64MB file sizes"
               />,
               <FormattedMessage
                 key="Basic analytics"
@@ -249,9 +249,9 @@ export const Pricing = () => {
                 defaultMessage="No episode limit"
               />,
               <FormattedMessage
-                key="80MB file sizes + bonus"
+                key="100MB file sizes + bonus"
                 description="A feature of the Starter plan, in the list on its ticket in the pricing section"
-                defaultMessage="80MB file sizes + bonus"
+                defaultMessage="100MB file sizes + bonus"
               />,
               <FormattedMessage
                 key="Premium analytics"
@@ -436,7 +436,7 @@ export const Pricing = () => {
           description={
             <FormattedMessage
               description="What the Hi-Fi add-on does, in its open row in the add-ons list of the pricing section"
-              defaultMessage="Upload audio files up to 256MB, with an extra 256MB buffer every thirty days. RSS feeds update 66% faster."
+              defaultMessage="Upload audio files up to 340MB, with an extra 340MB buffer every thirty days. RSS feeds update 66% faster."
             />
           }
           link="https://help.pinecast.com/article/71-add-on-packages#hi-fi-add-on"

@@ -75,6 +75,10 @@
     // After a price in the pricing section: the price is for one month
     "defaultMessage": "\/ Month"
   },
+  "4ryoyK": {
+    // A feature of the Starter plan, in the list on its ticket in the pricing section
+    "defaultMessage": "100MB file sizes + bonus"
+  },
   "4zg7Gp": {
     // Note under the sign-up button in the Tuned-in section of the home page
     "defaultMessage": "No credit card required"
@@ -147,10 +151,6 @@
     // Description of the Distribution feature, shown over the globe on the home page when the globe turns to it
     "defaultMessage": "Publish or import your podcast, get listed in apps, and grow your audience with our SEO-optimized tools."
   },
-  "APS4kv": {
-    // What the Hi-Fi add-on does, in its open row in the add-ons list of the pricing section
-    "defaultMessage": "Upload audio files up to 256MB, with an extra 256MB buffer every thirty days. RSS feeds update 66% faster."
-  },
   "AQ7TL1": {
     // Heading of the testimonials section of the home page, above recorded messages from customers. It is set in very large capitals: in another language, use a short, casual phrase with short words, not a word-for-word translation
     "defaultMessage": "Don’t just take our word for it"
@@ -218,10 +218,6 @@
   "ESsMXt": {
     // What the Analytics feature does, shown when its row on the Features page is open
     "defaultMessage": "See where your listeners are coming from and how they’re listening."
-  },
-  "EUVluX": {
-    // A feature of the Starter plan, in the list on its ticket in the pricing section
-    "defaultMessage": "80MB file sizes + bonus"
   },
   "FgdSGw": {
     // Description of the Analytics feature, shown over the globe on the home page when the globe turns to it
@@ -291,6 +287,10 @@
     // Link to the page that lists all the features of Pinecast. In the Features column in the footer of every page
     "defaultMessage": "All features"
   },
+  "KlRZCz": {
+    // A feature of the free plan, in the list on its ticket in the pricing section
+    "defaultMessage": "64MB file sizes"
+  },
   "Klb4PR": {
     // Introduction under the main heading of the home page. {br} is a line break
     "defaultMessage": "Welcome to Pinecast, a batteries-included{br}podcast hosting platform"
@@ -298,6 +298,10 @@
   "L8U4Ih": {
     // Name of the Distribution feature, read by screen readers before its description in the globe section of the home page
     "defaultMessage": "Distribution"
+  },
+  "Lc/Uyt": {
+    // What the Hi-Fi add-on does, in its open row in the add-ons list of the pricing section
+    "defaultMessage": "Upload audio files up to 340MB, with an extra 340MB buffer every thirty days. RSS feeds update 66% faster."
   },
   "M3zxrK": {
     // After a price in the pricing section: the price is for one year
@@ -366,10 +370,6 @@
   "OdXhTK": {
     // Big heading of the Features page. {br} is a line break: the words are big, and the lines are short
     "defaultMessage": "Tuned-in to{br}your needs"
-  },
-  "OvESM7": {
-    // A feature of the free plan, in the list on its ticket in the pricing section
-    "defaultMessage": "48MB file sizes"
   },
   "P/u37W": {
     // What the Pro Analytics add-on does, in its open row in the add-ons list of the pricing section
