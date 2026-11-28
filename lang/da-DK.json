@@ -56,6 +56,9 @@
   "4fxkcu": {
     "defaultMessage": "/ måned"
   },
+  "4ryoyK": {
+    "defaultMessage": "Filstørrelser på 100 MB + bonus"
+  },
   "4zg7Gp": {
     "defaultMessage": "Intet kreditkort påkrævet"
   },
@@ -110,9 +113,6 @@
   "ANkfZ+": {
     "defaultMessage": "Udgiv eller importér din podcast, kom med i apps, og få flere lyttere med vores SEO-optimerede værktøjer."
   },
-  "APS4kv": {
-    "defaultMessage": "Upload lydfiler på op til 256 MB, med en ekstra buffer på 256 MB hver 30. dag. RSS-feeds opdateres 66 % hurtigere."
-  },
   "AQ7TL1": {
     "defaultMessage": "Tro ikke bare på os"
   },
@@ -163,9 +163,6 @@
   },
   "ESsMXt": {
     "defaultMessage": "Se, hvor dine lyttere kommer fra, og hvordan de lytter."
-  },
-  "EUVluX": {
-    "defaultMessage": "Filer på op til 80 MB + bonus"
   },
   "FgdSGw": {
     "defaultMessage": "Podcastingens kraftigste statistik med premium-funktioner, enkle diagrammer og overskuelige kontroller."
@@ -218,11 +215,17 @@
   "KVVGEY": {
     "defaultMessage": "Alle funktioner"
   },
+  "KlRZCz": {
+    "defaultMessage": "Filstørrelser på 64 MB"
+  },
   "Klb4PR": {
     "defaultMessage": "Velkommen til Pinecast, podcast-hosting{br}med alt, hvad du skal bruge"
   },
   "L8U4Ih": {
     "defaultMessage": "Distribution"
+  },
+  "Lc/Uyt": {
+    "defaultMessage": "Upload lydfiler på op til 340 MB, med ekstra 340 MB buffer hver tredivte dag. RSS-feeds opdateres 66 % hurtigere."
   },
   "M3zxrK": {
     "defaultMessage": "/ år"
@@ -274,9 +277,6 @@
   },
   "OdXhTK": {
     "defaultMessage": "Tunet ind på{br}dine behov"
-  },
-  "OvESM7": {
-    "defaultMessage": "Filer på op til 48 MB"
   },
   "P/u37W": {
     "defaultMessage": "Få flere indsigter i dine lyttere med geografiske data, statistik over vækst i afspilninger, sparklines og meget mere."

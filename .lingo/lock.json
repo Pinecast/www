@@ -59,7 +59,7 @@
       "sha256": "7a6d5fea1f668483ad9f5b7765ee165579be08bd197a8a00d3254baed6db52ac"
     },
     "content/da-DK/learn/podcasting-for-power-users.mdx": {
-      "sha256": "5d9eea6f76e98bbd5eb714ee7aebc13aabe73aa72e83372e930dc79cb9ac4e83"
+      "sha256": "ab9d46a9ed842eb687b9005f0bf20a89570968ecdf01ed4869d020867bf61e6c"
     },
     "content/da-DK/learn/podcasting-glossary.mdx": {
       "sha256": "bebaef7cd7d9f4185281b072654866ae2638daa9b11a35f1fe756eddf75d4498"
@@ -128,7 +128,7 @@
       "sha256": "1f8e59a86bc4743fe0487ea589bccaebe8b16c3c50b96a77362dad045250101d"
     },
     "content/de-DE/learn/podcasting-for-power-users.mdx": {
-      "sha256": "e6030eea0123015171192e066bdb4861c472d972bcfe6773400b476909c4fd93"
+      "sha256": "4695007f7245342584d017d75661a5dba0a44294ee897b868504edf3086c8407"
     },
     "content/de-DE/learn/podcasting-glossary.mdx": {
       "sha256": "425babde3ce0eb3908753356fbe767c9d3bb790e23bbc54d2728e76d661f738c"
@@ -200,7 +200,7 @@
       "sha256": "4a38353485e71cf0fabd6af16ea81e818ee5635da621e3e4dd97f009b5f7c8ee"
     },
     "content/en/learn/podcasting-for-power-users.mdx": {
-      "sha256": "b1bc29ad701d821facd9c0b5d199f822cf5c4d41fc88fd84c41c087b2dba8e69"
+      "sha256": "37e00bc39007b533dc0bcba66c5b868469491f92da07f85b003ff91f85f621ae"
     },
     "content/en/learn/podcasting-glossary.mdx": {
       "sha256": "a06c9541f5da9f39b2a1aa334dcb4bcf4d370b0e499e54ed7ea5fa3ecef20207"
@@ -272,7 +272,7 @@
       "sha256": "c767ee34c4aafc14b648464167fd5396d203845779247830763d1c5557e851a7"
     },
     "content/es-419/learn/podcasting-for-power-users.mdx": {
-      "sha256": "8cf6f2895e85792d80ead0d483d6d9608bb20a1be6063dace6a6073884e8ef2c"
+      "sha256": "17fc26925f6301ce9baf2ede8a6125a9c747445959237e8007b3e9da360740d2"
     },
     "content/es-419/learn/podcasting-glossary.mdx": {
       "sha256": "461a72a6260959777575db114bb6487ac5801009ea3d8b1d00aa84d0c4e20d21"
@@ -341,7 +341,7 @@
       "sha256": "610b1bb7d65dca1a3d00a1026299798fc06f4a87e392c5bd74c600648f3f9b20"
     },
     "content/fr/learn/podcasting-for-power-users.mdx": {
-      "sha256": "8c553ec0cbe08b59f0a3fb6ecf59041631b1b388f8367de2cd05d8875e738b42"
+      "sha256": "f09a2d8f08920d31ee63521321a319afb79d33d02b33530130d832f373aa171f"
     },
     "content/fr/learn/podcasting-glossary.mdx": {
       "sha256": "41f296eb8338c05183452ce55abed60cd8f6801f1ad448b187d8d16923a2ce56"
@@ -410,7 +410,7 @@
       "sha256": "34253830c5780d221714e6110a48e8459b135bb3e4f50a84f634a6fa1578c4c7"
     },
     "content/pt-BR/learn/podcasting-for-power-users.mdx": {
-      "sha256": "a57f02c301f05eef0f7f7cc839aa022b1f9eee88655e9231dcbaf342f91b559c"
+      "sha256": "cd21870c0222d4a9ae7129dcc32eba14cc9437143021f58307f02209f62cc3ee"
     },
     "content/pt-BR/learn/podcasting-glossary.mdx": {
       "sha256": "4e8a17bda9ca7857ca2d4f52851c1c04c68a2c10a82680cdb66f3e001a9886a2"
@@ -422,25 +422,25 @@
       "sha256": "d41f63ac7beffa9a7f2e728b010641872dda56460bc53200871eebd05f356af6"
     },
     "lang/da-DK.json": {
-      "sha256": "d707c51ffbb32cd39fa46fc102a5d556eb56783d3200240fa273b32dcfe0fea8"
+      "sha256": "0bdd0bea4a3f2de8af57cddeb334e91a6db900a4e754a92726a13bd9bf580849"
     },
     "lang/de-DE.json": {
-      "sha256": "e3109890d1834bffadae8b077e1762f4e4679cfe0c9d9078b7259901222c9bad"
+      "sha256": "7fa0d67fe25fac33da21c937312ee2d9c94acde284cb36b70c6fea8b3fe6d11f"
     },
     "lang/en.json": {
       "sha256": "d0f8863babd1501f293fc8ca7b461a08cb6ad57b565fa6985233d37461093f97"
     },
     "lang/en.jsonc": {
-      "sha256": "328b7e046686ece5de090d9a2b1034b02c87238ef1803475a851bc745ec597a0"
+      "sha256": "5d73f1ba4876e56d69e83f092cbdb618c96a44735d24d645dd47d0627f270828"
     },
     "lang/es-419.json": {
-      "sha256": "c49266a6d318242ee47424bdd6bc26d7eee7a6cb620a0f9bbe6ca90d604cff61"
+      "sha256": "ee3e3f9c59127b162c557778253f72e9f4106899610216ef55ec6822edd42c22"
     },
     "lang/fr.json": {
-      "sha256": "991af63270c3744560d7c1e673299262174a5bda7bef0ae216bd75866b91e95d"
+      "sha256": "21c881ba1793b557377ea1cd9ff323df203e4b39b85eeec64c989fc155e41190"
     },
     "lang/pt-BR.json": {
-      "sha256": "19ec060df136fd286de5cc5fd721b220a4cdc3e2a34e37317799ed54603270df"
+      "sha256": "9d2f3991c2ed5674f887509b297c3439008b9c93d15db534f7220be811a458af"
     }
   }
 }

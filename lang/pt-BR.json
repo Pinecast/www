@@ -56,6 +56,9 @@
   "4fxkcu": {
     "defaultMessage": "/ mês"
   },
+  "4ryoyK": {
+    "defaultMessage": "Arquivos de até 100MB + bônus"
+  },
   "4zg7Gp": {
     "defaultMessage": "Não precisa de cartão de crédito"
   },
@@ -110,9 +113,6 @@
   "ANkfZ+": {
     "defaultMessage": "Publique ou importe seu podcast, apareça nos apps e faça sua audiência crescer com nossas ferramentas otimizadas para SEO."
   },
-  "APS4kv": {
-    "defaultMessage": "Envie arquivos de áudio de até 256 MB, com mais 256 MB de reserva a cada trinta dias. Os feeds RSS são atualizados 66% mais rápido."
-  },
   "AQ7TL1": {
     "defaultMessage": "Não é só a gente que diz"
   },
@@ -163,9 +163,6 @@
   },
   "ESsMXt": {
     "defaultMessage": "Veja de onde vêm seus ouvintes e como eles ouvem."
-  },
-  "EUVluX": {
-    "defaultMessage": "Arquivos de 80 MB + bônus"
   },
   "FgdSGw": {
     "defaultMessage": "As análises mais poderosas do podcasting, com recursos premium, gráficos simples e controles claros."
@@ -218,11 +215,17 @@
   "KVVGEY": {
     "defaultMessage": "Todos os recursos"
   },
+  "KlRZCz": {
+    "defaultMessage": "Arquivos de até 64MB"
+  },
   "Klb4PR": {
     "defaultMessage": "Boas-vindas ao Pinecast, a plataforma de hospedagem de podcasts{br}com tudo incluso"
   },
   "L8U4Ih": {
     "defaultMessage": "Distribuição"
+  },
+  "Lc/Uyt": {
+    "defaultMessage": "Envie arquivos de áudio de até 340MB, com um bônus extra de 340MB a cada trinta dias. Os feeds RSS são atualizados 66% mais rápido."
   },
   "M3zxrK": {
     "defaultMessage": "/ ano"
@@ -274,9 +277,6 @@
   },
   "OdXhTK": {
     "defaultMessage": "Sintonizados com{br}você"
-  },
-  "OvESM7": {
-    "defaultMessage": "Arquivos de 48 MB"
   },
   "P/u37W": {
     "defaultMessage": "Descubra mais sobre seus ouvintes com dados geográficos, análises de crescimento de reproduções, sparklines e muito mais."
